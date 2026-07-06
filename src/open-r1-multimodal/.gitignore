@@ -173,41 +173,6 @@ cython_debug/
 # Temp folders
 data/
 wandb/
-# scripts/
+scripts/
 checkpoints/
 .vscode/
-.cursor/
-
-output/
-rec_jsons_processed/
-
-test/
-images_eval/
-*.zip
-*.txt
-runs/
-temps/
-src/open-r1-multimodal/src/open_r1/grpo_jsonl_ocr.py
-# Large data/model artifacts
-checkpoint-*/
-Qwen2.5-VL-3B-Instruct/
-llava1/
-train2014/
-coco/
-data/train2014/
-data/rec_jsons_processed/
-rec_jsons_processed/
-*.safetensors
-*.bin
-*.zip
-
-# Experiment outputs
-src/eval/*.json
-src/eval/firsttime/
-src/eval/logs/
-src/eval/attention_outputs/
-src/eval/attention_outputs_tmp/
-src/eval/gradcam_outputs/
-src/open-r1-multimodal/output/
-debug_log*
-*.log
