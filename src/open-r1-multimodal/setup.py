@@ -61,8 +61,10 @@ _deps = [
     "safetensors>=0.3.3",
     "sentencepiece>=0.1.99",
     "torch>=2.5.1",
-    "transformers==4.49.0",
-    "trl @ git+https://github.com/huggingface/trl.git@main",
+    # Pin the known-good commits from the validated VLM-R1 runtime. Tracking
+    # either main branch directly is not reproducible and can break resolution.
+    "transformers @ git+https://github.com/huggingface/transformers.git@e18f233f6c8cba029324e2868fb68abdaf6badf3",
+    "trl @ git+https://github.com/huggingface/trl.git@e5ae703d352b29537159180087ef8bd4b41bf625",
     "vllm==0.6.6.post1",
     "wandb>=0.19.1",
     "pillow",
