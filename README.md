@@ -13,4 +13,5 @@ bash setup_formal_machine.sh formal_machine.env
 ```
 
 Model weights, images, environments, caches, and checkpoints are intentionally excluded from Git.
-
+Online bootstrap downloads the exact model and the gated official PathMMU `images.zip` after the
+user has obtained dataset access and authenticated with Hugging Face.

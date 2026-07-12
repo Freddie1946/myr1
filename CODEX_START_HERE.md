@@ -35,6 +35,11 @@ At minimum, edit:
 - `ONLINE`
 - `BASE_MODEL_SOURCE` when offline
 
+Before online PathMMU setup, the human must request access at
+`https://huggingface.co/datasets/jamessyx/PathMMU`, accept its terms, and authenticate on the
+formal machine with `hf auth login` or `HF_TOKEN`. This is a gated dataset and the bootstrap
+cannot bypass its manual approval step.
+
 If the script succeeds, it creates:
 
 - `$INSTALL_ROOT/envs/sft`
@@ -46,7 +51,10 @@ If the script succeeds, it creates:
 
 ## Online and offline modes
 
-Online mode downloads wheels, clones the exact LLaMA-Factory revision, and downloads the exact Qwen 7B revision.
+Online mode downloads wheels, clones the exact LLaMA-Factory revision, downloads the exact Qwen
+7B revision, downloads official PathMMU `images.zip`, and extracts only the 3,809 unique images
+referenced by the frozen split. It writes `reports/pathmmu_download_report.json` and aborts if any
+required image is unavailable or corrupt.
 
 Offline mode requires these to be copied through the remote-desktop shared drive:
 
@@ -116,6 +124,7 @@ Not finalized. Read `docs/20260712_144517_stage3_process_reward_decisions_pendin
 - `formal_machine/formal_machine.env.example`: user configuration.
 - `setup_formal_machine.sh`: single setup entry point.
 - `formal_machine/prepare_formal_data.py`: image-path rewrite and adapter generation.
+- `formal_machine/download_pathmmu.py`: gated download and frozen-image extraction.
 - `formal_machine/preflight_formal_machine.py`: hardware/environment/model/data gates.
 - `configs/`: debug and formal reference configurations.
 - `scripts/pathmmu_rewards.py`: shared online/offline reward implementation.
@@ -130,4 +139,3 @@ Not finalized. Read `docs/20260712_144517_stage3_process_reward_decisions_pendin
 - Do not silently change split, prompt, reward parser, seed policy, or model revision.
 - Do not interpret an exit-0 GRPO run as learning without checking reward variance, gradient norm, and parameter deltas.
 - Do not claim Attempt03 is valid.
-

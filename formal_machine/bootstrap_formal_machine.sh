@@ -18,6 +18,10 @@ source "$CONFIG_PATH"
 : "${BASE_MODEL_ID:=Qwen/Qwen2.5-VL-7B-Instruct}"
 : "${BASE_MODEL_REVISION:=cc594898137f460bfe9f0759e9844b3ce807cfb5}"
 : "${BASE_MODEL_SOURCE:=}"
+: "${PATHMMU_AUTO_DOWNLOAD:=1}"
+: "${PATHMMU_DATASET_ID:=jamessyx/PathMMU}"
+: "${PATHMMU_DATASET_REVISION:=main}"
+: "${PATHMMU_ARCHIVE:=}"
 : "${OVERWRITE_DATA:=0}"
 : "${CUDA_VISIBLE_DEVICES:=0,1,2,3}"
 : "${NPROC_PER_NODE:=4}"
@@ -49,15 +53,18 @@ if ! command -v "$CONDA_EXE" >/dev/null 2>&1 && [[ ! -x "$CONDA_EXE" ]]; then
   die "conda executable not found: $CONDA_EXE"
 fi
 [[ -d "$SPLIT_ROOT" ]] || die "split root not found: $SPLIT_ROOT"
-[[ -d "$IMAGE_ROOT" ]] || die "image root not found: $IMAGE_ROOT"
+mkdir -p "$IMAGE_ROOT"
 if [[ "$ONLINE" == 0 ]]; then
   [[ -d "$WHEELHOUSE" ]] || die "ONLINE=0 requires WHEELHOUSE: $WHEELHOUSE"
+  if [[ "$PATHMMU_AUTO_DOWNLOAD" == 1 && -z "$PATHMMU_ARCHIVE" ]]; then
+    die "offline PathMMU setup requires PATHMMU_ARCHIVE or PATHMMU_AUTO_DOWNLOAD=0"
+  fi
 fi
 
 log "Verifying repository code hashes"
 python3 "$REPO_ROOT/scripts/verify_code_hash_manifest.py" \
   --repo-root "$REPO_ROOT" \
-  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260712_192846.json"
+  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260712_213340.json"
 
 log "Hardware snapshot"
 nvidia-smi
@@ -132,6 +139,22 @@ install_torch "$GRPO_ENV/bin/python"
 install_common "$GRPO_ENV/bin/python"
 pip_install "$GRPO_ENV/bin/python" trl==0.15.2 bitsandbytes liger-kernel==0.5.2
 "$GRPO_ENV/bin/python" -m pip install --no-deps -e "$VLMR1_SRC"
+
+if [[ "$PATHMMU_AUTO_DOWNLOAD" == 1 ]]; then
+  log "Downloading and extracting frozen-split PathMMU images"
+  PATHMMU_ARGS=(
+    --split-root "$SPLIT_ROOT"
+    --image-root "$IMAGE_ROOT"
+    --cache-dir "$INSTALL_ROOT/cache/pathmmu"
+    --report "$REPORT_DIR/pathmmu_download_report.json"
+    --dataset-id "$PATHMMU_DATASET_ID"
+    --revision "$PATHMMU_DATASET_REVISION"
+  )
+  if [[ -n "$PATHMMU_ARCHIVE" ]]; then PATHMMU_ARGS+=(--archive "$PATHMMU_ARCHIVE"); fi
+  "$GRPO_ENV/bin/python" "$REPO_ROOT/formal_machine/download_pathmmu.py" "${PATHMMU_ARGS[@]}"
+else
+  log "PATHMMU_AUTO_DOWNLOAD=0; existing images will be validated during data preparation"
+fi
 
 log "Preparing exact base-model snapshot"
 if [[ -n "$BASE_MODEL_SOURCE" ]]; then
