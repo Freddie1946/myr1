@@ -1,0 +1,7 @@
+The two model safetensor shards in output/ were deleted after explicit approval to reclaim approximately 7.1 GiB.
+
+Reason: this run completed the online GRPO plumbing but had reward_std=0, loss=0, and grad_norm=0, so it did not produce an effective parameter update.
+
+Retained: train.log, online_rewards.jsonl, run_manifest.yaml, command.txt, output config/tokenizer/processor metadata, model index, training_args.bin, and timestamped result documentation.
+
+The remaining output/ directory is intentionally not loadable after pruning and must not be treated as a checkpoint.

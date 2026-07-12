@@ -1,0 +1,49 @@
+### model
+model_name_or_path: /home/wjy/.cache/huggingface/hub/models--Qwen--Qwen2.5-VL-3B-Instruct/snapshots/66285546d2b821cf421d4f5eb2576359d3770cd3
+trust_remote_code: true
+image_max_pixels: 65536
+video_max_pixels: 8192
+flash_attn: sdpa
+use_cache: false
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_vision_tower: true
+freeze_multi_modal_projector: true
+freeze_language_model: false
+deepspeed: /home/wjy/revision_runs/10_training/pathvlm_r1_v1/configs/deepspeed/ds_z3_optimizer_offload_torch_adamw.json
+
+### dataset
+dataset_dir: /home/wjy/revision_runs/10_training/pathvlm_r1_v1/data/llamafactory
+dataset: pathvlm_sft_smoke_n0008
+template: qwen2_vl
+cutoff_len: 512
+max_samples: 8
+overwrite_cache: true
+preprocessing_num_workers: 2
+
+### output
+output_dir: /home/wjy/revision_runs/10_training/pathvlm_r1_v1/debug_e2e/qwen2_5_vl_3b/stage1_sft/n0008/seed0042/output
+logging_steps: 1
+save_strategy: "no"
+save_only_model: true
+plot_loss: false
+overwrite_output_dir: false
+report_to: none
+
+### training
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+learning_rate: 2.0e-5
+max_steps: 1
+num_train_epochs: 1
+lr_scheduler_type: constant
+warmup_ratio: 0.0
+bf16: true
+gradient_checkpointing: true
+seed: 42
+data_seed: 42
+ddp_timeout: 180000000
+

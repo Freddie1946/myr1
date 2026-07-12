@@ -1,0 +1,51 @@
+### Formal reference config: clone with explicit run IDs for seeds 42, 43, and 44.
+### model
+model_name_or_path: Qwen/Qwen2.5-VL-7B-Instruct
+model_revision: cc594898137f460bfe9f0759e9844b3ce807cfb5
+trust_remote_code: true
+image_max_pixels: 65536
+video_max_pixels: 8192
+flash_attn: sdpa
+use_cache: false
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_vision_tower: true
+freeze_multi_modal_projector: true
+freeze_language_model: false
+deepspeed: /path/to/pathvlm_r1_v1/configs/deepspeed/ds_z3_optimizer_offload_torch_adamw.json
+
+### dataset
+dataset_dir: /path/to/pathvlm_r1_v1/data/llamafactory
+dataset: pathvlm_sft_n3000
+template: qwen2_vl
+cutoff_len: 512
+max_samples: 3000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: /path/to/pathvlm_r1_v1/stage1_sft/formal/n3000/seed0042/output
+logging_steps: 1
+save_strategy: steps
+save_steps: 100
+save_only_model: false
+plot_loss: true
+overwrite_output_dir: false
+report_to: none
+
+### training
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+learning_rate: 2.0e-5
+num_train_epochs: 10
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+bf16: true
+gradient_checkpointing: true
+seed: 42
+data_seed: 42
+ddp_timeout: 180000000
+

@@ -1,0 +1,6 @@
+The two output model shards are eligible for deletion after approval.
+
+Reason: the run had a real nonzero gradient and changed language parameters, but the online accuracy parser incorrectly credited an answer that merely enumerated all options. The resulting policy update is scientifically invalid and must not be used as a parent checkpoint.
+
+Retain train.log, online_rewards.jsonl, corrected_reward_audit.json, parameter_delta.json, command, manifest, and model/tokenizer metadata for audit.
+

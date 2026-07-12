@@ -1,0 +1,35 @@
+schema_version: 1
+experiment_version: pathvlm_r1_v1
+run_id: s1_sft_smoke_n0008_seed0042_a01
+status: failed_during_debug
+purpose: Verify that 7B full language-model SFT completes one optimizer step on the debug host.
+stage: stage1_sft
+formal_result: false
+data:
+  version: pathmmu_image_disjoint_v1
+  adapter: pathvlm_sft_smoke_n0008
+  qa_count: 8
+model:
+  base_id: Qwen/Qwen2.5-VL-7B-Instruct
+  base_revision: cc594898137f460bfe9f0759e9844b3ce807cfb5
+  parent_checkpoint: official_base
+training:
+  finetuning_type: full
+  trainable_component: language_model
+  vision_tower_frozen: true
+  multimodal_projector_frozen: true
+  seed: 42
+  max_steps: 1
+  framework: LLaMA-Factory 0.9.2
+  framework_commit: ef5f1c1def3da62ee2d5e6ba933f9d7d6aab4340
+  deepspeed: zero3_cpu_param_and_optimizer_offload_with_torch_adamw
+hardware:
+  host: lab
+  visible_gpus: [0, 1, 2]
+  gpu_type: NVIDIA GeForce RTX 4090
+test_accessed: false
+notes:
+  - GPU 3 is excluded because it is occupied by an unrelated VLLM process.
+  - Initial launch required NCCL_P2P_DISABLE=1 and NCCL_IB_DISABLE=1.
+  - DeepSpeedCPUAdam could not compile because Torch CUDA 11.8 did not match the CUDA 12.1 toolkit.
+  - Torch AdamW with ZeRO-3 CPU offload initialized successfully, but FlashAttention rotary failed on a float32/bfloat16 dtype mismatch.

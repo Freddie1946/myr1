@@ -1,0 +1,36 @@
+schema_version: 1
+experiment_version: pathvlm_r1_v1
+run_id: debug_e2e_3b_outcome_grpo_n0008_seed0042_a01
+status: failed_before_model_load
+purpose: Validate online generation, outcome/format reward, GRPO update, and save.
+stage: stage2_outcome_grpo
+formal_result: false
+data:
+  version: pathmmu_image_disjoint_v1
+  split: rl_train
+  adapter: pathvlm_rl_smoke_n0008
+  qa_count: 8
+model:
+  parent_checkpoint: debug_e2e_3b_sft_n0008_seed0042_a02
+  role: debug_proxy_for_formal_7b
+training:
+  finetuning_type: full
+  vision_modules_frozen: true
+  online_generation: true
+  reward_funcs: [accuracy, format]
+  num_generations: 2
+  max_completion_length: 64
+  max_steps: 1
+  beta: 0.04
+  seed: 42
+  optimizer: torch_adamw
+  deepspeed: zero3_optimizer_only_cpu_offload
+hardware:
+  visible_gpus: [1, 2]
+test_accessed: false
+failure:
+  timestamp: 2026-07-12T14:16:12+08:00
+  reason: incompatible_trl_0_9_6_missing_trl_data_utils
+  optimizer_step_completed: false
+  checkpoint_created: false
+

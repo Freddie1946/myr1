@@ -1,0 +1,14 @@
+tmp/
+formal_machine.env
+*.tar.gz
+*.tar.gz.sha256
+wheelhouse/
+models/
+images/
+**/output/
+**/*.safetensors
+**/checkpoint-*/
+__pycache__/
+*.pyc
+.DS_Store
+

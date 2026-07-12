@@ -1,0 +1,59 @@
+schema_version: 1
+experiment_version: pathvlm_r1_v1
+run_id: debug_e2e_3b_outcome_grpo_failed_case_n0001_seed0042_a03
+status: completed_but_invalid_accuracy_parser
+purpose: Demonstrate nonzero online GRPO reward variance and a real language-model parameter update on the previously truncated case.
+stage: stage2_outcome_grpo
+formal_result: false
+data:
+  version: pathmmu_image_disjoint_v1
+  split: rl_train
+  source_index: 6
+  selection: slice:6:7
+  qa_count: 1
+  data_sha256: 989ffd8ce74afb2786e9a9d0c58666e563d315ba2138efbd56ef43eacb0bd223
+  target_choice: A
+model:
+  parent_checkpoint: debug_e2e_3b_sft_n0008_seed0042_a02
+  role: debug_proxy_for_formal_7b
+training:
+  finetuning_type: full
+  vision_modules_frozen: true
+  online_generation: true
+  reward_funcs: [accuracy, format]
+  num_generations: 4
+  max_completion_length: 192
+  per_device_train_batch_size: 2
+  global_batch_size: 4
+  max_steps: 1
+  beta: 0.04
+  seed: 42
+  optimizer: torch_adamw
+  deepspeed: zero3_optimizer_only_cpu_offload
+success_criteria:
+  reward_std_positive: true
+  grad_norm_positive: true
+  language_parameter_delta_positive: true
+  frozen_visual_parameter_delta_zero: true
+hardware:
+  visible_gpus: [1, 2]
+test_accessed: false
+result:
+  exit_status: 0
+  checkpoint_saved: true
+  online_reward_events: 8
+  logged_reward_std: 0.9574271440505981
+  grad_norm: 6.445954322814941
+  language_parameter_changed_elements: 47611
+  visual_parameter_changed_elements: 0
+  valid_for_scientific_use: false
+invalid_reason:
+  - The old choice parser treated an answer that enumerated Option A through Option D as a prediction of A.
+  - Corrected offline audit changes mean accuracy from the credited event to 0.0.
+  - The policy update used the flawed online accuracy reward and must be discarded.
+corrected_offline_audit:
+  mean_accuracy: 0.0
+  mean_format: 0.5
+  mean_total_reward: 0.5
+  sample_reward_std: 0.5773502691896257
+

@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=0,1,2 \
+NCCL_P2P_DISABLE=1 \
+NCCL_IB_DISABLE=1 \
+PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
+HF_HUB_OFFLINE=1 \
+WANDB_MODE=disabled \
+/home/wjy/revision_runs/10_training/pathvlm_r1_v1/env/pathvlm-sft-venv/bin/python \
+  -m torch.distributed.run \
+  --nproc_per_node=3 \
+  --master_port=29571 \
+  /home/wjy/LLaMA-Factory/src/llamafactory/launcher.py \
+  /home/wjy/revision_runs/10_training/pathvlm_r1_v1/configs/sft/sft_smoke_full_z3offload_3gpu.yaml

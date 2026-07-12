@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-07-12T14:48:11+08:00",
+  "sha256": {
+    "LLaMA-Factory/src/llamafactory/launcher.py": "8f16bb782a6da2122b5accd50ce1a01fd99284dffa20ff340850ec3b06927b77",
+    "VLM-R1-main/src/open-r1-multimodal/src/open_r1/grpo_rec.py": "c11c11e1fad213621e9a8d44bb2043d17b14eabb7a5760d4bafa933dcb6f8ae7",
+    "VLM-R1-main/src/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py": "69fef836dc2c2a9ceba8e6d3a082a03bc40e6137d97fe97209b746429c5f79f2",
+    "VLM-R1-main/src/open-r1-multimodal/src/open_r1/trainer/grpo_config.py": "3ef432fb67ba51cd00b7122e565b969ca17e97016e8d337c167b367d31b8053a",
+    "pathvlm_r1_v1/scripts/grpo_pathmmu.py": "3bc3977abdd5a32755fec72ecaf09a5cd328940944b269e1eb45c584e650fde0",
+    "pathvlm_r1_v1/scripts/pathmmu_rewards.py": "928ba3d8ed3a7b865ff285b289c164ff657cf0a153559056f1fa46cea6e6a108"
+  }
+}
+

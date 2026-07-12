@@ -1,0 +1,287 @@
+{
+  "status": "frozen",
+  "algorithm": "image-grouped randomized greedy metadata balancing",
+  "base_seed": 20260711,
+  "attempts": 500,
+  "selected_attempt": 66,
+  "objective": 0.00022162080162155837,
+  "targets": {
+    "sft_train": 3000,
+    "rl_train": 1000,
+    "validation": 385,
+    "test": 1000
+  },
+  "input_sha256": {
+    "without_cot_data.json": "00e808836f4ef30a750993b99e920d2e78d7eadcefc5b8f70916122f76cb485f",
+    "converted_data.json": "cbf9b5f5c7f2c68a70c0b2063c1e392f548161c3dda5c54fd84cce117997e8ea",
+    "data.json": "d902c5c8e670e9802db9d26b7b611d608a1a2b1b2018c2ca6e3f198a088c132a"
+  },
+  "splits": {
+    "sft_train": {
+      "qa_count": 3000,
+      "unique_images": 2121,
+      "source_qa": {
+        "EduContent": 1161,
+        "PubMed": 1839
+      },
+      "answer_qa": {
+        "A": 754,
+        "B": 747,
+        "C": 753,
+        "D": 746
+      },
+      "questions_per_image": {
+        "1": 1366,
+        "2": 631,
+        "3": 124
+      },
+      "without_cot_sha256": "91c68695c0d72662068912d8fd62bf18eb71886ab99ad13d89aa6124a1d2cbe9",
+      "with_cot_sha256": "455e91b3c73242eb015c2518a7149680ba72e3b90f3894757700492d5f7784b2"
+    },
+    "rl_train": {
+      "qa_count": 1000,
+      "unique_images": 708,
+      "source_qa": {
+        "EduContent": 387,
+        "PubMed": 613
+      },
+      "answer_qa": {
+        "A": 252,
+        "B": 249,
+        "C": 251,
+        "D": 248
+      },
+      "questions_per_image": {
+        "1": 457,
+        "2": 210,
+        "3": 41
+      },
+      "without_cot_sha256": "e08128b01d6cfc87551ec2529b19d1d7f137d48fba9cf4f2aa7a350b56e5cd55",
+      "with_cot_sha256": "b8ee45769161fc167fbc457df8a80b04390d27d9a8b9c32b5a5e8f0e7eae0234"
+    },
+    "validation": {
+      "qa_count": 385,
+      "unique_images": 272,
+      "source_qa": {
+        "EduContent": 149,
+        "PubMed": 236
+      },
+      "answer_qa": {
+        "A": 97,
+        "B": 96,
+        "C": 97,
+        "D": 95
+      },
+      "questions_per_image": {
+        "1": 175,
+        "2": 81,
+        "3": 16
+      },
+      "without_cot_sha256": "b2094cca60aab259c5de871f0d1d3dd03c5bd9846c2d6ee3cf233810e363327b",
+      "with_cot_sha256": "9644ad80098f4239eb47822c961aa7832789b729331fb4351fc499ddcb2d5d8e"
+    },
+    "test": {
+      "qa_count": 1000,
+      "unique_images": 708,
+      "source_qa": {
+        "EduContent": 387,
+        "PubMed": 613
+      },
+      "answer_qa": {
+        "A": 252,
+        "B": 249,
+        "C": 251,
+        "D": 248
+      },
+      "questions_per_image": {
+        "1": 457,
+        "2": 210,
+        "3": 41
+      },
+      "without_cot_sha256": "5e4eac0dc7913e6b2f1b0f86ea3ec3ed3a411cef98fe7dbc57bfb5a6254baae7",
+      "with_cot_sha256": "f8c0d5a543b8da521407ebf4bb528cd3ffed3cc238d0be19f45247373261e779"
+    }
+  },
+  "image_overlap_counts": {
+    "sft_train__rl_train": 0,
+    "sft_train__validation": 0,
+    "sft_train__test": 0,
+    "rl_train__validation": 0,
+    "rl_train__test": 0,
+    "validation__test": 0
+  },
+  "version": "pathmmu_image_disjoint_v1",
+  "frozen_date": "2026-07-11",
+  "deprecated_inputs_excluded": [
+    "/home/wjy/processed_data/picked.json"
+  ],
+  "policy": {
+    "group_unit": "image basename; all QAs for an image remain in one split",
+    "selection_criteria": "source, answer option, and questions-per-image balance only; no model results used",
+    "test_usage": "sealed after freeze; not used for checkpoint, prompt, parser, reward, or hyperparameter selection",
+    "training_seeds_do_not_change_membership": true
+  },
+  "nested_subsets": {
+    "sft": {
+      "subset_seed": 20260711,
+      "selected_attempt": 59,
+      "objective": 0.0008172662732423827,
+      "sets": {
+        "500": {
+          "qa_count": 500,
+          "unique_images": 353,
+          "source_qa": {
+            "EduContent": 194,
+            "PubMed": 306
+          },
+          "answer_qa": {
+            "A": 126,
+            "B": 125,
+            "C": 125,
+            "D": 124
+          },
+          "questions_per_image": {
+            "1": 227,
+            "2": 105,
+            "3": 21
+          },
+          "without_cot_sha256": "42bbbc9ea894a98f973ea97cf11bc4bdd9cb723890422ffdfd6cc85d6f7271b2",
+          "with_cot_sha256": "43dd3f3b3f207202114708dcd5e39a8f653a10c706e476936bb2bb471c787459"
+        },
+        "1000": {
+          "qa_count": 1000,
+          "unique_images": 706,
+          "source_qa": {
+            "EduContent": 387,
+            "PubMed": 613
+          },
+          "answer_qa": {
+            "A": 252,
+            "B": 249,
+            "C": 251,
+            "D": 248
+          },
+          "questions_per_image": {
+            "1": 454,
+            "2": 210,
+            "3": 42
+          },
+          "without_cot_sha256": "a9d0ed4a390a25b0a15d9325477c2b3eca15568c8de06dadca9e918addcd1c3f",
+          "with_cot_sha256": "6cbde79d90aae48a574d2e411a21e3f9eb126b937c7254a5463097d6525a23a3"
+        },
+        "2000": {
+          "qa_count": 2000,
+          "unique_images": 1413,
+          "source_qa": {
+            "EduContent": 774,
+            "PubMed": 1226
+          },
+          "answer_qa": {
+            "A": 503,
+            "B": 498,
+            "C": 502,
+            "D": 497
+          },
+          "questions_per_image": {
+            "1": 909,
+            "2": 421,
+            "3": 83
+          },
+          "without_cot_sha256": "dbd49122822c56654cda9b9e13becf24fff5cbf49a898c57b7d2ef5c203ed0c7",
+          "with_cot_sha256": "e8557a4695ecb0eb192ea7b8621dfd6355d174f982d2fbff477b54de9c5a5989"
+        },
+        "3000": {
+          "qa_count": 3000,
+          "unique_images": 2121,
+          "source_qa": {
+            "EduContent": 1161,
+            "PubMed": 1839
+          },
+          "answer_qa": {
+            "A": 754,
+            "B": 747,
+            "C": 753,
+            "D": 746
+          },
+          "questions_per_image": {
+            "1": 1366,
+            "2": 631,
+            "3": 124
+          },
+          "without_cot_sha256": "0b43ef1268548d133bfc5b16be8dfbe702865daf46b498bc16913f0a6d90df83",
+          "with_cot_sha256": "1e2ff36a9cf475f1721e0cabfd20dd99f17d3fb51e048a9afee7989f4584c8b9"
+        }
+      }
+    },
+    "rl": {
+      "subset_seed": 20260711,
+      "selected_attempt": 2,
+      "objective": 0.0021951443653919636,
+      "sets": {
+        "250": {
+          "qa_count": 250,
+          "unique_images": 177,
+          "source_qa": {
+            "EduContent": 97,
+            "PubMed": 153
+          },
+          "answer_qa": {
+            "A": 63,
+            "B": 62,
+            "C": 63,
+            "D": 62
+          },
+          "questions_per_image": {
+            "1": 114,
+            "2": 53,
+            "3": 10
+          },
+          "without_cot_sha256": "4b7bdf182055de57f8fb0aa4eb9fec36b700c2235737e509fb448e1eb0f92f9d",
+          "with_cot_sha256": "e6b624e3e96ea6e32b24fa76b892f3844b11066510b0a0f55a52253e395fb106"
+        },
+        "500": {
+          "qa_count": 500,
+          "unique_images": 354,
+          "source_qa": {
+            "EduContent": 194,
+            "PubMed": 306
+          },
+          "answer_qa": {
+            "A": 126,
+            "B": 124,
+            "C": 126,
+            "D": 124
+          },
+          "questions_per_image": {
+            "1": 228,
+            "2": 106,
+            "3": 20
+          },
+          "without_cot_sha256": "2047f886c8571811338ea9b5efdc33ad4b92c0f64327c4e8128d109a519e1188",
+          "with_cot_sha256": "2100dd107e6f40e5b5ef5bbc64b436ab728606069002d7ffd610847d96a0dc3e"
+        },
+        "1000": {
+          "qa_count": 1000,
+          "unique_images": 708,
+          "source_qa": {
+            "EduContent": 387,
+            "PubMed": 613
+          },
+          "answer_qa": {
+            "A": 252,
+            "B": 249,
+            "C": 251,
+            "D": 248
+          },
+          "questions_per_image": {
+            "1": 457,
+            "2": 210,
+            "3": 41
+          },
+          "without_cot_sha256": "b95d536a805c53e4c47712d9d9b1936bf33d6b294eddecff19c3155a2ebc8837",
+          "with_cot_sha256": "1f3879bce06a87f1a8fae6803f1aada0f61fb34cf5f087c62cfc0fa4c06646be"
+        }
+      }
+    }
+  }
+}

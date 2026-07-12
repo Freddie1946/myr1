@@ -1,0 +1,43 @@
+schema_version: 1
+experiment_version: pathvlm_r1_v1
+run_id: debug_e2e_3b_sft_n0008_seed0042_a02
+status: completed
+purpose: Retry E1 using a verified complete 3B cache snapshot.
+stage: stage1_sft
+formal_result: false
+data:
+  version: pathmmu_image_disjoint_v1
+  adapter: pathvlm_sft_smoke_n0008
+  qa_count: 8
+model:
+  base_id: Qwen/Qwen2.5-VL-3B-Instruct
+  base_revision: 319ccfdc6cd974fab8373cb598dfe77ad93dedd3
+  role: debug_proxy_for_formal_7b
+training:
+  finetuning_type: full
+  trainable_component: language_model
+  vision_tower_frozen: true
+  multimodal_projector_frozen: true
+  attention_backend: sdpa
+  seed: 42
+  max_steps: 1
+  optimizer: torch_adamw
+  deepspeed: zero3_optimizer_only_cpu_offload
+hardware:
+  visible_gpus: [1, 2]
+  gpu_type: NVIDIA GeForce RTX 4090
+test_accessed: false
+result:
+  optimizer_step_completed: true
+  checkpoint_saved: true
+  trainable_parameters: 3085938688
+  total_parameters: 3754622976
+  trainable_percent: 82.1904
+  train_loss: 1.642995834350586
+  grad_norm: 25.186206817626953
+  optimizer_step_seconds: 36.6896
+  wall_clock_seconds_including_load_and_save: 133.43
+  output_size: 7.1GiB
+  output_dir: /home/wjy/revision_runs/10_training/pathvlm_r1_v1/debug_e2e/qwen2_5_vl_3b/stage1_sft/n0008/seed0042/attempt02/output
+  exit_status: 0
+

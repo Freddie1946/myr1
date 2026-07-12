@@ -1,0 +1,10 @@
+{
+  "purpose": "small-model end-to-end pipeline validation only",
+  "formal_result": false,
+  "model_id": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "revision": "319ccfdc6cd974fab8373cb598dfe77ad93dedd3",
+  "remote_snapshot": "/home/wjy/.cache/huggingface/hub/models--Qwen--Qwen2.5-VL-3B-Instruct/snapshots/319ccfdc6cd974fab8373cb598dfe77ad93dedd3",
+  "selection_note": "The cache refs/main points to 66285546..., an incomplete two-file snapshot. Revision 319ccfdc... contains config, tokenizer, processor, and both model shards and is pinned for the debug pipeline.",
+  "formal_model_remains": "Qwen/Qwen2.5-VL-7B-Instruct@cc594898137f460bfe9f0759e9844b3ce807cfb5",
+  "created_at": "2026-07-12T13:55:03+08:00"
+}

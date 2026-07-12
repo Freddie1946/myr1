@@ -1,0 +1,45 @@
+schema_version: 1
+experiment_version: pathvlm_r1_v1
+run_id: debug_e2e_3b_outcome_grpo_failed_case_n0001_seed0042_a04
+status: waiting_for_two_free_gpus
+purpose: Repeat the nonzero-gradient GRPO gate with the corrected multiple-choice parser.
+stage: stage2_outcome_grpo
+formal_result: false
+data:
+  version: pathmmu_image_disjoint_v1
+  split: rl_train
+  source_index: 6
+  qa_count: 1
+  data_sha256: 989ffd8ce74afb2786e9a9d0c58666e563d315ba2138efbd56ef43eacb0bd223
+  target_choice: A
+model:
+  parent_checkpoint: debug_e2e_3b_sft_n0008_seed0042_a02
+training:
+  finetuning_type: full
+  vision_modules_frozen: true
+  reward_parser: corrected_explicit_choice_v2
+  reward_funcs: [accuracy, format]
+  num_generations: 4
+  max_completion_length: 192
+  per_device_train_batch_size: 2
+  global_batch_size: 4
+  max_steps: 1
+  beta: 0.04
+  seed: 42
+  optimizer: torch_adamw
+  deepspeed: zero3_optimizer_only_cpu_offload
+success_criteria:
+  reward_unit_tests_pass: true
+  reward_std_positive: true
+  grad_norm_positive: true
+  language_parameter_delta_positive: true
+  frozen_visual_parameter_delta_zero: true
+  no_false_credit_for_option_enumeration: true
+hardware:
+  visible_gpus: [1, 2]
+test_accessed: false
+wait_state:
+  timestamp: 2026-07-12T18:43:22+08:00
+  reason: physical_gpus_1_and_2_are_both_occupied_by_unrelated_zw_evaluation_processes
+  safe_to_launch: false
+

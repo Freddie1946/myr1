@@ -1,0 +1,9 @@
+{
+  "count": 2,
+  "mean_accuracy_reward": 0.5,
+  "mean_format_reward": 1.0,
+  "max_new_tokens": 128,
+  "do_sample": false,
+  "test_accessed": false,
+  "predictions_file": "/home/wjy/revision_runs/10_training/pathvlm_r1_v1/debug_e2e/qwen2_5_vl_3b/evaluation/validation_n0002/stage2_checkpoint/results/predictions.jsonl"
+}

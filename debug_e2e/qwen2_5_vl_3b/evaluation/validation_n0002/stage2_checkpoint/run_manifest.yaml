@@ -1,0 +1,36 @@
+schema_version: 1
+experiment_version: pathvlm_r1_v1
+run_id: debug_e2e_3b_eval_validation_n0002_stage2
+status: completed
+purpose: Validate Stage 2 checkpoint loading, deterministic multimodal generation, raw-output persistence, and offline scoring.
+stage: evaluation
+formal_result: false
+data:
+  version: pathmmu_image_disjoint_v1
+  split: validation
+  qa_count: 2
+  selection: first:2
+model:
+  checkpoint: debug_e2e_3b_outcome_grpo_n0008_seed0042_a02
+inference:
+  do_sample: false
+  max_new_tokens: 128
+  physical_gpu: 1
+scoring:
+  module: pathmmu_rewards.py
+  reward_funcs: [accuracy, format]
+test_accessed: false
+result:
+  checkpoint_loaded: true
+  inference_completed: true
+  raw_predictions_saved: true
+  offline_scoring_completed: true
+  count: 2
+  correct: 1
+  mean_accuracy_reward: 0.5
+  valid_format: 2
+  mean_format_reward: 1.0
+  wall_clock_seconds: 17.27
+  max_resident_set_kib: 5828372
+  exit_status: 0
+

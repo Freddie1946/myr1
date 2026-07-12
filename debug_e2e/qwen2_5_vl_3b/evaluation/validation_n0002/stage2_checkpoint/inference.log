@@ -1,0 +1,36 @@
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  3.51it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.45it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.27it/s]
+/home/wjy/revision_runs/10_training/pathvlm_r1_v1/env/pathvlm-grpo-venv/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:629: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `1e-06` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+{
+  "count": 2,
+  "mean_accuracy_reward": 0.5,
+  "mean_format_reward": 1.0,
+  "max_new_tokens": 128,
+  "do_sample": false,
+  "test_accessed": false,
+  "predictions_file": "/home/wjy/revision_runs/10_training/pathvlm_r1_v1/debug_e2e/qwen2_5_vl_3b/evaluation/validation_n0002/stage2_checkpoint/results/predictions.jsonl"
+}
+	Command being timed: "/home/wjy/revision_runs/10_training/pathvlm_r1_v1/env/pathvlm-grpo-venv/bin/python /home/wjy/revision_runs/10_training/pathvlm_r1_v1/scripts/infer_and_score_pathmmu.py --model /home/wjy/revision_runs/10_training/pathvlm_r1_v1/debug_e2e/qwen2_5_vl_3b/stage2_outcome_grpo/n0008/seed0042/attempt02/output --data /home/wjy/revision_runs/10_training/pathvlm_r1_v1/data/evaluation/pathvlm_validation_smoke_n0002.json --output-dir /home/wjy/revision_runs/10_training/pathvlm_r1_v1/debug_e2e/qwen2_5_vl_3b/evaluation/validation_n0002/stage2_checkpoint/results --max-new-tokens 128"
+	User time (seconds): 21.65
+	System time (seconds): 8.59
+	Percent of CPU this job got: 175%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:17.27
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 5828372
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 30
+	Minor (reclaiming a frame) page faults: 587496
+	Voluntary context switches: 6128
+	Involuntary context switches: 3024
+	Swaps: 0
+	File system inputs: 211784
+	File system outputs: 40
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

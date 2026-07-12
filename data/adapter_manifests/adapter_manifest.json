@@ -1,0 +1,34 @@
+{
+  "format": "LLaMA-Factory ShareGPT multimodal",
+  "files": {
+    "pathvlm_sft_n0500.json": {
+      "samples": 500,
+      "sha256": "b926c856cc4ed7b68528804b26362dd538a4bf65cfd02e278b6b095f2c5cabea"
+    },
+    "pathvlm_sft_n1000.json": {
+      "samples": 1000,
+      "sha256": "8b3cae2c19740ffdc0b71ea016498f66390be956817c49fe7cae23b7a323b041"
+    },
+    "pathvlm_sft_n2000.json": {
+      "samples": 2000,
+      "sha256": "15869443f72f8189287c5463ab3cc60539a3c53d7a8245ba6b8b77b85d49c633"
+    },
+    "pathvlm_sft_n3000.json": {
+      "samples": 3000,
+      "sha256": "21e3112feab1af1c4d67d78ad0eba61befe2926c115956058b864b3843218cee"
+    },
+    "pathvlm_sft_smoke_n0008.json": {
+      "samples": 8,
+      "sha256": "2ff45d3e2d03f6a48786ba4a184edde9f19a00b7cbee81a2e7d13281ac060573"
+    },
+    "pathvlm_validation_n0385.json": {
+      "samples": 385,
+      "sha256": "d53ac8424b3f8020dc38652e7c809ce6c627f0f38e0a5476a0724e6b7814d8af"
+    },
+    "pathvlm_test_n1000.json": {
+      "samples": 1000,
+      "sha256": "67ed918742246d314a867fea404a133e9e1012f5e9841132fee99524e4d89670"
+    }
+  },
+  "dataset_info_sha256": "7d349de98266391d25850a24ad6352ef44315217f54f83c7c183172a124509a1"
+}

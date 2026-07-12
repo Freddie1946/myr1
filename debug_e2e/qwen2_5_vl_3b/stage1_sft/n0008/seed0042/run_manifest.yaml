@@ -1,0 +1,34 @@
+schema_version: 1
+experiment_version: pathvlm_r1_v1
+run_id: debug_e2e_3b_sft_n0008_seed0042
+status: failed_before_model_load
+purpose: Validate the new-data SFT stage as part of the small-model end-to-end pipeline.
+stage: stage1_sft
+formal_result: false
+data:
+  version: pathmmu_image_disjoint_v1
+  adapter: pathvlm_sft_smoke_n0008
+  qa_count: 8
+model:
+  base_id: Qwen/Qwen2.5-VL-3B-Instruct
+  base_revision: 66285546d2b821cf421d4f5eb2576359d3770cd3
+  role: debug_proxy_for_formal_7b
+training:
+  finetuning_type: full
+  trainable_component: language_model
+  vision_tower_frozen: true
+  multimodal_projector_frozen: true
+  attention_backend: sdpa
+  seed: 42
+  max_steps: 1
+  optimizer: torch_adamw
+  deepspeed: zero3_optimizer_only_cpu_offload
+hardware:
+  visible_gpus: [1, 2]
+  gpu_type: NVIDIA GeForce RTX 4090
+test_accessed: false
+failure:
+  timestamp: 2026-07-12T13:57:10+08:00
+  reason: refs_main_pointed_to_incomplete_snapshot_missing_config_json
+  optimizer_step_completed: false
+  checkpoint_created: false
