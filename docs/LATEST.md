@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260714_002042`
+Latest timestamp: `20260714_005450`
 
 Read in this order:
 
@@ -34,24 +34,26 @@ Read in this order:
 28. `20260713_222306_grpo_dependency_gate_correction.md`
 29. `20260714_001041_formal_data_adapter_idempotency_correction.md`
 30. `20260714_002042_strengthened_preflight_rerun_completed.md`
-31. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-32. `../manuscript/README.md` and its mandatory reading order
-33. `../CODEX_START_HERE.md`
-34. `../protocol/code_hash_manifest_20260714_001041.json`
-35. `../protocol/code_hash_manifest_20260713_222306.json`
-36. `../protocol/code_hash_manifest_20260713_214352.json`
-37. `../protocol/code_hash_manifest_20260713_213248.json`
-38. `../protocol/code_hash_manifest_20260713_205956.json`
-39. `../protocol/code_hash_manifest_20260713_203631.json`
-40. `../protocol/code_hash_manifest_20260712_213340.json`
-41. `../protocol/code_hash_manifest_20260712_192846.json`
-42. `../protocol/code_hash_manifest_20260712_144811.json`
-43. `../protocol/debug_proxy_model_manifest.json`
-44. `../protocol/training_plan.md`
-45. `../protocol/old_sft_audit.md`
-46. The latest manifest under `../debug_e2e/`
+31. `20260714_005450_sft_smoke_attempt01_resume_failure.md`
+32. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+33. `../manuscript/README.md` and its mandatory reading order
+34. `../CODEX_START_HERE.md`
+35. `../protocol/code_hash_manifest_20260714_005450.json`
+36. `../protocol/code_hash_manifest_20260714_001041.json`
+37. `../protocol/code_hash_manifest_20260713_222306.json`
+38. `../protocol/code_hash_manifest_20260713_214352.json`
+39. `../protocol/code_hash_manifest_20260713_213248.json`
+40. `../protocol/code_hash_manifest_20260713_205956.json`
+41. `../protocol/code_hash_manifest_20260713_203631.json`
+42. `../protocol/code_hash_manifest_20260712_213340.json`
+43. `../protocol/code_hash_manifest_20260712_192846.json`
+44. `../protocol/code_hash_manifest_20260712_144811.json`
+45. `../protocol/debug_proxy_model_manifest.json`
+46. `../protocol/training_plan.md`
+47. `../protocol/old_sft_audit.md`
+48. The latest manifest under `../debug_e2e/`
 
-Current next action: after explicit user confirmation, perform a fresh all-device occupancy check and
-run the audited formal SFT one-step/save/reload/resume smoke. The idempotent adapter reuse check and
-strengthened 21-gate preflight have passed. No long training is authorized. Attempt04 remains pending
-on the old debug host; Stage 3 remains pending user agreement.
+Current next action: rerun the formal SFT smoke in a fresh run directory with the narrowly scoped
+PyTorch-2.6/DeepSpeed resume compatibility override. Attempt01 completed a nonzero-gradient first
+step and independent checkpoint load, then failed before its resume step. No formal long training may
+start until the full save/reload/resume and tensor-delta gate passes. Stage 3 is explicitly deferred.

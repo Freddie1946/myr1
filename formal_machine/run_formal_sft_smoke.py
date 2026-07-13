@@ -238,12 +238,16 @@ def main() -> None:
                      "vision_tower_frozen": True, "multimodal_projector_frozen": True,
                      "seed": 42, "initial_max_steps": 1, "resumed_total_max_steps": 2},
         "provenance": {
-            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260714_001041.json"),
+            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260714_005450.json"),
             "base_model_manifest": str(repo / "protocol/base_model_manifest.json"),
             "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json"),
         },
         "hardware": {"host": socket.gethostname(), "cuda_visible_devices": gpu_ids,
                      "gpu_count": args.nproc_per_node},
+        "resume_compatibility": {
+            "torch_force_no_weights_only_load": True,
+            "scope": "trusted locally generated DeepSpeed optimizer checkpoint only",
+        },
         "test_accessed": False,
     }
     manifest_path = run_dir / "run_manifest.yaml"
@@ -259,7 +263,7 @@ def main() -> None:
     capture(["git", "-C", str(llamafactory), "rev-parse", "HEAD"], snapshots / "llamafactory_git.txt")
     capture([sys.executable, "-c", "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"], snapshots / "torch_cuda_versions.txt")
     for source in (
-        repo / "protocol/code_hash_manifest_20260714_001041.json",
+        repo / "protocol/code_hash_manifest_20260714_005450.json",
         repo / "protocol/base_model_manifest.json",
         install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json",
         Path(base["deepspeed"]),
@@ -290,7 +294,16 @@ def main() -> None:
 
         resume["resume_from_checkpoint"] = str(checkpoint1)
         write_yaml(configs / "resume.yaml", resume)
-        run_logged(command2, run_dir / "resume.log", env, llamafactory, run_dir / "resume_resources.jsonl")
+        resume_env = env.copy()
+        resume_env.pop("TORCH_FORCE_WEIGHTS_ONLY_LOAD", None)
+        resume_env["TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD"] = "1"
+        run_logged(
+            command2,
+            run_dir / "resume.log",
+            resume_env,
+            llamafactory,
+            run_dir / "resume_resources.jsonl",
+        )
         checkpoint2 = find_checkpoint(output, 2)
         manifest["resume_metrics"] = checkpoint_metrics(checkpoint2)
         manifest["resume_resources"] = resource_summary(run_dir / "resume_resources.jsonl", gpu_ids)

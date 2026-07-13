@@ -70,7 +70,7 @@ fi
 log "Verifying repository code hashes"
 python3 "$REPO_ROOT/scripts/verify_code_hash_manifest.py" \
   --repo-root "$REPO_ROOT" \
-  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260714_001041.json"
+  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260714_005450.json"
 
 log "Verifying frozen split hashes and image-disjoint invariants"
 python3 "$REPO_ROOT/formal_machine/verify_frozen_splits.py" \
