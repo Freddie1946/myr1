@@ -43,6 +43,10 @@ def main() -> None:
     parser.add_argument("--install-root", required=True, type=Path)
     parser.add_argument("--model-dir", required=True, type=Path)
     parser.add_argument("--model-source-manifest", required=True, type=Path)
+    parser.add_argument("--llamafactory-src", required=True, type=Path)
+    parser.add_argument("--llamafactory-source-manifest", required=True, type=Path)
+    parser.add_argument("--expected-llamafactory-revision", required=True)
+    parser.add_argument("--expected-llamafactory-launcher-sha256", required=True)
     parser.add_argument("--base-model-manifest", required=True, type=Path)
     parser.add_argument("--expected-model-id", required=True)
     parser.add_argument("--expected-revision", required=True)
@@ -55,12 +59,15 @@ def main() -> None:
     grpo_python = args.install_root / "envs" / "grpo" / "bin" / "python"
     for path in (sft_python, grpo_python, args.model_dir / "config.json",
                  args.model_source_manifest, args.base_model_manifest,
+                 args.llamafactory_source_manifest,
+                 args.llamafactory_src / "src" / "llamafactory" / "launcher.py",
                  args.data_root / "formal_data_manifest.json", args.split_verification):
         if not path.exists():
             raise FileNotFoundError(path)
 
     config = json.loads((args.model_dir / "config.json").read_text(encoding="utf-8"))
     model_source = json.loads(args.model_source_manifest.read_text(encoding="utf-8"))
+    llamafactory_source = json.loads(args.llamafactory_source_manifest.read_text(encoding="utf-8"))
     base_model = json.loads(args.base_model_manifest.read_text(encoding="utf-8"))
     manifest = json.loads((args.data_root / "formal_data_manifest.json").read_text(encoding="utf-8"))
     split_verification = json.loads(args.split_verification.read_text(encoding="utf-8"))
@@ -94,12 +101,15 @@ def main() -> None:
                 "tokenizer_config.json": sha256(tokenizer_config) if tokenizer_config.is_file() else None,
             },
         },
+        "llamafactory_source": llamafactory_source,
         "data": manifest,
         "split_verification": split_verification,
         "import_checks": {
             "llamafactory": run([str(sft_python), "-c", "import llamafactory; print('llamafactory import PASS')"]),
             "open_r1": run([str(grpo_python), "-c", "from open_r1.trainer import Qwen2VLGRPOTrainer; print('open_r1 import PASS')"]),
             "reward_tests": run([str(grpo_python), str(Path(__file__).resolve().parents[1] / "scripts/test_pathmmu_rewards.py")]),
+            "sft_pip_check": run([str(sft_python), "-m", "pip", "check"]),
+            "grpo_pip_check": run([str(grpo_python), "-m", "pip", "check"]),
         },
         "gates": {
             "model_is_qwen2_5_vl": config.get("model_type") == "qwen2_5_vl",
@@ -107,6 +117,16 @@ def main() -> None:
             "model_has_weights": bool(model_shards) and sum(path.stat().st_size for path in model_shards) > 10_000_000_000,
             "model_id_matches": model_source.get("model_id") == args.expected_model_id,
             "model_revision_matches": model_source.get("revision") == args.expected_revision,
+            "llamafactory_revision_matches": (
+                llamafactory_source.get("revision") == args.expected_llamafactory_revision
+                and llamafactory_source.get("resolved_head") == args.expected_llamafactory_revision
+            ),
+            "llamafactory_launcher_hash_matches": (
+                sha256(args.llamafactory_src / "src" / "llamafactory" / "launcher.py")
+                == args.expected_llamafactory_launcher_sha256
+                and llamafactory_source.get("launcher_sha256")
+                == args.expected_llamafactory_launcher_sha256
+            ),
             "model_config_hash_matches": sha256(args.model_dir / "config.json") == base_model["config_sha256"],
             "model_index_hash_matches": model_index.is_file() and sha256(model_index) == base_model["model_index_sha256"],
             "tokenizer_config_hash_matches": tokenizer_config.is_file() and sha256(tokenizer_config) == base_model["tokenizer_config_sha256"],
@@ -136,6 +156,8 @@ def main() -> None:
     report["gates"]["llamafactory_imports"] = report["import_checks"]["llamafactory"]["returncode"] == 0
     report["gates"]["open_r1_imports"] = report["import_checks"]["open_r1"]["returncode"] == 0
     report["gates"]["reward_tests_pass"] = report["import_checks"]["reward_tests"]["returncode"] == 0
+    report["gates"]["sft_pip_check_passes"] = report["import_checks"]["sft_pip_check"]["returncode"] == 0
+    report["gates"]["grpo_pip_check_passes"] = report["import_checks"]["grpo_pip_check"]["returncode"] == 0
     report["passed"] = all(report["gates"].values()) and report["nvidia_smi"]["returncode"] == 0
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

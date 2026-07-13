@@ -27,11 +27,16 @@ source "$CONFIG_PATH"
 : "${NPROC_PER_NODE:=4}"
 : "${MASTER_PORT_BASE:=29600}"
 : "${GRPO_PER_DEVICE_BATCH:=1}"
+: "${HF_HUB_DISABLE_XET:=1}"
+: "${HF_HUB_DOWNLOAD_TIMEOUT:=120}"
+: "${HF_HUB_MAX_WORKERS:=1}"
+export HF_HUB_DISABLE_XET HF_HUB_DOWNLOAD_TIMEOUT
 
 LLAMAFACTORY_SRC="${LLAMAFACTORY_SRC:-$INSTALL_ROOT/sources/LLaMA-Factory}"
 VLMR1_SRC="${VLMR1_SRC:-$REPO_ROOT/vendor/open-r1-multimodal}"
 LLAMAFACTORY_GIT_URL="${LLAMAFACTORY_GIT_URL:-https://github.com/hiyouga/LLaMA-Factory.git}"
-LLAMAFACTORY_REVISION="${LLAMAFACTORY_REVISION:-ef5f1c1def3da62ee2d5e6ba933f9d7d6aab4340}"
+LLAMAFACTORY_REVISION="${LLAMAFACTORY_REVISION:-e2299e261be852304bb1d370515078193ab12bd8}"
+LLAMAFACTORY_LAUNCHER_SHA256="${LLAMAFACTORY_LAUNCHER_SHA256:-8f16bb782a6da2122b5accd50ce1a01fd99284dffa20ff340850ec3b06927b77}"
 
 ENV_ROOT="$INSTALL_ROOT/envs"
 SFT_ENV="$ENV_ROOT/sft"
@@ -40,6 +45,7 @@ DATA_OUT="$INSTALL_ROOT/data/pathmmu_image_disjoint_v1"
 MODEL_DIR="$INSTALL_ROOT/models/Qwen2.5-VL-7B-Instruct-$BASE_MODEL_REVISION"
 REPORT_DIR="$INSTALL_ROOT/reports"
 MODEL_SOURCE_MANIFEST="$REPORT_DIR/model_source_manifest.json"
+LLAMAFACTORY_SOURCE_MANIFEST="$REPORT_DIR/llamafactory_source_manifest.json"
 mkdir -p "$ENV_ROOT" "$INSTALL_ROOT/sources" "$INSTALL_ROOT/models" "$REPORT_DIR"
 
 log() { printf '[formal-setup] %s\n' "$*"; }
@@ -64,7 +70,7 @@ fi
 log "Verifying repository code hashes"
 python3 "$REPO_ROOT/scripts/verify_code_hash_manifest.py" \
   --repo-root "$REPO_ROOT" \
-  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260713_203631.json"
+  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260714_001041.json"
 
 log "Verifying frozen split hashes and image-disjoint invariants"
 python3 "$REPO_ROOT/formal_machine/verify_frozen_splits.py" \
@@ -87,6 +93,21 @@ elif [[ "$ONLINE" == 1 ]]; then
 else
   die "offline mode requires an existing LLaMA-Factory source tree"
 fi
+LLAMAFACTORY_HEAD="$(git -C "$LLAMAFACTORY_SRC" rev-parse HEAD 2>/dev/null || true)"
+[[ "$LLAMAFACTORY_HEAD" == "$LLAMAFACTORY_REVISION" ]] || \
+  die "LLaMA-Factory revision mismatch: expected $LLAMAFACTORY_REVISION, got ${LLAMAFACTORY_HEAD:-no Git revision}"
+ACTUAL_LLAMAFACTORY_LAUNCHER_SHA256="$(sha256sum "$LLAMAFACTORY_SRC/src/llamafactory/launcher.py" | awk '{print $1}')"
+[[ "$ACTUAL_LLAMAFACTORY_LAUNCHER_SHA256" == "$LLAMAFACTORY_LAUNCHER_SHA256" ]] || \
+  die "LLaMA-Factory launcher hash mismatch: expected $LLAMAFACTORY_LAUNCHER_SHA256, got $ACTUAL_LLAMAFACTORY_LAUNCHER_SHA256"
+cat > "$LLAMAFACTORY_SOURCE_MANIFEST" <<EOF
+{
+  "git_url": "$LLAMAFACTORY_GIT_URL",
+  "revision": "$LLAMAFACTORY_REVISION",
+  "resolved_head": "$LLAMAFACTORY_HEAD",
+  "release": "v0.9.2",
+  "launcher_sha256": "$ACTUAL_LLAMAFACTORY_LAUNCHER_SHA256"
+}
+EOF
 [[ -f "$VLMR1_SRC/setup.py" && -d "$VLMR1_SRC/src/open_r1" ]] || \
   die "vendored Open-R1 source missing: $VLMR1_SRC"
 
@@ -142,7 +163,7 @@ pip_install "$SFT_ENV/bin/python" transformers==4.49.0 tokenizers==0.21.0 trl==0
 log "Installing GRPO environment"
 install_torch "$GRPO_ENV/bin/python"
 install_common "$GRPO_ENV/bin/python"
-pip_install "$GRPO_ENV/bin/python" trl==0.15.2 bitsandbytes liger-kernel==0.5.2
+pip_install "$GRPO_ENV/bin/python" trl==0.15.2 bitsandbytes liger-kernel==0.5.2 einops hf-transfer
 "$GRPO_ENV/bin/python" -m pip install --no-deps -e "$VLMR1_SRC"
 
 if [[ "$PATHMMU_AUTO_DOWNLOAD" == 1 ]]; then
@@ -167,10 +188,15 @@ if [[ -n "$BASE_MODEL_SOURCE" ]]; then
   MODEL_DIR="$(readlink -f "$BASE_MODEL_SOURCE")"
 else
   [[ "$ONLINE" == 1 ]] || die "offline mode requires BASE_MODEL_SOURCE"
-  "$GRPO_ENV/bin/python" - "$BASE_MODEL_ID" "$BASE_MODEL_REVISION" "$MODEL_DIR" <<'PY'
+  "$GRPO_ENV/bin/python" - "$BASE_MODEL_ID" "$BASE_MODEL_REVISION" "$MODEL_DIR" "$HF_HUB_MAX_WORKERS" <<'PY'
 import sys
 from huggingface_hub import snapshot_download
-snapshot_download(repo_id=sys.argv[1], revision=sys.argv[2], local_dir=sys.argv[3])
+snapshot_download(
+    repo_id=sys.argv[1],
+    revision=sys.argv[2],
+    local_dir=sys.argv[3],
+    max_workers=int(sys.argv[4]),
+)
 PY
 fi
 cat > "$MODEL_SOURCE_MANIFEST" <<EOF
@@ -187,7 +213,11 @@ DATA_ARGS=(
   --image-root "$IMAGE_ROOT"
   --output-root "$DATA_OUT"
 )
-if [[ "$OVERWRITE_DATA" == 1 ]]; then DATA_ARGS+=(--overwrite); fi
+if [[ "$OVERWRITE_DATA" == 1 ]]; then
+  DATA_ARGS+=(--overwrite)
+else
+  DATA_ARGS+=(--reuse-if-valid)
+fi
 "$GRPO_ENV/bin/python" "$REPO_ROOT/formal_machine/prepare_formal_data.py" "${DATA_ARGS[@]}"
 
 log "Rendering machine-resolved SFT and Outcome-GRPO configs"
@@ -203,6 +233,10 @@ log "Running environment/model/data preflight"
   --install-root "$INSTALL_ROOT" \
   --model-dir "$MODEL_DIR" \
   --model-source-manifest "$MODEL_SOURCE_MANIFEST" \
+  --llamafactory-src "$LLAMAFACTORY_SRC" \
+  --llamafactory-source-manifest "$LLAMAFACTORY_SOURCE_MANIFEST" \
+  --expected-llamafactory-revision "$LLAMAFACTORY_REVISION" \
+  --expected-llamafactory-launcher-sha256 "$LLAMAFACTORY_LAUNCHER_SHA256" \
   --base-model-manifest "$REPO_ROOT/protocol/base_model_manifest.json" \
   --expected-model-id "$BASE_MODEL_ID" \
   --expected-revision "$BASE_MODEL_REVISION" \

@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260713_204927`
+Latest timestamp: `20260714_002042`
 
 Read in this order:
 
@@ -27,19 +27,31 @@ Read in this order:
 21. `20260713_200535_formal_machine_codex_runbook.md`
 22. `20260713_203631_formal_protocol_and_sft_gate_correction.md`
 23. `20260713_204927_formal_gpu_allocation_and_machine_config.md`
-24. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-25. `../manuscript/README.md` and its mandatory reading order
-26. `../CODEX_START_HERE.md`
-27. `../protocol/code_hash_manifest_20260713_203631.json`
-28. `../protocol/code_hash_manifest_20260712_213340.json`
-29. `../protocol/code_hash_manifest_20260712_192846.json`
-30. `../protocol/code_hash_manifest_20260712_144811.json`
-31. `../protocol/debug_proxy_model_manifest.json`
-32. `../protocol/training_plan.md`
-33. `../protocol/old_sft_audit.md`
-34. The latest manifest under `../debug_e2e/`
+24. `20260713_205956_llamafactory_pin_bootstrap_failure_and_correction.md`
+25. `20260713_213248_pathmmu_xet_hang_and_http_retry.md`
+26. `20260713_214352_model_download_concurrency_correction.md`
+27. `20260713_222126_formal_bootstrap_and_preflight_completed.md`
+28. `20260713_222306_grpo_dependency_gate_correction.md`
+29. `20260714_001041_formal_data_adapter_idempotency_correction.md`
+30. `20260714_002042_strengthened_preflight_rerun_completed.md`
+31. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+32. `../manuscript/README.md` and its mandatory reading order
+33. `../CODEX_START_HERE.md`
+34. `../protocol/code_hash_manifest_20260714_001041.json`
+35. `../protocol/code_hash_manifest_20260713_222306.json`
+36. `../protocol/code_hash_manifest_20260713_214352.json`
+37. `../protocol/code_hash_manifest_20260713_213248.json`
+38. `../protocol/code_hash_manifest_20260713_205956.json`
+39. `../protocol/code_hash_manifest_20260713_203631.json`
+40. `../protocol/code_hash_manifest_20260712_213340.json`
+41. `../protocol/code_hash_manifest_20260712_192846.json`
+42. `../protocol/code_hash_manifest_20260712_144811.json`
+43. `../protocol/debug_proxy_model_manifest.json`
+44. `../protocol/training_plan.md`
+45. `../protocol/old_sft_audit.md`
+46. The latest manifest under `../debug_e2e/`
 
-Current next actions: authenticate the approved PathMMU Hugging Face account, confirm the existing
-GPU-0 process has exited, and run bootstrap/strengthened preflight with the prepared machine-local
-configuration. Then run the audited formal SFT save/load/resume smoke and report before any long
-training. Attempt04 remains pending on the old debug host; Stage 3 remains pending user agreement.
+Current next action: after explicit user confirmation, perform a fresh all-device occupancy check and
+run the audited formal SFT one-step/save/reload/resume smoke. The idempotent adapter reuse check and
+strengthened 21-gate preflight have passed. No long training is authorized. Attempt04 remains pending
+on the old debug host; Stage 3 remains pending user agreement.

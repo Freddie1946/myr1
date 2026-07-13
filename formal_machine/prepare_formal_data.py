@@ -97,27 +97,47 @@ def image_set(records: list[dict]) -> set[str]:
     return {Path(record["image"]).name for record in records}
 
 
+def emit_text(path: Path, content: str, reuse: bool, expected_files: set[Path]) -> None:
+    resolved = path.resolve()
+    expected_files.add(resolved)
+    if reuse:
+        if not path.is_file():
+            raise FileNotFoundError(f"existing adapter output is missing: {path}")
+        if path.read_text(encoding="utf-8") != content:
+            raise ValueError(f"existing adapter output differs from deterministic rebuild: {path}")
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--split-root", required=True, type=Path)
     parser.add_argument("--image-root", required=True, type=Path)
     parser.add_argument("--output-root", required=True, type=Path)
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--reuse-if-valid", action="store_true")
     args = parser.parse_args()
 
-    if args.output_root.exists() and any(args.output_root.iterdir()) and not args.overwrite:
+    output_nonempty = args.output_root.exists() and any(args.output_root.iterdir())
+    reuse_existing = output_nonempty and args.reuse_if_valid and not args.overwrite
+    if output_nonempty and not args.overwrite and not reuse_existing:
         raise FileExistsError(
-            f"output is not empty: {args.output_root}; use --overwrite only intentionally"
+            f"output is not empty: {args.output_root}; use --reuse-if-valid or --overwrite intentionally"
         )
+    if args.overwrite and args.output_root.exists():
+        shutil.rmtree(args.output_root)
     args.output_root.mkdir(parents=True, exist_ok=True)
     lf_dir = args.output_root / "llamafactory"
     grpo_dir = args.output_root / "grpo"
     records_dir = args.output_root / "rewritten_records"
     for directory in (lf_dir, grpo_dir, records_dir):
-        directory.mkdir(parents=True, exist_ok=True)
+        if not reuse_existing:
+            directory.mkdir(parents=True, exist_ok=True)
 
     rewritten: dict[str, list[dict]] = {}
     sources = {}
+    expected_files: set[Path] = set()
     for name, relative in SPLIT_SPECS.items():
         source = (args.split_root / relative).resolve()
         if not source.is_file():
@@ -128,8 +148,11 @@ def main() -> None:
             raise ValueError(f"{name}: expected {expected}, found {len(records)}")
         rewritten[name] = records
         sources[name] = {"path": str(source), "sha256": sha256(source), "count": len(records)}
-        (records_dir / f"{name}.json").write_text(
-            json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        emit_text(
+            records_dir / f"{name}.json",
+            json.dumps(records, ensure_ascii=False, indent=2) + "\n",
+            reuse_existing,
+            expected_files,
         )
 
     # Verify nestedness.
@@ -161,48 +184,69 @@ def main() -> None:
         key = f"sft_{size:04d}"
         dataset_name = f"pathvlm_sft_n{size:04d}"
         filename = f"{dataset_name}.json"
-        (lf_dir / filename).write_text(
+        emit_text(
+            lf_dir / filename,
             json.dumps([lf_record(r) for r in rewritten[key]], ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
+            reuse_existing,
+            expected_files,
         )
         dataset_info[dataset_name] = dataset_info_entry(filename)
 
     for key, dataset_name in (("validation_0385", "pathvlm_validation_n0385"),
                               ("test_1000", "pathvlm_test_n1000")):
         filename = f"{dataset_name}.json"
-        (lf_dir / filename).write_text(
+        emit_text(
+            lf_dir / filename,
             json.dumps([lf_record(r) for r in rewritten[key]], ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
+            reuse_existing,
+            expected_files,
         )
         dataset_info[dataset_name] = dataset_info_entry(filename)
 
     smoke_name = "pathvlm_sft_smoke_n0008"
     smoke_file = f"{smoke_name}.json"
-    (lf_dir / smoke_file).write_text(
+    emit_text(
+        lf_dir / smoke_file,
         json.dumps([lf_record(r) for r in rewritten["sft_0500"][:8]], ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+        reuse_existing,
+        expected_files,
     )
     dataset_info[smoke_name] = dataset_info_entry(smoke_file)
-    (lf_dir / "dataset_info.json").write_text(
-        json.dumps(dataset_info, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    emit_text(
+        lf_dir / "dataset_info.json",
+        json.dumps(dataset_info, ensure_ascii=False, indent=2) + "\n",
+        reuse_existing,
+        expected_files,
     )
 
     for size in (250, 500, 1000):
         key = f"rl_{size:04d}"
         data_file = grpo_dir / f"pathvlm_rl_n{size:04d}.json"
         yaml_file = grpo_dir / f"pathvlm_rl_n{size:04d}.yaml"
-        data_file.write_text(json.dumps(rewritten[key], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        yaml_file.write_text(
+        emit_text(
+            data_file,
+            json.dumps(rewritten[key], ensure_ascii=False, indent=2) + "\n",
+            reuse_existing,
+            expected_files,
+        )
+        emit_text(
+            yaml_file,
             f"datasets:\n  - json_path: {data_file.resolve()}\n    sampling_strategy: all\n",
-            encoding="utf-8",
+            reuse_existing,
+            expected_files,
         )
     smoke_grpo = grpo_dir / "pathvlm_rl_smoke_n0008.json"
-    smoke_grpo.write_text(
-        json.dumps(rewritten["rl_0250"][:8], ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    emit_text(
+        smoke_grpo,
+        json.dumps(rewritten["rl_0250"][:8], ensure_ascii=False, indent=2) + "\n",
+        reuse_existing,
+        expected_files,
     )
-    (grpo_dir / "pathvlm_rl_smoke_n0008.yaml").write_text(
+    emit_text(
+        grpo_dir / "pathvlm_rl_smoke_n0008.yaml",
         f"datasets:\n  - json_path: {smoke_grpo.resolve()}\n    sampling_strategy: all\n",
-        encoding="utf-8",
+        reuse_existing,
+        expected_files,
     )
 
     manifest = {
@@ -216,10 +260,24 @@ def main() -> None:
         "test_policy": "evaluation_only_never_training_or_selection",
     }
     manifest_path = args.output_root / "formal_data_manifest.json"
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    emit_text(
+        manifest_path,
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        reuse_existing,
+        expected_files,
+    )
+    if reuse_existing:
+        actual_files = {path.resolve() for path in args.output_root.rglob("*") if path.is_file()}
+        missing = sorted(str(path) for path in expected_files - actual_files)
+        unexpected = sorted(str(path) for path in actual_files - expected_files)
+        if missing or unexpected:
+            raise ValueError(
+                "existing adapter output file set differs from deterministic rebuild; "
+                f"missing={missing[:5]}, unexpected={unexpected[:5]}"
+            )
+        print(f"validated and reused {len(expected_files)} deterministic adapter files")
     print(json.dumps(manifest, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
     main()
-
