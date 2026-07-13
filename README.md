@@ -3,6 +3,8 @@
 This Git repository is a machine-independent handoff for configuring the formal training machine and continuing the PathVLM-R1 revision experiments without access to the original Codex chat memory.
 
 Start with [CODEX_START_HERE.md](CODEX_START_HERE.md), then follow [AGENTS.md](AGENTS.md).
+For the formal server, begin with
+[`FORMAL_MACHINE_CODEX_GUIDE.md`](FORMAL_MACHINE_CODEX_GUIDE.md).
 The submitted paper and reviewer/editorial materials are indexed under
 [`manuscript/README.md`](manuscript/README.md).
 

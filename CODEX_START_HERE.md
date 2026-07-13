@@ -3,6 +3,7 @@
 Timestamp of this handoff: 2026-07-12 19:18:13 Asia/Shanghai
 
 This repository replaces cross-machine chat memory. A new Codex session on the formal machine must treat the repository, timestamped documents, and run manifests as its source of truth.
+Use `FORMAL_MACHINE_CODEX_GUIDE.md` as the operational runbook.
 
 ## First response expected from the new Codex
 

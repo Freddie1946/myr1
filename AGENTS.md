@@ -6,12 +6,13 @@ These instructions apply to every Codex/agent working in this repository, especi
 
 Before changing files or launching work, read completely:
 
-1. `CODEX_START_HERE.md`
-2. `docs/LATEST.md`
-3. The timestamped documents referenced by `docs/LATEST.md`
-4. `manuscript/README.md` and the materials in its mandatory reading order
-5. `protocol/training_plan.md`
-6. `protocol/code_hash_manifest_20260712_144811.json`
+1. `FORMAL_MACHINE_CODEX_GUIDE.md`
+2. `CODEX_START_HERE.md`
+3. `docs/LATEST.md`
+4. The timestamped documents referenced by `docs/LATEST.md`
+5. `manuscript/README.md` and the materials in its mandatory reading order
+6. `protocol/training_plan.md`
+7. `protocol/code_hash_manifest_20260712_144811.json`
 
 Do not rely on chat memory from another machine. The Git repository is the authoritative handoff record.
 
