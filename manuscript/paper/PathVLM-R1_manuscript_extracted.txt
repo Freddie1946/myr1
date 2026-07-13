@@ -1,0 +1,939 @@
+                                                                                        IEEE JOURNAL OF BIOMEDICAL AND HEALTH INFORMATICS      1
+
+
+
+
+ PathVLM-R1: A Reinforcement Learning-Driven
+       Reasoning Model for Pathology
+          Visual-Language Tasks
+Jianyu Wu, Hao Yang , Yang Liu , Member, IEEE, Guibing He, Zhiyu Chen, Zihui Li, Yangyang Ma, Run
+                      Fang, Xinhua Zeng , Wei Zhou , Senior Member, IEEE
+
+
+
+
+   Abstract— The emergence of foundational models has                          pathological visual question-answering tasks, surpassing
+catalyzed transformative advances in medical image anal-                       both the baseline model by 13.2% and the substantially
+ysis, yet their clinical deployment remains constrained by                     larger Qwen2.5-VL-32B model despite having fewer pa-
+insufficient interpretability and opaque reasoning mecha-                      rameters. Furthermore, it demonstrates remarkable cross-
+nisms. In pathology, where diagnostic decisions demand                         modal transferability, achieving an average 17.3% improve-
+both accuracy and transparency, these limitations repre-                       ment across out-of-domain medical imaging modalities in-
+sent critical barriers to adoption. Current visual language                    cluding dermoscopy, chest CT, and retinal imaging, which
+models (VLMs) predominantly rely on supervised fine-                           underscore the effectiveness of the proposed PathVLM-R1
+tuning, which tends to capture superficial statistical cor-                    as a parameter-efficient, interpretable foundational archi-
+relations rather than develop genuine reasoning capabil-                       tecture for diverse clinical applications.
+ities, which remains a fundamental shortcoming in high-
+stakes medical contexts. To address these challenges, we                         Index Terms— Pathology image analysis, visual-
+propose PathVLM-R1, a reasoning-enhanced visual lan-                           language model, reinforcement learning, visual question
+guage model for pathological image analysis. Building                          answering, foundational models.
+upon the Qwen2.5-VL-7B-Instruct foundation, PathVLM-R1
+employs a meticulously designed two-stage post-training
+strategy: first injecting domain-specific pathological knowl-                                        I. I NTRODUCTION
+edge through supervised fine-tuning, then constructing
+robust reasoning capabilities via reinforcement learning                          The development of foundational models has ushered in a
+with a novel dual-reward mechanism. The mechanism                              paradigm shift in medical image analysis, offering unprece-
+uniquely combines cross-modal process rewards with out-                        dented capabilities for clinical decision support across diverse
+come accuracy rewards, ensuring both procedural rigor
+                                                                               diagnostic modalities [1]–[3]. The large-scale architectures,
+and diagnostic precision. Through group relative policy
+optimization, PathVLM-R1 achieves 65.50% accuracy on                           pre-trained on vast multimodal datasets, have demonstrated
+                                                                               remarkable proficiency in tasks ranging from lesion detection
+   This work was supported by the AI-Assisted Pathological Diagnosis           to automated report generation. However, their integration into
+of Nephroblastoma Based on Virtual Staining and Multimodal Large               clinical workflows aces a persistent challenge, i.e., the tension
+Model, Medical-Engineering Cooperation Project of Fudan-Affiliated
+Hospital, ”Dual Pairing” Program for Clinical & Basic Research of Chil-
+                                                                               between model performance and interpretability, particularly
+dren’s Hospital of Fudan University, Dual Pairing Program of Children’s        in specialized domains such as pathology. Unlike general
+Hospital of Fudan University, Construction of Digital & Intelligent Training   computer vision tasks, medical diagnosis requires not only
+Base for Pediatric Pathology, and Project of Shanghai Municipal Health
+Commission Shenkang. (Jianyu Wu and Hao Yang contributed equally
+                                                                               accurate predictions but also transparent, verifiable reasoning
+to this work.) (Corresponding authors: Yang Liu, Xinhua Zeng.)                 processes that clinicians can scrutinize and trust.
+   Jianyu Wu, Guibing He, Zhiyu Chen and Zihui Li are with the College            Pathological diagnosis exemplifies this challenge with par-
+of Intelligent Robotics and Advanced Manufacturing, Fudan University,
+Shanghai 200433, China (e-mails: {jywu24, gbhe23, zhiyuchen23, zi-             ticular acuteness. The interpretation of histopathological im-
+huili24}@m.fudan.edu.cn).                                                      ages demands the recognition of subtle morphological varia-
+   Hao Yang and Xinhua Zeng are with the College of Intelligent Robotics       tions, complex spatial relationships between cellular structures,
+and Advanced Manufacturing, Fudan University, Shanghai 200433,
+China, and also with the Yiwu Research Institute of Fudan University,          and nuanced patterns in tissue architecture and staining charac-
+Yiwu, Zhejiang 322000, China (e-mails: haoyang24@m.fudan.edu.cn,               teristics. A diagnostic model that produces only classification
+zengxh@fudan.edu.cn).                                                          labels, without articulating the visual evidence and logical
+   Yang Liu is with the College of Electronic and Information
+Engineering, Tongji University, Shanghai 201804, China (e-mail:                steps underlying its conclusion, fails to meet the rigorous
+yang liu@ieee.org).                                                            standards of pathological practice. Moreover, in high-stakes
+   Yangyang Ma is with the Department of Pathology, Children’s Hos-            clinical scenarios where diagnostic errors can have profound
+pital of Fudan University, National Children’s Medical Center, Shanghai
+201102, China (e-mail: 12111240009@fudan.edu.cn).                              consequences, the ”black box” nature of many existing models
+   Run Fang is with the Yiwu Research Institute of Fudan University,           creates justifiable hesitation among practitioners and regula-
+Yiwu, Zhejiang 322000, China (e-mail: fangrun@ywfudan.cn).                     tory bodies alike.
+   Wei Zhou is with the School of Computer Science and Informat-
+ics, Cardiff University, Cardiff, CF24 4AG, United Kingdom (e-mail:               Current approaches to medical Visual Language Models
+zhouw26@cardiff.ac.uk).                                                        (VLMs) predominantly employ Supervised Fine-Tuning (SFT)
+2                                                                                            IEEE JOURNAL OF BIOMEDICAL AND HEALTH INFORMATICS
+
+
+
+                                                                    PathVLM-β                                           PathVLM-R1
+                          Question                   Think                                                Think
+                                                                                                           The image shows a variety of cell nuclei
+                          Based on the nuclear         The image shows variability in nuclear size,        with different sizes and shapes, which
+                          characteristics              with some nuclei appearing larger and               indicates pleomorphism. This is in contrast
+                          observed in the              others smaller, which suggests                      to monomorphic populations or cells with
+                          image, what kind of          anisonucleosis. This is a feature of cellular       the same size and shape of nuclei, which
+                          cellular morphology          atypia often seen in malignant tumors. The          would suggest either anisonucleosis or
+                                                       other options, such as pleomorphism and             isokaryosis. Anisonucleosis typically refers
+                          is suggested?                                                                    to variation in nuclear size, while
+                                                       monomorphism, refer to variations in cell
+                                                       size and shape, respectively, and                   isokaryosis refers to uniform nuclear size,
+                                                       isokaryosis means equal nuclear sizes, which        neither of which accurately describe the
+                                                       is not supported by the image.                      range of variability seen in this image.
+    Options:
+
+      A) Anisonucleosis    B) Monomorphism                Answer: A) Anisonucleosis                             Answer: C) Pleomorphism
+      C) Pleomorphism      D) Isokaryosis
+
+                                                    • Only focuses on a single factor(nuclear          ✓ Comprehensively considering variations in nuclear
+                                                      size) , reasoning incomplete                       size and shape, excluding other options, with more
+     Ground truth: C) Pleomorphism                  • Misunderstanding of “Anisonucleosis” as a          rigorous logic
+                                                                                                       ✓ Correctly applying the definition of
+                                                      core manifestation of malignant features
+                                                                                                         “Pleomorphism”, in line with medical consensus
+
+
+Fig. 1. Comparison of the final PathVLM-R1 model and its variant PathVLM-β. For the same pathology image question-answering task, the
+PathVLM-R1, which incorporates cross-modal procedural rewards, demonstrates superior rigor in reasoning and accuracy in medical knowledge
+compared to the PathVLM-β, which utilizes only accuracy rewards and format rewards. Specifically, in this example, PathVLM-β only focuses on
+differences in nuclear size while neglecting that ”pleomorphism” includes multiple aspects of variation, such as nuclear shape and structure. In
+contrast, PathVLM integrates multiple nuclear features, accurately grasping the definition of ”pleomorphism” with a more comprehensive thought
+process and stronger rigor.
+
+
+
+paradigms [4], [5]. While SFT enables models to learn task-                  for effective learning. Second, traditional RL approaches such
+specific mappings from paired image-text data, it fundamen-                  as Proximal Policy Optimization (PPO) paired with Outcome
+tally optimizes for pattern matching rather than reasoning.                  Reward Models (ORM) [7], [8] focus exclusively on final out-
+Models trained exclusively through SFT tend to memorize                      puts, overlooking the correctness and quality of intermediate
+correlations present in training data without developing the                 reasoning steps. The outcome-centric paradigm is insufficient
+capacity to construct explicit, step-wise diagnostic rationales.             for medical applications, where process validity is as critical
+This limitation is particularly problematic in medical contexts,             as result accuracy. Conversely, while PPO combined with
+where reasoning transparency is not merely desirable but                     Process Reward Models (PRM) can supervise reasoning steps,
+essential for clinical acceptance. Furthermore, the heavy de-                the approach incurs prohibitive costs for expert annotation of
+pendence on training data quality and coverage makes models                  reasoning chains in specialized domains like pathology.
+vulnerable to performance degradation on rare conditions or                     To overcome these challenges, we propose PathVLM-R1, a
+atypical presentations—scenarios frequently encountered in                   reasoning-enhanced VLM with a staged post-training frame-
+real-world practice.                                                         work. Our approach addresses the aforementioned limitations
+   The limitations of supervised learning in fostering deep                  through two key innovations. First, we implement a two-phase
+reasoning capabilities have motivated the exploration of al-                 training strategy: an initial knowledge injection phase where
+ternative training paradigms. Reinforcement Learning (RL),                   supervised fine-tuning on curated pathological datasets endows
+widely employed in developing reasoning models for domains                   the model with foundational domain expertise, followed by
+such as mathematics and logical inference, offers a compelling               a reasoning construction phase where reinforcement learning
+alternative by optimizing models to maximize cumulative                      develops interpretable diagnostic reasoning capabilities. This
+rewards rather than merely mimicking training examples. By                   sequential approach ensures that RL optimization operates
+framing reasoning chain generation as a sequential decision-                 on a knowledge-rich policy space, dramatically improving
+making process, RL encourages models to explore causal                       sample efficiency and training stability. Second, we introduce
+relationships between observations and conclusions, thereby                  a novel dual-reward mechanism that holistically evaluates both
+constructing interpretable reasoning paths. Recent advances,                 reasoning process quality and outcome accuracy. Drawing
+such as DeepSeek-R1 [6], have demonstrated the potential                     inspiration from recent advances in Reinforcement Learning
+of RL-based post-training to enhance reasoning in general                    from AI Feedback (RLAIF) [9], we leverage the evaluative
+domains. However, the direct application of these methodolo-                 capabilities of advanced language models to generate scal-
+gies to specialized medical domains encounters several critical              able, high-quality process-level feedback without requiring
+obstacles. First, foundational models lacking domain-specific                expensive expert annotations. Our cross-modal process reward
+medical knowledge yield inefficient and potentially erratic ex-              assesses reasoning chains along two critical dimensions: com-
+ploration during RL optimization. Without a solid grounding in               pleteness of diagnostic logic (evaluating whether the model
+pathological concepts, terminology, and diagnostic principles,               systematically analyzes visual features, considers differential
+the initial policy is essentially random, resulting in sparse                diagnoses, and references appropriate medical knowledge)
+reward signals that necessitate prohibitively large sample sizes             and correctness of medical reasoning (identifying violations
+WU et al.: PATHVLM-R1: A REINFORCEMENT LEARNING-DRIVEN REASONING MODEL FOR PATHOLOGY VISUAL-LANGUAGE TASKS                         3
+
+
+
+of pathological principles, logical inconsistencies, or use of      models to medical images and clinical texts. Through super-
+outdated diagnostic criteria). This process reward operates         vised fine-tuning and instruction tuning, they adapt the models
+in tandem with outcome accuracy rewards that verify final           for specialized medical tasks. Traditional medical image-
+diagnostic correctness. The integration of the complementary        assisted diagnosis methods [19]–[21] require fine-tuning for
+reward signals through Group Relative Policy Optimization           each specific task. These specialized approaches range from
+(GRPO) [10] enables PathVLM-R1 to develop reasoning ca-             classical computer vision techniques like template matching
+pabilities that are simultaneously interpretable and accurate.      [22] for image segmentation [23] to more modern, yet still
+   The main contributions are summarized as follows:                task-specific, Transformer architectures for classifying whole-
+   • We present PathVLM-R1, the first VLM specifically op-          slide images. In contrast, the new learning paradigm using
+      timized for pathological image analysis through a staged      VLMs can effectively leverage web data and zero-shot predic-
+      training paradigm that systematically builds from knowl-      tion, allowing VLMs to identify new objects with few or no
+      edge acquisition to reasoning capability construction. The    image samples [24]. For example, the LLaVA-Med [4] models
+      model generates clinically interpretable reasoning expla-     leverage large volumes of medical image-text pairs for further
+      nations while achieving superior diagnostic accuracy.         training, achieving significant progress in tasks like automated
+   • We transform the clinical imperative for transparent rea-      image report generation and visual question-answering. Fur-
+      soning into learnable reward signals by quantifying rea-      thermore, the VLM paradigm is already expanding beyond 2D
+      soning quality through cross-modal process rewards and        modalities, with models like Med3DVLM [5] demonstrating
+      constraining diagnostic precision through outcome accu-       its efficacy for analyzing 3D medical images. Despite these
+      racy rewards. which operationalizes the joint optimization    advancements, current medical visual language models still
+      of evidence derivation and conclusion generation.             face several challenges:
+   • PathVLM-R1 demonstrates that its training architectures           Firstly, many medical visual language models primarily
+      can achieve performance surpassing larger models while        employ methods such as supervised fine-tuning, unsupervised
+      requiring minimal reinforcement learning samples. With        pre-training, and contrastive learning. These methods aim
+      only 7 billion parameters and 1,000 RL training samples,      to capture the statistical correlations and surface patterns
+      it outperforms traditional SFT baselines and exhibits         between images and text. The commonly used training data
+      strong cross-modal transferability, highlighting its poten-   typically involve paired sets of images and final diagnos-
+      tial as a foundational model for clinical applications.       tic reports, clinical records, or radiology reports. Such data
+   The remainder of this paper is organized as follows. Sec-        often only record diagnostic outcomes or report summaries,
+tion II reviews related work on visual language models and          lacking detailed descriptions of the intermediate reasoning
+reinforcement learning in post-training, positioning our con-       steps involved in the diagnostic process. This limitation affects
+tributions within the broader landscape of medical AI and           existing medical visual language models in terms of inference
+foundational model research. Section III details our methodol-      capability and clinical interpretability, making it difficult to
+ogy, elaborating on the staged training framework, the GRPO         construct clear and transparent medical reasoning chains that
+algorithm, and the design of our dual-reward mechanism.             could provide deep diagnostic insights.Recently, researchers
+Section IV presents comprehensive experimental evaluations          have attempted to enhance model reasoning performance on
+on both in-domain pathological datasets and out-of-domain           medical tasks using reinforcement learning with GRPO as
+medical imaging modalities, demonstrating the effectiveness,        the optimization strategy. For instance, the MedVLM-R1 [25]
+efficiency, and generalization capabilities of PathVLM-R1.          model has surpassed baseline methods that use supervised
+Finally, Section V concludes with a discussion of our findings,     fine-tuning in tests involving MRI, CT, and OCT modalities.
+limitations, and directions for future research toward clinical     However, it failed in tests on pathology modalities. Moreover,
+validation and deployment.                                          its approach of directly applying reinforcement learning to
+                                                                    base models lacking fundamental knowledge has resulted in
+                                                                    relatively limited performance improvements.
+                    II. R ELATED W ORKS
+                                                                       Secondly, since the training data is often restricted to
+A. Visual Language Models                                           specific domains and imaging modalities, the models have
+   In recent years, general Visual Language Models such as          limited generalization capability when confronted with diverse
+LLama, Gemma, and QwenVL [11]–[16] have achieved a                  clinical scenarios.
+deep alignment of visual and linguistic representations through
+pre-training on large-scale image and text data, significantly
+advancing the field of multimodal understanding technology.         B. Reinforcement Learning in the Post-training Phase
+The underlying Transformer [17] architecture and contrastive           Reinforcement learning (RL) has emerged as a powerful
+learning strategies provide effective means for capturing se-       methodology for optimizing sequential decision-making pro-
+mantic associations between images and language [18]. These         cesses across various domains, including healthcare. Beyond
+technological advancements offer important theoretical and          image analysis, RL has been successfully applied to complex
+practical foundations for constructing medical visual language      clinical policy management, such as optimizing the switching
+models.                                                             strategy for noninvasive ventilation in patients [26]. This
+   In the medical domain, researchers have drawn on the             demonstrates the capability of RL to learn effective policies
+successful experience of general VLMs by transferring these         from interactions in environments where optimal decisions
+4                                                                                       IEEE JOURNAL OF BIOMEDICAL AND HEALTH INFORMATICS
+
+
+
+
+    Stage1: Knowledge Injection                  Stage2: Preliminary Reasoning                      Stage 3: Refined Reasoning
+              (SFT)                                 (RL - Outcome Rewards)                             (RL - Dual Rewards)
+
+
+                 Qwen2.5-VL-7B                                PathVLM-α                                          PathVLM-β
+                    Base LLM
+
+
+
+                                                           Sample from Policy                                 Sample from Policy
+                                                             (1k Samples)                                       (1k Samples)
+
+                      SFT
+                  (3k Samples)
+                                                                                                              GRPO (Dual-Reward)
+                                                                GRPO                              Prompt: Image, Question,           GPT-4o
+                                                          (Outcome-Reward)                        Gold Answer, Model Trace          Evaluator
+
+                                                      Compare with        Accuracy                   Compare with Standard            Generate
+                   PathVLM-α                         Standard Answer       Reward                       Answer/Format                  Reward
+
+
+                                                      Compare with            Format                 Format        Accuracy         Process
+                                                     Standard Format          Reward                 Reward         Reward          Reward
+
+     Training Data Sample
+
+
+                    Identify the process
+                    depicted by the structure                Upgrade Policy
+                                                                                                                Upgrade Policy
+                    pointed by the blue arrow.
+
+      Options:
+
+      A) Erythrophagocytosis C) Apoptosis
+                                                                                                                 PathVLM-R1
+      B) Broad-based budding D) Anisocytosis                 PathVLM-β                                            Final Model   ★
+
+
+Fig. 2. The PathVLM-R1 staged training pipeline is depicted in the accompanying diagram, illustrating the progressive development of the
+model from foundational knowledge acquisition to refined reasoning capabilities. In Stage 1 (Knowledge Injection), the Qwen2.5-VL-7B base large
+language model (LLM) undergoes supervised fine-tuning (SFT) on a 3,000-sample pathology dataset to acquire essential pathological knowledge,
+resulting in the intermediate model, PathVLM-α. In Stage 2 (Preliminary Reasoning), PathVLM-α is further optimized using Group Relative Policy
+Optimization (GRPO), where the reward signals are limited to outcome-based metrics—namely, Accuracy Reward and Format Reward. This stage is
+designed to establish initial reasoning capabilities, producing PathVLM-β. Finally, Stage 3 (Refined Reasoning) involves an additional GRPO-based
+refinement of PathVLM-β, introducing a Dual-Reward mechanism that integrates both outcome-based rewards and a Process Reward. The Process
+Reward is dynamically generated by a GPT-4o Evaluator, which assesses a comprehensive prompt containing the input image, the posed question,
+the reference answer (Ref-A), and the model-generated reasoning trace (Model Trace). The evaluator’s assessment of the reasoning quality guides
+the policy updates, enabling the model to produce more robust and coherent reasoning chains. This multi-stage procedure culminates in the final
+PathVLM-R1 model, which combines foundational knowledge with advanced reasoning capabilities.
+
+
+
+are not immediately obvious. Framing the generation of a                  closely with human values. A seminal work is InstructGPT
+coherent reasoning chain as a sequential decision-making                  [31], which employs Reinforcement Learning from Human
+problem—where the model must select the best subsequent                   Feedback (RLHF) to enhance the model’s ability to adhere to
+token at each step to maximize a final reward—aligns perfectly            instructions given in text prompts, thereby reducing harmful
+with the principles of RL. This perspective motivates our                 outputs and improving factual accuracy.
+application of RL in the post-training phase of large models.                There are primarily two types of reward models: the Out-
+Reinforcement Learning from Human Feedback (RLHF) [27]                    come Reward Model (ORM) and the Process Reward Model
+is a common practice during the post-training phase of large              (PRM). The ORM focuses on the final output, rating and
+models [28]–[30]. RLHF is a methodological approach that                  evaluating the overall result generated by the model, while
+integrates human feedback into the reinforcement learning pro-            the PRM scores each step in the generation process. Training
+cess. By collecting and analyzing human preferences or ratings            these reward models typically relies on a substantial amount
+for different behaviors, RLHF trains a reward model that sim-             of human-labeled data. However, in fields such as medicine,
+ulates human preferences. Subsequently, using reinforcement               where high-quality annotated data is scarce, the difficulty of
+learning algorithms such as Proximal Policy Optimization                  training reward models increases significantly.
+(PPO), this approach employs the initial model as a policy
+and uses the reward model’s ratings as optimization signals
+to iteratively refine the model outputs, aligning them more
+WU et al.: PATHVLM-R1: A REINFORCEMENT LEARNING-DRIVEN REASONING MODEL FOR PATHOLOGY VISUAL-LANGUAGE TASKS                                       5
+
+
+
+                             III. M ETHODS                                      πθ by maximizing this objective, synchronizing parameters
+   In the post-training phase for pathology tasks, we employ                    with πθold for the next iteration, thus enabling efficient ex-
+carefully crafted training strategies to enhance the model’s                    ploration of solution spaces to enhance reasoning capabilities,
+reasoning capability and performance in these tasks. Below, we                  as demonstrated by notable improvements in benchmarks like
+will introduce the specific optimization algorithms and training                MATH.
+processes.
+                                                                                B. Redesigning Reward Mechanisms for Interpretability
+A. Group Relative Policy Optimization                                              During the training of Deepseek-R1 [6], distinct reward
+   In the medical field, the sensitivity of data, barriers due to               mechanisms were tailored for different types of tasks. For
+specialized knowledge, and the high cost of annotations make                    tasks with well-defined standard answers or those that can
+acquiring high-quality reasoning process labels extremely                       be mechanically verified (such as mathematics, code, and
+difficult. This presents significant challenges to traditional                  logical reasoning), rule-based reward functions were utilized
+reinforcement learning methods that rely on explicit reward                     for optimization. For tasks lacking explicit rules or requiring
+models or value functions, such as Proximal Policy Opti-                        subjective evaluation (such as creative writing and open-ended
+mization (PPO). In this context, GRPO emerges as a highly                       questions), a reward model capturing human preferences was
+promising solution.                                                             introduced to address the limitations of rule-based rewards in
+   Group Relative Policy Optimization is an efficient reinforce-                unstructured tasks. This aims to balance reasoning capability
+ment learning algorithm designed to enhance model reasoning                     with adaptability in general scenarios.
+by optimizing policy gradients through group-based relative                        Similarly, to fulfill the requirements of process interpretabil-
+advantage estimation and regularization, addressing limitations                 ity and result accuracy in reasoning within medical contexts,
+of traditional methods like PPO. The algorithm operates on a                    we designed a reward mechanism composed of cross-modal
+problem distribution P (Q), where each problem q is processed                   process rewards and result accuracy rewards. This mechanism
+by an old policy πθold to generate G candidate responses                        ensures logical supervision of the reasoning process and
+     G                                                                          constraints on result accuracy. The detailed workflow of this
+{oi }i=1 , with πθ denoting the current policy to be optimized
+and πref serving as a frozen reference policy to constrain                      dual-reward mechanism is illustrated in Fig. II-A, where the
+updates via KL divergence. For each candidate response oi ,                     model’s output is bifurcated to generate a Process Reward
+a rule-based reward ri is computed, and relative advantage is                   that evaluates the reasoning quality and Outcome Rewards that
+derived through group-wise normalization:                                       verify the final answer’s correctness.
+                                                                                   The result accuracy rewards follow the design of Deepseek-
+                            ri − mean (r1 , . . . , rG )                        Math [10], comprising format rewards and accuracy rewards.
+                 Ai =                                                     (1)
+                                std (r1 , . . . , rG )                          The format reward requires the model to produce outputs in a
+which measures the quality of oi relative to the group. The                     specified format: explicitly articulating the reasoning process
+objective function of GRPO balances policy improvement and                      within a ¡think¿ tag and providing the final answer within
+stability as:                                                                   an ¡answer¿ tag. Outputs that meet the format specifications
+                                                                                receive a score of 1. In accuracy evaluation, the model must
+                    "                                                 #         present a clear letter option and content within the ¡answer¿
+     JGRPO (θ) = E q ∼ P (Q),
+                                                G
+                                           {oi }i=1 ∼ πθold (O | q)             tag, receiving a score of 1 only for completely correct answers.
+                                                                                   However, test results based solely on format and accuracy
+                        G
+                             (         "                                        rewards indicate that the quality of the generated reasoning
+                  1 X                       πθ (oi | q)
+                                 min                      Ai ,                  chains is often suboptimal, frequently exhibiting logical leaps
+                  G i=1                    πθold (oi | q)                       or misuse of medical arguments. Despite this, even low-
+                                                          ! #
+                              πθ (oi | q)                                       quality reasoning chains can sometimes lead to correct results,
+                  clip                      , 1 − ε, 1 + ε Ai                   which is detrimental to the model’s ability to find effective
+                             πθold (oi | q)
+                                               )                                strategies. We realized that for open-ended tasks such as
+                                                                                medical reasoning, accuracy rewards alone are insufficient.
+                     − β DKL [πθ ∥πref ]                                  (2)   External models are needed to supervise the reasoning process.
+                                                                                Given the scarcity of high-quality reasoning process data in
+ where G is the number of candidate responses per problem,                      the medical field, we referenced Reinforcement Learning with
+  πθ (oi |q)
+πθold (oi |q) is the policy ratio reflecting the change in response             AI Feedback (RLAIF) [9], [32], [33] and DeepSeek-R1 [6]’s
+generation probability, clip(·) with hyperparameter ϵ stabilizes                training strategies to design a segmented approach.
+training by limiting extreme updates, and βDKL (πθ ∥πref )                         We input images, questions, standard answers, model out-
+ensures πθ does not deviate excessively from the reference                      puts, and prompts into the GPT-4o model, which evaluates
+policy πref , with β controlling the regularization strength.                   them to generate cross-modal rewards. In the prompts, we
+Unlike PPO, which relies on a value function for advantage                      specified the GPT-4o’s evaluation criteria and response format.
+estimation, GRPO leverages group statistics to compute Ai ,                     To prevent GPT-4o from returning biased formatting or irrele-
+eliminating the need for a separate critic model and reducing                   vant information, we designed a detailed process for handling
+computational costs by 50%. The algorithm iteratively updates                   its feedback.
+6                                                                                         IEEE JOURNAL OF BIOMEDICAL AND HEALTH INFORMATICS
+
+
+
+
+                Step 1: Sample form old strategy                                         Step 2: Constructing assessment prompt
+
+           Identify the process depicted by the structure                            You are a medical image pathology expert. Evaluate the quality
+    User   pointed by the blue arrow.                                                of this diagnostic thinking chain:
+           Options:
+           A) Erythrophagocytosis B) Broad-based budding                             [Question]
+           C) Apoptosis            D) Anisocytosis                                   Considering the morphological … D) Necrosis
+
+                                                                                     [Thinking Chain]
+                                                                                     <think> The structure indicated by the blue arrow is a rounded,
+                   <think> The structure indicated by the blue                       eosinophilic ……not the presence of rounded eosinophilic
+                   arrow is a rounded, eosinophilic ……not the
+                                                                    Model            bodies.</think>
+                   presence of rounded eosinophilic bodies.</think>
+                                                                                     [Predicted Answer]
+                   <answer> B) Broad-based budding </answer>                         <answer> B) Broad-based budding </answer>
+
+                                                                                     [Standard answer]
+                                                                                     B) Broad-based budding
+
+                                                                                     Scoring criteria (each with a full score of 1 point):
+                      Step 3: Obtaining and                                          1. Thinking chain integrity (deduct 0.4 points for each missing
+                                                                                        step, until 0):
+                  processing assessment results                                             • Image feature analysis
+       1. Retrieve the raw response content.                                                • Step-by-step option elimination (at least 2 options)
+       2. Try to parse the JSON:                                                            • Medical knowledge citation
+              • If successful, extract the integrity and knowledge
+                 scores.                                                             2. Medical knowledge rationality (deduct 0.4 points for each
+              • If parsing fails, check for JSON wrapped in Markdown:                error, until 0):
+                     a. If found, attempt to parse it and extract                            • Violation of basic histological definitions
+                          scores.                                                            • Logical contradiction
+                     b. If parsing fails, fall back to comparing the                         • Use of outdated or incorrect pathological criteria
+                          predicted answer with the correct answer.
+       3. Fallback logic:                                                            Output format: JSON only (include "integrity_score" and
+              • If the predicted answer is correct, assign 0.5 points to             "knowledge_score")
+                 each dimension.
+              • If incorrect, assign 0 points.                                       Example: {\"integrity_score\": 0.0, \"knowledge_score\": 0.0}
+       4. Clamp scores to the range [0, 1].                                          (strict JSON, no explanation)
+       5. Calculate the final reward as the average of the scores.
+
+
+Fig. 3. Pipeline for cross-modal procedural loss. First, sampling is performed on the old policy to obtain the model’s generated thought process and
+final answers. These, along with the questions, generated content, and evaluation criteria, are then given to GPT-4o for review in terms of reasoning
+completeness and knowledge correctness, obtaining an Integrity score and Knowledge score. Lastly, GPT-4o’s feedback is processed, including
+error handling and score normalization, using the average of the Integrity score and Knowledge score as the final reward.
+
+
+
+   Evaluation criteria include completeness of the reasoning                choice questions (Q&A) and 24,067 pathological images. We
+chain and reasonableness of medical knowledge, each with a                  selected the PubMed and EduContent subsets, totaling 5,385
+full score of 1 point. Completeness of the reasoning chain en-              entries for training and testing. Among these, 3,000 were used
+compasses the analysis of image features, stepwise elimination              for training the Supervised Fine-Tuning base model, 1,000
+of options, and reference to medical knowledge, with a deduc-               for reinforcement learning training, and the remaining 1,385
+tion of 0.4 points for each missing step, with a minimum score              for testing. Furthermore, to verify the model’s generalization
+of 0. Medical knowledge reasonableness involves breaches of                 capability, we selected ChestCT [35], ISIC2020 [36], Retinal
+basic histological definitions, logical contradictions, and the             OCT-C8 [37], and Diabetic Retinopathy [38] from OmniMed-
+use of outdated or inappropriate pathological standards, with               VQA [39] as out-of-domain data for testing. The detailed
+0.4 points deducted for each infraction, also with a minimum                breakdown of our data utilization for each experimental phase
+score of 0. Fig.III-A illustrates the detailed evaluation process.          is provided in Table I. The out-of-domain datasets from
+   To validate the stability and reliability of our GPT-4o based            OmniMedVQA were chosen to represent a diverse array of
+reward scorer, we conducted a consistency analysis by having                medical imaging modalities, including computed tomography
+it score the same 500 reasoning chains in three indepen-                    (ChestCT), dermoscopy (ISIC2020), and retinal imaging (OCT
+dent runs. As visualized in Fig.4, the analysis reveals nearly              and fundus photography). This diversity provides a robust
+identical score distributions and strong pairwise correlations              testbed for assessing the model’s ability to transfer its learned
+(Spearman’s ρ > 0.78) across all runs. This result confirms that            reasoning skills from the microscopic world of pathology to
+our evaluator provides a consistent and robust reward signal,               visually and contextually distinct clinical domains.
+which is a crucial prerequisite for effective reinforcement
+learning.                                                                      Evaluation Metrics To thoroughly assess the performance
+                                                                            of our models, we employed a multi-faceted evaluation strat-
+                 IV. E XPERIMENT AND R ESULTS                               egy. Beyond traditional accuracy for the final answer, we
+                                                                            utilized a comprehensive set of human-aligned metrics to
+A. Experimental Setup                                                       evaluate the quality of the generated reasoning chains. These
+  Dataset This study utilized the PathMMU [34] dataset for                  metrics, scored on a 0-1 scale by a GPT-4o-based evaluator,
+experiments, which comprises 33,428 multimodal multiple-                    encompass:
+WU et al.: PATHVLM-R1: A REINFORCEMENT LEARNING-DRIVEN REASONING MODEL FOR PATHOLOGY VISUAL-LANGUAGE TASKS                                                                                                                            7
+
+
+
+                    400
+                                                                    ρ = 0.785                                ρ = 0.812                               400
+                                                                                                                                                                         •   Conciseness: Focuses on the conciseness and directness
+                                                                                                                                                     350
+
+
+                    300
+                                                                                                                                                     300                     of the reasoning, penalizing unnecessary verbosity.
+Integrity Run1
+
+
+
+
+                                                                                                                                                           Frequency
+                                                                                                                                                     250
+
+                                                                                                                                                     200
+                                                                                                                                                                       The primary objective of these detailed metrics is to quantify
+                    200
+                                                                                                                                                     150               the nuanced aspects of diagnostic reasoning, beyond just the
+                                                                                                                                                     100
+                    100
+                                                                                                                                                     50
+                                                                                                                                                                       final outcome.
+                     0                                                                                                                                                    Implementation Details Experiments were conducted on a
+                    0.8
+                           ρ = 0.785                                                                         ρ = 0.814                               400               setup with four H20 GPUs (96GB of memory). The training
+                    0.7
+
+                    0.6
+                                                                                                                                                     350
+
+                                                                                                                                                     300
+                                                                                                                                                                       base is Qwen2.5-VL-7B-Instruct [13], with the visual encoder
+                                                                                                                                                                       frozen. The parameter G is set to 4, and both the maximum
+   Integrity Run2
+
+
+
+
+                    0.5
+
+
+
+
+                                                                                                                                                           Frequency
+                                                                                                                                                     250
+                    0.4
+
+                    0.3
+                                                                                                                                                     200
+
+                                                                                                                                                     150
+                                                                                                                                                                       prompt length and the maximum generation length are set to
+                    0.2
+                                                                                                                                                     100               1024.
+                    0.1
+
+                    0.0
+                                                                                                                                                     50
+                                                                                                                                                                          The experimental procedure consists of the following three
+                    0.8
+                                                                                                                                                                       phases:
+                           ρ = 0.812                                ρ = 0.814
+                    0.7
+                                                                                                                                                                          • Step 1: SFT Phase to Obtain the Alpha Model Utilizing
+                    0.6
+                                                                                                                                                                             3,000 data points to train the Qwen2.5-VL-7B-Instruct
+   Integrity Run3
+
+
+
+
+                    0.5
+
+                    0.4
+                                                                                                                                                                             model for 18,000 steps until performance stabilizes, re-
+                    0.3
+
+                    0.2
+                                                                                                                                                                             sulting in the new base model, Alpha.
+                    0.1
+                                                                                                                                                                          • Step 2: Reinforcement Learning Phase to Obtain the Beta
+                    0.0
+
+                          0.0     0.2         0.4      0.6   0.8   0.0     0.2         0.4      0.6   0.8   0.0     0.2         0.4      0.6   0.8                           Model This is the first step in constructing reasoning
+                                        Integrity Run1                           Integrity Run2                           Integrity Run3
+                                                                                                                                                                             capabilities. Using 1,000 newly introduced data points
+Fig. 4.     Consistency Analysis of GPT-4o Integrity Scores across                                                                                                           and applying rewards for accuracy and formatting only,
+Three Independent Runs. This correlation matrix illustrates the high                                                                                                         Alpha is optimized for 2,000 steps until performance
+scoring consistency of the GPT-4o evaluator for the reasoning integrity
+dimension.Diagonal Panels: The histograms show the score frequency                                                                                                           stabilizes, resulting in the Beta model.
+distribution for each of the three independent runs. Their nearly identical                                                                                               • Step 3: Final Optimization Using Cross-Modal Process
+shapes demonstrate a highly consistent scoring pattern applied in                                                                                                            Rewards Continuing with the same 1,000 data points,
+each session.Off-Diagonal Panels: The 2D density heatmaps visualize
+the pairwise correlations between the runs. The concentration of data                                                                                                        combined with cross-modal process rewards and outcome
+along the diagonal (dashed line) visually confirms the strong agree-                                                                                                         accuracy rewards, the Beta model is further optimized
+ment.Quantitative Analysis: The Spearman’s rank correlation coefficient                                                                                                      for 2,000 steps until performance stabilizes, ultimately
+(ρ) is annotated for each pair, with all values exceeding 0.78, indicating
+a strong and reliable positive correlation between the independent                                                                                                           yielding the PathVLM-R1 model. We aim for the model
+evaluations.                                                                                                                                                                 to be faithful to the data distribution of the training
+                                                                                                                                                                             set while avoiding potential reward hacking issues, thus
+                                                 TABLE I                                                                                                                     choosing to further refine the reasoning process after
+                          OVERVIEW OF THE PATH MMU DATASET S UBSETS U SED IN T HIS                                                                                           initial model exploration.
+                                                 S TUDY.                                                                                                               Fig.5 presents the model variants obtained during the training
+                 Statistical Item                                                        Quantity/Description                                                          process.
+                 Total Images in PathMMU                                                         24,067                                                                   To ensure the rigor of the experiment, we established the
+                 Total Q&A Pairs in PathMMU                                                      33,428
+                                                                                        5,385 (from PubMed &                                                           following control groups:
+                 Q&A Pairs Used in This Study
+                                                                                             EduContent)                                                                  • Directly using 1,000 data points on the Qwen2.5-VL-7B-
+                 For SFT Training                                                                 3,000
+                 For RL Training                                                                  1,000
+                                                                                                                                                                             Instruct with accuracy and format rewards, optimized via
+                 For Performance Testing                                                          1,385                                                                      GRPO, termed as model Epsilon, along with a supervised
+                                                                                                                                                                             fine-tuning control group called model Delta.
+                                                                                                                                                                          • Continued SFT training on the Alpha model, termed as
+                                                                                                                                                                             model Gamma.
+                     • R-ACC: Evaluates if the reasoning logically supports the
+                       final answer, is evidence-based, and sufficiently conclu-
+                       sive. Concise and effective reasoning is prioritized.                                                                                           B. Experimental Results
+                     • K-ACC: Assesses the accuracy of medical/pathological                                                                                               In this section, we present a systematic evaluation of
+                       terminology, adherence to basic medical principles, and                                                                                         PathVLM-R1 to validate the efficacy of our proposed training
+                       appropriate use of diagnostic criteria.                                                                                                         framework. We conducted a series of experiments on both
+                     • Rigor: Examines the natural flow of reasoning steps,                                                                                            in-domain and out-of-domain datasets, assessing the model’s
+                       absence of logical leaps or unsupported jumps, and the                                                                                          diagnostic accuracy, reasoning capabilities, generalization per-
+                       necessity of conclusions from premises.                                                                                                         formance, and interpretability.
+                     • Professionalism: Evaluates the use of appropriate medi-                                                                                            In-domain Performance and Staged Training Analysis
+                       cal terminology and language suitable for experts, avoid-                                                                                       Our primary experiments were designed to quantify the con-
+                       ing casual expressions.                                                                                                                         tribution of each stage in our ”knowledge injection followed
+                     • Clarity: Measures the ease of understanding, organiza-                                                                                          by reasoning construction” pipeline. The results, summarized
+                       tion, and adequate explanation of concepts within the                                                                                           in Table II and visualized in Fig.6, demonstrate a clear and
+                       reasoning.                                                                                                                                      progressive enhancement of the model’s performance.
+8                                                                                                                      IEEE JOURNAL OF BIOMEDICAL AND HEALTH INFORMATICS
+
+
+
+                                                          1000 pieces            1385 pieces
+               3000 pieces for SFT training
+                                                          for RL training        for validation
+                                                                                                          it to learn superficial strategies. These findings highlight the
+                                                                                                          importance of initial knowledge injection. The superiority of
+                1000 data                                                                                 our final method is evident as PathVLM-R1 surpassed the
+                            PathVLM-δ
+                  SFT                                                                                     supervised baseline (PathVLM-Gamma) by 7.96%, whereas
+                                              1000 data
+                                                               PathVLM-γ
+                                                                                                          directly applying RL from the start resulted in a much smaller
+                                              SFT
+
+                3000 data
+                                                                                                          increase.
+    Qwen2.5-                PathVLM-α                                                                        Our findings contrast with other reasoning models for
+     VL-7B        SFT
+                                                                                                  Final
+                                               1000 data                         1000 data
+                                                                                                          medical imaging, such as MedVLM-R1, which employ a rule-
+                                                               PathVLM-β                     PathVLM-R1   based reward function directly on a base model optimized via
+                                                GRPO,                             GRPO,
+                1000 data
+                                              Acc/Format                    Acc/Format/Process            GRPO. This direct approach has yielded suboptimal results,
+                            PathVLM-ε           Reward                            Reward
+                 GRPO,                                                                                    and MedVLM-R1 notably failed in tests on pathology im-
+               Acc/Format
+                 Reward                                                                                   ages. Our experimental results strongly suggest that our post-
+                                                                                                          training strategy of ”pathological knowledge infusion followed
+Fig. 5. Various model variants generated during stage-wise training.
+Through the comparison of various model variants generated at each                                        by reasoning capability construction” is a more effective
+stage, this pipeline empirically validates the effectiveness of our staged                                and efficient paradigm for achieving superior performance in
+training methodology. The entire training set is divided into disjoint                                    complex medical domains.
+segments in the form of 3000, 1000, 1385, used for supervised fine-
+tuning, reinforcement learning, and its control group, as well as the final                                  In addition to accuracy, we analyzed the average output
+performance testing process, respectively. Using Qwen2.5-VL-7B as the                                     token count across different models, as shown in Table III.
+base, the model Alpha is obtained with 3000 data points for supervised                                    We observed that the initial 18,000 steps of SFT led to a
+fine-tuning. Delta and Epsilon are obtained using 1000 data points for
+supervised fine-tuning/reinforcement learning. Gamma and Beta are                                         notable reduction in the output token count of PathVLM-
+obtained by continuing supervised fine-tuning/reinforcement learning                                      Alpha. However, this issue of brevity was effectively alleviated
+with an additional 1000 data points on Alpha. Finally, adding cross-                                      by the subsequent 2,000-step optimization with cross-modal
+modal procedural losses to Beta results in the final model PathVLM-R1.
+                                                                                                          process rewards, which encouraged the generation of more
+                                                                                                          detailed and complete reasoning chains in the final PathVLM-
+                                                                                                          R1 model.
+   The baseline model, Qwen2.5-VL-7B, achieved an initial                                                    Beyond quantitative metrics, it is crucial to verify that the
+accuracy of 51.55% on the in-domain test set. In the first                                                model’s reasoning is grounded in relevant visual evidence, a
+stage, we performed supervised fine-tuning (SFT) on 3,000                                                 key factor for clinical trust. To this end, we visualized the
+pathological data pairs to inject foundational domain knowl-                                              model’s cross-modal attention to understand where it ”looks”
+edge. This resulted in the PathVLM-Alpha model, which saw                                                 while generating its response. Fig.7 presents a compelling case
+its accuracy significantly increase to 57.59%. This outcome                                               study where the attention heatmap confirms that PathVLM-
+underscores the criticality of SFT as a preliminary step to                                               R1 correctly focuses on the specific pathological features
+equip the model with the necessary pathological concepts and                                              mentioned in the prompt—namely, the peripheral insert with
+terminology.                                                                                              immunohistochemical staining. This strong alignment between
+   Building upon the knowledge-infused PathVLM-Alpha, we                                                  the model’s visual focus and its textual reasoning provides
+explored two distinct paths for the second stage using 1,000                                              clear evidence of its interpretability and robust diagnostic
+new data samples. Continuing with SFT yielded the PathVLM-                                                capability.
+Gamma model with an accuracy of 59.92%. In contrast, ap-                                                     Analysis of Out-of-domain Data Results To assess the
+plying our reinforcement learning strategy with only outcome-                                             model’s ability to transfer learned knowledge, we evaluated
+based rewards (accuracy and format) produced the PathVLM-                                                 PathVLM-R1 on four out-of-domain medical imaging modal-
+Beta model, which achieved a substantially higher accuracy                                                ities not present in its training set. The results are detailed in
+of 63.89%. As illustrated by the steeper performance curve in                                             Table IV.
+Figure 6, this demonstrates that once a knowledge base is es-                                                PathVLM-R1 demonstrated remarkable generalization capa-
+tablished, reinforcement learning is a more potent strategy than                                          bility on the ISIC 2020 dermoscopy dataset, achieving an ac-
+SFT for cultivating sophisticated reasoning abilities. The final                                          curacy of 80.00%. This represents a 23.41% improvement over
+and most crucial optimization step involved incorporating our                                             the Qwen2.5-VL-7B baseline model. This result is particularly
+novel cross-modal process rewards. By fine-tuning PathVLM-                                                significant because our training data consisted of microscopic
+Beta with this dual-reward mechanism, we developed the                                                    skin pathology slides, whereas the ISIC 2020 test data contains
+final PathVLM-R1 model, which attained a peak accuracy of                                                 macroscopic images of surface lesions. The successful knowl-
+65.50%. The detailed accuracy improvements for each model                                                 edge transfer between these different scales indicates that
+variant at every stage of our pipeline are comprehensively                                                our model has learned the underlying pathological principles
+presented in Table V.                                                                                     rather than just superficial image features, showcasing its
+   To further validate our staged approach, we established                                                potential as a robust and adaptable pathology model. While
+control groups. The PathVLM-Epsilon model, trained by ap-                                                 its performance on other modalities like Chest CT and Retinal
+plying RL directly to the 7B base model, achieved an accuracy                                             OCT did not exceed models specifically trained on such data, it
+of only 56.10%. Although this outperformed its direct SFT                                                 consistently outperformed the SFT baseline, further evidencing
+counterpart (PathVLM-Delta), the model’s performance was                                                  its impressive generalization potential.
+unstable, likely due to a lack of domain knowledge that led                                                  Interpretability and Visual Grounding For any model
+WU et al.: PATHVLM-R1: A REINFORCEMENT LEARNING-DRIVEN REASONING MODEL FOR PATHOLOGY VISUAL-LANGUAGE TASKS                                      9
+
+
+
+                                                               TABLE II
+                  I N - DOMAIN COMPARISON OF MODELS WITH DIFFERENT PARAMETER SCALES (ACC. REPRESENTS ACCURACY ).
+
+                                                           Large-parameter models
+          Model                  Samples       ACC       R-ACC     K-ACC         Rigor     Professionalism        Clarity   Conciseness
+          Doubao-1.5-vison         500         45.80      0.5253    0.5719      0.5399         0.8715             0.8395       0.7715
+          Qwen-VL-Plus             500         46.60      0.5326    0.5791      0.5417         0.8729             0.8381       0.7196
+          DeepSeek-VL2             500         49.40      0.5217    0.5777      0.5261         0.8644             0.8291       0.7528
+          Claude-3.5-Haiku         500         54.20      0.6022    0.6488      0.6118         0.9000             0.8582       0.7886
+          Grok-4-Fast              500         55.80      0.6219    0.6718      0.6298         0.9048             0.8549       0.7837
+          LLaMA3.2-90B             500         63.80      0.6352    0.7100      0.6521         0.9144             0.8522       0.7176
+          Claude-4.5               500         64.80      0.7000    0.7448      0.7108         0.9285             0.8857       0.8102
+                                                         Comparable-parameter models
+          Model                  Samples       ACC       R-ACC     K-ACC         Rigor     Professionalism        Clarity   Conciseness
+          LLaMA3.2-11B             500         23.40      0.3681    0.3983      0.3770         0.8330             0.8090       0.6889
+          MedVLM-R1                500         42.60      0.4263    0.5090      0.4410         0.7840             0.7361       0.6780
+          MedGemma-4B              500         44.40      0.4862    0.5524      0.4935         0.8463             0.7980       0.7154
+          Qwen2.5-VL-3B            500         44.40      0.5016    0.5508      0.5067         0.8616             0.8267       0.7567
+          Qwen2.5-VL-7B            500         51.80      0.5799    0.6276      0.5855         0.8879             0.8479       0.7728
+          Lingshu-7B               500         55.60      0.6248    0.6612      0.6284         0.9056             0.8684       0.7992
+          InternVL3-8B             500         57.20      0.6152    0.6569      0.6184         0.8986             0.8683       0.8130
+          Ours(PathVLM-R1)         500         65.50      0.6323    0.6950      0.6373         0.9040             0.8663       0.8228
+
+
+
+                            TABLE III                                                                  TABLE IV
+AVERAGE NUMBER OF TOKENS OUTPUTTED BY DIFFERENT MODELS ON                    O UT- OF - DOMAIN COMPARISON OF DIFFERENT MODELS AND THEIR
+                     I N - DOMAIN DATA .                                                              ACCURACIES .
+
+            Model             Average number of tokens                         Model                    Dataset                  Accuracy (%)
+            Qwen2.5-VL-7B             210.04                                                            Chest CT                        38.60
+            PathVLM-β-7B               80.31                                                            ISIC 2020                       34.59
+                                                                               Qwen2.5-VL-3B
+            PathVLM-ϵ-7B              220.07                                                            Retinal OCT-C8                  60.40
+            PathVLM-R1                 94.99                                                            Diabetic Retinopathy            64.20
+                                                                                                        Chest CT                        48.60
+                                                                                                        ISIC 2020                       56.59
+                                                                               Qwen2.5-VL-7B
+                                                                                                        Retinal OCT-C8                  57.19
+intended for clinical application, ensuring its decisions are                                           Diabetic Retinopathy            70.80
+transparent and trustworthy is paramount. To this end, we                                               Chest CT                        51.00
+qualitatively analyzed PathVLM-R1’s reasoning process by vi-                                            ISIC 2020                       34.20
+                                                                               HuatuoGPT-Vision-7B
+sualizing its cross-modal attention mechanisms. The heatmap                                             Retinal OCT-C8                  48.19
+                                                                                                        Diabetic Retinopathy            62.00
+generation process is technically intricate. First, we program-
+matically construct a mask to isolate the indices of pure text                                          Chest CT                        40.60
+                                                                                                        ISIC 2020                       45.40
+tokens; this is achieved by identifying the index ranges corre-                PathVLM-γ
+                                                                                                        Retinal OCT-C8                  45.80
+sponding to image tokens (demarcated by < |vision start| >                                              Diabetic Retinopathy            32.00
+and < |vision end| >) and excluding them, while also filtering                                          Chest CT                        44.00
+out special control symbols. With this text-position mask, we                  Ours (PathVLM-R1)
+                                                                                                        ISIC 2020                       80.00
+proceed to the attention matrices within each transformer layer.                                        Retinal OCT-C8                  49.20
+                                                                                                        Diabetic Retinopathy            59.80
+For each layer, we average the attention matrix across all
+heads, then select the attention weights corresponding to the
+flow from the text positions to all tokens in the sequence. By
+averaging these weights along the text dimension, we derive             precisely localized over this specific area of interest. This
+a single vector representing the collective attention from the          strong visual grounding confirms that the model’s textual rea-
+entire text block to every token (both text and image). We              soning—identifying a ”membranous distribution”—is directly
+then isolate the segment of this vector that corresponds to             based on the correct visual evidence from the image. This
+the image patches, which yields a final vector quantifying the          alignment between the model’s visual focus and its generated
+overall textual focus on each part of the image. This vector            explanation provides clear evidence of its interpretability and
+is subsequently normalized, reshaped into a two-dimensional             enhances the trustworthiness of its diagnostic process.
+grid, and finally interpolated and overlaid onto the original
+input image.                                                                                       V. D ISCUSSION
+   As shown in Fig.7, the model was tasked with identi-                    Interpretation of Principal Findings Our primary finding
+fying a staining pattern within a specific ”peripheral in-              is that a staged training strategy is crucial for adapting large
+sert” of the pathology image. The attention heatmap reveals             models to specialized domains like pathology. We observed
+that the model’s high-intensity focus (yellow/red regions) is           that directly applying reinforcement learning to a base model
+10                                                                                   IEEE JOURNAL OF BIOMEDICAL AND HEALTH INFORMATICS
+
+
+
+                                                                                Original Input Image            Attention Heatmap of the Model
+
+
+
+
+                                                                              Focusing on the peripheral insert, what is the pattern of the brown
+                                                                              staining indicative of immunohistochemical reactivity?
+                                                                              Options:
+                                                                              A) Staining within the extracellular matrix      B) Nuclear localization
+                                                                              C) Cytoplasmic localization                D) Membranous distribution
+
+                                                                              Think: The brown staining pattern seen in the peripheral insert of the
+                                                                              image indicates immunohistochemical reactivity localized to the cell
+                                                                              membrane of the epithelial cells, not the nuclei or cytoplasmic areas,
+                                                                              and it is not staining within the extracellular matrix.
+                                                                              Answer: D) Membranous distribution
+
+
+                                                                       Fig. 7. Visual Grounding of PathVLM-R1’s Reasoning via Attention
+Fig. 6.     Changes in model accuracy across different optimization    Heatmap. This figure provides a qualitative example of the model’s inter-
+stages. The model’s performance is significantly improved across all   pretability.(Left Panel) The input provided to the model, which includes
+three training steps.                                                  the original pathology image, a question focused on the peripheral
+                                                                       insert, and the ground truth answer.(Right Panel) The model’s output,
+                                                                       including the generated reasoning chain (think) and the correct final
+                                                                       answer (answer). The attention heatmap, generated by aggregating
+                                                                       attention scores from the model’s transformer layers, is overlaid on
+(PathVLM-Epsilon) yielded unstable and suboptimal perfor-              the original image. The heatmap’s high-intensity regions (yellow/red)
+mance, even though it surpassed its direct SFT counterpart             are precisely localized over the peripheral insert, confirming that the
+(PathVLM-Delta). This supports our hypothesis that without             model bases its reasoning—specifically identifying the ”membranous
+                                                                       distribution”—on the correct visual evidence. This demonstrates a strong
+a foundational layer of domain knowledge, the model’s ex-              cross-modal alignment and enhances the trustworthiness of the model’s
+ploration during RL can be inefficient and may lead to the             diagnostic process.
+learning of superficial strategies. The initial SFT phase, which
+produced PathVLM-Alpha, proved to be an indispensable step                                         TABLE V
+for knowledge injection, establishing a robust foundation upon           I N - DOMAIN ACCURACY OF PATH VLM-R1 AND ITS P REDECESSOR
+which complex reasoning capabilities could be built. Further-           M ODELS ACROSS S TAGED T RAINING P IPELINE (ACC. REPRESENTS
+more, the significant performance increase from PathVLM-                                          ACCURACY ).
+
+Beta to our final PathVLM-R1 model highlights the superiority
+                                                                                         Model                        Accuracy (%)
+of supervising the reasoning process itself, not merely the
+final outcome. By incorporating a cross-modal process reward,                            Qwen2.5-VL-3B                     44.50
+                                                                                         Qwen2.5-VL-7B                     51.60
+we guided the model to develop reasoning chains that are                                 Qwen2.5-VL-32B                    54.20
+more logically sound and aligned with medical knowledge,                                 PathVLM-α-3B                      54.60
+directly addressing the ”black box” challenge in clinical AI.                            PathVLM-β-3B                      56.90
+The exceptional parameter efficiency of our approach, where                              PathVLM-γ-3B                      54.40
+                                                                                         PathVLM-δ-3B                      52.10
+our 7B model outperformed a 32B model, suggests that                                     PathVLM-ϵ-3B                      49.60
+sophisticated training architecture is a more effective path to
+                                                                                         PathVLM-α-7B                      57.60
+specialized expertise than sheer model scale.                                            PathVLM-β-7B                      63.90
+   Interpretation of Clinical Implications The clinical impli-                           PathVLM-γ-7B                      59.90
+                                                                                         PathVLM-δ-7B                      52.90
+cations of PathVLM-R1 extend significantly beyond its accu-                              PathVLM-ϵ-7B                      56.10
+racy improvements, primarily by addressing the critical barrier
+                                                                                         Ours (PathVLM-R1)                 65.50
+of clinical trust in medical AI. Unlike opaque ”black box”
+models, our approach yields an auditable ”glass box” partner.
+The model generates explicit, interpretable reasoning chains ,
+allowing clinicians to scrutinize the diagnostic logic (as shown       nuclear size and shape), whereas the baseline model failed
+in Fig. I) . This trust is further solidified by the model’s strong    by focusing on only a single factor. The model’s resulting
+visual grounding; attention heatmaps (Fig. 7) confirm that its         capability suggests its potential as a powerful decision-support
+textual reasoning—such as identifying a ”membranous distri-            tool to reduce diagnostic variability and improve accuracy,
+bution”—is directly anchored to the correct visual evidence,           particularly in morphologically ambiguous cases that demand
+namely the ”peripheral insert” in the image. This verifiable           nuanced interpretation. Furthermore, the model’s remarkable
+reasoning process is directly coupled with enhanced diagnostic         generalization, evidenced by its 80.00% accuracy on the ISIC
+utility. As demonstrated in the differentiation of ”Pleomor-           2020 dermoscopy dataset, carries profound implications. The
+phism” from ”Anisonucleosis” (Fig. I), PathVLM-R1 succeeds             successful knowledge transfer from microscopic pathology
+by comprehensively evaluating multiple visual features (both           slides to macroscopic surface lesions strongly indicates that the
+WU et al.: PATHVLM-R1: A REINFORCEMENT LEARNING-DRIVEN REASONING MODEL FOR PATHOLOGY VISUAL-LANGUAGE TASKS                                     11
+
+
+
+model has learned fundamental pathological principles rather           The study not only provides a new perspective for auto-
+than superficial image features. This validates our staged train-   mated reasoning in pathology image diagnostics but also lays
+ing paradigm as a parameter-efficient and effective pathway for     the groundwork for multi-scenario applications across other
+developing robust, interpretable foundational models poised         medical imaging modalities. Looking ahead, PathVLM-R1 is
+for diverse clinical applications.                                  poised to further enhance performance in diverse application
+   Analysis of Out-of-domain Data Results Despite these             domains through richer data training and optimization strate-
+promising results, we acknowledge several limitations in our        gies, advancing the automation of medical image analysis.
+current work. Our process reward mechanism is contingent            We believe that as algorithms, computational power, and data
+upon the evaluative capabilities of GPT-4o. Although we             evolve, PathVLM-R1 can be extended to broader clinical sce-
+confirmed its scoring consistency through independent runs,         narios, contributing to the development of precision medicine
+this external model is not a certified pathology expert and may     and intelligent healthcare.
+harbor inherent biases or knowledge gaps, which could intro-
+duce subtle noise into our reward signal. Secondly, our study                                       R EFERENCES
+was primarily conducted using the PathMMU dataset, which is
+centered on multiple-choice question-answering tasks. While
+this is a valuable benchmark, the model’s proficiency in more        [1] Z. Huang, F. Bianchi, M. Yuksekgonul, T. J. Montine, and J. Zou, “A
+                                                                         visual–language foundation model for pathology image analysis using
+open-ended, generative tasks—such as composing a full diag-              medical Twitter,” Nature Medicine, vol. 29, no. 9, pp. 2307–2316, 2023.
+nostic report from a slide—or its ability to handle rare diseases    [2] M. Y. L. et al., “A multimodal generative AI copilot for human
+not represented in the training data remains unverified. Lastly,         pathology,” Nature, vol. 634, no. 8033, pp. 466–473, 2024.
+                                                                     [3] J. Li, R. Selvaraju, A. Gotmare, S. Joty, C. Xiong, and S. C. H.
+while PathVLM-R1 demonstrated excellent generalization to                Hoi, “Align before fuse: Vision and language representation learning
+the closely related domain of dermoscopy, its performance                with momentum distillation,” in Proceedings of the Advances in Neural
+gains were more modest on modalities with disparate imaging              Information Processing Systems, 221, pp. 9694–9705.
+                                                                     [4] C. Li, C. Wong, S. Zhang, N. Usuyama, H. Liu, J. Yang, T. Naumann,
+principles, such as Chest CT and Retinal OCT, indicating that            H. Poon, and J. Gao, “LLaVA-Med: Training a large language-and-vision
+the boundaries of its cross-modal knowledge transfer still need          assistant for biomedicine in one day,” in Proceedings of the Advances
+to be expanded.                                                          in Neural Information Processing Systems, 2023, pp. 28 541–28 564.
+                                                                     [5] Y. Xin, G. C. Ates, K. Gong, and W. Shao, “Med3DVLM: An
+   Future Research Directions Building upon our findings                 efficient vision-language model for 3D medical image analysis,”
+and acknowledging these limitations, we identify several key             arXiv:2403.07826, 2024.
+avenues for future research. To mitigate the reliance on a single    [6] D. G. et al., “DeepSeek-R1: Incentivizing reasoning capability in LLMs
+                                                                         via reinforcement learning,” arXiv:2501.12948, 2025.
+AI evaluator, we plan to refine the reward model by incorporat-      [7] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov,
+ing feedback from human pathology experts, thereby creating              “Proximal policy optimization algorithms,” arXiv:1707.06347, 2017.
+a more accurate and professionally aligned human-in-the-loop         [8] H. Lightman, V. Kosaraju, Y. Burda, H. Edwards, B. Baker, T. Lee,
+                                                                         J. Leike, J. Schulman, I. Sutskever, and K. Cobbe, “Let’s verify step
+system. We also intend to expand the scope of our work by                by step,” in Proceedings of the International Conference on Learning
+training on more diverse datasets, particularly those including          Representations, 2023.
+Whole Slide Images (WSIs), and by tackling more complex              [9] H. L. et al., “RLAIF vs. RLHF: Scaling reinforcement learning from
+                                                                         human feedback with AI feedback,” arXiv:2309.00267, 2023.
+tasks such as automated report generation and patient prog-         [10] Z. S. et al., “DeepSeekMath: Pushing the limits of mathematical
+nosis prediction. To improve generalization, we will explore             reasoning in open language models,” arXiv:2402.03300, 2024.
+methods for strategically integrating a wider variety of medical    [11] A. G. et al., “The Llama 3 herd of models,” arXiv:2407.21783, 2024.
+                                                                    [12] G. T. et al., “Gemma 2: Improving open language models at a practical
+imaging modalities into the training process. Ultimately, our            size,” arXiv:2408.00118, 2024.
+goal is to advance this research toward prospective clinical        [13] S. B. et al., “Qwen2.5-VL technical report,” arXiv:2502.13923, 2025.
+validation, deploying PathVLM-R1 in real-world workflows            [14] J. Bai, S. Bai, S. Yang, S. Wang, S. Tan, P. Wang, J. Lin, C. Zhou, and
+                                                                         J. Zhou, “Qwen-VL: A versatile vision-language model for understand-
+to rigorously assess its utility and safety as a collaborative           ing, localization, text reading, and beyond,” arXiv:2308.12966, 2023.
+tool for pathologists.                                              [15] H. L. et al., “DeepSeek-VL: Towards real-world vision-language under-
+                                                                         standing,” arXiv:2403.05525, 2024.
+                                                                    [16] H. Liu, C. Li, Q. Wu, and Y. J. Lee, “Visual instruction tuning,” in
+                      VI. C ONCLUSION                                    Proceedings of the Advances in Neural Information Processing Systems,
+                                                                         2023, pp. 34 892–34 916.
+   This paper introduces PathVLM-R1, a visual-language rea-         [17] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez,
+soning model tailored for pathology images, capable of effec-            L. Kaiser, and I. Polosukhin, “Attention is all you need,” in Proceedings
+                                                                         of the Advances in Neural Information Processing Systems, 2017, pp.
+tively enhancing reasoning capability and diagnostic accuracy.           5998–6008.
+By employing a combined strategy of supervised fine-tuning          [18] H. Yang, H. Lu, X. Zeng, Y. Liu, X. Zhang, H. Yang, Y. Zhang,
+and reinforcement learning based on Qwen2.5-VL-7B-Instruct,              S. Huang, Y. Wei, and W. Lam, “Stephanie: Step-by-step dialogues for
+                                                                         mimicking human interactions in social conversations,” arXiv preprint
+we achieved the infusion of pathological knowledge and struc-            arXiv:2407.04093, 2024.
+tured construction of the reasoning process. Experimental re-       [19] P. R. et al., “CheXNet: Radiologist-level pneumonia detection on chest
+sults demonstrate that PathVLM-R1 significantly outperforms              x-rays with deep learning,” arXiv:1711.05225, 2017.
+                                                                    [20] Y. Su, D. Li, and X. Chen, “Lung nodule detection based on faster R-
+traditional models across various medical imaging domains,               CNN framework,” Computer Methods and Programs in Biomedicine,
+particularly excelling in pathology image question-answering             vol. 200, p. 105866, 2021.
+tasks. Its dual-reward mechanism effectively integrates inter-      [21] S. Eslami, C. Meinel, and G. D. Melo, “PubMedCLIP: How much
+                                                                         does CLIP benefit visual question answering in the medical domain?”
+pretability of the process with result accuracy, showcasing              in Proceedings of the Findings of the Association for Computational
+strong adaptability and generalization capabilities.                     Linguistics: EACL, 2023, pp. 1181–1193.
+12                                                                               IEEE JOURNAL OF BIOMEDICAL AND HEALTH INFORMATICS
+
+
+
+[22] K. Yan, Y. Liu, J. Li, J. Cao, and D. Zhou, “Pathological image
+     segmentation of breast cancer via template matching,” IEEE Journal
+     of Biomedical and Health Informatics, pp. 1–12, 2025.
+[23] Z. Hu, J. Wang, Q. Gao, Z. Wu, H. Xu, Z. Guo, J. Quan, L. Zhong,
+     M. Du, T. Tong, and G. Chen, “Weakly supervised classification for
+     nasopharyngeal carcinoma with Transformer in whole slide images,”
+     IEEE Journal of Biomedical and Health Informatics, vol. 28, no. 12,
+     pp. 7251–7262, 2024.
+[24] J. Zhang, J. Huang, S. Jin, and S. Lu, “Vision-language models for vision
+     tasks: A survey,” IEEE Transactions on Pattern Analysis and Machine
+     Intelligence, 2024.
+[25] J. P. et al., “MedVLM-R1: Incentivizing medical reasoning capabil-
+     ity of vision-language models (VLMs) via reinforcement learning,”
+     arXiv:2502.19634, 2025.
+[26] X. Feng, D. Wang, Q. Pan, M. Yan, X. Liu, Y. Shen, L. Fang, G. Cai,
+     and G. Ning, “Reinforcement learning model for managing noninvasive
+     ventilation switching policy,” IEEE Journal of Biomedical and Health
+     Informatics, vol. 27, no. 8, pp. 4120–4130, 2023.
+[27] P. F. Christiano, J. Leike, T. Brown, M. Martic, S. Legg, and D. Amodei,
+     “Deep reinforcement learning from human preferences,” in Proceedings
+     of the Advances in Neural Information Processing Systems, 2017.
+[28] J. A. et al., “GPT-4 technical report,” arXiv:2303.08774, 2023.
+[29] G. Sheng, C. Zhang, Z. Ye, X. Wu, W. Zhang, R. Zhang, Y. Peng, H. Lin,
+     and C. Wu, “HybridFlow: A flexible and efficient RLHF framework,”
+     arXiv:2409.19256, 2024.
+[30] H. Lee, S. Phatale, H. Mansoor, K. R. Lu, T. Mesnard, J. Ferret,
+     C. Bishop, E. Hall, V. Carbune, and A. Rastogi, “RLAIF: Scal-
+     ing reinforcement learning from human feedback with AI feedback,”
+     arXiv:2309.00267, 2023.
+[31] L. O. et al., “Training language models to follow instructions with
+     human feedback,” in Proceedings of the Advances in Neural Information
+     Processing Systems, 2022, pp. 27 730–27 744.
+[32] Y. B. et al., “Constitutional AI: Harmlessness from AI feedback,”
+     arXiv:2212.08073, 2022.
+[33] X. Pang, S. Tang, R. Ye, Y. Xiong, B. Zhang, Y. Wang, and S. Chen,
+     “Self-alignment of large language models via monopolylogue-based
+     social scene simulation,” arXiv:2402.05699, 2024.
+[34] Y. S. et al., “PathMMU: A massive multimodal expert-level benchmark
+     for understanding and reasoning in pathology,” in Proceedings of the
+     European Conference on Computer Vision, 2024, pp. 56–73.
+[35] Y. Sunne, “Chest CT-Scan images Dataset,” [Online]. Available: https:
+     //tianchi.aliyun.com/dataset/93929, 2021.
+[36] V. R. et al., “A patient-centric dataset of images and metadata for
+     identifying melanomas using clinical context,” Scientific Data, vol. 8,
+     no. 1, p. 34, 2021.
+[37] M. Subramanian, K. Shanmugavadivel, O. S. Naren, K. Premkumar,
+     and K. Rankish, “Classification of retinal OCT images using deep
+     learning,” in Proceedings of the International Conference on Computing,
+     Communication and Informatics, 2022, pp. 1–7.
+[38] A. T. Platform, “Diabetic Retinopathy Arranged Dataset,” [On-
+     line]. Available: https://tianchi.aliyun.com/dataset/93926, 2023, ac-
+     cessed: 2021-03-10.
+[39] Y. Hu, T. Li, Q. Lu, W. Shao, J. He, Y. Qiao, and P. Luo, “Om-
+     niMedVQA: A new large-scale comprehensive evaluation benchmark
+     for medical LVLM,” in Proceedings of the IEEE/CVF Conference on
+     Computer Vision and Pattern Recognition, 2024, pp. 22 170–22 183.
+

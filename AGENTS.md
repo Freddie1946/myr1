@@ -9,8 +9,9 @@ Before changing files or launching work, read completely:
 1. `CODEX_START_HERE.md`
 2. `docs/LATEST.md`
 3. The timestamped documents referenced by `docs/LATEST.md`
-4. `protocol/training_plan.md`
-5. `protocol/code_hash_manifest_20260712_144811.json`
+4. `manuscript/README.md` and the materials in its mandatory reading order
+5. `protocol/training_plan.md`
+6. `protocol/code_hash_manifest_20260712_144811.json`
 
 Do not rely on chat memory from another machine. The Git repository is the authoritative handoff record.
 
@@ -81,4 +82,3 @@ Before formal Outcome GRPO:
 - Never commit model weights, images, venvs, caches, generated outputs, credentials, or API keys.
 - Preserve unrelated user changes and dirty working trees.
 - Do not force-push or rewrite shared history without explicit permission.
-

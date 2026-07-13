@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-07-13T20:00:11+08:00",
+  "source_root": "/home/wjy/Majorrevision",
+  "public_upload_authorized_by_user": true,
+  "pdf_text_extractor": "Poppler pdftotext 24.08.0, layout mode, UTF-8",
+  "files": {
+    "environment/baseline_repos_and_envs.md": "a499adfbeeb81e41e0d31766d0e72a3539172fc58d359a9c94f635c73326d78d",
+    "environment/reproducible_env_commands.md": "06f8ad9fe7b2458aa2a21b52b962f3abf4208ebaf6cbc64712f5fd40c9ceec2b",
+    "paper/PathVLM-R1_manuscript.pdf": "e4aed159424d9df18df3d9f8e1150c30a863ff00220d14f7c905c868083d8928",
+    "paper/PathVLM-R1_manuscript_extracted.txt": "e61bb1c490746d6d2e8eee276bd3efcea9d15aed537b9ad1219219d223385ce5",
+    "reviews/JBHI-06328-2025_decision_and_reviews.pdf": "a1ad5e90be31082aa239e0c5c79a3d60dfe0bd61430bf133bfb448c5408233c7",
+    "reviews/JBHI-06328-2025_decision_and_reviews_extracted.txt": "7441f1935a3fd9c9d8f756cec6c3086b9a6ffdb67fd5ea81c0ae9fcb43491424",
+    "reviews/reviewer_1_notes.md": "3663bcccf93619bbbda4e47fe673d3b89778e2140930b53f6a821a09a344fd50",
+    "revision/code_version_audit.md": "1856205d310f5941b99921473fdae050de47b9ff9169444a9cf985a94c5cef0e",
+    "revision/revision_execution_log.md": "2ed8c7cfa1cddc45ad4e408b9be0628b43d5bba35968ef8875b79b7d1a15a5b5",
+    "revision/revision_todo_priorities.md": "cac95b443a351c310061165b9ed6e0af0fdf0b64e3a423445bb92d8bab0292ef"
+  }
+}

@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260712_213340`
+Latest timestamp: `20260713_200011`
 
 Read in this order:
 
@@ -23,14 +23,16 @@ Read in this order:
 17. `20260712_191813_git_based_codex_handoff_plan.md`
 18. `20260712_192846_formal_git_handoff_implemented.md`
 19. `20260712_213340_pathmmu_download_and_processing.md`
-20. `../CODEX_START_HERE.md`
-21. `../protocol/code_hash_manifest_20260712_213340.json`
-22. `../protocol/code_hash_manifest_20260712_192846.json`
-23. `../protocol/code_hash_manifest_20260712_144811.json`
-24. `../protocol/debug_proxy_model_manifest.json`
-25. `../protocol/training_plan.md`
-26. `../protocol/old_sft_audit.md`
-27. The latest manifest under `../debug_e2e/`
+20. `20260713_200011_manuscript_and_reviews_added.md`
+21. `../manuscript/README.md` and its mandatory reading order
+22. `../CODEX_START_HERE.md`
+23. `../protocol/code_hash_manifest_20260712_213340.json`
+24. `../protocol/code_hash_manifest_20260712_192846.json`
+25. `../protocol/code_hash_manifest_20260712_144811.json`
+26. `../protocol/debug_proxy_model_manifest.json`
+27. `../protocol/training_plan.md`
+28. `../protocol/old_sft_audit.md`
+29. The latest manifest under `../debug_e2e/`
 
 Current next actions: on the formal machine, obtain gated PathMMU access, authenticate with Hugging
 Face, clone the handoff branch, and run bootstrap/preflight. Attempt04 remains pending two free debug

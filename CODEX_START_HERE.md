@@ -130,6 +130,7 @@ Not finalized. Read `docs/20260712_144517_stage3_process_reward_decisions_pendin
 - `scripts/pathmmu_rewards.py`: shared online/offline reward implementation.
 - `scripts/test_pathmmu_rewards.py`: mandatory reward regression tests.
 - `protocol/`: model/data/code manifests and training plan.
+- `manuscript/README.md`: paper, editorial decision, reviewer comments, and revision-record index.
 
 ## What not to do
 

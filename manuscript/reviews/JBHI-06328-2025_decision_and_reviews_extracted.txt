@@ -1,0 +1,407 @@
+转发：JBHI-06328-2025
+
+zengxh@fudan.edu.cn <zengxh@fudan.edu.cn>
+
+发件⼈ zengxh@fudan.edu.cn
+收件⼈ haoyang24@m.fudan.edu.cn
+⼤⼩   0K
+时间   2026年06⽉19⽇ 07:09
+
+
+
+
+发⾃我的⼿机
+
+
+
+
+-------- 原始邮件 --------
+发件⼈： IEEE Journal of Biomedical and Health Informatics
+<onbehalfof@manuscriptcentral.com>
+⽇期： 2026年6⽉19⽇周五 半夜12:05
+收件⼈： zengxh@fudan.edu.cn
+主 题： JBHI-06328-2025
+
+18-Jun-2026
+
+
+JBHI Ref: JBHI-06328-2025
+Reject/Resubmit (major revision and new external review
+required)
+
+Dear Prof. Xinhua ZENG,
+
+
+This letter is to inform you that the peer review process has
+concluded for manuscript, "PathVLM-R1: A Reinforcement
+Learning-Driven Reasoning Model for Pathology Visual-
+Language Tasks," which you had submitted for possible
+publication in the IEEE Journal of Biomedical and Health
+Informatics (J-BHI).
+
+
+The Associate Editor responsible for your manuscript review
+has received feedback from independent reviewers and
+compiled their evaluations. It is the recommendation of the
+Associate Editor and the Editor-in-Chief that your
+manuscript requires a MAJOR REVISION before it can be
+accepted for publication in J-BHI. Please note the J-BHI
+Editorial Policy that only one major revision is allowed for any
+submitted manuscript. This means that if the review
+recommendation for your revised paper triggers another
+major revision, the paper will be rejected automatically.
+
+
+Enclosed, please find the comments by the Associate Editor
+and all the reviewers. I hope that the feedback is helpful for
+further improving the quality of your manuscript. If you
+decide to resubmit a revised manuscript, this must be done
+within 10 weeks (not extendable) from the date of this
+message. Please quote the above manuscript reference
+number for all future correspondence.
+
+
+*IMPORTANT: PLEASE RETURN THE IEEE JBHI AUTHOR
+PORTAL TO SUBMIT ALL FILES:
+https://ieee.submission.researchexchange.com/journal/j
+bhi-embs
+
+
+Also note that it is mandatory to enter your replies to the
+reviewers' questions and indicate how you have dealt with
+their comments in the revised manuscript. Please include
+your replies in the authors' response section or a separate
+file with a point-by-point explanation of all the changes
+made. Please do NOT include it in the cover letter since this
+is not accessible by the reviewers. For submitting your
+revised manuscript, please ensure all changes are
+highlighted in the manuscript to facilitate the review process.
+
+
+Citing/including papers suggested by the reviewers or the
+Associate Editor is up to the authors and only if they add
+value to your work. Please also report
+to ontolimatics@gmail.com any suspicious suggestion by the
+reviewers.
+
+
+The authors are responsible to follow the J-BHI publication
+rules for maximum number of pages, quality of figures, etc.
+as they are mentioned in:
+https://www.embs.org/jbhi/prepare-and-submit-your-
+manuscript/
+On the opposite your article might need to be returned to
+you and the review process will be delayed and in case of
+acceptance no publication is possible.
+
+
+Please carefully read about how to prepare your manuscript
+and note the mandatory charge for over-length papers as
+imposed by IEEE in the website of J-BHI
+(https://www.embs.org/jbhi/prepare-and-submit-your-
+manuscript/).
+
+
+Thank you very much for considering JBHI to publish your
+research work.
+
+
+Sincerely,
+
+
+Prof. Peter Elkin
+Editor-in-Chief
+
+
+Cc: file
+
+
+Associate Editor's comments to the authors:
+Associate Editor
+Comments to the Author:
+The Reviewers agree that this paper provides some
+interesting ideas. Howevr, there are several open questions
+and weaknesses that should be carefully addressed before a
+new round of reviews.
+
+
+For submitting your revised manuscript, please ensure all
+changes are clearly highlighted in the manuscript and
+explained in detail in the rebuttal to facilitate the review
+process.
+
+
+Reviewers' comments to the authors:
+Reviewer: 1
+
+
+Comments to the Corresponding Author
+This paper proposes PathVLM-R1, a visual-language model
+specifically designed for pathological image analysis. The
+authors' motivation to address the "black-box" nature of
+medical visual-language models aligns well with the scope
+of JBHI. By adapting concepts from reasoning models like
+DeepSeek-R1 and DeepSeek-Math to pathology image
+analysis, the authors have achieved good results,
+demonstrating value in applied innovation.
+
+
+However, there are several methodological and presentation
+issues that need to be addressed.
+
+
+Concerns:
+1. A foundational premise of this study relies on using GPT-
+4o as a surrogate medical expert to establish the reward
+mechanism. Although Figure 4 demonstrates the
+consistency of GPT-4o's evaluations across multiple trials,
+this consistency does not inherently prove clinical accuracy.
+While the authors acknowledge this limitation, the paper
+would be significantly strengthened if a small-scale
+validation study were conducted comparing GPT-4o's
+reward scores with those of human experts, thereby
+justifying the validity of this approach.
+
+
+2. It is highly important to include an analysis of typical
+failure cases of the model (e.g., when diagnosing rare
+diseases). This will help to clearly articulate the model's
+current limitations and outline concrete directions for future
+improvement.
+
+
+3.The authors repeatedly emphasize the model's
+"remarkable cross-modal transferability." However, while its
+performance on the ISIC 2020 dataset is impressive
+(80.00%), its accuracy on Chest CT and Retinal OCT-C8 is
+actually lower than that of the baseline model, Qwen2.5-VL-
+7B (as shown in Table IV). The authors must provide a
+thorough explanation for this performance degradation in
+certain modalities.
+
+
+4. In the methodology section describing the reward
+mechanism, the authors state that 0.4 points are deducted
+for each missing reasoning step. What is the empirical basis
+or rationale for choosing this specific penalty value? Please
+clarify.
+
+
+5. Regarding the evaluation criteria, it is noted that GPT-4o is
+used both to construct the reward mechanism during the
+reinforcement learning phase and later as the evaluator for
+the final model performance. This dual role creates a circular
+evaluation loop, rendering the current evaluation system
+insufficiently objective and rigorous.
+
+
+6. Figure 4 is too small, making the text and details difficult
+to read. Please improve its resolution and enlarge it for better
+legibility.
+
+
+7. In Table II, please explicitly specify the experimental
+configurations or prompting strategies used for the "Large-
+parameter models" and "Comparable-parameter models" to
+ensure a fair and transparent comparison.
+
+
+8. The attention heatmap in Figure 7 lacks a color scale bar,
+making it impossible for readers to quantify the intensity of
+the attention weights accurately.
+
+
+9.There is a noticeable mix of terminology throughout the
+manuscript. For example, "PathVLM-α" and "PathVLM-
+Alpha", as well as "procedural loss" and "process reward",
+are used interchangeably. Please thoroughly proofread the
+manuscript and standardize these terms globally.
+
+
+Reviewer: 2
+
+
+Comments to the Corresponding Author
+This manuscript proposes PathVLM-R1, a pathology visual-
+language model built on Qwen2.5-VL-7B-Instruct and
+optimized through staged supervised fine-tuning and
+GRPO-based reinforcement learning. The main technical
+idea is a dual-reward mechanism combining answer/format
+rewards with a GPT-4o-based cross-modal process reward
+for evaluating the generated reasoning chain. The topic is
+timely, and the staged comparison between SFT, outcome-
+only RL, and process-aware RL is a useful direction.
+
+
+However, I have several major concerns.
+
+
+First, the experimental setting is too limited for the strength
+of the claims. The study mainly uses a small subset of
+PathMMU, with 3,000 samples for SFT, 1,000 samples for
+RL, and 1,385 samples for testing/validation. This is a small
+data regime for adapting a 7B VLM, especially with many
+optimization steps. The paper should avoid claims of a
+broadly generalizable or foundational pathology model
+unless substantially stronger evidence is provided.
+
+
+Second, the train/test split is not sufficiently specified. Since
+PathMMU may contain multiple Q&A pairs per image, it is
+important to clarify whether the split was performed at the
+Q&A-entry level, image level, or case/patient level. If the
+same image appears in both training/RL and testing with
+different questions, the reported performance may
+overestimate generalization. Please provide image-level and
+case-level de-duplication details across SFT, RL, validation,
+and test sets.
+
+Third, the baseline comparison is incomplete. The
+manuscript compares with several general or medical VLMs,
+but does not include enough pathology-specific VLM/LMM
+baselines, including strong non-RL pathology models. Since
+the paper claims superior performance on pathology visual-
+language tasks, comparison with representative pathology-
+specialized models is necessary. Otherwise, it is difficult to
+determine whether the gain comes from the proposed dual-
+reward RL strategy or from comparing against less domain-
+adapted baselines.
+
+
+Fourth, the GPT-4o reward mechanism needs more detail
+and validation. Please clarify whether GPT-4o rewards are
+computed online during RL or precomputed/cached offline,
+and report the exact prompts, model version, decoding
+parameters, parsing/fallback rules, number of calls, and cost.
+Since GPT-4o is given the standard answer, the process
+reward may partly evaluate answer-consistent rationalization
+rather than faithful visual reasoning. Human pathologist
+validation of the reward scores would strengthen the paper.
+
+
+Finally, the evaluation scope remains narrow. The current
+evaluation is mainly multiple-choice pathology VQA on a
+subset of PathMMU. Additional evaluations on official
+PathMMU splits and independent pathology benchmarks
+would make the empirical conclusions more convincing. The
+paper should also report results on the full held-out set
+rather than only a 500-sample comparison, and provide
+confidence intervals or repeated-run statistics.
+
+
+Overall, the dual-reward idea is potentially interesting, but
+the current manuscript requires substantial additional
+experiments, clearer data-splitting details, stronger
+pathology-specific comparisons, and more cautious claims.
+
+
+Reviewer: 3
+
+
+Comments to the Corresponding Author
+This manuscript presents PathVLM-R1, a pathology visual-
+language model built on Qwen2.5-VL-7B-Instruct. The
+method uses a staged post-training pipeline: supervised
+fine-tuning for pathology knowledge injection, followed by
+reinforcement learning with GRPO using outcome rewards
+and a GPT-4o-based cross-modal process reward. The
+authors report improved in-domain performance on
+PathMMU pathology VQA tasks and argue that the model
+provides more interpretable reasoning and cross-modal
+generalization to other medical imaging modalities.
+
+
+While the paper addressing an important problem that
+attempted to improve reasoning transparency and
+diagnostic accuracy in pathology-oriented LLMs, several
+concerns have been raised from my side, they are:
+
+
+1. The claim of cross-modal transferability is not supported
+by the reported results. The manuscript claims strong cross-
+modal transferability, but Table IV does not support this
+conclusion. Compared with Qwen2.5-VL-7B, PathVLM-R1
+improves only on ISIC 2020, from 56.59% to 80.00%.
+However, it performs worse on the other three out-of-
+domain datasets: Chest CT decreases from 48.60% to
+44.00%, Retinal OCT-C8 decreases from 57.19% to 49.20%,
+and Diabetic Retinopathy decreases from 70.80% to
+59.80%. Therefore, the evidence does not justify a general
+claim of cross-modal transferability. The authors should
+either substantially tone down this claim or provide stronger
+out-of-domain experiments, modality-wise analysis, and
+statistical validation.
+
+
+2. The manuscript uses a single attention heatmap in Fig. 7
+to support visual grounding and states that it provides clear
+evidence of interpretability and enhances trustworthiness.
+However, this is only a qualitative showcase. A single
+example cannot substantiate broad claims about
+interpretability or trustworthiness. Moreover, attention maps
+do not necessarily provide faithful explanations of model
+decisions. The authors should add quantitative grounding or
+faithfulness evaluations, such as expert-rated localization,
+region-overlap metrics when annotations are available,
+counterfactual image perturbation, deletion/insertion tests,
+or evaluation across multiple representative cases.
+
+
+3. The overall pipeline: supervised fine-tuning followed by
+GRPO-based reinforcement learning with format, accuracy,
+and GPT-based process rewards, is a relatively standard
+recent reasoning-model training strategy. The paper should
+more clearly explain what is genuinely novel beyond applying
+this existing pipeline to pathology VQA. If the key
+contribution is the GPT-4o-based cross-modal process
+reward, the authors need stronger ablations showing that
+this component provides a clear and statistically meaningful
+improvement over SFT-only, outcome-reward-only, and
+simpler rule-based or model-based reward designs.
+
+
+4. The manuscript should provide a more detailed discussion
+of prominent pathology foundation-model and pathology
+VLM work, especially the line of work represented by UNI,
+CONCH, and PathChat from Mahmood Lab. Even if direct
+performance comparison is not feasible, the paper should
+clearly position PathVLM-R1 relative to these models in
+terms of task scope, training data, supervision strategy,
+model capability, clinical use case, and limitation.
+
+
+5. The paper emphasizes that PathVLM-R1 can achieve
+strong performance with only 3,000 SFT samples and 1,000
+RL samples. However, there is no systematic data scaling
+experiment. The authors should report how performance
+changes with different SFT and RL data sizes, for example
+500, 1,000, 2,000, and 3,000 SFT samples, as well as
+different RL sample budgets. This would help determine
+whether the reported gains are robust or dependent on a
+particular data size and split.
+
+
+6. The results are mainly presented as point estimates,
+without confidence intervals, significance tests, or repeated
+runs with different random seeds. Given the relatively limited
+test size and the sensitivity of VLMs to prompting and
+parsing rules, the authors should report variability across
+runs and provide statistical evidence that the improvements
+are reliable.
+
+
+7. GPT-4o is central to the proposed reward mechanism, and
+GPT-based scores are also used to evaluate reasoning
+quality. This may introduce circularity, because the model is
+partly optimized toward the same kind of judgment used for
+evaluation. The authors should validate the GPT-based
+reward against human pathologist assessments or use
+independent evaluator models and report agreement with
+expert judgments.
+
+
+8. There are typographical and formatting errors. For
+example, “Doubao-1.5-vison” should likely be “Doubao-1.5-
+vision.” The manuscript would benefit from careful
+proofreading for grammar, formatting, and consistency.
+
