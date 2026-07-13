@@ -127,6 +127,8 @@ Not finalized. Read `docs/20260712_144517_stage3_process_reward_decisions_pendin
 - `formal_machine/prepare_formal_data.py`: image-path rewrite and adapter generation.
 - `formal_machine/download_pathmmu.py`: gated download and frozen-image extraction.
 - `formal_machine/preflight_formal_machine.py`: hardware/environment/model/data gates.
+- `formal_machine/verify_frozen_splits.py`: CRLF/LF-aware frozen split hash and leakage gate.
+- `scripts/launch_formal_sft_smoke.sh`: audited formal SFT save/load/resume launcher.
 - `configs/`: debug and formal reference configurations.
 - `scripts/pathmmu_rewards.py`: shared online/offline reward implementation.
 - `scripts/test_pathmmu_rewards.py`: mandatory reward regression tests.

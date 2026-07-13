@@ -15,7 +15,7 @@ def sft_yaml(*, model: Path, lf_data: Path, ds: Path, output: Path, dataset: str
         if smoke
         else "num_train_epochs: 10\nlr_scheduler_type: cosine\nwarmup_ratio: 0.03"
     )
-    save = 'save_strategy: "no"\nsave_only_model: true' if smoke else "save_strategy: steps\nsave_steps: 100\nsave_only_model: false"
+    save = "save_strategy: steps\nsave_steps: 1\nsave_only_model: false" if smoke else "save_strategy: steps\nsave_steps: 100\nsave_only_model: false"
     return f"""### Generated formal-machine config. Review before launch.
 ### model
 model_name_or_path: {model}

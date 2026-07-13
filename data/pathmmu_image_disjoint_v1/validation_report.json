@@ -1,5 +1,11 @@
 {
   "version": "pathmmu_image_disjoint_v1",
+  "hash_policy": {
+    "algorithm": "sha256",
+    "recorded_serialization": "utf8_json_with_crlf_line_endings",
+    "git_checkout_serialization": "utf8_json_with_lf_line_endings",
+    "verification_script": "formal_machine/verify_frozen_splits.py"
+  },
   "checks": {
     "qa_partition_exact_union_5385": true,
     "image_overlap_counts": {

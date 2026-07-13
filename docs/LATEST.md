@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260713_200535`
+Latest timestamp: `20260713_203631`
 
 Read in this order:
 
@@ -25,17 +25,20 @@ Read in this order:
 19. `20260712_213340_pathmmu_download_and_processing.md`
 20. `20260713_200011_manuscript_and_reviews_added.md`
 21. `20260713_200535_formal_machine_codex_runbook.md`
-22. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-23. `../manuscript/README.md` and its mandatory reading order
-24. `../CODEX_START_HERE.md`
-25. `../protocol/code_hash_manifest_20260712_213340.json`
-26. `../protocol/code_hash_manifest_20260712_192846.json`
-27. `../protocol/code_hash_manifest_20260712_144811.json`
-28. `../protocol/debug_proxy_model_manifest.json`
-29. `../protocol/training_plan.md`
-30. `../protocol/old_sft_audit.md`
-31. The latest manifest under `../debug_e2e/`
+22. `20260713_203631_formal_protocol_and_sft_gate_correction.md`
+23. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+24. `../manuscript/README.md` and its mandatory reading order
+25. `../CODEX_START_HERE.md`
+26. `../protocol/code_hash_manifest_20260713_203631.json`
+27. `../protocol/code_hash_manifest_20260712_213340.json`
+28. `../protocol/code_hash_manifest_20260712_192846.json`
+29. `../protocol/code_hash_manifest_20260712_144811.json`
+30. `../protocol/debug_proxy_model_manifest.json`
+31. `../protocol/training_plan.md`
+32. `../protocol/old_sft_audit.md`
+33. The latest manifest under `../debug_e2e/`
 
-Current next actions: on the formal machine, obtain gated PathMMU access, authenticate with Hugging
-Face, clone the handoff branch, and run bootstrap/preflight. Attempt04 remains pending two free debug
-GPUs; Stage 3 remains pending user agreement.
+Current next actions: authenticate the approved PathMMU Hugging Face account, confirm allocated
+physical GPUs, render machine-local configuration, and run bootstrap/strengthened preflight. Then run
+the audited formal SFT save/load/resume smoke and report before any long training. Attempt04 remains
+pending on the old debug host; Stage 3 remains pending user agreement.

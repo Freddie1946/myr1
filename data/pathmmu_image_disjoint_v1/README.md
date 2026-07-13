@@ -43,3 +43,13 @@ RL subsets are nested and image-complete:
 - Subset seed: `20260711`
 - Full statistics and SHA256 hashes: `manifest.json`
 - Integrity checks: `validation_report.json`
+
+## Hash serialization note
+
+The hashes recorded when this data version was frozen were computed from the original
+UTF-8 JSON files with CRLF line endings. Git stores/checks out the same JSON content with
+LF line endings on this Linux machine, so a raw `sha256sum` of the checkout intentionally
+differs. `formal_machine/verify_frozen_splits.py` normalizes JSON line endings to CRLF,
+checks every recorded frozen hash, and independently rechecks counts, nested subsets,
+image completeness, and all pairwise image overlaps. This is a serialization correction,
+not a split or content change.

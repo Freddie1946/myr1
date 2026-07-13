@@ -64,7 +64,12 @@ fi
 log "Verifying repository code hashes"
 python3 "$REPO_ROOT/scripts/verify_code_hash_manifest.py" \
   --repo-root "$REPO_ROOT" \
-  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260712_213340.json"
+  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260713_203631.json"
+
+log "Verifying frozen split hashes and image-disjoint invariants"
+python3 "$REPO_ROOT/formal_machine/verify_frozen_splits.py" \
+  --split-root "$SPLIT_ROOT" \
+  --output "$REPORT_DIR/frozen_split_verification.json"
 
 log "Hardware snapshot"
 nvidia-smi
@@ -198,9 +203,11 @@ log "Running environment/model/data preflight"
   --install-root "$INSTALL_ROOT" \
   --model-dir "$MODEL_DIR" \
   --model-source-manifest "$MODEL_SOURCE_MANIFEST" \
+  --base-model-manifest "$REPO_ROOT/protocol/base_model_manifest.json" \
   --expected-model-id "$BASE_MODEL_ID" \
   --expected-revision "$BASE_MODEL_REVISION" \
   --data-root "$DATA_OUT" \
+  --split-verification "$REPORT_DIR/frozen_split_verification.json" \
   --output "$REPORT_DIR/preflight_report.json"
 
 cat > "$INSTALL_ROOT/FORMAL_PATHS.env" <<EOF
@@ -220,4 +227,4 @@ log "SETUP COMPLETE"
 log "Preflight report: $REPORT_DIR/preflight_report.json"
 log "Persistent paths: $INSTALL_ROOT/FORMAL_PATHS.env"
 log "Generated configs: $INSTALL_ROOT/generated_configs"
-log "Next: ask Codex to read AGENTS.md and CODEX_START_HERE.md, then prepare a one-step formal-hardware smoke run."
+log "Next: review GPU allocation, then run scripts/launch_formal_sft_smoke.sh for the save/reload/resume gate."

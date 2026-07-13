@@ -9,12 +9,15 @@
 - Formal seeds: 42, 43, 44 for the full-data model.
 - Scaling subsets: 500, 1000, 2000, 3000 QA; seed 42 for initial scaling runs.
 
-The old 7B full-fine-tuning configuration OOMed on 4x4090 at AdamW state allocation. Before selecting the final method, run controlled smoke tests for:
+The old 7B full-fine-tuning configuration OOMed on 4x4090 at AdamW state allocation.
+The revised formal protocol is no longer method-selective: it requires full-parameter
+language-model fine-tuning with the vision tower and multimodal projector frozen.
+Use ZeRO-3 and optimizer offload as required by the formal hardware. LoRA/QLoRA may
+only be used in separately labelled engineering diagnostics and must not enter the
+formal scaling curve or paper results.
 
-1. Full language-model fine-tuning with ZeRO-3 CPU optimizer offload.
-2. LoRA SFT with the same frozen vision tower/projector and data protocol.
-
-The formal paper method must use one consistently documented choice. Do not mix full and LoRA runs in the same scaling curve.
+Before any formal SFT run, complete the one-step save/reload/resume gate specified in
+`AGENTS.md` and record trainable/frozen parameter counts and representative tensor deltas.
 
 ## Stage 2 Outcome GRPO
 
@@ -24,13 +27,13 @@ The formal paper method must use one consistently documented choice. Do not mix 
 
 ## Stage 3 Process GRPO
 
-- Parent: validation-selected Stage 2 checkpoint.
-- Rewards: accuracy, format, and online GPT process reward.
-- Every judge request and response must be cached and auditable.
+- Status: reconstructed/completed work whose scientific definition is still pending user agreement.
+- Parent, process unit, supervision source, label space, aggregation, and online implementation must be frozen in a new timestamped protocol before training.
+- If an external judge is selected, every request, response, parser result, fallback, model version, decoding parameter, and cost record must be cached and auditable.
+- No historical-recovery claim is allowed unless provenance proves it.
 
 ## Evaluation
 
 - Development decisions use validation only.
 - Test is executed after the protocol and checkpoints are frozen.
 - OOD evaluation is stored separately from in-domain test results.
-

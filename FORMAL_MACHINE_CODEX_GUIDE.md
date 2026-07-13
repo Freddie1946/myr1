@@ -84,6 +84,17 @@ PathMMU 已获授权时，在当前 shell 安全输入 Hugging Face 只读 token
 read -rsp 'HF read token: ' HF_TOKEN && export HF_TOKEN && echo
 ```
 
+也可以使用持久的用户级登录（推荐用于需要重跑的 bootstrap）：
+
+```bash
+/home/wjy/.conda/envs/wjy/bin/hf auth login
+/home/wjy/.conda/envs/wjy/bin/hf auth whoami
+```
+
+使用与 PathMMU 网页审批相同的账号和只读 token；若询问是否保存为 Git credential，选择
+`n`。凭据只能保存在用户级 Hugging Face 缓存或当前 shell，禁止写入仓库和
+`formal_machine.env`。
+
 复制配置：
 
 ```bash
@@ -101,6 +112,9 @@ git check-ignore formal_machine.env
 - `CONDA_EXE` 是可执行的 Conda 绝对路径或命令。
 - `ONLINE=1`、`PATHMMU_AUTO_DOWNLOAD=1`。
 - `CUDA_VISIBLE_DEVICES` 和 `NPROC_PER_NODE` 与获准使用的 GPU 一致。
+- 当前 `YiwuServer` 的正式环境选择 PyTorch 2.6.0 cu124 wheel；驱动 580.142 支持该
+  runtime。系统 `nvcc 11.5` 不作为 PyTorch runtime，训练使用 Torch AdamW，避免依赖
+  DeepSpeedCPUAdam 的本机 JIT 编译。
 
 运行配置流程：
 
@@ -124,16 +138,23 @@ python3 -c "import json; p=json.load(open('$INSTALL_ROOT/reports/preflight_repor
 
 ## 5. 执行任务的顺序
 
-### A. 先补齐并执行正式 SFT smoke
+### A. 执行正式 SFT smoke
 
-当前仓库会生成 SFT YAML，但正式 SFT 的一键启动、运行清单、保存/重载/续训门禁仍需补齐。Codex 必须先完成这些工程项，不得直接运行长训练：
+仓库已经提供 `scripts/launch_formal_sft_smoke.sh`。它会生成可审计的
+`command.txt`、`run_manifest.yaml`、环境快照和日志，运行一步、保存并重新加载
+checkpoint，再续训一步并比较语言/视觉张量。bootstrap/preflight 通过且 GPU 获得明确授权后：
 
-1. 生成可审计的 SFT launcher、`command.txt`、`run_manifest.yaml` 和日志目录。
-2. 用 8 个样本、seed 42、一个 optimizer step 运行 7B 全参数语言模型 SFT。
-3. 保存 checkpoint，验证可重新加载，再从该 checkpoint 续训一步。
-4. 确认 language model 可训练，vision tower 和 projector 冻结。
-5. 记录 loss、gradient norm、样本数、GPU、环境版本、模型/数据/代码哈希。
-6. 标记 smoke 为 `formal_result: false`，向用户报告并等待确认。
+```bash
+source formal_machine.env
+source "$INSTALL_ROOT/FORMAL_PATHS.env"
+export PATHVLM_SMOKE_CUDA_VISIBLE_DEVICES="1,2,3,4"  # 改为实际获准的卡
+export PATHVLM_SMOKE_NPROC_PER_NODE=4
+bash scripts/launch_formal_sft_smoke.sh
+```
+
+成功标准：8 个 SFT 样本、seed 42、7B 全参数语言模型；vision/projector 冻结；第一步
+checkpoint 可加载；可从第一步续训到第二步；两个更新均有 language tensor delta 且
+visual tensor 严格相同。该 smoke 必须标记 `formal_result: false`，完成后向用户报告并等待确认。
 
 ### B. SFT 正式实验
 
