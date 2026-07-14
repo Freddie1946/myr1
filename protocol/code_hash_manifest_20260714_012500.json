@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-07-14T01:25:00+08:00",
+  "purpose": "Record the passing formal SFT smoke and freeze audited seed-42 scale and validation launchers",
+  "sha256": {
+    "setup_formal_machine.sh": "1e3668b327dd6f356c750629e79d20508116755be792c2e2493871cc81f66f06",
+    "vendor/open-r1-multimodal/src/open_r1/grpo_rec.py": "c11c11e1fad213621e9a8d44bb2043d17b14eabb7a5760d4bafa933dcb6f8ae7",
+    "vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py": "69fef836dc2c2a9ceba8e6d3a082a03bc40e6137d97fe97209b746429c5f79f2",
+    "vendor/open-r1-multimodal/src/open_r1/trainer/grpo_config.py": "3ef432fb67ba51cd00b7122e565b969ca17e97016e8d337c167b367d31b8053a",
+    "scripts/grpo_pathmmu.py": "3bc3977abdd5a32755fec72ecaf09a5cd328940944b269e1eb45c584e650fde0",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f",
+    "scripts/test_pathmmu_rewards.py": "234454e2f79d4f909ce62b886c9e69a6d16989d83126ec5157683c6720af322b",
+    "scripts/compare_checkpoint_tensors.py": "ba503491445fb3ad60e63c2f6740c4ae0a5ea8a2d2e8d6a042ba22a4f4e84e00",
+    "scripts/infer_and_score_pathmmu.py": "7b3efd7243973b87fc48a3a17eb2e86664ca75af268599822c3002563e19d6a9",
+    "scripts/launch_formal_sft_smoke.sh": "55a12fe496db0dca7d8569250fd34638d1b37547ce0cf239390e5941905da4f5",
+    "scripts/launch_formal_sft_run.sh": "95a04d52b8099c62be1f99652f27fde123d7f18abb6d1d15cc22bbb8f8095a4b",
+    "scripts/launch_formal_validation.sh": "98b0c08d7f99fc3af44eb499e2f416c1de1945f63a360d4417c66444ddec5afc",
+    "scripts/launch_formal_outcome_grpo_smoke.sh": "8b91371b9d8afb14df90a823b519499ba388601d64c25b4528e8cfb8db2d9bb5",
+    "formal_machine/bootstrap_formal_machine.sh": "2ed5e39ed038ef1711879edb0cd3b49cb95a6cdd86b1f17eb9e37624ef0db806",
+    "formal_machine/download_pathmmu.py": "864aec46e455e26d8063b713875eca1757af56a46d3f9a9c2b72298ba83d825d",
+    "formal_machine/prepare_formal_data.py": "931da51a7c579742da7c5b5beb30ceb1a8f471de8e97b601e3fe956790b529c3",
+    "formal_machine/preflight_formal_machine.py": "f004730a8f4d0d0a47df43c8650142e244819ed03c0f0ef19138cb23e8a82429",
+    "formal_machine/render_formal_configs.py": "a7014ed5a894c661dbc315f898c8cdb0d149fcc2e475c8000fb5f69d4de1930a",
+    "formal_machine/verify_frozen_splits.py": "eded44769a5ebf5d3d53507a536da0214fe005678c74f7dde6052b3afc67a559",
+    "formal_machine/run_formal_sft_smoke.py": "47874bd539ab5041d0341d5afcd128688659df331432098320470fca194d4013",
+    "formal_machine/run_formal_sft.py": "0c1feb696972e13b8f2234068a2e0399e4ba00a220eaff56cb1d3fc2d4ba4ac4",
+    "formal_machine/run_formal_validation.py": "3299a448360cc57f5cbbafb133053a95d2312ce6e48a4725578771b24cefe9db",
+    "formal_machine/verify_sft_checkpoint_load.py": "619bc4a0d6c6b9231d79cccd369695c716c41fd3345da093b0b49ac03b2c0833",
+    "formal_machine/formal_machine.env.example": "670963329ebcf34f732bdc34bc7ea3babb490c6c2ce2f0aabf33187b656fa185"
+  }
+}
