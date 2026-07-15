@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-07-15T23:50:00+08:00",
+  "purpose": "Freeze the fail-closed supervisor that attaches n0500 and sequences validation plus n1000/n2000/n3000 without test or Stage 2 access",
+  "sha256": {
+    "formal_machine/run_formal_sft_scale_sequence.py": "ec76c651bfbb1a712b7cdfd21cf17878d77b4cbccb0e8d2f7e0516f4edfe3e91",
+    "scripts/launch_formal_sft_scale_sequence.sh": "f1dc5519ab2be05792eeeeba2c9701586e9f0a639fa616538520a148f840b883",
+    "scripts/test_formal_sft_scale_sequence.py": "1b7d50cde179be3523cf18e34de9eb4a49c72918bf96399aa10790fa805d0f53",
+    "scripts/launch_formal_sft_run.sh": "95a04d52b8099c62be1f99652f27fde123d7f18abb6d1d15cc22bbb8f8095a4b",
+    "scripts/launch_formal_validation.sh": "98b0c08d7f99fc3af44eb499e2f416c1de1945f63a360d4417c66444ddec5afc",
+    "formal_machine/run_formal_sft.py": "0c1feb696972e13b8f2234068a2e0399e4ba00a220eaff56cb1d3fc2d4ba4ac4",
+    "formal_machine/run_formal_validation.py": "3299a448360cc57f5cbbafb133053a95d2312ce6e48a4725578771b24cefe9db",
+    "scripts/infer_and_score_pathmmu.py": "7b3efd7243973b87fc48a3a17eb2e86664ca75af268599822c3002563e19d6a9",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f",
+    "protocol/code_hash_manifest_20260714_012500.json": "8eaf2df42bf05ec223b61ea71175591d829a6672d5be32383b0509481599598b",
+    "protocol/training_plan.md": "36b7c622034eab299ad2ce6eceeaa12999485dff35f7e23c6be54ae2e699d707"
+  }
+}

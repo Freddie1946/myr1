@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260715_230037`
+Latest timestamp: `20260715_235000`
 
 Read in this order:
 
@@ -38,26 +38,28 @@ Read in this order:
 32. `20260714_010813_sft_smoke_attempt02_completed.md`
 33. `20260714_012500_formal_sft_scale_execution_and_approval.md`
 34. `20260715_230037_formal_sft_n0500_launched.md`
-35. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-36. `../manuscript/README.md` and its mandatory reading order
-37. `../CODEX_START_HERE.md`
-38. `../protocol/code_hash_manifest_20260714_012500.json`
-39. `../protocol/code_hash_manifest_20260714_005450.json`
-40. `../protocol/code_hash_manifest_20260714_001041.json`
-41. `../protocol/code_hash_manifest_20260713_222306.json`
-42. `../protocol/code_hash_manifest_20260713_214352.json`
-43. `../protocol/code_hash_manifest_20260713_213248.json`
-44. `../protocol/code_hash_manifest_20260713_205956.json`
-45. `../protocol/code_hash_manifest_20260713_203631.json`
-46. `../protocol/code_hash_manifest_20260712_213340.json`
-47. `../protocol/code_hash_manifest_20260712_192846.json`
-48. `../protocol/code_hash_manifest_20260712_144811.json`
-49. `../protocol/debug_proxy_model_manifest.json`
-50. `../protocol/training_plan.md`
-51. `../protocol/old_sft_audit.md`
-52. The latest manifest under `../debug_e2e/`
+35. `20260715_235000_formal_sft_scale_supervisor.md`
+36. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+37. `../manuscript/README.md` and its mandatory reading order
+38. `../CODEX_START_HERE.md`
+39. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+40. `../protocol/code_hash_manifest_20260714_012500.json`
+41. `../protocol/code_hash_manifest_20260714_005450.json`
+42. `../protocol/code_hash_manifest_20260714_001041.json`
+43. `../protocol/code_hash_manifest_20260713_222306.json`
+44. `../protocol/code_hash_manifest_20260713_214352.json`
+45. `../protocol/code_hash_manifest_20260713_213248.json`
+46. `../protocol/code_hash_manifest_20260713_205956.json`
+47. `../protocol/code_hash_manifest_20260713_203631.json`
+48. `../protocol/code_hash_manifest_20260712_213340.json`
+49. `../protocol/code_hash_manifest_20260712_192846.json`
+50. `../protocol/code_hash_manifest_20260712_144811.json`
+51. `../protocol/debug_proxy_model_manifest.json`
+52. `../protocol/training_plan.md`
+53. `../protocol/old_sft_audit.md`
+54. The latest manifest under `../debug_e2e/`
 
-Current next action: monitor the running seed-42 n=500 formal SFT candidate through all 630 optimizer
-steps and its final save/reload/tensor-delta gates. Do not run validation or another training job in
-parallel. If it completes, run deterministic frozen validation before proceeding to n=1000. Stage 3
-is explicitly deferred.
+Current next action: after committing and re-verifying the fail-closed supervisor, attach it to the
+running seed-42 n=500 SFT candidate. It may advance only after complete SFT and validation gates,
+sequentially through n=1000/n=2000/n=3000 and their validations. Any ambiguity or failed gate stops
+the chain. Stage 2 and Stage 3 are outside this supervisor.
