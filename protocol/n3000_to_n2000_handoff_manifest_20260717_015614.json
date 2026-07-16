@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-07-17T01:56:14+08:00",
+  "purpose": "Freeze the exact fail-closed one-way handoff from formal n3000 run 20260717_014544 to one fresh base-model n2000 seed42 SFT",
+  "formal_result": false,
+  "external_frozen_inputs": {
+    "parent_manifest": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_sft/n3000_seed0042/formal_sft_n3000_seed0042_20260717_014544/run_manifest.yaml",
+    "target_generated_config": "/home/wjy/pathvlm_r1_v1_formal/generated_configs/sft/sft_n2000_seed0042.yaml",
+    "target_generated_config_sha256": "e495c64057a810e1c21bb44279e8b81f8159115eb5554aba7abc9d62cbccc8bd"
+  },
+  "sha256": {
+    "formal_machine/run_n3000_to_n2000_handoff.py": "1acb9f7700ccada0ff281b94089ed9fdae1a0c6b12e4171fd955b546cd9ebcc0",
+    "scripts/launch_n3000_to_n2000_handoff.sh": "238c7e65d0e5979662fe71d2262bdd71e96275981145b2240361a28cf83e7af0",
+    "scripts/test_n3000_to_n2000_handoff.py": "6cb792f290344683a4d17b35919d2f3a4cd75579746b6e0bd7620a6172c2db7d",
+    "scripts/launch_formal_sft_run.sh": "95a04d52b8099c62be1f99652f27fde123d7f18abb6d1d15cc22bbb8f8095a4b",
+    "formal_machine/run_formal_sft.py": "5f6e7ac000491181601728aedc241ddca6bf5a75925a086c66962d8252e2c092",
+    "formal_machine/checkpoint_retention.py": "7366e0906be1341d4ad6db2eed878fef3ecdff21fc50a4362a293e6e699542a2",
+    "configs/deepspeed/ds_z2_gpu_torch_adamw.json": "7d992d6465f65e41d42384dc4cf7501a72a3969111a6c15fdd7f6433975f2b00",
+    "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
+    "protocol/code_hash_manifest_20260717_010146.json": "5e78b7c51cb854a53713d3100632cd5bf4f93377e4fa07362c2f106774e8bb1f",
+    "protocol/training_plan.md": "36b7c622034eab299ad2ce6eceeaa12999485dff35f7e23c6be54ae2e699d707",
+    "docs/20260717_015819_n3000_to_n2000_fail_closed_handoff.md": "200b3921f6f5b359e621793f9797fcb84777176bce65c1677b31d8ce71be03bc"
+  }
+}

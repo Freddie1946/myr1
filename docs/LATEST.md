@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260717_014544`
+Latest timestamp: `20260717_015819`
 
 Read in this order:
 
@@ -48,32 +48,34 @@ Read in this order:
 42. `20260717_013408_sft_gc_speed_confirmation_completed.md`
 43. `20260717_014045_pre_n3000_storage_cleanup_completed.md`
 44. `20260717_014544_formal_sft_n3000_seed42_launched.md`
-45. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-46. `../manuscript/README.md` and its mandatory reading order
-47. `../CODEX_START_HERE.md`
-48. `../protocol/code_hash_manifest_20260717_010146.json`
-49. `../protocol/code_hash_manifest_20260717_002323.json`
-50. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-51. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-52. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-53. `../protocol/code_hash_manifest_20260714_012500.json`
-54. `../protocol/code_hash_manifest_20260714_005450.json`
-55. `../protocol/code_hash_manifest_20260714_001041.json`
-56. `../protocol/code_hash_manifest_20260713_222306.json`
-57. `../protocol/code_hash_manifest_20260713_214352.json`
-58. `../protocol/code_hash_manifest_20260713_213248.json`
-59. `../protocol/code_hash_manifest_20260713_205956.json`
-60. `../protocol/code_hash_manifest_20260713_203631.json`
-61. `../protocol/code_hash_manifest_20260712_213340.json`
-62. `../protocol/code_hash_manifest_20260712_192846.json`
-63. `../protocol/code_hash_manifest_20260712_144811.json`
-64. `../protocol/debug_proxy_model_manifest.json`
-65. `../protocol/training_plan.md`
-66. `../protocol/old_sft_audit.md`
-67. The latest manifest under `../debug_e2e/`
+45. `20260717_015819_n3000_to_n2000_fail_closed_handoff.md`
+46. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+47. `../manuscript/README.md` and its mandatory reading order
+48. `../CODEX_START_HERE.md`
+49. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
+50. `../protocol/code_hash_manifest_20260717_010146.json`
+51. `../protocol/code_hash_manifest_20260717_002323.json`
+52. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+53. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+54. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+55. `../protocol/code_hash_manifest_20260714_012500.json`
+56. `../protocol/code_hash_manifest_20260714_005450.json`
+57. `../protocol/code_hash_manifest_20260714_001041.json`
+58. `../protocol/code_hash_manifest_20260713_222306.json`
+59. `../protocol/code_hash_manifest_20260713_214352.json`
+60. `../protocol/code_hash_manifest_20260713_213248.json`
+61. `../protocol/code_hash_manifest_20260713_205956.json`
+62. `../protocol/code_hash_manifest_20260713_203631.json`
+63. `../protocol/code_hash_manifest_20260712_213340.json`
+64. `../protocol/code_hash_manifest_20260712_192846.json`
+65. `../protocol/code_hash_manifest_20260712_144811.json`
+66. `../protocol/debug_proxy_model_manifest.json`
+67. `../protocol/training_plan.md`
+68. `../protocol/old_sft_audit.md`
+69. The latest manifest under `../debug_e2e/`
 
-Current next action: monitor the running fresh n=3000, seed-42 formal SFT duration sweep. At every
-epoch, require a complete model-only snapshot and retain only the latest two full resume checkpoints.
-After training, require all final gates before running validation-only inference over all ten epoch
-snapshots with raw generations retained. Do not resume the old scale supervisor or blindly chain a
-later training run. Stage 2 long runs and Stage 3 remain outside the current launch.
+Current next action: commit and activate the exact fail-closed n=3000-to-n=2000 watcher while
+monitoring the running n=3000 seed-42 duration sweep. The watcher may launch one fresh base-model
+n=2000 seed-42 SFT only after every n=3000 formal gate and every transition resource/integrity gate
+passes. It does not run validation or access test. Do not resume the old scale supervisor. Stage 2
+long runs and Stage 3 remain outside the current launch.
