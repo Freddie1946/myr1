@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-07-16T23:33:01+08:00",
+  "purpose": "audited engineering-only eight-GPU SFT throughput smoke",
+  "formal_result": false,
+  "variant": "z2_gpu_nogc_fused",
+  "sha256": {
+    "configs/deepspeed/ds_z2_gpu_torch_adamw.json": "7d992d6465f65e41d42384dc4cf7501a72a3969111a6c15fdd7f6433975f2b00",
+    "formal_machine/run_formal_sft_speed_smoke.py": "d0a5ff9cb37b846f7164e426a3d94e013a6c89165a50a75634a351fc34d7cf9f",
+    "scripts/launch_formal_sft_speed_smoke.sh": "381c35e31b007129d8b284b5ed1699c6362b36e1022e718a86531ca27720677d",
+    "docs/20260716_233301_sft_speed_smoke_and_ablation_correction.md": "37d67bb373f9be005032ebb77de08d36999b8b063fd31f86d6b7a3879eca16e7"
+  }
+}
