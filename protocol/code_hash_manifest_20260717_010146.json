@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-07-17T01:01:46+08:00",
+  "purpose": "retry incomplete LLaMA-Factory tokenizer writes in two-tier checkpoint archiver",
+  "formal_result": false,
+  "supersedes": "protocol/code_hash_manifest_20260717_002323.json",
+  "sha256": {
+    "configs/deepspeed/ds_z2_gpu_torch_adamw.json": "7d992d6465f65e41d42384dc4cf7501a72a3969111a6c15fdd7f6433975f2b00",
+    "configs/sft/formal_7b_full_n3000_seed0042.yaml": "805016d8efe16b76c02a6b50476e455b4d5628b07ed1c41beff7ef85c4806f39",
+    "formal_machine/checkpoint_retention.py": "7366e0906be1341d4ad6db2eed878fef3ecdff21fc50a4362a293e6e699542a2",
+    "formal_machine/render_formal_configs.py": "3de102798263801e32d71d050b3fb62723ddb63ce05b5fe59389c9b1ab2fc80d",
+    "formal_machine/run_formal_sft.py": "5f6e7ac000491181601728aedc241ddca6bf5a75925a086c66962d8252e2c092",
+    "formal_machine/run_formal_sft_scale_sequence.py": "483f68da9e8a1e67c09692135bc76b7da046c5ad50831df8e7c509e689edae79",
+    "formal_machine/run_formal_sft_smoke.py": "b8cac19d097cc067f7d1ae2540dac51931ef57f846c9eee94a2cf8ef9f45d547",
+    "scripts/test_checkpoint_retention.py": "a1856371ac25c7137e6e7e5566ce749f04f0af64cdb524e7611e393399b934e1",
+    "scripts/test_formal_sft_scale_sequence.py": "0f2baa4ad09aa3bc48d591354e19740b4324a0756a3b50ccddf8b8366013500f",
+    "docs/20260717_010146_checkpoint_retention_smoke_attempt01_failure_and_retry.md": "b0947fbd724b4de7518a066ab3d1c34c7e7eeb5c30ee8862586c5ad8b44ad28c"
+  }
+}

@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260717_002323`
+Latest timestamp: `20260717_010146`
 
 Read in this order:
 
@@ -43,31 +43,34 @@ Read in this order:
 37. `20260716_234731_sft_speed_smoke_attempt01_config_key_correction.md`
 38. `20260716_235950_sft_speed_smoke_attempt02_completed_and_checkpoint_policy_pending.md`
 39. `20260717_002323_two_tier_checkpoint_retention_implemented.md`
-40. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-41. `../manuscript/README.md` and its mandatory reading order
-42. `../CODEX_START_HERE.md`
-43. `../protocol/code_hash_manifest_20260717_002323.json`
-44. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-45. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-46. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-47. `../protocol/code_hash_manifest_20260714_012500.json`
-48. `../protocol/code_hash_manifest_20260714_005450.json`
-49. `../protocol/code_hash_manifest_20260714_001041.json`
-50. `../protocol/code_hash_manifest_20260713_222306.json`
-51. `../protocol/code_hash_manifest_20260713_214352.json`
-52. `../protocol/code_hash_manifest_20260713_213248.json`
-53. `../protocol/code_hash_manifest_20260713_205956.json`
-54. `../protocol/code_hash_manifest_20260713_203631.json`
-55. `../protocol/code_hash_manifest_20260712_213340.json`
-56. `../protocol/code_hash_manifest_20260712_192846.json`
-57. `../protocol/code_hash_manifest_20260712_144811.json`
-58. `../protocol/debug_proxy_model_manifest.json`
-59. `../protocol/training_plan.md`
-60. `../protocol/old_sft_audit.md`
-61. The latest manifest under `../debug_e2e/`
+40. `20260717_010146_checkpoint_retention_smoke_attempt01_failure_and_retry.md`
+41. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+42. `../manuscript/README.md` and its mandatory reading order
+43. `../CODEX_START_HERE.md`
+44. `../protocol/code_hash_manifest_20260717_010146.json`
+45. `../protocol/code_hash_manifest_20260717_002323.json`
+46. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+47. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+48. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+49. `../protocol/code_hash_manifest_20260714_012500.json`
+50. `../protocol/code_hash_manifest_20260714_005450.json`
+51. `../protocol/code_hash_manifest_20260714_001041.json`
+52. `../protocol/code_hash_manifest_20260713_222306.json`
+53. `../protocol/code_hash_manifest_20260713_214352.json`
+54. `../protocol/code_hash_manifest_20260713_213248.json`
+55. `../protocol/code_hash_manifest_20260713_205956.json`
+56. `../protocol/code_hash_manifest_20260713_203631.json`
+57. `../protocol/code_hash_manifest_20260712_213340.json`
+58. `../protocol/code_hash_manifest_20260712_192846.json`
+59. `../protocol/code_hash_manifest_20260712_144811.json`
+60. `../protocol/debug_proxy_model_manifest.json`
+61. `../protocol/training_plan.md`
+62. `../protocol/old_sft_audit.md`
+63. The latest manifest under `../debug_e2e/`
 
-Current next action: commit and render the audited two-tier retention configuration, then run the
-three-step formal 7B save/resume/rotate smoke and the correctly labeled `z2_gpu_gc_fused`
-confirmation smoke. Only if every gate and the projected 550-GiB disk reserve pass may a fresh
-n=3000, seed-42 formal SFT duration sweep start. Do not resume the old scale supervisor. Stage 2
-long runs and Stage 3 remain outside the authorized scope.
+Current next action: commit the readiness-retry correction, explicitly remove only the failed
+Attempt01 smoke weights after approval, and rerun the three-step formal 7B save/resume/rotate smoke.
+Attempt01 reached step 3 and proved ZeRO-2 resume/rotation but failed because the watcher treated a
+transient empty tokenizer file as terminal. Do not run the GC confirmation or launch formal n=3000
+until the retry passes. Do not resume the old scale supervisor. Stage 2 long runs and Stage 3 remain
+outside the authorized scope.

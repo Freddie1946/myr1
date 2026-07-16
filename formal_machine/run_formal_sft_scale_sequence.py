@@ -25,7 +25,7 @@ COUNTS = (500, 1000, 2000, 3000)
 FORMAL_GPU_IDS = list(range(8))
 MIN_FREE_DISK_BYTES = 500 * 1024**3
 BASE_REVISION = "cc594898137f460bfe9f0759e9844b3ce807cfb5"
-CORE_MANIFEST_NAME = "code_hash_manifest_20260717_002323.json"
+CORE_MANIFEST_NAME = "code_hash_manifest_20260717_010146.json"
 SEQUENCE_MANIFEST_NAME = "sft_scale_sequence_manifest_20260715_235000.json"
 SFT_GATES = {
     "training_completed",

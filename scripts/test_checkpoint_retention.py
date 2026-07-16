@@ -30,6 +30,11 @@ def make_checkpoint(root: Path, step: int, epoch: float) -> Path:
         json.dumps(index) + "\n", encoding="utf-8"
     )
     (checkpoint / "config.json").write_text('{"model_type":"unit_test"}\n', encoding="utf-8")
+    for name in (
+        "merges.txt", "preprocessor_config.json", "special_tokens_map.json",
+        "tokenizer.json", "tokenizer_config.json", "vocab.json",
+    ):
+        (checkpoint / name).write_text("{}\n", encoding="utf-8")
     (checkpoint / "trainer_state.json").write_text(
         json.dumps({"global_step": step, "epoch": epoch}) + "\n", encoding="utf-8"
     )
@@ -91,6 +96,23 @@ class RetentionTests(unittest.TestCase):
             )
             archiver.scan_once()
             self.assertEqual(archiver.stop_and_validate()["count"], 0)
+
+    def test_transient_empty_tokenizer_file_is_retried(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = make_checkpoint(root / "output", 1, 1.0)
+            (checkpoint / "vocab.json").write_bytes(b"")
+            archiver = TwoTierCheckpointArchiver(
+                root / "output", root / "snapshots", root / "events.jsonl",
+                minimum_free_bytes=0,
+            )
+            archiver.scan_once()
+            self.assertFalse((root / "snapshots/checkpoint-1").exists())
+            (checkpoint / "vocab.json").write_text("{}\n", encoding="utf-8")
+            archiver.scan_once()
+            summary = archiver.stop_and_validate()
+            self.assertEqual(summary["count"], 1)
+            self.assertEqual(summary["missing_observed_snapshot_steps"], [])
 
 
 if __name__ == "__main__":

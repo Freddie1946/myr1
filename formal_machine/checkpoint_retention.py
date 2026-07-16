@@ -72,7 +72,16 @@ def snapshot_source_files(checkpoint: Path) -> list[Path]:
         )
     names = {"model.safetensors.index.json", *weight_map.values()}
     names.update(name for name in MODEL_AUXILIARY_FILES if (checkpoint / name).is_file())
-    required_auxiliary = {"config.json", "trainer_state.json"}
+    required_auxiliary = {
+        "config.json",
+        "merges.txt",
+        "preprocessor_config.json",
+        "special_tokens_map.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "trainer_state.json",
+        "vocab.json",
+    }
     missing_auxiliary = sorted(name for name in required_auxiliary if name not in names)
     if missing_auxiliary:
         raise FileNotFoundError(f"checkpoint lacks required model files: {missing_auxiliary}")
@@ -201,6 +210,8 @@ class TwoTierCheckpointArchiver:
         self._thread: threading.Thread | None = None
         self._failure: BaseException | None = None
         self._archived: dict[int, dict] = {}
+        self._observed_steps: set[int] = set()
+        self._pending_errors: dict[int, str] = {}
 
     def scan_once(self) -> None:
         if not self.output_dir.is_dir():
@@ -211,14 +222,24 @@ class TwoTierCheckpointArchiver:
         )
         for checkpoint in checkpoints:
             step = checkpoint_step(checkpoint)
+            self._observed_steps.add(step)
             if step in self._archived:
                 continue
             if not (checkpoint / "trainer_state.json").is_file():
                 continue
-            payload = archive_checkpoint(
-                checkpoint, self.snapshot_root, minimum_free_bytes=self.minimum_free_bytes,
-            )
+            try:
+                payload = archive_checkpoint(
+                    checkpoint, self.snapshot_root, minimum_free_bytes=self.minimum_free_bytes,
+                )
+            except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+                # Trainer writes trainer_state.json before LLaMA-Factory finishes
+                # saving processor/tokenizer files. Treat incomplete content as
+                # pending and retry; the terminal missing-snapshot gate remains
+                # fail-closed if the checkpoint rotates before becoming ready.
+                self._pending_errors[step] = f"{type(exc).__name__}: {exc}"
+                continue
             self._archived[step] = payload
+            self._pending_errors.pop(step, None)
             self.events_path.parent.mkdir(parents=True, exist_ok=True)
             with self.events_path.open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps({
@@ -262,4 +283,12 @@ class TwoTierCheckpointArchiver:
             "snapshot_root": str(self.snapshot_root),
             "count": len(snapshots),
             "snapshots": snapshots,
+            "observed_checkpoint_steps": sorted(self._observed_steps),
+            "missing_observed_snapshot_steps": sorted(
+                self._observed_steps.difference(item["global_step"] for item in snapshots)
+            ),
+            "pending_errors": {
+                str(step): message for step, message in sorted(self._pending_errors.items())
+                if step not in {item["global_step"] for item in snapshots}
+            },
         }
