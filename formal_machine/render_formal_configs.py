@@ -15,7 +15,11 @@ def sft_yaml(*, model: Path, lf_data: Path, ds: Path, output: Path, dataset: str
         if smoke
         else "num_train_epochs: 10\nlr_scheduler_type: cosine\nwarmup_ratio: 0.03"
     )
-    save = "save_strategy: steps\nsave_steps: 1\nsave_only_model: false" if smoke else "save_strategy: steps\nsave_steps: 100\nsave_only_model: false"
+    save = (
+        "save_strategy: steps\nsave_steps: 1\nsave_only_model: false"
+        if smoke
+        else "save_strategy: epoch\nsave_only_model: false"
+    )
     return f"""### Generated formal-machine config. Review before launch.
 ### model
 model_name_or_path: {model}
@@ -58,6 +62,8 @@ learning_rate: 2.0e-5
 {schedule}
 bf16: true
 gradient_checkpointing: true
+disable_gradient_checkpointing: false
+optim: adamw_torch_fused
 seed: {seed}
 data_seed: {seed}
 ddp_timeout: 180000000
@@ -130,7 +136,7 @@ def main() -> None:
     sft_dir.mkdir(parents=True, exist_ok=True)
     grpo_dir.mkdir(parents=True, exist_ok=True)
     runs = args.install_root / "runs"
-    ds = args.repo_root / "configs/deepspeed/ds_z3_optimizer_offload_torch_adamw.json"
+    ds = args.repo_root / "configs/deepspeed/ds_z2_gpu_torch_adamw.json"
     lf_data = args.data_root / "llamafactory"
     grpo_data = args.data_root / "grpo"
 

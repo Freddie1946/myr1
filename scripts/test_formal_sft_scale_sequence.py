@@ -68,11 +68,20 @@ class SupervisorGateTests(unittest.TestCase):
                 "language_model_trainable": True,
                 "vision_tower_frozen": True,
                 "multimodal_projector_frozen": True,
+                "backend": "deepspeed_zero2_gpu_fused_adamw_gc",
             },
             "hardware": {"cuda_visible_devices": list(range(8)), "gpu_count": 8},
             "gates": {key: True for key in MODULE.SFT_GATES},
-            "outputs": {"final_checkpoint": str(checkpoint), "run_dir": str(self.sft_manifest.parent)},
+            "outputs": {
+                "final_checkpoint": str(checkpoint),
+                "run_dir": str(self.sft_manifest.parent),
+                "epoch_snapshots": str(self.sft_manifest.parent / "epoch_snapshots"),
+            },
         }
+        for epoch in range(1, 11):
+            snapshot = self.sft_manifest.parent / "epoch_snapshots" / f"checkpoint-{epoch}"
+            snapshot.mkdir(parents=True)
+            (snapshot / "snapshot_manifest.json").write_text("{}\n", encoding="utf-8")
         write_yaml(self.sft_manifest, self.sft_payload)
         self.checkpoint = checkpoint
 

@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-07-17T00:23:23+08:00",
+  "purpose": "two-tier SFT checkpoint retention and ZeRO-2 GPU backend freeze",
+  "formal_result": false,
+  "sha256": {
+    "configs/deepspeed/ds_z2_gpu_torch_adamw.json": "7d992d6465f65e41d42384dc4cf7501a72a3969111a6c15fdd7f6433975f2b00",
+    "configs/sft/formal_7b_full_n3000_seed0042.yaml": "805016d8efe16b76c02a6b50476e455b4d5628b07ed1c41beff7ef85c4806f39",
+    "formal_machine/checkpoint_retention.py": "f4a93c2a7214762ccca63dc6d4066836d84c1149e3f7fb695bb20942cbb8d876",
+    "formal_machine/render_formal_configs.py": "3de102798263801e32d71d050b3fb62723ddb63ce05b5fe59389c9b1ab2fc80d",
+    "formal_machine/run_formal_sft.py": "8987d2cc692bec426d8c5708b2ffbd65b9b4c73c6fcf108b31ff7f9a17485fc9",
+    "formal_machine/run_formal_sft_scale_sequence.py": "769ad1a72e21af425bc3eab2d1e8bbe9ff77faa3ab588a13e4183dd2dac2d354",
+    "formal_machine/run_formal_sft_smoke.py": "26450615e28e989000e8e82a504252509cad3a9b13a30c44a064eb5c6d163542",
+    "scripts/test_checkpoint_retention.py": "8b0222ef5a04f0da964c602a3760c0b585845d05f2d656d696af4f604c357ab1",
+    "scripts/test_formal_sft_scale_sequence.py": "0f2baa4ad09aa3bc48d591354e19740b4324a0756a3b50ccddf8b8366013500f",
+    "docs/20260717_002323_two_tier_checkpoint_retention_implemented.md": "935ba35f882e57c43eb021f27aa22d0eed9204448174eb1e2753dcd8e80b0c02"
+  }
+}

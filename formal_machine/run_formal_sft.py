@@ -20,6 +20,8 @@ from pathlib import Path
 
 import yaml
 
+from checkpoint_retention import TwoTierCheckpointArchiver, checkpoint_step
+
 
 AUTHORIZED_CONFIGS = {
     "sft_n0500_seed0042.yaml": ("pathvlm_sft_n0500", 500, 42),
@@ -27,7 +29,17 @@ AUTHORIZED_CONFIGS = {
     "sft_n2000_seed0042.yaml": ("pathvlm_sft_n2000", 2000, 42),
     "sft_n3000_seed0042.yaml": ("pathvlm_sft_n3000", 3000, 42),
 }
-MIN_FREE_DISK_BYTES = 500 * 1024**3
+DISK_RESERVE_BYTES = 550 * 1024**3
+FULL_CHECKPOINT_BUDGET_BYTES = 110 * 1024**3
+MODEL_SNAPSHOT_BUDGET_BYTES = 18 * 1024**3
+FORMAL_EPOCHS = 10
+PROJECTED_START_FREE_BYTES = (
+    DISK_RESERVE_BYTES
+    # Trainer writes the new checkpoint before rotating the oldest of the two
+    # retained checkpoints, so budget for three full checkpoints transiently.
+    + 3 * FULL_CHECKPOINT_BUDGET_BYTES
+    + (FORMAL_EPOCHS + 1) * MODEL_SNAPSHOT_BUDGET_BYTES
+)
 FORMAL_GPU_IDS = list(range(8))
 MASTER_PORT = 29700
 
@@ -238,8 +250,12 @@ def main() -> None:
             "formal SFT topology is frozen to physical GPUs 0,1,2,3,4,5,6,7 "
             "with nproc-per-node=8"
         )
-    if shutil.disk_usage(install).free < MIN_FREE_DISK_BYTES:
-        raise RuntimeError("less than 500 GiB free; refusing formal SFT")
+    free_before = shutil.disk_usage(install).free
+    if free_before < PROJECTED_START_FREE_BYTES:
+        raise RuntimeError(
+            "insufficient disk for two-tier SFT retention: "
+            f"free={free_before}, required={PROJECTED_START_FREE_BYTES}"
+        )
     hardware_before = gpu_snapshot(gpu_ids)
     require_master_port_free(MASTER_PORT)
 
@@ -248,11 +264,12 @@ def main() -> None:
         "stage": "sft", "finetuning_type": "full", "freeze_vision_tower": True,
         "freeze_multi_modal_projector": True, "freeze_language_model": False,
         "dataset": dataset_name, "max_samples": sample_count, "seed": seed, "data_seed": seed,
-        "learning_rate": 2e-5, "num_train_epochs": 10,
+        "learning_rate": 2e-5, "num_train_epochs": FORMAL_EPOCHS,
         "per_device_train_batch_size": 1, "gradient_accumulation_steps": 1,
         "lr_scheduler_type": "cosine", "warmup_ratio": 0.03, "bf16": True,
         "gradient_checkpointing": True, "cutoff_len": 512,
-        "save_strategy": "steps", "save_steps": 100, "save_only_model": False,
+        "disable_gradient_checkpointing": False, "optim": "adamw_torch_fused",
+        "save_strategy": "epoch", "save_only_model": False,
     }
     mismatches = {key: {"expected": value, "actual": base.get(key)}
                   for key, value in expected.items() if base.get(key) != value}
@@ -264,7 +281,7 @@ def main() -> None:
     exact_model = install / "models" / "Qwen2.5-VL-7B-Instruct-cc594898137f460bfe9f0759e9844b3ce807cfb5"
     if model_dir != exact_model.resolve():
         raise ValueError(f"unexpected base model: {model_dir}")
-    expected_deepspeed = (repo / "configs/deepspeed/ds_z3_optimizer_offload_torch_adamw.json").resolve()
+    expected_deepspeed = (repo / "configs/deepspeed/ds_z2_gpu_torch_adamw.json").resolve()
     if Path(base["deepspeed"]).resolve() != expected_deepspeed:
         raise ValueError(f"unexpected DeepSpeed config: {base['deepspeed']}")
     dataset_dir = Path(base["dataset_dir"]).resolve()
@@ -302,6 +319,7 @@ def main() -> None:
         raise FileExistsError(run_dir)
     run_dir.mkdir(parents=True)
     output = run_dir / "output"
+    epoch_snapshots = run_dir / "epoch_snapshots"
     snapshots = run_dir / "env_snapshot"
     snapshots.mkdir()
     resolved_config = {
@@ -333,14 +351,28 @@ def main() -> None:
         "model": {"base_id": "Qwen/Qwen2.5-VL-7B-Instruct",
                   "base_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
                   "base_path": str(model_dir)},
-        "training": {"seed": seed, "epochs": 10, "learning_rate": 2e-5,
+        "training": {"seed": seed, "epochs": FORMAL_EPOCHS, "learning_rate": 2e-5,
                      "finetuning_type": "full", "language_model_trainable": True,
                      "vision_tower_frozen": True, "multimodal_projector_frozen": True,
-                     "checkpoint_policy": "save_every_100_steps_keep_last_2_plus_final"},
+                     "backend": "deepspeed_zero2_gpu_fused_adamw_gc",
+                     "checkpoint_policy": {
+                         "save_strategy": "epoch",
+                         "model_only_epoch_snapshots": FORMAL_EPOCHS,
+                         "full_resume_checkpoints_retained": 2,
+                         "final_model_retained": True,
+                         "automatic_scientific_snapshot_pruning": False,
+                     }},
+        "disk_budget": {
+            "free_before_bytes": free_before,
+            "reserve_bytes": DISK_RESERVE_BYTES,
+            "full_checkpoint_budget_bytes": FULL_CHECKPOINT_BUDGET_BYTES,
+            "model_snapshot_budget_bytes": MODEL_SNAPSHOT_BUDGET_BYTES,
+            "projected_start_free_required_bytes": PROJECTED_START_FREE_BYTES,
+        },
         "hardware": {"host": socket.gethostname(), "cuda_visible_devices": gpu_ids,
                      "gpu_count": args.nproc_per_node, "before": hardware_before},
         "provenance": {
-            "repo_code_manifest": str(repo / "protocol" / "code_hash_manifest_20260714_012500.json"),
+            "repo_code_manifest": str(repo / "protocol" / "code_hash_manifest_20260717_002323.json"),
             "base_model_manifest": str(repo / "protocol" / "base_model_manifest.json"),
             "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json"),
             "preflight_report": str(preflight_path), "preflight_report_sha256": sha256(preflight_path),
@@ -358,7 +390,7 @@ def main() -> None:
     capture(["git", "-C", str(repo), "rev-parse", "HEAD"], snapshots / "git_commit.txt")
     capture(["git", "-C", str(llamafactory), "rev-parse", "HEAD"], snapshots / "llamafactory_git.txt")
     for source in (
-        repo / "protocol/code_hash_manifest_20260714_012500.json",
+        repo / "protocol/code_hash_manifest_20260717_002323.json",
         repo / "protocol/base_model_manifest.json",
         install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json",
         preflight_path,
@@ -380,7 +412,20 @@ def main() -> None:
         env.pop(key, None)
     try:
         resources = run_dir / "resources.jsonl"
-        run_logged(command, run_dir / "train.log", env, llamafactory, resources, set(gpu_ids), install)
+        archiver = TwoTierCheckpointArchiver(
+            output,
+            epoch_snapshots,
+            run_dir / "checkpoint_retention_events.jsonl",
+            minimum_free_bytes=DISK_RESERVE_BYTES,
+        )
+        archiver.start()
+        try:
+            run_logged(
+                command, run_dir / "train.log", env, llamafactory, resources,
+                set(gpu_ids), install,
+            )
+        finally:
+            retention = archiver.stop_and_validate()
         if not (output / "model.safetensors.index.json").is_file():
             raise FileNotFoundError("final gathered model index is missing")
         load_report = run_dir / "final_checkpoint_load.json"
@@ -411,6 +456,19 @@ def main() -> None:
         losses = [float(row["loss"]) for row in history if "loss" in row]
         gradients = [float(row["grad_norm"]) for row in history if "grad_norm" in row]
         trainability = parse_trainability(run_dir / "train.log")
+        log_text = (run_dir / "train.log").read_text(encoding="utf-8", errors="replace")
+        actual_gradient_checkpointing = "Gradient checkpointing enabled." in log_text
+        full_checkpoints = sorted(
+            (path for path in output.glob("checkpoint-*") if path.is_dir()),
+            key=checkpoint_step,
+        )
+        retention_steps = [item["global_step"] for item in retention["snapshots"]]
+        retention_epochs = [item.get("epoch") for item in retention["snapshots"]]
+        expected_steps_per_epoch = math.ceil(sample_count / len(FORMAL_GPU_IDS))
+        expected_retention_steps = [
+            expected_steps_per_epoch * epoch for epoch in range(1, FORMAL_EPOCHS + 1)
+        ]
+        resource_summary = summarize_resources(resources)
         gates = {
             "training_completed": True,
             "final_checkpoint_saved": True,
@@ -420,13 +478,36 @@ def main() -> None:
             "gradients_finite_nonzero": bool(gradients) and all(math.isfinite(value) and value > 0 for value in gradients),
             "language_tensor_changed": delta["tensors"]["language"]["changed_elements"] > 0,
             "visual_tensor_exactly_equal": delta["tensors"]["visual"]["exactly_equal"] is True,
+            "gradient_checkpointing_observed": actual_gradient_checkpointing,
+            "all_epoch_model_snapshots_saved": retention_steps == expected_retention_steps,
+            "all_epoch_snapshot_metadata_present": (
+                len(retention_epochs) == FORMAL_EPOCHS
+                and all(epoch is not None for epoch in retention_epochs)
+            ),
+            "latest_two_full_resume_checkpoints_retained": (
+                len(full_checkpoints) == 2
+                and [checkpoint_step(path) for path in full_checkpoints]
+                == expected_retention_steps[-2:]
+            ),
+            "disk_reserve_maintained": (
+                resource_summary["minimum_disk_free_bytes"] is not None
+                and resource_summary["minimum_disk_free_bytes"] >= DISK_RESERVE_BYTES
+                and shutil.disk_usage(install).free >= DISK_RESERVE_BYTES
+            ),
             "test_not_accessed": True,
         }
         manifest.update({
             "trainability": trainability, "trainer_state": {"global_step": trainer_state.get("global_step"),
             "loss_history": losses, "gradient_history": gradients},
-            "resources": summarize_resources(resources), "gates": gates,
-            "outputs": {"final_checkpoint": str(output), "run_dir": str(run_dir)},
+            "observed_execution": {
+                "gradient_checkpointing_enabled": actual_gradient_checkpointing,
+                "full_resume_checkpoints": [str(path) for path in full_checkpoints],
+            },
+            "retention": retention,
+            "resources": resource_summary, "gates": gates,
+            "outputs": {"final_checkpoint": str(output), "run_dir": str(run_dir),
+                        "epoch_snapshots": str(epoch_snapshots),
+                        "retention_events": str(run_dir / "checkpoint_retention_events.jsonl")},
             "status": "completed" if all(gates.values()) else "failed_gate",
             "formal_result": all(gates.values()),
             "completed_at": datetime.now().astimezone().isoformat(),

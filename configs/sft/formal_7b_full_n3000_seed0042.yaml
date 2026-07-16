@@ -15,7 +15,7 @@ finetuning_type: full
 freeze_vision_tower: true
 freeze_multi_modal_projector: true
 freeze_language_model: false
-deepspeed: /path/to/pathvlm_r1_v1/configs/deepspeed/ds_z3_optimizer_offload_torch_adamw.json
+deepspeed: /path/to/pathvlm_r1_v1/configs/deepspeed/ds_z2_gpu_torch_adamw.json
 
 ### dataset
 dataset_dir: /path/to/pathvlm_r1_v1/data/llamafactory
@@ -29,8 +29,7 @@ preprocessing_num_workers: 16
 ### output
 output_dir: /path/to/pathvlm_r1_v1/stage1_sft/formal/n3000/seed0042/output
 logging_steps: 1
-save_strategy: steps
-save_steps: 100
+save_strategy: epoch
 save_only_model: false
 plot_loss: true
 overwrite_output_dir: false
@@ -45,7 +44,8 @@ lr_scheduler_type: cosine
 warmup_ratio: 0.03
 bf16: true
 gradient_checkpointing: true
+disable_gradient_checkpointing: false
+optim: adamw_torch_fused
 seed: 42
 data_seed: 42
 ddp_timeout: 180000000
-

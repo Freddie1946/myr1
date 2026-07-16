@@ -19,6 +19,12 @@ from pathlib import Path
 
 import yaml
 
+from checkpoint_retention import TwoTierCheckpointArchiver, checkpoint_step
+
+
+DISK_RESERVE_BYTES = 550 * 1024**3
+SMOKE_START_FREE_BYTES = DISK_RESERVE_BYTES + (3 * 110 + 4 * 18) * 1024**3
+
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -178,6 +184,8 @@ def main() -> None:
     run_dir = args.run_dir.resolve()
     if run_dir.exists():
         raise FileExistsError(f"refusing to reuse run directory: {run_dir}")
+    if shutil.disk_usage(install).free < SMOKE_START_FREE_BYTES:
+        raise RuntimeError("insufficient disk for two-tier save/rotate/resume smoke")
     gpu_ids = [item.strip() for item in args.cuda_visible_devices.split(",") if item.strip()]
     if len(gpu_ids) != args.nproc_per_node:
         raise ValueError("CUDA_VISIBLE_DEVICES count must equal nproc-per-node")
@@ -191,6 +199,20 @@ def main() -> None:
     mismatches = {key: {"expected": value, "actual": base.get(key)} for key, value in required.items() if base.get(key) != value}
     if mismatches:
         raise ValueError(f"formal smoke config mismatch: {mismatches}")
+    backend_required = {
+        "gradient_checkpointing": True,
+        "disable_gradient_checkpointing": False,
+        "optim": "adamw_torch_fused",
+    }
+    backend_mismatches = {
+        key: {"expected": value, "actual": base.get(key)}
+        for key, value in backend_required.items() if base.get(key) != value
+    }
+    if backend_mismatches:
+        raise ValueError(f"formal smoke backend mismatch: {backend_mismatches}")
+    expected_deepspeed = (repo / "configs/deepspeed/ds_z2_gpu_torch_adamw.json").resolve()
+    if Path(base["deepspeed"]).resolve() != expected_deepspeed:
+        raise ValueError(f"formal smoke must use audited ZeRO-2 backend: {base['deepspeed']}")
     model_dir = Path(base["model_name_or_path"]).resolve()
     dataset_dir = Path(base["dataset_dir"]).resolve()
     dataset_info = json.loads((dataset_dir / "dataset_info.json").read_text(encoding="utf-8"))
@@ -209,16 +231,24 @@ def main() -> None:
              "save_strategy": "steps", "save_steps": 1, "save_only_model": False,
              "overwrite_output_dir": False}
     step1.pop("resume_from_checkpoint", None)
+    # The engineering smoke retains one full checkpoint to cap temporary disk;
+    # the production runner retains two. Rotation semantics are identical.
+    step1["save_total_limit"] = 1
     resume = {**step1, "max_steps": 2}
+    rotate = {**step1, "max_steps": 3}
     write_yaml(configs / "step1.yaml", step1)
     write_yaml(configs / "resume.yaml", resume)
+    write_yaml(configs / "rotate.yaml", rotate)
 
     launcher = llamafactory / "src/llamafactory/launcher.py"
     common = [sys.executable, "-m", "torch.distributed.run", f"--nproc_per_node={args.nproc_per_node}"]
     command1 = common + [f"--master_port={args.master_port}", str(launcher), str(configs / "step1.yaml")]
     command2 = common + [f"--master_port={args.master_port + 1}", str(launcher), str(configs / "resume.yaml")]
+    command3 = common + [f"--master_port={args.master_port + 2}", str(launcher), str(configs / "rotate.yaml")]
     (run_dir / "command.txt").write_text(
-        "STEP1\n" + shlex.join(command1) + "\n\nRESUME\n" + shlex.join(command2) + "\n",
+        "STEP1\n" + shlex.join(command1)
+        + "\n\nRESUME\n" + shlex.join(command2)
+        + "\n\nROTATE\n" + shlex.join(command3) + "\n",
         encoding="utf-8",
     )
 
@@ -236,9 +266,11 @@ def main() -> None:
                   "base_path": str(model_dir)},
         "training": {"finetuning_type": "full", "language_model_trainable": True,
                      "vision_tower_frozen": True, "multimodal_projector_frozen": True,
-                     "seed": 42, "initial_max_steps": 1, "resumed_total_max_steps": 2},
+                     "seed": 42, "initial_max_steps": 1, "resumed_total_max_steps": 2,
+                     "rotated_total_max_steps": 3,
+                     "checkpoint_policy": "three model-only snapshots plus latest one full resume checkpoint"},
         "provenance": {
-            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260714_012500.json"),
+            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260717_002323.json"),
             "base_model_manifest": str(repo / "protocol/base_model_manifest.json"),
             "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json"),
         },
@@ -263,7 +295,7 @@ def main() -> None:
     capture(["git", "-C", str(llamafactory), "rev-parse", "HEAD"], snapshots / "llamafactory_git.txt")
     capture([sys.executable, "-c", "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"], snapshots / "torch_cuda_versions.txt")
     for source in (
-        repo / "protocol/code_hash_manifest_20260714_012500.json",
+        repo / "protocol/code_hash_manifest_20260717_002323.json",
         repo / "protocol/base_model_manifest.json",
         install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json",
         Path(base["deepspeed"]),
@@ -281,7 +313,17 @@ def main() -> None:
         "WANDB_MODE": "disabled",
         "HF_HUB_OFFLINE": "1",
     })
+    for key in ("http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "all_proxy"):
+        env.pop(key, None)
     try:
+        archiver = TwoTierCheckpointArchiver(
+            output,
+            run_dir / "epoch_snapshots",
+            run_dir / "checkpoint_retention_events.jsonl",
+            minimum_free_bytes=DISK_RESERVE_BYTES,
+            poll_seconds=2.0,
+        )
+        archiver.start()
         run_logged(command1, run_dir / "step1.log", env, llamafactory, run_dir / "step1_resources.jsonl")
         checkpoint1 = find_checkpoint(output, 1)
         manifest["trainability"] = parse_trainability(run_dir / "step1.log")
@@ -308,16 +350,39 @@ def main() -> None:
         manifest["resume_metrics"] = checkpoint_metrics(checkpoint2)
         manifest["resume_resources"] = resource_summary(run_dir / "resume_resources.jsonl", gpu_ids)
 
+        rotate["resume_from_checkpoint"] = str(checkpoint2)
+        write_yaml(configs / "rotate.yaml", rotate)
+        run_logged(
+            command3,
+            run_dir / "rotate.log",
+            resume_env,
+            llamafactory,
+            run_dir / "rotate_resources.jsonl",
+        )
+        checkpoint3 = find_checkpoint(output, 3)
+        manifest["rotate_metrics"] = checkpoint_metrics(checkpoint3)
+        manifest["rotate_resources"] = resource_summary(run_dir / "rotate_resources.jsonl", gpu_ids)
+        retention = archiver.stop_and_validate()
+        snapshot1 = run_dir / "epoch_snapshots/checkpoint-1"
+        snapshot2 = run_dir / "epoch_snapshots/checkpoint-2"
+        snapshot3 = run_dir / "epoch_snapshots/checkpoint-3"
+        remaining_full = sorted(
+            (path for path in output.glob("checkpoint-*") if path.is_dir()), key=checkpoint_step,
+        )
+
         load2 = [sys.executable, str(repo / "formal_machine/verify_sft_checkpoint_load.py"),
-                 "--checkpoint", str(checkpoint2), "--output", str(run_dir / "checkpoint2_load.json")]
+                 "--checkpoint", str(snapshot2), "--output", str(run_dir / "checkpoint2_load.json")]
         run_logged(load2, run_dir / "checkpoint2_load.log", env, repo)
+        load3 = [sys.executable, str(repo / "formal_machine/verify_sft_checkpoint_load.py"),
+                 "--checkpoint", str(snapshot3), "--output", str(run_dir / "checkpoint3_load.json")]
+        run_logged(load3, run_dir / "checkpoint3_load.log", env, repo)
 
         delta1 = run_dir / "base_to_checkpoint1_delta.json"
         delta2 = run_dir / "checkpoint1_to_checkpoint2_delta.json"
         compare1 = [sys.executable, str(repo / "scripts/compare_checkpoint_tensors.py"),
-                    "--parent", str(model_dir), "--child", str(checkpoint1), "--output", str(delta1)]
+                    "--parent", str(model_dir), "--child", str(snapshot1), "--output", str(delta1)]
         compare2 = [sys.executable, str(repo / "scripts/compare_checkpoint_tensors.py"),
-                    "--parent", str(checkpoint1), "--child", str(checkpoint2), "--output", str(delta2)]
+                    "--parent", str(snapshot1), "--child", str(snapshot2), "--output", str(delta2)]
         run_logged(compare1, run_dir / "base_to_checkpoint1_delta.log", env, repo)
         run_logged(compare2, run_dir / "checkpoint1_to_checkpoint2_delta.log", env, repo)
         gates = {
@@ -327,18 +392,57 @@ def main() -> None:
             "resume_step_completed": True,
             "checkpoint2_saved": True,
             "checkpoint2_reloaded": json.loads((run_dir / "checkpoint2_load.json").read_text())["passed"],
+            "second_resume_step_completed": True,
+            "checkpoint3_saved": True,
+            "checkpoint3_reloaded": json.loads((run_dir / "checkpoint3_load.json").read_text())["passed"],
+            "all_three_model_snapshots_retained": (
+                retention["count"] == 3
+                and [item["global_step"] for item in retention["snapshots"]] == [1, 2, 3]
+            ),
+            "oldest_full_checkpoint_rotated": not (output / "checkpoint-1").exists(),
+            "latest_full_checkpoint_retained": (
+                [checkpoint_step(path) for path in remaining_full] == [3]
+            ),
             "base_to_checkpoint1_delta": check_delta(delta1)["passed"],
             "checkpoint1_to_checkpoint2_delta": check_delta(delta2)["passed"],
             "trainability_freeze_gate": manifest["trainability"]["passed"],
+            "gradient_checkpointing_observed": all(
+                "Gradient checkpointing enabled." in (run_dir / name).read_text(
+                    encoding="utf-8", errors="replace"
+                )
+                for name in ("step1.log", "resume.log", "rotate.log")
+            ),
+            "zero2_gpu_optimizer_observed": all(
+                "Creating torch.bfloat16 ZeRO stage 2 optimizer" in (run_dir / name).read_text(
+                    encoding="utf-8", errors="replace"
+                )
+                and "CPU Offload: False" in (run_dir / name).read_text(
+                    encoding="utf-8", errors="replace"
+                )
+                for name in ("step1.log", "resume.log", "rotate.log")
+            ),
+            "test_not_accessed": True,
         }
         manifest["gates"] = gates
-        manifest["outputs"] = {"checkpoint1": str(checkpoint1), "checkpoint2": str(checkpoint2)}
+        manifest["retention"] = retention
+        manifest["outputs"] = {
+            "snapshot1": str(snapshot1), "snapshot2": str(snapshot2),
+            "snapshot3": str(snapshot3),
+            "full_checkpoint3": str(checkpoint3),
+        }
         manifest["status"] = "completed" if all(gates.values()) else "failed_gate"
         manifest["completed_at"] = datetime.now().astimezone().isoformat()
         write_yaml(manifest_path, manifest)
         if not all(gates.values()):
             raise RuntimeError(f"formal SFT smoke gates failed: {gates}")
     except Exception as exc:
+        if "archiver" in locals():
+            try:
+                manifest["retention_on_failure"] = archiver.stop_and_validate()
+            except Exception as retention_exc:
+                manifest["retention_stop_failure"] = {
+                    "type": type(retention_exc).__name__, "message": str(retention_exc),
+                }
         manifest["status"] = "failed"
         manifest["failure"] = {"type": type(exc).__name__, "message": str(exc)}
         manifest["completed_at"] = datetime.now().astimezone().isoformat()

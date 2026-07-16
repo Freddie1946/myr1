@@ -25,7 +25,7 @@ COUNTS = (500, 1000, 2000, 3000)
 FORMAL_GPU_IDS = list(range(8))
 MIN_FREE_DISK_BYTES = 500 * 1024**3
 BASE_REVISION = "cc594898137f460bfe9f0759e9844b3ce807cfb5"
-CORE_MANIFEST_NAME = "code_hash_manifest_20260714_012500.json"
+CORE_MANIFEST_NAME = "code_hash_manifest_20260717_002323.json"
 SEQUENCE_MANIFEST_NAME = "sft_scale_sequence_manifest_20260715_235000.json"
 SFT_GATES = {
     "training_completed",
@@ -36,6 +36,11 @@ SFT_GATES = {
     "gradients_finite_nonzero",
     "language_tensor_changed",
     "visual_tensor_exactly_equal",
+    "gradient_checkpointing_observed",
+    "all_epoch_model_snapshots_saved",
+    "all_epoch_snapshot_metadata_present",
+    "latest_two_full_resume_checkpoints_retained",
+    "disk_reserve_maintained",
     "test_not_accessed",
 }
 VALIDATION_GATES = {
@@ -150,6 +155,7 @@ def validate_sft_manifest(path: Path, install: Path, expected_count: int) -> tup
         "language_model_trainable": True,
         "vision_tower_frozen": True,
         "multimodal_projector_frozen": True,
+        "backend": "deepspeed_zero2_gpu_fused_adamw_gc",
     }
     training_mismatches = {
         key: {"expected": value, "actual": training.get(key)}
@@ -172,6 +178,17 @@ def validate_sft_manifest(path: Path, install: Path, expected_count: int) -> tup
     for required_file in ("model.safetensors.index.json", "trainer_state.json", "config.json"):
         if not (checkpoint / required_file).is_file():
             raise SequenceStop(f"SFT final checkpoint is missing {required_file}: {checkpoint}")
+    snapshot_root = Path(outputs.get("epoch_snapshots", "")).resolve()
+    expected_snapshot_root = (path.parent / "epoch_snapshots").resolve()
+    if snapshot_root != expected_snapshot_root:
+        raise SequenceStop(
+            f"SFT epoch snapshot root mismatch: {snapshot_root} != {expected_snapshot_root}"
+        )
+    snapshots = sorted(snapshot_root.glob("checkpoint-*"))
+    if len(snapshots) != 10 or any(
+        not (snapshot / "snapshot_manifest.json").is_file() for snapshot in snapshots
+    ):
+        raise SequenceStop(f"SFT epoch snapshots are incomplete: {snapshot_root}")
     return payload, checkpoint
 
 
