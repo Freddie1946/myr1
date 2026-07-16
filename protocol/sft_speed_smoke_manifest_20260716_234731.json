@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-07-16T23:47:31+08:00",
+  "purpose": "correct LLaMA-Factory gradient-checkpointing control and add an observed-state gate",
+  "formal_result": false,
+  "attempt01_disposition": {
+    "run_id": "sft_speed_smoke_z2_gpu_nogc_fused_20260716_233956",
+    "status": "failed_configuration_intent_gate",
+    "intended_gradient_checkpointing": false,
+    "observed_gradient_checkpointing": true,
+    "measurement_retained": true
+  },
+  "next_variant": "z2_gpu_nogc_fused",
+  "fallback_variant": "z2_gpu_gc_fused",
+  "sha256": {
+    "configs/deepspeed/ds_z2_gpu_torch_adamw.json": "7d992d6465f65e41d42384dc4cf7501a72a3969111a6c15fdd7f6433975f2b00",
+    "formal_machine/run_formal_sft_speed_smoke.py": "eb47fb6cfa054365e7298c525c6dd8ef6ec8dfc2012a53e42bda8017a7f35ec8",
+    "scripts/launch_formal_sft_speed_smoke.sh": "3b760f73a2498c6a600b4e1203d54b0a2775d40bda4f2251b4fdbd3ee80d8c5b",
+    "docs/20260716_234731_sft_speed_smoke_attempt01_config_key_correction.md": "ea3a34de2cf85beb4eb3f0ecc9142f7e174405841745d2306dcf31ad36a8d587"
+  }
+}

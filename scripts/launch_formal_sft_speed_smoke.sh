@@ -7,7 +7,7 @@ set -euo pipefail
 : "${PATHVLM_LLAMAFACTORY_SRC:?source FORMAL_PATHS.env first}"
 
 VARIANT="${1:-z2_gpu_nogc_fused}"
-if [[ "$VARIANT" != "z2_gpu_nogc_fused" ]]; then
+if [[ "$VARIANT" != "z2_gpu_nogc_fused" && "$VARIANT" != "z2_gpu_gc_fused" ]]; then
   echo "unsupported speed-smoke variant: $VARIANT" >&2
   exit 2
 fi

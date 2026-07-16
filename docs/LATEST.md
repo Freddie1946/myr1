@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260716_233301`
+Latest timestamp: `20260716_234731`
 
 Read in this order:
 
@@ -40,29 +40,32 @@ Read in this order:
 34. `20260715_230037_formal_sft_n0500_launched.md`
 35. `20260715_235000_formal_sft_scale_supervisor.md`
 36. `20260716_233301_sft_speed_smoke_and_ablation_correction.md`
-37. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-38. `../manuscript/README.md` and its mandatory reading order
-39. `../CODEX_START_HERE.md`
-40. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-41. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-42. `../protocol/code_hash_manifest_20260714_012500.json`
-43. `../protocol/code_hash_manifest_20260714_005450.json`
-44. `../protocol/code_hash_manifest_20260714_001041.json`
-45. `../protocol/code_hash_manifest_20260713_222306.json`
-46. `../protocol/code_hash_manifest_20260713_214352.json`
-47. `../protocol/code_hash_manifest_20260713_213248.json`
-48. `../protocol/code_hash_manifest_20260713_205956.json`
-49. `../protocol/code_hash_manifest_20260713_203631.json`
-50. `../protocol/code_hash_manifest_20260712_213340.json`
-51. `../protocol/code_hash_manifest_20260712_192846.json`
-52. `../protocol/code_hash_manifest_20260712_144811.json`
-53. `../protocol/debug_proxy_model_manifest.json`
-54. `../protocol/training_plan.md`
-55. `../protocol/old_sft_audit.md`
-56. The latest manifest under `../debug_e2e/`
+37. `20260716_234731_sft_speed_smoke_attempt01_config_key_correction.md`
+38. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+39. `../manuscript/README.md` and its mandatory reading order
+40. `../CODEX_START_HERE.md`
+41. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+42. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+43. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+44. `../protocol/code_hash_manifest_20260714_012500.json`
+45. `../protocol/code_hash_manifest_20260714_005450.json`
+46. `../protocol/code_hash_manifest_20260714_001041.json`
+47. `../protocol/code_hash_manifest_20260713_222306.json`
+48. `../protocol/code_hash_manifest_20260713_214352.json`
+49. `../protocol/code_hash_manifest_20260713_213248.json`
+50. `../protocol/code_hash_manifest_20260713_205956.json`
+51. `../protocol/code_hash_manifest_20260713_203631.json`
+52. `../protocol/code_hash_manifest_20260712_213340.json`
+53. `../protocol/code_hash_manifest_20260712_192846.json`
+54. `../protocol/code_hash_manifest_20260712_144811.json`
+55. `../protocol/debug_proxy_model_manifest.json`
+56. `../protocol/training_plan.md`
+57. `../protocol/old_sft_audit.md`
+58. The latest manifest under `../debug_e2e/`
 
-Current next action: commit and run the training-only `z2_gpu_nogc_fused` eight-GPU SFT throughput
-smoke. The prior CPU-offload n=2000 attempt and its scale supervisor stopped fail-closed. Do not
-resume the old sequence or launch another formal scale run until the speed/memory candidate and the
-validation-only duration-selection plan have been reviewed. Stage 2 long runs and Stage 3 remain
-outside the authorized scope.
+Current next action: commit and run the corrected training-only `z2_gpu_nogc_fused` eight-GPU SFT
+throughput smoke. Attempt01 actually used gradient checkpointing despite its intended label and is
+retained as a failed configuration-intent gate; if corrected no-GC OOMs, use the correctly labeled
+`z2_gpu_gc_fused` fallback. Do not resume the old scale sequence or launch another formal scale run
+until the speed/memory candidate and validation-only duration-selection plan have been reviewed.
+Stage 2 long runs and Stage 3 remain outside the authorized scope.

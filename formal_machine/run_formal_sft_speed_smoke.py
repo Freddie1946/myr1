@@ -34,6 +34,11 @@ VARIANTS = {
         "gradient_checkpointing": False,
         "optim": "adamw_torch_fused",
     },
+    "z2_gpu_gc_fused": {
+        "deepspeed": "configs/deepspeed/ds_z2_gpu_torch_adamw.json",
+        "gradient_checkpointing": True,
+        "optim": "adamw_torch_fused",
+    },
 }
 
 
@@ -114,6 +119,10 @@ def main() -> None:
         "lr_scheduler_type": "constant",
         "warmup_ratio": 0.0,
         "bf16": True,
+        # LLaMA-Factory v0.9.2 controls model-level checkpointing with the
+        # negative ModelArguments flag below. Keep the transformers flag too,
+        # but do not rely on it as the execution gate.
+        "disable_gradient_checkpointing": not variant["gradient_checkpointing"],
         "gradient_checkpointing": variant["gradient_checkpointing"],
         "optim": variant["optim"],
         "seed": 42,
@@ -187,11 +196,16 @@ def main() -> None:
         train_results = json.loads((output / "train_results.json").read_text(encoding="utf-8"))
         trainer_state = json.loads((output / "trainer_state.json").read_text(encoding="utf-8"))
         trainability = parse_trainability(run_dir / "train.log")
+        log_text = (run_dir / "train.log").read_text(encoding="utf-8")
+        actual_gradient_checkpointing = "Gradient checkpointing enabled." in log_text
         steps_per_second = float(train_results["train_steps_per_second"])
         gates = {
             "completed_requested_steps": trainer_state.get("global_step") == args.max_steps,
             "positive_finite_throughput": steps_per_second > 0,
             "trainability_freeze_gate": trainability["passed"],
+            "gradient_checkpointing_matches_intent": (
+                actual_gradient_checkpointing == variant["gradient_checkpointing"]
+            ),
             "test_not_accessed": True,
         }
         manifest.update({
@@ -206,6 +220,10 @@ def main() -> None:
                 "train_loss": float(train_results["train_loss"]),
             },
             "trainability": trainability,
+            "observed_execution": {
+                "gradient_checkpointing_enabled": actual_gradient_checkpointing,
+                "evidence": "train.log contains LLaMA-Factory 'Gradient checkpointing enabled.' message",
+            },
             "resources": summarize_resources(resources),
             "gates": gates,
             "outputs": {"output_dir": str(output), "log": str(run_dir / "train.log")},
