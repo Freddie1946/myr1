@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-20T06:43:52+08:00",
+  "status": "frozen_before_execution",
+  "scope": "formal-only Outcome-GRPO n1000 seed42 continuation after passing pilot",
+  "source_pipeline_run_id": "stage2_priority_n1000_seed0042_20260720_035156",
+  "source_pipeline_manifest_sha256": "5e1cf2bece85a73aa6af6e06c91e54ca211dc363376a337555bc722879a2b1be",
+  "passing_pilot_manifest_sha256": "520aae6474c7a71f7093b9070b09900ed8640f4e461242a60429c3b31666828d",
+  "pruning_record_sha256": "1507ea57cbad257ff6f8c4e784c26470457463a2c095b9b0a4d6a06e38a67423",
+  "checkpoint_inventory_sha256": "9483d4ce1ece4731e75a2c2e1a7375b27e5107f2914bc71900473c5ed1d6bebb",
+  "pilot_rerun_authorized": false,
+  "formal_parent": {
+    "sft_sample_count": 3000,
+    "seed": 42,
+    "epoch": 3,
+    "global_step": 1125,
+    "snapshot_manifest_sha256": "6c8708dd677f5ab1563e77317d86cd1b53cb9b969ebda09e4a312581a2b9f1f1"
+  },
+  "pilot_output_is_parent": false,
+  "data_version": "pathmmu_image_disjoint_v2",
+  "rl_sample_count": 1000,
+  "seed": 42,
+  "formal_epochs": 3,
+  "steps_per_epoch": 500,
+  "formal_steps": 1500,
+  "num_generations": 4,
+  "global_batch_size": 8,
+  "learning_rate": 1e-06,
+  "beta": 0.04,
+  "max_completion_length": 192,
+  "prompt_contract": "pathmmu_think_answer_only_v2",
+  "checkpoint_policy": {
+    "full_resume_save_steps": 100,
+    "full_resume_retain": 1,
+    "model_only_epoch_snapshots": [500, 1000, 1500]
+  },
+  "validation": {
+    "split": "validation_0385",
+    "count": 385,
+    "epochs": [1, 2, 3],
+    "selection_rule": "maximum accuracy; exact tie maximum format; exact tie earliest epoch"
+  },
+  "required_free_bytes": 897060103530,
+  "disk_reserve_bytes": 590558003200,
+  "failure_policy": "preserve and stop; no automatic retry or tuning",
+  "other_experiments_authorized": false,
+  "test_authorized": false,
+  "test_accessed": false,
+  "picked_json_used": false
+}

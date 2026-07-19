@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-20T02:51:12+08:00`
+Last updated: `2026-07-20T06:52:00+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -188,6 +188,10 @@ The original decision PDF remains authoritative; comments below are concise para
   exact online/offline and source provenance; full validation was 232/385 versus parent 233/385,
   with exact McNemar p=1.0, 100% format/extraction and zero empty outputs. The formal arm did not
   start because the post-pilot storage projection failed closed.
+- Continuation: after audited pruning of only the consumed pilot resume checkpoint, the user
+  authorized a formal-only continuation from the original SFT n=3000 epoch-3 parent. Its protocol
+  and evidence hashes are frozen; launch remains conditional on fresh code/data/parent/storage/GPU
+  gates. This still concerns outcome-only rewards and does not validate GPT-4o or Process Reward.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -254,8 +258,10 @@ The original decision PDF remains authoritative; comments below are concise para
 - Frozen priority under the user's revision-time constraint: run n=1000/seed42 first from the selected
   n=3000 epoch-3 SFT parent after a 50-step save/resume/full-validation pilot. RL 250/500 and other
   SFT/RL combinations are deferred, so the systematic RL scale request remains incomplete.
-- The 50-step prerequisite pilot is now complete and passing. The n=1000 formal point remains blocked
-  only on an explicitly approved storage action and a formal-only continuation gate.
+- The 50-step prerequisite pilot is complete and passing. The approved checkpoint pruning restored
+  the frozen storage margin, and the formal n=1000 continuation from the original SFT parent is now
+  frozen and authorized, subject to its fresh launch gates. No formal result is claimed before it
+  completes.
 - Status: `partial`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds
@@ -325,6 +331,9 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
 15. After explicit approval, hashed all 44 files and pruned only the consumed 109.3-GB pilot resume
     checkpoint. The final model, raw reward events, logs, tensor audit, 385 predictions and manifests
     remain. Free space now passes the formal projection; formal training still has not started.
+16. Froze the separately manifested formal-only continuation from SFT n=3000/seed42/epoch3 to
+    Outcome-GRPO n=1000/seed42 for three epochs after explicit user authorization. The launcher
+    rechecks immutable pilot/pruning evidence and every formal gate; no result is claimed yet.
 
 ## Mandatory update rule
 

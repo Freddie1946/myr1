@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-07-20T06:52:00+08:00",
+  "purpose": "Freeze the fail-closed formal-only Outcome-GRPO n1000 seed42 continuation after the passing pilot and audited checkpoint pruning",
+  "data_version": "pathmmu_image_disjoint_v2",
+  "prompt_contract": "pathmmu_think_answer_only_v2",
+  "sha256": {
+    "formal_machine/run_stage2_formal_only.py": "eadf23981af0d0fcde6bd09d54f932dd22b47b695fc02e9e9b6c3e53c42f4417",
+    "scripts/launch_stage2_formal_only.sh": "eb9960709a145ca15f45054ada01213bed4602863fe77872a2e908eb333fd666",
+    "scripts/test_stage2_formal_only.py": "89e52ec1f553358b65f8f80e285c8bd92c87ebdc0865b8058ad10e74117ba4d6",
+    "protocol/stage2_formal_n1000_seed42_continuation_manifest_20260720_064352.json": "7fdbb8468abfc853655f22663de19e03bd47d0471d0f17f097c486fa2e43baf0",
+    "protocol/stage2_priority_n1000_seed42_manifest_20260720_033024.json": "20fbac6e7fbe26c6d8b6ae314da9099e18c88e8fe2f80dcb7a2081d2a2611178",
+    "protocol/stage2_priority_n1000_seed42_code_manifest_20260720_033024.json": "5ca1ea8e321363a9b8ef090611177dd8638fd955af7b88b3580ba79e02c20423",
+    "protocol/training_plan.md": "e557a6c19b8f13e99f5853ca2616908c23f7e10ed52e14a9a5b5a3825c4ac959",
+    "docs/20260720_065200_stage2_formal_n1000_continuation_frozen.md": "417eba058a4f4fe21cabbf67026065df86e2fd928c917136e04ba994ab5a9fe1",
+    "docs/LATEST.md": "9cd441b4285e8f101e669c4bd90575237b4bbf1528326f1cf43ae0cfb27374fd",
+    "manuscript/revision/reviewer_response_tracker.md": "1647773e3f63bcf1296d20ad877c4e7c7badf2b736fe8f8dad8b8a9612e1ce45"
+  }
+}
