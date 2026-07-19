@@ -4,7 +4,7 @@
   "data_version": "pathmmu_image_disjoint_v2",
   "formal_result": false,
   "sha256": {
-    "formal_machine/run_formal_outcome_grpo_smoke.py": "20d1922db62645c61d022e108f8664b86d69081ef9762df23bfe88eb3799b4dd",
+    "formal_machine/run_formal_outcome_grpo_smoke.py": "cfa5299016fe7711582ac469f263fbcc781d1c7744f2b30ed63bd3a7ea89f3f2",
     "scripts/launch_formal_outcome_grpo_smoke.sh": "83d3c8f80e2707bf938fb262d178d9dd544566edc14f658f7365c3d2835e565f",
     "scripts/grpo_pathmmu.py": "d4dd9224571a998e76f2dec99ebc5e64de28da8ed99eda153e777f997f94be03",
     "scripts/grpo_pathmmu_audit.py": "1433674dbc56f86a28c9b9e7a2063fdbae58fcd3d42bfee1c3c84f6adc4e54dc",

@@ -221,6 +221,10 @@ def verify_parent(install: Path) -> tuple[Path, dict[str, Any]]:
     snapshot = sft_path.parent / "epoch_snapshots" / "checkpoint-1125"
     evidence = verify_snapshot(snapshot)
     selected_job = next((job for job in curve.get("jobs", []) if job.get("label") == "n3000_epoch03"), None)
+    selected_result = next(
+        (result for result in curve.get("results", []) if result.get("label") == "n3000_epoch03"),
+        None,
+    )
     if (
         not selected_job
         or Path(selected_job.get("checkpoint", "")).resolve() != snapshot.resolve()
@@ -228,13 +232,24 @@ def verify_parent(install: Path) -> tuple[Path, dict[str, Any]]:
         != SNAPSHOT_MANIFEST_SHA256
     ):
         raise GateStop("curve job does not bind the selected snapshot")
+    if (
+        not selected_result
+        or selected_result.get("status") != "completed"
+        or selected_result.get("formal_result") is not True
+        or selected_result.get("test_accessed") is not False
+        or Path(selected_result.get("checkpoint", "")).resolve() != snapshot.resolve()
+        or any(value is not True for value in selected_result.get("gates", {}).values())
+    ):
+        raise GateStop("selected validation result is not complete, formal, and fully passing")
+    metrics = selected_result.get("metrics", {})
     evidence.update({
         "sft_manifest": str(sft_path),
         "sft_manifest_sha256": SFT_MANIFEST_SHA256,
         "curve_manifest": str(curve_path),
         "curve_manifest_sha256": CURVE_MANIFEST_SHA256,
-        "validation_accuracy": selected_job.get("metrics", {}).get("mean_accuracy_reward"),
-        "validation_format": selected_job.get("metrics", {}).get("mean_format_reward"),
+        "validation_accuracy": metrics.get("mean_accuracy_reward"),
+        "validation_format": metrics.get("mean_format_reward"),
+        "validation_result_gates": selected_result.get("gates"),
     })
     return snapshot.resolve(), evidence
 
