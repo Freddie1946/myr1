@@ -24,8 +24,8 @@ import yaml
 
 BASE_REVISION = "cc594898137f460bfe9f0759e9844b3ce807cfb5"
 DATA_VERSION = "pathmmu_image_disjoint_v2"
-GATE_PROTOCOL = "outcome_grpo_gate_manifest_20260720_013054.json"
-CODE_MANIFEST = "outcome_grpo_gate_code_manifest_20260720_013054.json"
+GATE_PROTOCOL = "outcome_grpo_prompt_v2_gate_manifest_20260720_023057.json"
+CODE_MANIFEST = "outcome_grpo_prompt_v2_gate_code_manifest_20260720_023057.json"
 CURVE_RUN_ID = "sft_base_n2000_n3000_seed0042_20260719_184313"
 CURVE_MANIFEST_SHA256 = "e7170be9ddd3050b8421a02c3a12a3e59d9762b6296a26f246abe445ea06ff24"
 SFT_RUN_ID = "formal_sft_n3000_seed0042_20260717_014544"
@@ -133,6 +133,8 @@ def verify_protocol(repo: Path) -> dict[str, Any]:
         "rl_smoke_count": 8,
         "test_accessed": False,
         "long_grpo_authorized": False,
+        "prompt_contract": "pathmmu_think_answer_only_v2",
+        "require_positive_format_reward": True,
     }
     mismatch = {key: {"expected": value, "actual": payload.get(key)}
                 for key, value in expected.items() if payload.get(key) != value}
@@ -499,6 +501,8 @@ def audit_rewards(repo: Path, reward_dir: Path) -> dict[str, Any]:
         raise GateStop(f"expected two four-generation prompt groups, got {[len(v) for v in groups.values()]}")
     group_std = [statistics.stdev(values) for values in groups.values()]
     mean_std = statistics.mean(group_std)
+    accuracy_values = [pair["accuracy_reward"] for pair in pairs]
+    format_values = [pair["format_reward"] for pair in pairs]
     return {
         "event_files": [str(path) for path in files],
         "event_count": len(events), "completion_count": len(pairs),
@@ -506,6 +510,10 @@ def audit_rewards(repo: Path, reward_dir: Path) -> dict[str, Any]:
         "group_total_rewards": list(groups.values()),
         "group_sample_std": group_std, "mean_group_sample_std": mean_std,
         "positive_reward_variance": mean_std > 0.0,
+        "mean_accuracy_reward": statistics.mean(accuracy_values),
+        "mean_format_reward": statistics.mean(format_values),
+        "positive_format_reward_count": sum(value > 0.0 for value in format_values),
+        "format_reward_observed_positive": any(value > 0.0 for value in format_values),
     }
 
 
@@ -599,7 +607,7 @@ def main() -> None:
 
     preflight["hardware"] = gpu_inventory(GPU_IDS)
     require_free_port(MASTER_PORT)
-    run_id = f"outcome_grpo_gate_n0008_seed0042_{timestamp()}"
+    run_id = f"outcome_grpo_prompt_v2_gate_n0008_seed0042_{timestamp()}"
     run_dir = install / "runs" / "stage2_outcome_grpo" / "gate_n0008_seed0042" / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     parent_alias = run_dir / "parent_Qwen2.5-VL-7B-Instruct"
@@ -621,6 +629,8 @@ def main() -> None:
             "per_device_train_batch_size": 1, "gradient_accumulation_steps": 1,
             "deepspeed": "zero3_optimizer_cpu_offload", "language_model_trainable": True,
             "vision_tower_frozen": True, "multimodal_projector_frozen": True,
+            "prompt_contract": "pathmmu_think_answer_only_v2",
+            "require_positive_format_reward": True,
         },
         "command": command, "test_accessed": False, "picked_json_used": False,
         "long_grpo_authorized": False,
@@ -658,6 +668,7 @@ def main() -> None:
             "online_reward_jsonl_complete": rewards["event_count"] == EXPECTED_EVENTS,
             "online_offline_parser_consistency": rewards["parser_consistency"],
             "positive_offline_reward_variance": rewards["positive_reward_variance"],
+            "positive_format_reward_observed": rewards["format_reward_observed_positive"],
             "positive_trainer_reward_std": training_state["trainer_reward_std_positive"],
             "finite_loss": training_state["loss_finite"],
             "finite_nonzero_gradient": training_state["gradient_finite_nonzero"],

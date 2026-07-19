@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-20T02:19:19+08:00`
+Last updated: `2026-07-20T02:30:57+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -177,7 +177,8 @@ The original decision PDF remains authoritative; comments below are concise para
   hardware gate passed with 16/16 online/offline-consistent reward events, reward std 0.25, gradient
   norm 2.93, a changed language tensor and exactly unchanged visual tensor. This is engineering-only
   and does not prove Stage 3. It also exposed an all-zero format-reward branch caused by a JSON-format
-  prompt conflicting with the strict think/answer reward contract.
+  prompt conflicting with the strict think/answer reward contract. The user approved removing only
+  the contradictory JSON sentence; a new prompt-v2 one-step re-gate is frozen but has not run.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -296,6 +297,9 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     branch was all zero because the upstream JSON-format instruction conflicts with the strict
     think/answer reward, so long RL remains blocked pending an explicit correction and re-gate.
     Engineering evidence only; supports R2-4/R3-3/R3-5 as preparation.
+12. Froze the user-approved prompt-contract-v2 correction: remove only the contradictory trailing
+    JSON instruction, retain parser v2 and strict think/answer format reward, and require at least one
+    positive format reward in a new one-step re-gate. The re-gate is prepared but has not run.
 
 ## Mandatory update rule
 

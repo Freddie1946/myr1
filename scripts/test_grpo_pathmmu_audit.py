@@ -10,11 +10,33 @@ from pathlib import Path
 
 import torch
 
-from grpo_pathmmu_audit import aligned_solutions, append_audit_events, trainability_report
+from grpo_pathmmu_audit import (
+    STRICT_PROMPT_CONTRACT,
+    aligned_solutions,
+    append_audit_events,
+    replace_legacy_json_prompt,
+    strict_prompt_text,
+    trainability_report,
+)
 
 
 def wrapped(text: str):
     return [[{"role": "assistant", "content": text}]]
+
+
+prompt = strict_prompt_text("Question?\nOptions:\nA) one\nB) two")
+assert STRICT_PROMPT_CONTRACT == "pathmmu_think_answer_only_v2"
+assert prompt.endswith("<answer> </answer> tags.")
+assert "JSON" not in prompt
+assert prompt.count("Question?") == 1
+legacy = prompt + " Output the final answer in JSON format."
+assert replace_legacy_json_prompt(legacy, "Question?\nOptions:\nA) one\nB) two") == prompt
+try:
+    replace_legacy_json_prompt(prompt, "Question?")
+except RuntimeError:
+    pass
+else:
+    raise AssertionError("legacy prompt guard must fail when the expected suffix is absent")
 
 
 with tempfile.TemporaryDirectory() as temporary:

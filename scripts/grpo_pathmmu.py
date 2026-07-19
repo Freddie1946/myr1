@@ -7,7 +7,13 @@ import json
 import os
 from pathlib import Path
 
-from grpo_pathmmu_audit import aligned_solutions, append_audit_events, trainability_report
+from grpo_pathmmu_audit import (
+    STRICT_PROMPT_CONTRACT,
+    aligned_solutions,
+    append_audit_events,
+    replace_legacy_json_prompt,
+    trainability_report,
+)
 from open_r1 import grpo_rec
 from open_r1.trainer import Qwen2VLGRPOTrainer
 from pathmmu_rewards import accuracy_reward, format_reward
@@ -28,6 +34,21 @@ def audited_format_reward(completions, solution=None, **kwargs):
     return rewards
 
 
+class PathMMUStrictPromptDataset(grpo_rec.LazySupervisedDataset):
+    """Replace the vendored grounding-era JSON instruction with the scored contract."""
+
+    def __getitem__(self, index):
+        item = super().__getitem__(index)
+        try:
+            text_part = item["prompt"][0]["content"][1]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise RuntimeError("unexpected PathMMU multimodal prompt structure") from exc
+        original = str(text_part.get("text", ""))
+        text_part["text"] = replace_legacy_json_prompt(original, item["problem"])
+        item["prompt_contract"] = STRICT_PROMPT_CONTRACT
+        return item
+
+
 def main() -> None:
     grpo_rec.reward_funcs_registry["accuracy"] = audited_accuracy_reward
     grpo_rec.reward_funcs_registry["format"] = audited_format_reward
@@ -35,7 +56,7 @@ def main() -> None:
     script_args, training_args, model_args = parser.parse_args_and_config()
 
     reward_funcs = [grpo_rec.reward_funcs_registry[name] for name in script_args.reward_funcs]
-    dataset = grpo_rec.LazySupervisedDataset(script_args.dataset_name, script_args)
+    dataset = PathMMUStrictPromptDataset(script_args.dataset_name, script_args)
     peft_config = get_peft_config(model_args)
     if peft_config is not None:
         raise RuntimeError("formal PathMMU GRPO gate forbids PEFT/LoRA")

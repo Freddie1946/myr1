@@ -13,6 +13,28 @@ from typing import Any
 
 _AUDIT_CALLS: defaultdict[str, int] = defaultdict(int)
 
+STRICT_PROMPT_CONTRACT = "pathmmu_think_answer_only_v2"
+STRICT_PROMPT_SUFFIX = (
+    " First output the thinking process in <think> </think> tags and then output the final answer "
+    "in <answer> </answer> tags."
+)
+LEGACY_JSON_SUFFIX = " Output the final answer in JSON format."
+
+
+def strict_prompt_text(question: str) -> str:
+    """Return the exact prompt contract scored by the strict format reward."""
+    return str(question) + STRICT_PROMPT_SUFFIX
+
+
+def replace_legacy_json_prompt(original: str, question: str) -> str:
+    """Fail closed unless the vendored prompt has exactly the audited legacy suffix."""
+    if not str(original).endswith(LEGACY_JSON_SUFFIX):
+        raise RuntimeError("vendored prompt no longer has the expected legacy JSON suffix")
+    corrected = strict_prompt_text(question)
+    if "JSON format" in corrected or not corrected.endswith("<answer> </answer> tags."):
+        raise RuntimeError("strict PathMMU prompt contract construction failed")
+    return corrected
+
 
 def completion_text(completion: Any) -> str:
     if isinstance(completion, list) and completion and isinstance(completion[0], dict):

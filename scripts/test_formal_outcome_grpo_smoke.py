@@ -44,6 +44,8 @@ with tempfile.TemporaryDirectory() as temporary:
     assert audit["completion_count"] == 8
     assert audit["parser_consistency"] is True
     assert audit["positive_reward_variance"] is True
+    assert audit["positive_format_reward_count"] == 8
+    assert audit["format_reward_observed_positive"] is True
 
     output = root / "output"
     output.mkdir()

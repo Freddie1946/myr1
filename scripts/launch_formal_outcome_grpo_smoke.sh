@@ -3,11 +3,13 @@ set -euo pipefail
 
 if [[ "${1:-}" == "--approval-check" ]]; then
   printf '%s\n' \
-    'APPROVAL SCOPE: exact one-step Outcome GRPO engineering gate only' \
+    'APPROVAL SCOPE: prompt-contract-v2 one-step Outcome GRPO engineering re-gate only' \
     'PARENT: validation-selected formal n3000 epoch-3/step-1125 SFT snapshot' \
     'DATA: frozen v2 RL smoke n0008; no validation/test training access' \
     'HARDWARE: GPUs 0-7, only if all eight are idle at launch time' \
-    'GUARDS: exact hashes, parser regression, per-rank raw rewards, positive variance,' \
+    'PROMPT: strict think/answer only; contradictory JSON-format sentence removed' \
+    'GUARDS: exact hashes, parser regression, positive format reward, per-rank raw rewards,' \
+    '        positive total-reward variance,' \
     '        finite nonzero gradient, saved-model load, language delta, visual equality' \
     'FAILURE: preserve artifacts and stop; no automatic retry or protocol change' \
     'LONG GRPO: not authorized by this launcher'
