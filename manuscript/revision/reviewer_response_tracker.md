@@ -181,6 +181,9 @@ The original decision PDF remains authoritative; comments below are concise para
   the contradictory JSON sentence. The prompt-v2 re-gate then passed: 8/8 format rewards positive,
   16/16 online/offline reward events consistent, reward std 0.2887, gradient norm 3.3764, language
   tensor changed and visual tensor exactly unchanged. Formal long Outcome GRPO has not run.
+- Frozen next action: a 50-step save/resume/full-validation engineering pilot precedes the priority
+  n=1000, seed-42, three-epoch Outcome-GRPO arm. Every online completion is bound to its exact frozen
+  record/image hash/question/prompt and is re-scored offline. This does not address GPT-4o or Stage 3.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -244,6 +247,9 @@ The original decision PDF remains authoritative; comments below are concise para
   prompt-v2 correction re-gate passed with 8/8 positive format rewards, positive total-reward
   variance and a nonzero update. No formal RL-scale result exists. See
   `docs/20260720_025112_outcome_grpo_prompt_v2_regate_completed.md`.
+- Frozen priority under the user's revision-time constraint: run n=1000/seed42 first from the selected
+  n=3000 epoch-3 SFT parent after a 50-step save/resume/full-validation pilot. RL 250/500 and other
+  SFT/RL combinations are deferred, so the systematic RL scale request remains incomplete.
 - Status: `partial`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds
@@ -303,6 +309,9 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     instruction changed format rewards from 0/8 to 8/8; every online/offline reward, variance,
     gradient, save/load, trainability and tensor-freeze gate passed. Engineering evidence only; formal
     long RL and the RL-scale curve remain pending a separately frozen protocol.
+13. Froze the next priority pipeline: step-25 save/resume to step 50, complete 385-QA validation
+    gate, then only RL n=1000/seed42 for three epochs from the original SFT parent. Supports
+    R2-4/R3-3/R3-5/R3-6 as a predeclared plan; no long-run result is claimed yet.
 
 ## Mandatory update rule
 

@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import json
 import os
+import hashlib
+import shutil
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -53,14 +55,18 @@ def append_audit_events(
     completions: list[Any],
     solutions: list[Any],
     rewards: list[float],
+    metadata: list[dict[str, Any]] | None = None,
 ) -> None:
     """Write one JSONL per rank so distributed writes cannot interleave."""
     root = os.getenv("PATHVLM_REWARD_LOG_DIR")
     if not root:
         return
-    if not (len(completions) == len(solutions) == len(rewards)):
+    if metadata is None:
+        metadata = [{} for _ in completions]
+    if not (len(completions) == len(solutions) == len(rewards) == len(metadata)):
         raise RuntimeError(
-            f"reward audit length mismatch: {len(completions)}, {len(solutions)}, {len(rewards)}"
+            "reward audit length mismatch: "
+            f"{len(completions)}, {len(solutions)}, {len(rewards)}, {len(metadata)}"
         )
     rank = int(os.getenv("RANK", "0"))
     local_rank = int(os.getenv("LOCAL_RANK", "0"))
@@ -70,8 +76,8 @@ def append_audit_events(
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / f"rank_{rank:02d}.jsonl"
     with path.open("a", encoding="utf-8") as handle:
-        for item_index, (completion, solution, reward) in enumerate(
-            zip(completions, solutions, rewards)
+        for item_index, (completion, solution, reward, source) in enumerate(
+            zip(completions, solutions, rewards, metadata)
         ):
             event = {
                 "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -84,9 +90,100 @@ def append_audit_events(
                 "reward": float(reward),
                 "completion": completion_text(completion),
                 "solution": str(solution),
+                "training_segment": os.getenv("PATHVLM_TRAINING_SEGMENT", "unspecified"),
+                **source,
             }
             handle.write(json.dumps(event, ensure_ascii=False) + "\n")
         handle.flush()
+
+
+MODEL_SNAPSHOT_PATTERNS = (
+    "added_tokens.json",
+    "chat_template.json",
+    "config.json",
+    "generation_config.json",
+    "merges.txt",
+    "model.safetensors",
+    "model.safetensors.index.json",
+    "preprocessor_config.json",
+    "special_tokens_map.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "trainer_state.json",
+    "training_args.bin",
+    "vocab.json",
+)
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _is_model_snapshot_file(name: str) -> bool:
+    return name in MODEL_SNAPSHOT_PATTERNS or (
+        name.startswith("model-") and name.endswith(".safetensors")
+    )
+
+
+def create_model_only_snapshot(
+    checkpoint: Path, destination: Path, *, global_step: int, epoch: float
+) -> dict[str, Any]:
+    """Atomically retain a loadable model without optimizer/resume state."""
+    checkpoint = checkpoint.resolve()
+    if not checkpoint.is_dir():
+        raise RuntimeError(f"checkpoint is missing: {checkpoint}")
+    if destination.exists():
+        raise RuntimeError(f"snapshot destination already exists: {destination}")
+    required = {"config.json", "preprocessor_config.json", "tokenizer_config.json"}
+    selected = sorted(
+        path for path in checkpoint.iterdir()
+        if path.is_file() and _is_model_snapshot_file(path.name)
+    )
+    names = {path.name for path in selected}
+    if not required.issubset(names):
+        raise RuntimeError(f"checkpoint model metadata is incomplete: {sorted(required - names)}")
+    if not ({"model.safetensors"} <= names or "model.safetensors.index.json" in names):
+        raise RuntimeError("checkpoint has no gathered model weights")
+    if any(path.stat().st_size <= 0 for path in selected):
+        raise RuntimeError("checkpoint contains an empty model/processor file")
+
+    temporary = destination.with_name(destination.name + f".tmp-{os.getpid()}")
+    temporary.mkdir(parents=True, exist_ok=False)
+    try:
+        entries = []
+        for source in selected:
+            target = temporary / source.name
+            try:
+                os.link(source, target)
+            except OSError:
+                shutil.copy2(source, target)
+            entries.append({
+                "name": source.name,
+                "size_bytes": target.stat().st_size,
+                "sha256": file_sha256(target),
+            })
+        manifest = {
+            "schema_version": 1,
+            "global_step": int(global_step),
+            "epoch": float(epoch),
+            "model_only": True,
+            "resumable": False,
+            "source_checkpoint": str(checkpoint),
+            "files": entries,
+        }
+        manifest_path = temporary / "snapshot_manifest.json"
+        manifest_path.write_text(
+            json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+        os.replace(temporary, destination)
+        return manifest
+    except Exception:
+        shutil.rmtree(temporary, ignore_errors=True)
+        raise
 
 
 def _parameter_count(parameter) -> int:

@@ -31,6 +31,17 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Parent: validation-selected Stage 1 checkpoint from the same formal seed lineage.
 - Rewards: accuracy plus format.
 - Scaling subsets: 250, 500, 1000 QA.
+- Frozen priority decision (2026-07-20): because revision time is limited, run only the seed-42,
+  n=1000 arm first from the n=3000 epoch-3 SFT parent. Other RL sizes/combinations and seeds are
+  deferred, not silently cancelled or inferred from this one result.
+- Before that formal arm, run a 50-step engineering pilot on the same n=1000 adapter. Save a full
+  checkpoint at step 25, terminate only after the save, start a fresh process, resume to step 50,
+  and evaluate all 385 validation records. The pilot is always `formal_result: false`.
+- The formal arm may start automatically only if the frozen pilot gates in
+  `stage2_priority_n1000_seed42_manifest_20260720_033024.json` all pass. It restarts from the SFT
+  parent, trains three explicit epochs (1,500 optimizer steps), retains rolling resume state plus
+  model-only epoch snapshots, validates epochs 1--3, and selects by accuracy, then format, then the
+  earliest epoch. Test remains sealed.
 
 ## Stage 3 Process GRPO
 

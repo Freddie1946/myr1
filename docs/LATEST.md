@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260720_025112`
+Latest timestamp: `20260720_033024`
 
 Read in this order:
 
@@ -61,42 +61,44 @@ Read in this order:
 55. `20260720_021919_formal_outcome_grpo_one_step_gate_completed.md`
 56. `20260720_023057_outcome_grpo_prompt_v2_regate_frozen.md`
 57. `20260720_025112_outcome_grpo_prompt_v2_regate_completed.md`
-58. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-59. `../manuscript/README.md` and its mandatory reading order
-60. `../CODEX_START_HERE.md`
-61. `../manuscript/revision/reviewer_response_tracker.md`
-62. `../protocol/outcome_grpo_prompt_v2_gate_manifest_20260720_023057.json`
-63. `../protocol/outcome_grpo_prompt_v2_gate_code_manifest_20260720_023057.json`
-64. `../protocol/outcome_grpo_gate_manifest_20260720_013054.json`
-65. `../protocol/outcome_grpo_gate_code_manifest_20260720_013054.json`
-66. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
-67. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
-68. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
-69. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
-70. `../protocol/code_hash_manifest_20260719_172547.json`
-71. `../protocol/code_hash_manifest_20260717_010146.json`
-72. `../protocol/code_hash_manifest_20260717_002323.json`
-73. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-74. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-75. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-76. `../protocol/code_hash_manifest_20260714_012500.json`
-77. `../protocol/code_hash_manifest_20260714_005450.json`
-78. `../protocol/code_hash_manifest_20260714_001041.json`
-79. `../protocol/code_hash_manifest_20260713_222306.json`
-80. `../protocol/code_hash_manifest_20260713_214352.json`
-81. `../protocol/code_hash_manifest_20260713_213248.json`
-82. `../protocol/code_hash_manifest_20260713_205956.json`
-83. `../protocol/code_hash_manifest_20260713_203631.json`
-84. `../protocol/code_hash_manifest_20260712_213340.json`
-85. `../protocol/code_hash_manifest_20260712_192846.json`
-86. `../protocol/code_hash_manifest_20260712_144811.json`
-87. `../protocol/debug_proxy_model_manifest.json`
-88. `../protocol/training_plan.md`
-89. `../protocol/old_sft_audit.md`
-90. The latest manifest under `../debug_e2e/`
+58. `20260720_033024_stage2_priority_pilot_and_n1000_protocol_frozen.md`
+59. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+60. `../manuscript/README.md` and its mandatory reading order
+61. `../CODEX_START_HERE.md`
+62. `../manuscript/revision/reviewer_response_tracker.md`
+63. `../protocol/stage2_priority_n1000_seed42_manifest_20260720_033024.json`
+64. `../protocol/stage2_priority_n1000_seed42_code_manifest_20260720_033024.json`
+65. `../protocol/outcome_grpo_prompt_v2_gate_manifest_20260720_023057.json`
+66. `../protocol/outcome_grpo_prompt_v2_gate_code_manifest_20260720_023057.json`
+67. `../protocol/outcome_grpo_gate_manifest_20260720_013054.json`
+68. `../protocol/outcome_grpo_gate_code_manifest_20260720_013054.json`
+69. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
+70. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
+71. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
+72. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
+73. `../protocol/code_hash_manifest_20260719_172547.json`
+74. `../protocol/code_hash_manifest_20260717_010146.json`
+75. `../protocol/code_hash_manifest_20260717_002323.json`
+76. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+77. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+78. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+79. `../protocol/code_hash_manifest_20260714_012500.json`
+80. `../protocol/code_hash_manifest_20260714_005450.json`
+81. `../protocol/code_hash_manifest_20260714_001041.json`
+82. `../protocol/code_hash_manifest_20260713_222306.json`
+83. `../protocol/code_hash_manifest_20260713_214352.json`
+84. `../protocol/code_hash_manifest_20260713_213248.json`
+85. `../protocol/code_hash_manifest_20260713_205956.json`
+86. `../protocol/code_hash_manifest_20260713_203631.json`
+87. `../protocol/code_hash_manifest_20260712_213340.json`
+88. `../protocol/code_hash_manifest_20260712_192846.json`
+89. `../protocol/code_hash_manifest_20260712_144811.json`
+90. `../protocol/debug_proxy_model_manifest.json`
+91. `../protocol/training_plan.md`
+92. `../protocol/old_sft_audit.md`
+93. The latest manifest under `../debug_e2e/`
 
-Current next action: design and obtain user approval for the formal long Stage 2 protocol: SFT/RL
-combination matrix, RL 250/500/1000 scale design, seeds, steps/epochs, checkpoint/save and validation-
-only selection rules, storage budget, and fail-closed sequence. The corrected one-step gate passes,
-but do not start long Outcome GRPO automatically. Test remains untouched, and the user's decision not
-to rerun SFT n=500/n=1000 remains frozen.
+Current next action: commit and preflight the user-approved Stage-2 priority pipeline, then run the
+50-step step-25-save/resume full-validation pilot. Only if every frozen gate passes may it
+automatically start the formal RL n=1000, seed-42, three-epoch run from the original selected SFT
+parent. No other experiment or test inference is authorized.

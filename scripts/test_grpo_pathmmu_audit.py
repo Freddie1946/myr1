@@ -14,6 +14,7 @@ from grpo_pathmmu_audit import (
     STRICT_PROMPT_CONTRACT,
     aligned_solutions,
     append_audit_events,
+    create_model_only_snapshot,
     replace_legacy_json_prompt,
     strict_prompt_text,
     trainability_report,
@@ -49,8 +50,10 @@ with tempfile.TemporaryDirectory() as temporary:
     solutions = ["<answer>B) target</answer>"] * 4
     aligned = aligned_solutions(solutions, len(completions))
     assert aligned == ["<answer>B) target</answer>"]
-    append_audit_events("accuracy", completions, aligned, [1.0])
-    append_audit_events("format", completions, aligned, [1.0])
+    metadata = [{"record_index": 17, "image_sha256": "abc", "problem": "Question?"}]
+    os.environ["PATHVLM_TRAINING_SEGMENT"] = "segment_a"
+    append_audit_events("accuracy", completions, aligned, [1.0], metadata)
+    append_audit_events("format", completions, aligned, [1.0], metadata)
     path = Path(temporary) / "rank_03.jsonl"
     events = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
     assert len(events) == 2
@@ -59,6 +62,30 @@ with tempfile.TemporaryDirectory() as temporary:
     assert events[0]["completion"] == events[1]["completion"]
     assert events[0]["solution"] == events[1]["solution"]
     assert events[0]["item_index"] == events[1]["item_index"] == 0
+    assert all(event["record_index"] == 17 for event in events)
+    assert all(event["training_segment"] == "segment_a" for event in events)
+
+
+with tempfile.TemporaryDirectory() as temporary:
+    root = Path(temporary)
+    checkpoint = root / "checkpoint-25"
+    checkpoint.mkdir()
+    files = {
+        "config.json": b"{}\n",
+        "preprocessor_config.json": b"{}\n",
+        "tokenizer_config.json": b"{}\n",
+        "model.safetensors": b"weights",
+        "optimizer.pt": b"must not be retained",
+    }
+    for name, content in files.items():
+        (checkpoint / name).write_bytes(content)
+    destination = root / "epoch_snapshots" / "checkpoint-25"
+    destination.parent.mkdir()
+    manifest = create_model_only_snapshot(checkpoint, destination, global_step=25, epoch=1.0)
+    assert manifest["resumable"] is False
+    assert not (destination / "optimizer.pt").exists()
+    assert (destination / "model.safetensors").read_bytes() == b"weights"
+    assert (destination / "snapshot_manifest.json").is_file()
 
 
 class FakeModel:
