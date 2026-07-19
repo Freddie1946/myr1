@@ -184,6 +184,10 @@ The original decision PDF remains authoritative; comments below are concise para
 - Frozen next action: a 50-step save/resume/full-validation engineering pilot precedes the priority
   n=1000, seed-42, three-epoch Outcome-GRPO arm. Every online completion is bound to its exact frozen
   record/image hash/question/prompt and is re-scored offline. This does not address GPT-4o or Stage 3.
+- Result: the pilot passed all gates. Step 25 saved and resumed to step 50; 800/800 reward events had
+  exact online/offline and source provenance; full validation was 232/385 versus parent 233/385,
+  with exact McNemar p=1.0, 100% format/extraction and zero empty outputs. The formal arm did not
+  start because the post-pilot storage projection failed closed.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -250,6 +254,8 @@ The original decision PDF remains authoritative; comments below are concise para
 - Frozen priority under the user's revision-time constraint: run n=1000/seed42 first from the selected
   n=3000 epoch-3 SFT parent after a 50-step save/resume/full-validation pilot. RL 250/500 and other
   SFT/RL combinations are deferred, so the systematic RL scale request remains incomplete.
+- The 50-step prerequisite pilot is now complete and passing. The n=1000 formal point remains blocked
+  only on an explicitly approved storage action and a formal-only continuation gate.
 - Status: `partial`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds
@@ -312,6 +318,10 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
 13. Froze the next priority pipeline: step-25 save/resume to step 50, complete 385-QA validation
     gate, then only RL n=1000/seed42 for three epochs from the original SFT parent. Supports
     R2-4/R3-3/R3-5/R3-6 as a predeclared plan; no long-run result is claimed yet.
+14. Completed that pilot with all gates: genuine save/resume, 400 audited completions, full validation
+    232/385 versus parent 233/385, exact McNemar p=1.0, language change and visual equality. The
+    formal launch stopped before creation on the 550-GiB-reserve projection. No long RL result is
+    claimed; storage cleanup awaits explicit approval.
 
 ## Mandatory update rule
 
