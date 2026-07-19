@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260719_182337`
+Latest timestamp: `20260719_211417`
 
 Read in this order:
 
@@ -53,37 +53,40 @@ Read in this order:
 47. `20260719_162225_validation_curve_attempt01_chat_template_failure_and_retry.md`
 48. `20260719_174130_pathmmu_exact_content_v2_and_reviewer_tracker.md`
 49. `20260719_182337_validation_curve_v2_preflight_completed.md`
-50. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-51. `../manuscript/README.md` and its mandatory reading order
-52. `../CODEX_START_HERE.md`
-53. `../manuscript/revision/reviewer_response_tracker.md`
-54. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
-55. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
-56. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
-57. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
-58. `../protocol/code_hash_manifest_20260719_172547.json`
-59. `../protocol/code_hash_manifest_20260717_010146.json`
-60. `../protocol/code_hash_manifest_20260717_002323.json`
-61. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-62. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-63. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-64. `../protocol/code_hash_manifest_20260714_012500.json`
-65. `../protocol/code_hash_manifest_20260714_005450.json`
-66. `../protocol/code_hash_manifest_20260714_001041.json`
-67. `../protocol/code_hash_manifest_20260713_222306.json`
-68. `../protocol/code_hash_manifest_20260713_214352.json`
-69. `../protocol/code_hash_manifest_20260713_213248.json`
-70. `../protocol/code_hash_manifest_20260713_205956.json`
-71. `../protocol/code_hash_manifest_20260713_203631.json`
-72. `../protocol/code_hash_manifest_20260712_213340.json`
-73. `../protocol/code_hash_manifest_20260712_192846.json`
-74. `../protocol/code_hash_manifest_20260712_144811.json`
-75. `../protocol/debug_proxy_model_manifest.json`
-76. `../protocol/training_plan.md`
-77. `../protocol/old_sft_audit.md`
-78. The latest manifest under `../debug_e2e/`
+50. `20260719_210843_validation_curve_attempt02_completed.md`
+51. `20260719_211417_n0500_n1000_comparability_and_storage_audit.md`
+52. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+53. `../manuscript/README.md` and its mandatory reading order
+54. `../CODEX_START_HERE.md`
+55. `../manuscript/revision/reviewer_response_tracker.md`
+56. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
+57. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
+58. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
+59. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
+60. `../protocol/code_hash_manifest_20260719_172547.json`
+61. `../protocol/code_hash_manifest_20260717_010146.json`
+62. `../protocol/code_hash_manifest_20260717_002323.json`
+63. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+64. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+65. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+66. `../protocol/code_hash_manifest_20260714_012500.json`
+67. `../protocol/code_hash_manifest_20260714_005450.json`
+68. `../protocol/code_hash_manifest_20260714_001041.json`
+69. `../protocol/code_hash_manifest_20260713_222306.json`
+70. `../protocol/code_hash_manifest_20260713_214352.json`
+71. `../protocol/code_hash_manifest_20260713_213248.json`
+72. `../protocol/code_hash_manifest_20260713_205956.json`
+73. `../protocol/code_hash_manifest_20260713_203631.json`
+74. `../protocol/code_hash_manifest_20260712_213340.json`
+75. `../protocol/code_hash_manifest_20260712_192846.json`
+76. `../protocol/code_hash_manifest_20260712_144811.json`
+77. `../protocol/debug_proxy_model_manifest.json`
+78. `../protocol/training_plan.md`
+79. `../protocol/old_sft_audit.md`
+80. The latest manifest under `../debug_e2e/`
 
-Current next action: wait for explicit launch approval for validation-curve Attempt02. Its full v2
-preflight passes, but it has not launched. Attempt02 must be a fresh 21-job run without reusing
-Attempt01 outputs and must preserve all 8,085 raw generations and offline parser audits. Test remains
-untouched. Do not start RL, resume the old scale supervisor, or launch another formal training run.
+Current next action: obtain explicit approval for the recommended matched n=500/n=1000 reruns and
+the documented pruning of only redundant optimizer/resume checkpoints needed to meet the storage
+gate. Attempt02 completed all 21 base/n=2000/n=3000 validation jobs and preserved 8,085 raw
+predictions; selected checkpoints are n=2000 epoch 5 and n=3000 epoch 3. Test remains untouched. Do
+not start formal Outcome GRPO until the SFT-size curve and Stage 2 one-step gates are complete.

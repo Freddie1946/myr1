@@ -36,6 +36,20 @@
     "attempt01_outputs_reused": false,
     "test_accessed": false
   },
+  "completed_run": {
+    "run_id": "sft_base_n2000_n3000_seed0042_20260719_184313",
+    "manifest": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_validation_curves/sft_base_n2000_n3000_seed0042_20260719_184313/run_manifest.yaml",
+    "manifest_sha256": "e7170be9ddd3050b8421a02c3a12a3e59d9762b6296a26f246abe445ea06ff24",
+    "status": "completed",
+    "formal_result": true,
+    "job_count": 21,
+    "raw_prediction_count": 8085,
+    "all_job_gates_passed": true,
+    "all_parser_audits_consistent": true,
+    "selected_n2000": {"epoch": 5, "global_step": 1250, "accuracy": 0.5792207792207792},
+    "selected_n3000": {"epoch": 3, "global_step": 1125, "accuracy": 0.6051948051948052},
+    "test_accessed": false
+  },
   "sha256": {
     "formal_machine/run_formal_sft_validation_curve.py": "cf3209ff17e3f6667e6755c99a14809c8e748e11fed6d8993fd51d5ab98af3f8",
     "scripts/launch_formal_sft_validation_curve.sh": "489200a09da357dfc630778ab37edfe997ef7d74d9af155b0c6f27b9a6ef867e",
@@ -46,7 +60,7 @@
     "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
     "protocol/base_model_manifest.json": "d3b7a72a80bb0b860acf0833693368a33757c64793105b3b003950ac3b1034f3",
     "protocol/training_plan.md": "9a3ceddfcc6efd2993ef53f48c7643839b97cc0bcf5578b90bbc82859c22952f",
-    "protocol/code_hash_manifest_20260719_172547.json": "ee50741e0a1f509e44dba694ce23e3d286e4fa55cb5adb4ba367a96958982829",
+    "protocol/code_hash_manifest_20260719_172547.json": "1f7d28dab014009fc6eb934125822b5b8bf9a821bd663c5595d7c528de5f4843",
     "data/pathmmu_image_disjoint_v2/manifest.json": "aba5a93c1ace542034e3244e4379b3dc362e854f70eb3bc4ca96c543da7fdede",
     "data/pathmmu_image_disjoint_v2/validation_report.json": "13c00207b91314fb29d9b72b002c124eddbf9a8884d1cfbad5980ab1e194a5c0",
     "data/pathmmu_image_disjoint_v2/image_content_sha256.json": "e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed"
