@@ -35,7 +35,8 @@ EXPECTED_CONFIG_HASHES = {
     3000: "d15428f642fdc522254e7b3322c977d5bb985e6516df0350c816d988638ab273",
 }
 VALIDATION_DATA_SHA256 = "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f37a2ca"
-CURVE_CODE_MANIFEST = "sft_validation_curve_manifest_20260719_152742.json"
+CHAT_TEMPLATE_SHA256 = "ad60d90252ed0b0705ba14e2d0ad0fec0beac1ea955642b54059b36052d8bc96"
+CURVE_CODE_MANIFEST = "sft_validation_curve_manifest_20260719_162000.json"
 FORMAL_GPU_IDS = list(range(8))
 SFT_GATES = {
     "training_completed", "final_checkpoint_saved", "final_checkpoint_reloaded",
@@ -250,7 +251,7 @@ def wrapped(text: str):
     return [[{"role": "assistant", "content": text}]]
 
 
-def audit_results(results: Path, records: list[dict]) -> tuple[dict, dict]:
+def audit_results(results: Path, records: list[dict], chat_template: Path) -> tuple[dict, dict]:
     predictions = results / "predictions.jsonl"
     metrics_path = results / "metrics.json"
     metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
@@ -286,6 +287,8 @@ def audit_results(results: Path, records: list[dict]) -> tuple[dict, dict]:
     if (
         metrics.get("count") != 385 or metrics.get("do_sample") is not False
         or metrics.get("test_accessed") is not False
+        or metrics.get("chat_template_file") != str(chat_template.resolve())
+        or metrics.get("chat_template_sha256") != CHAT_TEMPLATE_SHA256
         or abs(metrics.get("mean_accuracy_reward") - accuracy_mean) > 1e-12
         or abs(metrics.get("mean_format_reward") - format_mean) > 1e-12
     ):
@@ -297,7 +300,7 @@ def audit_results(results: Path, records: list[dict]) -> tuple[dict, dict]:
 
 
 def run_job(job: dict, gpu: int, repo: Path, python: Path, data: Path, records: list[dict],
-            jobs_root: Path, stop: threading.Event) -> dict:
+            chat_template: Path, jobs_root: Path, stop: threading.Event) -> dict:
     if stop.is_set():
         return {**job, "status": "not_started_after_peer_failure", "formal_result": False}
     job_dir = jobs_root / f"{job['ordinal']:02d}_{job['label']}"
@@ -305,11 +308,13 @@ def run_job(job: dict, gpu: int, repo: Path, python: Path, data: Path, records: 
     results = job_dir / "results"
     command = [str(python), str(repo / "scripts/infer_and_score_pathmmu.py"),
                "--model", job["checkpoint"], "--data", str(data),
-               "--output-dir", str(results), "--max-new-tokens", "192"]
+               "--output-dir", str(results), "--max-new-tokens", "192",
+               "--chat-template-file", str(chat_template)]
     (job_dir / "command.txt").write_text(shlex.join(command) + "\n", encoding="utf-8")
     payload = {**job, "status": "running", "formal_result": False, "gpu": gpu,
                "created_at": now_iso(), "generation": {"do_sample": False,
-               "max_new_tokens": 192}, "test_accessed": False}
+               "max_new_tokens": 192, "chat_template_file": str(chat_template),
+               "chat_template_sha256": CHAT_TEMPLATE_SHA256}, "test_accessed": False}
     manifest_path = job_dir / "run_manifest.yaml"
     write_yaml(manifest_path, payload)
     env = os.environ.copy()
@@ -323,10 +328,11 @@ def run_job(job: dict, gpu: int, repo: Path, python: Path, data: Path, records: 
                                     stderr=subprocess.STDOUT, text=True, check=False)
         if result.returncode:
             raise CurveStop(f"inference exited with {result.returncode}")
-        metrics, audit = audit_results(results, records)
+        metrics, audit = audit_results(results, records, chat_template)
         gates = {"inference_completed": True, "exact_validation_count": True,
                  "deterministic_decoding": metrics.get("do_sample") is False,
                  "raw_predictions_saved": True, "offline_parser_consistency": True,
+                 "frozen_chat_template_used": metrics.get("chat_template_sha256") == CHAT_TEMPLATE_SHA256,
                  "checkpoint_integrity_verified": job["checkpoint_evidence"][
                      "verified" if job["kind"] == "epoch_snapshot" else "verified_hashes"
                  ] is not None,
@@ -351,11 +357,12 @@ def run_job(job: dict, gpu: int, repo: Path, python: Path, data: Path, records: 
 
 
 def worker(slot: int, gpu: int, jobs: list[dict], repo: Path, python: Path, data: Path,
-           records: list[dict], jobs_root: Path, stop: threading.Event) -> list[dict]:
+           records: list[dict], chat_template: Path, jobs_root: Path,
+           stop: threading.Event) -> list[dict]:
     time.sleep(slot * 15)
     completed = []
     for job in jobs:
-        result = run_job(job, gpu, repo, python, data, records, jobs_root, stop)
+        result = run_job(job, gpu, repo, python, data, records, chat_template, jobs_root, stop)
         completed.append(result)
         if result.get("formal_result") is not True:
             break
@@ -401,11 +408,16 @@ def main() -> None:
     records = json.loads(data.read_text(encoding="utf-8"))
     if len(records) != 385 or any(not Path(row["image"]).is_file() for row in records):
         raise CurveStop("validation count or image paths failed")
+    chat_template = install / "models" / f"Qwen2.5-VL-7B-Instruct-{BASE_REVISION}" / "chat_template.json"
+    if sha256(chat_template) != CHAT_TEMPLATE_SHA256:
+        raise CurveStop("frozen chat template hash mismatch")
     jobs, parents = build_jobs(repo, install)
     hardware = gpu_inventory(gpus)
     if args.preflight_only:
         print(json.dumps({"passed": True, "job_count": len(jobs), "parents": parents,
                           "validation_data_sha256": VALIDATION_DATA_SHA256,
+                          "chat_template": str(chat_template),
+                          "chat_template_sha256": CHAT_TEMPLATE_SHA256,
                           "hardware": hardware, "test_accessed": False},
                          ensure_ascii=False, indent=2))
         return
@@ -422,7 +434,9 @@ def main() -> None:
                 "epochs": list(range(1, 11)), "job_count": 21}, "parents": parents,
                 "data": {"version": "pathmmu_image_disjoint_v1", "split": "validation_0385",
                          "count": 385, "path": str(data), "sha256": VALIDATION_DATA_SHA256},
-                "generation": {"do_sample": False, "max_new_tokens": 192},
+                "generation": {"do_sample": False, "max_new_tokens": 192,
+                               "chat_template_file": str(chat_template),
+                               "chat_template_sha256": CHAT_TEMPLATE_SHA256},
                 "selection_rule": "per sample count: maximum validation accuracy; tie: maximum format; tie: earliest epoch",
                 "hardware": hardware, "jobs": jobs,
                 "provenance": {"repo_commit": subprocess.run(
@@ -441,7 +455,7 @@ def main() -> None:
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=len(gpus)) as executor:
             futures = [executor.submit(worker, slot, gpu, assignments[slot], repo, python,
-                                       data, records, jobs_root, stop)
+                                       data, records, chat_template, jobs_root, stop)
                        for slot, gpu in enumerate(gpus)]
             for future in concurrent.futures.as_completed(futures):
                 results.extend(future.result())

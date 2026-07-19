@@ -65,7 +65,7 @@ class CurveTests(unittest.TestCase):
         with self.assertRaises(MODULE.CurveStop):
             MODULE.verify_snapshot(self.make_snapshot(), 1, 500)
 
-    def make_results(self, corrupt_index: bool = False) -> tuple[Path, list[dict]]:
+    def make_results(self, corrupt_index: bool = False) -> tuple[Path, list[dict], Path]:
         results = self.root / "results"
         results.mkdir()
         records, rows = [], []
@@ -82,11 +82,15 @@ class CurveTests(unittest.TestCase):
         (results / "predictions.jsonl").write_text(
             "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8"
         )
+        chat_template = self.root / "chat_template.json"
+        chat_template.write_text("{}\n", encoding="utf-8")
         metrics = {"count": 385, "mean_accuracy_reward": 1.0,
                    "mean_format_reward": 1.0, "max_new_tokens": 192,
-                   "do_sample": False, "test_accessed": False}
+                   "do_sample": False, "test_accessed": False,
+                   "chat_template_file": str(chat_template.resolve()),
+                   "chat_template_sha256": MODULE.CHAT_TEMPLATE_SHA256}
         (results / "metrics.json").write_text(json.dumps(metrics) + "\n", encoding="utf-8")
-        return results, records
+        return results, records, chat_template
 
     def test_offline_rescore_passes(self) -> None:
         metrics, audit = MODULE.audit_results(*self.make_results())

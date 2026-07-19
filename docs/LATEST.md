@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260719_152742`
+Latest timestamp: `20260719_162225`
 
 Read in this order:
 
@@ -50,33 +50,35 @@ Read in this order:
 44. `20260717_014544_formal_sft_n3000_seed42_launched.md`
 45. `20260717_015819_n3000_to_n2000_fail_closed_handoff.md`
 46. `20260719_152742_formal_sft_completion_and_validation_curve_plan.md`
-47. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-48. `../manuscript/README.md` and its mandatory reading order
-49. `../CODEX_START_HERE.md`
-50. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
-51. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
-52. `../protocol/code_hash_manifest_20260717_010146.json`
-53. `../protocol/code_hash_manifest_20260717_002323.json`
-54. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-55. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-56. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-57. `../protocol/code_hash_manifest_20260714_012500.json`
-58. `../protocol/code_hash_manifest_20260714_005450.json`
-59. `../protocol/code_hash_manifest_20260714_001041.json`
-60. `../protocol/code_hash_manifest_20260713_222306.json`
-61. `../protocol/code_hash_manifest_20260713_214352.json`
-62. `../protocol/code_hash_manifest_20260713_213248.json`
-63. `../protocol/code_hash_manifest_20260713_205956.json`
-64. `../protocol/code_hash_manifest_20260713_203631.json`
-65. `../protocol/code_hash_manifest_20260712_213340.json`
-66. `../protocol/code_hash_manifest_20260712_192846.json`
-67. `../protocol/code_hash_manifest_20260712_144811.json`
-68. `../protocol/debug_proxy_model_manifest.json`
-69. `../protocol/training_plan.md`
-70. `../protocol/old_sft_audit.md`
-71. The latest manifest under `../debug_e2e/`
+47. `20260719_162225_validation_curve_attempt01_chat_template_failure_and_retry.md`
+48. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+49. `../manuscript/README.md` and its mandatory reading order
+50. `../CODEX_START_HERE.md`
+51. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
+52. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
+53. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
+54. `../protocol/code_hash_manifest_20260717_010146.json`
+55. `../protocol/code_hash_manifest_20260717_002323.json`
+56. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+57. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+58. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+59. `../protocol/code_hash_manifest_20260714_012500.json`
+60. `../protocol/code_hash_manifest_20260714_005450.json`
+61. `../protocol/code_hash_manifest_20260714_001041.json`
+62. `../protocol/code_hash_manifest_20260713_222306.json`
+63. `../protocol/code_hash_manifest_20260713_214352.json`
+64. `../protocol/code_hash_manifest_20260713_213248.json`
+65. `../protocol/code_hash_manifest_20260713_205956.json`
+66. `../protocol/code_hash_manifest_20260713_203631.json`
+67. `../protocol/code_hash_manifest_20260712_213340.json`
+68. `../protocol/code_hash_manifest_20260712_192846.json`
+69. `../protocol/code_hash_manifest_20260712_144811.json`
+70. `../protocol/debug_proxy_model_manifest.json`
+71. `../protocol/training_plan.md`
+72. `../protocol/old_sft_audit.md`
+73. The latest manifest under `../debug_e2e/`
 
-Current next action: freeze and commit the validation-curve code manifest, run its preflight-only
-full snapshot-hash and GPU gate, then evaluate exactly the base plus n=2000/n=3000 epochs 1--10 on
-frozen validation_0385. Preserve all 8,085 raw generations and offline parser audits. Test remains
-untouched. Do not start RL, resume the old scale supervisor, or launch another formal training run.
+Current next action: freeze and commit the explicit-chat-template correction, rerun the full hash and
+GPU preflight, and launch a new 21-job validation-curve Attempt02 without reusing Attempt01 outputs.
+Preserve all 8,085 raw generations and offline parser audits. Test remains untouched. Do not start
+RL, resume the old scale supervisor, or launch another formal training run.

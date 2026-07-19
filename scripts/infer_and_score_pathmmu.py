@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -26,6 +27,7 @@ def main() -> None:
     parser.add_argument("--data", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--max-new-tokens", type=int, default=128)
+    parser.add_argument("--chat-template-file", type=Path)
     args = parser.parse_args()
 
     records = json.loads(args.data.read_text(encoding="utf-8"))
@@ -34,6 +36,14 @@ def main() -> None:
     summary_path = args.output_dir / "metrics.json"
 
     processor = AutoProcessor.from_pretrained(args.model, local_files_only=True)
+    chat_template_sha256 = None
+    if args.chat_template_file is not None:
+        chat_template_payload = json.loads(args.chat_template_file.read_text(encoding="utf-8"))
+        chat_template = chat_template_payload.get("chat_template")
+        if not isinstance(chat_template, str) or not chat_template:
+            raise ValueError(f"chat_template is missing from {args.chat_template_file}")
+        processor.chat_template = chat_template
+        chat_template_sha256 = hashlib.sha256(args.chat_template_file.read_bytes()).hexdigest()
     processor.image_processor.max_pixels = 65536
     processor.image_processor.min_pixels = 3136
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
@@ -97,10 +107,12 @@ def main() -> None:
         "test_accessed": False,
         "predictions_file": str(predictions_path),
     }
+    if args.chat_template_file is not None:
+        summary["chat_template_file"] = str(args.chat_template_file.resolve())
+        summary["chat_template_sha256"] = chat_template_sha256
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
     main()
-
