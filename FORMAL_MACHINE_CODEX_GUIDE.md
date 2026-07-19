@@ -108,7 +108,7 @@ git check-ignore formal_machine.env
 
 - `INSTALL_ROOT` 是空间充足的持久目录。
 - `BUNDLE_ROOT` 是当前 `myr1` 的绝对路径。
-- `SPLIT_ROOT=$BUNDLE_ROOT/data/pathmmu_image_disjoint_v1`。
+- `SPLIT_ROOT=$BUNDLE_ROOT/data/pathmmu_image_disjoint_v2`。
 - `CONDA_EXE` 是可执行的 Conda 绝对路径或命令。
 - `ONLINE=1`、`PATHMMU_AUTO_DOWNLOAD=1`。
 - `CUDA_VISIBLE_DEVICES` 和 `NPROC_PER_NODE` 与获准使用的 GPU 一致。

@@ -1,0 +1,1927 @@
+[
+  {
+    "image": "/home/wjy/PathMMU/images/1e218d391e55f0b678bc980b42fa0fddd51d1fa9eeb964c9b41a8ba6c9085658.png",
+    "problem": "What is the nature of the extracellular matrix observed in the provided microscopic image?\nOptions:\nA) Densely fibrous stroma\nB) Calcified matrix\nC) Lightly eosinophilic stroma\nD) Myxoid stromal background",
+    "solution": "C) Lightly eosinophilic stroma"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ad5e78235aedf73d32d412fbbe1182305ba4a901f6a345fba95fc7358e8e2d08.png",
+    "problem": "What type of staining is evident in the tissue section?\nOptions:\nA) Hematoxylin and eosin staining\nB) Immunohistochemical staining\nC) Masson's trichrome staining\nD) Periodic acid-Schiff staining",
+    "solution": "B) Immunohistochemical staining"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ad5e78235aedf73d32d412fbbe1182305ba4a901f6a345fba95fc7358e8e2d08.png",
+    "problem": "Based on the cellular distribution and intensity of the staining, what might the brown-stained structures represent?\nOptions:\nA) Glandular epithelium\nB) Inflammatory infiltrates\nC) Vascular endothelium\nD) Neoplastic cell clusters",
+    "solution": "A) Glandular epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/663eaec43122d99be6d317e7ee41a0b9d347c851bc6d75ee80406ba10da35c31.png",
+    "problem": "What feature distinguishes the cells indicated by the arrow from the other cells in the image?\nOptions:\nA) Larger cellular size\nB) Lack of a visible nucleus\nC) Presence of multiple nuclei\nD) Presence of cytoplasmic staining",
+    "solution": "D) Presence of cytoplasmic staining"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/663eaec43122d99be6d317e7ee41a0b9d347c851bc6d75ee80406ba10da35c31.png",
+    "problem": "In the surrounding connective tissue matrix, what is the observed staining intensity compared to the germ cells?\nOptions:\nA) Similar staining intensity\nB) Lightly stained\nC) More intensely stained\nD) No staining",
+    "solution": "B) Lightly stained"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8a704909eaf88fe3e98d0255dd192c978a9d42e87b957839ba8382bf01a5467b.png",
+    "problem": "Which cell indicated by the yellow arrow represents a component of the adaptive immune response?\nOptions:\nA) Cell with multilobed nucleus\nB) Cell with a large, eccentric nucleus\nC) Large cell with abundant cytoplasm\nD) Cell with a small, round to slightly irregular nucleus",
+    "solution": "D) Cell with a small, round to slightly irregular nucleus"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8a704909eaf88fe3e98d0255dd192c978a9d42e87b957839ba8382bf01a5467b.png",
+    "problem": "Identify the cell indicated by the black arrow based on its morphological features as seen in the image.\nOptions:\nA) Cell with a bilobed nucleus and granular cytoplasm\nB) Cell with a small, round to slightly irregular nucleus and scant cytoplasm\nC) Cell with a multilobed nucleus and non-granular cytoplasm\nD) Cell with a large, eccentric nucleus and abundant cytoplasm",
+    "solution": "A) Cell with a bilobed nucleus and granular cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8a704909eaf88fe3e98d0255dd192c978a9d42e87b957839ba8382bf01a5467b.png",
+    "problem": "What does the pink-stained material in the connective tissue matrix surrounding the immune cells represent?\nOptions:\nA) Reticular fibers\nB) Elastic fibers\nC) Adipose tissue\nD) Collagen fibers",
+    "solution": "D) Collagen fibers"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/70d2af4cf806a8e0ffad201563fd48b7fef26e3c9b24186cdea1a60441d6e5af.png",
+    "problem": "Considering the nuclear characteristics within the epithelial cells lining the glands, what is the most likely observation?\nOptions:\nA) The nuclei show even chromatin distribution with prominent nucleoli.\nB) The epithelial cells exhibit hyperchromatic and crowded nuclei.\nC) The nuclei are uniform in appearance with a low nuclear-to-cytoplasmic ratio.\nD) The nuclear density is reduced, showing a clear separation between cells.",
+    "solution": "B) The epithelial cells exhibit hyperchromatic and crowded nuclei."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2a9f103337924d0fd351070aa4c1c1d55f58d6e53e10b18f0c66d541ec783d28.png",
+    "problem": "What morphological features are demonstrated by the cells highlighted with arrows?\nOptions:\nA) Cells with ample, pale cytoplasm and irregularly shaped nuclei\nB) Small cells with scant cytoplasm and densely stained nuclei\nC) Cells with amphophilic cytoplasm and multiple nuclei\nD) Large cells with hyperchromatic nuclei",
+    "solution": "A) Cells with ample, pale cytoplasm and irregularly shaped nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2a9f103337924d0fd351070aa4c1c1d55f58d6e53e10b18f0c66d541ec783d28.png",
+    "problem": "Based on the staining pattern, what is the possible nature of the red-staining material within the cells pointed out by the arrows?\nOptions:\nA) Erythrocytes phagocytosed by macrophages\nB) Immunohistochemical staining indicative of a specific antigen\nC) Cytoplasmic inclusion bodies commonly seen in degenerative processes\nD) Lipid droplets accumulated within the cytoplasm",
+    "solution": "B) Immunohistochemical staining indicative of a specific antigen"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6780d45b35bbd854cbb4bcb6270198d85eded47d57151d8cd29b48f1b39bdc97.png",
+    "problem": "Based on the morphology visible at 400x magnification, what is the main cellular characteristic of the cells lining the vascular channels?\nOptions:\nA) Small, hyperchromatic nuclei with scant cytoplasm\nB) Spindle-shaped cells with fusiform nuclei and little cytoplasm\nC) Large cells with abundant eosinophilic cytoplasm and prominent nucleoli\nD) Binucleated cells with basophilic cytoplasm and inconspicuous nucleoli",
+    "solution": "C) Large cells with abundant eosinophilic cytoplasm and prominent nucleoli"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5d734c2c575e4945e00b803c64109d3d38d3a43c900b765a9bc53fb939c13a36.png",
+    "problem": "Based on the histological features observed, which type of glandular structure does the staining pattern most closely resemble?\nOptions:\nA) Sebaceous gland ducts\nB) Salivary gland ducts\nC) Breast ductal structures\nD) Mucous gland acini",
+    "solution": "C) Breast ductal structures"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6ce90b50a729c08603f087c86728162491d6d7a54c20255cbd9479cea384fbc4.png",
+    "problem": "What is the intensity of the histochemical staining observed in the nuclei of the cells?\nOptions:\nA) The nuclei appear unstained and are colorless\nB) The nuclei are stained with a blue color\nC) The nuclei are stained with a moderate brown color\nD) The nuclei are deeply stained with a dark brown color",
+    "solution": "B) The nuclei are stained with a blue color"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8d94849e2e09c2ae6f5f2cc961e6875faecb70bdb1391166d30a54b94cd99c9a.png",
+    "problem": "What feature in the image suggests that the tissue may be from the central nervous system, such as the hippocampus?\nOptions:\nA) The variation in cellular size\nB) The presence of a clear band delineating cellular areas\nC) The presence of densely packed cells\nD) The presence of cells with prominent nucleoli",
+    "solution": "C) The presence of densely packed cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/99dd039cd9b0e26ab2971bdea14ca8d12fb9506bb1bfc1a0fe4d3933f585f909.png",
+    "problem": "What is the predominant cytoplasmic staining characteristic observed in these cells?\nOptions:\nA) Clear cytoplasm\nB) Eosinophilic cytoplasm\nC) Basophilic cytoplasm\nD) Amphophilic cytoplasm",
+    "solution": "B) Eosinophilic cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/99dd039cd9b0e26ab2971bdea14ca8d12fb9506bb1bfc1a0fe4d3933f585f909.png",
+    "problem": "How would you describe the arrangement of the cells seen in this histological image?\nOptions:\nA) Organized, with well-defined architectural patterns\nB) Uniformly distributed with regular spacing\nC) Disorganized, with a lack of discernible architectural patterns\nD) Arranged in regularly repeating structures",
+    "solution": "C) Disorganized, with a lack of discernible architectural patterns"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/559bdd303a264ce20d77eefa77797eaf0e17ebb94024db67a1009692fb6ad517.png",
+    "problem": "What is the predominant chromatin pattern observed in the nuclei of the cells in the higher magnification inset?\nOptions:\nA) Fine chromatin without overt clumping\nB) Coarse chromatin with multiple nucleoli\nC) Prominently clumped chromatin\nD) Dispersed chromatin with prominent nucleoli",
+    "solution": "A) Fine chromatin without overt clumping"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/41df2773d6e97bb9dd2ae3d181871f34f0a92b9811552ba7ecea71371de5d894.png",
+    "problem": "What does the distribution and color of the stain in this tissue sample likely indicate?\nOptions:\nA) Localization of a specific antibody tagged with a chromogen\nB) Presence of glycogen within the cells\nC) Deposition of hemosiderin due to hemorrhage\nD) Accumulation of lipofuscin pigment in the cells",
+    "solution": "A) Localization of a specific antibody tagged with a chromogen"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/cb013cf8c4da5479e88e0af14e95e74b89afc41e96cd4616ea1aebe849aacb64.png",
+    "problem": "Based on the histopathological features, what is the most likely pattern of growth observed in this ovarian tumor?\nOptions:\nA) A cystic growth pattern with fluid-filled spaces\nB) A papillary growth pattern with finger-like projections\nC) A diffuse infiltrative growth pattern with individual cells spread throughout the stroma\nD) A neoplastic solid growth pattern with dense cell clusters",
+    "solution": "D) A neoplastic solid growth pattern with dense cell clusters"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/cb013cf8c4da5479e88e0af14e95e74b89afc41e96cd4616ea1aebe849aacb64.png",
+    "problem": "The inset image depicts nuclear staining indicative of which marker's expression in the tumor cells?\nOptions:\nA) Estrogen receptor (ER)\nB) Progesterone receptor (PR)\nC) Cytokeratin (CK)\nD) Thyroid transcription factor-1 (TTF-1)",
+    "solution": "D) Thyroid transcription factor-1 (TTF-1)"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c3dfe28fdde5f0dd1d682dbbc48af8d77061b17d35966f53fc9076434d19266b.png",
+    "problem": "What type of connective tissue is predominantly visible on the left side of this microscopic image?\nOptions:\nA) Dense regular connective tissue\nB) Elastic connective tissue\nC) Reticular connective tissue\nD) Dense irregular connective tissue",
+    "solution": "A) Dense regular connective tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c3dfe28fdde5f0dd1d682dbbc48af8d77061b17d35966f53fc9076434d19266b.png",
+    "problem": "Which feature in the microscopic image can be used to identify adipose tissue?\nOptions:\nA) Spindle-shaped cells with elongated nuclei and abundant cytoplasm\nB) Large, vacuolated cells with centralized spherical nuclei\nC) Cells with peripheral, flattened nuclei and a small amount of cytoplasm\nD) Compact cell arrangement with scant intercellular space",
+    "solution": "C) Cells with peripheral, flattened nuclei and a small amount of cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/30fa8216e1e6a5030ee2f1b5e4541d84cb4462a10449f0e99b638a1db216899e.png",
+    "problem": "What cellular phenomenon is notably marked by the orange arrow in this microscopic image?\nOptions:\nA) Apoptosis\nB) Emperipolesis\nC) Phagocytosis\nD) Karyorrhexis",
+    "solution": "B) Emperipolesis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/30fa8216e1e6a5030ee2f1b5e4541d84cb4462a10449f0e99b638a1db216899e.png",
+    "problem": "Based on the number of cells and density of the cell nuclei, what is the predominant cell type in the background of this image?\nOptions:\nA) Epithelial cells\nB) Fibroblasts\nC) Endothelial cells\nD) Lymphocytes and plasma cells",
+    "solution": "D) Lymphocytes and plasma cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/aff1458d2d420f2835034fa73c5d0bb565390b682205b3cf92693c5b642d8a8f.png",
+    "problem": "What is the arrangement of the cells in this tissue sample?\nOptions:\nA) Arranged in glandular configurations\nB) Disorganized with no specific pattern\nC) Organized in solid nests\nD) Scattered individually with no cohesion",
+    "solution": "C) Organized in solid nests"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1e642aee1ee49864c59279db6ee3e36a29a4c6737236347819531c410894c0be.png",
+    "problem": "Based on the glomerulus indicated by the left orange arrow, which of the following best describes its morphology?\nOptions:\nA) Enlarged glomerulus with proliferative changes\nB) Hypercellular glomerulus with crescent formation\nC) Shrunken glomerulus with collapsed capillary loops\nD) Normal glomerular size with open capillary loops",
+    "solution": "C) Shrunken glomerulus with collapsed capillary loops"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1e642aee1ee49864c59279db6ee3e36a29a4c6737236347819531c410894c0be.png",
+    "problem": "Considering the renal tubule adjacent to the right orange arrow, how would you characterize it?\nOptions:\nA) Tubule with normal luminal diameter\nB) Tubule showing evidence of dilation\nC) Atrophic tubule with thickened basement membrane\nD) Tubule with significant cellular atypia",
+    "solution": "B) Tubule showing evidence of dilation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1e642aee1ee49864c59279db6ee3e36a29a4c6737236347819531c410894c0be.png",
+    "problem": "In terms of pathology, what is the most likely finding that can be observed in the space surrounding the tubules and glomeruli?\nOptions:\nA) Marked lymphocytic infiltration\nB) No obvious increase in cellularity\nC) Extensive necrosis of interstitial tissue\nD) Significant interstitial fibrosis",
+    "solution": "B) No obvious increase in cellularity"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d3a5d840f6c7e99bc7ee76fa80bb64a8f5e47f0dfdbfdfe122f8f21a56a2307d.png",
+    "problem": "Which layer in the cerebellar tissue shows the highest expression of mGluR1 protein as indicated by the density of brown staining?\nOptions:\nA) Granule cell layer\nB) White matter\nC) Molecular layer\nD) Purkinje cell layer",
+    "solution": "C) Molecular layer"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d3a5d840f6c7e99bc7ee76fa80bb64a8f5e47f0dfdbfdfe122f8f21a56a2307d.png",
+    "problem": "Based on the absence of brown staining, which cerebellar structure appears to show a lack of expression for the mGluR1 protein?\nOptions:\nA) Dendritic trees of Purkinje cells\nB) Granule cell layer\nC) Cell bodies of Purkinje cells\nD) White matter",
+    "solution": "D) White matter"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d2974b7ff7ff74796f7017904166a56546b9635de2de647df37bf93e8783f429.png",
+    "problem": "Which feature in this image is consistent with the presence of macrophages?\nOptions:\nA) Large cells with irregularly shaped nuclei\nB) Cells with slightly larger, pale cytoplasmic areas\nC) Cells with small, dark-staining nuclei\nD) Multilobed nuclear morphology",
+    "solution": "B) Cells with slightly larger, pale cytoplasmic areas"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2649ec3104d6776b8c4ad9d9607e86b04afd5303ec8e57a18549af2c0360ae1e.png",
+    "problem": "Identify the clusters of cells indicated by the arrow in the ovarian cortex, which are consistent with a particular cell type?\nOptions:\nA) Heterophils\nB) Eosinophils\nC) Basophils\nD) Lymphocytes",
+    "solution": "A) Heterophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2649ec3104d6776b8c4ad9d9607e86b04afd5303ec8e57a18549af2c0360ae1e.png",
+    "problem": "What histological feature suggests follicular atresia in the ovarian cortex?\nOptions:\nA) Presence of large cells with ample cytoplasm and multi-lobed nuclei\nB) Presence of a highly cellular follicular antrum\nC) Presence of dense cellular layers within the cortex\nD) Presence of heterophils associated with follicles",
+    "solution": "D) Presence of heterophils associated with follicles"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/312992e90e6a60b46deaa7d94873b6cb024a82b7f68bd3a32367c49e7d7607a2.png",
+    "problem": "Based on the characteristics observed in the glomerular basement membrane, which of the following descriptions is most accurate?\nOptions:\nA) Thickening with evidence of reduplication\nB) Presence of spike and dome formations consistent with membranous nephropathy\nC) Evident thinning suggestive of hereditary nephritis\nD) Normal thickness without any abnormalities",
+    "solution": "A) Thickening with evidence of reduplication"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ffa8c4dcc9b73b0a537e7805d29c311125dfd37d07998fd00e0b930f5b600c43.png",
+    "problem": "When examining the interstitial tissue in the image, which of the following conditions is not observed?\nOptions:\nA) Lack of visible necrosis\nB) Significant expansion of the interstitium\nC) Presence of inflammatory cell infiltrates\nD) Absence of extensive fibrosis",
+    "solution": "D) Absence of extensive fibrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5c4bb8ce76e2ef55f1214c096e60782f28c05d119f0b255c4501ac837b73a79f.png",
+    "problem": "Which characteristic feature denotes the atrophy of muscle fibers in this image?\nOptions:\nA) The fibers that exhibit a rounded morphology\nB) The muscle fibers pointed out by tailed arrows\nC) The space between fibers marked with a star symbol\nD) The overall uniformity in the size and shape of the muscle fibers",
+    "solution": "B) The muscle fibers pointed out by tailed arrows"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e87dcf3ae2f9bda715b21dae3cb860fbf2e12ca70a0d74a26ce8610c7392f955.png",
+    "problem": "What is the predominant feature of the extracellular matrix in the cartilage tissue as observed under the microscope?\nOptions:\nA) Homogeneous basophilic staining\nB) Variegated basophilic and eosinophilic staining\nC) Acellular eosinophilic zones\nD) Homogeneous eosinophilic staining",
+    "solution": "B) Variegated basophilic and eosinophilic staining"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e87dcf3ae2f9bda715b21dae3cb860fbf2e12ca70a0d74a26ce8610c7392f955.png",
+    "problem": "What does the cellular arrangement in the cartilage tissue suggest?\nOptions:\nA) Varied distribution with regions of closely packed and sparse cells\nB) Uniform distribution with hyaline matrix\nC) Disorganized clusters in a myxoid matrix\nD) Uniformly dispersed cells in a fibrous matrix",
+    "solution": "A) Varied distribution with regions of closely packed and sparse cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/44c41a3cb2cbd51e0f1603c4c9872c8f1fe779a33fccd3ba4207a5d9d7a20307.png",
+    "problem": "What tissue characteristic can be observed at the location indicated by the orange arrow in the image?\nOptions:\nA) Multilayered squamous cells\nB) Keratinized stratified epithelium\nC) Transitional epithelium\nD) Pseudostratified columnar epithelium with cilia",
+    "solution": "D) Pseudostratified columnar epithelium with cilia"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/44c41a3cb2cbd51e0f1603c4c9872c8f1fe779a33fccd3ba4207a5d9d7a20307.png",
+    "problem": "What do the structures highlighted by the yellow arrow represent?\nOptions:\nA) Bronchial glands with clustered acini\nB) Cluster of hepatocytes forming a liver lobule\nC) Acinar units of a salivary gland\nD) Alveolar sacs in the lung",
+    "solution": "A) Bronchial glands with clustered acini"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e9bb4667fe75759054badf5948b727747aceff64ff27f5405579fbde2cea9546.png",
+    "problem": "Upon microscopic examination, how are the spindle-shaped cells with elongated nuclei arranged within the extracellular matrix?\nOptions:\nA) They are arranged in a haphazard manner\nB) They are arranged in tight clusters\nC) They are arranged in a whorled pattern\nD) They are arranged in a well-organized palisading pattern",
+    "solution": "A) They are arranged in a haphazard manner"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/be4d51617fbc30bfd4a846290750c8ddcc777c2c571e9c56283232f7c736fd55.png",
+    "problem": "What is the predominant cell type in this microscopic image based on the nuclear morphology?\nOptions:\nA) Neutrophils\nB) Lymphocytes\nC) Monocytes\nD) Eosinophils",
+    "solution": "A) Neutrophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/be4d51617fbc30bfd4a846290750c8ddcc777c2c571e9c56283232f7c736fd55.png",
+    "problem": "Based on the cytoplasmic characteristics of the cells, what type of staining technique has likely been used?\nOptions:\nA) Pap stain\nB) Gram stain\nC) Wright's stain\nD) Acid-fast stain",
+    "solution": "A) Pap stain"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4abb6ebd3a0f256985a9672265814abc8d2da13faf172d6c5692af661788b44d.png",
+    "problem": "What is the predominant cell type based on the morphology observed in this tissue section?\nOptions:\nA) Adipocytes\nB) Columnar epithelial cells\nC) Squamous epithelial cells\nD) Spindle-shaped mesenchymal cells",
+    "solution": "D) Spindle-shaped mesenchymal cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/31e1a027a033d2fb5d629e43f8aa3a06201b9465af46b3318f277853b702d820.png",
+    "problem": "Based on the uniform basal line of nuclei, what type of epithelium is present in this image?\nOptions:\nA) Transitional epithelium\nB) Squamous epithelium\nC) Cuboidal epithelium\nD) Columnar epithelium",
+    "solution": "D) Columnar epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ad4f1afcbb2514918b4d9e5fc3b96744c7e32acc701013958f4cd2c64814ec8a.png",
+    "problem": "Based on the histological architecture, what possible condition does this tissue section suggest?\nOptions:\nA) Tubular adenoma\nB) Villous atrophy\nC) Hyperplastic polyps\nD) Goblet cell carcinoid",
+    "solution": "B) Villous atrophy"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ad4f1afcbb2514918b4d9e5fc3b96744c7e32acc701013958f4cd2c64814ec8a.png",
+    "problem": "What does the increased presence of dense cells with darker staining nuclei within the epithelium likely indicate?\nOptions:\nA) Hyperchromatic malignant cells\nB) Lipid-laden macrophages\nC) Inflammatory response\nD) Metaplastic transformation",
+    "solution": "C) Inflammatory response"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7ca5a31ce910d90658180ddf484e626aa8402fec7aa8f7293273a03ae0790612.png",
+    "problem": "Based on the morphological characteristics seen in the image, what is the majority cell type?\nOptions:\nA) Megakaryocytes\nB) Neutrophils\nC) Erythrocytes\nD) Plasmacytoid lymphocytes",
+    "solution": "D) Plasmacytoid lymphocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3b7fac84316e0cdff05d5b1cb4201db65f905c7f2163e359967ad5f691434c78.png",
+    "problem": "In Fig. 2A, the matrix morphology is indicative of which type of tissue?\nOptions:\nA) Loose Connective Tissue\nB) Chondroid Matrix\nC) Adipose Tissue\nD) Dense Fibrous Connective Tissue",
+    "solution": "B) Chondroid Matrix"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/52e15f0ecc0ed946b135f91b92be13693d6fe31882115cc2123069d02da34d78.png",
+    "problem": "In the provided PAS-stained image, how does the basement membrane of the glomerular capillaries appear?\nOptions:\nA) Stained lightly, almost transparent\nB) Interrupted and distorted\nC) Smooth and uninterrupted\nD) Thickened and homogeneous",
+    "solution": "B) Interrupted and distorted"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5d30d27e105caec64d44f81658341e9561a975746c9d598b258fb66e6d16a621.png",
+    "problem": "Which cell labeled in the image is characterized by a high density of cytoplasmic granules that stain deep blue-purple?\nOptions:\nA) Cell labeled number 1\nB) Cell labeled number 2\nC) Cell labeled number 4\nD) Cell labeled number 5",
+    "solution": "A) Cell labeled number 1"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5d30d27e105caec64d44f81658341e9561a975746c9d598b258fb66e6d16a621.png",
+    "problem": "Which cell in the image represents an immature neutrophil with a characteristic banded nuclear shape?\nOptions:\nA) Cell labeled number 1\nB) Cell labeled number 5\nC) Cell labeled number 4\nD) Cell labeled number 2",
+    "solution": "C) Cell labeled number 4"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5d30d27e105caec64d44f81658341e9561a975746c9d598b258fb66e6d16a621.png",
+    "problem": "Which of the following cells has a multi-lobed nucleus typical of a mature neutrophil?\nOptions:\nA) Cell labeled number 3\nB) Cell labeled number 1\nC) Cell labeled number 4\nD) Cell labeled number 5",
+    "solution": "D) Cell labeled number 5"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1c2d47da7e71b92106522b7912abe9189b710b95f702debb0db71c58bba6267b.png",
+    "problem": "The overall tissue architecture observed in the image is indicative of what type of growth pattern?\nOptions:\nA) Organized and structured growth\nB) Rosette formation\nC) Lobular architecture\nD) Disorganized and anarchic growth",
+    "solution": "D) Disorganized and anarchic growth"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/58cd0071cef26fdb1f16ab1ef062735d6a58ac1e8b0bafe6d37f0a7e3798e4f3.png",
+    "problem": "What is the most likely appearance of the cells indicated by the arrowheads within the renal glomerulus?\nOptions:\nA) Necrotic cells with significant karyorrhexis\nB) Hypercellular with crescent formation\nC) Hypocellular with evidence of scar tissue\nD) Cells with vacuolated cytoplasm",
+    "solution": "D) Cells with vacuolated cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/58cd0071cef26fdb1f16ab1ef062735d6a58ac1e8b0bafe6d37f0a7e3798e4f3.png",
+    "problem": "What cellular morphology can be identified within the capillaries of the glomerulus?\nOptions:\nA) Podocytes\nB) Erythrocytes\nC) Mesangial cells\nD) Decoy cells",
+    "solution": "B) Erythrocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f24b7d839ee7b409b567f2acb733430e559c64432afde2c180dd479289d2c605.png",
+    "problem": "Which layer of the epidermis is prominently separated from the underlying layer in this histopathological image?\nOptions:\nA) Stratum spinosum\nB) Stratum basale\nC) Stratum corneum\nD) Stratum granulosum",
+    "solution": "C) Stratum corneum"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f24b7d839ee7b409b567f2acb733430e559c64432afde2c180dd479289d2c605.png",
+    "problem": "Based on evaluating the epithelial layer morphology in this microscopic image, which feature is absent?\nOptions:\nA) Inflammatory infiltrate\nB) Stratum lucidum layer\nC) Clear delineation between the layers of epidermis\nD) Parakeratosis",
+    "solution": "A) Inflammatory infiltrate"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/603072494497b0b23b36ba8a77be9a313f682a6d363551e7514f4ec8c714ed42.png",
+    "problem": "What does the histological architecture of the cells suggest about the tissue?\nOptions:\nA) Disorganized neoplastic growth\nB) Highly organized glandular tissue\nC) Benign reactive proliferation\nD) Normal physiological cell turnover",
+    "solution": "A) Disorganized neoplastic growth"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/aaa497a71402ce60200f6e1048c7d6b187ca2514e7b8fcbcd1b8184348545c56.png",
+    "problem": "What differentiates panel (d) from panels (b) and (c) in terms of immunoreactivity?\nOptions:\nA) Strong, diffuse green staining in cellular matrix\nB) Brown staining confined to a minority of cells suggesting glandular structures\nC) Universal strong brown staining throughout all cells\nD) No visible brown staining in any cells",
+    "solution": "B) Brown staining confined to a minority of cells suggesting glandular structures"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3b80425e87a41a07e22f50050aa78bbdc715febbbbef19dde96ac59f871b56b2.png",
+    "problem": "What is the morphology of the nuclei in the cells indicated by the arrow?\nOptions:\nA) Uniformly shaped with multiple nucleoli\nB) Hyperchromatic, round and single nuclei\nC) Multinucleated with dispersed chromatin\nD) Bilobed with a 'coffee bean' appearance",
+    "solution": "D) Bilobed with a 'coffee bean' appearance"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3b80425e87a41a07e22f50050aa78bbdc715febbbbef19dde96ac59f871b56b2.png",
+    "problem": "What is the characteristic appearance of the nuclei in the smaller cells surrounding the histiocytes?\nOptions:\nA) Large, vesicular and centrally located\nB) Lightly stained with dispersed chromatin\nC) Smaller with densely stained chromatin\nD) Fragmented and variably sized",
+    "solution": "C) Smaller with densely stained chromatin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/20f9fb85c26b7ba141c54f72ed3647a3e62af29936bee305653c9f229ec0badd.png",
+    "problem": "What can be inferred about the potential inflammatory response in this tissue based on the cellular characteristics?\nOptions:\nA) Aggregates of cells with darkly stained nuclei\nB) Presence of well-differentiated lymphocytes and plasma cells\nC) Absence of inflammatory cells\nD) Neutrophils are the predominant inflammatory cell type",
+    "solution": "A) Aggregates of cells with darkly stained nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3c54fb4811fda8a49b9586c03d7e73878efc305e9aada0c7a476b1fde50a9e8d.png",
+    "problem": "Analyzing the density of cells and the connective tissue stroma, what condition does NOT appear to be present in the viewed pancreatic tissue?\nOptions:\nA) Inflammation\nB) Severe necrosis\nC) Edema\nD) Extensive fibrosis",
+    "solution": "D) Extensive fibrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/701f9a71f589243bd9273b8df67a5087a585bd3653076eacc9ba32a5b0be23f9.png",
+    "problem": "What is the predominant cellular morphology visible in this tissue section?\nOptions:\nA) Cuboidal cells arranged in duct-like structures\nB) Spindle-shaped cells arranged in fascicles\nC) Squamous cells forming stratified layers\nD) Columnar cells with apical mucin and basal nuclei",
+    "solution": "B) Spindle-shaped cells arranged in fascicles"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/701f9a71f589243bd9273b8df67a5087a585bd3653076eacc9ba32a5b0be23f9.png",
+    "problem": "How would you describe the staining characteristics of the nuclei in this microscopic view?\nOptions:\nA) Uniformly light-stained nuclei throughout the cells\nB) Binucleated cells with homogeneously stained nuclei\nC) Varied intensity of nuclear staining with some nuclei darker than others\nD) Nuclei with predominantly dark, condensed chromatin",
+    "solution": "C) Varied intensity of nuclear staining with some nuclei darker than others"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/701f9a71f589243bd9273b8df67a5087a585bd3653076eacc9ba32a5b0be23f9.png",
+    "problem": "What type of extracellular matrix is evident surrounding the cells in this microscopic view?\nOptions:\nA) Calcified matrix with basophilic stippling\nB) Myxoid or mucoid substance\nC) Adipose tissue with prominent lipid vacuoles\nD) Dense and fibrous connective tissue matrix",
+    "solution": "B) Myxoid or mucoid substance"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f4939265e44de7bcf4450aa48e2114f73eecd3d146b7c302314758f971e62c26.png",
+    "problem": "What does the blue arrow in the image signify within the tissue section?\nOptions:\nA) Sebaceous gland\nB) Nerve bundle\nC) Lymphatic vessel\nD) Melanocyte",
+    "solution": "A) Sebaceous gland"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6819ae91e6987f9f9cc24cde791ba078fa4e4e680041e301aecae6c21f17e451.png",
+    "problem": "Based on the cellular morphology, what type of tissue proliferation is suggested by the histologic features observed in this high-power field?\nOptions:\nA) Benign cartilaginous proliferation\nB) Malignant neoplastic hematopoietic infiltration\nC) Benign adipose tissue hyperplasia\nD) Malignant osteoid formation",
+    "solution": "D) Malignant osteoid formation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/92d0a14bc7580e58a66bba48eef99293da6269168d838adb2d018b36ef30b934.png",
+    "problem": "What type of cellular morphology is indicated by the elongated structures within the dermal layer that are labeled with a black arrow in the image?\nOptions:\nA) Adipose cells.\nB) Melanocytes.\nC) Endothelial cells.\nD) Squamous epithelial cells.",
+    "solution": "C) Endothelial cells."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b9b96ae9b6da5e775e222d2cc667e300726546536e6a2c9222260ae8d61b3241.png",
+    "problem": "What type of staining can be observed at the foci indicated by the red arrows in the glandular structures?\nOptions:\nA) Alcian blue\nB) Hematoxylin and eosin\nC) Immunohistochemical\nD) Periodic acid-Schiff",
+    "solution": "C) Immunohistochemical"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4b61fc27ab03de9d761ac377a48ba37d34987ef5c634a7e2d9e15a2827fc3996.png",
+    "problem": "What is the significance of the brown staining observed in the cells?\nOptions:\nA) It reveals areas of calcification within the tissue\nB) It is a non-specific background staining\nC) It shows positivity for a specific antigen such as CK20\nD) It indicates necrotic cell death",
+    "solution": "C) It shows positivity for a specific antigen such as CK20"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4b61fc27ab03de9d761ac377a48ba37d34987ef5c634a7e2d9e15a2827fc3996.png",
+    "problem": "What can be inferred about the homogeneity of the tumor cells based on the image?\nOptions:\nA) Irregular sizes and shapes suggest heterogeneity\nB) The cells have uniform shapes and sizes promoting the idea of homogeneity\nC) The uniform staining pattern suggests homogeneity\nD) The presence of numerous mitotic figures suggests homogeneity",
+    "solution": "A) Irregular sizes and shapes suggest heterogeneity"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e3fc1fb1adca90547e4751e4a41b48b31c0a154a3460807ef031cb8c675d303f.png",
+    "problem": "Based on the image, what is the primary morphological abnormality observed within the glomerulus?\nOptions:\nA) Presence of numerous crescents\nB) Advanced glomerulosclerosis\nC) Significant increase in cellularity\nD) Extensive fibrosis and scarring",
+    "solution": "C) Significant increase in cellularity"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e3fc1fb1adca90547e4751e4a41b48b31c0a154a3460807ef031cb8c675d303f.png",
+    "problem": "Given the cellular morphology visible in the image, which of the following is least likely to be associated with the observed histopathological changes?\nOptions:\nA) Minimal change disease\nB) Diabetic glomerulosclerosis\nC) Acute post-infectious glomerulonephritis\nD) Membranoproliferative glomerulonephritis",
+    "solution": "A) Minimal change disease"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c5f5ac1a350525e0dda4dc7040a97ab6a2eccf71b9af149ff4320a0e63390c21.png",
+    "problem": "Based on the pattern of brown staining seen in the image, which cellular component is most likely being targeted by the immunostaining technique?\nOptions:\nA) Cell surface receptors\nB) Cytoplasmic proteins\nC) Extracellular matrix components\nD) Nuclear material",
+    "solution": "B) Cytoplasmic proteins"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5bb60e5f7c2252465f15248d0140ad8cdc916b13ac25dea20fa5afbb9bbb60b7.png",
+    "problem": "Based on the microscopic characteristics observed in the image, what type of remodeling is evident in the bronchial mucosa?\nOptions:\nA) Squamous metaplasia\nB) Goblet cell hyperplasia\nC) Fibrotic remodeling\nD) Mucous gland hypertrophy",
+    "solution": "C) Fibrotic remodeling"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b3f93eeb55837123773cc34bb00dbb2f4ce626cc8787ffc42051967068f59631.png",
+    "problem": "What feature can be observed within the central tubular structure?\nOptions:\nA) Keratin debris\nB) Mucous secretion\nC) Ciliated epithelial cells\nD) Inflammatory infiltrate",
+    "solution": "D) Inflammatory infiltrate"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/01a784ccf439221323aa94e187b47446a18a2589327600a01c1383c8621ebf3c.png",
+    "problem": "In the inset image (b), what do the structures highlighted by the special staining technique represent?\nOptions:\nA) Apoptotic bodies\nB) Hemoglobin molecules\nC) Intracellular organisms\nD) Lipid droplets",
+    "solution": "C) Intracellular organisms"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6ef1d6bc4120ae2399abfe2429caa8fe77cbdca20ea00fa3cc37a2a5ce338bf5.png",
+    "problem": "What histological feature is indicated by the black arrow in the image?\nOptions:\nA) An inflamed muscle fiber\nB) An atrophied muscle fiber\nC) An adipocyte\nD) A normal muscle fiber",
+    "solution": "C) An adipocyte"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6ef1d6bc4120ae2399abfe2429caa8fe77cbdca20ea00fa3cc37a2a5ce338bf5.png",
+    "problem": "Based on the tissue architecture in this image, what is the predominant pathological process occurring?\nOptions:\nA) Muscle atrophy with fatty infiltration\nB) Inflammation-induced muscle damage\nC) Normal muscle regeneration\nD) Hypertrophic muscle disorder",
+    "solution": "A) Muscle atrophy with fatty infiltration"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d858c39ce9039013f2db8a11dac157473848ba04706e2479008c9549c3842c75.png",
+    "problem": "Based on the image, what histological pattern is most consistent with the interface of the cellular components observed?\nOptions:\nA) Encapsulated nodular pattern\nB) Diffuse infiltration without a clear boundary\nC) Well-defined, pushing margin\nD) Irregular 'mushrooming' invasive projection",
+    "solution": "D) Irregular 'mushrooming' invasive projection"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d858c39ce9039013f2db8a11dac157473848ba04706e2479008c9549c3842c75.png",
+    "problem": "Which type of tissue appears to be surrounding the neoplastic cells and is being invaded by them?\nOptions:\nA) Hyalinized collagenous stroma\nB) Dense fibrous connective tissue\nC) Skeletal muscle tissue\nD) Adipose tissue with lipid vacuoles",
+    "solution": "D) Adipose tissue with lipid vacuoles"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4f6d00ac556adcedcac4556727f4d53c3d2aee583cc3942d57a56b5002e40088.png",
+    "problem": "What does the appearance of cells with clear cytoplasm signify in the context of the glandular formations observed in the image?\nOptions:\nA) Presence of intranuclear inclusions\nB) Accumulation of mucin within the cytoplasm\nC) High lipid content within the cells\nD) Artifactual clearing due to technical processing",
+    "solution": "B) Accumulation of mucin within the cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/105816db2afa77c83e717fa7edb7f098c12f40bf20f471bbb1fb4e7f3297e735.png",
+    "problem": "How would you describe the extracellular matrix present in the left side of the image?\nOptions:\nA) Dense with extensive calcification\nB) Lightly stained and fibrillar\nC) Basophilic with a mucinous appearance\nD) Abundant and eosinophilic",
+    "solution": "B) Lightly stained and fibrillar"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6f42117a64e890987f002d8f6a207d9c4b982511cc759a8afec6867153e0bbbf.png",
+    "problem": "Based on the microscopic image, what is indicated by the presence of vessels with red blood cells in the stroma?\nOptions:\nA) Evidence of angiogenesis within the tumor\nB) Normal vascular supply to the tissue\nC) Inflammation and increased vascularity due to infection\nD) Hemorrhage within the tissue",
+    "solution": "A) Evidence of angiogenesis within the tumor"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c249874d609c6ea4223bd8800cdfc780ad3f3ec675dcb071cdd3ad0ec1e2258d.png",
+    "problem": "What feature is indicated by the small arrows in the image?\nOptions:\nA) Neutrophils with multilobed nuclei\nB) Lymphocytes with hyperchromatic nuclei\nC) Keratinocytes with abundant cytoplasm\nD) Epithelioid histiocytes with well-defined cell boundaries and centrally placed nuclei",
+    "solution": "D) Epithelioid histiocytes with well-defined cell boundaries and centrally placed nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c249874d609c6ea4223bd8800cdfc780ad3f3ec675dcb071cdd3ad0ec1e2258d.png",
+    "problem": "What does the large arrow in the image likely indicate?\nOptions:\nA) A vascular structure with erythrocytes\nB) An adipocyte with a central fat vacuole\nC) A multinucleated giant cell with multiple nuclei\nD) A dysplastic cell with nuclear atypia",
+    "solution": "C) A multinucleated giant cell with multiple nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c5ea459301d1c0b7b6ec17f0f38ccbba9796128bf53e93c53a15add0050c8219.png",
+    "problem": "Based on the staining pattern observed, what does the brown coloration predominantly signify?\nOptions:\nA) Hematoxylin staining of nucleic acids\nB) Immunohistochemical staining demonstrating antibody binding\nC) Negative control with no specific staining\nD) Eosin staining of extracellular matrix components",
+    "solution": "B) Immunohistochemical staining demonstrating antibody binding"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5a4d0b81621ff5bfe9dbc38396a9a59bbe639fe707ea9bcbad95e6875414b0a5.png",
+    "problem": "How would you describe the epithelial component of the duct-like structures in this tissue sample?\nOptions:\nA) Appears as a single layer of uniform cells\nB) Lined by a bilayered epithelium\nC) Lacks any sort of lining epithelium\nD) Characterized by significant pleomorphism",
+    "solution": "B) Lined by a bilayered epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/cbfb9f7928736057aaaa0a7ea0c68fedc2b7cbb4af950ce663a41d00b6c513e5.png",
+    "problem": "Based on the staining characteristics, what can be inferred about the nuclei of the cells?\nOptions:\nA) The nuclei are small and hyperchromatic without visible nucleoli\nB) The nuclei are enlarged with an increased nuclear-to-cytoplasmic ratio\nC) The nuclei are hyperchromatic with prominent nucleoli\nD) The nuclei are vesicular with inconspicuous nucleoli",
+    "solution": "A) The nuclei are small and hyperchromatic without visible nucleoli"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e8157e1a064bcbc2f6f6ebaf513c8d694f680dac405de5aa7b029eb6aab7d2b1.png",
+    "problem": "What characteristic feature is indicated by the red arrows in the microscopic image?\nOptions:\nA) Mitotic figures\nB) Mesothelial windows\nC) Cytoplasmic inclusion bodies\nD) Hyperchromatic nuclei",
+    "solution": "B) Mesothelial windows"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/43edaec6fff87a4c7812785d7de0ac535ca482c5d4dac8d92abc8fa783620ccc.png",
+    "problem": "Based on the observed features in the microscopic image, what can be inferred about the nuclear characteristics of these cells?\nOptions:\nA) The nuclei are predominantly small and pyknotic.\nB) The nuclei show uniform size and shape.\nC) The nuclei have a low nuclear-to-cytoplasmic ratio.\nD) The nuclei exhibit anisokaryosis with hyperchromasia.",
+    "solution": "D) The nuclei exhibit anisokaryosis with hyperchromasia."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2ecf42d35e4d4ca17d64f06f9642f37638d3c3235af81335a018b22aca4176d3.png",
+    "problem": "The appearance of swollen endothelial cells and the presence of pinkish hue in some areas most likely indicate:\nOptions:\nA) Evidence of blood congestion within the capillaries\nB) Artifacts from the tissue preparation process\nC) Alterations in the glomerular basement membrane and mesangial matrix\nD) Normal variation in capillary wall thickness",
+    "solution": "C) Alterations in the glomerular basement membrane and mesangial matrix"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1bb4956a0014787e87189fe66c08decf36f530b6ffaa0a73efdaefe36379c312.png",
+    "problem": "Identify the structure at the center of the image outlined by a layer of pink endothelial cells.\nOptions:\nA) Blood vessel\nB) Lymphoid nodule\nC) Hassall's corpuscle\nD) Thymic corpuscle",
+    "solution": "A) Blood vessel"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ae1f7ebe9c4e0c5e224bd9c18ffc7c075eb37c7eb14d5ddea5ecca0acbb58345.png",
+    "problem": "From the coloration in the image provided, which staining technique is suggested to have been used for this histological section?\nOptions:\nA) Toluidine blue stain\nB) Periodic acid–Schiff stain\nC) Masson's trichrome stain\nD) Hematoxylin and eosin stain",
+    "solution": "D) Hematoxylin and eosin stain"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8eb3247d237c5b1b031ad21ae2e89db363f054bcc2c5465b9662aa9c4e99f658.png",
+    "problem": "What can be inferred about the mitotic activity in this tissue sample?\nOptions:\nA) Numerous typical mitotic figures in the basal layer only, reflecting controlled proliferation\nB) Mitotic figures are absent, indicating low mitotic activity\nC) Atypical mitotic figures are present, suggesting increased and abnormal mitotic activity\nD) Normal mitotic figures are uniformly distributed, implying a well-regulated cell cycle",
+    "solution": "C) Atypical mitotic figures are present, suggesting increased and abnormal mitotic activity"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/77cdbdd23f8fedca3ee9f756c5a03e57c3f85ef02919627b6056556ad8e34df1.png",
+    "problem": "Which observation would be consistent with a pattern suggestive of vascular congestion within this tissue sample?\nOptions:\nA) Regions with homogeneously distributed eosinophilic cytoplasm\nB) Regions showing multinucleated giant cells\nC) Regions more densely populated by cells\nD) Regions that have fewer cells and more abundant extracellular matrix",
+    "solution": "C) Regions more densely populated by cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/20dc06fee5405dab14badbdde897d3476be0b14224cc6f39187b86f6024d92bb.png",
+    "problem": "Based on the cytoplasmic staining observed in the microscopic image, which specific cellular protein or enzyme is most likely being indicated by the immunohistochemical stain?\nOptions:\nA) Myoglobin\nB) Hemoglobin\nC) CD20\nD) Actin",
+    "solution": "C) CD20"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/20dc06fee5405dab14badbdde897d3476be0b14224cc6f39187b86f6024d92bb.png",
+    "problem": "In this tissue section, how does the distribution of staining intensity across the nuclei and cytoplasm help differentiate between a benign and malignant process?\nOptions:\nA) Staining absent in the nuclei\nB) Uniform staining intensity\nC) Variable staining intensity\nD) Staining only in the perinuclear region",
+    "solution": "B) Uniform staining intensity"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9f9b858676f6786815f3139db067ef5b9cb8827a8cea811152a02c332ac1fac4.png",
+    "problem": "What type of cells show a large amount with ample cytoplasm, as seen under the microscope in this renal tissue section?\nOptions:\nA) Fibroblasts\nB) Plasma cells\nC) Macrophages\nD) Tubular epithelial cells",
+    "solution": "B) Plasma cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9f9b858676f6786815f3139db067ef5b9cb8827a8cea811152a02c332ac1fac4.png",
+    "problem": "Which cell type can be identified by eosinophilic cytoplasm and bi-lobed nuclei in this histologic image of renal tissue?\nOptions:\nA) Mast cells\nB) Eosinophils\nC) Neutrophils\nD) Basophils",
+    "solution": "B) Eosinophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9f9b858676f6786815f3139db067ef5b9cb8827a8cea811152a02c332ac1fac4.png",
+    "problem": "What pattern of fibrosis is best exemplified by the arrangement of collagen fibers in this image of renal tissue?\nOptions:\nA) Diffuse pattern fibrosis\nB) Nodular pattern fibrosis\nC) Linear pattern fibrosis\nD) Storiform pattern fibrosis",
+    "solution": "D) Storiform pattern fibrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2fc7d107c0c125b5cc41711ee5da2d0e0bc27308d943db6a4d55fe6d7617efe1.png",
+    "problem": "Observing the nuclei of the spindle-shaped cells at higher magnification, what is the most accurate description of their appearance?\nOptions:\nA) Hyperchromatic and irregularly shaped\nB) Large and pleomorphic\nC) Small with prominent nucleoli\nD) Small and uniform without prominent nucleoli",
+    "solution": "D) Small and uniform without prominent nucleoli"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2fc7d107c0c125b5cc41711ee5da2d0e0bc27308d943db6a4d55fe6d7617efe1.png",
+    "problem": "In relation to the cellularity of the examined tissue, what feature stands out in the background?\nOptions:\nA) Myxoid matrix\nB) Abundant collagenous stroma\nC) Significant inflammatory infiltrate\nD) Abundant adipose tissue",
+    "solution": "B) Abundant collagenous stroma"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/876d5c07bc110dcff20f9c3eeafee200c2300984f3c4dde4f789c287242cd67a.png",
+    "problem": "Considering the staining properties of the tissue, what is the predominant feature of the stroma as it appears in this H&E stained section?\nOptions:\nA) Predominantly basophilic with a fibrous texture\nB) Mixed eosinophilic and basophilic with high cellularity\nC) Intensely eosinophilic with numerous inflammatory cells\nD) Eosinophilic with a glassy, acellular appearance",
+    "solution": "D) Eosinophilic with a glassy, acellular appearance"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/876d5c07bc110dcff20f9c3eeafee200c2300984f3c4dde4f789c287242cd67a.png",
+    "problem": "What can be inferred about the cellular architecture based on the clusters of cells with round basophilic nuclei within the stroma?\nOptions:\nA) Architectural uniformity indicates a well-differentiated tissue\nB) The architecture suggests high-grade dysplasia with pleomorphism\nC) There is evidence of significant neoplastic infiltration\nD) The presence of multi-nucleated giant cells indicates granulomatous inflammation",
+    "solution": "A) Architectural uniformity indicates a well-differentiated tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d4b6b5d4aa67b66ade0f4ba8538267229a0572b613a1162be57057a8c0d2dcb4.png",
+    "problem": "What histological feature is indicated by the arrows in the given image?\nOptions:\nA) Glomerular enlargement\nB) Tubular atrophy\nC) Intertubular congestion\nD) Inflammatory infiltration",
+    "solution": "C) Intertubular congestion"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d4b6b5d4aa67b66ade0f4ba8538267229a0572b613a1162be57057a8c0d2dcb4.png",
+    "problem": "Judging by the staining pattern, what cytoplasmic characteristic can be observed in the majority of the cells?\nOptions:\nA) Eosinophilic cytoplasm\nB) Foamy cytoplasm\nC) Clear cytoplasm\nD) Basophilic cytoplasm",
+    "solution": "A) Eosinophilic cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5b6786576ea2422cd25381d300171f9f6ec874f99e56c318353016afa623360e.png",
+    "problem": "What morphological feature is indicated by the arrows in the image?\nOptions:\nA) Karyorrhexis\nB) Lipid vacuoles\nC) Multinucleated giant cells\nD) Granuloma formation",
+    "solution": "A) Karyorrhexis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c132ff9989cf715ef19af2e4775d43a2e873da4063b3145205317bd72030df3e.png",
+    "problem": "Based on the microscopic characteristics, what is the most likely staining technique used in this renal tissue sample?\nOptions:\nA) Silver staining\nB) Hematoxylin and Eosin (H&E)\nC) Periodic acid-Schiff (PAS)\nD) Masson's Trichrome",
+    "solution": "B) Hematoxylin and Eosin (H&E)"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c132ff9989cf715ef19af2e4775d43a2e873da4063b3145205317bd72030df3e.png",
+    "problem": "How would you characterize the extracellular matrix between the tubules in this image?\nOptions:\nA) Disorganized with multiple areas of inflammatory cells\nB) Dominated by large, irregularly shaped spaces suggesting edema\nC) Homogenous pink staining with no signs of fibrosis\nD) Marked by extensive fibrosis and scarring",
+    "solution": "C) Homogenous pink staining with no signs of fibrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9d9da432f0c124ef435a7e68d7f65ee09b6df8c7f8a7bf17e5eb907d4a880939.png",
+    "problem": "What is the most likely pathological process depicted in the image where lung tissue shows areas of disrupted architecture amid the presence of inflammatory cells?\nOptions:\nA) Healing fibrosis\nB) Acute bacterial pneumonia\nC) Pulmonary edema\nD) Invasive fungal infection",
+    "solution": "D) Invasive fungal infection"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/13a43266721fcb87552e4279df29d2b363635252cb9d70aea546df273e426e55.png",
+    "problem": "What distinctive morphology is presented by several cells in this photomicrograph?\nOptions:\nA) Multiple prominent nucleoli\nB) Signet ring appearance\nC) Multilobulated nuclei\nD) Spindle-shaped cytoplasm",
+    "solution": "B) Signet ring appearance"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/13a43266721fcb87552e4279df29d2b363635252cb9d70aea546df273e426e55.png",
+    "problem": "Based on the photomicrograph, how could you best describe the nuclei of these unique cells?\nOptions:\nA) Irregular and hyperchromatic\nB) Small and hypochromatic\nC) Uniformly round and centrally located\nD) Large with a clear halo",
+    "solution": "A) Irregular and hyperchromatic"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b09b79260eef8d1da4511e2fefdf2d08a50fbb6e0e97b070d705ec9b8c97b849.png",
+    "problem": "Based on the distribution and intensity of the brown staining, which antigen is most likely being targeted by the immunohistochemical marker in this tissue section?\nOptions:\nA) CD45RO\nB) CD30\nC) CD3\nD) CD20",
+    "solution": "D) CD20"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/048ba985b69c7fe774466e7c1339422aa0307e1716185879de8fda3072bc106d.png",
+    "problem": "What is the predominant staining pattern observed in the cells indicated by the arrows?\nOptions:\nA) Nuclear staining\nB) Cytoplasmic and membrane staining\nC) Extracellular matrix staining\nD) Staining absent",
+    "solution": "B) Cytoplasmic and membrane staining"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/24f579fd5e6de9d814bbf793f6c7b36ba2ab83b81cea846781781f903b7936c0.png",
+    "problem": "In the main image section, what does the perinuclear halo around some of the nuclei suggest?\nOptions:\nA) Cellular necrosis\nB) Higher degree of cell maturity\nC) Inflammatory cell infiltration\nD) Immature cell origin",
+    "solution": "B) Higher degree of cell maturity"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0c3aecc3abe19041a30c8142f31f37eec677798823207c775e252f0a6ec52e94.png",
+    "problem": "What does the central region of the layered structure in the image indicate?\nOptions:\nA) Russell body accumulation\nB) Fibrinoid necrosis\nC) Granuloma with central caseous necrosis\nD) Keratin pearl formation",
+    "solution": "B) Fibrinoid necrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0c3aecc3abe19041a30c8142f31f37eec677798823207c775e252f0a6ec52e94.png",
+    "problem": "Observing the peripheral areas of the tissue, what is the possible normal tissue type or pathology indicated?\nOptions:\nA) Normal thyroid gland tissue\nB) Hyaline cartilage\nC) Dense irregular connective tissue\nD) Smooth muscle tissue",
+    "solution": "A) Normal thyroid gland tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3723282b5ca5b682ee29e2e33596d1ce906f01767c4f0bf75f2f5c13a683bdbf.png",
+    "problem": "Based on the characteristics of the capillary loops in the histological section, which of the following best describes the observed changes?\nOptions:\nA) Normal cellularity of capillary walls\nB) Thinned capillary walls\nC) Aneurysmal dilation of capillary loops\nD) Endocapillary hyperplasia",
+    "solution": "D) Endocapillary hyperplasia"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3723282b5ca5b682ee29e2e33596d1ce906f01767c4f0bf75f2f5c13a683bdbf.png",
+    "problem": "In evaluating the architecture of the glomeruli, how does increased cellularity affect the structure as seen in this histological image?\nOptions:\nA) It causes global sclerosis of the glomerulus\nB) It leads to thickening and narrowing of the capillary lumens\nC) It leads to the formation of synechiae\nD) It results in a lobulated appearance of the glomeruli",
+    "solution": "B) It leads to thickening and narrowing of the capillary lumens"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7e6ce71575ac35341dce160f389b2334aefee9b91ea15f03b7128ef6d215562e.png",
+    "problem": "What feature of cells on the right side of the image is indicative of rhabdomyosarcoma?\nOptions:\nA) Large, round nuclei within a clear extracellular matrix\nB) Spindle-shaped cells with densely eosinophilic cytoplasm arranged in fascicles\nC) Abundant cytoplasm with small, indistinct nuclei\nD) Cells with a high nucleus-to-cytoplasm ratio",
+    "solution": "B) Spindle-shaped cells with densely eosinophilic cytoplasm arranged in fascicles"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/bdd947dee501da14f5cb26d3921431c9d7d1c23741d0b78b5755d954b2611454.png",
+    "problem": "What feature is indicated by the clear cytoplasmic vacuole observed within many of the cells at the center of the tissue section?\nOptions:\nA) Lipid accumulation\nB) Glycogen deposition\nC) Intracytoplasmic mucin\nD) Keratin pearl formation",
+    "solution": "C) Intracytoplasmic mucin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e44e11efb7e814634ea3a6d47035208b841d2c3d36061272d38c40c282694f7d.png",
+    "problem": "What best describes the staining pattern observed in the cytoplasm of the cells in this tissue section?\nOptions:\nA) Granular with varying intensities of staining\nB) Uniform intense staining throughout the cytoplasm\nC) Homogeneous with no distinct granularity\nD) Patchy with areas of unstained cytoplasm",
+    "solution": "B) Uniform intense staining throughout the cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e44e11efb7e814634ea3a6d47035208b841d2c3d36061272d38c40c282694f7d.png",
+    "problem": "Considering the organization of cells, how would you describe the arrangement of the epithelial cells in this tissue sample?\nOptions:\nA) Multilayered and pseudostratified\nB) Disorganized and randomly distributed\nC) Aligned in an orderly, columnar fashion\nD) Single-layered and uniform",
+    "solution": "C) Aligned in an orderly, columnar fashion"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0326296f3f4cad9295ff57561f4f08b205a219ab716a1afa754b2bab5ab75d5a.png",
+    "problem": "Based on the immunohistochemical staining pattern observed in the image, which marker might these cells be positive for?\nOptions:\nA) CD20\nB) Estrogen Receptor (ER)\nC) HER2/neu\nD) CD45",
+    "solution": "C) HER2/neu"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2c60cd9e57f7d9fe6f428ee089690a308e210482e37449896c2db8340ec60ad3.png",
+    "problem": "In Panel B, where is the black arrow indicating the presence of hyperplasia?\nOptions:\nA) In the renal tubular epithelium\nB) In the uroepithelium\nC) Within the glomerular capillary tuft\nD) In the renal corpuscle",
+    "solution": "B) In the uroepithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2c60cd9e57f7d9fe6f428ee089690a308e210482e37449896c2db8340ec60ad3.png",
+    "problem": "Considering Panel D, what pathological feature does the black arrow most likely indicate?\nOptions:\nA) A segment of normal uroepithelium with regular cell turnover\nB) Areas of fibrosis with increased interstitial collagen deposition\nC) Disruption of the uroepithelial barrier caused by inflammatory infiltrate\nD) Clusters of neoplastic cells forming a tumor mass",
+    "solution": "C) Disruption of the uroepithelial barrier caused by inflammatory infiltrate"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/af8f37c7e42ddb45478e5d9607a0f57a8692deaa4848b1386608358fe099fa09.png",
+    "problem": "Based on the intensity and distribution of the brown staining seen in the microscopic image, which antigen is most likely being targeted by the immunohistochemical stain?\nOptions:\nA) CD3\nB) CD4\nC) CD20\nD) CD8",
+    "solution": "B) CD4"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8d9253a6b23e63b0f9f91df414821fb162ccbde75a8a06fbcf20dd28640451a1.png",
+    "problem": "Which of the following best describes the topmost layer of the epidermis in the image?\nOptions:\nA) Anucleate corneocytes\nB) Retention of nuclei within keratinocytes\nC) Granular cell layer hypertrophy\nD) Melanocyte proliferation",
+    "solution": "B) Retention of nuclei within keratinocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6c8a849b544364bc73b3e7ba59b8a2befe22835f9cded41978fa79723c81d2a2.png",
+    "problem": "Based on the histological features visible in this image, which of the following best describes the observed tissue's status?\nOptions:\nA) Severe glandular hyperplasia with significant atypia\nB) Normal proliferation consistent with the secretory phase\nC) Moderate to marked glandular and stromal proliferation\nD) Highly atrophic with scarcity of glandular structures",
+    "solution": "C) Moderate to marked glandular and stromal proliferation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/cf211cddee338a78c1c89c37062f455a71cde09b80821aee9bb1a62121b9746a.png",
+    "problem": "The eosinophilic content in section 'C' is indicative of what process or material, commonly seen in the pathological state hinted by this image?\nOptions:\nA) Fibrin exudate\nB) Keratin debris\nC) Mucoid accumulation\nD) Collagen deposition",
+    "solution": "B) Keratin debris"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/06cad4ba9e56924ea74c0b1ecce32b47fca14bb7a00eaff5df68d13670adbfc7.png",
+    "problem": "Based on the observed staining pattern in the microscopic image, which marker could be primarily demonstrated by the red staining?\nOptions:\nA) Hematoxylin\nB) Eosin\nC) Cytokeratin\nD) Vimentin",
+    "solution": "C) Cytokeratin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/06cad4ba9e56924ea74c0b1ecce32b47fca14bb7a00eaff5df68d13670adbfc7.png",
+    "problem": "Evaluating the cellular morphology in the tissue sample, what is the predominant shape of the atypically-stained cells?\nOptions:\nA) Cuboidal\nB) Round\nC) Squamous\nD) Spindle-like",
+    "solution": "D) Spindle-like"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/06cad4ba9e56924ea74c0b1ecce32b47fca14bb7a00eaff5df68d13670adbfc7.png",
+    "problem": "Considering the nuclei of the red-stained cells, what is their appearance based on the staining intensity?\nOptions:\nA) Varied sizes with different staining intensities\nB) No visible nuclei\nC) Uniformly small and lightly-stained\nD) Large and darkly-stained",
+    "solution": "A) Varied sizes with different staining intensities"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/09463d5b2c57c6b9f96b19e6fa432be3ada814608428a9e7340579ed19a41eaa.png",
+    "problem": "Based on the shape of the nuclei in the cells observed in the bone marrow tissue, which description is most accurate?\nOptions:\nA) All nuclei are elongated with a spindle-like appearance.\nB) The nuclei are polymorphic with marked anisokaryosis.\nC) All nuclei are uniform in size and shape without any variation.\nD) The nuclei are round to oval with some variation in size and shape.",
+    "solution": "D) The nuclei are round to oval with some variation in size and shape."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c9430c7910fc0eb3bea56e2b0344bd3683f873e8a2c9522403040bfe093ef6a4.png",
+    "problem": "Based on the histological features observed in the image, which cellular alteration is indicated by a granular eosinophilic appearance in the hepatocytes?\nOptions:\nA) Ballooning degeneration\nB) Steatosis\nC) Apoptosis\nD) Granular degeneration",
+    "solution": "D) Granular degeneration"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c9430c7910fc0eb3bea56e2b0344bd3683f873e8a2c9522403040bfe093ef6a4.png",
+    "problem": "What does the darker eosinophilic staining observed near the central vein suggest?\nOptions:\nA) Sinusoidal congestion\nB) Lymphocytic infiltration\nC) Necrosis\nD) Fibrosis",
+    "solution": "A) Sinusoidal congestion"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9e1598db8c3e5092a6249dcadd2feac8dca12b737163f589dbd2dc281ef38e44.png",
+    "problem": "What is the morphology of the deposits seen within the renal tubules?\nOptions:\nA) Uniform, dark pigmented, intracellular aggregates\nB) Uniform, eosinophilic, intracellular deposits\nC) Heterogeneous, eosinophilic, extracellular deposits\nD) Heterogeneous, dark pigmented, intraluminal deposits",
+    "solution": "D) Heterogeneous, dark pigmented, intraluminal deposits"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/badb67429c0a70db9c03ed8eded069e6e587bdfdf7239f5399e6bc7316f57c65.png",
+    "problem": "By examining the cellular architecture in this image, what type of tissue is most likely represented?\nOptions:\nA) Lymphoid tissue\nB) Adipose tissue\nC) Squamous epithelium\nD) Muscular tissue",
+    "solution": "A) Lymphoid tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/40198a0ddcaad5cd74d0a3372e501d5824a9b97c76737156501f7337763f4571.png",
+    "problem": "Based on the organization of the cell layers around the tubular structures, which potential diagnosis should be considered?\nOptions:\nA) Nephroblastoma (Wilms' Tumor)\nB) Acute Tubular Necrosis\nC) Renal Cell Carcinoma\nD) Schwannoma",
+    "solution": "D) Schwannoma"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/40198a0ddcaad5cd74d0a3372e501d5824a9b97c76737156501f7337763f4571.png",
+    "problem": "Analyzing the staining patterns, what can be inferred about the tubules compared to the surrounding spindle cells?\nOptions:\nA) Tubules contain anaplastic cells\nB) Tubules contain cells that are more lightly stained\nC) Tubules show higher density of the targeted marker\nD) Tubules exhibit more cellular pleomorphism",
+    "solution": "B) Tubules contain cells that are more lightly stained"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/86d8fdc84359825b81b819432fe57c5b3ae33e0ddedcc43cbafd031fee71cffe.png",
+    "problem": "What is the most likely process indicated by the surrounding cellular infiltrate?\nOptions:\nA) Granulomatous inflammation\nB) An acute inflammatory response\nC) Chronic inflammation\nD) Benign neoplastic proliferation",
+    "solution": "B) An acute inflammatory response"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/59d78d4352151832899b8059d461962dde309023bdf3baf28c76ab7786634ae8.png",
+    "problem": "Considering the staining characteristics seen in area B, which immunohistochemical marker would likely confirm the suspected cell type?\nOptions:\nA) S100 protein, indicating nerve sheath origin\nB) CD34, suggestive of vascular endothelial lineage\nC) Chromogranin, consistent with neuroendocrine cells\nD) Desmin, indicative of muscle cell differentiation",
+    "solution": "C) Chromogranin, consistent with neuroendocrine cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/31e2e0df70e92eb69ba202f88e336574442a4261171a176296fb7df65978ccee.png",
+    "problem": "Based on the microfollicular structures observed, what type of nuclear features would be most consistent with a follicular neoplasm of the thyroid gland?\nOptions:\nA) Bi-nucleation and multinucleation with anisonucleosis\nB) Enlarged and pleomorphic nuclei with prominent nucleoli\nC) Hyperchromatic nuclei with irregular nuclear contours\nD) Small, uniform nuclei with inconspicuous nucleoli",
+    "solution": "D) Small, uniform nuclei with inconspicuous nucleoli"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5aec0465047d3824622d68a1d77b1a81c0fa40f6a7bb9fde0ee0cba07aec26c2.png",
+    "problem": "Based on the organization of the cells in this tissue sample, which growth pattern do they most likely represent?\nOptions:\nA) Solid nests\nB) Glandular formation\nC) Psammoma bodies\nD) Fibrosis",
+    "solution": "A) Solid nests"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/cccbe583ad64a893843f4d29a6b3cdfe89401fb30b5171da16d7cf6f40d67f7f.png",
+    "problem": "What does the presence of macrophages containing ingested cellular debris in the image suggest about the tissue's condition?\nOptions:\nA) Regenerative activity\nB) Metabolic storage disease\nC) Acute inflammation\nD) Immune clearance",
+    "solution": "D) Immune clearance"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/608e8683f518078ec924551d971b21384585296f375a6b359c051c9c815ffab6.png",
+    "problem": "What pattern of staining best describes the immunohistochemistry observed in the cells?\nOptions:\nA) Cytoplasmic staining\nB) Nuclear staining\nC) Diffuse staining throughout the cell\nD) Membrane-bound staining",
+    "solution": "D) Membrane-bound staining"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/608e8683f518078ec924551d971b21384585296f375a6b359c051c9c815ffab6.png",
+    "problem": "Considering the distribution of the specific antigen targeted by the primary antibody, what would be the most likely intensity pattern of staining across the cells?\nOptions:\nA) Uniform and intense across all cells\nB) Variable intensity with some cells showing no staining\nC) Gradient intensity from one side of the tissue section to the other\nD) Intermittent, patchy staining across cells",
+    "solution": "A) Uniform and intense across all cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/031413b3949fbf2fa631fd437154cbe750f079f054853b266c387525d7e90349.png",
+    "problem": "Based on the characteristics observed in the keratinocytes of the epidermal layer, which condition is most likely indicated?\nOptions:\nA) Spongiosis\nB) Acantholysis\nC) Keratinocyte necrosis\nD) Hyperkeratosis",
+    "solution": "C) Keratinocyte necrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d3a4a827b94cc401ee1215e6a197a81f68105590c80bbb66bdcbfa210e3c21c7.png",
+    "problem": "What feature marked by the star indicates the peripheral boundary of the glandular structure?\nOptions:\nA) Fibrovascular stroma\nB) Muscularis mucosae\nC) Glandular lumina\nD) Gastric pits",
+    "solution": "B) Muscularis mucosae"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d3a4a827b94cc401ee1215e6a197a81f68105590c80bbb66bdcbfa210e3c21c7.png",
+    "problem": "What does the arrow in the image likely point to?\nOptions:\nA) A blood vessel\nB) A glandular lumen\nC) A gastric pit\nD) Muscularis mucosae",
+    "solution": "C) A gastric pit"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/85ebb64dc8ecaf201dfb99f0f2bf4624753750bac6977bc493d7442ed18ce26e.png",
+    "problem": "Based on the immunolabeling pattern, which cerebellar layer is likely to have the highest expression of the targeted antigen?\nOptions:\nA) Molecular layer\nB) Purkinje cell layer\nC) White matter tracts\nD) Granular layer",
+    "solution": "D) Granular layer"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3a1742f85e9328e80d0169c2d3df7dbfdc2848a28e6bc230890ff1138bb99a1f.png",
+    "problem": "What feature indicates the presence of a possible focal lesion within the tissue?\nOptions:\nA) Lighter, less cellular area as indicated by the arrow\nB) Region with monomorphic cell population\nC) Homogeneous pink staining without structural details\nD) Area with high cellularity and mitotic figures",
+    "solution": "A) Lighter, less cellular area as indicated by the arrow"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3a1742f85e9328e80d0169c2d3df7dbfdc2848a28e6bc230890ff1138bb99a1f.png",
+    "problem": "What is the nature of the stroma observed in the tumor tissue?\nOptions:\nA) Loose connective tissue with adipocytes\nB) Copious amounts of extracellular mucin\nC) Eosinophilic collagen fibers with a dense arrangement\nD) Myxoid with scattered reticular fibers",
+    "solution": "C) Eosinophilic collagen fibers with a dense arrangement"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c6e5d2261e6973003ac69ec2f87c150a105785da1f7c5c450005e98e393fb890.png",
+    "problem": "What does the cellular distribution within the glomerulus suggest?\nOptions:\nA) Increased cellularity with cells filling the capillary lumina\nB) Decreased cellularity in the glomerular capillaries\nC) Uniform cell distribution within the glomerular capillaries\nD) Presence of only extracapillary cells surrounding the glomerulus",
+    "solution": "A) Increased cellularity with cells filling the capillary lumina"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1a2b0e99eddff3f6793cf459e1034d383c346999c6c0eab8693f1564cd856c63.png",
+    "problem": "What feature is indicated by the arrow in the image?\nOptions:\nA) A region of necrosis\nB) A sebaceous gland entrapped by neoplastic cells\nC) A collection of adipocytes\nD) A normal lymph node follicle",
+    "solution": "B) A sebaceous gland entrapped by neoplastic cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0adfe571f0cf6499de8b8579b2f379a6839c543411cff13bbd6064885f0685f2.png",
+    "problem": "What feature is highlighted by the star symbol in the image?\nOptions:\nA) Inflammatory infiltrate\nB) Keratin pearls\nC) Dermal papillae\nD) Nevus cell aggregates",
+    "solution": "B) Keratin pearls"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0adfe571f0cf6499de8b8579b2f379a6839c543411cff13bbd6064885f0685f2.png",
+    "problem": "Based on the arrow indicator, how would you describe the pleomorphism within the epithelium shown?\nOptions:\nA) Absent with uniform cell size and shape\nB) Evident with severe atypia\nC) Minimal with slight variation in size and shape\nD) Moderate with some cells larger than others",
+    "solution": "C) Minimal with slight variation in size and shape"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/bfc7aab6126ec9efa8647665ab02fcc0b8e22d246213115fd4423d431cccf695.png",
+    "problem": "In section A, the adipocytes within the adipose tissue are characterized by which of the following features?\nOptions:\nA) They possess a large, centrally located vacuole\nB) They contain large nuclei, centrally located within the cell\nC) They exhibit large, vacuolated structures with peripheral nuclei\nD) They display multiple small lipid droplets",
+    "solution": "C) They exhibit large, vacuolated structures with peripheral nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/83058ff154ae6dae54f9a38703946be333c9d47498633bb7e32706f96e84e34c.png",
+    "problem": "What does the absence of hypercellularity within the glomerular capillary loops suggest about the renal pathology?\nOptions:\nA) Diabetic nephropathy\nB) Acute poststreptococcal glomerulonephritis\nC) Minimal change disease\nD) Membranous nephropathy",
+    "solution": "D) Membranous nephropathy"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/83058ff154ae6dae54f9a38703946be333c9d47498633bb7e32706f96e84e34c.png",
+    "problem": "In the depicted glomerular capillaries, which cellular components are likely represented by the nuclei stained blue-purple?\nOptions:\nA) Podocytes and mesangial cells\nB) Tubular epithelial cells and endothelial cells\nC) Mesangial cells and endothelial cells\nD) Podocytes and endothelial cells",
+    "solution": "D) Podocytes and endothelial cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7f9e46125b74b90f49bd24320e7d3538092aed3b86bffd7f3a3ed65e647c5d2e.png",
+    "problem": "What type of muscle tissue is predominantly featured in this histological section based on the visible histological characteristics?\nOptions:\nA) Skeletal muscle tissue\nB) Myoepithelial tissue\nC) Cardiac muscle tissue\nD) Smooth muscle tissue",
+    "solution": "A) Skeletal muscle tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4b9e94dd7119db5b7990a4cae0969a4f831c2c7c098688c5c2b6fe0e47c7c4fd.png",
+    "problem": "What is the predominant histological feature observed in the center of the pilosebaceous unit?\nOptions:\nA) Well-formed granuloma with multinucleated giant cells\nB) Calcification with basophilic stippling\nC) Necrotic debris with associated neutrophil infiltration\nD) Cross-sectional view of a structure with linear, darkly stained features",
+    "solution": "D) Cross-sectional view of a structure with linear, darkly stained features"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f7237848b3a88f6d52931b80c92679e008f82c1f235323f80781a4a5feae6eab.png",
+    "problem": "What cellular arrangement is predominantly seen in the main field of this image?\nOptions:\nA) Cells arranged in an acinar pattern\nB) Cells randomly scattered without a distinctive arrangement\nC) Cells organized in a palisading pattern\nD) Cells forming whorls or a swirling pattern",
+    "solution": "D) Cells forming whorls or a swirling pattern"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f7237848b3a88f6d52931b80c92679e008f82c1f235323f80781a4a5feae6eab.png",
+    "problem": "Based on the morphology seen in the inset, what type of cell is prominently featured?\nOptions:\nA) Mast cell characterized by a round shape and cytoplasmic granules\nB) Lymphocyte with a large nucleus and scant cytoplasm\nC) Neutrophil with lobed nucleus and neutral staining granules\nD) Eosinophil due to the presence of bilobed nucleus and crystalline granules",
+    "solution": "A) Mast cell characterized by a round shape and cytoplasmic granules"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f7237848b3a88f6d52931b80c92679e008f82c1f235323f80781a4a5feae6eab.png",
+    "problem": "What can be inferred about the elongated, spindle-shaped cells based on the nuclei's appearance?\nOptions:\nA) The nuclei have multiple lobes indicative of a high grade malignancy\nB) The nuclei are relatively uniform, suggesting an organized and possibly benign growth pattern\nC) The densely stained nuclei suggest a benign process\nD) The nuclei demonstrate marked pleomorphism and hyperchromaticity",
+    "solution": "B) The nuclei are relatively uniform, suggesting an organized and possibly benign growth pattern"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b005abab40046db3d4155d79246c3bf0467c2b57fb9a68eb7c6274484ec173d0.png",
+    "problem": "What is the predominant cellular morphology visible in this colon tissue sample?\nOptions:\nA) Monomorphic cells with clear cytoplasm\nB) Uniform cells with small, regular nuclei\nC) Small cells with high nucleus-to-cytoplasm ratio\nD) Pleomorphic cells with hyperchromatic nuclei",
+    "solution": "D) Pleomorphic cells with hyperchromatic nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/58eaf140e770eaf082ee496a941b03e51496de4df034532ac75563f14d4c7ce1.png",
+    "problem": "What is the predominant staining characteristic of the structure identified with the label 'vg'?\nOptions:\nA) It shows a dense eosinophilic staining.\nB) It has primarily dark blue hematoxylin-stained nuclei.\nC) It is characterized by a lack of distinguishable staining.\nD) It exhibits lighter eosinophilic staining in the cytoplasm.",
+    "solution": "A) It shows a dense eosinophilic staining."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/fc0381fa8ace4295d11c6b98f48c399990b8849e077e973567e6d83fa7ced4f7.png",
+    "problem": "In this bone marrow aspirate smear, which feature best identifies the early erythroid progenitors?\nOptions:\nA) Cells with pinkish cytoplasm and no apparent nucleus\nB) Pale pink discs with a lighter center\nC) Cells with high nucleus to cytoplasm ratio and densely stained chromatin\nD) Cells with multilobed nuclei and granular cytoplasm",
+    "solution": "C) Cells with high nucleus to cytoplasm ratio and densely stained chromatin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/fc0381fa8ace4295d11c6b98f48c399990b8849e077e973567e6d83fa7ced4f7.png",
+    "problem": "What morphological feature represents reticulocytes in this Wright-Giemsa stained bone marrow aspirate smear?\nOptions:\nA) Small cells with clumped nuclear chromatin\nB) Cells lacking a nucleus with bluish cytoplasm\nC) Large cells with prominent nucleoli\nD) Small, densely nucleated cells",
+    "solution": "B) Cells lacking a nucleus with bluish cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/fc0381fa8ace4295d11c6b98f48c399990b8849e077e973567e6d83fa7ced4f7.png",
+    "problem": "Which type of cell is indicated by the presence of pale pink discs with a lighter center in the cytoplasm in this image?\nOptions:\nA) Lymphocytes\nB) Eosinophils\nC) Myeloblasts\nD) Mature red blood cells",
+    "solution": "D) Mature red blood cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0275020cd5a9571ae8a1f7d84b0c1c28922f5eaf87b7f9426371aac794efd099.png",
+    "problem": "Based on the morphological features observed in the image, which statement best describes the nuclei of the epithelial cells lining the glands?\nOptions:\nA) The nuclei display anisokaryosis with high mitotic activity.\nB) The nuclei are basophilic and appear intact.\nC) The nuclei are hyperchromatic with prominent nucleoli.\nD) The nuclei are small with dense chromatin and irregular shapes.",
+    "solution": "B) The nuclei are basophilic and appear intact."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6c8e65b293092746a32c25a7bede7ddd3af1adef9a309dc9765577f5797c2ee5.png",
+    "problem": "What type of cells can be identified intermixed with the columnar epithelial cells lining the crypts?\nOptions:\nA) Goblet cells\nB) Paneth cells\nC) Plasma cells\nD) Squamous epithelial cells",
+    "solution": "A) Goblet cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6c8e65b293092746a32c25a7bede7ddd3af1adef9a309dc9765577f5797c2ee5.png",
+    "problem": "Based on the appearance of cells in the lamina propria, what is a potential finding?\nOptions:\nA) Neutrophilic infiltration\nB) Lymphoid aggregates\nC) Fibroblastic proliferation\nD) Pigmented macrophages",
+    "solution": "D) Pigmented macrophages"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d08630a4b0263a26d055c75943730149c65dd18cd46c5c6c0048722169f64387.png",
+    "problem": "Which feature in the image is characteristic of lymphatic structures that can be highlighted by a specific marker such as D2-40?\nOptions:\nA) The brownish staining in some areas\nB) The elongated cells with tapered ends forming the bundles\nC) The irregular clear space indicated by the arrow\nD) The cluster of cells with eosinophilic cytoplasm",
+    "solution": "A) The brownish staining in some areas"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f683e0dbbce6625b1be0a9c64be71e1a330c6b2ad3bbebc2896255e3f9442cfa.png",
+    "problem": "Upon examination of the glandular structures' epithelial cells, what feature can be observed regarding the orientation of the nuclei?\nOptions:\nA) The nuclei are basally oriented and appear darker\nB) The nuclei are located apically and exhibit polymorphism\nC) The nuclei are randomly distributed and hyperchromatic\nD) The nuclei are mostly peripheral and flattened",
+    "solution": "A) The nuclei are basally oriented and appear darker"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/87fb02e584fcb39ecf5a163939892ca8de53ee777ed3fca04b658dbe8ebe654f.png",
+    "problem": "What is the predominant staining characteristic of the cytoplasm in the tissue cells observed in the image?\nOptions:\nA) Predominantly pale\nB) Heterogeneously stained\nC) Darkly basophilic\nD) Intensely eosinophilic",
+    "solution": "A) Predominantly pale"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/87fb02e584fcb39ecf5a163939892ca8de53ee777ed3fca04b658dbe8ebe654f.png",
+    "problem": "How are the nuclei positioned within the cells of the gland-like structures?\nOptions:\nA) Apically located\nB) Basally located\nC) Randomly scattered\nD) Centrally located",
+    "solution": "B) Basally located"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/87fb02e584fcb39ecf5a163939892ca8de53ee777ed3fca04b658dbe8ebe654f.png",
+    "problem": "What are the small red-stained structures observed on the surface of the tissue?\nOptions:\nA) Erythrocyte aggregates\nB) Muscle fibers\nC) Spirochetes\nD) Red blood cells",
+    "solution": "C) Spirochetes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9f011cf65e32ca51c4c2f5e4ff79057867956bd962204703e4d973240dfc3c0d.png",
+    "problem": "Based on the cytoplasmic characteristics of the cells observed in the image, which type of inclusion bodies can be suspected?\nOptions:\nA) Lewy bodies\nB) Michaelis-Gutmann bodies\nC) Russell bodies\nD) Mallory bodies",
+    "solution": "D) Mallory bodies"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9f011cf65e32ca51c4c2f5e4ff79057867956bd962204703e4d973240dfc3c0d.png",
+    "problem": "What alteration in tissue architecture is suggested by the intercellular spaces seen in the image?\nOptions:\nA) Hydropic change\nB) Tubular alteration\nC) Caseous necrosis\nD) Coagulative necrosis",
+    "solution": "B) Tubular alteration"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9f011cf65e32ca51c4c2f5e4ff79057867956bd962204703e4d973240dfc3c0d.png",
+    "problem": "Upon examining the nuclei, the staining suggests their chromatin structure is:\nOptions:\nA) Heterochromatic\nB) Euchromatic\nC) Pyknotic\nD) Karyorrhectic",
+    "solution": "B) Euchromatic"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c4319b674821256100130186c2d142036645bafbbdc1d3476e7086cd9fee9416.png",
+    "problem": "What is the most likely nature of the large, clear spaces scattered throughout the less organized tissue on the left side of the image?\nOptions:\nA) Dilated vascular spaces\nB) Areas of necrosis\nC) Granuloma formations\nD) Mucinous lakes",
+    "solution": "A) Dilated vascular spaces"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c4319b674821256100130186c2d142036645bafbbdc1d3476e7086cd9fee9416.png",
+    "problem": "Based on the cellular morphology and arrangements observed in the image, which type of proliferative process is suggested on the left side of the image?\nOptions:\nA) Adenomatous proliferation\nB) Reactive or neoplastic proliferation\nC) Squamous cell proliferation\nD) Lymphoid proliferation",
+    "solution": "B) Reactive or neoplastic proliferation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ffb569318f3505ba6703f5ba3a3d937f626fbd9fa2aaeff91c2f8caf9104fb51.png",
+    "problem": "What can be inferred about the renal tubules based on the image provided?\nOptions:\nA) The tubules demonstrate pronounced inflammation\nB) The tubules show clear spaces surrounded by simple cuboidal epithelium\nC) Tubules contain an eosinophilic substance in their lumen\nD) Tubules are surrounded by dense connective tissue",
+    "solution": "B) The tubules show clear spaces surrounded by simple cuboidal epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ffb569318f3505ba6703f5ba3a3d937f626fbd9fa2aaeff91c2f8caf9104fb51.png",
+    "problem": "Based on the contents of the image, which statement accurately describes the extracellular matrix and stromal components observed within the renal tissue?\nOptions:\nA) Hyaline deposition around the tubules and glomeruli\nB) Extensive hemorrhage in the interstitial matrix\nC) Faintly visible with no significant details discernible\nD) Dense fibrosis throughout the interstitial areas",
+    "solution": "C) Faintly visible with no significant details discernible"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b3492f1686ee13805c01ba398b0b049a64a313fe851db8f16322fadf23c5ece8.png",
+    "problem": "By analyzing the cellular morphology, what is the cytoplasmic staining characteristic in the clusters of cells?\nOptions:\nA) Melanin accumulation\nB) Glycogen deposition\nC) Lipofuscin pigmentation\nD) Hemosiderin deposition",
+    "solution": "A) Melanin accumulation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b3492f1686ee13805c01ba398b0b049a64a313fe851db8f16322fadf23c5ece8.png",
+    "problem": "What can be inferred about the nuclei of the spindle-shaped, brown-staining cells?\nOptions:\nA) They are pleomorphic\nB) They are obscured by the staining\nC) They are enlarged and prominent\nD) They are hyperchromatic",
+    "solution": "B) They are obscured by the staining"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/bf352d1f37cf48665040b2dddf049e08934b551a71815fe711385490ac2cd923.png",
+    "problem": "Based on the cellular morphology observed, what is the likely nature of the process involving these cells?\nOptions:\nA) Malignant neoplasm\nB) Benign hyperplasia\nC) Acute inflammatory process\nD) Normal tissue homeostasis",
+    "solution": "A) Malignant neoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/bf352d1f37cf48665040b2dddf049e08934b551a71815fe711385490ac2cd923.png",
+    "problem": "How would you describe the level of expression of the target antigen based on the staining intensity?\nOptions:\nA) High level of expression\nB) Moderate level of expression\nC) Intermittent expression across the sample\nD) Low level of expression",
+    "solution": "A) High level of expression"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/dabc2791c36919b0e4df2a01e3febeab63e0eca9121c4fe63da66d71ba84fde1.png",
+    "problem": "Based on the observation of the surface epithelium in the image, which type of epithelium is present?\nOptions:\nA) Pseudostratified ciliated columnar epithelium\nB) Simple columnar epithelium\nC) Simple squamous epithelium\nD) Stratified squamous epithelium",
+    "solution": "D) Stratified squamous epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/dabc2791c36919b0e4df2a01e3febeab63e0eca9121c4fe63da66d71ba84fde1.png",
+    "problem": "What is the histological feature of the organized cell collections within the underlying stroma?\nOptions:\nA) Multinucleated giant cells\nB) Caseating granulomas\nC) Neoplastic cells\nD) Epithelioid histiocytes",
+    "solution": "D) Epithelioid histiocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5e9ced537e5a4a96ea06f58c872b1f120f8d6e53102c413ba1936b5236bde358.png",
+    "problem": "Which of these features is not consistent with the normal histology of the liver tissue observed in this image?\nOptions:\nA) Central basophilic nuclei in hepatocytes\nB) Dense and unstructured cellular clusters\nC) Eosinophilic (pink) cytoplasm in hepatocytes\nD) Organized plates of hepatocytes",
+    "solution": "D) Organized plates of hepatocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5e9ced537e5a4a96ea06f58c872b1f120f8d6e53102c413ba1936b5236bde358.png",
+    "problem": "What does the presence of open clear spaces in this hepatic tissue suggest?\nOptions:\nA) Areas of necrosis or lipid accumulation\nB) Dilation of hepatic blood vessels\nC) Area of active fibrogenesis\nD) Normal sinusoidal spaces",
+    "solution": "A) Areas of necrosis or lipid accumulation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7ba7df996d9b34c64a62efe4c2108ac224c587b0741c431832ff352b72e6b262.png",
+    "problem": "Based on the staining pattern, which feature of the cells' nuclei is the most evident?\nOptions:\nA) Nuclear hyperchromasia\nB) Non-expression of vimentin\nC) High metabolic activity\nD) Multinucleation",
+    "solution": "B) Non-expression of vimentin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7ea99059763b50d513c908e84d276d0e99b134c6ce3a0cf66f5e78f833b67a20.png",
+    "problem": "Considering the integrity of the hepatic architecture, which histological feature is NOT observed within this field of view?\nOptions:\nA) Multinucleated giant cell\nB) Bridging fibrosis\nC) Eosinophilic cytoplasm of hepatocytes\nD) Central round nuclei of hepatocytes",
+    "solution": "B) Bridging fibrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0ca6bdb4b8028852244763ab18aaa8081dabcc74c4813087e16a266f89fe0ae0.png",
+    "problem": "What is the nature of the nuclear contours in the cells present in this image?\nOptions:\nA) Coarse and clumped\nB) Irregular and not uniform\nC) Smooth and well-defined\nD) Regular and geometric",
+    "solution": "B) Irregular and not uniform"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0ca6bdb4b8028852244763ab18aaa8081dabcc74c4813087e16a266f89fe0ae0.png",
+    "problem": "The cytoplasm of the cells in this image appears to be...\nOptions:\nA) Transparent and voluminous\nB) Equally proportionate to the nuclei\nC) Abundant and overshadowing the nuclei\nD) Scant and eosinophilic",
+    "solution": "D) Scant and eosinophilic"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/88b910f9c3e02793b90040be471c7bd5a717e985b0a0c7a0c8de8d9ed2bf031f.png",
+    "problem": "What cellular structure is indicated by the arrow in the microscopic image?\nOptions:\nA) Charcot–Leyden crystal\nB) Neutrophil granule\nC) Lymphocyte nuclei\nD) Russell body",
+    "solution": "A) Charcot–Leyden crystal"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/88b910f9c3e02793b90040be471c7bd5a717e985b0a0c7a0c8de8d9ed2bf031f.png",
+    "problem": "Assessing the extracellular matrix surrounding the cellular clusters in the image, what is its primary staining characteristic?\nOptions:\nA) Basophilic\nB) Eosinophilic\nC) Neutrophilic\nD) Amphophilic",
+    "solution": "B) Eosinophilic"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f7918a55427e20dc06c1012c69ef436fcf04bbbb7cd1c43e5130f070f093ed9d.png",
+    "problem": "Based on the morphology of the nuclei visible in the image, what type of cells are most likely forming the clusters?\nOptions:\nA) Neurons\nB) Keratinocytes\nC) Erythrocytes\nD) Microglia",
+    "solution": "D) Microglia"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f7918a55427e20dc06c1012c69ef436fcf04bbbb7cd1c43e5130f070f093ed9d.png",
+    "problem": "What can be inferred about the pathological state of the tissue based on the image?\nOptions:\nA) There is evidence of acute inflammation\nB) Neoplastic transformation is evident\nC) There are no visible viral inclusion bodies\nD) Viral inclusion bodies are readily visible",
+    "solution": "C) There are no visible viral inclusion bodies"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5ce632853a9f0d8392a5078ddfcbe488636a37155736b3b275635ebdd99bae17.png",
+    "problem": "What cellular elements can be identified within the tubular structures indicated by the black arrows?\nOptions:\nA) Platelets\nB) Neutrophils\nC) Red blood cells\nD) Epithelial cells",
+    "solution": "C) Red blood cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5ce632853a9f0d8392a5078ddfcbe488636a37155736b3b275635ebdd99bae17.png",
+    "problem": "Based on the histological features observed, which of the following conditions is most likely represented in this tissue section?\nOptions:\nA) Acute tubular necrosis\nB) Acute cystitis\nC) Glomerular filtration barrier breakdown\nD) Polycystic kidney disease",
+    "solution": "C) Glomerular filtration barrier breakdown"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5ce632853a9f0d8392a5078ddfcbe488636a37155736b3b275635ebdd99bae17.png",
+    "problem": "What is the likely appearance of the interstitium among the tubules in this H&E stained section of kidney tissue?\nOptions:\nA) Increased cellularity with possible inflammatory infiltrate\nB) Clear spaces consistent with edema\nC) Absence of cells, displaying large open spaces\nD) Sparse cellularity with mainly fibrous tissue",
+    "solution": "A) Increased cellularity with possible inflammatory infiltrate"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/56eee9b32c47eee704e619012aae36ff4945db1614c8c7c52f926f7b81c157ae.png",
+    "problem": "Assessing the tissue organization, what is the most discernible structural characteristic?\nOptions:\nA) Densely packed cells in certain areas\nB) Homogeneous cell distribution throughout the tissue\nC) A single layer of uniform cells\nD) Clear glandular structures with defined lumina",
+    "solution": "A) Densely packed cells in certain areas"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/cbaab434bf0219aafc20d2df56cb6d6e4ee66f033d0188357afc25ca54978910.png",
+    "problem": "What morphological feature is characteristic of the cells observed in this high magnification H&E stained microscopic image?\nOptions:\nA) Nuclear displacement to the periphery with intracellular mucin\nB) Multinucleation with a syncytial arrangement\nC) Abundant eosinophilic cytoplasm without nuclear atypia\nD) Formation of glandular structures with central necrosis",
+    "solution": "A) Nuclear displacement to the periphery with intracellular mucin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f93888297b69541d7872193bd5084035ec74b113a29f969d2d1475e9b8fc9cc2.png",
+    "problem": "Based on the morphology seen in this histological slide, which tissue characteristic can be determined?\nOptions:\nA) Presence of cuboidal epithelial cells\nB) Presence of squamous epithelial cells\nC) Presence of glandular structures\nD) Presence of spindle-shaped cells",
+    "solution": "D) Presence of spindle-shaped cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f93888297b69541d7872193bd5084035ec74b113a29f969d2d1475e9b8fc9cc2.png",
+    "problem": "What does the cellular arrangement in the tissue sample suggest about the potential origin of the lesion?\nOptions:\nA) Random arrangement suggesting a mesenchymal origin\nB) Organized pattern suggesting a well-differentiated neoplasm\nC) Papillary structures suggesting epithelial origin\nD) Rosette formation suggesting neuroendocrine origin",
+    "solution": "A) Random arrangement suggesting a mesenchymal origin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f93888297b69541d7872193bd5084035ec74b113a29f969d2d1475e9b8fc9cc2.png",
+    "problem": "In the provided tissue section stained with hematoxylin and eosin (H&E), what characteristic do the observed red-stained areas most likely represent?\nOptions:\nA) Areas of necrosis within the tumor\nB) Blood vessels characterized by red blood cells\nC) Eosinophilic cytoplasmic staining\nD) Concentrations of inflammatory cells",
+    "solution": "B) Blood vessels characterized by red blood cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/a4efcf54036142c40b48a0ad8878d3ce67c1e5e6afea07acfc3bbffb22ce654c.png",
+    "problem": "What can be inferred about the type of cells based on their morphology in the hematopoietic bone marrow?\nOptions:\nA) These are atypical lymphoid cells\nB) They represent mature adipocytes\nC) There is a predominance of megakaryocytes\nD) The cells are predominantly erythroblasts",
+    "solution": "A) These are atypical lymphoid cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0c2927614e8ec2fa6a92d449415cf3ddba5c39dc9023fb1134d178432206229e.png",
+    "problem": "Based on the staining characteristics and nuclear morphology observed in this image, what type of cellular alteration can be inferred?\nOptions:\nA) Uniform nuclear staining and slight variation in cell size\nB) Hyperchromasia and nuclear pleomorphism\nC) Macronucleoli and anisocytosis\nD) Anisonucleosis and increased mitotic figures",
+    "solution": "A) Uniform nuclear staining and slight variation in cell size"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ef8595c8bf644aa7edc17f01d12c209f6ee40a3fde81c98492dab1e03b7eb401.png",
+    "problem": "Upon examining the lymphocytic infiltrate in the epidermis, which feature is most indicative of epidermotropism?\nOptions:\nA) Atypical lymphocytes with irregular nuclei\nB) Presence of melanocytes within the infiltrate\nC) Lymphocytes forming a band-like pattern at the dermoepidermal junction\nD) Homogeneous appearance of the lymphocytes",
+    "solution": "A) Atypical lymphocytes with irregular nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9496a82e60c954971de6bae28fda5c58ca5e6a1cc37baa12800601961a0963c2.png",
+    "problem": "Based on the visible morphological features, what type of white blood cell is characterized by large, round, purple-staining nuclei that almost entirely fill the cell?\nOptions:\nA) Basophils\nB) Lymphocytes\nC) Eosinophils\nD) Monocytes",
+    "solution": "B) Lymphocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9496a82e60c954971de6bae28fda5c58ca5e6a1cc37baa12800601961a0963c2.png",
+    "problem": "Identify the cells in this blood smear characterized by lobed nuclei with more abundant cytoplasm.\nOptions:\nA) Eosinophils\nB) Neutrophils\nC) Erythrocytes\nD) Megakaryocytes",
+    "solution": "B) Neutrophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e1e6367e448fa1e47bc898bb2990b5b8c4d235a5c2ae914ccfdecf879657e151.png",
+    "problem": "Considering the morphology of cells on the left side of the band of fibrous tissue, what characteristic feature do they display?\nOptions:\nA) Hyperchromatic nuclei with scant cytoplasm\nB) Spindle-shaped cells with eosinophilic cytoplasm\nC) Round, eccentric nuclei with abundant basophilic cytoplasm\nD) Multinucleated giant cells with clear cytoplasm",
+    "solution": "C) Round, eccentric nuclei with abundant basophilic cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/27dc216b67615716662cb2aa808520e2af8ead9b3f8754293c264d30ee68d615.png",
+    "problem": "Based on the morphology and staining characteristics, what might be suggested about the origin or nature of these cells?\nOptions:\nA) They suggest a myelogenous lineage\nB) They are indicative of an inflammatory process\nC) They are suggestive of melanocytic origin\nD) They indicate an epithelial origin",
+    "solution": "C) They are suggestive of melanocytic origin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/54177d1bfa0ca974478564307de999863f0c85d5ab80d9f19592986313ba63a7.png",
+    "problem": "Based on the cellular morphology and the staining characteristics seen in the underlying stroma, which type of inflammatory cells appear to be most abundant?\nOptions:\nA) Lymphocytes\nB) Eosinophils\nC) Neutrophils\nD) Plasma cells",
+    "solution": "D) Plasma cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/a9c23615014bbbe0460709e71c4df9020a1ef1907e0cd96c147bc32bb7130320.png",
+    "problem": "What is the histological appearance of the nuclei within the connective tissue matrix and what does this suggest?\nOptions:\nA) Pyknotic and fragmented, indicative of apoptosis\nB) Elongated and regular, indicating a benign fibroblastic proliferation\nC) Hyperchromatic and overlapping, suggesting a high turnover\nD) Vesicular with prominent nucleoli, indicating active protein synthesis",
+    "solution": "B) Elongated and regular, indicating a benign fibroblastic proliferation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e9e87036ebd1f9847cfdb445bf5084c95fe487f72d7fd06e2baca0e222a856f5.png",
+    "problem": "What does the presence of dark brown stained nuclei primarily suggest about the tissue sample?\nOptions:\nA) A state of cell quiescence\nB) Cellular senescence\nC) High expression of a cell cycle-related protein\nD) Low rates of cell division",
+    "solution": "C) High expression of a cell cycle-related protein"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/810e94ee136d56a3be48bd140d16d605ea6376041f2e875c451e526091a164be.png",
+    "problem": "Based on the staining properties observed, what is indicated by the pink or lavender hue in the cytoplasm of the cells?\nOptions:\nA) Presence of cytoplasmic inclusions or pigments\nB) Uptake of eosin dye indicating basic cytoplasmic components\nC) Predominance of acidic components\nD) Deposition of collagen fibers",
+    "solution": "B) Uptake of eosin dye indicating basic cytoplasmic components"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c7c5a7d31734d4c667397a2b64f3dc009afcb2889fa45165ed9d224fc4b932bb.png",
+    "problem": "What is the probable function of the brown coloration seen in the image?\nOptions:\nA) Presence of hemosiderin deposits\nB) Indicative of necrosis\nC) Sign of lipid accumulation\nD) Result of immunohistochemical staining",
+    "solution": "D) Result of immunohistochemical staining"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8756de653e0b6c23dd21e3729af94b65b37ef8b3f00be8efbc4e8c7ae54dae93.png",
+    "problem": "Based on the organization of the densely packed cells with eosinophilic cytoplasm seen beneath the gland and stroma, what type of tissue are these cells most likely a part of?\nOptions:\nA) Smooth muscle tissue\nB) Glandular epithelium\nC) Adipose tissue\nD) Nervous tissue",
+    "solution": "A) Smooth muscle tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/eb7b6191f7ef1e1e2ced59d956995282159de06dd7bdb5b216a28debf3c4605a.png",
+    "problem": "What is the morphological characteristic of the larger cells in the image with prominent nuclei?\nOptions:\nA) They have a bipartite nucleus with dense clustering of chromatin\nB) They are in different stages of maturation\nC) They are devoid of cytoplasmic granules\nD) They have multiple nuclei",
+    "solution": "B) They are in different stages of maturation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8dd7dddb9b2ab5b0f89fc4f4b29296a15f5ae444f34df80288b1661657df2012.png",
+    "problem": "The extracellular matrix in this image appears to be:\nOptions:\nA) Rich in elastic fibers\nB) Collagenous with dense fibrous background\nC) Loose and myxoid\nD) Hyalinized",
+    "solution": "B) Collagenous with dense fibrous background"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2bc7ecea771e5e8e39a09843d430a52088541c12f20387cc622e762326488318.png",
+    "problem": "Which description best matches the nuclear characteristics of the cells observed in the tissue?\nOptions:\nA) Uniform nuclei with consistent size and shape\nB) Monotonous nuclei with low variance in nuclear size\nC) Hyperchromatic nuclei with high nuclear-to-cytoplasmic ratios\nD) Small, regular nuclei with a high cytoplasm-to-nuclear ratio",
+    "solution": "C) Hyperchromatic nuclei with high nuclear-to-cytoplasmic ratios"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2bc7ecea771e5e8e39a09843d430a52088541c12f20387cc622e762326488318.png",
+    "problem": "What feature of the cellular arrangement can be observed in this tissue section?\nOptions:\nA) Cells are densely packed without clear boundaries\nB) Cells are uniformly spaced with distinct boundaries\nC) There is evident normal layering and stratification of the cells\nD) Cells display a regular pattern typical for organized, normal tissue",
+    "solution": "A) Cells are densely packed without clear boundaries"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/000734274a955227ff47638d4e129525a40cffdb04eb84bdc299635339026316.png",
+    "problem": "What additional finding can be observed in the renal tissue surrounding the glomerulus?\nOptions:\nA) Hyperplasia of tubular epithelial cells\nB) Formation of granulomas\nC) Presence of proteinaceous casts\nD) Accumulation of neutrophils",
+    "solution": "C) Presence of proteinaceous casts"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8746f79289df983c602dfb4adc6476372ad34b7853f375f289f11edb15d5fc99.png",
+    "problem": "Within the dermal layer of the tissue section, what is the appearance of the extracellular matrix as visualized in the image?\nOptions:\nA) Basophilic with dense irregular patterns\nB) Eosinophilic with smooth textured appearance\nC) Eosinophilic with dense irregular patterns\nD) Basophilic with smooth textured appearance",
+    "solution": "C) Eosinophilic with dense irregular patterns"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ab76c7094a79a7cb23a3273c3fff834822a6d0363ac859d5ceb4b6b3dee52be1.png",
+    "problem": "Based on the morphology of the cells in this tissue section, which diagnosis is most consistent with the observed characteristics?\nOptions:\nA) Adipose tissue with signet ring cells\nB) Dense irregular connective tissue\nC) Stratified squamous epithelium\nD) Spindle cell sarcoma",
+    "solution": "D) Spindle cell sarcoma"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/768165e6024739e1f29d2de3250305f088cdc84fc86c1d5434925f57f8166e4d.png",
+    "problem": "What histological feature is indicated by the arrowhead in the renal tissue section?\nOptions:\nA) Perivascular inflammation\nB) Tubular atrophy\nC) Hyperplastic arteriolosclerosis\nD) Fibrinoid necrosis",
+    "solution": "A) Perivascular inflammation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/784039c6278ddc81ad1b14a7bb74299dc06adcf11d6f32e96f8a2ac256e3ee26.png",
+    "problem": "Based on the microscopic characteristics visible in the image, which cell type is predominant?\nOptions:\nA) Myeloblasts\nB) Erythroblasts\nC) Megakaryocytes\nD) Neutrophils",
+    "solution": "B) Erythroblasts"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/784039c6278ddc81ad1b14a7bb74299dc06adcf11d6f32e96f8a2ac256e3ee26.png",
+    "problem": "What is the likely stage of development of the immature erythroid cells based on the chromatin pattern and cytoplasmic color?\nOptions:\nA) Polychromatophilic normoblast\nB) Orthochromatic normoblast\nC) Myelocyte\nD) Promyelocyte",
+    "solution": "B) Orthochromatic normoblast"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/da76e373d867a8630dd39a010b2626b52822b6ed43eba3c28d63d982b939f495.jpg",
+    "problem": "What is the predominant type of tissue visible in the main area of the image?\nOptions:\nA) Hyaline cartilage\nB) Elastic cartilage\nC) Adipose tissue\nD) Dense irregular connective tissue",
+    "solution": "D) Dense irregular connective tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/da76e373d867a8630dd39a010b2626b52822b6ed43eba3c28d63d982b939f495.jpg",
+    "problem": "The rounded structures with pink-staining concentric layers and darker centers observed in the image resemble what skin-associated feature?\nOptions:\nA) Sebaceous glands\nB) Pacinian corpuscles\nC) Hair follicles\nD) Sweat glands",
+    "solution": "C) Hair follicles"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/73fe17df5cb4f0c3eebdc3e8bea97547397d14d716c321c561ef01b4e2eaf476.jpg",
+    "problem": "By examining the cellular morphology, what is the most likely origin of the well-defined, fusiform cell structures in the image?\nOptions:\nA) Adipose tissue\nB) Smooth muscle tissue\nC) Peripheral nerve tissue\nD) Epithelial tissue",
+    "solution": "C) Peripheral nerve tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ffb47930fa5a9bc4c3489b12cbe6391e0605fcf049a6ac84492ac7488093dbd3.jpg",
+    "problem": "What type of blood vessel is prominently featured in the microscopic image?\nOptions:\nA) Artery\nB) Capillary\nC) Vein\nD) Lymphatic vessel",
+    "solution": "C) Vein"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ffb47930fa5a9bc4c3489b12cbe6391e0605fcf049a6ac84492ac7488093dbd3.jpg",
+    "problem": "Identify the cellular morphology of the cells surrounding the lumen.\nOptions:\nA) Columnar epithelium\nB) Squamous epithelium\nC) Cuboidal epithelium\nD) Smooth muscle cells",
+    "solution": "D) Smooth muscle cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/458ec7b7c75271d5df20b52305cae3f7af600423f1cc0f779896f963516f1cf9.jpg",
+    "problem": "How would you describe the arrangement of the cells within this neural tissue?\nOptions:\nA) Cells dispersed with ample extracellular space\nB) A dense collection of cells with indistinct cell borders\nC) Organized in a glandular pattern\nD) Spindle-shaped cells in a fascicular pattern",
+    "solution": "B) A dense collection of cells with indistinct cell borders"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/43b0f7c4b1d093a0ed6b1de6c536cee46ce6a035f05b474709aa11ef14b0d2e2.jpg",
+    "problem": "Based on the cellular details in the image, what characteristic nuclear feature can be associated with the mononuclear cells resembling plasma cells?\nOptions:\nA) Macronucleoli\nB) Clockface chromatin\nC) Vesicular chromatin\nD) Multiple nucleoli",
+    "solution": "B) Clockface chromatin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e30b6bb4251bea7fc1e2e3d06fbca4df991879b21050784510e2e913e22dd323.jpg",
+    "problem": "What feature is characteristic of the glandular structures observed in the provided histological image?\nOptions:\nA) Irregularly shaped luminal spaces with eosinophilic materials\nB) Multiple layers of nuclei with a disorganized architecture\nC) Predominantly uniform cells with a smooth basal membrane\nD) Clear cytoplasm with round-to-oval nuclei and prominent nucleoli",
+    "solution": "A) Irregularly shaped luminal spaces with eosinophilic materials"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2e5239602842a49dff9397ce244544ca94dd643732f7676a09764a02daf6ba4e.jpg",
+    "problem": "What does the presence of elongated rete ridges in this image likely suggest regarding the pathology?\nOptions:\nA) Healing of an epithelial ulcer\nB) Lichenification due to chronic irritation\nC) Increased cell turnover and proliferation\nD) Atrophy of the epithelial layer",
+    "solution": "C) Increased cell turnover and proliferation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6a51d92c60de0444b5ed2427310005f14439ce00fddde39af0d04c1f7871a7cd.jpg",
+    "problem": "Based on the nucleus to cytoplasm (N:C) ratio, what is the predominant feature observed in these cells?\nOptions:\nA) Decreased N:C ratio, nuclei appear small\nB) Normal N:C ratio with uniform nuclear size\nC) N:C ratio varies widely throughout the tissue\nD) Increased N:C ratio, nuclei appear enlarged",
+    "solution": "D) Increased N:C ratio, nuclei appear enlarged"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6a51d92c60de0444b5ed2427310005f14439ce00fddde39af0d04c1f7871a7cd.jpg",
+    "problem": "What does the nuclear chromatin pattern of these cells suggest?\nOptions:\nA) The chromatin is finely dispersed and uniform\nB) The nuclei are hypochromatic with a clear perinuclear halo\nC) The chromatin is arranged in a peripheral pattern with a central nucleolus\nD) Nuclei show hyperchromatic staining with variation in size and density",
+    "solution": "D) Nuclei show hyperchromatic staining with variation in size and density"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7b126e8005ebd3f0f871ecfd823266192a4c79f58d43a968b7fbf44f1a1c5b86.jpg",
+    "problem": "Based on the histological features observed in the image, what is the predominant tissue type visible?\nOptions:\nA) Cardiac muscle showing intercalated discs\nB) Skeletal muscle with variable-sized fibers and peripheral nuclei\nC) Smooth muscle with spindle-shaped cells without striations\nD) Neoplastic tissue with dysplastic cellular changes",
+    "solution": "B) Skeletal muscle with variable-sized fibers and peripheral nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/fb7424c9866aad34feb4f62e12fb6ca4bf98630aae67c9268f69eca08a6d2be4.jpg",
+    "problem": "Based on the image, which glandular architectural change is not consistent with normal intestinal mucosa?\nOptions:\nA) Regular spacing between adjacent glands\nB) Elongated finger-like projections of villi\nC) Basally located nuclei in a single layer\nD) Crowding and architectural distortion of glands",
+    "solution": "D) Crowding and architectural distortion of glands"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e3d92aecdae8702f17e530a8e9768a25ff32a3bb9d7aa030feac92d68f900d9f.jpg",
+    "problem": "What evidence of a reactive process can be observed in the epidermis of this histological section?\nOptions:\nA) Occurrence of melanocyte proliferation\nB) Presence of parakeratosis\nC) Formation of granulomas\nD) Elongation of rete ridges",
+    "solution": "D) Elongation of rete ridges"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6a3b1b9d285f53d99b785ab0404b4a93632d4ccf32ea8781ae030850ac47618e.jpg",
+    "problem": "Considering the observable cell division in this tissue sample, which description best fits the mitotic figures?\nOptions:\nA) Mitotic figures with evenly spaced chromosomes\nB) No visible mitotic activity\nC) Abnormal and atypical mitotic figures\nD) Regular and symmetrical mitotic figures",
+    "solution": "C) Abnormal and atypical mitotic figures"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/dcc29e944f0bf2ecfdb2fad499aa1266ce784cc2ce6f1dfa5b09ff939d4e20f7.jpg",
+    "problem": "Based on the histologic features seen in the image, what type of tissue is predominantly displayed?\nOptions:\nA) Keratinized stratified squamous epithelium\nB) Glandular epithelium\nC) Muscular tissue\nD) Neurogenic tissue",
+    "solution": "B) Glandular epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/dcc29e944f0bf2ecfdb2fad499aa1266ce784cc2ce6f1dfa5b09ff939d4e20f7.jpg",
+    "problem": "What evidence of pathology can be identified in the stroma of the tissue?\nOptions:\nA) Lymphocytic and plasma cell infiltration\nB) Neutrophilic infiltration\nC) Goblet cell hyperplasia\nD) Squamous cell metaplasia",
+    "solution": "A) Lymphocytic and plasma cell infiltration"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/160cd72df5b5078d8d0eb066ee9b708464bf359f0d356f4c5acfff50de124fe0.jpg",
+    "problem": "Based on the visual evidence provided in the image, what type of stroma can be inferred from the tissue matrix?\nOptions:\nA) Chondroid matrix\nB) Osteoid matrix\nC) Lipomatous stroma\nD) Myxoid stroma",
+    "solution": "D) Myxoid stroma"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/42d88b9debf7ab2f874eafd4efa018126994093aa6dbbd7531df0f76cb5ec272.jpg",
+    "problem": "Based on the arrangement of the cells within the tissue, what can be inferred about the architecture?\nOptions:\nA) The cellular architecture demonstrates uniformity and organization\nB) The cellular architecture is polarized with one end of the cell different from the other\nC) The cellular architecture shows tightly packed cells with minimal intercellular spaces\nD) The cellular architecture shows disorganized structure with loss of regular patterning",
+    "solution": "D) The cellular architecture shows disorganized structure with loss of regular patterning"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/a53980b75703a135f557541780e9893458320948b2bd2660b516bfba81cbb4c4.jpg",
+    "problem": "Based on the underlying histological features, what is the likely condition affecting the epithelial tissue displayed in the specimen?\nOptions:\nA) Psoriasis\nB) Lichen planus\nC) Pityriasis rosea\nD) Epidermodysplasia verruciformis",
+    "solution": "D) Epidermodysplasia verruciformis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5e79d80501ce13d36042901fcaae28d70bcffe288b0a5d281fceb031f282f925.jpg",
+    "problem": "In this histological section of the lesion, how would you describe the morphology of the cells within the aggregations?\nOptions:\nA) Cells vary significantly in size and shape, with evidence of severe pleomorphism\nB) Cells exhibit a high degree of anisocytosis and anisokaryosis\nC) Cells are generally uniform in appearance with eosinophilic cytoplasm and centrally located nuclei\nD) Cells show abundant cytoplasm with peripheral displacement of nuclei",
+    "solution": "C) Cells are generally uniform in appearance with eosinophilic cytoplasm and centrally located nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b125d85a051c82bfe517af8118d52210e19b46f33da79140bc6dda4febeba776.jpg",
+    "problem": "What histological feature is absent in this tissue specimen, which can be indicative of certain types of epithelial pathology?\nOptions:\nA) Hyperchromatic nuclei\nB) Presence of numerous multinucleated giant cells\nC) Infiltration of inflammatory cells\nD) Formation of keratin pearls",
+    "solution": "D) Formation of keratin pearls"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ef7c2c154e7f86351714d88e94da16e11a3066095e8eb2f8adb0f7382bdde2a5.jpg",
+    "problem": "What is the general pattern of cellular organization throughout the depth of the lesion?\nOptions:\nA) Cells show clear maturation with depth, becoming larger and pleomorphic in the deeper aspects\nB) Cells exhibit decreased cellularity and increased fibrosis with depth\nC) The cellular composition seems uniformly dense throughout the depth of the lesion\nD) There is necrosis and significant inflammation in the deeper aspects of the lesion",
+    "solution": "C) The cellular composition seems uniformly dense throughout the depth of the lesion"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/fafdfd8cc71bb8cc34718bc71614a42c1e6e5b26cfcba87c3195cd25b5a5608a.jpg",
+    "problem": "How would you describe the appearance of the nuclei of the glandular cells?\nOptions:\nA) Enlarged with prominent nucleoli\nB) Small and hyperchromatic with frequent mitotic figures\nC) Markedly pleomorphic with significant atypia\nD) Small and uniform",
+    "solution": "D) Small and uniform"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b4096ebf98c20fe6e2dd7171265dc8512421efa23e7bef3ba5c51c66ce03f966.jpg",
+    "problem": "Based on the appearance of the cytoplasm, how can the majority of cells in this image be characterized?\nOptions:\nA) The cytoplasm appears mostly vacuolated\nB) The cytoplasm is predominantly eosinophilic\nC) The cytoplasm has a highly granular texture\nD) The cytoplasm shows evidence of significant lipid accumulation",
+    "solution": "B) The cytoplasm is predominantly eosinophilic"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b4096ebf98c20fe6e2dd7171265dc8512421efa23e7bef3ba5c51c66ce03f966.jpg",
+    "problem": "Judging by the background matrix, could you identify the likely tissue type represented in this microscopic image?\nOptions:\nA) Fibrillary matrix consistent with glial tissue\nB) Loose areolar connective tissue\nC) Hyaline cartilage\nD) Dense irregular connective tissue",
+    "solution": "A) Fibrillary matrix consistent with glial tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c0c7459ab51d90ca803d2e31a5471864a8c27d80fef7c0d12beefa34e762b5f7.jpg",
+    "problem": "Looking at the ductal spaces involved, how would you characterize the extent of involvement?\nOptions:\nA) The involvement of ductal spaces is monomorphic with complete loss of luminal space.\nB) There are multiple, variably-sized ductal spaces involved with preserved architecture.\nC) All ductal spaces are completely filled with high-grade atypical cells, indicating invasive growth.\nD) The ductal involvement is extensive throughout the tissue, lacking any normal architecture.",
+    "solution": "B) There are multiple, variably-sized ductal spaces involved with preserved architecture."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1082b8b35ea0db68d324f474a4a42d27ed0765820133beef6325334c2891fab0.jpg",
+    "problem": "In evaluating the lighter-stained clusters of cells that stand out in the background, what is the most likely composition of these clusters based on their distinct staining and structural characteristics?\nOptions:\nA) Acinar cells packed densely with zymogen granules\nB) Endocrine cells forming the islets of Langerhans\nC) Fibroblasts forming a connective tissue matrix\nD) Adipocytes with large lipid vacuoles",
+    "solution": "B) Endocrine cells forming the islets of Langerhans"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/aacbe64dfa21db5993ccc69f8f3c5aa3877681f66597e8c86ff47b9509e617f3.jpg",
+    "problem": "What histological feature is evident at the center of this skin biopsy?\nOptions:\nA) Hypergranulosis\nB) Acantholysis\nC) Parakeratosis\nD) Spongiosis",
+    "solution": "B) Acantholysis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/aacbe64dfa21db5993ccc69f8f3c5aa3877681f66597e8c86ff47b9509e617f3.jpg",
+    "problem": "What do the round, eosinophilic bodies within the epidermis represent?\nOptions:\nA) Corps ronds\nB) Langerhans cells\nC) Melanocytes\nD) Keratohyalin granules",
+    "solution": "A) Corps ronds"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5a9be52105ca17796e689c8a3c292f6b063294265721a200fe66967d0d0bf319.jpg",
+    "problem": "Based on cellular organization and morphology, what type of epithelium is demonstrated in this microscopic image?\nOptions:\nA) Simple squamous epithelium\nB) Pseudostratified columnar epithelium\nC) Transitional epithelium\nD) Stratified squamous epithelium",
+    "solution": "D) Stratified squamous epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5a9be52105ca17796e689c8a3c292f6b063294265721a200fe66967d0d0bf319.jpg",
+    "problem": "What property of the epithelium in this image indicates that it is non-keratinized?\nOptions:\nA) Presence of a granular layer\nB) Multinucleate cell appearance\nC) Cells with a pale cytoplasm\nD) Uppermost cells with darkly stained cytoplasm",
+    "solution": "C) Cells with a pale cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/aca2044803c0aa7fea397bbb71206914ab0efd7af248f4e6ba987ba51e0088fa.jpg",
+    "problem": "Based on the histological features, which of the following cellular changes are most evident at the dermal-epidermal junction?\nOptions:\nA) Hyperkeratosis\nB) Acanthosis\nC) Vacuolar alteration\nD) Parakeratosis",
+    "solution": "C) Vacuolar alteration"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/aca2044803c0aa7fea397bbb71206914ab0efd7af248f4e6ba987ba51e0088fa.jpg",
+    "problem": "What feature of the epidermis can be observed in the histological section?\nOptions:\nA) A clear stratum corneum as the most superficial layer\nB) Absence of the stratum basale at the bottom layer\nC) Stratum granulosum exhibiting prominent granules\nD) Thickened stratum spinosum",
+    "solution": "A) A clear stratum corneum as the most superficial layer"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5f92450008e9d9b70b95998fd629ac5b6275db0380ad4b206701f2daa110b847.jpg",
+    "problem": "What is the predominant feature of the trophoblastic cells lining the vesicles in the image?\nOptions:\nA) Spindle-shaped cells with ample eosinophilic cytoplasm\nB) Single-layered columnar cells with basophilic cytoplasm\nC) Mononucleated cells with hyperchromatic nuclei\nD) Multinucleated layer with eosinophilic cytoplasm",
+    "solution": "D) Multinucleated layer with eosinophilic cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/13dd92d3d78919121792916e63a2477a208cfc85902dbdce779f605926246a02.jpg",
+    "problem": "What tissue characteristic is suggested by the presence of eosinophilic, fibrillary stroma in the image?\nOptions:\nA) Adipose tissue infiltration\nB) Neuroblastic origin\nC) Dense connective tissue\nD) Muscle tissue differentiation",
+    "solution": "B) Neuroblastic origin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/a0e6e29a90d76b619e2d7841b6c7c9883ee7880e59752ef4c1f43206fb6ca7e9.jpg",
+    "problem": "What characteristic feature of the extracellular matrix is most apparent in this histological section stained with Hematoxylin and Eosin?\nOptions:\nA) Dense collagenous stroma\nB) Extensive hyalinization\nC) Prominent calcification\nD) Abundant myxoid matrix",
+    "solution": "D) Abundant myxoid matrix"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/a0e6e29a90d76b619e2d7841b6c7c9883ee7880e59752ef4c1f43206fb6ca7e9.jpg",
+    "problem": "Upon examination of the vascular structures within this image, how would you describe the blood vessels?\nOptions:\nA) Surrounded by palisading neoplastic cells\nB) Highly irregular with evidence of atypia\nC) Lined with flat endothelial cells and lacking atypia\nD) Showing extensive branching and complex anastomoses",
+    "solution": "C) Lined with flat endothelial cells and lacking atypia"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4e12a7129036324483abc3968ddabe203523999d92d882360bf5f86cad3d71b1.jpg",
+    "problem": "How would you describe the nuclear to cytoplasmic ratio observed in the majority of the cells in this image?\nOptions:\nA) High nuclear to cytoplasmic ratio\nB) Nuclear to cytoplasmic ratio suggesting mature cells\nC) Low nuclear to cytoplasmic ratio\nD) Nuclear to cytoplasmic ratio consistent across cells",
+    "solution": "A) High nuclear to cytoplasmic ratio"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6759edf4030d24202e1168b99f111010327859be6062cd09162041a9ef2f9169.jpg",
+    "problem": "What is the predominant nuclear morphology of the cells in this histological image?\nOptions:\nA) Elongated, spindle-shaped nuclei\nB) Hyperchromatic and pleomorphic nuclei\nC) Small, hyperchromatic nuclei with high mitotic rate\nD) Round nuclei with prominent nucleoli",
+    "solution": "A) Elongated, spindle-shaped nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/550640e3df598871e81c17d65543c12f7d0950a2263d064bf144c33038c3d0a5.jpg",
+    "problem": "By closely examining the branching structures within the thrombus, how would you characterize their morphology?\nOptions:\nA) Thick-walled with rare branching\nB) Broad-based with irregular branching\nC) Thin, regular, septate with acute angle branching\nD) Non-septate with wide angle branching",
+    "solution": "C) Thin, regular, septate with acute angle branching"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/550640e3df598871e81c17d65543c12f7d0950a2263d064bf144c33038c3d0a5.jpg",
+    "problem": "What can be inferred about the tissue response adjacent to the occluded vessel?\nOptions:\nA) The adjacent tissue shows signs of neoplastic transformation\nB) The tissue has no signs of an inflammatory response\nC) The tissue demonstrates necrosis with a lack of cellular structures\nD) There is evidence of preserved cellular structures with inflammatory cells",
+    "solution": "D) There is evidence of preserved cellular structures with inflammatory cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/cc5ea03e6f83aa878e90925c046869f2ed4bfd0f2077a207184a0e352055f4e6.jpg",
+    "problem": "What features of the nuclei can be observed in this microscopic image?\nOptions:\nA) Nuclei with smooth nuclear membranes and small nucleoli\nB) Enlarged nuclei with prominent nucleoli and dispersed chromatin\nC) Multinucleation with variation in nuclear size and hyperchromatic chromatin\nD) Uniform, small nuclei with evenly dispersed chromatin",
+    "solution": "C) Multinucleation with variation in nuclear size and hyperchromatic chromatin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d1100266d69bfdb4befeb5dd4d271d4c7c9ba92b328e25824eaf8025112c485a.jpg",
+    "problem": "Based on the arrangement and appearance of the cells in the image, which potential histopathological condition is suggested?\nOptions:\nA) High-grade dysplasia in Barrett's esophagus\nB) Well-differentiated liposarcoma\nC) Normal stratified squamous epithelium\nD) Invasive ductal carcinoma",
+    "solution": "D) Invasive ductal carcinoma"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d1100266d69bfdb4befeb5dd4d271d4c7c9ba92b328e25824eaf8025112c485a.jpg",
+    "problem": "What characteristic of the nuclei suggests active transcription and ongoing protein synthesis?\nOptions:\nA) The presence of multiple nucleoli within a single nucleus\nB) The irregular shape of the nuclei\nC) The vesicular appearance of chromatin\nD) The enlarged size of the nuclei",
+    "solution": "C) The vesicular appearance of chromatin"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2348f6a426b2bad38d82b40fa429c74f72300d91dc33feae2d5ad23fc253b3cf.jpg",
+    "problem": "Based on the cell morphology, what characteristic feature can be observed in the cells within this microscopic image?\nOptions:\nA) Clear, structured tissue architecture\nB) Monomorphic cells with uniform nuclei\nC) Single nucleoli within the nuclei\nD) Spindle-shaped and rounded irregular cells",
+    "solution": "D) Spindle-shaped and rounded irregular cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f04ad746170b0885989570db0f7d6e39c8ec3b35e9dbf386f374fdb69db75343.jpg",
+    "problem": "Based on the glandular structures observed, what might be the pattern of spread?\nOptions:\nA) Lymphatic spread\nB) Bloodborne spread\nC) Direct invasion into adjacent tissue\nD) No evidence of spread",
+    "solution": "C) Direct invasion into adjacent tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f04ad746170b0885989570db0f7d6e39c8ec3b35e9dbf386f374fdb69db75343.jpg",
+    "problem": "What can be inferred about the neoplastic process based on the nuclear atypia?\nOptions:\nA) Reactive atypia without neoplasm\nB) Benign neoplasm\nC) Malignant, low-grade tumor\nD) Malignant, high-grade tumor",
+    "solution": "C) Malignant, low-grade tumor"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/caacc1b69949a1605d91a38e12024e9b0e4300db8111d25e8f923369e44b2e48.jpg",
+    "problem": "What describes the morphology of the endothelial cells lining the blood vessels in this tissue section?\nOptions:\nA) Cuboidal with basophilic cytoplasm\nB) Spindle-shaped with clear cytoplasm\nC) Plump with hyperchromatic nuclei\nD) Plump with eosinophilic cytoplasm",
+    "solution": "D) Plump with eosinophilic cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/50aced08585c4878525f15eaa84e5b1ed335c8ff62fd396e441550042450c7ac.jpg",
+    "problem": "Which of the following features suggests a tissue reaction to a foreign body within the sample?\nOptions:\nA) Cells organized in a disordered fashion\nB) Multinucleated giant cells with foamy cytoplasm\nC) Basal lamina underlying the epithelial layer appearing intact\nD) Basophilic structure surrounded by palisading epithelioid cells",
+    "solution": "D) Basophilic structure surrounded by palisading epithelioid cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2b07a719653dd2997dfcc7bdf93c7f0bfb28d9e485accc83ac929b39e4a13a27.jpg",
+    "problem": "Which of the following best describes the state of the keratinocytes in the provided histological image of epidermal tissue?\nOptions:\nA) Evenly stained keratinocytes with uniform cytoplasm\nB) Lack of visible intercellular spaces between keratinocytes\nC) Slightly paler-staining cytoplasm in the keratinocytes\nD) Hypergranulosis with increased granular layer",
+    "solution": "C) Slightly paler-staining cytoplasm in the keratinocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2b07a719653dd2997dfcc7bdf93c7f0bfb28d9e485accc83ac929b39e4a13a27.jpg",
+    "problem": "What pathological feature is evident in the stratum corneum of the epidermis in this image?\nOptions:\nA) Acantholysis with loss of cohesion between keratinocytes\nB) Necrosis with loss of nuclei and cell structure\nC) Hyperkeratosis with thickened stratum corneum\nD) Parakeratosis with retention of nuclei",
+    "solution": "D) Parakeratosis with retention of nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2b07a719653dd2997dfcc7bdf93c7f0bfb28d9e485accc83ac929b39e4a13a27.jpg",
+    "problem": "In the context of the cellular infiltration observed in the epidermis and stratum corneum, which type of inflammatory cell is present within this section of skin tissue?\nOptions:\nA) Neutrophils\nB) Lymphocytes\nC) Macrophages\nD) Eosinophils",
+    "solution": "A) Neutrophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b019018ff514a6f3790326d04f6d2819f194f3cb10966428c0d538e7b74be8e2.jpg",
+    "problem": "Analyzing the cellular composition within the connective tissue displayed, what observation can be made?\nOptions:\nA) Moderate cellular density with a mix of inflammatory and non-inflammatory cells\nB) High cellular density with abundant inflammatory cells\nC) Minimal cellular content suggesting an acellular matrix\nD) Dense clusters of neoplastic cells disrupting the collagen",
+    "solution": "C) Minimal cellular content suggesting an acellular matrix"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/b019018ff514a6f3790326d04f6d2819f194f3cb10966428c0d538e7b74be8e2.jpg",
+    "problem": "In the context of the suspected diagnosis based on this image, which of the following signs are absent?\nOptions:\nA) Presence of inflammatory cells indicating active inflammation\nB) Regular arrangement of collagen fibers\nC) Disruption of collagen by other tissue or cell types\nD) Variability in the thickness and orientation of collagen fibers",
+    "solution": "A) Presence of inflammatory cells indicating active inflammation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8b0f526d24f723033a033fee9a098da2d208eded426c49642efd03c9d7373556.jpg",
+    "problem": "What type of cellular arrangement can be observed in the image?\nOptions:\nA) Trabecular architecture\nB) Rosette-like formation\nC) Palisading pattern\nD) Disorganized clustering",
+    "solution": "A) Trabecular architecture"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8b0f526d24f723033a033fee9a098da2d208eded426c49642efd03c9d7373556.jpg",
+    "problem": "Based on the histological features observed, what can be inferred about the differentiation status of the tissue in the image?\nOptions:\nA) Moderately differentiated\nB) Anaplastic\nC) Poorly differentiated\nD) Well-differentiated",
+    "solution": "D) Well-differentiated"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/122823a7fccad8ac4902dbfe35b9785ca120d36be28d5ef41f7299253e6e7250.jpg",
+    "problem": "In the given microscopic image, the nuclei of the cells are best described as:\nOptions:\nA) Large with prominent nucleoli\nB) Multinucleated with a single central nucleolus\nC) Hyperchromatic and small\nD) Vesicular with peripheral margination of chromatin",
+    "solution": "C) Hyperchromatic and small"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/122823a7fccad8ac4902dbfe35b9785ca120d36be28d5ef41f7299253e6e7250.jpg",
+    "problem": "Assessing the arrangement of cells in this tissue section, which description aligns most closely with the cellular pattern:\nOptions:\nA) Cells are uniformly distributed and well-differentiated\nB) Cells are organized into well-formed glands\nC) Cells are arranged in an unstructured, irregular manner\nD) Cells exhibit a storiform pattern",
+    "solution": "C) Cells are arranged in an unstructured, irregular manner"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/122823a7fccad8ac4902dbfe35b9785ca120d36be28d5ef41f7299253e6e7250.jpg",
+    "problem": "Based on the cellular morphology observed in the microscopic image, what is the predominant shape of the cells present within this section of tissue?\nOptions:\nA) Round\nB) Spindle-shaped\nC) Polygonal\nD) Oval",
+    "solution": "C) Polygonal"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/91e62a75edc72c0e81f26db020a0887c4cdcf9592443fc0a75218eb08d9983e9.jpg",
+    "problem": "What is the level of cellular atypia present in the observed ductal spaces?\nOptions:\nA) High-grade with extensive pleomorphism and necrosis\nB) Moderate atypia with some nuclear enlargement\nC) Mild atypia with minimal pleomorphism\nD) No overt sign of high-grade cytologic atypia",
+    "solution": "D) No overt sign of high-grade cytologic atypia"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/20841744e62fe40f6e17ead18d540df91432b90cdbaf6aec3a62144213a59beb.jpg",
+    "problem": "What is the predominant growth pattern observed in the neoplasm?\nOptions:\nA) Alveolar\nB) Trabecular\nC) Papillary\nD) Follicular",
+    "solution": "B) Trabecular"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e642e6b00ed84927a14325ff6fce94f73227a25f1b67b31a5056611115da5f38.jpg",
+    "problem": "What does the overall tissue organization observed in this image suggest about the physiological processes that may be associated with this tissue?\nOptions:\nA) Inflammatory response\nB) Oncogenic transformation\nC) Specialized functional change\nD) Regenerative healing",
+    "solution": "C) Specialized functional change"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ae87bc61a123a8b568f9d619b8ba051f2c34e86aac321568b6491f0b5f6bbf4f.jpg",
+    "problem": "What type of bone tissue is depicted at the center and bottom left, characterized by its microscopic features?\nOptions:\nA) Woven bone\nB) Spongy bone\nC) Mature lamellar bone\nD) Immature bone",
+    "solution": "C) Mature lamellar bone"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/094470a3083ef1a825cb46b57ee2f0e26a458506c4dc99e214bd730ea42a6f0a.jpg",
+    "problem": "Based on the morphology of the cells and pigmented granules in the cytoplasm, what might these pigmented granules represent in the context of the image?\nOptions:\nA) Hemosiderin within macrophages\nB) Glycogen deposits within hepatocytes\nC) Lipofuscin within nerve cells\nD) Melanin within melanocytes",
+    "solution": "A) Hemosiderin within macrophages"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/daf3df64a64abdfe68efb1074ca8cfa63cec6a796bb3bc23cd5aa429c3439afe.jpg",
+    "problem": "The peripheral structures of the glandular tissue are indicative of what kind of secretion based on the morphological appearance?\nOptions:\nA) Seromucinous secretion, with both serous and mucinous components mixed\nB) Serous secretion, with clearly discernible zymogen granules\nC) Mucinous secretion, with evidence of mucin within the acini\nD) Sebaceous secretion, with lipid droplets present in the tissue",
+    "solution": "C) Mucinous secretion, with evidence of mucin within the acini"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d69786335e1487602218274623153d684506b054d156a1af13296f4234495ea1.jpg",
+    "problem": "What tissue component might be challenging to definitively identify in this image without specific staining?\nOptions:\nA) Elastic fibers\nB) Nerve fibers\nC) Collagen fibers\nD) Blood vessels",
+    "solution": "B) Nerve fibers"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d69786335e1487602218274623153d684506b054d156a1af13296f4234495ea1.jpg",
+    "problem": "Based on the morphology of the nuclei, how would you describe their appearance?\nOptions:\nA) Round and uniform\nB) Hyperchromatic and pleomorphic\nC) Small with prominent nucleoli\nD) Elongated and somewhat wavy or corkscrew-shaped",
+    "solution": "D) Elongated and somewhat wavy or corkscrew-shaped"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/a0858fbb7d931ae73fcf96af0edc462e143b651cb77b24159b9bb599c8eb73cb.jpg",
+    "problem": "What abnormal feature can be observed in the glandular structures seen in the microscopic image of the gastrointestinal tract tissue?\nOptions:\nA) Crypts running parallel to the mucosal surface\nB) Absence of inflammatory cells within the lamina propria\nC) Uniform crypt size and shape\nD) Regular distribution of crypts without distortion",
+    "solution": "A) Crypts running parallel to the mucosal surface"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2d4ec87545a9b27a9873aba03fc03e73273207b9fe8e74e3086119748337a690.jpg",
+    "problem": "Based on the arrangement of cells, where can blood vessels likely be observed in this image?\nOptions:\nA) Within the dense fibroblastic proliferation on the left\nB) Adjacent to the spindle-shaped cells of the left side\nC) In the area with a collagen-rich extracellular matrix\nD) Within the inflamed tissue on the right side showing a looser matrix",
+    "solution": "D) Within the inflamed tissue on the right side showing a looser matrix"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c49c63875d6bc6ec7efd320135e3e2868f1db7a60d3fd37d2e3bb8aa6ca6afa7.jpg",
+    "problem": "What is the predominant extracellular matrix composition of the stroma observed in this histological section?\nOptions:\nA) Myxoid matrix\nB) Dense collagen bundles\nC) Hyaline cartilage\nD) Adipose tissue",
+    "solution": "A) Myxoid matrix"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c49c63875d6bc6ec7efd320135e3e2868f1db7a60d3fd37d2e3bb8aa6ca6afa7.jpg",
+    "problem": "Based on the arrangement of vascular structures, how would you classify the organization of the vessels within this tissue?\nOptions:\nA) Organized in a 'chicken wire' pattern\nB) Randomly dispersed without a discernible pattern\nC) Delicately branching in a non-uniform pattern\nD) Forming thick-walled, muscular structures",
+    "solution": "C) Delicately branching in a non-uniform pattern"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6a54a67265313b25bc807b6aab69fd2623ba3623c1546ac2b5598164550bc964.jpg",
+    "problem": "Based on the appearance of the cells' cytoplasm, how would you characterize it?\nOptions:\nA) Granular cytoplasm with multiple inclusions\nB) Abundant clear cytoplasm\nC) Dense eosinophilic cytoplasm\nD) Scarce basophilic cytoplasm",
+    "solution": "B) Abundant clear cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6ffec53c70014c2bc22e32ec0400b7da879e711a439e6b94615c0d2c39dd284b.jpg",
+    "problem": "Considering the density of stromal tissue and presence of inflammatory cells, what could this suggest about the sample?\nOptions:\nA) It suggests chronic inflammatory bowel disease.\nB) The sample is likely from osteoarthritic synovium.\nC) There is evidence of acute appendicitis.\nD) These features are common in viral myocarditis.",
+    "solution": "A) It suggests chronic inflammatory bowel disease."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9ce80cd82861a0ed2ed9053a474762abb44499dbac74404e2905bb15a77f68f7.jpg",
+    "problem": "Based on the histological features of the blood vessels within this section of skin, what change is evident in the vessel wall?\nOptions:\nA) Evidence of significant atherosclerosis\nB) No significant change, the vessel wall appears normal\nC) Homogeneous eosinophilic deposition suggesting amyloidosis\nD) Thickening of the vessel wall consistent with arteriosclerosis",
+    "solution": "B) No significant change, the vessel wall appears normal"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9ce80cd82861a0ed2ed9053a474762abb44499dbac74404e2905bb15a77f68f7.jpg",
+    "problem": "Considering the size of the blood vessels shown in the image, which term best describes their abnormal size relative to typical dermal blood vessels?\nOptions:\nA) Aneurysmal dilation\nB) Arteriovenous malformation\nC) Telangiectasia\nD) Varicosities",
+    "solution": "A) Aneurysmal dilation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4d38baffc9434489f65f243977abc255b8fda3527ee101d9a4ca2886388b0983.jpg",
+    "problem": "In the microscopic image provided, how would you describe the appearance of the cytoplasm in most of the observed cells?\nOptions:\nA) Multiple vacuoles within the cytoplasm\nB) Homogeneous staining throughout the cytoplasm\nC) A clear perinuclear zone with surrounding darker eosinophilic cytoplasm\nD) Extensive cytoplasmic granulation",
+    "solution": "C) A clear perinuclear zone with surrounding darker eosinophilic cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f2571ce389b025933e7e949c9402dc10136685022466bd034cc5e241b997ed6d.jpg",
+    "problem": "Based on the tissue morphology, what type of tissue change can be observed in the image?\nOptions:\nA) Hyperplasia\nB) Metaplasia\nC) Necrosis\nD) Dysplasia",
+    "solution": "C) Necrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/58f6a5a6fd51f249096241ad22fc47a6a925ae429ed4df843f89f9b4b5f9bf59.jpg",
+    "problem": "What kind of epithelium is predominantly lining the papillary structures observed in the image?\nOptions:\nA) Stratified squamous epithelium\nB) Pseudostratified columnar epithelium\nC) Simple cuboidal or columnar epithelium\nD) Simple squamous epithelium",
+    "solution": "C) Simple cuboidal or columnar epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c861dea79affdb45ff093fe885bcd84f7bee5c5b4bac491d8a1215b20a2b6ff7.jpg",
+    "problem": "Based on the histological features observed, what is the appearance of the nuclei in the serous gland cells?\nOptions:\nA) The nuclei have a low nuclear to cytoplasmic ratio\nB) The nuclei are pale and not visible\nC) The nuclei are small and inconspicuous\nD) The nuclei are large and likely more basophilic",
+    "solution": "D) The nuclei are large and likely more basophilic"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/33f5f16a7de3a1bc429a63f024064e24eb4b48a67788b462574b70aa8403ad83.jpg",
+    "problem": "What cellular morphology is prominently displayed by the cells in the tissue section shown?\nOptions:\nA) Cuboidal cells with 'hobnailing' into air spaces\nB) Squamous cell morphology with keratin pearls\nC) Columnar epithelial cells with brush border specialization\nD) Spindle-shaped cells with elongated nuclei",
+    "solution": "A) Cuboidal cells with 'hobnailing' into air spaces"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/33f5f16a7de3a1bc429a63f024064e24eb4b48a67788b462574b70aa8403ad83.jpg",
+    "problem": "What does the extracellular matrix surrounding the cells in the image suggest?\nOptions:\nA) The formation of a hydropic or edematous extracellular space\nB) Evidence of fibrosis or scarring within the tissue\nC) The development of calcifications within the tissue\nD) The presence of abundant myxoid stroma",
+    "solution": "B) Evidence of fibrosis or scarring within the tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5177cf35f05f6c34edf7e7d95aeea6f14d817909789eb7508eeb438d65eb1417.jpg",
+    "problem": "Identify the type of necrosis likely present within the tissue sample based on the visible morphological features.\nOptions:\nA) Coagulative necrosis\nB) Fat necrosis\nC) Liquefactive necrosis\nD) Fibrinoid necrosis",
+    "solution": "D) Fibrinoid necrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/5177cf35f05f6c34edf7e7d95aeea6f14d817909789eb7508eeb438d65eb1417.jpg",
+    "problem": "Based on the morphology, what condition could the architectural changes in this kidney tissue sample indicate?\nOptions:\nA) Diabetic glomerulosclerosis\nB) Minimal change disease\nC) Acute pyelonephritis\nD) Leukocytoclastic vasculitis",
+    "solution": "D) Leukocytoclastic vasculitis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/fa59d6db77ca802d8935ac90b681f1b964522bfa7d7cd432454b9fb096ea3284.jpg",
+    "problem": "What is the predominant pattern of the nuclei in the muscle fibers?\nOptions:\nA) Peripherally located and irregularly spaced\nB) Centrally located and aligned in a straight line\nC) Clustered in groups at the periphery of the cells\nD) Randomly scattered with no specific orientation",
+    "solution": "A) Peripherally located and irregularly spaced"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e096020dc0ab939c12fc390442f50af8e5b81ca5d94c69ebf3f858ffa079e30f.jpg",
+    "problem": "What is the architectural pattern exhibited by the cells in this image?\nOptions:\nA) Irregular, trabecular architecture\nB) Glandular formation with mucin production\nC) Disorganized with high pleomorphism\nD) Sheets of undifferentiated cells",
+    "solution": "A) Irregular, trabecular architecture"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e096020dc0ab939c12fc390442f50af8e5b81ca5d94c69ebf3f858ffa079e30f.jpg",
+    "problem": "What can be inferred about the cellular differentiation in this neuroendocrine tumor based on the visible morphology?\nOptions:\nA) High level of differentiation with little pleomorphism\nB) Undifferentiated with high mitotic index\nC) Poor differentiation with extensive necrosis\nD) Anaplastic features with numerous atypical mitotic figures",
+    "solution": "A) High level of differentiation with little pleomorphism"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c17a9796a91eb17152c351689ab9640f95738c7fbf5b1cb1ddf33c5d26117e88.jpg",
+    "problem": "What is the morphology of the elongated and striated cells interspersed among the multinucleated larger cells?\nOptions:\nA) Striated muscle fibers resembling cardiac muscle with disarray\nB) Smooth muscle cells without striations\nC) Skeletal muscle fibers showing prominent striations\nD) Neuronal axons with myelin sheath",
+    "solution": "A) Striated muscle fibers resembling cardiac muscle with disarray"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d9ffc965b33561292deb167597815a69f3ab4ce5508ba0fe9fd0f1ecd908078b.jpg",
+    "problem": "In the slide, which cells appear to indicate the presence of an inflammatory process?\nOptions:\nA) Plasma cells with eccentric nuclei\nB) Eosinophils with bright red granules\nC) Lymphocytes that are small round cells\nD) Macrophages with large irregular nuclei",
+    "solution": "C) Lymphocytes that are small round cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8b106a5466907a644caaebd6a2bb24073691b2269a0626ba1b369cf42b964811.jpg",
+    "problem": "Considering the appearance of the tissue architecture in the image, what can be inferred regarding its organization?\nOptions:\nA) The tissue architecture appears highly organized and uniform\nB) The tissue architecture is disrupted, suggesting a possible malignant infiltrate\nC) There is slight disorganization, but overall tissue structure is maintained\nD) The disruption in tissue architecture indicates regeneration and repair",
+    "solution": "B) The tissue architecture is disrupted, suggesting a possible malignant infiltrate"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d3125aa721571d2dd07db9c1d846ab9245d60b9a2e3093550fefec63046c0e7c.jpg",
+    "problem": "What type of cellular orientation pattern is discernible among the spindle-shaped cells within the tissue?\nOptions:\nA) Storiform pattern\nB) Alveolar pattern\nC) Nested pattern\nD) Palisading pattern",
+    "solution": "A) Storiform pattern"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d3125aa721571d2dd07db9c1d846ab9245d60b9a2e3093550fefec63046c0e7c.jpg",
+    "problem": "The red-staining structures that are scattered throughout the image, what are these structures most likely representative of?\nOptions:\nA) Blood vessels\nB) Nerve fibers\nC) Smooth muscle fibers\nD) Erythrocytes",
+    "solution": "A) Blood vessels"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4082ee96b3bee5e60fa49c9386d6b80575bb674bd8de6927bd0c59ebf080c79c.jpg",
+    "problem": "Based on the organization of the tissue and presence of specific structures, what type of tissue is represented in the microscopic view?\nOptions:\nA) Dense irregular connective tissue\nB) Stratified squamous epithelium\nC) Nervous tissue\nD) Cardiac muscle tissue",
+    "solution": "A) Dense irregular connective tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/67dd4cd013054b13ce6d729679499fdf7503f84ab832d9c2cb54ad65b09a3614.jpg",
+    "problem": "What is the morphology of the inflammatory cells visible in this tissue section?\nOptions:\nA) Large cells with well-defined nuclear membranes and prominent nucleoli\nB) Cells with abundant eosinophilic (pink) cytoplasm\nC) Larger cells with pale cytoplasm and multiple nuclei\nD) Smaller cells with hyperchromatic (dark) and condensed nuclei",
+    "solution": "D) Smaller cells with hyperchromatic (dark) and condensed nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f8ae7ea4bc73d1fa5dcb42826c6ac9399ab6a1e11774895701313e68d16aa425.jpg",
+    "problem": "Based on the histological features present in this image, what is the predominant alteration of epidermal thickness?\nOptions:\nA) Hyperplasia with increased epidermal thickness and elongated rete ridges\nB) Papillomatosis with upward projections of the epidermis\nC) Atrophy with decreased epidermal thickness\nD) Acanthosis with diffuse epidermal thickening without elongation of rete ridges",
+    "solution": "D) Acanthosis with diffuse epidermal thickening without elongation of rete ridges"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/795294eeb39d54bdfa6cde70ba66a6a2d92b2cc56c6f0195d7b4dae6f242be84.jpg",
+    "problem": "What is the nature of the lymphocytic infiltrate observed at the dermoepidermal junction in the image?\nOptions:\nA) Absent\nB) Patchy and dense\nC) Dense and diffuse\nD) Patchy and not particularly dense",
+    "solution": "D) Patchy and not particularly dense"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/940925ac99b4a678c453021d06f31ffe22710e4c026a39da75a88ca2ca650662.jpg",
+    "problem": "How does the chromatin within the nuclei of these cells appear?\nOptions:\nA) Absent or transparent\nB) Uniformly distributed but condensed\nC) Finely dispersed and evenly distributed\nD) Coarsely clumped and irregularly distributed",
+    "solution": "D) Coarsely clumped and irregularly distributed"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/940925ac99b4a678c453021d06f31ffe22710e4c026a39da75a88ca2ca650662.jpg",
+    "problem": "Based on the cellular organization, what can be inferred about the architecture of the tissue?\nOptions:\nA) The tissue shows abundant extracellular matrix and low cellular density\nB) The tissue lacks specialized architecture and appears densely packed\nC) The tissue is highly organized with clear cell differentiation\nD) The tissue displays specialized structures such as glands",
+    "solution": "B) The tissue lacks specialized architecture and appears densely packed"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/070f789057a06c8bd8c85cb5b707db5dcbdc86f8c5f0297ff375e0165e1c3b5c.jpg",
+    "problem": "How would you characterize the epidermal changes observed in this skin section?\nOptions:\nA) Hyperkeratosis\nB) Parakeratosis\nC) Acantholysis\nD) Spongiosis",
+    "solution": "D) Spongiosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/bce3cc11f50f0ec3fa296bd3b8b16bc18a9be257ed19e8601656511a20187465.jpg",
+    "problem": "What is the predominant type of inflammatory cell observed in the dense cellular infiltrate within this tissue section?\nOptions:\nA) Lymphocytes\nB) Macrophages\nC) Neutrophils\nD) Eosinophils",
+    "solution": "C) Neutrophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/bce3cc11f50f0ec3fa296bd3b8b16bc18a9be257ed19e8601656511a20187465.jpg",
+    "problem": "What additional pathological feature is visible in the tissue section apart from the cystic degeneration and dense inflammatory infiltrate?\nOptions:\nA) Angiogenesis\nB) Granuloma formation\nC) Caseous necrosis\nD) Squamous metaplasia",
+    "solution": "A) Angiogenesis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/437e3d1a84f4ed479af6ae15118246c025d6d317fe76220aaec7cb208b8b5229.jpg",
+    "problem": "Upon examining the nuclei of the cells, what level of pleomorphism is observed?\nOptions:\nA) Severe nuclear pleomorphism with significant size variation\nB) High nuclear pleomorphism with bizarre and atypical nuclei\nC) Moderate nuclear pleomorphism with some variation in size and shape\nD) No nuclear pleomorphism",
+    "solution": "C) Moderate nuclear pleomorphism with some variation in size and shape"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/ccb7f00adfafcb0cc27cbcea96e0f43ff1100c60e5fc725c4d27befdd68a7b19.jpg",
+    "problem": "What type of nuclear chromatin can be observed in the lymphocyte indicated by the arrow?\nOptions:\nA) Pycnotic (clumped staining)\nB) Heterochromatic (dark staining)\nC) Euchromatic (light staining)\nD) Aneuchromatic (no staining)",
+    "solution": "B) Heterochromatic (dark staining)"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/66d1d191338600245e91e4802bed6c7d882535d29c3162191a41120c6339416b.jpg",
+    "problem": "What type of epithelial cell arrangement is observed in the tissue specimen?\nOptions:\nA) Stratified squamous\nB) Simple columnar\nC) Pseudostratified ciliated\nD) Transitional",
+    "solution": "B) Simple columnar"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/66d1d191338600245e91e4802bed6c7d882535d29c3162191a41120c6339416b.jpg",
+    "problem": "Based on the presence of the observed tissue characteristics, which organ is this tissue most likely derived from?\nOptions:\nA) Trachea\nB) Urinary bladder\nC) Small intestine\nD) Skin",
+    "solution": "C) Small intestine"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/01f6044d5328aabf01bad6c22606be3f34de4792ec134423fc1c98efa618306a.jpg",
+    "problem": "Based on the morphology observed in the image, what is the predominant cell type within the central lighter staining region?\nOptions:\nA) Adipocytes\nB) Hematopoietic Cells\nC) Chondrocytes\nD) Osteocytes",
+    "solution": "B) Hematopoietic Cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/01f6044d5328aabf01bad6c22606be3f34de4792ec134423fc1c98efa618306a.jpg",
+    "problem": "What does the denser pinkish material primarily surrounding the central area of the bone marrow signify?\nOptions:\nA) Hyaline cartilage\nB) Osteoid matrix\nC) Cortical bone\nD) Trabecular bone",
+    "solution": "C) Cortical bone"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/17b3554f32db934e16bf3bfcb448965849d8eaf927a43f36ba352259b6293945.jpg",
+    "problem": "Considering the cells with irregularly shaped and rounded nuclei, what could be inferred about the central structure surrounded by these cells?\nOptions:\nA) Sebaceous gland\nB) Sweat duct\nC) Melanocytic nevus\nD) Hair follicle",
+    "solution": "B) Sweat duct"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7f82de9336b4040ff9a29a2027322c306900dc437cd431f521097e15575fd253.jpg",
+    "problem": "What is the most prominent abnormal histological feature observed in the submucosal layer?\nOptions:\nA) Fibrotic tissue\nB) Dense inflammatory infiltrate\nC) Foreign body multinucleated giant cells\nD) Cystically dilated spaces likely representing air",
+    "solution": "D) Cystically dilated spaces likely representing air"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7f82de9336b4040ff9a29a2027322c306900dc437cd431f521097e15575fd253.jpg",
+    "problem": "In the assessment of the muscularis propria, what is the observed condition?\nOptions:\nA) Presence of foreign material\nB) Retained integrity of muscle layers\nC) Disruption of the muscle layer\nD) Signs of neoplastic infiltration",
+    "solution": "B) Retained integrity of muscle layers"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/f3af0866607f779a47d446e0134e4b6297e7bab5f44f4b6ccbd09beac70f9ee2.jpg",
+    "problem": "What is the nature of the cytoplasmic pigmentation observed in the cells within the presented tissue section?\nOptions:\nA) Melanin deposition\nB) Hemosiderin accumulation\nC) Glycogen deposits\nD) Lipofuscin granules",
+    "solution": "A) Melanin deposition"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/30603abea0aa19496c30d51bf2a55d3492e09b6fb2307225e4351c326960990e.jpg",
+    "problem": "How are the granulosa cells organized around the oocyte?\nOptions:\nA) As a loosely arranged connective tissue\nB) As a single row of columnar cells\nC) As multiple concentric layers of spindle-shaped cells\nD) As a layer of closely packed cells",
+    "solution": "D) As a layer of closely packed cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/41475c67b442866d1853d3cd0c6293e5e6064133eb34f1d1f9d3844b2d3948e4.jpg",
+    "problem": "Based on the tissue morphology, what is the predominant cell shape within the nodular formations?\nOptions:\nA) Spindle-shaped\nB) Columnar\nC) Cuboidal\nD) Round to oval",
+    "solution": "A) Spindle-shaped"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2d7b67ce3255ec4fbb955f28492937871da8c2473b1bfba765a108fdbc369812.jpg",
+    "problem": "What characteristic of the cells infiltrating the gastric mucosa suggests an active pathological process in the observed tissue?\nOptions:\nA) Their high density within the lamina propria\nB) Increased mitotic figures\nC) The presence of signet ring cells\nD) The hyperplastic nature of the gastric mucosa",
+    "solution": "A) Their high density within the lamina propria"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2d7b67ce3255ec4fbb955f28492937871da8c2473b1bfba765a108fdbc369812.jpg",
+    "problem": "Based on the morphological features observed in the gastric mucosal tissue, what type of inflammatory cells are predominantly infiltrating the lamina propria?\nOptions:\nA) Lymphocytes\nB) Basophils\nC) Neutrophils\nD) Eosinophils",
+    "solution": "D) Eosinophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2d7b67ce3255ec4fbb955f28492937871da8c2473b1bfba765a108fdbc369812.jpg",
+    "problem": "In the provided image of gastric mucosal tissue, the epithelial compartment is observed to be infiltrated by which type of cell?\nOptions:\nA) Eosinophils\nB) Fibroblasts\nC) Mast cells\nD) Macrophages",
+    "solution": "A) Eosinophils"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/e34240eb704c867f04174dde39ebe6ddf81351c911a09744591ad537e5dffd10.jpg",
+    "problem": "In the given microscopic view, the appearance of the luminal spaces of the glands can best be described as:\nOptions:\nA) Irregularly distended containing cellular debris or secretions\nB) Regularly distended with prominent secretions\nC) Uniformly collapsed without evidence of secretions\nD) Regularly distended with uniform cellular lining",
+    "solution": "A) Irregularly distended containing cellular debris or secretions"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/4f9ff5fa9f5dbc2059f8ed4eeb9ad1bcc1e8588f5fa18d23ff4cdcbedce1c78b.jpg",
+    "problem": "How would you characterize the nuclei of the smaller cells in the image?\nOptions:\nA) Hypochromatic and regular\nB) Uniform in size with prominent nucleoli\nC) Shows evidence of karyorrhexis\nD) Hyperchromatic and atypical",
+    "solution": "D) Hyperchromatic and atypical"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1435abe695369ee3d44e79c611183134bedc8eb6891f6902a21530511f607163.jpg",
+    "problem": "What can be deduced about the nature of the pink-stained material in the upper part of the image?\nOptions:\nA) It suggests a myxoid matrix.\nB) It is consistent with fibrous tissue.\nC) It is indicative of a necrotic process.\nD) It indicates a deposition of adipose tissue.",
+    "solution": "B) It is consistent with fibrous tissue."
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1435abe695369ee3d44e79c611183134bedc8eb6891f6902a21530511f607163.jpg",
+    "problem": "The small, round to oval structures within the cellular region surrounded by cells with high nucleus-to-cytoplasm ratios are likely to be what anatomical structure based on their morphology?\nOptions:\nA) Sweat glands\nB) Follicular structures\nC) Muscle fibers\nD) Blood vessels",
+    "solution": "D) Blood vessels"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/73fbfbe26031992e86b36eb1c3bd790bc58a8ee55b9b684992f19c2921af48f7.jpg",
+    "problem": "What feature of the surrounding stroma can be observed in this microscopic view?\nOptions:\nA) Loose connective tissue with abundant ground substance\nB) Abundance of adipose tissue\nC) Presence of dense irregular connective tissue with interspersed spindle-shaped fibroblasts\nD) Marked inflammatory infiltrate",
+    "solution": "C) Presence of dense irregular connective tissue with interspersed spindle-shaped fibroblasts"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/986eed79aac45674a4f49e859ac739adcf3e3f031e6d4dcbadc08c22cb56f6d9.jpg",
+    "problem": "Based on the cellular structure and coloration, what type of tissue occupies the lower region of the image?\nOptions:\nA) Muscle tissue\nB) Fibrous connective tissue\nC) Bone tissue\nD) Neural tissue",
+    "solution": "C) Bone tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/837b193b4e598d404afa248dc0bec4d04de81486e5a552ed8f9b2fff4902f2e5.jpg",
+    "problem": "What pattern best describes the arrangement of the spindle-shaped cells in this microscopic image?\nOptions:\nA) Storiform pattern\nB) Rosette pattern\nC) Palisading pattern\nD) Alveolar pattern",
+    "solution": "A) Storiform pattern"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/837b193b4e598d404afa248dc0bec4d04de81486e5a552ed8f9b2fff4902f2e5.jpg",
+    "problem": "Based on the cellular arrangement and morphology, which feature does NOT describe the vascular structures visibly scattered throughout this tissue section?\nOptions:\nA) Branching 'staghorn' vessels\nB) Hemangiopericytic vascular pattern\nC) Classic Kaposi sarcoma-like vascular spaces\nD) Prominent vascular proliferation",
+    "solution": "C) Classic Kaposi sarcoma-like vascular spaces"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/837b193b4e598d404afa248dc0bec4d04de81486e5a552ed8f9b2fff4902f2e5.jpg",
+    "problem": "Considering the homogeneous appearance of the individual cells within this neoplastic tissue section, what finding is notably absent?\nOptions:\nA) Areas of necrosis\nB) All of the above\nC) Cellular pleomorphism\nD) Distribution of adipose tissue",
+    "solution": "B) All of the above"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/2b6430e6809d0040f0901a5ad83a96b0919e40dffa93e6285cdfde12def02bc8.jpg",
+    "problem": "What is the predominant characteristic of the inflammatory cells present in the central area of the artery?\nOptions:\nA) Predominantly macrophages with abundant foamy cytoplasm\nB) Predominantly lymphocytes with scant cytoplasm\nC) Predominantly neutrophils with dark, round nuclei\nD) Predominantly plasma cells with eccentric nuclei",
+    "solution": "C) Predominantly neutrophils with dark, round nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/6ee823909d9f7a7ee2527c72ff7fbe72dc1b555dc3e67a726e251c6e640c484d.jpg",
+    "problem": "Based on the histological features observed, what is the predominant cell type making up the cellular aggregates with darkly stained nuclei?\nOptions:\nA) Lymphocytes\nB) Fibroblasts\nC) Neoplastic cells\nD) Adipocytes",
+    "solution": "A) Lymphocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7019b8f2fdbd1cdc03b06b22d78e5ed20e65a867f46e0411e32510a1c51c45c4.jpg",
+    "problem": "What feature characterizes the cells within the central nest in the provided image?\nOptions:\nA) High nuclear-cytoplasmic ratios\nB) Multinucleated giant cells\nC) Abundant cytoplasm with perinuclear clearing\nD) Lipid-laden macrophages",
+    "solution": "A) High nuclear-cytoplasmic ratios"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c0b94117943f554787d18b53df0ece46d69466c0163856c6dd1478c9fa73f4b9.jpg",
+    "problem": "What does the presence of clear spaces in the tissue section most likely indicate?\nOptions:\nA) Medullary sinuses\nB) Areas of necrosis\nC) Apoptotic bodies\nD) Keratin pearl formations",
+    "solution": "A) Medullary sinuses"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1e17d1a6315d84f62c6a88dd000fc3da6c715df67314446383fd48c977ea84a4.jpg",
+    "problem": "What is the predominant cell type based on the morphological features observed in this tissue section?\nOptions:\nA) Round cells with a high nucleus to cytoplasm ratio\nB) Large polygonal cells with abundant eosinophilic cytoplasm\nC) Spindle-shaped cells with elongated nuclei\nD) Multinucleated giant cells",
+    "solution": "C) Spindle-shaped cells with elongated nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/1e17d1a6315d84f62c6a88dd000fc3da6c715df67314446383fd48c977ea84a4.jpg",
+    "problem": "How would you characterize the arrangement of the spindle-shaped cells in this tissue section?\nOptions:\nA) Forming well-defined nests and trabeculae\nB) Lined up in a palisading pattern\nC) Organized in a syncytial pattern\nD) Arranged in loose fascicles or haphazard arrays",
+    "solution": "D) Arranged in loose fascicles or haphazard arrays"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/8f5380827b27120800f2d4cffb65c39cf842e83dc120731e88f6306cd6a50049.jpg",
+    "problem": "Analyzing the cellular arrangement of the skin tissue, which dermal area exhibits the presence of cells that show darker staining indicative of a positive immunostain response?\nOptions:\nA) Mid dermis\nB) Superficial dermis\nC) Deep dermis\nD) The staining is uniform throughout the dermis",
+    "solution": "B) Superficial dermis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/c102ac903bb71eb6dbc0b46c79b2f25466d37cbe999227744b33ccf75e7a54ff.jpg",
+    "problem": "By examining the tissue architecture in the provided image, which feature below is NOT visible?\nOptions:\nA) Increased nucleus to cytoplasm ratio in inflammatory regions\nB) Fibrous connective tissue with collagen fibers\nC) Necrosis within the infiltrated areas\nD) Disrupted normal tissue architecture",
+    "solution": "C) Necrosis within the infiltrated areas"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/9a271c60eca02a41080a60f42dc321f465380778cd60c2eb66e7a1f01ba8c295.jpg",
+    "problem": "Based on the cellular organization within the nodular area, what is the predominant histological pattern observable?\nOptions:\nA) Distinct areas of necrosis and/or hemorrhage\nB) Disorganized cellular architecture\nC) Uniform cellular distribution\nD) A repetitive, highly structured arrangement",
+    "solution": "A) Distinct areas of necrosis and/or hemorrhage"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/14e92d7bded452171285b2a2e85cb55e4631b3645f4fcc17561bc5c1c2268a1f.jpg",
+    "problem": "What is the predominant cellular shape observed in this section of tissue?\nOptions:\nA) Cuboidal\nB) Columnar\nC) Squamous\nD) Spindle",
+    "solution": "B) Columnar"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/3933c23abdcb601e4b5988f017fb353deedb93deb2da0126edd42be6297841a6.jpg",
+    "problem": "Based on the histological features observed, where is the likely location of the bulla formation?\nOptions:\nA) Within the viable epidermal layers\nB) Below the dermal layer\nC) Above the stratum corneum\nD) Within the dermis",
+    "solution": "A) Within the viable epidermal layers"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/38ca47d5b64a93efdc9f3085ca452e95654d61fd81f2fd1320dadf1bcf8a19b7.jpg",
+    "problem": "Based on the tissue structure and cellular arrangement, which description most accurately reflects the organization of the proliferative cellular areas?\nOptions:\nA) Uniform cells arranged in a well-differentiated glandular pattern\nB) Loose connective tissue with widely separated cells and minimal nuclear variation\nC) Densely packed cells with little intervening stroma and extensive fibrosis\nD) Sparsely distributed cells with abundant eosinophilic stroma and no nuclear atypia",
+    "solution": "C) Densely packed cells with little intervening stroma and extensive fibrosis"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/04a9e5d6ee851a383fc2d646566f6c001913e24eb254d44fba10af3bcc626a66.jpg",
+    "problem": "Observing the peripheral areas of the tissue clusters, what cytoplasmic characteristic can be inferred?\nOptions:\nA) Patchy basophilic cytoplasm\nB) Prominent eosinophilic cytoplasm\nC) Uniformly clear cytoplasm\nD) Sparse eosinophilic cytoplasm",
+    "solution": "B) Prominent eosinophilic cytoplasm"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/748f213bc9c2663b4584d90f49aacfac2fff1fb59ee75b1ba47de1a09aff3557.jpg",
+    "problem": "Which of the following best describes the epithelial lining of the cystic structure?\nOptions:\nA) Transitional epithelium\nB) Simple squamous epithelium\nC) Stratified squamous epithelium\nD) Pseudostratified columnar epithelium",
+    "solution": "C) Stratified squamous epithelium"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/d8e72038d45b0e056f5d48ce47cee677f06ed32ad5d262c04606d495571ac812.jpg",
+    "problem": "By close observation of the cellular and extracellular matrix density, what potential function does this tissue likely serve?\nOptions:\nA) Insulation and storage of energy\nB) Allowing for stretch and contraction\nC) Facilitating rapid diffusion of gases\nD) Providing rigid support to other tissues",
+    "solution": "B) Allowing for stretch and contraction"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/da666a34abbbe67e5175e52336297c1bb461a6388ddcac02b9c65479ed761d89.jpg",
+    "problem": "Which type of cells dominate the microscopic field based on their morphology?\nOptions:\nA) Neutrophils\nB) Eosinophils\nC) Lymphocytes\nD) Fibroblasts",
+    "solution": "C) Lymphocytes"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/da666a34abbbe67e5175e52336297c1bb461a6388ddcac02b9c65479ed761d89.jpg",
+    "problem": "Based on the image, what might the overall preservation of tissue architecture suggest?\nOptions:\nA) Reactive process or inflammation\nB) Fibrotic deposition\nC) Healthy tissue homeostasis\nD) Neoplastic transformation",
+    "solution": "A) Reactive process or inflammation"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0dabfbc481cfd97165975cd29e58ff9e2bb65ca3ad179398b87ac3cd0d8e0651.jpg",
+    "problem": "What histological feature distinguishes the inflammatory cells from the muscle fibers in the image?\nOptions:\nA) Smaller and more densely packed nuclei\nB) Larger and more widely spaced nuclei\nC) Absence of striations\nD) Spindle-shaped appearance",
+    "solution": "A) Smaller and more densely packed nuclei"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/0dabfbc481cfd97165975cd29e58ff9e2bb65ca3ad179398b87ac3cd0d8e0651.jpg",
+    "problem": "Based on the architectural arrangement observed, what type of muscle tissue is depicted in the image?\nOptions:\nA) Smooth muscle tissue\nB) Cardiac muscle tissue\nC) Skeletal muscle tissue\nD) Non-striated involuntary muscle tissue",
+    "solution": "C) Skeletal muscle tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/dcaa4971c6fd368efef55edba1665c66cb6c102b0d8e1b67f013266c9f2b2d8d.jpg",
+    "problem": "Identify the type of blood vessel present at the center of this image and its significance.\nOptions:\nA) An arteriole with a thick muscular wall, indicative of its role in regulating blood flow\nB) A capillary with a single cell-thick endothelial lining, allowing for gas exchange\nC) A venule with thin walls, indicating a low-pressure vessel\nD) A lymphatic vessel with abundant lymphocytes around it, showing immune activity",
+    "solution": "A) An arteriole with a thick muscular wall, indicative of its role in regulating blood flow"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/00ea0aad5302a980977ce8b160ebd33c48adbcde3b6fc9ebd0080aef33c70780.jpg",
+    "problem": "Based on the tissue morphology depicted in the image, how would you describe the fibrous component?\nOptions:\nA) Loose myxoid stroma\nB) Dense hyalinized fibrous tissue\nC) Dense collagenous fibrous tissue\nD) Dense connective tissue with regular arrangement",
+    "solution": "C) Dense collagenous fibrous tissue"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/00d2b77fd11786d951e3284da986b43b1f36339e110179463a4d4c8023a0d137.jpg",
+    "problem": "Based on the cellular morphology, which type of tissue origin does this section most likely represent?\nOptions:\nA) Neural tissue with pseudo-unipolar cells\nB) Epithelial tissue with columnar cells\nC) Mesenchymal tissue with spindle-shaped cells\nD) Lymphoid tissue with small, round lymphocytes",
+    "solution": "C) Mesenchymal tissue with spindle-shaped cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/7b17cdd8ffdebea8236b6fa2b93b7492f6febf6d3465b11b39159b4176ca4627.jpg",
+    "problem": "What feature of the dermis can be primarily observed in this image?\nOptions:\nA) Abundance of elastic fibers\nB) Presence of scattered inflammatory cells\nC) Higher concentration of sebaceous glands\nD) High vascularity with numerous blood vessels",
+    "solution": "B) Presence of scattered inflammatory cells"
+  },
+  {
+    "image": "/home/wjy/PathMMU/images/243daa7b4fae5c8cca7cb8a2722a7cc108004cf2f55215566ca7f0042e838cf6.jpg",
+    "problem": "Observing the stratum corneum of the stratified squamous epithelium, what can be inferred about its cellular characteristics?\nOptions:\nA) The stratum corneum shows parakeratosis with retention of nuclei in the outermost layers\nB) The stratum corneum exhibits dyskeratosis with abnormal keratinization in lower layers\nC) The stratum corneum appears hyperplastic with an increased number of cell layers\nD) The stratum corneum demonstrates atrophy with a reduced number of cell layers",
+    "solution": "C) The stratum corneum appears hyperplastic with an increased number of cell layers"
+  }
+]

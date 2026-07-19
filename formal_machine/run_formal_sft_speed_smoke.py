@@ -68,8 +68,8 @@ def main() -> None:
     if preflight_payload.get("passed") is not True:
         raise RuntimeError("formal preflight is not passing")
     model_dir = install / f"models/Qwen2.5-VL-7B-Instruct-{BASE_REVISION}"
-    adapter = install / "data/pathmmu_image_disjoint_v1/llamafactory/pathvlm_sft_n0500.json"
-    dataset_info = install / "data/pathmmu_image_disjoint_v1/llamafactory/dataset_info.json"
+    adapter = install / "data/pathmmu_image_disjoint_v2/llamafactory/pathvlm_sft_n0500.json"
+    dataset_info = install / "data/pathmmu_image_disjoint_v2/llamafactory/dataset_info.json"
     deepspeed = (repo / variant["deepspeed"]).resolve()
     for required in (model_dir / "config.json", adapter, dataset_info, deepspeed):
         if not required.exists():

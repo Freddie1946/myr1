@@ -79,8 +79,14 @@ def main() -> None:
     expected_counts = {
         "sft_0500": 500, "sft_1000": 1000, "sft_2000": 2000, "sft_3000": 3000,
         "rl_0250": 250, "rl_0500": 500, "rl_1000": 1000,
-        "validation_0385": 385, "test_1000": 1000,
+        "validation_0385": 385,
     }
+    if manifest.get("data_version") == "pathmmu_image_disjoint_v2":
+        expected_counts["test_0999"] = 999
+    elif manifest.get("data_version") == "pathmmu_image_disjoint_v1":
+        expected_counts["test_1000"] = 1000
+    else:
+        raise ValueError(f"unsupported formal data version: {manifest.get('data_version')}")
     report = {
         "nvidia_smi": run(["nvidia-smi"]),
         "disk": run(["df", "-h", str(args.install_root)]),
@@ -132,6 +138,10 @@ def main() -> None:
             "tokenizer_config_hash_matches": tokenizer_config.is_file() and sha256(tokenizer_config) == base_model["tokenizer_config_sha256"],
             "frozen_split_verification_passes": split_verification.get("passed") is True,
             "no_image_overlap": all(v == 0 for v in manifest["pairwise_image_overlaps"].values()),
+            "no_exact_content_overlap": (
+                split_verification.get("gates", {}).get("all_pairwise_content_overlaps_zero") is True
+                if manifest.get("data_version") == "pathmmu_image_disjoint_v2" else True
+            ),
             "picked_json_unused": manifest.get("picked_json_used") is False,
             "adapter_source_counts_match": all(
                 manifest.get("sources", {}).get(name, {}).get("count") == count

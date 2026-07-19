@@ -4,7 +4,8 @@
 
 - Framework: LLaMA-Factory.
 - Base: pinned Qwen2.5-VL-7B-Instruct revision from `base_model_manifest.json`.
-- Data: CoT SFT files from `pathmmu_image_disjoint_v1`.
+- Data: CoT SFT files from `pathmmu_image_disjoint_v2`. These SFT files are byte-identical to v1;
+  v2 only removes one exact-content duplicate QA from test.
 - Validation: frozen 385-QA validation split.
 - Formal seeds: 42, 43, 44 for the full-data model.
 - Scaling subsets: 500, 1000, 2000, 3000 QA; seed 42 for initial scaling runs.
@@ -35,5 +36,6 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 ## Evaluation
 
 - Development decisions use validation only.
-- Test is executed after the protocol and checkpoints are frozen.
+- Test is the corrected 999-QA v2 split and is executed only after the protocol and checkpoints are
+  frozen. It is never used for prompt, checkpoint, parser, seed, reward, or threshold selection.
 - OOD evaluation is stored separately from in-domain test results.

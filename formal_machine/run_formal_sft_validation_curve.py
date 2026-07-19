@@ -36,7 +36,7 @@ EXPECTED_CONFIG_HASHES = {
 }
 VALIDATION_DATA_SHA256 = "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f37a2ca"
 CHAT_TEMPLATE_SHA256 = "ad60d90252ed0b0705ba14e2d0ad0fec0beac1ea955642b54059b36052d8bc96"
-CURVE_CODE_MANIFEST = "sft_validation_curve_manifest_20260719_162000.json"
+CURVE_CODE_MANIFEST = "sft_validation_curve_manifest_20260719_172547.json"
 FORMAL_GPU_IDS = list(range(8))
 SFT_GATES = {
     "training_completed", "final_checkpoint_saved", "final_checkpoint_reloaded",
@@ -398,11 +398,16 @@ def main() -> None:
     preflight = json.loads((install / "reports/preflight_report.json").read_text(encoding="utf-8"))
     if preflight.get("passed") is not True:
         raise CurveStop("formal preflight is not passing")
+    if (
+        preflight.get("data", {}).get("data_version") != "pathmmu_image_disjoint_v2"
+        or preflight.get("gates", {}).get("no_exact_content_overlap") is not True
+    ):
+        raise CurveStop("formal preflight is not the passing PathMMU v2 exact-content gate")
     reward_test = subprocess.run([str(python), str(repo / "scripts/test_pathmmu_rewards.py")],
                                  cwd=repo / "scripts", text=True, capture_output=True, check=False)
     if reward_test.returncode:
         raise CurveStop(f"parser regression tests failed: {reward_test.stdout}{reward_test.stderr}")
-    data = install / "data/pathmmu_image_disjoint_v1/rewritten_records/validation_0385.json"
+    data = install / "data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json"
     if sha256(data) != VALIDATION_DATA_SHA256:
         raise CurveStop("frozen validation data hash mismatch")
     records = json.loads(data.read_text(encoding="utf-8"))
@@ -432,8 +437,15 @@ def main() -> None:
                 "stage": "stage1_sft_validation_curve", "formal_result": False,
                 "created_at": now_iso(), "scope": {"base": True, "sample_counts": [2000, 3000],
                 "epochs": list(range(1, 11)), "job_count": 21}, "parents": parents,
-                "data": {"version": "pathmmu_image_disjoint_v1", "split": "validation_0385",
+                "data": {"version": "pathmmu_image_disjoint_v2", "split": "validation_0385",
                          "count": 385, "path": str(data), "sha256": VALIDATION_DATA_SHA256},
+                "data_version_bridge": {
+                    "parent_sft_version": "pathmmu_image_disjoint_v1",
+                    "evaluation_version": "pathmmu_image_disjoint_v2",
+                    "sft_and_validation_membership_unchanged": True,
+                    "validation_rewritten_bytes_unchanged": True,
+                    "test_accessed": False,
+                },
                 "generation": {"do_sample": False, "max_new_tokens": 192,
                                "chat_template_file": str(chat_template),
                                "chat_template_sha256": CHAT_TEMPLATE_SHA256},

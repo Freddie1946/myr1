@@ -1,0 +1,54 @@
+{
+  "version": "pathmmu_image_disjoint_v2",
+  "hash_policy": {
+    "algorithm": "sha256",
+    "recorded_serialization": "exact_git_bytes_utf8_json_lf"
+  },
+  "checks": {
+    "primary_qa_exact_union_5384": true,
+    "basename_overlap_counts": {
+      "sft__rl": 0,
+      "sft__validation": 0,
+      "sft__test": 0,
+      "rl__validation": 0,
+      "rl__test": 0,
+      "validation__test": 0
+    },
+    "exact_content_overlap_counts": {
+      "sft__rl": 0,
+      "sft__validation": 0,
+      "sft__test": 0,
+      "rl__validation": 0,
+      "rl__test": 0,
+      "validation__test": 0
+    },
+    "sft_subsets_nested_and_image_complete": true,
+    "rl_subsets_nested_and_image_complete": true,
+    "deprecated_picked_json_absent": true
+  },
+  "files": {
+    "image_content_sha256.json": "e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed",
+    "splits/rl_train_1000_with_cot.json": "5beb918095c882d70abca1708849afb85758c4ed96165e45bf6ed74f84f83708",
+    "splits/rl_train_1000_without_cot.json": "ea08663f8ddc9ec0741bebc8610ed248ff0786701be0a9656dd48ca87e7880db",
+    "splits/sft_train_3000_with_cot.json": "667c2f235dc2c05582dfed0ad59ca4581d15d87fdf1b9d8c21ba711322f9ee78",
+    "splits/sft_train_3000_without_cot.json": "5cde7e94e1afa8398bbdd9ffccaf194e7e1a731e6f13c7365e6bedb8f9bb36e3",
+    "splits/test_0999_with_cot.json": "ac682986cec741b5d04fe265bb49a89169f6d92c163074b4976787dc641712b8",
+    "splits/test_0999_without_cot.json": "5d6040c9d1b1dd4d08840ac4573a09dcb2c89f3ea7bd00a2a584e8a49550ff66",
+    "splits/validation_385_with_cot.json": "ad2445e503529495a6dcf5e9d3a7562382bee1d56f1b8b92fc6931b58636228f",
+    "splits/validation_385_without_cot.json": "ea27bf8de2eb06a98058b7ce4178a6887f3e66cbc634ad50913265053cc26e42",
+    "subsets/rl/rl_0250_with_cot.json": "bae4ce8d830dbc8348bef39b1cc2b6468ff3c465cc910911a4c4e8a025d56612",
+    "subsets/rl/rl_0250_without_cot.json": "995a59ffd3daf294b04fc10a702c34e5382139a836e11e963dc0b8ebc2e94456",
+    "subsets/rl/rl_0500_with_cot.json": "d8ece33fcb21e5eb340deb559d91e0ed6fa6356de8b25d5df12577e52624c494",
+    "subsets/rl/rl_0500_without_cot.json": "c15d27537f1a1f02c4ed329692e0104404c2ab27bf768cbcfd0ba5a372620782",
+    "subsets/rl/rl_1000_with_cot.json": "5ca2160068ab11f9908701e2eaa69ab1ebf6107a9b6b4fc265123eae40d88f44",
+    "subsets/rl/rl_1000_without_cot.json": "9c7ef6c3c395976f2d71f46fdf2a2bbae01b13964be0f3d523ab192f238deda2",
+    "subsets/sft/sft_0500_with_cot.json": "040a68a8377db37dabbaeb9cb20cb73b54102bdfd639af93d76e0f7c5b0844d2",
+    "subsets/sft/sft_0500_without_cot.json": "491a343cb358915872791d49397687e5c5526b2fa8120f1f270b86a0c5755297",
+    "subsets/sft/sft_1000_with_cot.json": "602ca8e296aa3204f32c46995f85dc38427ba3e7f9d154bc8b1b494474072ab7",
+    "subsets/sft/sft_1000_without_cot.json": "bc6bf9994ae7b86c33e1fb9afc76376e06435f4fb2e397c8480f1414774d1b12",
+    "subsets/sft/sft_2000_with_cot.json": "23a0e1d9d2e74de6673f2b0a597ad0b9e53e21de7ffa29ed35976def64082798",
+    "subsets/sft/sft_2000_without_cot.json": "4f0235d68558caae9a8cc0cefb0496019daddc4b7a3eaca2a67b873ec7df7852",
+    "subsets/sft/sft_3000_with_cot.json": "153f79e5e74007bb041171e017f76829f07dbade0a188e528599e6f91f6a9671",
+    "subsets/sft/sft_3000_without_cot.json": "f3b8f5f9e4278104b38a1d5e8a6cb948dcf30b912d1a7a9b36bb9bdba7d12307"
+  }
+}

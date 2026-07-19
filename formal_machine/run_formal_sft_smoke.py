@@ -215,6 +215,9 @@ def main() -> None:
         raise ValueError(f"formal smoke must use audited ZeRO-2 backend: {base['deepspeed']}")
     model_dir = Path(base["model_name_or_path"]).resolve()
     dataset_dir = Path(base["dataset_dir"]).resolve()
+    expected_dataset_dir = (install / "data/pathmmu_image_disjoint_v2/llamafactory").resolve()
+    if dataset_dir != expected_dataset_dir:
+        raise ValueError(f"formal SFT smoke dataset root must be v2: {dataset_dir}")
     dataset_info = json.loads((dataset_dir / "dataset_info.json").read_text(encoding="utf-8"))
     adapter = dataset_dir / dataset_info[base["dataset"]]["file_name"]
     adapter_rows = json.loads(adapter.read_text(encoding="utf-8"))
@@ -259,7 +262,7 @@ def main() -> None:
         "stage": "stage1_sft_smoke",
         "formal_result": False,
         "created_at": datetime.now().astimezone().isoformat(),
-        "data": {"version": "pathmmu_image_disjoint_v1", "split": "sft_train", "qa_count": 8,
+        "data": {"version": "pathmmu_image_disjoint_v2", "split": "sft_train", "qa_count": 8,
                  "adapter": str(adapter), "adapter_sha256": sha256(adapter)},
         "model": {"base_id": "Qwen/Qwen2.5-VL-7B-Instruct",
                   "base_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
@@ -270,9 +273,9 @@ def main() -> None:
                      "rotated_total_max_steps": 3,
                      "checkpoint_policy": "three model-only snapshots plus latest one full resume checkpoint"},
         "provenance": {
-            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260717_010146.json"),
+            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260719_172547.json"),
             "base_model_manifest": str(repo / "protocol/base_model_manifest.json"),
-            "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json"),
+            "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json"),
         },
         "hardware": {"host": socket.gethostname(), "cuda_visible_devices": gpu_ids,
                      "gpu_count": args.nproc_per_node},
@@ -295,9 +298,9 @@ def main() -> None:
     capture(["git", "-C", str(llamafactory), "rev-parse", "HEAD"], snapshots / "llamafactory_git.txt")
     capture([sys.executable, "-c", "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"], snapshots / "torch_cuda_versions.txt")
     for source in (
-        repo / "protocol/code_hash_manifest_20260717_010146.json",
+        repo / "protocol/code_hash_manifest_20260719_172547.json",
         repo / "protocol/base_model_manifest.json",
-        install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json",
+        install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json",
         Path(base["deepspeed"]),
     ):
         if not source.is_file():

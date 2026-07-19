@@ -3,18 +3,23 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTPUT="${1:?usage: build_transfer_bundle.sh /path/to/output.tar.gz [split_root] [image_root] [llamafactory_src]}"
-SPLIT_ROOT="${2:-$REPO_ROOT/data/pathmmu_image_disjoint_v1}"
+SPLIT_ROOT="${2:-$REPO_ROOT/data/pathmmu_image_disjoint_v2}"
 IMAGE_ROOT="${3:-}"
 LLAMAFACTORY_SRC="${4:-}"
 
 [[ -d "$SPLIT_ROOT" ]] || { echo "Missing split root: $SPLIT_ROOT" >&2; exit 1; }
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
-mkdir -p "$STAGE/pathvlm-formal-handoff/data/pathmmu_image_disjoint_v1"
+DATA_VERSION="$(python3 - "$SPLIT_ROOT/manifest.json" <<'PY'
+import json, sys
+print(json.load(open(sys.argv[1], encoding="utf-8"))["version"])
+PY
+)"
+mkdir -p "$STAGE/pathvlm-formal-handoff/data/$DATA_VERSION"
 
 rsync -a --exclude='.git' --exclude='tmp' --exclude='*.safetensors' --exclude='output/' \
   "$REPO_ROOT/" "$STAGE/pathvlm-formal-handoff/"
-rsync -a "$SPLIT_ROOT/" "$STAGE/pathvlm-formal-handoff/data/pathmmu_image_disjoint_v1/"
+rsync -a "$SPLIT_ROOT/" "$STAGE/pathvlm-formal-handoff/data/$DATA_VERSION/"
 
 if [[ -n "$IMAGE_ROOT" ]]; then
   mkdir -p "$STAGE/pathvlm-formal-handoff/images"

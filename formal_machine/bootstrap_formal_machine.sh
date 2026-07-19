@@ -41,7 +41,6 @@ LLAMAFACTORY_LAUNCHER_SHA256="${LLAMAFACTORY_LAUNCHER_SHA256:-8f16bb782a6da2122b
 ENV_ROOT="$INSTALL_ROOT/envs"
 SFT_ENV="$ENV_ROOT/sft"
 GRPO_ENV="$ENV_ROOT/grpo"
-DATA_OUT="$INSTALL_ROOT/data/pathmmu_image_disjoint_v1"
 MODEL_DIR="$INSTALL_ROOT/models/Qwen2.5-VL-7B-Instruct-$BASE_MODEL_REVISION"
 REPORT_DIR="$INSTALL_ROOT/reports"
 MODEL_SOURCE_MANIFEST="$REPORT_DIR/model_source_manifest.json"
@@ -59,6 +58,15 @@ if ! command -v "$CONDA_EXE" >/dev/null 2>&1 && [[ ! -x "$CONDA_EXE" ]]; then
   die "conda executable not found: $CONDA_EXE"
 fi
 [[ -d "$SPLIT_ROOT" ]] || die "split root not found: $SPLIT_ROOT"
+DATA_VERSION="$(python3 - "$SPLIT_ROOT/manifest.json" <<'PY'
+import json, sys
+print(json.load(open(sys.argv[1], encoding="utf-8"))["version"])
+PY
+)"
+[[ "$DATA_VERSION" == "pathmmu_image_disjoint_v1" || \
+   "$DATA_VERSION" == "pathmmu_image_disjoint_v2" ]] || \
+  die "unsupported split data version: $DATA_VERSION"
+DATA_OUT="$INSTALL_ROOT/data/$DATA_VERSION"
 mkdir -p "$IMAGE_ROOT"
 if [[ "$ONLINE" == 0 ]]; then
   [[ -d "$WHEELHOUSE" ]] || die "ONLINE=0 requires WHEELHOUSE: $WHEELHOUSE"
@@ -70,12 +78,7 @@ fi
 log "Verifying repository code hashes"
 python3 "$REPO_ROOT/scripts/verify_code_hash_manifest.py" \
   --repo-root "$REPO_ROOT" \
-  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260714_012500.json"
-
-log "Verifying frozen split hashes and image-disjoint invariants"
-python3 "$REPO_ROOT/formal_machine/verify_frozen_splits.py" \
-  --split-root "$SPLIT_ROOT" \
-  --output "$REPORT_DIR/frozen_split_verification.json"
+  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260719_172547.json"
 
 log "Hardware snapshot"
 nvidia-smi
@@ -180,6 +183,19 @@ if [[ "$PATHMMU_AUTO_DOWNLOAD" == 1 ]]; then
   "$GRPO_ENV/bin/python" "$REPO_ROOT/formal_machine/download_pathmmu.py" "${PATHMMU_ARGS[@]}"
 else
   log "PATHMMU_AUTO_DOWNLOAD=0; existing images will be validated during data preparation"
+fi
+
+log "Verifying frozen split hashes and image-disjoint invariants"
+if [[ "$DATA_VERSION" == "pathmmu_image_disjoint_v2" ]]; then
+  python3 "$REPO_ROOT/formal_machine/verify_frozen_splits_v2.py" \
+    --split-root "$SPLIT_ROOT" \
+    --image-root "$IMAGE_ROOT" \
+    --parent-root "$REPO_ROOT/data/pathmmu_image_disjoint_v1" \
+    --output "$REPORT_DIR/frozen_split_verification.json"
+else
+  python3 "$REPO_ROOT/formal_machine/verify_frozen_splits.py" \
+    --split-root "$SPLIT_ROOT" \
+    --output "$REPORT_DIR/frozen_split_verification.json"
 fi
 
 log "Preparing exact base-model snapshot"

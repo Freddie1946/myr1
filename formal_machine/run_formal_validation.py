@@ -100,7 +100,7 @@ def main() -> None:
     if "test" in str(checkpoint).lower():
         raise ValueError("test reference is forbidden in validation execution")
 
-    data = install / "data/pathmmu_image_disjoint_v1/rewritten_records/validation_0385.json"
+    data = install / "data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json"
     records = json.loads(data.read_text(encoding="utf-8"))
     if len(records) != 385:
         raise ValueError(f"expected 385 validation records, found {len(records)}")
@@ -123,11 +123,11 @@ def main() -> None:
         "created_at": datetime.now().astimezone().isoformat(),
         "parent": {"manifest": str(parent_manifest_path), "manifest_sha256": sha256(parent_manifest_path),
                    "checkpoint": str(checkpoint)},
-        "data": {"version": "pathmmu_image_disjoint_v1", "split": "validation_0385",
+        "data": {"version": "pathmmu_image_disjoint_v2", "split": "validation_0385",
                  "count": 385, "path": str(data), "sha256": sha256(data)},
         "generation": {"do_sample": False, "max_new_tokens": 192},
         "hardware": {"host": socket.gethostname(), "gpu": hardware},
-        "provenance": {"repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260714_012500.json")},
+        "provenance": {"repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260719_172547.json")},
         "test_accessed": False,
     }
     manifest_path = run_dir / "run_manifest.yaml"

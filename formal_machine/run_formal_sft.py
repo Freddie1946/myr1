@@ -285,6 +285,9 @@ def main() -> None:
     if Path(base["deepspeed"]).resolve() != expected_deepspeed:
         raise ValueError(f"unexpected DeepSpeed config: {base['deepspeed']}")
     dataset_dir = Path(base["dataset_dir"]).resolve()
+    expected_dataset_dir = (install / "data/pathmmu_image_disjoint_v2/llamafactory").resolve()
+    if dataset_dir != expected_dataset_dir:
+        raise ValueError(f"formal SFT dataset root must be v2: {dataset_dir}")
     info = json.loads((dataset_dir / "dataset_info.json").read_text(encoding="utf-8"))
     adapter = dataset_dir / info[dataset_name]["file_name"]
     adapter_records = json.loads(adapter.read_text(encoding="utf-8"))
@@ -300,8 +303,11 @@ def main() -> None:
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
     if preflight.get("passed") is not True:
         raise RuntimeError("formal-machine preflight report is not passing")
+    if preflight.get("data", {}).get("data_version") != "pathmmu_image_disjoint_v2":
+        raise RuntimeError("formal-machine preflight is not for PathMMU v2")
     required_preflight_gates = {
-        "frozen_split_verification_passes", "no_image_overlap", "picked_json_unused",
+        "frozen_split_verification_passes", "no_image_overlap", "no_exact_content_overlap",
+        "picked_json_unused",
         "adapter_source_counts_match", "model_id_matches", "model_revision_matches",
     }
     failed_preflight = {
@@ -344,7 +350,7 @@ def main() -> None:
         "schema_version": 1, "run_id": run_id, "status": "running",
         "stage": "stage1_sft", "formal_result": False,
         "created_at": datetime.now().astimezone().isoformat(),
-        "data": {"version": "pathmmu_image_disjoint_v1", "dataset": dataset_name,
+        "data": {"version": "pathmmu_image_disjoint_v2", "dataset": dataset_name,
                  "qa_count": sample_count, "image_reference_count": len(adapter_images),
                  "all_image_paths_exist": True, "adapter": str(adapter),
                  "adapter_sha256": sha256(adapter)},
@@ -372,9 +378,9 @@ def main() -> None:
         "hardware": {"host": socket.gethostname(), "cuda_visible_devices": gpu_ids,
                      "gpu_count": args.nproc_per_node, "before": hardware_before},
         "provenance": {
-            "repo_code_manifest": str(repo / "protocol" / "code_hash_manifest_20260717_010146.json"),
+            "repo_code_manifest": str(repo / "protocol" / "code_hash_manifest_20260719_172547.json"),
             "base_model_manifest": str(repo / "protocol" / "base_model_manifest.json"),
-            "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json"),
+            "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json"),
             "preflight_report": str(preflight_path), "preflight_report_sha256": sha256(preflight_path),
             "source_config": str(config_path), "source_config_sha256": sha256(config_path),
             "resolved_config_sha256": sha256(resolved_path),
@@ -390,9 +396,9 @@ def main() -> None:
     capture(["git", "-C", str(repo), "rev-parse", "HEAD"], snapshots / "git_commit.txt")
     capture(["git", "-C", str(llamafactory), "rev-parse", "HEAD"], snapshots / "llamafactory_git.txt")
     for source in (
-        repo / "protocol/code_hash_manifest_20260717_010146.json",
+        repo / "protocol/code_hash_manifest_20260719_172547.json",
         repo / "protocol/base_model_manifest.json",
-        install / "data/pathmmu_image_disjoint_v1/formal_data_manifest.json",
+        install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json",
         preflight_path,
         Path(base["deepspeed"]), config_path,
     ):

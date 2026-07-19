@@ -1,0 +1,51 @@
+{
+  "created_at": "2026-07-19T17:25:47+08:00",
+  "purpose": "Freeze fresh Attempt02 validation-only base plus n2000/n3000 seed42 epoch curves after PathMMU exact-content v2 correction",
+  "formal_result": false,
+  "supersedes": "protocol/sft_validation_curve_manifest_20260719_162000.json",
+  "superseded_manifest_sha256": "dc0a20c005acedab9b36dd398e6b9f53a75fa45688701e0e84a950572c4d7bb3",
+  "data_version_bridge": {
+    "parent_sft_version": "pathmmu_image_disjoint_v1",
+    "evaluation_version": "pathmmu_image_disjoint_v2",
+    "sft_and_validation_source_files_byte_identical": true,
+    "validation_rewritten_bytes_identical": true,
+    "v2_change_scope": "one opaque exact-content duplicate QA removed from test only",
+    "test_accessed": false
+  },
+  "external_frozen_inputs": {
+    "validation_records": "/home/wjy/pathvlm_r1_v1_formal/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json",
+    "validation_records_sha256": "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f37a2ca",
+    "formal_data_manifest": "/home/wjy/pathvlm_r1_v1_formal/data/pathmmu_image_disjoint_v2/formal_data_manifest.json",
+    "formal_data_manifest_sha256": "6dc08a6317dcac8932df9c7f0b345b80bbf7f63d9312908add6b1dcdb8e534ba",
+    "split_verification": "/home/wjy/pathvlm_r1_v1_formal/reports/frozen_split_verification_v2.json",
+    "split_verification_sha256": "f75e74884b9b08dcb16276dbfafa89d94ae28f31deef07c54d64b6a6d5de32aa",
+    "preflight_report": "/home/wjy/pathvlm_r1_v1_formal/reports/preflight_report.json",
+    "preflight_report_sha256_at_freeze": "124c8bf9835bc7f071d7fbe452c0fe33f4bb7f6f6a8adf1e900f80138507513a",
+    "chat_template": "/home/wjy/pathvlm_r1_v1_formal/models/Qwen2.5-VL-7B-Instruct-cc594898137f460bfe9f0759e9844b3ce807cfb5/chat_template.json",
+    "chat_template_sha256": "ad60d90252ed0b0705ba14e2d0ad0fec0beac1ea955642b54059b36052d8bc96",
+    "n2000_parent": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_sft/n2000_seed0042/formal_sft_n2000_seed0042_20260717_140336/run_manifest.yaml",
+    "n2000_parent_sha256": "c8672ba3e9538f25abba1f1117341e1d0bc93edd9aeb5d17f6a9adaff3b415e7",
+    "n3000_parent": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_sft/n3000_seed0042/formal_sft_n3000_seed0042_20260717_014544/run_manifest.yaml",
+    "n3000_parent_sha256": "088959edf5d1fa025938e1ad46331fab8e3e5007b4fa3a3c9125bc29b329e4b5",
+    "base_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "job_count": 21,
+    "raw_prediction_count": 8085,
+    "attempt01_outputs_reused": false,
+    "test_accessed": false
+  },
+  "sha256": {
+    "formal_machine/run_formal_sft_validation_curve.py": "cf3209ff17e3f6667e6755c99a14809c8e748e11fed6d8993fd51d5ab98af3f8",
+    "scripts/launch_formal_sft_validation_curve.sh": "489200a09da357dfc630778ab37edfe997ef7d74d9af155b0c6f27b9a6ef867e",
+    "scripts/test_formal_sft_validation_curve.py": "c3e24b451c1ff9a34782fbbcde9272d912b7cf59d9a4ce3cfb7ef0377be6894d",
+    "scripts/infer_and_score_pathmmu.py": "c11b8e0feadff84fe9f3c1c6a77cab8ef77587943a1145b15600048f34fba39d",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f",
+    "scripts/test_pathmmu_rewards.py": "234454e2f79d4f909ce62b886c9e69a6d16989d83126ec5157683c6720af322b",
+    "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
+    "protocol/base_model_manifest.json": "d3b7a72a80bb0b860acf0833693368a33757c64793105b3b003950ac3b1034f3",
+    "protocol/training_plan.md": "9a3ceddfcc6efd2993ef53f48c7643839b97cc0bcf5578b90bbc82859c22952f",
+    "protocol/code_hash_manifest_20260719_172547.json": "d34407e78a4270b9ae0da1e1f4cb3e33ca0b450cf65d692ed22596d447230704",
+    "data/pathmmu_image_disjoint_v2/manifest.json": "aba5a93c1ace542034e3244e4379b3dc362e854f70eb3bc4ca96c543da7fdede",
+    "data/pathmmu_image_disjoint_v2/validation_report.json": "13c00207b91314fb29d9b72b002c124eddbf9a8884d1cfbad5980ab1e194a5c0",
+    "data/pathmmu_image_disjoint_v2/image_content_sha256.json": "e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed"
+  }
+}

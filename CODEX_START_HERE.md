@@ -46,14 +46,14 @@ If the script succeeds, it creates:
 - `$INSTALL_ROOT/envs/sft`
 - `$INSTALL_ROOT/envs/grpo`
 - `$INSTALL_ROOT/models/...`
-- `$INSTALL_ROOT/data/pathmmu_image_disjoint_v1`
+- `$INSTALL_ROOT/data/pathmmu_image_disjoint_v2`
 - `$INSTALL_ROOT/reports/preflight_report.json`
 - `$INSTALL_ROOT/FORMAL_PATHS.env`
 
 ## Online and offline modes
 
 Online mode downloads wheels, clones the exact LLaMA-Factory revision, downloads the exact Qwen
-7B revision, downloads official PathMMU `images.zip`, and extracts only the 3,809 unique images
+7B revision, downloads official PathMMU `images.zip`, and extracts only the 3,808 image basenames
 referenced by the frozen split. It writes `reports/pathmmu_download_report.json` and aborts if any
 required image is unavailable or corrupt.
 
@@ -75,8 +75,8 @@ Set `ONLINE=0`, `WHEELHOUSE`, `BASE_MODEL_SOURCE`, and `LLAMAFACTORY_SRC` accord
 - SFT: 3000 QA / 2121 images.
 - RL: 1000 QA / 708 images.
 - Validation: 385 QA / 272 images.
-- Test: 1000 QA / 708 images.
-- Pairwise image overlap: zero.
+- Test: 999 QA / 707 image basenames.
+- Pairwise basename and exact-file-content SHA-256 overlap: zero.
 - Nested SFT: 500/1000/2000/3000.
 - Nested RL: 250/500/1000.
 
@@ -127,7 +127,8 @@ Not finalized. Read `docs/20260712_144517_stage3_process_reward_decisions_pendin
 - `formal_machine/prepare_formal_data.py`: image-path rewrite and adapter generation.
 - `formal_machine/download_pathmmu.py`: gated download and frozen-image extraction.
 - `formal_machine/preflight_formal_machine.py`: hardware/environment/model/data gates.
-- `formal_machine/verify_frozen_splits.py`: CRLF/LF-aware frozen split hash and leakage gate.
+- `formal_machine/verify_frozen_splits_v2.py`: frozen data hashes, exact image-byte hashes, nested
+  subsets, and basename/content leakage gate.
 - `scripts/launch_formal_sft_smoke.sh`: audited formal SFT save/load/resume launcher.
 - `configs/`: debug and formal reference configurations.
 - `scripts/pathmmu_rewards.py`: shared online/offline reward implementation.

@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 
 
-SPLIT_SPECS = {
+BASE_SPLIT_SPECS = {
     "sft_0500": "subsets/sft/sft_0500_with_cot.json",
     "sft_1000": "subsets/sft/sft_1000_with_cot.json",
     "sft_2000": "subsets/sft/sft_2000_with_cot.json",
@@ -19,9 +19,8 @@ SPLIT_SPECS = {
     "rl_0500": "subsets/rl/rl_0500_with_cot.json",
     "rl_1000": "subsets/rl/rl_1000_with_cot.json",
     "validation_0385": "splits/validation_385_with_cot.json",
-    "test_1000": "splits/test_1000_with_cot.json",
 }
-EXPECTED_COUNTS = {
+BASE_EXPECTED_COUNTS = {
     "sft_0500": 500,
     "sft_1000": 1000,
     "sft_2000": 2000,
@@ -30,8 +29,25 @@ EXPECTED_COUNTS = {
     "rl_0500": 500,
     "rl_1000": 1000,
     "validation_0385": 385,
-    "test_1000": 1000,
 }
+
+
+def data_contract(split_root: Path) -> tuple[str, dict[str, str], dict[str, int], str]:
+    manifest = json.loads((split_root / "manifest.json").read_text(encoding="utf-8"))
+    version = manifest.get("version")
+    specs = dict(BASE_SPLIT_SPECS)
+    counts = dict(BASE_EXPECTED_COUNTS)
+    if version == "pathmmu_image_disjoint_v2":
+        test_key = "test_0999"
+        specs[test_key] = "splits/test_0999_with_cot.json"
+        counts[test_key] = 999
+    elif version == "pathmmu_image_disjoint_v1":
+        test_key = "test_1000"
+        specs[test_key] = "splits/test_1000_with_cot.json"
+        counts[test_key] = 1000
+    else:
+        raise ValueError(f"unsupported data version: {version}")
+    return version, specs, counts, test_key
 
 
 def sha256(path: Path) -> str:
@@ -119,6 +135,8 @@ def main() -> None:
     parser.add_argument("--reuse-if-valid", action="store_true")
     args = parser.parse_args()
 
+    data_version, split_specs, expected_counts, test_key = data_contract(args.split_root)
+
     output_nonempty = args.output_root.exists() and any(args.output_root.iterdir())
     reuse_existing = output_nonempty and args.reuse_if_valid and not args.overwrite
     if output_nonempty and not args.overwrite and not reuse_existing:
@@ -138,12 +156,12 @@ def main() -> None:
     rewritten: dict[str, list[dict]] = {}
     sources = {}
     expected_files: set[Path] = set()
-    for name, relative in SPLIT_SPECS.items():
+    for name, relative in split_specs.items():
         source = (args.split_root / relative).resolve()
         if not source.is_file():
             raise FileNotFoundError(source)
         records = rewrite_records(load_records(source), args.image_root)
-        expected = EXPECTED_COUNTS[name]
+        expected = expected_counts[name]
         if len(records) != expected:
             raise ValueError(f"{name}: expected {expected}, found {len(records)}")
         rewritten[name] = records
@@ -168,7 +186,7 @@ def main() -> None:
         "sft": image_set(rewritten["sft_3000"]),
         "rl": image_set(rewritten["rl_1000"]),
         "validation": image_set(rewritten["validation_0385"]),
-        "test": image_set(rewritten["test_1000"]),
+        "test": image_set(rewritten[test_key]),
     }
     overlaps = {}
     names = list(partitions)
@@ -193,7 +211,7 @@ def main() -> None:
         dataset_info[dataset_name] = dataset_info_entry(filename)
 
     for key, dataset_name in (("validation_0385", "pathvlm_validation_n0385"),
-                              ("test_1000", "pathvlm_test_n1000")):
+                              (test_key, f"pathvlm_test_n{expected_counts[test_key]:04d}")):
         filename = f"{dataset_name}.json"
         emit_text(
             lf_dir / filename,
@@ -250,7 +268,7 @@ def main() -> None:
     )
 
     manifest = {
-        "data_version": "pathmmu_image_disjoint_v1",
+        "data_version": data_version,
         "picked_json_used": False,
         "image_root": str(args.image_root.resolve()),
         "sources": sources,

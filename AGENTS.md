@@ -19,7 +19,8 @@ Do not rely on chat memory from another machine. The Git repository is the autho
 ## Scientific invariants
 
 - Formal base model: `Qwen/Qwen2.5-VL-7B-Instruct` revision `cc594898137f460bfe9f0759e9844b3ce807cfb5`.
-- Data version: `pathmmu_image_disjoint_v1`.
+- Data version: `pathmmu_image_disjoint_v2`. Historical v1 run manifests remain immutable; v2
+  preserves SFT/RL/validation exactly and removes one opaque exact-byte duplicate from test.
 - `picked.json` is deprecated and forbidden.
 - SFT/RL/validation/test must remain image-disjoint.
 - Test is evaluation-only. Never use it for prompt, seed, checkpoint, threshold, reward, or hyperparameter selection.

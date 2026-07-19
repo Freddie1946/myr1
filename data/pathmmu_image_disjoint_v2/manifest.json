@@ -1,0 +1,78 @@
+{
+  "status": "frozen",
+  "version": "pathmmu_image_disjoint_v2",
+  "frozen_date": "2026-07-19",
+  "algorithm": "deterministic exact-content decontamination of frozen v1",
+  "parent": {
+    "version": "pathmmu_image_disjoint_v1",
+    "manifest_sha256": "c5d0efba408511442f4f7fca788e2f8e4c53e00615abff2a42db0e98f3e0221b"
+  },
+  "primary_splits": {
+    "sft": {
+      "without_cot": "splits/sft_train_3000_without_cot.json",
+      "with_cot": "splits/sft_train_3000_with_cot.json",
+      "qa_count": 3000,
+      "unique_image_basenames": 2121
+    },
+    "rl": {
+      "without_cot": "splits/rl_train_1000_without_cot.json",
+      "with_cot": "splits/rl_train_1000_with_cot.json",
+      "qa_count": 1000,
+      "unique_image_basenames": 708
+    },
+    "validation": {
+      "without_cot": "splits/validation_385_without_cot.json",
+      "with_cot": "splits/validation_385_with_cot.json",
+      "qa_count": 385,
+      "unique_image_basenames": 272
+    },
+    "test": {
+      "without_cot": "splits/test_0999_without_cot.json",
+      "with_cot": "splits/test_0999_with_cot.json",
+      "qa_count": 999,
+      "unique_image_basenames": 707
+    }
+  },
+  "primary_qa_total": 5384,
+  "unique_image_basenames": 3808,
+  "unique_image_contents": 3807,
+  "exact_content_overlap_counts": {
+    "sft__rl": 0,
+    "sft__validation": 0,
+    "sft__test": 0,
+    "rl__validation": 0,
+    "rl__test": 0,
+    "validation__test": 0
+  },
+  "removal": {
+    "split": "test",
+    "opaque_image_basename": "8dea89dfc932d80d9038a2862e6bafb0926badc4dccd1a3469b85b5a8f2d0d17.jpg",
+    "qa_removed": 1,
+    "reason": "exact file-byte duplicate of one RL image",
+    "duplicate_content_sha256": "3ea31be316b0f7a99ab9b6dd2881866b2dc67af96225f02f2a03aa1585360fbe",
+    "question_or_answer_inspected_for_decision": false,
+    "model_output_or_performance_used_for_decision": false
+  },
+  "unchanged_membership": [
+    "sft",
+    "rl",
+    "validation",
+    "all nested SFT/RL subsets"
+  ],
+  "nested_subsets": {
+    "sft": [
+      500,
+      1000,
+      2000,
+      3000
+    ],
+    "rl": [
+      250,
+      500,
+      1000
+    ]
+  },
+  "content_manifest": "image_content_sha256.json",
+  "picked_json_used": false,
+  "test_policy": "999-QA evaluation-only split; never used for selection or tuning"
+}
