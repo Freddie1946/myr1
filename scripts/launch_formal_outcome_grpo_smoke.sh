@@ -3,14 +3,23 @@ set -euo pipefail
 
 if [[ "${1:-}" == "--approval-check" ]]; then
   printf '%s\n' \
-    'APPROVAL SCOPE: Outcome GRPO engineering smoke only' \
-    'PARENT: newly trained and validation-qualified formal SFT checkpoint only' \
-    'DATA: frozen RL smoke n0008; no validation/test training access' \
-    'GUARDS: parser regression, reward audit/variance, gradient and tensor-delta gates' \
+    'APPROVAL SCOPE: exact one-step Outcome GRPO engineering gate only' \
+    'PARENT: validation-selected formal n3000 epoch-3/step-1125 SFT snapshot' \
+    'DATA: frozen v2 RL smoke n0008; no validation/test training access' \
+    'HARDWARE: GPUs 0-7, only if all eight are idle at launch time' \
+    'GUARDS: exact hashes, parser regression, per-rank raw rewards, positive variance,' \
+    '        finite nonzero gradient, saved-model load, language delta, visual equality' \
+    'FAILURE: preserve artifacts and stop; no automatic retry or protocol change' \
     'LONG GRPO: not authorized by this launcher'
   exit 0
 fi
 
-printf '%s\n' \
-  'Outcome GRPO smoke backend is intentionally locked until formal SFT completes and the Stage-2 gate is audited.' >&2
-exit 3
+REPO_ROOT="${PATHVLM_REPO:-/home/wjy/myr1}"
+INSTALL_ROOT="${PATHVLM_INSTALL_ROOT:-/home/wjy/pathvlm_r1_v1_formal}"
+GRPO_PYTHON="${PATHVLM_GRPO_PYTHON:-${INSTALL_ROOT}/envs/grpo/bin/python}"
+
+exec "$GRPO_PYTHON" \
+  "$REPO_ROOT/formal_machine/run_formal_outcome_grpo_smoke.py" \
+  --repo-root "$REPO_ROOT" \
+  --install-root "$INSTALL_ROOT" \
+  "$@"

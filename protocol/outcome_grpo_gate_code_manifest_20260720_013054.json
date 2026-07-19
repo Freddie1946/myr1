@@ -1,0 +1,31 @@
+{
+  "created_at": "2026-07-20T01:30:54+08:00",
+  "purpose": "Freeze the exact code, parser, trainer, parent-selection protocol, and v2 data evidence for the formal one-step Outcome-GRPO gate",
+  "data_version": "pathmmu_image_disjoint_v2",
+  "formal_result": false,
+  "sha256": {
+    "formal_machine/run_formal_outcome_grpo_smoke.py": "20d1922db62645c61d022e108f8664b86d69081ef9762df23bfe88eb3799b4dd",
+    "scripts/launch_formal_outcome_grpo_smoke.sh": "83d3c8f80e2707bf938fb262d178d9dd544566edc14f658f7365c3d2835e565f",
+    "scripts/grpo_pathmmu.py": "d4dd9224571a998e76f2dec99ebc5e64de28da8ed99eda153e777f997f94be03",
+    "scripts/grpo_pathmmu_audit.py": "1433674dbc56f86a28c9b9e7a2063fdbae58fcd3d42bfee1c3c84f6adc4e54dc",
+    "scripts/test_grpo_pathmmu_audit.py": "40f282808f3dc35f011b83b3757781d246a881a973175afb98ab25a401648143",
+    "scripts/test_formal_outcome_grpo_smoke.py": "39469c9e75f5cc92d22f00c3561b050fda3e3a8bdb7e63f8bb1239c80b615d62",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f",
+    "scripts/test_pathmmu_rewards.py": "234454e2f79d4f909ce62b886c9e69a6d16989d83126ec5157683c6720af322b",
+    "scripts/compare_checkpoint_tensors.py": "ba503491445fb3ad60e63c2f6740c4ae0a5ea8a2d2e8d6a042ba22a4f4e84e00",
+    "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
+    "configs/deepspeed/ds_z3_optimizer_offload_torch_adamw.json": "b87ef4b9711da35cd913cd6523844e8b056e018d5ba8d01103157f3a91865ba5",
+    "vendor/open-r1-multimodal/src/open_r1/grpo_rec.py": "c11c11e1fad213621e9a8d44bb2043d17b14eabb7a5760d4bafa933dcb6f8ae7",
+    "vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py": "69fef836dc2c2a9ceba8e6d3a082a03bc40e6137d97fe97209b746429c5f79f2",
+    "vendor/open-r1-multimodal/src/open_r1/trainer/grpo_config.py": "3ef432fb67ba51cd00b7122e565b969ca17e97016e8d337c167b367d31b8053a",
+    "protocol/outcome_grpo_gate_manifest_20260720_013054.json": "f015d43408fa38169089127403f0cee566f3948cbc3196be79a922554cb79799",
+    "protocol/training_plan.md": "beeaa16bc34524a6261ece241064a508e53b4b3a04f515db12cf7f905ddc913c",
+    "protocol/base_model_manifest.json": "d3b7a72a80bb0b860acf0833693368a33757c64793105b3b003950ac3b1034f3",
+    "protocol/sft_validation_curve_manifest_20260719_172547.json": "d39679b2efb0638b8cb866cf9a62f33871aada26e7152333012ee0123fcf22ba",
+    "data/pathmmu_image_disjoint_v2/manifest.json": "aba5a93c1ace542034e3244e4379b3dc362e854f70eb3bc4ca96c543da7fdede",
+    "data/pathmmu_image_disjoint_v2/validation_report.json": "13c00207b91314fb29d9b72b002c124eddbf9a8884d1cfbad5980ab1e194a5c0",
+    "data/pathmmu_image_disjoint_v2/image_content_sha256.json": "e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed",
+    "data/pathmmu_image_disjoint_v2/subsets/rl/rl_1000_with_cot.json": "5ca2160068ab11f9908701e2eaa69ab1ebf6107a9b6b4fc265123eae40d88f44",
+    "formal_machine/verify_frozen_splits_v2.py": "3f4c21cda2856a1f553cb7b71a9a23e5066fe7217a8d4a34b4343b2e8e587faa"
+  }
+}

@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-20T00:11:37+08:00`
+Last updated: `2026-07-20T01:40:51+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -173,7 +173,8 @@ The original decision PDF remains authoritative; comments below are concise para
   address answer-conditioned rationalization and obtain human validation.
 - Evidence/actions: historical code audit found offline GPT-4o scorers but no complete Stage 3 online
   training implementation. Outcome-only GRPO now has shared online/offline parser v2, raw reward
-  JSONL, variance/gradient/tensor-delta gates. This does not prove Stage 3.
+  JSONL, variance/gradient/tensor-delta gates. The exact seed-42 n=3000 epoch-3 parent and one-step
+  formal-hardware gate are now frozen, but the gate has not run. This does not prove Stage 3.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -273,8 +274,8 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
    R2-1/R3-5/R3-6 after validation results are complete.
 7. Implemented deterministic validation curves with raw 385-row generations and offline parser
    consistency. Attempt01 failed because an archival timing race left four snapshots without archived
-   chat templates; all jobs now use one frozen base template. Attempt01 is not reused; Attempt02 is
-   pending.
+   chat templates and is not reused. Attempt02 completed all 21 jobs and selected n=2000 epoch 5 and
+   n=3000 epoch 3; all 8,085 raw predictions are retained.
 8. Debugged Outcome GRPO. Attempt02 had zero reward variance/no update; Attempt03 updated language
    parameters but used a false-positive parser and is scientifically invalid. Parser v2 regression
    tests pass; a valid formal Outcome-GRPO gate/run has not occurred. Supports R2-4/R3-3 only as
@@ -282,6 +283,10 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
 9. Preserved raw logs/manifests and recorded approved storage pruning without rewriting failures.
 10. Audited the official image archive by exact bytes. Found one RL/test duplicate under different
     basenames; created v2 by blindly excluding the test QA before formal RL/test. Directly supports R2-2.
+11. Froze the seed-42 n=3000 epoch-3 parent and a fail-closed eight-GPU, one-step Outcome-GRPO gate
+    with per-rank raw reward events, offline parser reconstruction, reward-variance, gradient,
+    loadability and language/visual tensor gates. Engineering gate is prepared but has not yet run.
+    Supports R2-4/R3-3/R3-5 as preparation only.
 
 ## Mandatory update rule
 

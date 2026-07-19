@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260720_001137`
+Latest timestamp: `20260720_014051`
 
 Read in this order:
 
@@ -56,38 +56,40 @@ Read in this order:
 50. `20260719_210843_validation_curve_attempt02_completed.md`
 51. `20260719_211417_n0500_n1000_comparability_and_storage_audit.md`
 52. `20260720_001137_no_n0500_n1000_rerun_decision.md`
-53. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-54. `../manuscript/README.md` and its mandatory reading order
-55. `../CODEX_START_HERE.md`
-56. `../manuscript/revision/reviewer_response_tracker.md`
-57. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
-58. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
-59. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
-60. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
-61. `../protocol/code_hash_manifest_20260719_172547.json`
-62. `../protocol/code_hash_manifest_20260717_010146.json`
-63. `../protocol/code_hash_manifest_20260717_002323.json`
-64. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-65. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-66. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-67. `../protocol/code_hash_manifest_20260714_012500.json`
-68. `../protocol/code_hash_manifest_20260714_005450.json`
-69. `../protocol/code_hash_manifest_20260714_001041.json`
-70. `../protocol/code_hash_manifest_20260713_222306.json`
-71. `../protocol/code_hash_manifest_20260713_214352.json`
-72. `../protocol/code_hash_manifest_20260713_213248.json`
-73. `../protocol/code_hash_manifest_20260713_205956.json`
-74. `../protocol/code_hash_manifest_20260713_203631.json`
-75. `../protocol/code_hash_manifest_20260712_213340.json`
-76. `../protocol/code_hash_manifest_20260712_192846.json`
-77. `../protocol/code_hash_manifest_20260712_144811.json`
-78. `../protocol/debug_proxy_model_manifest.json`
-79. `../protocol/training_plan.md`
-80. `../protocol/old_sft_audit.md`
-81. The latest manifest under `../debug_e2e/`
+53. `20260720_014051_formal_outcome_grpo_one_step_gate_frozen.md`
+54. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+55. `../manuscript/README.md` and its mandatory reading order
+56. `../CODEX_START_HERE.md`
+57. `../manuscript/revision/reviewer_response_tracker.md`
+58. `../protocol/outcome_grpo_gate_manifest_20260720_013054.json`
+59. `../protocol/outcome_grpo_gate_code_manifest_20260720_013054.json`
+60. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
+61. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
+62. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
+63. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
+64. `../protocol/code_hash_manifest_20260719_172547.json`
+65. `../protocol/code_hash_manifest_20260717_010146.json`
+66. `../protocol/code_hash_manifest_20260717_002323.json`
+67. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+68. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+69. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+70. `../protocol/code_hash_manifest_20260714_012500.json`
+71. `../protocol/code_hash_manifest_20260714_005450.json`
+72. `../protocol/code_hash_manifest_20260714_001041.json`
+73. `../protocol/code_hash_manifest_20260713_222306.json`
+74. `../protocol/code_hash_manifest_20260713_214352.json`
+75. `../protocol/code_hash_manifest_20260713_213248.json`
+76. `../protocol/code_hash_manifest_20260713_205956.json`
+77. `../protocol/code_hash_manifest_20260713_203631.json`
+78. `../protocol/code_hash_manifest_20260712_213340.json`
+79. `../protocol/code_hash_manifest_20260712_192846.json`
+80. `../protocol/code_hash_manifest_20260712_144811.json`
+81. `../protocol/debug_proxy_model_manifest.json`
+82. `../protocol/training_plan.md`
+83. `../protocol/old_sft_audit.md`
+84. The latest manifest under `../debug_e2e/`
 
-Current next action: freeze the exact n=3000 epoch-3/step-1125 checkpoint as the proposed seed-42
-Stage 2 parent and prepare the one-step Outcome-GRPO parser/reward-variance/gradient/language-delta/
-visual-freeze gate. The user decided not to rerun n=500/n=1000; the scale analysis uses fixed
-epoch-10 endpoints and discloses the backend mismatch. Test remains untouched. Do not start a formal
-long Outcome-GRPO run before the one-step gate passes.
+Current next action: commit the frozen one-step Outcome-GRPO gate, run its clean-worktree/static/GPU/
+disk preflight, and execute exactly one optimizer step only if all eight GPUs are idle. Preserve and
+document either pass or failure. Do not retry or start a formal long Outcome-GRPO run automatically.
+The user decided not to rerun n=500/n=1000. Test remains untouched.
