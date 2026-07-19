@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-19T17:41:30+08:00`
+Last updated: `2026-07-19T18:23:37+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -220,7 +220,9 @@ The original decision PDF remains authoritative; comments below are concise para
 - Evidence/actions: all nested sets and hashes exist. Formal n=2000/n=3000 seed-42 SFT completed with
   ten epoch snapshots; n=500/n=1000 historical formal finals exist but are not retention-matched.
   Validation Attempt01 failed on a chat-template archival race; the explicit frozen-template fix and
-  retry code pass tests, but Attempt02 has not launched. No formal RL-scale result exists.
+  retry code pass tests. The full v2 validation-curve preflight now passes for all 21 planned jobs,
+  but Attempt02 has not launched. No formal RL-scale result exists. See
+  `docs/20260719_182337_validation_curve_v2_preflight_completed.md`.
 - Status: `partial`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds

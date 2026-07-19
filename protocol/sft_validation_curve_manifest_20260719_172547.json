@@ -21,6 +21,9 @@
     "split_verification_sha256": "f75e74884b9b08dcb16276dbfafa89d94ae28f31deef07c54d64b6a6d5de32aa",
     "preflight_report": "/home/wjy/pathvlm_r1_v1_formal/reports/preflight_report.json",
     "preflight_report_sha256_at_freeze": "124c8bf9835bc7f071d7fbe452c0fe33f4bb7f6f6a8adf1e900f80138507513a",
+    "preflight_only_evidence": "/home/wjy/pathvlm_r1_v1_formal/reports/sft_validation_curve_v2_preflight_20260719_181800.json",
+    "preflight_only_evidence_sha256": "a32451d546ef210f135a140bac15edceadfabe9e329690bb33684a84b488a419",
+    "preflight_only_passed": true,
     "chat_template": "/home/wjy/pathvlm_r1_v1_formal/models/Qwen2.5-VL-7B-Instruct-cc594898137f460bfe9f0759e9844b3ce807cfb5/chat_template.json",
     "chat_template_sha256": "ad60d90252ed0b0705ba14e2d0ad0fec0beac1ea955642b54059b36052d8bc96",
     "n2000_parent": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_sft/n2000_seed0042/formal_sft_n2000_seed0042_20260717_140336/run_manifest.yaml",
@@ -43,7 +46,7 @@
     "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
     "protocol/base_model_manifest.json": "d3b7a72a80bb0b860acf0833693368a33757c64793105b3b003950ac3b1034f3",
     "protocol/training_plan.md": "9a3ceddfcc6efd2993ef53f48c7643839b97cc0bcf5578b90bbc82859c22952f",
-    "protocol/code_hash_manifest_20260719_172547.json": "d34407e78a4270b9ae0da1e1f4cb3e33ca0b450cf65d692ed22596d447230704",
+    "protocol/code_hash_manifest_20260719_172547.json": "ee50741e0a1f509e44dba694ce23e3d286e4fa55cb5adb4ba367a96958982829",
     "data/pathmmu_image_disjoint_v2/manifest.json": "aba5a93c1ace542034e3244e4379b3dc362e854f70eb3bc4ca96c543da7fdede",
     "data/pathmmu_image_disjoint_v2/validation_report.json": "13c00207b91314fb29d9b72b002c124eddbf9a8884d1cfbad5980ab1e194a5c0",
     "data/pathmmu_image_disjoint_v2/image_content_sha256.json": "e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed"
