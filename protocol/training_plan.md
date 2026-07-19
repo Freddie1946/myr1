@@ -9,6 +9,12 @@
 - Validation: frozen 385-QA validation split.
 - Formal seeds: 42, 43, 44 for the full-data model.
 - Scaling subsets: 500, 1000, 2000, 3000 QA; seed 42 for initial scaling runs.
+- Frozen scale-reporting decision (2026-07-20): do not rerun n=500/n=1000. Compare all four sizes
+  at the fixed epoch-10 endpoint. Report the n=2000/n=3000 epoch curves separately as a training-
+  duration/over-SFT analysis. Disclose that n=500/n=1000 used ZeRO-3 optimizer offload while
+  n=2000/n=3000 used ZeRO-2 fused AdamW; do not attribute every difference solely to data size.
+- Seed-42 Stage 2 candidate parent: validation-selected n=3000 epoch 3 (step 1125), subject to an
+  exact parent/hash/load gate before Outcome GRPO.
 
 The old 7B full-fine-tuning configuration OOMed on 4x4090 at AdamW state allocation.
 The revised formal protocol is no longer method-selective: it requires full-parameter

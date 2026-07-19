@@ -29,11 +29,11 @@
     "scripts/test_pathmmu_rewards.py": "234454e2f79d4f909ce62b886c9e69a6d16989d83126ec5157683c6720af322b",
     "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
     "protocol/base_model_manifest.json": "d3b7a72a80bb0b860acf0833693368a33757c64793105b3b003950ac3b1034f3",
-    "protocol/training_plan.md": "9a3ceddfcc6efd2993ef53f48c7643839b97cc0bcf5578b90bbc82859c22952f",
+    "protocol/training_plan.md": "beeaa16bc34524a6261ece241064a508e53b4b3a04f515db12cf7f905ddc913c",
     "data/pathmmu_image_disjoint_v2/manifest.json": "aba5a93c1ace542034e3244e4379b3dc362e854f70eb3bc4ca96c543da7fdede",
     "data/pathmmu_image_disjoint_v2/validation_report.json": "13c00207b91314fb29d9b72b002c124eddbf9a8884d1cfbad5980ab1e194a5c0",
     "data/pathmmu_image_disjoint_v2/image_content_sha256.json": "e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed",
     "docs/20260719_174130_pathmmu_exact_content_v2_and_reviewer_tracker.md": "7567440a0f5369bf0b793f4fd64bd10411b3e87fa039628e2c93fbb0fd4b67c9",
-    "manuscript/revision/reviewer_response_tracker.md": "31856f674f6a9e8cd8172d4736872bf58f1adf78990615f209796f5dbf8e7181"
+    "manuscript/revision/reviewer_response_tracker.md": "04e75e3aa19ee3e5b8445dd9b171a19b95092814393564e2cda32641b3d8bba4"
   }
 }

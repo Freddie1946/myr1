@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-19T21:14:17+08:00`
+Last updated: `2026-07-20T00:11:37+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -127,9 +127,11 @@ The original decision PDF remains authoritative; comments below are concise para
   and n=3000 epoch 3 at 60.52%; epoch 10 fell to 51.95% and 55.58%, respectively. All 8,085 raw
   predictions are preserved. No formal RL scale curve exists.
 - Status: `partial`.
-- Remaining: rerun n=500/n=1000 with the matched backend/retention policy (recommended), run RL scale
-  after Outcome-GRPO gates, and rewrite claims. See
-  `docs/20260719_211417_n0500_n1000_comparability_and_storage_audit.md`.
+- Frozen decision: do not rerun n=500/n=1000. Report the fixed epoch-10 endpoints for all sizes
+  (49.87/51.43/51.95/55.58%) and keep the n=2000/n=3000 early-stopping curves separate. Explicitly
+  disclose the ZeRO-3 versus ZeRO-2 backend limitation. See
+  `docs/20260720_001137_no_n0500_n1000_rerun_decision.md`.
+- Remaining: run RL scale after Outcome-GRPO gates and rewrite/narrow claims.
 
 ### R2-2 — Specify image/case-level splitting and prevent leakage
 
@@ -227,9 +229,9 @@ The original decision PDF remains authoritative; comments below are concise para
   Validation Attempt01 failed on a chat-template archival race; the explicit frozen-template fix and
   retry code passes tests. Attempt02 then completed all 21 v2 validation jobs with 8,085 raw
   predictions and parser consistency. It selected n=2000 epoch 5 (57.92%) and n=3000 epoch 3
-  (60.52%), demonstrating a non-monotonic duration effect. Existing n=500/n=1000 results are
-  final-only and backend/retention-mismatched, so a matched rerun is recommended. No formal RL-scale
-  result exists. See
+  (60.52%), demonstrating a non-monotonic duration effect. The user declined matched n=500/n=1000
+  reruns; the scale table is therefore frozen to common epoch-10 endpoints with the backend mismatch
+  disclosed. No formal RL-scale result exists. See
   `docs/20260719_210843_validation_curve_attempt02_completed.md`.
 - Status: `partial`.
 
