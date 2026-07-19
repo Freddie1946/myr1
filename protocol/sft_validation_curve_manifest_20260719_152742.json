@@ -1,0 +1,27 @@
+{
+  "created_at": "2026-07-19T15:27:42+08:00",
+  "purpose": "Freeze deterministic validation-only base plus n2000/n3000 seed42 epoch-1..10 SFT curves with raw predictions and offline parser consistency audits",
+  "formal_result": false,
+  "external_frozen_inputs": {
+    "validation_records": "/home/wjy/pathvlm_r1_v1_formal/data/pathmmu_image_disjoint_v1/rewritten_records/validation_0385.json",
+    "validation_records_sha256": "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f37a2ca",
+    "n2000_parent": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_sft/n2000_seed0042/formal_sft_n2000_seed0042_20260717_140336/run_manifest.yaml",
+    "n3000_parent": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_sft/n3000_seed0042/formal_sft_n3000_seed0042_20260717_014544/run_manifest.yaml",
+    "base_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "job_count": 21,
+    "raw_prediction_count": 8085
+  },
+  "sha256": {
+    "formal_machine/run_formal_sft_validation_curve.py": "108942c278142c339448e91142c0f290ed2a3414d79749ac6a03be7c983bcb86",
+    "scripts/launch_formal_sft_validation_curve.sh": "489200a09da357dfc630778ab37edfe997ef7d74d9af155b0c6f27b9a6ef867e",
+    "scripts/test_formal_sft_validation_curve.py": "f5a50931439a97ea8116985a6b7e60723fb876067e5f84f0990b596e1168b562",
+    "scripts/infer_and_score_pathmmu.py": "7b3efd7243973b87fc48a3a17eb2e86664ca75af268599822c3002563e19d6a9",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f",
+    "scripts/test_pathmmu_rewards.py": "234454e2f79d4f909ce62b886c9e69a6d16989d83126ec5157683c6720af322b",
+    "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
+    "protocol/base_model_manifest.json": "a89627a5dfb445ae1c2c6a9a4269119f623edd841264bdfa8e3bb365c54c0d6e",
+    "protocol/code_hash_manifest_20260717_010146.json": "5e78b7c51cb854a53713d3100632cd5bf4f93377e4fa07362c2f106774e8bb1f",
+    "protocol/training_plan.md": "36b7c622034eab299ad2ce6eceeaa12999485dff35f7e23c6be54ae2e699d707",
+    "docs/20260719_152742_formal_sft_completion_and_validation_curve_plan.md": "e5fca3d2bca4ecb59ff97e96d199a1717c1c5ddbfc691868ea411e44d28c881f"
+  }
+}
