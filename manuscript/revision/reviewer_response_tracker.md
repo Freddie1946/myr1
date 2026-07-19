@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-20T02:30:57+08:00`
+Last updated: `2026-07-20T02:51:12+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -178,7 +178,9 @@ The original decision PDF remains authoritative; comments below are concise para
   norm 2.93, a changed language tensor and exactly unchanged visual tensor. This is engineering-only
   and does not prove Stage 3. It also exposed an all-zero format-reward branch caused by a JSON-format
   prompt conflicting with the strict think/answer reward contract. The user approved removing only
-  the contradictory JSON sentence; a new prompt-v2 one-step re-gate is frozen but has not run.
+  the contradictory JSON sentence. The prompt-v2 re-gate then passed: 8/8 format rewards positive,
+  16/16 online/offline reward events consistent, reward std 0.2887, gradient norm 3.3764, language
+  tensor changed and visual tensor exactly unchanged. Formal long Outcome GRPO has not run.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -214,9 +216,8 @@ The original decision PDF remains authoritative; comments below are concise para
   process-reward design and staged evidence. Compare SFT-only, outcome-only RL, process-aware RL, and
   a simpler alternative reward under matched data/settings with statistical analysis.
 - Evidence/actions: formal SFT infrastructure is valid; Outcome-GRPO parser/update plumbing was debugged;
-  the formal-hardware one-step Outcome-GRPO gate now passes, but its format-prompt contract must be
-  corrected and re-gated before a long outcome-only run. Stage 3 definition and formal ablation
-  remain incomplete.
+  the corrected formal-hardware one-step Outcome-GRPO gate now passes with 8/8 strict format rewards.
+  Stage 3 definition and formal matched ablation remain incomplete.
 - Status: `blocked-decision` then `pending-experiment`.
 
 ### R3-4 — Expand pathology foundation-model/VLM related work
@@ -239,9 +240,10 @@ The original decision PDF remains authoritative; comments below are concise para
   (60.52%), demonstrating a non-monotonic duration effect. The user declined matched n=500/n=1000
   reruns; the scale table is therefore frozen to common epoch-10 endpoints with the backend mismatch
   disclosed. The one-step Outcome-GRPO engineering gate passed, but all eight format rewards were
-  zero because the JSON-format prompt conflicts with the strict think/answer reward; formal long RL
-  remains blocked pending a frozen correction and re-gate. No formal RL-scale result exists. See
-  `docs/20260720_021919_formal_outcome_grpo_one_step_gate_completed.md`.
+  zero because the JSON-format prompt conflicted with the strict think/answer reward. The approved
+  prompt-v2 correction re-gate passed with 8/8 positive format rewards, positive total-reward
+  variance and a nonzero update. No formal RL-scale result exists. See
+  `docs/20260720_025112_outcome_grpo_prompt_v2_regate_completed.md`.
 - Status: `partial`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds
@@ -297,9 +299,10 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     branch was all zero because the upstream JSON-format instruction conflicts with the strict
     think/answer reward, so long RL remains blocked pending an explicit correction and re-gate.
     Engineering evidence only; supports R2-4/R3-3/R3-5 as preparation.
-12. Froze the user-approved prompt-contract-v2 correction: remove only the contradictory trailing
-    JSON instruction, retain parser v2 and strict think/answer format reward, and require at least one
-    positive format reward in a new one-step re-gate. The re-gate is prepared but has not run.
+12. Completed the user-approved prompt-contract-v2 re-gate. Removing only the contradictory JSON
+    instruction changed format rewards from 0/8 to 8/8; every online/offline reward, variance,
+    gradient, save/load, trainability and tensor-freeze gate passed. Engineering evidence only; formal
+    long RL and the RL-scale curve remain pending a separately frozen protocol.
 
 ## Mandatory update rule
 
