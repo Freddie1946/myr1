@@ -322,6 +322,9 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     232/385 versus parent 233/385, exact McNemar p=1.0, language change and visual equality. The
     formal launch stopped before creation on the 550-GiB-reserve projection. No long RL result is
     claimed; storage cleanup awaits explicit approval.
+15. After explicit approval, hashed all 44 files and pruned only the consumed 109.3-GB pilot resume
+    checkpoint. The final model, raw reward events, logs, tensor audit, 385 predictions and manifests
+    remain. Free space now passes the formal projection; formal training still has not started.
 
 ## Mandatory update rule
 
