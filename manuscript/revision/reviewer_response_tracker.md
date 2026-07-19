@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-20T01:40:51+08:00`
+Last updated: `2026-07-20T02:19:19+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -173,8 +173,11 @@ The original decision PDF remains authoritative; comments below are concise para
   address answer-conditioned rationalization and obtain human validation.
 - Evidence/actions: historical code audit found offline GPT-4o scorers but no complete Stage 3 online
   training implementation. Outcome-only GRPO now has shared online/offline parser v2, raw reward
-  JSONL, variance/gradient/tensor-delta gates. The exact seed-42 n=3000 epoch-3 parent and one-step
-  formal-hardware gate are now frozen, but the gate has not run. This does not prove Stage 3.
+  JSONL, variance/gradient/tensor-delta gates. The exact seed-42 n=3000 epoch-3 one-step formal-
+  hardware gate passed with 16/16 online/offline-consistent reward events, reward std 0.25, gradient
+  norm 2.93, a changed language tensor and exactly unchanged visual tensor. This is engineering-only
+  and does not prove Stage 3. It also exposed an all-zero format-reward branch caused by a JSON-format
+  prompt conflicting with the strict think/answer reward contract.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -210,7 +213,9 @@ The original decision PDF remains authoritative; comments below are concise para
   process-reward design and staged evidence. Compare SFT-only, outcome-only RL, process-aware RL, and
   a simpler alternative reward under matched data/settings with statistical analysis.
 - Evidence/actions: formal SFT infrastructure is valid; Outcome-GRPO parser/update plumbing was debugged;
-  Stage 3 definition and formal ablation remain incomplete.
+  the formal-hardware one-step Outcome-GRPO gate now passes, but its format-prompt contract must be
+  corrected and re-gated before a long outcome-only run. Stage 3 definition and formal ablation
+  remain incomplete.
 - Status: `blocked-decision` then `pending-experiment`.
 
 ### R3-4 — Expand pathology foundation-model/VLM related work
@@ -232,8 +237,10 @@ The original decision PDF remains authoritative; comments below are concise para
   predictions and parser consistency. It selected n=2000 epoch 5 (57.92%) and n=3000 epoch 3
   (60.52%), demonstrating a non-monotonic duration effect. The user declined matched n=500/n=1000
   reruns; the scale table is therefore frozen to common epoch-10 endpoints with the backend mismatch
-  disclosed. No formal RL-scale result exists. See
-  `docs/20260719_210843_validation_curve_attempt02_completed.md`.
+  disclosed. The one-step Outcome-GRPO engineering gate passed, but all eight format rewards were
+  zero because the JSON-format prompt conflicts with the strict think/answer reward; formal long RL
+  remains blocked pending a frozen correction and re-gate. No formal RL-scale result exists. See
+  `docs/20260720_021919_formal_outcome_grpo_one_step_gate_completed.md`.
 - Status: `partial`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds
@@ -283,10 +290,12 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
 9. Preserved raw logs/manifests and recorded approved storage pruning without rewriting failures.
 10. Audited the official image archive by exact bytes. Found one RL/test duplicate under different
     basenames; created v2 by blindly excluding the test QA before formal RL/test. Directly supports R2-2.
-11. Froze the seed-42 n=3000 epoch-3 parent and a fail-closed eight-GPU, one-step Outcome-GRPO gate
-    with per-rank raw reward events, offline parser reconstruction, reward-variance, gradient,
-    loadability and language/visual tensor gates. Engineering gate is prepared but has not yet run.
-    Supports R2-4/R3-3/R3-5 as preparation only.
+11. Completed the seed-42 n=3000 epoch-3 fail-closed eight-GPU, one-step Outcome-GRPO gate. All
+    predefined gates passed: 16/16 raw reward events, online/offline parser consistency, positive
+    reward variance, nonzero gradient, loadable save, language delta and visual equality. The format
+    branch was all zero because the upstream JSON-format instruction conflicts with the strict
+    think/answer reward, so long RL remains blocked pending an explicit correction and re-gate.
+    Engineering evidence only; supports R2-4/R3-3/R3-5 as preparation.
 
 ## Mandatory update rule
 
