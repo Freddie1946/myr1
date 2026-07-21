@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-21T16:11:41+08:00",
+  "status": "frozen_before_execution",
+  "scope": "validation-only three-model generation-cap correction pilot",
+  "formal_result": false,
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 768,
+    "truncation_gate": "no completion token count may reach 768"
+  },
+  "data": {
+    "version": "pathmmu_image_disjoint_v2",
+    "split": "validation_0385",
+    "count": 385,
+    "path": "/home/wjy/pathvlm_r1_v1_formal/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json",
+    "sha256": "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f37a2ca"
+  },
+  "chat_template": {
+    "path": "/home/wjy/pathvlm_r1_v1_formal/models/Qwen2.5-VL-7B-Instruct-cc594898137f460bfe9f0759e9844b3ce807cfb5/chat_template.json",
+    "sha256": "ad60d90252ed0b0705ba14e2d0ad0fec0beac1ea955642b54059b36052d8bc96"
+  },
+  "models": {
+    "base": {
+      "id": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+      "path": "/home/wjy/pathvlm_r1_v1_formal/models/Qwen2.5-VL-7B-Instruct-cc594898137f460bfe9f0759e9844b3ce807cfb5"
+    },
+    "sft_n3000_epoch03": {
+      "path": "/home/wjy/pathvlm_r1_v1_formal/runs/stage1_sft/n3000_seed0042/formal_sft_n3000_seed0042_20260717_014544/epoch_snapshots/checkpoint-1125",
+      "snapshot_manifest_sha256": "6c8708dd677f5ab1563e77317d86cd1b53cb9b969ebda09e4a312581a2b9f1f1"
+    },
+    "outcome_grpo_n1000_epoch02": {
+      "path": "/home/wjy/pathvlm_r1_v1_formal/runs/stage2_outcome_grpo/priority_n1000_seed0042/stage2_priority_n1000_seed0042_20260720_035156/formal_n1000_seed0042_epoch3/epoch_snapshots/checkpoint-1000",
+      "snapshot_manifest_sha256": "83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0"
+    }
+  },
+  "code": {
+    "scripts/infer_and_score_pathmmu.py": "c11b8e0feadff84fe9f3c1c6a77cab8ef77587943a1145b15600048f34fba39d",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f"
+  },
+  "gpus": [0, 1, 2],
+  "test_authorized": false,
+  "test_accessed": false,
+  "automatic_retry": false
+}
