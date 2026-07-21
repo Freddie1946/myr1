@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-22T00:02:42+08:00",
+  "status": "frozen_before_preflight",
+  "scope": "formal validation-only Attempt02 from-scratch rerun of all 26 seed-42 candidates",
+  "formal_result": false,
+  "job_count": 26,
+  "expected_prediction_count": 10010,
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 1024,
+    "cap_hit_policy": "hard truncate at 1024; preserve output; score with unchanged parser v2; report per model; continue queue",
+    "prompt_contract": "pathmmu_think_answer_only_v2"
+  },
+  "data": {
+    "version": "pathmmu_image_disjoint_v2",
+    "split": "validation_0385",
+    "count": 385,
+    "sha256": "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f37a2ca"
+  },
+  "candidates": {
+    "base": 1,
+    "sft_n0500_final": 1,
+    "sft_n1000_final": 1,
+    "sft_n2000_epochs_1_to_10": 10,
+    "sft_n3000_epochs_1_to_10": 10,
+    "outcome_grpo_n1000_epochs_1_to_3": 3
+  },
+  "attempt01_evidence": {
+    "manifest": "protocol/validation_1024_all_candidates_manifest_20260721_181115.json",
+    "manifest_sha256": "fc935bd5b988acd35c396cc10c4f907efbaddd96146517588f4ccfc57306d8e9",
+    "status": "failed_gate_preserved",
+    "outputs_reused": false
+  },
+  "hardware": {
+    "gpu_ids": [0, 1, 2, 3, 4, 5, 6, 7],
+    "availability_confirmation": "user_manual_confirmation",
+    "automated_state_query": false,
+    "skip_reason": "explicit user instruction on 2026-07-22"
+  },
+  "selection_rule": "per family/sample count: maximum validation accuracy; exact tie maximum strict format; exact tie earliest epoch",
+  "automatic_retry": false,
+  "training_authorized": false,
+  "stage3_authorized": false,
+  "test_authorized": false,
+  "test_accessed": false
+}

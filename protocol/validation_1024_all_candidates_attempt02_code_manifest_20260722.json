@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-07-22T00:02:42+08:00",
+  "purpose": "Freeze Attempt02 with scored/reported 1024-token timeouts and user-confirmed hardware",
+  "data_version": "pathmmu_image_disjoint_v2",
+  "sha256": {
+    "formal_machine/run_formal_validation_1024_all_candidates.py": "68de634db2e02e3732deeb4bedd7628c9c67ed10ef8861f5e86d196490bb0190",
+    "scripts/infer_and_score_pathmmu_with_tokens.py": "7a39957f94a8d1a7f4f4814b3a13c3c6dff087c9b5e70dcd68e20b2662fc6302",
+    "scripts/test_formal_validation_1024_all_candidates.py": "051246aa7196aa66d9194b074b9d2c518c4d0bcdebee032428e8ba1b8e6731fa",
+    "scripts/launch_formal_validation_1024_all_candidates.sh": "85ab2263e66befc5a7fcc582496bac1d4eaef58960c74de3c613b12f3ff20673",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f",
+    "scripts/test_pathmmu_rewards.py": "234454e2f79d4f909ce62b886c9e69a6d16989d83126ec5157683c6720af322b",
+    "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
+    "formal_machine/run_formal_sft_validation_curve.py": "cf3209ff17e3f6667e6755c99a14809c8e748e11fed6d8993fd51d5ab98af3f8",
+    "protocol/base_model_manifest.json": "d3b7a72a80bb0b860acf0833693368a33757c64793105b3b003950ac3b1034f3",
+    "protocol/training_plan.md": "e557a6c19b8f13e99f5853ca2616908c23f7e10ed52e14a9a5b5a3825c4ac959",
+    "docs/20260721_225442_validation_1024_attempt01_degenerate_cap_gate_failure.md": "238efcff867ab2c53f949e201ed5ef8d093e2ad83ef4bd49ded110e823d285ac",
+    "protocol/validation_1024_all_candidates_manifest_20260721_181115.json": "fc935bd5b988acd35c396cc10c4f907efbaddd96146517588f4ccfc57306d8e9"
+  }
+}

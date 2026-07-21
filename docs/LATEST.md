@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260721_225442`
+Latest timestamp: `20260722_000242`
 
 Read in this order:
 
@@ -70,48 +70,50 @@ Read in this order:
 64. `20260721_181115_validation_1024_all_candidates_frozen.md`
 65. `20260721_182701_validation_1024_preflight_completed.md`
 66. `20260721_225442_validation_1024_attempt01_degenerate_cap_gate_failure.md`
-67. `../protocol/validation_1024_all_candidates_manifest_20260721_181115.json`
-68. `../protocol/validation_1024_all_candidates_code_manifest_20260721.json`
-69. `../protocol/validation_generation_cap_pilot_manifest_20260721_161141.json`
-70. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-71. `../manuscript/README.md` and its mandatory reading order
-72. `../CODEX_START_HERE.md`
-73. `../manuscript/revision/reviewer_response_tracker.md`
-74. `../protocol/stage2_formal_n1000_seed42_continuation_manifest_20260720_064352.json`
-75. `../protocol/stage2_formal_n1000_seed42_continuation_code_manifest_20260720_064352.json`
-76. `../protocol/stage2_priority_n1000_seed42_manifest_20260720_033024.json`
-77. `../protocol/stage2_priority_n1000_seed42_code_manifest_20260720_033024.json`
-78. `../protocol/outcome_grpo_prompt_v2_gate_manifest_20260720_023057.json`
-79. `../protocol/outcome_grpo_prompt_v2_gate_code_manifest_20260720_023057.json`
-80. `../protocol/outcome_grpo_gate_manifest_20260720_013054.json`
-81. `../protocol/outcome_grpo_gate_code_manifest_20260720_013054.json`
-82. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
-83. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
-84. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
-85. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
-86. `../protocol/code_hash_manifest_20260719_172547.json`
-87. `../protocol/code_hash_manifest_20260717_010146.json`
-88. `../protocol/code_hash_manifest_20260717_002323.json`
-89. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-90. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-91. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-92. `../protocol/code_hash_manifest_20260714_012500.json`
-93. `../protocol/code_hash_manifest_20260714_005450.json`
-94. `../protocol/code_hash_manifest_20260714_001041.json`
-95. `../protocol/code_hash_manifest_20260713_222306.json`
-96. `../protocol/code_hash_manifest_20260713_214352.json`
-97. `../protocol/code_hash_manifest_20260713_213248.json`
-98. `../protocol/code_hash_manifest_20260713_205956.json`
-99. `../protocol/code_hash_manifest_20260713_203631.json`
-100. `../protocol/code_hash_manifest_20260712_213340.json`
-101. `../protocol/code_hash_manifest_20260712_192846.json`
-102. `../protocol/code_hash_manifest_20260712_144811.json`
-103. `../protocol/debug_proxy_model_manifest.json`
-104. `../protocol/training_plan.md`
-105. `../protocol/old_sft_audit.md`
-106. The latest manifest under `../debug_e2e/`
+67. `20260722_000242_validation_1024_attempt02_frozen.md`
+68. `../protocol/validation_1024_all_candidates_attempt02_manifest_20260722_000242.json`
+69. `../protocol/validation_1024_all_candidates_attempt02_code_manifest_20260722.json`
+70. `../protocol/validation_1024_all_candidates_manifest_20260721_181115.json`
+71. `../protocol/validation_1024_all_candidates_code_manifest_20260721.json`
+72. `../protocol/validation_generation_cap_pilot_manifest_20260721_161141.json`
+73. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+74. `../manuscript/README.md` and its mandatory reading order
+75. `../CODEX_START_HERE.md`
+76. `../manuscript/revision/reviewer_response_tracker.md`
+77. `../protocol/stage2_formal_n1000_seed42_continuation_manifest_20260720_064352.json`
+78. `../protocol/stage2_formal_n1000_seed42_continuation_code_manifest_20260720_064352.json`
+79. `../protocol/stage2_priority_n1000_seed42_manifest_20260720_033024.json`
+80. `../protocol/stage2_priority_n1000_seed42_code_manifest_20260720_033024.json`
+81. `../protocol/outcome_grpo_prompt_v2_gate_manifest_20260720_023057.json`
+82. `../protocol/outcome_grpo_prompt_v2_gate_code_manifest_20260720_023057.json`
+83. `../protocol/outcome_grpo_gate_manifest_20260720_013054.json`
+84. `../protocol/outcome_grpo_gate_code_manifest_20260720_013054.json`
+85. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
+86. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
+87. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
+88. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
+89. `../protocol/code_hash_manifest_20260719_172547.json`
+90. `../protocol/code_hash_manifest_20260717_010146.json`
+91. `../protocol/code_hash_manifest_20260717_002323.json`
+92. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+93. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+94. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+95. `../protocol/code_hash_manifest_20260714_012500.json`
+96. `../protocol/code_hash_manifest_20260714_005450.json`
+97. `../protocol/code_hash_manifest_20260714_001041.json`
+98. `../protocol/code_hash_manifest_20260713_222306.json`
+99. `../protocol/code_hash_manifest_20260713_214352.json`
+100. `../protocol/code_hash_manifest_20260713_213248.json`
+101. `../protocol/code_hash_manifest_20260713_205956.json`
+102. `../protocol/code_hash_manifest_20260713_203631.json`
+103. `../protocol/code_hash_manifest_20260712_213340.json`
+104. `../protocol/code_hash_manifest_20260712_192846.json`
+105. `../protocol/code_hash_manifest_20260712_144811.json`
+106. `../protocol/debug_proxy_model_manifest.json`
+107. `../protocol/training_plan.md`
+108. `../protocol/old_sft_audit.md`
+109. The latest manifest under `../debug_e2e/`
 
-Current next action: wait for the user to decide whether a rare 1024-token degenerate loop should be
-preserved and scored as a model failure rather than invalidate the entire evaluation run. Do not
-retry Attempt01, increase the cap, access test, start Stage 3, or launch another experiment without
-a separately frozen correction.
+Current next action: run the non-hardware Attempt02 preflight and launch the user-authorized
+from-scratch 26-candidate validation rerun. Preserve and score 1024-token timeouts, save all 10,010
+raw predictions, keep test sealed, and do not start Stage 3 or another training experiment.

@@ -70,9 +70,10 @@ class CorrectedValidationTests(unittest.TestCase):
         self.assertEqual(audit["accuracy_correct"], 385)
         self.assertEqual(audit["generation_cap_hit_count"], 0)
 
-    def test_generation_cap_hit_fails_closed(self) -> None:
-        with self.assertRaises(RUNNER.ValidationStop):
-            RUNNER.audit_results(*self.rows(cap_hit=True))
+    def test_generation_cap_hit_is_preserved_and_scored(self) -> None:
+        metrics, audit = RUNNER.audit_results(*self.rows(cap_hit=True))
+        self.assertEqual(metrics["generation_cap_hit_count"], 1)
+        self.assertEqual(audit["generation_cap_hit_count"], 1)
 
     def test_selection_accuracy_format_then_earliest(self) -> None:
         rows = []
@@ -93,4 +94,3 @@ class CorrectedValidationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
-

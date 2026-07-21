@@ -32,7 +32,7 @@ VALIDATION_SHA256 = "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f3
 CHAT_TEMPLATE_SHA256 = "ad60d90252ed0b0705ba14e2d0ad0fec0beac1ea955642b54059b36052d8bc96"
 MAX_NEW_TOKENS = 1024
 FORMAL_GPUS = list(range(8))
-CODE_MANIFEST = "validation_1024_all_candidates_code_manifest_20260721.json"
+CODE_MANIFEST = "validation_1024_all_candidates_attempt02_code_manifest_20260722.json"
 SFT_FINALS = {
     500: ("formal_sft_n0500_seed0042_20260715_230037",
           "f22b0ea946e8f41924436af2a746e49ac9ac07b74fb262a997edb29afe9d7d12"),
@@ -213,8 +213,6 @@ def audit_results(results: Path, records: list[dict], chat_template: Path) -> tu
     if (abs(metrics.get("mean_accuracy_reward") - sum(accuracy_values) / 385) > 1e-12
             or abs(metrics.get("mean_format_reward") - sum(format_values) / 385) > 1e-12):
         raise ValidationStop("metrics/offline rescore mismatch")
-    if cap_hits:
-        raise ValidationStop(f"1024-token truncation gate failed: {cap_hits} cap hits")
     audit = {"prediction_count": 385, "indices_exact": True, "source_fields_exact": True,
              "parser_consistency": True, "accuracy_correct": int(sum(accuracy_values)),
              "format_correct": int(sum(format_values)),
@@ -258,7 +256,8 @@ def run_job(job: dict, gpu: int, repo: Path, python: Path, data: Path, records: 
         gates = {"inference_completed": True, "exact_validation_count": True,
                  "deterministic_decoding": True, "raw_predictions_saved": True,
                  "offline_parser_consistency": True, "checkpoint_integrity_verified": True,
-                 "no_generation_cap_hit": audit["generation_cap_hit_count"] == 0,
+                 "generation_cap_status_recorded":
+                     metrics["generation_cap_hit_count"] == audit["generation_cap_hit_count"],
                  "test_not_accessed": True}
         payload.update({"status": "completed" if all(gates.values()) else "failed_gate",
                         "formal_result": all(gates.values()), "metrics": metrics,
@@ -308,12 +307,15 @@ def main() -> None:
     parser.add_argument("--install-root", required=True, type=Path)
     parser.add_argument("--gpus", default="0,1,2,3,4,5,6,7")
     parser.add_argument("--preflight-only", action="store_true")
+    parser.add_argument("--user-confirmed-hardware", action="store_true")
     args = parser.parse_args()
     repo, install = args.repo_root.resolve(), args.install_root.resolve()
     python = Path(sys.executable).resolve()
     gpus = [int(item) for item in args.gpus.split(",")]
     if gpus != FORMAL_GPUS:
         raise ValidationStop("formal validation is frozen to physical GPUs 0-7")
+    if not args.user_confirmed_hardware:
+        raise ValidationStop("Attempt02 requires explicit --user-confirmed-hardware")
     status = subprocess.run(["git", "-C", str(repo), "status", "--porcelain"],
                             text=True, capture_output=True, check=False)
     if status.returncode or status.stdout.strip():
@@ -338,7 +340,9 @@ def main() -> None:
     if sha256(chat_template) != CHAT_TEMPLATE_SHA256:
         raise ValidationStop("chat template hash mismatch")
     jobs, parents = build_jobs(repo, install)
-    hardware = legacy.gpu_inventory(gpus)
+    hardware = {"confirmation_source": "user_manual_confirmation",
+                "confirmed_gpu_ids": gpus, "automated_inventory_skipped": True,
+                "reason": "user explicitly confirmed availability and requested skipping the automated hardware-state stage"}
     if args.preflight_only:
         print(json.dumps({"passed": True, "job_count": len(jobs), "parents": parents,
                           "maximum_new_tokens": MAX_NEW_TOKENS, "hardware": hardware,
@@ -352,7 +356,7 @@ def main() -> None:
     jobs_root.mkdir()
     manifest_path = run_dir / "run_manifest.yaml"
     manifest = {"schema_version": 1, "run_id": run_dir.name, "status": "running",
-                "stage": "formal_validation_1024_all_candidates", "formal_result": False,
+                "stage": "formal_validation_1024_all_candidates_attempt02", "formal_result": False,
                 "created_at": now_iso(), "scope": {"job_count": 26,
                 "base": True, "sft_sample_counts": [500, 1000, 2000, 3000],
                 "sft_curve_epochs": {"2000": list(range(1, 11)), "3000": list(range(1, 11))},
@@ -362,7 +366,7 @@ def main() -> None:
                 "generation": {"do_sample": False, "max_new_tokens": MAX_NEW_TOKENS,
                                "chat_template_file": str(chat_template),
                                "chat_template_sha256": CHAT_TEMPLATE_SHA256,
-                               "cap_hit_policy": "fail entire run"},
+                               "cap_hit_policy": "preserve, score under unchanged parser, report per model, continue queue"},
                 "selection_rule": "maximum validation accuracy; tie maximum format; tie earliest epoch",
                 "hardware": hardware, "jobs": jobs,
                 "provenance": {"repo_commit": subprocess.run(
@@ -393,8 +397,8 @@ def main() -> None:
                      Path(row["outputs"]["predictions"]).is_file() for row in completed),
                  "all_offline_parser_checks_pass": len(completed) == 26 and all(
                      row["gates"]["offline_parser_consistency"] for row in completed),
-                 "no_generation_cap_hits": len(completed) == 26 and all(
-                     row["offline_audit"]["generation_cap_hit_count"] == 0 for row in completed),
+                 "all_generation_cap_statuses_recorded": len(completed) == 26 and all(
+                     row["gates"]["generation_cap_status_recorded"] for row in completed),
                  "test_not_accessed": True}
         if len(completed) == 26:
             selections = {}
