@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-07-21T18:11:15+08:00",
+  "purpose": "Freeze fail-closed 1024-token validation over every formal seed-42 candidate",
+  "data_version": "pathmmu_image_disjoint_v2",
+  "sha256": {
+    "formal_machine/run_formal_validation_1024_all_candidates.py": "56c5966e5dceac612716b2a0dabd12504f66b241ae14051bcd1a74b8a291a532",
+    "scripts/infer_and_score_pathmmu_with_tokens.py": "7a39957f94a8d1a7f4f4814b3a13c3c6dff087c9b5e70dcd68e20b2662fc6302",
+    "scripts/test_formal_validation_1024_all_candidates.py": "d7e79b212ae6afaff41a02ee36466fce009d6a6005a9379c9c206e12059f5ea8",
+    "scripts/launch_formal_validation_1024_all_candidates.sh": "ba331f4968815f9f77af64d4a71677f626cb71f863059850f342481bb19b376a",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f",
+    "scripts/test_pathmmu_rewards.py": "234454e2f79d4f909ce62b886c9e69a6d16989d83126ec5157683c6720af322b",
+    "scripts/verify_code_hash_manifest.py": "768fea7472115e272f21b2ed46e63f31f1e5e72e4ba6870e425e26f6ca070125",
+    "formal_machine/run_formal_sft_validation_curve.py": "cf3209ff17e3f6667e6755c99a14809c8e748e11fed6d8993fd51d5ab98af3f8",
+    "protocol/base_model_manifest.json": "d3b7a72a80bb0b860acf0833693368a33757c64793105b3b003950ac3b1034f3",
+    "protocol/training_plan.md": "e557a6c19b8f13e99f5853ca2616908c23f7e10ed52e14a9a5b5a3825c4ac959",
+    "docs/20260721_170223_validation_generation_cap_correction_pilot_completed.md": "8a0c5796336de1a5d1b956f953e8196c5346088dea4fff724cf00f9b6b8a5d3c",
+    "protocol/validation_generation_cap_pilot_manifest_20260721_161141.json": "a48e8ad75ff63321f90eaa223af7ca70e74d296e7e8550b0fbf793098e6402d1"
+  }
+}

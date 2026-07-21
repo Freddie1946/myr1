@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-21T18:11:15+08:00",
+  "status": "frozen_before_preflight",
+  "scope": "formal validation-only corrected evaluation of every frozen seed-42 candidate",
+  "formal_result": false,
+  "job_count": 26,
+  "expected_prediction_count": 10010,
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 1024,
+    "cap_hit_policy": "fail entire run",
+    "prompt_contract": "pathmmu_think_answer_only_v2"
+  },
+  "data": {
+    "version": "pathmmu_image_disjoint_v2",
+    "split": "validation_0385",
+    "count": 385,
+    "path": "/home/wjy/pathvlm_r1_v1_formal/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json",
+    "sha256": "6434da3e89e81c4e6a01736a1eda885858b56c28f8bfef284bd730693f37a2ca"
+  },
+  "candidates": {
+    "base": 1,
+    "sft_n0500_final": 1,
+    "sft_n1000_final": 1,
+    "sft_n2000_epochs_1_to_10": 10,
+    "sft_n3000_epochs_1_to_10": 10,
+    "outcome_grpo_n1000_epochs_1_to_3": 3
+  },
+  "parent_evidence": {
+    "sft_n0500_manifest_sha256": "f22b0ea946e8f41924436af2a746e49ac9ac07b74fb262a997edb29afe9d7d12",
+    "sft_n1000_manifest_sha256": "889b99138b506ba9b3482194ed1a2fb680f37655fc4b624619cb001e7b7a7c18",
+    "outcome_grpo_formal_result_manifest_sha256": "cd6f57b24b3f1cc424ddaf2e1d868d575fbf8c16875a28b1d25c0a415ab7cd97",
+    "corrected_generation_pilot_manifest": "protocol/validation_generation_cap_pilot_manifest_20260721_161141.json",
+    "corrected_generation_pilot_passed": true
+  },
+  "selection_rule": "per family/sample count: maximum validation accuracy; exact tie maximum strict format; exact tie earliest epoch",
+  "gpus": [0, 1, 2, 3, 4, 5, 6, 7],
+  "automatic_retry": false,
+  "training_authorized": false,
+  "stage3_authorized": false,
+  "test_authorized": false,
+  "test_accessed": false
+}
