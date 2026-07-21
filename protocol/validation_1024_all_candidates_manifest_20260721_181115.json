@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_at": "2026-07-21T18:11:15+08:00",
-  "status": "preflight_passed_ready_to_launch",
+  "status": "attempt01_failed_gate",
   "scope": "formal validation-only corrected evaluation of every frozen seed-42 candidate",
   "formal_result": false,
   "job_count": 26,
@@ -53,5 +53,36 @@
     "all_gpus_at_18_mib_idle_baseline": true,
     "compute_processes": [],
     "test_accessed": false
+  },
+  "attempt01": {
+    "run_id": "validation_1024_20260721_184726",
+    "run_manifest": "/home/wjy/pathvlm_r1_v1_formal/runs/validation_1024_all_candidates/validation_1024_20260721_184726/run_manifest.yaml",
+    "run_manifest_sha256": "12b7c9a3a374497359a45c30a95fb4adc6f04a87a9616906cb8d37052402c681",
+    "status": "failed_gate",
+    "formal_result": false,
+    "created_jobs": 10,
+    "completed_jobs": 8,
+    "failed_jobs": 2,
+    "not_started_jobs": 16,
+    "preserved_prediction_count": 3850,
+    "failures": [
+      {
+        "label": "n2000_epoch01",
+        "record_index": 148,
+        "generated_token_count": 1024,
+        "failure": "degenerate repeated karyolysis/karyosis loop without EOS or final answer",
+        "predictions_sha256": "eb4aa79599ce5b239dbf1652bb04f786a02f0830fdf331d5f11ad9b333c5f7d0"
+      },
+      {
+        "label": "n2000_epoch05",
+        "record_index": 257,
+        "generated_token_count": 1024,
+        "failure": "degenerate repeated tag/rationale loop without EOS; parsed answer was also wrong",
+        "predictions_sha256": "637009aa271b7c128691818521c46f810f9a66ed1bc185e633ce3f3bc30ee270"
+      }
+    ],
+    "test_accessed": false,
+    "automatic_retry_performed": false,
+    "all_gpus_released": true
   }
 }
