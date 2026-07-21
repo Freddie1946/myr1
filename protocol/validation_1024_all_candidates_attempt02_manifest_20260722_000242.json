@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_at": "2026-07-22T00:02:42+08:00",
-  "status": "frozen_before_preflight",
+  "status": "preflight_passed",
   "scope": "formal validation-only Attempt02 from-scratch rerun of all 26 seed-42 candidates",
   "formal_result": false,
   "job_count": 26,
@@ -37,6 +37,18 @@
     "availability_confirmation": "user_manual_confirmation",
     "automated_state_query": false,
     "skip_reason": "explicit user instruction on 2026-07-22"
+  },
+  "preflight": {
+    "completed_at": "2026-07-22T00:22:59+08:00",
+    "repo_commit": "9a8cc52",
+    "passed": true,
+    "job_count": 26,
+    "maximum_new_tokens": 1024,
+    "checkpoint_and_parent_manifest_checks_passed": true,
+    "validation_identity_and_count_passed": true,
+    "code_hash_manifest_passed": true,
+    "automated_hardware_inventory_executed": false,
+    "test_accessed": false
   },
   "selection_rule": "per family/sample count: maximum validation accuracy; exact tie maximum strict format; exact tie earliest epoch",
   "automatic_retry": false,
