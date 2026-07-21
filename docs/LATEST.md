@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260721_181115`
+Latest timestamp: `20260721_182701`
 
 Read in this order:
 
@@ -68,48 +68,49 @@ Read in this order:
 62. `20260721_161141_validation_generation_cap_correction_pilot_plan.md`
 63. `20260721_170223_validation_generation_cap_correction_pilot_completed.md`
 64. `20260721_181115_validation_1024_all_candidates_frozen.md`
-65. `../protocol/validation_1024_all_candidates_manifest_20260721_181115.json`
-66. `../protocol/validation_1024_all_candidates_code_manifest_20260721.json`
-67. `../protocol/validation_generation_cap_pilot_manifest_20260721_161141.json`
-68. `../FORMAL_MACHINE_CODEX_GUIDE.md`
-69. `../manuscript/README.md` and its mandatory reading order
-70. `../CODEX_START_HERE.md`
-71. `../manuscript/revision/reviewer_response_tracker.md`
-72. `../protocol/stage2_formal_n1000_seed42_continuation_manifest_20260720_064352.json`
-73. `../protocol/stage2_formal_n1000_seed42_continuation_code_manifest_20260720_064352.json`
-74. `../protocol/stage2_priority_n1000_seed42_manifest_20260720_033024.json`
-75. `../protocol/stage2_priority_n1000_seed42_code_manifest_20260720_033024.json`
-76. `../protocol/outcome_grpo_prompt_v2_gate_manifest_20260720_023057.json`
-77. `../protocol/outcome_grpo_prompt_v2_gate_code_manifest_20260720_023057.json`
-78. `../protocol/outcome_grpo_gate_manifest_20260720_013054.json`
-79. `../protocol/outcome_grpo_gate_code_manifest_20260720_013054.json`
-80. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
-81. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
-82. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
-83. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
-84. `../protocol/code_hash_manifest_20260719_172547.json`
-85. `../protocol/code_hash_manifest_20260717_010146.json`
-86. `../protocol/code_hash_manifest_20260717_002323.json`
-87. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
-88. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
-89. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
-90. `../protocol/code_hash_manifest_20260714_012500.json`
-91. `../protocol/code_hash_manifest_20260714_005450.json`
-92. `../protocol/code_hash_manifest_20260714_001041.json`
-93. `../protocol/code_hash_manifest_20260713_222306.json`
-94. `../protocol/code_hash_manifest_20260713_214352.json`
-95. `../protocol/code_hash_manifest_20260713_213248.json`
-96. `../protocol/code_hash_manifest_20260713_205956.json`
-97. `../protocol/code_hash_manifest_20260713_203631.json`
-98. `../protocol/code_hash_manifest_20260712_213340.json`
-99. `../protocol/code_hash_manifest_20260712_192846.json`
-100. `../protocol/code_hash_manifest_20260712_144811.json`
-101. `../protocol/debug_proxy_model_manifest.json`
-102. `../protocol/training_plan.md`
-103. `../protocol/old_sft_audit.md`
-104. The latest manifest under `../debug_e2e/`
+65. `20260721_182701_validation_1024_preflight_completed.md`
+66. `../protocol/validation_1024_all_candidates_manifest_20260721_181115.json`
+67. `../protocol/validation_1024_all_candidates_code_manifest_20260721.json`
+68. `../protocol/validation_generation_cap_pilot_manifest_20260721_161141.json`
+69. `../FORMAL_MACHINE_CODEX_GUIDE.md`
+70. `../manuscript/README.md` and its mandatory reading order
+71. `../CODEX_START_HERE.md`
+72. `../manuscript/revision/reviewer_response_tracker.md`
+73. `../protocol/stage2_formal_n1000_seed42_continuation_manifest_20260720_064352.json`
+74. `../protocol/stage2_formal_n1000_seed42_continuation_code_manifest_20260720_064352.json`
+75. `../protocol/stage2_priority_n1000_seed42_manifest_20260720_033024.json`
+76. `../protocol/stage2_priority_n1000_seed42_code_manifest_20260720_033024.json`
+77. `../protocol/outcome_grpo_prompt_v2_gate_manifest_20260720_023057.json`
+78. `../protocol/outcome_grpo_prompt_v2_gate_code_manifest_20260720_023057.json`
+79. `../protocol/outcome_grpo_gate_manifest_20260720_013054.json`
+80. `../protocol/outcome_grpo_gate_code_manifest_20260720_013054.json`
+81. `../protocol/sft_validation_curve_manifest_20260719_172547.json`
+82. `../protocol/sft_validation_curve_manifest_20260719_162000.json`
+83. `../protocol/sft_validation_curve_manifest_20260719_152742.json`
+84. `../protocol/n3000_to_n2000_handoff_manifest_20260717_015614.json`
+85. `../protocol/code_hash_manifest_20260719_172547.json`
+86. `../protocol/code_hash_manifest_20260717_010146.json`
+87. `../protocol/code_hash_manifest_20260717_002323.json`
+88. `../protocol/sft_speed_smoke_manifest_20260716_234731.json`
+89. `../protocol/sft_speed_smoke_manifest_20260716_233301.json`
+90. `../protocol/sft_scale_sequence_manifest_20260715_235000.json`
+91. `../protocol/code_hash_manifest_20260714_012500.json`
+92. `../protocol/code_hash_manifest_20260714_005450.json`
+93. `../protocol/code_hash_manifest_20260714_001041.json`
+94. `../protocol/code_hash_manifest_20260713_222306.json`
+95. `../protocol/code_hash_manifest_20260713_214352.json`
+96. `../protocol/code_hash_manifest_20260713_213248.json`
+97. `../protocol/code_hash_manifest_20260713_205956.json`
+98. `../protocol/code_hash_manifest_20260713_203631.json`
+99. `../protocol/code_hash_manifest_20260712_213340.json`
+100. `../protocol/code_hash_manifest_20260712_192846.json`
+101. `../protocol/code_hash_manifest_20260712_144811.json`
+102. `../protocol/debug_proxy_model_manifest.json`
+103. `../protocol/training_plan.md`
+104. `../protocol/old_sft_audit.md`
+105. The latest manifest under `../debug_e2e/`
 
-Current next action: run the complete preflight and then launch the user-authorized corrected
-1024-token validation over all 26 frozen candidates. Preserve 10,010 raw predictions, fail the
-entire run on any generation-cap hit or parser/source mismatch, and keep test sealed. Do not start
-Stage 3 or another training experiment.
+Current next action: launch the preflight-passed, user-authorized corrected 1024-token validation
+over all 26 frozen candidates. Preserve 10,010 raw predictions, fail the entire run on any
+generation-cap hit or parser/source mismatch, and keep test sealed. Do not start Stage 3 or another
+training experiment.
