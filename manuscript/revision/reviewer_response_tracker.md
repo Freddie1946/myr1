@@ -213,10 +213,10 @@ The original decision PDF remains authoritative; comments below are concise para
   tests. Add independent pathology benchmarks if feasible.
 - Evidence/actions: deterministic 385-QA validation infrastructure and raw-output audits exist; final
   full-test and independent-benchmark results do not. Preparation is frozen for the four full
-  requested OmniMedVQA sources, PathMMU additional-source metadata and official PathVQA test, with
-  mandatory revision/hash and overlap audits before evaluation. All four OmniMedVQA sources and the
-  6,719-QA PathVQA test are now present; exact-content audits pass against formal PathMMU v2, but no
-  inference or statistical result exists.
+  requested OmniMedVQA sources, PathMMU additional-source metadata and a normalized copy of the
+  author-provided PathVQA test, with mandatory revision/hash and overlap audits before evaluation.
+  All four OmniMedVQA sources and the 6,719-QA PathVQA test are now present; exact-content audits
+  pass against formal PathMMU v2, but no inference or statistical result exists.
 - Evidence path: `docs/20260725_004340_external_evaluation_assets_and_baseline_environment_prepared.md`.
 - Status: `pending-experiment`.
 

@@ -23,8 +23,8 @@ cleanup occurred.
   - ISIC2020: 1,580 QA, 1,499 referenced paths/contents.
   - Retinal OCT-C8: 4,016 QA, 3,224 referenced paths and 3,222 unique exact contents.
   - Diabetic Retinopathy: 2,051 QA, 1,966 referenced paths/contents.
-- Fixed-revision normalized PathVQA official-author test split: three parquet shards, 6,719 QA and
-  858 unique exact image contents.
+- Fixed-revision normalized copy of the author-provided PathVQA test split: three parquet shards,
+  6,719 QA and 858 unique exact image contents.
 
 The actual Diabetic Retinopathy count is 1,966 unique referenced images, correcting the earlier
 1,996 estimate. Every OmniMedVQA image reference exists.

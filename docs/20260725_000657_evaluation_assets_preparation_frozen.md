@@ -47,9 +47,9 @@ environment variables or the relevant credential store.
 4. Acquire the four requested OmniMedVQA source subsets: Chest CT, ISIC2020, Retinal OCT-C8 and
    Diabetic Retinopathy. If the distribution is a monolithic archive, retain it initially and
    extract only the required files when the layout permits.
-5. Prepare the official PathVQA test package as an independent external benchmark. Its labels may
-   be used only for final scoring under a separately frozen evaluation protocol; this preparation
-   step performs no model selection or inference.
+5. Prepare a normalized copy of the author-provided PathVQA test split as an independent external
+   benchmark. Its labels may be used only for final scoring under a separately frozen evaluation
+   protocol; this preparation step performs no model selection or inference.
 6. Create an isolated pathology-encoder environment for PLIP, CONCH and UNI. Pin exact source
    revisions and package versions. Run CPU-only imports and model-construction checks where they do
    not require weights.
