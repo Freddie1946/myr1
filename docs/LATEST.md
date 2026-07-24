@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260725_010533`
+Latest timestamp: `20260725_013154`
 
 Read in this order:
 
@@ -124,9 +124,15 @@ Read in this order:
 118. `../protocol/evaluation_assets_preparation_completion_manifest_20260725_004340.json`
 119. `20260725_010533_baseline_access_and_environment_status.md`
 120. `../protocol/baseline_access_status_manifest_20260725_010533.json`
+121. `20260725_011528_all_manuscript_baselines_mandatory.md`
+122. `../protocol/all_manuscript_baselines_manifest_20260725_011528.json`
+123. `20260725_013154_manuscript_baseline_metadata_and_access_audit.md`
+124. `../protocol/manuscript_baseline_metadata_manifest_20260725_013154.json`
 
-Current next action: after user confirmation, download and hash the fixed PLIP/CONCH/UNI weights and
-implement/freeze the matched option-scoring adapters, or first configure a separately selected
-manuscript baseline subset. The prepared data and shared pathology environment pass integrity/import
-gates, but no evaluation protocol is frozen. Do not run inference or training, allocate a GPU, clean
-storage, open the formal PathMMU test split, or start Stage 3 without separate authorization.
+Current next action: obtain Meta Llama 3.2 Vision 11B/90B access, resolve the five hosted-model
+identities/provider contracts, and freeze selective file allowlists plus a storage destination for
+the nine missing local manuscript baselines. Their recognized weight files total 301.82 GiB, while
+unfiltered repositories total 487.18 GiB; `/home` has only about 506 GiB free and is already below
+the 550-GiB formal reserve. PLIP/CONCH/UNI remain additional. Do not bulk-download weights, run
+inference/training, allocate a GPU, clean storage, open formal PathMMU test, or start Stage 3 without
+the corresponding gate and authorization.

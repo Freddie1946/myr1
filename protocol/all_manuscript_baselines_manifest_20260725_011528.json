@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-25T01:15:28+08:00",
+  "formal_result": false,
+  "decision": "every baseline named in manuscript Table II or Table IV is mandatory",
+  "supersedes_recommendation_only": "docs/20260725_010533_baseline_access_and_environment_status.md",
+  "table_ii": [
+    {
+      "manuscript_name": "Doubao-1.5-vison",
+      "corrected_name": "Doubao-1.5-vision",
+      "execution_class": "hosted_api",
+      "exact_provider_model_id": null,
+      "status": "identity_and_credentials_pending"
+    },
+    {
+      "manuscript_name": "Qwen-VL-Plus",
+      "execution_class": "hosted_api",
+      "exact_provider_model_id": null,
+      "status": "identity_and_credentials_pending"
+    },
+    {
+      "manuscript_name": "DeepSeek-VL2",
+      "execution_class": "local_open_weight",
+      "candidate_model_id": "deepseek-ai/deepseek-vl2",
+      "exact_revision": null,
+      "status": "snapshot_environment_adapter_pending"
+    },
+    {
+      "manuscript_name": "Claude-3.5-Haiku",
+      "execution_class": "hosted_api",
+      "candidate_model_id": "claude-3-5-haiku-20241022",
+      "exact_provider_model_id": null,
+      "status": "historical_provider_contract_and_credentials_pending"
+    },
+    {
+      "manuscript_name": "Grok-4-Fast",
+      "execution_class": "hosted_api",
+      "candidate_model_ids": [
+        "grok-4-fast-reasoning",
+        "grok-4-fast-non-reasoning"
+      ],
+      "exact_provider_model_id": null,
+      "status": "historical_variant_unresolved_and_original_slugs_retired"
+    },
+    {
+      "manuscript_name": "LLaMA3.2-90B",
+      "execution_class": "local_gated_weight",
+      "candidate_model_id": "meta-llama/Llama-3.2-90B-Vision-Instruct",
+      "exact_revision": null,
+      "status": "access_snapshot_environment_adapter_pending"
+    },
+    {
+      "manuscript_name": "Claude-4.5",
+      "execution_class": "hosted_api",
+      "exact_provider_model_id": null,
+      "status": "model_family_version_provider_and_credentials_unresolved"
+    },
+    {
+      "manuscript_name": "LLaMA3.2-11B",
+      "execution_class": "local_gated_weight",
+      "candidate_model_id": "meta-llama/Llama-3.2-11B-Vision-Instruct",
+      "exact_revision": null,
+      "status": "access_snapshot_environment_adapter_pending"
+    },
+    {
+      "manuscript_name": "MedVLM-R1",
+      "execution_class": "local_open_weight",
+      "candidate_model_id": "JZPeterPan/MedVLM-R1",
+      "exact_revision": null,
+      "status": "snapshot_environment_adapter_pending"
+    },
+    {
+      "manuscript_name": "MedGemma-4B",
+      "execution_class": "local_gated_weight",
+      "candidate_model_id": "google/medgemma-4b-it",
+      "exact_revision": null,
+      "status": "access_snapshot_environment_adapter_pending"
+    },
+    {
+      "manuscript_name": "Qwen2.5-VL-3B",
+      "execution_class": "local_open_weight",
+      "candidate_model_id": "Qwen/Qwen2.5-VL-3B-Instruct",
+      "candidate_revision": "66285546d2b821cf421d4f5eb2576359d3770cd3",
+      "status": "formal_baseline_snapshot_environment_adapter_pending"
+    },
+    {
+      "manuscript_name": "Qwen2.5-VL-7B",
+      "execution_class": "local_open_weight",
+      "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+      "status": "end_to_end_environment_ready_evaluation_contract_pending"
+    },
+    {
+      "manuscript_name": "Lingshu-7B",
+      "execution_class": "local_open_weight",
+      "candidate_model_id": "lingshu-medical-mllm/Lingshu-7B",
+      "exact_revision": null,
+      "status": "snapshot_environment_adapter_pending"
+    },
+    {
+      "manuscript_name": "InternVL3-8B",
+      "execution_class": "local_open_weight",
+      "candidate_model_id": "OpenGVLab/InternVL3-8B",
+      "exact_revision": null,
+      "status": "snapshot_environment_adapter_pending"
+    }
+  ],
+  "table_iv_additional": [
+    {
+      "manuscript_name": "HuatuoGPT-Vision-7B",
+      "execution_class": "local_open_weight",
+      "candidate_model_id": "FreedomIntelligence/HuatuoGPT-Vision-7B",
+      "exact_revision": null,
+      "status": "snapshot_environment_adapter_pending"
+    }
+  ],
+  "additional_reviewer_response_group": [
+    "PLIP",
+    "CONCH",
+    "UNI"
+  ],
+  "counts": {
+    "table_ii": 14,
+    "table_iv_additional": 1,
+    "total_mandatory_manuscript_baselines": 15,
+    "hosted_api": 5,
+    "local_or_gated_weight": 10
+  },
+  "scientific_gates": {
+    "historical_500_ids_recovered": false,
+    "test_used_for_configuration_selection": false,
+    "all_exact_model_identities_frozen": false,
+    "all_environments_ready": false,
+    "all_weights_local_and_hashed": false,
+    "all_adapters_ready": false,
+    "all_raw_prediction_schemas_frozen": false,
+    "bulk_download_authorized": false,
+    "gpu_use_authorized": false,
+    "evaluation_authorized": false
+  }
+}

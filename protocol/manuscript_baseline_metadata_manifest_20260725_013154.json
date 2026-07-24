@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-25T01:31:54+08:00",
+  "formal_result": false,
+  "scope": "official model metadata, weight-size and gated-access audit; no weight download",
+  "models": [
+    {
+      "manuscript_name": "DeepSeek-VL2",
+      "model_id": "deepseek-ai/deepseek-vl2",
+      "revision": "f363772d1c47f4239dd844015b4bd53beb87951b",
+      "gated": false,
+      "weight_bytes": 54961192528,
+      "all_repository_bytes": 54968330382
+    },
+    {
+      "manuscript_name": "LLaMA3.2-90B",
+      "model_id": "meta-llama/Llama-3.2-90B-Vision-Instruct",
+      "revision": "e305d2a43a4adc6987308fe7d896fb8ec5f1a5d8",
+      "gated": "manual",
+      "authenticated_config_access": false,
+      "access_error": "HTTP 403 account not authorized",
+      "weight_bytes": 177186907758,
+      "all_repository_bytes": 354820045791
+    },
+    {
+      "manuscript_name": "LLaMA3.2-11B",
+      "model_id": "meta-llama/Llama-3.2-11B-Vision-Instruct",
+      "revision": "9eb2daaa8597bf192a8b0e73f848f3a102794df5",
+      "gated": "manual",
+      "authenticated_config_access": false,
+      "access_error": "HTTP 403 account not authorized",
+      "weight_bytes": 21340560870,
+      "all_repository_bytes": 42610555647
+    },
+    {
+      "manuscript_name": "MedVLM-R1",
+      "model_id": "JZPeterPan/MedVLM-R1",
+      "revision": "d256f2cfdf98c6872c1dc9f20b7dd52f49374fe9",
+      "gated": false,
+      "weight_bytes": 4418059032,
+      "all_repository_bytes": 4434955803
+    },
+    {
+      "manuscript_name": "MedGemma-4B",
+      "model_id": "google/medgemma-4b-it",
+      "revision": "290cda5eeccbee130f987c4ad74a59ae6f196408",
+      "gated": "auto",
+      "authenticated_config_access": true,
+      "weight_bytes": 8600277880,
+      "all_repository_bytes": 8639644263
+    },
+    {
+      "manuscript_name": "Qwen2.5-VL-3B",
+      "model_id": "Qwen/Qwen2.5-VL-3B-Instruct",
+      "revision": "66285546d2b821cf421d4f5eb2576359d3770cd3",
+      "gated": false,
+      "weight_bytes": 7509337976,
+      "all_repository_bytes": 7520919614
+    },
+    {
+      "manuscript_name": "Lingshu-7B",
+      "model_id": "lingshu-medical-mllm/Lingshu-7B",
+      "revision": "b98aecd41dfd9d7545a6b8e2f4743ae8471bd7a9",
+      "gated": false,
+      "weight_bytes": 16584414544,
+      "all_repository_bytes": 16604558952
+    },
+    {
+      "manuscript_name": "InternVL3-8B",
+      "model_id": "OpenGVLab/InternVL3-8B",
+      "revision": "853e3a797a661694b1b8ece0cb72dc2b23e3dac9",
+      "gated": false,
+      "weight_bytes": 15888831920,
+      "all_repository_bytes": 15903165729
+    },
+    {
+      "manuscript_name": "HuatuoGPT-Vision-7B",
+      "model_id": "FreedomIntelligence/HuatuoGPT-Vision-7B",
+      "revision": "34dfcdbb7728ff38da865839f342b88c4cf6ef39",
+      "gated": false,
+      "weight_bytes": 17583367129,
+      "all_repository_bytes": 17598544266
+    }
+  ],
+  "totals_for_nine_missing_local_manuscript_models": {
+    "recognized_weight_bytes": 324072949637,
+    "recognized_weight_gib": 301.81645381916314,
+    "all_repository_bytes_without_allowlists": 523100720447,
+    "all_repository_gib_without_allowlists": 487.1755097499117
+  },
+  "existing_formal_qwen7_snapshot": {
+    "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+    "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "local_bytes": 16595999395
+  },
+  "storage": {
+    "filesystem": "/home",
+    "available_bytes": 542882775040,
+    "displayed_available": "506 GiB",
+    "formal_reserve_gib": 550,
+    "selective_bulk_download_allowed": false,
+    "unfiltered_bulk_download_allowed": false
+  },
+  "gates": {
+    "metadata_queries_complete_for_missing_local_rows": true,
+    "medgemma_access": true,
+    "llama_11b_access": false,
+    "llama_90b_access": false,
+    "selective_file_allowlists_frozen": false,
+    "storage_destination_approved": false,
+    "model_weights_downloaded": false,
+    "gpu_used": false,
+    "formal_test_opened": false
+  }
+}

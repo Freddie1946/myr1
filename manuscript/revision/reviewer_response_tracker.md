@@ -98,8 +98,15 @@ The original decision PDF remains authoritative; comments below are concise para
 - Evidence/actions: baseline repository/environment audit exists, but a final comparable-baseline
   manifest and complete raw outputs are not yet frozen. The formal-machine audit confirms only
   Qwen2.5-VL-7B is currently end-to-end ready; historical scripts/results do not supply reproducible
-  environment, weight and raw-output provenance for the other Table II/IV baselines.
-- Evidence path: `docs/20260725_010533_baseline_access_and_environment_status.md`.
+  environment, weight and raw-output provenance for the other Table II/IV baselines. The user has
+  now made every one of the fourteen Table II baselines and the additional Table IV
+  HuatuoGPT-Vision-7B row mandatory; none may be dropped for cost or setup convenience. The exact
+  historical 500 IDs and several exact API-version identities remain unresolved, so contemporary
+  reruns must not be mislabeled as exact historical recovery.
+- Evidence path: `docs/20260725_010533_baseline_access_and_environment_status.md` and
+  `docs/20260725_011528_all_manuscript_baselines_mandatory.md`. The fixed-revision metadata/storage
+  audit is `docs/20260725_013154_manuscript_baseline_metadata_and_access_audit.md`: MedGemma access
+  passes, Meta Llama Vision 11B/90B access returns 403, and bulk download is storage-blocked.
 - Status: `partial`.
 
 ### R1-8 — Add a color scale to Figure 7
@@ -174,8 +181,12 @@ The original decision PDF remains authoritative; comments below are concise para
   fixed-revision weight HEAD checks now pass for CONCH and UNI. Weights and formal adapters are not
   yet local. Only the manuscript Qwen2.5-VL-7B baseline is end-to-end ready on this machine; other
   manuscript baseline environments/weights/raw outputs are absent or unauditable. No new formal
-  baseline result is complete.
-- Evidence path: `docs/20260725_010533_baseline_access_and_environment_status.md`.
+  baseline result is complete. All fifteen manuscript baselines are now mandatory in addition to,
+  rather than instead of, the compatible pathology-specialized reviewer-response group.
+- Evidence path: `docs/20260725_010533_baseline_access_and_environment_status.md` and
+  `docs/20260725_011528_all_manuscript_baselines_mandatory.md`, with exact local-model metadata and
+  current access/storage gates in
+  `docs/20260725_013154_manuscript_baseline_metadata_and_access_audit.md`.
 - Status: `partial`.
 
 ### R2-4 — Fully specify and validate GPT-4o reward execution
@@ -378,6 +389,16 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     checks now pass, while downloads/adapters remain pending. Confirmed that only Qwen2.5-VL-7B among
     the manuscript baselines is end-to-end ready on this machine; the rest require reproducible
     environment/weight/provider work. Supports R1-7/R2-3/R3-4 preparation.
+21. Recorded the user decision that all fourteen Table II baselines plus the additional Table IV
+    HuatuoGPT-Vision-7B baseline are mandatory reruns. PLIP/CONCH/UNI remain an additional comparison
+    group. Historical API identities and the old 500-example IDs are not yet recoverable, so the
+    exhaustive scope is frozen without making a false exact-reproduction claim. Supports R1-7 and
+    R2-3 preparation.
+22. Queried official fixed-revision metadata for the nine missing local manuscript rows. Selective
+    recognized weights total 301.82 GiB, while unfiltered repositories total 487.18 GiB; bulk
+    download is blocked against the formal storage reserve. MedGemma gated access passes, but both
+    Meta Llama 3.2 Vision repositories return 403. No weight/GPU/test use occurred. Supports R1-7 and
+    R2-3 preparation.
 
 ## Mandatory update rule
 

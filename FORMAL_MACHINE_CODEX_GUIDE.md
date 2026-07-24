@@ -327,6 +327,45 @@ PYTHONPATH="$EVAL_ROOT/sources/plip" CUDA_VISIBLE_DEVICES="" \
 `$EVAL_ROOT/reports/`，并把小型摘要/清单写回仓库。任何外部评测开始前，必须先冻结
 prompt、解码、评分、统计和污染审计协议；test 仍不得用于选择。
 
+### 5.4 迁移论文原有的全部基线
+
+论文 Table II 的十四个基线和 Table IV 额外的 HuatuoGPT-Vision-7B 均为必跑项，完整
+集合及当前候选模型 ID 见
+`protocol/all_manuscript_baselines_manifest_20260725_011528.json`。PLIP、CONCH、UNI
+属于额外审稿回应组，不能替代这十五个原有基线。
+
+不要直接为所有模型执行浮动版本的 `pip install` 或批量下载 `main`。迁移顺序固定为：
+
+1. 先为每一行解析准确模型/API ID、固定 revision、许可和精确下载字节数；
+2. 把五个托管模型的 endpoint、版本/日期、SDK 和服务商写进独立 manifest；凭据只能
+   通过仓库外的权限为 `600` 的环境文件或服务商凭据存储注入；
+3. 分别创建 Qwen、Meta Llama Vision、DeepSeek-VL2、MedGemma、InternVL3、
+   Huatuo/LLaVA 和 API client 环境，不能污染正式 `sft`/`grpo` 环境；
+4. 每个环境先做 CPU 导入、`pip check` 和最小处理器加载，再在共享服务器 GPU 门禁后做
+   单样本 smoke；
+5. 每个模型保存 `pip freeze`、模型/代码哈希、prompt、图像预处理、解码参数、原始返回、
+   parser 版本、错误和重试事件。
+
+建议的迁移目录为：
+
+```text
+$EVAL_ROOT/
+  envs/{qwen_vl,llama32_vision,deepseek_vl2,medgemma,internvl3,huatuo_llava,api_clients}/
+  models/<provider>--<model>--<revision>/
+  configs/manuscript_baselines/
+  outputs/manuscript_baselines/
+  reports/manuscript_baselines/
+```
+
+原论文 Table II 的 500 个历史样本 ID 尚未恢复，因此不能把新跑结果写成精确历史复现。
+统一 rerun 数据集、prompt 和 parser 必须先在 validation 上冻结；正式 PathMMU test 在
+所有十五个基线完成配置与 smoke 前保持密封，且每个模型只做预声明的最终评测。
+
+存储是硬门禁：90B BF16 权重本身约 180 GB，完整本地集合可能需要数百 GB。先汇总官方
+文件列表和字节数，再决定存储位置；未获批准不得批量下载。不能为了节省空间静默改用
+量化权重、不同参数规模或第三方转换版本。若历史 API 模型已下线/重定向，仍需运行经
+批准的当前替代版本，但必须明确标记为 contemporary rerun，不能冒充原模型。
+
 ## 6. 执行任务的顺序
 
 ### A. 执行正式 SFT smoke
