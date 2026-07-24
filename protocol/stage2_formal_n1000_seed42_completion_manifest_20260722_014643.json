@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-22T01:46:43+08:00",
+  "status": "completed",
+  "formal_result": true,
+  "scope": "Outcome-GRPO n1000 seed42 three-epoch formal continuation and corrected checkpoint selection",
+  "frozen_protocol": {
+    "path": "protocol/stage2_formal_n1000_seed42_continuation_manifest_20260720_064352.json",
+    "sha256": "7fdbb8468abfc853655f22663de19e03bd47d0471d0f17f097c486fa2e43baf0"
+  },
+  "frozen_code_manifest": {
+    "path": "protocol/stage2_formal_n1000_seed42_continuation_code_manifest_20260720_064352.json",
+    "sha256": "cf10bb0c1bfa9f089a421564b3c4e72115b56976e51723e5c3e9f3a60c423251"
+  },
+  "training": {
+    "run_dir": "/home/wjy/pathvlm_r1_v1_formal/runs/stage2_outcome_grpo/priority_n1000_seed0042/stage2_priority_n1000_seed0042_20260720_035156/formal_n1000_seed0042_epoch3",
+    "manifest": "/home/wjy/pathvlm_r1_v1_formal/runs/stage2_outcome_grpo/priority_n1000_seed0042/stage2_priority_n1000_seed0042_20260720_035156/formal_n1000_seed0042_epoch3/formal_training_manifest.json",
+    "manifest_sha256": "f15918a5cfd3cb0272d0c20854de9442d6fda6b5d0be6989c50eecf64534792d",
+    "global_steps": 1500,
+    "positive_gradient_steps": 1500,
+    "positive_reward_std_steps": 1075,
+    "online_reward_event_count": 24000,
+    "completion_count": 12000,
+    "source_provenance_exact": true,
+    "online_offline_parser_consistency": true,
+    "language_tensor_changed": true,
+    "visual_tensor_exactly_equal": true,
+    "picked_json_used": false,
+    "test_accessed": false
+  },
+  "original_192_token_result": {
+    "manifest": "/home/wjy/pathvlm_r1_v1_formal/runs/stage2_outcome_grpo/priority_n1000_seed0042/stage2_priority_n1000_seed0042_20260720_035156/formal_n1000_seed0042_epoch3/formal_result_manifest.json",
+    "manifest_sha256": "cd6f57b24b3f1cc424ddaf2e1d868d575fbf8c16875a28b1d25c0a415ab7cd97",
+    "epoch_correct": [237, 241, 237],
+    "selected_epoch": 2,
+    "test_accessed": false
+  },
+  "corrected_1024_token_validation": {
+    "run_manifest": "/home/wjy/pathvlm_r1_v1_formal/runs/validation_1024_all_candidates/validation_1024_20260722_003447/run_manifest.yaml",
+    "run_manifest_sha256": "bcc4b463a455cc500f69152ca7dad42a5682c7cfa598f5c1724c7cf057734a6c",
+    "epoch_correct": [237, 241, 237],
+    "epoch_accuracy": [0.6155844155844156, 0.625974025974026, 0.6155844155844156],
+    "selected_epoch": 2,
+    "selected_step": 1000,
+    "all_cap_hits": 0,
+    "test_accessed": false
+  },
+  "gates": {
+    "training_completed_1500_steps": true,
+    "all_training_metrics_finite": true,
+    "nonzero_gradients_observed": true,
+    "positive_reward_variance_observed": true,
+    "online_events_complete_and_consistent": true,
+    "language_changed_visual_frozen": true,
+    "all_three_epochs_validated": true,
+    "selection_rule_applied": true,
+    "test_not_accessed": true,
+    "picked_json_unused": true
+  }
+}

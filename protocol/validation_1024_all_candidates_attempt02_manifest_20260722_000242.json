@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "created_at": "2026-07-22T00:02:42+08:00",
-  "status": "preflight_passed",
+  "status": "completed",
   "scope": "formal validation-only Attempt02 from-scratch rerun of all 26 seed-42 candidates",
-  "formal_result": false,
+  "formal_result": true,
   "job_count": 26,
   "expected_prediction_count": 10010,
   "generation": {
@@ -49,6 +49,38 @@
     "code_hash_manifest_passed": true,
     "automated_hardware_inventory_executed": false,
     "test_accessed": false
+  },
+  "result": {
+    "run_id": "validation_1024_20260722_003447",
+    "run_dir": "/home/wjy/pathvlm_r1_v1_formal/runs/validation_1024_all_candidates/validation_1024_20260722_003447",
+    "run_manifest": "/home/wjy/pathvlm_r1_v1_formal/runs/validation_1024_all_candidates/validation_1024_20260722_003447/run_manifest.yaml",
+    "run_manifest_sha256": "bcc4b463a455cc500f69152ca7dad42a5682c7cfa598f5c1724c7cf057734a6c",
+    "repo_commit": "67e3ae62ebb1552b7ecade132c5e71f65b4a09d0",
+    "completed_at": "2026-07-22T01:46:43.396123+08:00",
+    "completed_job_count": 26,
+    "raw_prediction_count": 10010,
+    "failed_job_count": 0,
+    "generation_cap_hits": {
+      "total": 2,
+      "n2000_epoch01": 1,
+      "n2000_epoch05": 1,
+      "all_other_candidates": 0
+    },
+    "selections": {
+      "sft_n0500": {"label": "sft_n0500_epoch10_final", "correct": 192, "accuracy": 0.4987012987012987},
+      "sft_n1000": {"label": "sft_n1000_epoch10_final", "correct": 198, "accuracy": 0.5142857142857142},
+      "sft_n2000": {"label": "n2000_epoch05", "correct": 223, "accuracy": 0.5792207792207792},
+      "sft_n3000": {"label": "n3000_epoch03", "correct": 233, "accuracy": 0.6051948051948052},
+      "outcome_grpo_n1000": {"label": "outcome_grpo_n1000_epoch02", "correct": 241, "accuracy": 0.625974025974026}
+    },
+    "gates": {
+      "exact_26_jobs_completed": true,
+      "all_job_gates_pass": true,
+      "all_raw_predictions_saved": true,
+      "all_offline_parser_checks_pass": true,
+      "all_generation_cap_statuses_recorded": true,
+      "test_not_accessed": true
+    }
   },
   "selection_rule": "per family/sample count: maximum validation accuracy; exact tie maximum strict format; exact tie earliest epoch",
   "automatic_retry": false,

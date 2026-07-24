@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-20T06:52:00+08:00`
+Last updated: `2026-07-22T01:46:43+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -122,10 +122,11 @@ The original decision PDF remains authoritative; comments below are concise para
 - Evidence/actions: nested SFT 500/1000/2000/3000 and RL 250/500/1000 sets are frozen. Formal seed-42
   n=3000 and n=2000 SFT runs completed with valid updates. Earlier n=500/n=1000 final models exist,
   but used a different ZeRO-3 offload backend and lack early-epoch snapshots. Their final-only
-  validation scores are 49.87% and 51.43%, and current parser re-scoring has zero mismatches. Formal
-  validation selected n=2000 epoch 5 at 57.92%
-  and n=3000 epoch 3 at 60.52%; epoch 10 fell to 51.95% and 55.58%, respectively. All 8,085 raw
-  predictions are preserved. No formal RL scale curve exists.
+  validation scores are 49.87% and 51.43%, and current parser re-scoring has zero mismatches. The
+  completed 1024-token, 26-candidate validation audit selected n=2000 epoch 5 at 57.92% and n=3000
+  epoch 3 at 60.52%; epoch 10 fell to 51.95% and 55.58%, respectively. Outcome-GRPO n=1000 reached
+  61.56/62.60/61.56% over epochs 1/2/3 and selected epoch 2. All 10,010 raw predictions are
+  preserved. RL n=250/n=500 and seeds 43/44 remain unrun.
 - Status: `partial`.
 - Frozen decision: do not rerun n=500/n=1000. Report the fixed epoch-10 endpoints for all sizes
   (49.87/51.43/51.95/55.58%) and keep the n=2000/n=3000 early-stopping curves separate. Explicitly
@@ -180,18 +181,21 @@ The original decision PDF remains authoritative; comments below are concise para
   prompt conflicting with the strict think/answer reward contract. The user approved removing only
   the contradictory JSON sentence. The prompt-v2 re-gate then passed: 8/8 format rewards positive,
   16/16 online/offline reward events consistent, reward std 0.2887, gradient norm 3.3764, language
-  tensor changed and visual tensor exactly unchanged. Formal long Outcome GRPO has not run.
-- Frozen next action: a 50-step save/resume/full-validation engineering pilot precedes the priority
-  n=1000, seed-42, three-epoch Outcome-GRPO arm. Every online completion is bound to its exact frozen
-  record/image hash/question/prompt and is re-scored offline. This does not address GPT-4o or Stage 3.
+  tensor changed and visual tensor exactly unchanged. The formal three-epoch Outcome-GRPO n=1000,
+  seed-42 arm subsequently completed from the frozen n=3000 SFT epoch-3 parent.
+- Frozen execution contract: a 50-step save/resume/full-validation engineering pilot preceded the
+  priority n=1000, seed-42, three-epoch Outcome-GRPO arm. Every online completion was bound to its
+  exact frozen record/image hash/question/prompt and re-scored offline. This does not address GPT-4o
+  or Stage 3.
 - Result: the pilot passed all gates. Step 25 saved and resumed to step 50; 800/800 reward events had
   exact online/offline and source provenance; full validation was 232/385 versus parent 233/385,
   with exact McNemar p=1.0, 100% format/extraction and zero empty outputs. The formal arm did not
   start because the post-pilot storage projection failed closed.
-- Continuation: after audited pruning of only the consumed pilot resume checkpoint, the user
-  authorized a formal-only continuation from the original SFT n=3000 epoch-3 parent. Its protocol
-  and evidence hashes are frozen; launch remains conditional on fresh code/data/parent/storage/GPU
-  gates. This still concerns outcome-only rewards and does not validate GPT-4o or Process Reward.
+- Formal result: after audited pruning of only the consumed pilot resume checkpoint, the formal-only
+  continuation completed from the original SFT n=3000 epoch-3 parent. Corrected 1024-token validation
+  scored epochs 1/2/3 at 237/241/237 of 385 (61.56/62.60/61.56%), selecting epoch 2 under the frozen
+  rule. All raw validation predictions and online reward evidence remain preserved. This concerns
+  outcome-only rewards and does not validate GPT-4o or Process Reward.
 - Status: `blocked-decision`.
 - Remaining: define and implement reconstructed Stage 3 transparently, cache every judge event, then
   run expert validation. Never claim exact historical recovery without provenance.
@@ -246,30 +250,34 @@ The original decision PDF remains authoritative; comments below are concise para
 - Evidence/actions: all nested sets and hashes exist. Formal n=2000/n=3000 seed-42 SFT completed with
   ten epoch snapshots; n=500/n=1000 historical formal finals exist but are not retention-matched.
   Validation Attempt01 failed on a chat-template archival race; the explicit frozen-template fix and
-  retry code passes tests. Attempt02 then completed all 21 v2 validation jobs with 8,085 raw
-  predictions and parser consistency. It selected n=2000 epoch 5 (57.92%) and n=3000 epoch 3
-  (60.52%), demonstrating a non-monotonic duration effect. The user declined matched n=500/n=1000
-  reruns; the scale table is therefore frozen to common epoch-10 endpoints with the backend mismatch
+  retry code passes tests. The corrected 1024-token Attempt02 completed all 26 candidates with 10,010
+  raw predictions and parser consistency. It selected n=2000 epoch 5 (57.92%), n=3000 epoch 3
+  (60.52%), and Outcome-GRPO n=1000 epoch 2 (62.60%), demonstrating non-monotonic duration effects.
+  Two isolated 1024-token loops were preserved and scored as model failures. The user declined
+  matched n=500/n=1000 reruns; the scale table is therefore frozen to common epoch-10 endpoints with
+  the backend mismatch
   disclosed. The one-step Outcome-GRPO engineering gate passed, but all eight format rewards were
   zero because the JSON-format prompt conflicted with the strict think/answer reward. The approved
   prompt-v2 correction re-gate passed with 8/8 positive format rewards, positive total-reward
-  variance and a nonzero update. No formal RL-scale result exists. See
-  `docs/20260720_025112_outcome_grpo_prompt_v2_regate_completed.md`.
-- Frozen priority under the user's revision-time constraint: run n=1000/seed42 first from the selected
-  n=3000 epoch-3 SFT parent after a 50-step save/resume/full-validation pilot. RL 250/500 and other
-  SFT/RL combinations are deferred, so the systematic RL scale request remains incomplete.
-- The 50-step prerequisite pilot is complete and passing. The approved checkpoint pruning restored
-  the frozen storage margin, and the formal n=1000 continuation from the original SFT parent is now
-  frozen and authorized, subject to its fresh launch gates. No formal result is claimed before it
-  completes.
+  variance and a nonzero update. The priority formal RL n=1000/seed42 arm is now complete; n=250,
+  n=500, other SFT/RL combinations and seeds 43/44 remain deferred. See
+  `docs/20260722_014643_validation_1024_attempt02_completed.md`.
+- Frozen priority under the user's revision-time constraint was n=1000/seed42 first from the selected
+  n=3000 epoch-3 SFT parent after a 50-step save/resume/full-validation pilot. That priority arm is
+  complete; RL 250/500 and other SFT/RL combinations are deferred, so the systematic RL scale request
+  remains incomplete.
+- The 50-step prerequisite pilot passed; approved checkpoint pruning restored the frozen storage
+  margin; and the formal n=1000 continuation completed. Validation selected epoch 2 at 62.60%, versus
+  the SFT parent at 60.52%. This is one RL size and one seed, not a systematic RL scaling result.
 - Status: `partial`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds
 
 - Planned response: seeds 42/43/44 for main formal lineages without favorable-seed selection; raw
   paired predictions; mean/std across training seeds; Wilson/bootstrap CIs and McNemar/paired tests.
-- Evidence/actions: seed-42 n=2000/n=3000 SFT is complete. Seeds 43/44, formal RL seeds and final
-  statistical comparisons are not complete.
+- Evidence/actions: seed-42 n=2000/n=3000 SFT and Outcome-GRPO n=1000 are complete with paired raw
+  validation outputs. Seeds 43/44 and final confidence intervals/paired statistical comparisons are
+  not complete.
 - Status: `pending-experiment`.
 
 ### R3-7 — Avoid GPT-4o reward/evaluator circularity
@@ -298,16 +306,16 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
    Engineering evidence only; failed/mislabeled attempts remain invalid or non-formal.
 5. Implemented two-tier checkpoint retention: per-epoch model snapshots plus recent resumable states.
    Enables duration selection and R3-5 without retaining every optimizer state.
-6. Completed formal seed-42 n=3000 and n=2000 SFT runs with ten snapshots and all gates. Supports
-   R2-1/R3-5/R3-6 after validation results are complete.
+6. Completed formal seed-42 n=3000 and n=2000 SFT runs with ten snapshots and all gates. The complete
+   validation curves now support R2-1/R3-5/R3-6, subject to the stated one-seed limitation.
 7. Implemented deterministic validation curves with raw 385-row generations and offline parser
-   consistency. Attempt01 failed because an archival timing race left four snapshots without archived
-   chat templates and is not reused. Attempt02 completed all 21 jobs and selected n=2000 epoch 5 and
-   n=3000 epoch 3; all 8,085 raw predictions are retained.
-8. Debugged Outcome GRPO. Attempt02 had zero reward variance/no update; Attempt03 updated language
-   parameters but used a false-positive parser and is scientifically invalid. Parser v2 regression
-   tests pass; a valid formal Outcome-GRPO gate/run has not occurred. Supports R2-4/R3-3 only as
-   engineering preparation.
+   consistency. The earlier 21-job SFT curve selected n=2000 epoch 5 and n=3000 epoch 3. The final
+   corrected 1024-token Attempt02 completed all 26 Base/SFT/Outcome-GRPO candidates and retained all
+   10,010 predictions; isolated cap hits are preserved rather than hidden.
+8. Debugged Outcome GRPO. Debug Attempt02 had zero reward variance/no update; debug Attempt03 updated
+   language parameters but used a false-positive parser and is scientifically invalid. Parser v2
+   regression tests pass; later formal gates and the seed-42 n=1000 run completed. The debug attempts
+   remain invalid and are not parents of the formal 7B lineage.
 9. Preserved raw logs/manifests and recorded approved storage pruning without rewriting failures.
 10. Audited the official image archive by exact bytes. Found one RL/test duplicate under different
     basenames; created v2 by blindly excluding the test QA before formal RL/test. Directly supports R2-2.
@@ -319,21 +327,25 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     Engineering evidence only; supports R2-4/R3-3/R3-5 as preparation.
 12. Completed the user-approved prompt-contract-v2 re-gate. Removing only the contradictory JSON
     instruction changed format rewards from 0/8 to 8/8; every online/offline reward, variance,
-    gradient, save/load, trainability and tensor-freeze gate passed. Engineering evidence only; formal
-    long RL and the RL-scale curve remain pending a separately frozen protocol.
-13. Froze the next priority pipeline: step-25 save/resume to step 50, complete 385-QA validation
-    gate, then only RL n=1000/seed42 for three epochs from the original SFT parent. Supports
-    R2-4/R3-3/R3-5/R3-6 as a predeclared plan; no long-run result is claimed yet.
+    gradient, save/load, trainability and tensor-freeze gate passed. Engineering evidence only; it
+    enabled, but is distinct from, the later formal long run.
+13. Froze the priority pipeline: step-25 save/resume to step 50, complete 385-QA validation gate,
+    then only RL n=1000/seed42 for three epochs from the original SFT parent. This was the predeclared
+    plan that governed the later completed run.
 14. Completed that pilot with all gates: genuine save/resume, 400 audited completions, full validation
-    232/385 versus parent 233/385, exact McNemar p=1.0, language change and visual equality. The
-    formal launch stopped before creation on the 550-GiB-reserve projection. No long RL result is
-    claimed; storage cleanup awaits explicit approval.
+    232/385 versus parent 233/385, exact McNemar p=1.0, language change and visual equality. At that
+    point, formal launch stopped before creation on the 550-GiB-reserve projection.
 15. After explicit approval, hashed all 44 files and pruned only the consumed 109.3-GB pilot resume
     checkpoint. The final model, raw reward events, logs, tensor audit, 385 predictions and manifests
-    remain. Free space now passes the formal projection; formal training still has not started.
+    remained. This restored the formal storage margin before the later launch.
 16. Froze the separately manifested formal-only continuation from SFT n=3000/seed42/epoch3 to
     Outcome-GRPO n=1000/seed42 for three epochs after explicit user authorization. The launcher
-    rechecks immutable pilot/pruning evidence and every formal gate; no result is claimed yet.
+    rechecked immutable pilot/pruning evidence and every formal gate.
+17. Completed the formal Outcome-GRPO continuation and the corrected 26-candidate, 1024-token
+    validation audit. Epochs 1/2/3 scored 61.56/62.60/61.56%, selecting epoch 2; the SFT parent was
+    60.52%. All 10,010 raw predictions passed offline parser audits and test remained sealed. Supports
+    R2-1/R2-4/R3-5/R3-6, but does not substitute for RL-size scaling, multiple seeds, Stage 3, expert
+    reasoning validation, or final test.
 
 ## Mandatory update rule
 
