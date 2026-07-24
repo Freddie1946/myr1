@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-25T00:43:40+08:00",
+  "status": "partially_completed_access_blocked",
+  "formal_result": false,
+  "frozen_protocol": "protocol/evaluation_assets_preparation_manifest_20260725_000657.json",
+  "external_root": "/home/wjy/pathvlm_revision_eval",
+  "repository_code": {
+    "scripts/audit_external_eval_assets.py": "d533b4861730ca3a307496a79c821585849519c633be43150953348b7fa11b5c",
+    "protocol/pathology_clip_requirements_20260725.txt": "0edb112abd78e1068243656faa03f2d6de27f8abc450941eab7403b054f69c00",
+    "protocol/pathology_baseline_source_manifest_20260725_000657.json": "e11933e9c9cb1b5533583905310e8128c26b5688f6cc2402a771bd1a78e6ab67",
+    "protocol/evaluation_assets_preparation_manifest_20260725_000657.json": "a04392a875ec28cd621291d5ba24638d41c4e2935d170ddf80b65862479db376"
+  },
+  "data": {
+    "pathmmu_metadata": {
+      "repo_id": "jamessyx/PathMMU",
+      "revision": "054e64e56e599e9636024f1471d49ecae4a2784f",
+      "root": "/home/wjy/pathvlm_revision_eval/downloads/pathmmu_metadata",
+      "files": {
+        "README.md": "cdeb2d438be893a3f69263ca7b4675950e960238d3d1574e39c173a304742e42",
+        "construct_pathcls.py": "65112aaeae3517f153acdf49e076b74a38174a80bde29bed3222fe14e840a031",
+        "data.json": "7351476669ea3116cd49561b388914c6873d4b690822f3f37df444f722e76f13",
+        "instructions.md": "47e33eee72325bf3069822574384a94f7706acb5e343b9852295eb7b2eca75de",
+        "socialpath_mapping.json": "415f6097a135e4a75a46d75979349d36fcdfe91766111112a7c7548b24031324"
+      },
+      "images_downloaded_in_this_step": false
+    },
+    "omnimedvqa": {
+      "repo_id": "foreverbeliever/OmniMedVQA",
+      "revision": "1ba51c28fc0773bdf7efb8396e5bcfd4227e22da",
+      "archive": "/home/wjy/pathvlm_revision_eval/downloads/omnimedvqa/OmniMedVQA.zip",
+      "archive_sha256": "12245e0f99afbc7d6f70e4ca3c2e5a7979a01816cd8159ae34539f4aa76adee0",
+      "extracted_root": "/home/wjy/pathvlm_revision_eval/datasets/omnimedvqa_ood_v1/OmniMedVQA",
+      "sources": {
+        "Chest CT Scan": {
+          "qa_count": 871,
+          "unique_referenced_image_count": 382,
+          "unique_image_content_count": 349,
+          "internal_exact_duplicate_path_count": 33,
+          "internal_exact_duplicate_content_group_count": 17,
+          "missing_image_count": 0
+        },
+        "ISIC2020": {
+          "qa_count": 1580,
+          "unique_referenced_image_count": 1499,
+          "unique_image_content_count": 1499,
+          "internal_exact_duplicate_path_count": 0,
+          "internal_exact_duplicate_content_group_count": 0,
+          "missing_image_count": 0
+        },
+        "Retinal OCT-C8": {
+          "qa_count": 4016,
+          "unique_referenced_image_count": 3224,
+          "unique_image_content_count": 3222,
+          "internal_exact_duplicate_path_count": 2,
+          "internal_exact_duplicate_content_group_count": 2,
+          "missing_image_count": 0
+        },
+        "Diabetic Retinopathy": {
+          "qa_count": 2051,
+          "unique_referenced_image_count": 1966,
+          "unique_image_content_count": 1966,
+          "internal_exact_duplicate_path_count": 0,
+          "internal_exact_duplicate_content_group_count": 0,
+          "missing_image_count": 0
+        }
+      }
+    },
+    "pathvqa_test": {
+      "repo_id": "flaviagiammarino/path-vqa",
+      "revision": "1685832883334b5bb5beaf4e4b333fdeecaa4ad9",
+      "root": "/home/wjy/pathvlm_revision_eval/datasets/pathvqa_test_v1",
+      "qa_count": 6719,
+      "unique_image_content_count": 858,
+      "shards": {
+        "data/test-00000-of-00003-e9adadb4799f44d3.parquet": "533175be08e87b9ccf2fc06e2f82e58bb2e9bf2299a4a138cf5311f1d26ac157",
+        "data/test-00001-of-00003-7ea98873fc919813.parquet": "84bde926245c4b136de6ef48b197a0f3f177b3fbcb03b7f3cbfcfcb212f20c50",
+        "data/test-00002-of-00003-1628308435019820.parquet": "ae676f41a7ddfc85be8503a731c719e1608da37ddc981de42a10dd2d55a8ee87"
+      }
+    }
+  },
+  "integrity_audit": {
+    "path": "/home/wjy/pathvlm_revision_eval/reports/external_eval_asset_audit_20260725.json",
+    "sha256": "d5a4d8e21e207c26e6c0853026566b0b3e09793a99a73677fe6617e9526b727d",
+    "formal_pathmmu_content_manifest_sha256": "e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed",
+    "all_referenced_images_exist": true,
+    "external_formal_pathmmu_exact_content_overlap_count": 0,
+    "pathvqa_omnimedvqa_exact_content_overlap_count": 0,
+    "passed": true
+  },
+  "environment": {
+    "path": "/home/wjy/pathvlm_revision_eval/envs/pathology_clip",
+    "python": "3.10.20",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "transformers": "4.49.0",
+    "tokenizers": "0.21.0",
+    "timm": "0.9.8",
+    "datasets": "3.3.2",
+    "pip_check_passed": true,
+    "cpu_only_imports_passed": true,
+    "formal_environments_modified": false,
+    "pip_freeze": {
+      "path": "/home/wjy/pathvlm_revision_eval/reports/pathology_clip_pip_freeze_20260725.txt",
+      "sha256": "6864c585ee7869faf4f7027df5661a1e631fb50cd8e3ec773741fdec9aaa3b5d"
+    },
+    "conda_explicit": {
+      "path": "/home/wjy/pathvlm_revision_eval/reports/pathology_clip_conda_explicit_20260725.txt",
+      "sha256": "2bd82f67e8c3bb9207b4459b4e785128a0322cc8390762ee1ba5d4932ceadfa4"
+    }
+  },
+  "baselines": {
+    "PLIP": {
+      "source_commit": "f010f3d0bef20f4e8cc64cc26c301cbd26305fa1",
+      "model_revision": "67ade53ddd32195868f422585f72698ef5d15094",
+      "metadata_downloaded": true,
+      "weights_downloaded": false,
+      "weight_size_bytes": 605000000,
+      "upstream_editable_install_passed": false,
+      "failure": "upstream setup.py declares nonexistent package directory plip",
+      "corrected_interface": "transformers CLIPModel and CLIPProcessor",
+      "source_import_passed": true
+    },
+    "CONCH": {
+      "source_commit": "141cc09c7d4ff33d8eda562bd75169b457f71a62",
+      "model_revision": "f9ca9f877171a28ade80228fb195ac5d79003357",
+      "editable_install_passed": true,
+      "weight_size_bytes": 802235437,
+      "weight_access": "denied_403_request_license",
+      "weights_downloaded": false
+    },
+    "UNI": {
+      "source_commit": "42715efc11722a496e0a67f3369505a8f277206c",
+      "model_revision": "b55a5ec6cade1a39edfe6534189a9b8ca7a022f0",
+      "editable_install_passed": true,
+      "weight_size_bytes": 1213527781,
+      "weight_access": "denied_403_request_license",
+      "weights_downloaded": false
+    },
+    "LLaVA-Med": {
+      "source_commit": "30697ca50b5c29a8e955c99330b259776aef27b9",
+      "environment_prepared": false,
+      "weights_downloaded": false,
+      "status": "deferred_separate_gate"
+    }
+  },
+  "storage": {
+    "external_root_du": "18G",
+    "free_gb_df_after_preparation": 506,
+    "preparation_floor_gib": 450,
+    "formal_training_reserve_gib": 550,
+    "cleanup_performed": false
+  },
+  "gates": {
+    "data_integrity_passed": true,
+    "environment_imports_passed": true,
+    "all_requested_baseline_weights_available": false,
+    "no_inference": true,
+    "no_training": true,
+    "no_stage3": true,
+    "no_gpu_use": true,
+    "formal_test_qa_labels_not_opened": true,
+    "picked_json_unused": true,
+    "no_cleanup": true
+  }
+}

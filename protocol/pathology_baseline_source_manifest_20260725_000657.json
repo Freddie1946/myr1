@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-25T00:06:57+08:00",
+  "formal_result": false,
+  "purpose": "immutable source pins for preparation-only pathology baselines",
+  "sources": {
+    "CONCH": {
+      "url": "https://github.com/mahmoodlab/CONCH.git",
+      "commit": "141cc09c7d4ff33d8eda562bd75169b457f71a62",
+      "local_path": "/home/wjy/pathvlm_revision_eval/sources/CONCH"
+    },
+    "UNI": {
+      "url": "https://github.com/mahmoodlab/UNI.git",
+      "commit": "42715efc11722a496e0a67f3369505a8f277206c",
+      "local_path": "/home/wjy/pathvlm_revision_eval/sources/UNI"
+    },
+    "PLIP": {
+      "url": "https://github.com/PathologyFoundation/plip.git",
+      "commit": "f010f3d0bef20f4e8cc64cc26c301cbd26305fa1",
+      "local_path": "/home/wjy/pathvlm_revision_eval/sources/plip"
+    },
+    "LLaVA-Med": {
+      "url": "https://github.com/microsoft/LLaVA-Med.git",
+      "commit": "30697ca50b5c29a8e955c99330b259776aef27b9",
+      "local_path": "/home/wjy/pathvlm_revision_eval/sources/LLaVA-Med",
+      "environment_and_weights_deferred": true
+    }
+  },
+  "environment": {
+    "path": "/home/wjy/pathvlm_revision_eval/envs/pathology_clip",
+    "python": "3.10",
+    "direct_requirements": "protocol/pathology_clip_requirements_20260725.txt",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "formal_sft_grpo_environments_modified": false
+  },
+  "execution_forbidden": [
+    "training",
+    "inference",
+    "GPU allocation",
+    "formal test access"
+  ]
+}

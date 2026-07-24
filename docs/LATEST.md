@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260722_014643`
+Latest timestamp: `20260725_004340`
 
 Read in this order:
 
@@ -116,7 +116,14 @@ Read in this order:
 110. `../protocol/training_plan.md`
 111. `../protocol/old_sft_audit.md`
 112. The latest manifest under `../debug_e2e/`
+113. `20260725_000657_evaluation_assets_preparation_frozen.md`
+114. `../protocol/evaluation_assets_preparation_manifest_20260725_000657.json`
+115. `../protocol/pathology_baseline_source_manifest_20260725_000657.json`
+116. `../protocol/pathology_clip_requirements_20260725.txt`
+117. `20260725_004340_external_evaluation_assets_and_baseline_environment_prepared.md`
+118. `../protocol/evaluation_assets_preparation_completion_manifest_20260725_004340.json`
 
-Current next action: audit and commit the completed Attempt02 evidence, then wait for the user to
-choose the next frozen protocol. Keep test sealed; do not start Stage 3, another training experiment,
-or final test inference without separate authorization.
+Current next action: wait for the user to request/accept CONCH and UNI Hugging Face licenses and
+decide whether to download PLIP weights. The prepared data and environment passed integrity/import
+gates, but no evaluation protocol is frozen. Do not run inference or training, allocate a GPU, clean
+storage, open the formal PathMMU test split, or start Stage 3 without separate authorization.

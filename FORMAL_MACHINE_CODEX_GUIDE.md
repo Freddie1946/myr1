@@ -136,7 +136,198 @@ python3 -c "import json; p=json.load(open('$INSTALL_ROOT/reports/preflight_repor
 
 只有 `passed=True` 才能进入训练门禁。
 
-## 5. 执行任务的顺序
+## 5. 迁移外部评测数据与病理基线环境
+
+这一节是可选的修订实验迁移流程，与第 4 节的正式 SFT/GRPO bootstrap 完全隔离。只有在
+用户明确批准外部评测资产准备后才执行。当前冻结范围和源版本见：
+
+- `protocol/evaluation_assets_preparation_manifest_20260725_000657.json`
+- `protocol/pathology_baseline_source_manifest_20260725_000657.json`
+- `protocol/pathology_clip_requirements_20260725.txt`
+
+先设置机器相关路径。不要把 token 写入命令、脚本或 `.env`：
+
+```bash
+cd /path/to/myr1
+export EVAL_ROOT="${EVAL_ROOT:-$HOME/pathvlm_revision_eval}"
+export HF_BIN="${HF_BIN:-$HOME/.conda/envs/wjy/bin/hf}"
+export CONDA_EXE="${CONDA_EXE:-/opt/miniconda3/bin/conda}"
+mkdir -p "$EVAL_ROOT"/{downloads,datasets,models,envs,reports,sources}
+"$HF_BIN" auth whoami
+df -h "$EVAL_ROOT"
+```
+
+外部资产不进入 Git。迁移前后至少保留 450 GiB 可用空间；空间不足时停止并报告，不自动
+清理。迁移只准备数据/环境，不运行推理、训练或 Stage 3，也不占用 GPU。
+
+### 5.1 下载固定版本的数据
+
+下载 PathMMU 的小型元数据，不重复下载已经由正式 bootstrap 管理的图片归档：
+
+```bash
+"$HF_BIN" download jamessyx/PathMMU \
+  data.json instructions.md socialpath_mapping.json README.md construct_pathcls.py \
+  --repo-type dataset \
+  --revision 054e64e56e599e9636024f1471d49ecae4a2784f \
+  --local-dir "$EVAL_ROOT/downloads/pathmmu_metadata"
+```
+
+下载固定提交的 OmniMedVQA 官方归档：
+
+```bash
+"$HF_BIN" download foreverbeliever/OmniMedVQA OmniMedVQA.zip README.md \
+  --repo-type dataset \
+  --revision 1ba51c28fc0773bdf7efb8396e5bcfd4227e22da \
+  --local-dir "$EVAL_ROOT/downloads/omnimedvqa" \
+  --max-workers 2
+```
+
+只抽取已批准的 Chest CT、ISIC2020、Retinal OCT-C8 和 Diabetic Retinopathy：
+
+```bash
+unzip -q -n "$EVAL_ROOT/downloads/omnimedvqa/OmniMedVQA.zip" \
+  'OmniMedVQA/Images/Chest CT Scan/*' \
+  'OmniMedVQA/Images/ISIC2020/*' \
+  'OmniMedVQA/Images/Retinal OCT-C8/*' \
+  'OmniMedVQA/Images/Diabetic Retinopathy/*' \
+  'OmniMedVQA/QA_information/Open-access/Chest CT Scan.json' \
+  'OmniMedVQA/QA_information/Open-access/ISIC2020.json' \
+  'OmniMedVQA/QA_information/Open-access/Retinal OCT-C8.json' \
+  'OmniMedVQA/QA_information/Open-access/Diabetic Retinopathy.json' \
+  'OmniMedVQA/README.md' \
+  -d "$EVAL_ROOT/datasets/omnimedvqa_ood_v1"
+```
+
+当前已验证的归档 SHA-256 和真实结构是：
+
+- `OmniMedVQA.zip`:
+  `12245e0f99afbc7d6f70e4ca3c2e5a7979a01816cd8159ae34539f4aa76adee0`
+- Chest CT: 382 个唯一引用图像、871 个 QA。
+- ISIC2020: 1,499 个唯一引用图像、1,580 个 QA。
+- Retinal OCT-C8: 3,224 个唯一引用图像、4,016 个 QA。
+- Diabetic Retinopathy: 1,966 个唯一引用图像、2,051 个 QA。
+
+PathVQA 使用数据卡明确说明来自作者 2023-02-15 更新分发版本的规范化 Hugging Face
+test split，只下载三个 test parquet，不下载 train/validation：
+
+```bash
+"$HF_BIN" download flaviagiammarino/path-vqa \
+  README.md \
+  data/test-00000-of-00003-e9adadb4799f44d3.parquet \
+  data/test-00001-of-00003-7ea98873fc919813.parquet \
+  data/test-00002-of-00003-1628308435019820.parquet \
+  --repo-type dataset \
+  --revision 1685832883334b5bb5beaf4e4b333fdeecaa4ad9 \
+  --local-dir "$EVAL_ROOT/datasets/pathvqa_test_v1" \
+  --max-workers 2
+```
+
+三个 shard 应分别为 2,240/2,240/2,239 行，共 6,719 QA、858 个唯一图像内容。对应
+SHA-256 依次是：
+
+- `533175be08e87b9ccf2fc06e2f82e58bb2e9bf2299a4a138cf5311f1d26ac157`
+- `84bde926245c4b136de6ef48b197a0f3f177b3fbcb03b7f3cbfcfcb212f20c50`
+- `ae676f41a7ddfc85be8503a731c719e1608da37ddc981de42a10dd2d55a8ee87`
+
+### 5.2 固定基线源码
+
+下面四个提交是准备阶段实际审计的版本。迁移时 checkout 提交而不是浮动 `main`：
+
+```bash
+git clone --filter=blob:none --no-checkout \
+  https://github.com/mahmoodlab/CONCH.git "$EVAL_ROOT/sources/CONCH"
+git -C "$EVAL_ROOT/sources/CONCH" fetch --depth 1 origin \
+  141cc09c7d4ff33d8eda562bd75169b457f71a62
+git -C "$EVAL_ROOT/sources/CONCH" checkout --detach \
+  141cc09c7d4ff33d8eda562bd75169b457f71a62
+
+git clone --filter=blob:none --no-checkout \
+  https://github.com/mahmoodlab/UNI.git "$EVAL_ROOT/sources/UNI"
+git -C "$EVAL_ROOT/sources/UNI" fetch --depth 1 origin \
+  42715efc11722a496e0a67f3369505a8f277206c
+git -C "$EVAL_ROOT/sources/UNI" checkout --detach \
+  42715efc11722a496e0a67f3369505a8f277206c
+
+git clone --filter=blob:none --no-checkout \
+  https://github.com/PathologyFoundation/plip.git "$EVAL_ROOT/sources/plip"
+git -C "$EVAL_ROOT/sources/plip" fetch --depth 1 origin \
+  f010f3d0bef20f4e8cc64cc26c301cbd26305fa1
+git -C "$EVAL_ROOT/sources/plip" checkout --detach \
+  f010f3d0bef20f4e8cc64cc26c301cbd26305fa1
+
+git clone --filter=blob:none --no-checkout \
+  https://github.com/microsoft/LLaVA-Med.git "$EVAL_ROOT/sources/LLaVA-Med"
+git -C "$EVAL_ROOT/sources/LLaVA-Med" fetch --depth 1 origin \
+  30697ca50b5c29a8e955c99330b259776aef27b9
+git -C "$EVAL_ROOT/sources/LLaVA-Med" checkout --detach \
+  30697ca50b5c29a8e955c99330b259776aef27b9
+```
+
+### 5.3 创建 PLIP/CONCH/UNI 隔离环境
+
+不要在正式 `sft`、`grpo` 或用户的通用 `wjy` 环境里安装这些依赖：
+
+```bash
+"$CONDA_EXE" create -p "$EVAL_ROOT/envs/pathology_clip" \
+  python=3.10 pip=25.1 setuptools=78.1 wheel=0.45 -y
+
+"$EVAL_ROOT/envs/pathology_clip/bin/pip" install \
+  --index-url https://download.pytorch.org/whl/cu121 \
+  torch==2.5.1 torchvision==0.20.1
+
+"$EVAL_ROOT/envs/pathology_clip/bin/pip" install \
+  -r protocol/pathology_clip_requirements_20260725.txt
+
+"$EVAL_ROOT/envs/pathology_clip/bin/pip" install --no-deps \
+  -e "$EVAL_ROOT/sources/CONCH" \
+  -e "$EVAL_ROOT/sources/UNI"
+```
+
+不要对固定提交 `f010f3d...` 的 PLIP 仓库执行 `pip install -e`：其上游 `setup.py`
+声明不存在的 `plip/` 包，而源码实际是顶层 `plip.py`，会在 `egg_info` 阶段失败。
+评测适配器优先使用 PLIP README 同样给出的
+`transformers.CLIPModel/CLIPProcessor.from_pretrained("vinid/plip")`；若仅需审计上游
+wrapper，则临时设置 `PYTHONPATH="$EVAL_ROOT/sources/plip"` 后 `import plip`，不要修改上游
+源码伪装修复。
+
+CONCH 和 UNI 权重需要各自在 Hugging Face 页面接受许可；不要把 token 作为 Python 参数、
+命令行参数或源码常量。PLIP/CONCH 仅作为图文匹配基线；公开 CONCH 不含生成解码器。
+UNI 是视觉编码器，只做定位/表征对比，不伪装成生成式 VQA 基线。LLaVA-Med 的独立环境和
+约 15 GB 权重仍需后续单独门禁。
+
+当前 `Freddie1946` 账号能读模型卡，但对固定版本的 CONCH/UNI
+`pytorch_model.bin` 做鉴权 HEAD 时均返回 403。迁移后仍需由账号本人分别在以下页面接受
+许可并等待授权，再重新做 HEAD 检查；文件总大小约 0.80 GB 和 1.21 GB：
+
+- `https://huggingface.co/MahmoodLab/CONCH`
+- `https://huggingface.co/MahmoodLab/UNI`
+
+迁移完成后只做 CPU 导入和一致性检查：
+
+```bash
+for d in CONCH UNI plip LLaVA-Med; do
+  git -C "$EVAL_ROOT/sources/$d" rev-parse HEAD
+done
+sha256sum "$EVAL_ROOT/downloads/omnimedvqa/OmniMedVQA.zip"
+"$EVAL_ROOT/envs/pathology_clip/bin/pip" check
+CUDA_VISIBLE_DEVICES="" "$EVAL_ROOT/envs/pathology_clip/bin/python" -c \
+  "import torch, torchvision, transformers, timm, datasets; import conch, uni; print('core imports PASS')"
+PYTHONPATH="$EVAL_ROOT/sources/plip" CUDA_VISIBLE_DEVICES="" \
+  "$EVAL_ROOT/envs/pathology_clip/bin/python" -c \
+  "import plip; from transformers import CLIPModel, CLIPProcessor; print('PLIP imports PASS')"
+
+"$EVAL_ROOT/envs/pathology_clip/bin/python" scripts/audit_external_eval_assets.py \
+  --omnimed-root "$EVAL_ROOT/datasets/omnimedvqa_ood_v1/OmniMedVQA" \
+  --pathvqa-root "$EVAL_ROOT/datasets/pathvqa_test_v1" \
+  --formal-content-manifest data/pathmmu_image_disjoint_v2/image_content_sha256.json \
+  --output "$EVAL_ROOT/reports/external_eval_asset_audit_20260725.json"
+```
+
+将 `pip freeze`、源提交、数据哈希、文件/QA 数量、缺失路径和精确内容重叠报告写入
+`$EVAL_ROOT/reports/`，并把小型摘要/清单写回仓库。任何外部评测开始前，必须先冻结
+prompt、解码、评分、统计和污染审计协议；test 仍不得用于选择。
+
+## 6. 执行任务的顺序
 
 ### A. 执行正式 SFT smoke
 
@@ -173,7 +364,7 @@ visual tensor 严格相同。该 smoke 必须标记 `formal_result: false`，完
 4. Stage 3 Process Reward 的科学定义未敲定，未经用户确认不得正式训练。
 5. 最后冻结 prompt、checkpoint、解码和评分，再运行 test；test 永不用于选择。
 
-## 6. Codex 每次汇报格式
+## 7. Codex 每次汇报格式
 
 每个阶段至少报告：状态、执行命令、输入/输出路径、数据量、seed、GPU、耗时、关键指标、门禁结果、异常和下一步。每个重要计划、失败、修复和完成都新增时间戳文档并更新 `docs/LATEST.md`；不得改写失败历史。
 

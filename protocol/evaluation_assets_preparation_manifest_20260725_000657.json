@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-25T00:06:57+08:00",
+  "status": "frozen_preparation",
+  "formal_result": false,
+  "repository_commit_at_freeze": "8fc2e095bae99f65ff9e6cfd468c83c07e89750c",
+  "scope": "external evaluation data and pathology baseline environment preparation only",
+  "external_root": "/home/wjy/pathvlm_revision_eval",
+  "authorized_actions": [
+    "create isolated directories and environments",
+    "resolve and record immutable upstream revisions",
+    "download and extract approved evaluation assets",
+    "inspect schemas and validate files",
+    "compute hashes and overlap reports",
+    "install pinned dependencies",
+    "run CPU-only import and construction checks"
+  ],
+  "forbidden_actions": [
+    "stage3 training or validation",
+    "any model training",
+    "any model inference or evaluation",
+    "formal PathMMU test access",
+    "GPU allocation or process termination",
+    "storage cleanup",
+    "use of picked.json",
+    "use of expired embedded API credentials",
+    "commit of weights images environments caches credentials or generated outputs"
+  ],
+  "storage": {
+    "starting_free_gb_df": 524,
+    "estimated_increment_gb": {
+      "four_omnimedvqa_subsets_plus_plip_conch": "15-22",
+      "with_pathvqa_test": "20-27",
+      "with_llava_med_and_separate_environment": "41-50",
+      "conservative_all_assets_with_archives_and_cache": "55-80"
+    },
+    "fail_closed_minimum_free_gib": 450,
+    "cleanup_authorized": false
+  },
+  "datasets": [
+    {
+      "name": "PathMMU metadata and additional-source audit",
+      "upstream": "jamessyx/PathMMU",
+      "revision": "054e64e56e599e9636024f1471d49ecae4a2784f",
+      "preparation_only": true
+    },
+    {
+      "name": "OmniMedVQA requested OOD sources",
+      "upstream": "foreverbeliever/OmniMedVQA",
+      "revision": null,
+      "requested_sources": [
+        "Chest CT",
+        "ISIC2020",
+        "Retinal OCT-C8",
+        "Diabetic Retinopathy"
+      ],
+      "revision_must_resolve_before_large_download": true
+    },
+    {
+      "name": "PathVQA official test",
+      "upstream": "official distribution to be resolved",
+      "revision": null,
+      "independent_evaluation_only": true
+    }
+  ],
+  "baselines": [
+    {
+      "name": "PLIP",
+      "role": "pathology image-text option matching",
+      "environment": "pathology_clip"
+    },
+    {
+      "name": "CONCH",
+      "role": "pathology image-text option matching",
+      "environment": "pathology_clip",
+      "access_may_be_gated": true
+    },
+    {
+      "name": "UNI",
+      "role": "vision-only representation/positioning analysis",
+      "environment": "pathology_clip",
+      "not_a_direct_generative_vqa_baseline": true,
+      "access_may_be_gated": true
+    },
+    {
+      "name": "LLaVA-Med",
+      "role": "optional direct generative medical VQA baseline",
+      "environment": "llava_med",
+      "deferred_until_separate_size_and_dependency_gate": true
+    }
+  ],
+  "data_gates": {
+    "formal_v2_split_immutable": true,
+    "picked_json_forbidden": true,
+    "external_data_not_training_data": true,
+    "exact_overlap_audit_required_before_evaluation": true,
+    "historical_500_ids_recovered": false,
+    "test_used_for_selection": false
+  },
+  "hardware_at_freeze": {
+    "gpu_count": 8,
+    "gpu_model_reported": "NVIDIA GeForce RTX 4090",
+    "memory_mib_each": 49140,
+    "all_gpus_busy": true,
+    "gpu_use_authorized_for_this_phase": false
+  },
+  "authentication": {
+    "huggingface_user": "Freddie1946",
+    "credentials_recorded_in_git": false
+  },
+  "gates": {
+    "preparation_only": true,
+    "formal_test_sealed": true,
+    "no_training_authorized": true,
+    "no_inference_authorized": true,
+    "no_cleanup_authorized": true,
+    "no_gpu_process_interference": true
+  }
+}

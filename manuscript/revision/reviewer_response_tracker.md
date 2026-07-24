@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-22T01:46:43+08:00`
+Last updated: `2026-07-25T00:43:40+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -165,7 +165,12 @@ The original decision PDF remains authoritative; comments below are concise para
   pathology/medical VQA baselines where weights and licenses allow; retain same-base SFT-only and
   continued-SFT controls.
 - Evidence/actions: CONCH, UNI, PLIP, and LLaVA-Med repositories/requirements were audited; their
-  task mismatches are documented. No new formal baseline result is complete.
+  task mismatches are documented. A preparation-only protocol now authorizes isolated, pinned
+  environments for PLIP/CONCH/UNI and a separately gated LLaVA-Med environment. The isolated
+  environment now passes CPU imports and dependency checks. PLIP metadata is prepared; CONCH/UNI
+  weight access is blocked by unaccepted Hugging Face licenses. No new formal baseline result is
+  complete.
+- Evidence path: `docs/20260725_004340_external_evaluation_assets_and_baseline_environment_prepared.md`.
 - Status: `partial`.
 
 ### R2-4 — Fully specify and validate GPT-4o reward execution
@@ -207,7 +212,12 @@ The original decision PDF remains authoritative; comments below are concise para
   prompt/checkpoint/parser lock; save all raw predictions; report Wilson/bootstrap CIs and paired
   tests. Add independent pathology benchmarks if feasible.
 - Evidence/actions: deterministic 385-QA validation infrastructure and raw-output audits exist; final
-  full-test and independent-benchmark results do not.
+  full-test and independent-benchmark results do not. Preparation is frozen for the four full
+  requested OmniMedVQA sources, PathMMU additional-source metadata and official PathVQA test, with
+  mandatory revision/hash and overlap audits before evaluation. All four OmniMedVQA sources and the
+  6,719-QA PathVQA test are now present; exact-content audits pass against formal PathMMU v2, but no
+  inference or statistical result exists.
+- Evidence path: `docs/20260725_004340_external_evaluation_assets_and_baseline_environment_prepared.md`.
 - Status: `pending-experiment`.
 
 ## Reviewer 3
@@ -216,6 +226,9 @@ The original decision PDF remains authoritative; comments below are concise para
 
 - Response: same corrective action as R1-3; explicitly report negative transfer on three modalities
   instead of averaging it away.
+- Evidence/actions: preparation is frozen for full Chest CT, ISIC2020, Retinal OCT-C8 and Diabetic
+  Retinopathy source subsets. All four are downloaded, path-complete and exact-content-disjoint from
+  formal PathMMU v2. No rerun or statistical result is complete.
 - Status: `pending-writing`/`pending-experiment`.
 
 ### R3-2 — One attention heatmap is insufficient and may be unfaithful
@@ -241,6 +254,8 @@ The original decision PDF remains authoritative; comments below are concise para
   generation/reasoning capability, clinical scope and limitations; explain when direct VQA comparison
   is invalid.
 - Evidence/actions: repository and environment audit completed; manuscript section not yet revised.
+- Preparation action: exact source revisions, dependency versions, access limits and task
+  comparability for UNI, CONCH and PLIP are recorded. CONCH/UNI weights remain license-blocked.
 - Status: `pending-writing`.
 
 ### R3-5 — Run systematic SFT and RL data-scaling experiments
@@ -346,6 +361,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     60.52%. All 10,010 raw predictions passed offline parser audits and test remained sealed. Supports
     R2-1/R2-4/R3-5/R3-6, but does not substitute for RL-size scaling, multiple seeds, Stage 3, expert
     reasoning validation, or final test.
+18. Froze a preparation-only external-evaluation protocol for full requested OmniMedVQA sources,
+    additional PathMMU metadata, independent PathVQA test, and isolated PLIP/CONCH/UNI environments.
+    It authorizes no inference, training, GPU use, test opening or cleanup. Supports preparation for
+    R1-3/R2-3/R2-5/R3-1/R3-4; no scientific result is claimed.
+19. Prepared and exact-content-audited the four requested OmniMedVQA sources plus the 6,719-QA
+    PathVQA test, and built a CPU-import-valid PLIP/CONCH/UNI environment. No external inference was
+    run; CONCH/UNI weights remain license-blocked. Supports R1-3/R2-3/R2-5/R3-1/R3-4 preparation.
 
 ## Mandatory update rule
 
