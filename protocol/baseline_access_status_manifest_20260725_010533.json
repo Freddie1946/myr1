@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-25T01:05:33+08:00",
+  "formal_result": false,
+  "scope": "read-only baseline access and environment status audit",
+  "new_baselines": {
+    "PLIP": {
+      "environment_import": "pass",
+      "weight_access": "public",
+      "weight_local": false,
+      "formal_adapter": false,
+      "end_to_end_ready": false
+    },
+    "CONCH": {
+      "environment_import": "pass",
+      "model_revision": "f9ca9f877171a28ade80228fb195ac5d79003357",
+      "weight_size_bytes": 802235437,
+      "weight_etag": "40a9644b9ba0e83a74576e0a5e5f7313599fa9c9cdaf3c20f8a3e271b0e9ae7c",
+      "authenticated_head": "pass",
+      "weight_local": false,
+      "formal_adapter": false,
+      "end_to_end_ready": false
+    },
+    "UNI": {
+      "environment_import": "pass",
+      "model_revision": "b55a5ec6cade1a39edfe6534189a9b8ca7a022f0",
+      "weight_size_bytes": 1213527781,
+      "weight_etag": "56ef09b44a25dc5c7eedc55551b3d47bcd17659a7a33837cf9abc9ec4e2ffb40",
+      "authenticated_head": "pass",
+      "weight_local": false,
+      "formal_adapter": false,
+      "end_to_end_ready": false
+    },
+    "LLaVA-Med": {
+      "source_local": true,
+      "dedicated_environment": false,
+      "weight_local": false,
+      "formal_adapter": false,
+      "end_to_end_ready": false
+    },
+    "PathChat": {
+      "verified_public_release": false,
+      "end_to_end_ready": false
+    }
+  },
+  "manuscript_baselines": {
+    "Qwen2.5-VL-7B": {
+      "exact_snapshot_local": true,
+      "environment_import": "pass",
+      "validated_inference_infrastructure": true,
+      "end_to_end_ready": true
+    },
+    "other_local_open_weight_models": {
+      "models": [
+        "DeepSeek-VL2",
+        "LLaMA3.2-90B",
+        "LLaMA3.2-11B",
+        "MedVLM-R1",
+        "MedGemma-4B",
+        "Qwen2.5-VL-3B",
+        "Lingshu-7B",
+        "InternVL3-8B",
+        "HuatuoGPT-Vision-7B"
+      ],
+      "verified_weight_snapshots_local": false,
+      "reproducible_isolated_environments": false,
+      "complete_raw_output_provenance": false
+    },
+    "api_hosted_models": {
+      "models": [
+        "Doubao-1.5-vision",
+        "Qwen-VL-Plus",
+        "Claude-3.5-Haiku",
+        "Grok-4-Fast",
+        "Claude-4.5"
+      ],
+      "fresh_credentials_available": false,
+      "provider_contract_frozen": false,
+      "end_to_end_ready": false
+    }
+  },
+  "gates": {
+    "weights_downloaded": false,
+    "environment_modified": false,
+    "model_inference_performed": false,
+    "training_performed": false,
+    "gpu_used": false,
+    "formal_test_scored": false
+  }
+}

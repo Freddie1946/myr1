@@ -295,9 +295,9 @@ CONCH 和 UNI 权重需要各自在 Hugging Face 页面接受许可；不要把 
 UNI 是视觉编码器，只做定位/表征对比，不伪装成生成式 VQA 基线。LLaVA-Med 的独立环境和
 约 15 GB 权重仍需后续单独门禁。
 
-当前 `Freddie1946` 账号能读模型卡，但对固定版本的 CONCH/UNI
-`pytorch_model.bin` 做鉴权 HEAD 时均返回 403。迁移后仍需由账号本人分别在以下页面接受
-许可并等待授权，再重新做 HEAD 检查；文件总大小约 0.80 GB 和 1.21 GB：
+`Freddie1946` 账号最初只能读模型卡，权重鉴权返回 403；用户完成申请后，2026-07-25
+对固定版本的 CONCH/UNI `pytorch_model.bin` 鉴权 HEAD 均已通过。迁移到新机器后仍需由
+账号本人分别在以下页面接受许可，并重新做 HEAD 检查；文件总大小约 0.80 GB 和 1.21 GB：
 
 - `https://huggingface.co/MahmoodLab/CONCH`
 - `https://huggingface.co/MahmoodLab/UNI`

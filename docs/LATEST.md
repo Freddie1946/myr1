@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260725_004340`
+Latest timestamp: `20260725_010533`
 
 Read in this order:
 
@@ -122,8 +122,11 @@ Read in this order:
 116. `../protocol/pathology_clip_requirements_20260725.txt`
 117. `20260725_004340_external_evaluation_assets_and_baseline_environment_prepared.md`
 118. `../protocol/evaluation_assets_preparation_completion_manifest_20260725_004340.json`
+119. `20260725_010533_baseline_access_and_environment_status.md`
+120. `../protocol/baseline_access_status_manifest_20260725_010533.json`
 
-Current next action: wait for the user to request/accept CONCH and UNI Hugging Face licenses and
-decide whether to download PLIP weights. The prepared data and environment passed integrity/import
+Current next action: after user confirmation, download and hash the fixed PLIP/CONCH/UNI weights and
+implement/freeze the matched option-scoring adapters, or first configure a separately selected
+manuscript baseline subset. The prepared data and shared pathology environment pass integrity/import
 gates, but no evaluation protocol is frozen. Do not run inference or training, allocate a GPU, clean
 storage, open the formal PathMMU test split, or start Stage 3 without separate authorization.

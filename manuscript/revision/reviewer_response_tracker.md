@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-25T00:43:40+08:00`
+Last updated: `2026-07-25T01:05:33+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -96,7 +96,10 @@ The original decision PDF remains authoritative; comments below are concise para
 - Response: add model/revision, prompt template, image preprocessing, decoding, sample count, parser,
   and raw-output provenance for every baseline; avoid comparing unmatched settings without caveats.
 - Evidence/actions: baseline repository/environment audit exists, but a final comparable-baseline
-  manifest and complete raw outputs are not yet frozen.
+  manifest and complete raw outputs are not yet frozen. The formal-machine audit confirms only
+  Qwen2.5-VL-7B is currently end-to-end ready; historical scripts/results do not supply reproducible
+  environment, weight and raw-output provenance for the other Table II/IV baselines.
+- Evidence path: `docs/20260725_010533_baseline_access_and_environment_status.md`.
 - Status: `partial`.
 
 ### R1-8 — Add a color scale to Figure 7
@@ -167,10 +170,12 @@ The original decision PDF remains authoritative; comments below are concise para
 - Evidence/actions: CONCH, UNI, PLIP, and LLaVA-Med repositories/requirements were audited; their
   task mismatches are documented. A preparation-only protocol now authorizes isolated, pinned
   environments for PLIP/CONCH/UNI and a separately gated LLaVA-Med environment. The isolated
-  environment now passes CPU imports and dependency checks. PLIP metadata is prepared; CONCH/UNI
-  weight access is blocked by unaccepted Hugging Face licenses. No new formal baseline result is
-  complete.
-- Evidence path: `docs/20260725_004340_external_evaluation_assets_and_baseline_environment_prepared.md`.
+  environment now passes CPU imports and dependency checks. PLIP metadata is prepared; authenticated
+  fixed-revision weight HEAD checks now pass for CONCH and UNI. Weights and formal adapters are not
+  yet local. Only the manuscript Qwen2.5-VL-7B baseline is end-to-end ready on this machine; other
+  manuscript baseline environments/weights/raw outputs are absent or unauditable. No new formal
+  baseline result is complete.
+- Evidence path: `docs/20260725_010533_baseline_access_and_environment_status.md`.
 - Status: `partial`.
 
 ### R2-4 — Fully specify and validate GPT-4o reward execution
@@ -255,7 +260,8 @@ The original decision PDF remains authoritative; comments below are concise para
   is invalid.
 - Evidence/actions: repository and environment audit completed; manuscript section not yet revised.
 - Preparation action: exact source revisions, dependency versions, access limits and task
-  comparability for UNI, CONCH and PLIP are recorded. CONCH/UNI weights remain license-blocked.
+  comparability for UNI, CONCH and PLIP are recorded. CONCH/UNI license access is resolved; weights,
+  adapters and manuscript text remain pending.
 - Status: `pending-writing`.
 
 ### R3-5 — Run systematic SFT and RL data-scaling experiments
@@ -368,6 +374,10 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
 19. Prepared and exact-content-audited the four requested OmniMedVQA sources plus the 6,719-QA
     PathVQA test, and built a CPU-import-valid PLIP/CONCH/UNI environment. No external inference was
     run; CONCH/UNI weights remain license-blocked. Supports R1-3/R2-3/R2-5/R3-1/R3-4 preparation.
+20. Re-audited baseline access after user license approval. Fixed-revision CONCH/UNI weight HEAD
+    checks now pass, while downloads/adapters remain pending. Confirmed that only Qwen2.5-VL-7B among
+    the manuscript baselines is end-to-end ready on this machine; the rest require reproducible
+    environment/weight/provider work. Supports R1-7/R2-3/R3-4 preparation.
 
 ## Mandatory update rule
 
