@@ -78,7 +78,7 @@ fi
 log "Verifying repository code hashes"
 python3 "$REPO_ROOT/scripts/verify_code_hash_manifest.py" \
   --repo-root "$REPO_ROOT" \
-  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260719_172547.json"
+  --manifest "$REPO_ROOT/protocol/code_hash_manifest_20260727_203723.json"
 
 log "Hardware snapshot"
 nvidia-smi

@@ -1,0 +1,50 @@
+你现在位于新的 8×A100 正式实验机器，用户工作区为
+/home/dataset-assist-0/czy/wjy，仓库根目录为
+/home/dataset-assist-0/czy/wjy/myr1。
+
+不要依赖其他机器的聊天记忆。Git 仓库是唯一权威交接记录。先完整阅读根目录 AGENTS.md，
+严格按照 Mandatory reading order 阅读，特别是：
+- A100_STAGE3_EVAL_CODEX_START.md
+- FORMAL_MACHINE_CODEX_GUIDE.md
+- CODEX_START_HERE.md
+- docs/LATEST.md 及其全部引用
+- manuscript/README.md、论文、编辑决定和全部审稿意见
+- protocol/training_plan.md
+- 最新的 A100 迁移 manifest、基线 manifest 和已有正式结果 manifest
+
+本机角色：
+1. 承担 Stage 3、所有后续 validation/test、所有基线、OOD/跨模态评测、统计和 bad-case；
+2. 承担之后仍保留在计划中的其他实验，不能因为实验换机器而擅自取消；
+3. 不负责当前机器上计划的 4000-SFT 训练，但之后负责接收、校验和验证其所有候选 checkpoint。
+
+先执行完整的只读机器审计：Git、8 张 A100 的型号/显存/占用、驱动/CUDA、CPU/RAM/swap、
+磁盘与 quota、Conda/Python、网络/GitHub/Hugging Face、当前用户身份和现有文件。不得终止、
+迁移或干扰任何其他用户进程，不得擅自占用繁忙 GPU。
+
+审计后，只要路径、权限、磁盘、固定版本和数据许可满足门禁，就继续自动完成“准备阶段”：
+- 创建用户工作区内的隔离缓存、Conda 环境、正式 SFT/GRPO/Stage3 基础环境；
+- 运行 setup_formal_machine.sh 并取得 passed=true 的 preflight_report.json；
+- 按 FORMAL_MACHINE_CODEX_GUIDE.md 准备固定版本 PathMMU、OmniMedVQA 四个子集和 PathVQA；
+- 准备 PLIP/CONCH/UNI 及全部可本地运行的原文基线的隔离环境；
+- 对权重采用固定 revision、文件白名单和哈希；下载前先做精确容量和剩余空间门禁；
+- 仅做 CPU import、pip check、数据完整性、图像重叠和配置检查；
+- 为每个重要计划、失败、修复和完成写新时间戳文档、manifest，更新 docs/LATEST.md 和
+  reviewer_response_tracker.md。
+
+用户已授权在门禁通过后进行数据/模型下载和环境创建，但没有授权：
+- 训练或任何模型推理；
+- validation/test 评测或打开 test 结果；
+- Stage 3 judge/API 调用或任何付费 API；
+- 清理、删除或覆盖文件；
+- 终止进程或占用未经确认的 GPU；
+- 使用 picked.json；
+- 把 token、权重、图片、环境、缓存或大规模原始输出提交 Git。
+
+Stage 3 的方向和 0.3/0.4/0.5 敏感性已经列入计划，但精确科学协议仍需冻结。不得自行发明
+JSON schema、penalty 聚合、judge 版本、fallback 或历史恢复结论。API 历史模型暂缓，
+但必须继续记录为待处理任务。
+
+如果遇到单个权限或模型阻塞，记录准确错误并继续其他安全、独立的准备工作；只有系统性
+风险、磁盘不足、数据不一致、Git 冲突或需要扩大授权时才停止。完成后报告所有命令、路径、
+版本、哈希、磁盘增量、门禁和剩余阻塞，不要启动任何正式长任务。
+

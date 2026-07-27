@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-27T20:37:23+08:00",
+  "formal_result": false,
+  "scope": "two-machine responsibility and memoryless Codex preparation handoff",
+  "repository": {
+    "remote": "https://github.com/Freddie1946/myr1.git",
+    "handoff_branch": "codex/formal-machine-handoff",
+    "parent_commit_before_this_handoff": "b2359bc926bb180865ad00a630351ced3fa4eb7b"
+  },
+  "a100_machine": {
+    "workspace_root": "/home/dataset-assist-0/czy/wjy",
+    "repository_root": "/home/dataset-assist-0/czy/wjy/myr1",
+    "install_root": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100",
+    "evaluation_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100",
+    "declared_gpu_count": 8,
+    "declared_gpu_model": "NVIDIA A100",
+    "hardware_not_yet_audited": true,
+    "codex_home": "/home/dataset-assist-0/czy/wjy/.codex-wjy",
+    "codex_install_dir": "/home/dataset-assist-0/czy/wjy/codex-bin",
+    "execution_branch": "codex/a100-stage3-eval"
+  },
+  "existing_machine_scope": {
+    "allowed": [
+      "freeze 4000-SFT scientific protocol",
+      "run required 4000-SFT engineering/formal gates after approval",
+      "train only the approved 4000-SFT control",
+      "save every predeclared checkpoint candidate and transfer manifest"
+    ],
+    "forbidden": [
+      "validation checkpoint selection",
+      "PathMMU test",
+      "OOD or baseline inference",
+      "Stage 3",
+      "all other future experiments unless scope is explicitly changed"
+    ],
+    "execution_branch": "codex/sft4000"
+  },
+  "a100_inherited_scope": [
+    "all retained remaining Stage 2 work",
+    "4000-SFT candidate validation and selection",
+    "Stage 3 design freeze, smoke, formal runs and 0.3/0.4/0.5 sensitivity",
+    "all feasible original manuscript baselines",
+    "PLIP, CONCH, UNI and approved additional pathology/medical baselines",
+    "PathMMU validation and one locked final test",
+    "Chest CT, ISIC2020, Retinal OCT-C8 and Diabetic Retinopathy",
+    "PathVQA and approved additional pathology/OOD evaluation",
+    "paired statistics, visual-dependence subset, two-part bad-case analysis",
+    "expert/human evaluation packet preparation"
+  ],
+  "scientific_identity": {
+    "base_model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+    "base_model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "data_version": "pathmmu_image_disjoint_v2",
+    "picked_json_allowed": false,
+    "test_for_selection_allowed": false,
+    "validation_is_selection_split": true,
+    "formal_training_seeds": [
+      42,
+      43,
+      44
+    ]
+  },
+  "pending_4000_sft_decision": {
+    "status": "not_frozen",
+    "candidate_a": "fresh pinned base trained on all 4000 SFT records",
+    "candidate_b": "selected n3000 SFT parent continued on an additional 1000 SFT records",
+    "interchangeable": false,
+    "launch_allowed": false
+  },
+  "preparation_authorization": {
+    "read_only_machine_audit": true,
+    "pinned_data_download_after_gates": true,
+    "pinned_model_download_after_access_and_storage_gates": true,
+    "isolated_environment_creation": true,
+    "cpu_import_and_integrity_checks": true,
+    "gpu_inference": false,
+    "training": false,
+    "validation_inference": false,
+    "test_inference": false,
+    "stage3_judge_calls": false,
+    "paid_api_calls": false,
+    "cleanup_or_deletion": false,
+    "process_termination": false
+  },
+  "handoff_files": {
+    "entry": {
+      "path": "A100_STAGE3_EVAL_CODEX_START.md",
+      "sha256": "e0028398ee95d462ea3b8adc4b9670d66ab35b81ce25dfa41424a521a50a33a1"
+    },
+    "workspace_env_example": {
+      "path": "formal_machine/a100_stage3_eval_workspace.env.example",
+      "sha256": "de180b3076f0833b612690a7bf7b65ea2b70065bb176e1a8ffceb118fd28f71b"
+    },
+    "codex_launcher": {
+      "path": "scripts/launch_personal_codex_a100.sh",
+      "sha256": "b0e99f68b804462a53425adc5c62efbaddd687071a49965a9aa1014c3f79e845"
+    },
+    "initial_prompt": {
+      "path": "protocol/a100_codex_bootstrap_prompt_20260727.txt",
+      "sha256": "737a20923cbd6b906c83399a2f272fee9404fe131344e9a48b66d917fb664c36"
+    },
+    "active_code_manifest": "protocol/code_hash_manifest_20260727_203723.json"
+  },
+  "updated_instruction_hashes": {
+    "AGENTS.md": "6c51a94e3644cc376f47d056c317122ed73979095807f2472bf8601b295fabf4",
+    "FORMAL_MACHINE_CODEX_GUIDE.md": "8bf2f8ae9005812fe2c61de43c5d429b5664d6ca641037d7534859ba1129d596",
+    "CODEX_START_HERE.md": "5b7bd82d249fc7da241b5c07b66f72b1f74fab192659aa058bccfa119dfb1696",
+    "protocol/training_plan.md": "f1a42a3963de335ff79c969552109b19ee012c7f3c5d6369820a511f440def06"
+  },
+  "gates": {
+    "repository_branch_pushed": false,
+    "a100_git_clone_verified": false,
+    "personal_codex_installed": false,
+    "personal_codex_authenticated": false,
+    "a100_hardware_audited": false,
+    "huggingface_authenticated": false,
+    "formal_preflight_passed": false,
+    "external_data_audit_passed": false,
+    "baseline_environments_prepared": false,
+    "4000_sft_protocol_frozen": false,
+    "4000_sft_artifacts_transferred_and_hashed": false,
+    "stage3_protocol_frozen": false,
+    "test_opened": false
+  }
+}

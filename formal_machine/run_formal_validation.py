@@ -127,7 +127,7 @@ def main() -> None:
                  "count": 385, "path": str(data), "sha256": sha256(data)},
         "generation": {"do_sample": False, "max_new_tokens": 192},
         "hardware": {"host": socket.gethostname(), "gpu": hardware},
-        "provenance": {"repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260719_172547.json")},
+        "provenance": {"repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260727_203723.json")},
         "test_accessed": False,
     }
     manifest_path = run_dir / "run_manifest.yaml"

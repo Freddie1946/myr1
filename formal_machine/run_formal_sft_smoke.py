@@ -273,7 +273,7 @@ def main() -> None:
                      "rotated_total_max_steps": 3,
                      "checkpoint_policy": "three model-only snapshots plus latest one full resume checkpoint"},
         "provenance": {
-            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260719_172547.json"),
+            "repo_code_manifest": str(repo / "protocol/code_hash_manifest_20260727_203723.json"),
             "base_model_manifest": str(repo / "protocol/base_model_manifest.json"),
             "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json"),
         },
@@ -298,7 +298,7 @@ def main() -> None:
     capture(["git", "-C", str(llamafactory), "rev-parse", "HEAD"], snapshots / "llamafactory_git.txt")
     capture([sys.executable, "-c", "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"], snapshots / "torch_cuda_versions.txt")
     for source in (
-        repo / "protocol/code_hash_manifest_20260719_172547.json",
+        repo / "protocol/code_hash_manifest_20260727_203723.json",
         repo / "protocol/base_model_manifest.json",
         install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json",
         Path(base["deepspeed"]),

@@ -2,6 +2,20 @@
 
 本指南用于让一台没有当前聊天记忆的正式训练机器，通过 Git 恢复项目上下文、盘点共享算力、完成配置，并按门禁继续实验。
 
+## 0. 2026-07-27 起的两机职责
+
+当前正式机器与新 8×A100 机器使用同一个 Git 科学计划，但职责不同：
+
+- 当前机器只负责下一项经过单独冻结和批准的 4000-SFT 训练控制；只训练、保存所有预声明
+  checkpoint，不在本机跑 validation、test、基线、OOD 或 Stage 3。
+- 新 A100 机器位于 `/home/dataset-assist-0/czy/wjy`，负责接收并校验 4000-SFT
+  checkpoint、统一 validation 选择、Stage 3、所有基线、所有 OOD/跨模态评测和最终 test。
+- 其余计划不能因为换机器而删除。完整职责、个人 Codex 安装和第一条自动配置 prompt 见
+  `A100_STAGE3_EVAL_CODEX_START.md`。
+
+“4000 SFT”究竟是基座直接训练全部 4,000 条，还是 n=3000 parent 上继续训练额外
+1,000 条，尚未冻结；两者不是同一对照。当前机器不得直接启动任一方案。
+
 ## 1. 拉取或更新仓库
 
 首次拉取：
@@ -14,6 +28,19 @@ cd myr1
 git status --short --branch
 git log -1 --oneline
 ```
+
+新 A100 机器必须使用固定工作区：
+
+```bash
+export WJY_WORK_ROOT=/home/dataset-assist-0/czy/wjy
+git clone --branch codex/formal-machine-handoff --single-branch \
+  https://github.com/Freddie1946/myr1.git "$WJY_WORK_ROOT/myr1"
+cd "$WJY_WORK_ROOT/myr1"
+test -f A100_STAGE3_EVAL_CODEX_START.md
+git switch -c codex/a100-stage3-eval
+```
+
+如果 `test` 失败，说明 GitHub 分支尚未包含完整迁移包；不要根据旧文档继续。
 
 已经拉取过：
 
@@ -31,6 +58,37 @@ git pull --ff-only origin codex/formal-machine-handoff
 ```
 
 ## 2. 在仓库根目录启动 Codex
+
+### 2.1 A100 上使用个人 Codex
+
+不要复用全局 `/usr/bin/codex` 或其他用户的 `~/.codex`。官方 Codex CLI 支持用
+`CODEX_HOME` 隔离 config、auth、session、log、skills 和包缓存，并用
+`CODEX_INSTALL_DIR` 指定用户级二进制目录。A100 的固定值是：
+
+```bash
+export WJY_WORK_ROOT=/home/dataset-assist-0/czy/wjy
+export CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy"
+export CODEX_INSTALL_DIR="$WJY_WORK_ROOT/codex-bin"
+mkdir -p "$CODEX_HOME" "$CODEX_INSTALL_DIR"
+chmod 700 "$CODEX_HOME" "$CODEX_INSTALL_DIR"
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+export PATH="$CODEX_INSTALL_DIR:$PATH"
+codex login --device-auth
+codex login status
+codex doctor
+```
+
+配置和完整安全说明见 `A100_STAGE3_EVAL_CODEX_START.md`。安装完成后从仓库执行：
+
+```bash
+bash scripts/launch_personal_codex_a100.sh \
+  "$(cat protocol/a100_codex_bootstrap_prompt_20260727.txt)"
+```
+
+该 prompt 会让新 Codex 读完整仓库、审计 A100，然后在门禁允许时自动准备数据和环境；
+不授权训练、推理、test、付费 API、清理或终止进程。
+
+### 2.2 通用首次审计 prompt
 
 让 Codex 收到下面这段首条指令：
 
@@ -76,7 +134,24 @@ python3 --version
 
 这是共享服务器：只选择明确空闲且经用户允许的 GPU；不得停止、迁移或干扰其他用户进程。CUDA toolkit 缺失不一定阻止使用 PyTorch wheel，但必须如实记录。
 
+A100 机器即使声明有 8 张卡，也必须重新核对具体 A100 型号、40/80GB 显存、MIG、ECC、
+NVLink/NVSwitch、当前进程和用户授权。机器描述不等于 GPU 当前空闲。
+
 ## 4. 配置数据、模型和环境
+
+A100 先复制并 source 用户工作区模板，使缓存、环境、模型和临时文件均留在
+`/home/dataset-assist-0/czy/wjy`：
+
+```bash
+cp formal_machine/a100_stage3_eval_workspace.env.example \
+  /home/dataset-assist-0/czy/wjy/a100_stage3_eval_workspace.env
+chmod 600 /home/dataset-assist-0/czy/wjy/a100_stage3_eval_workspace.env
+source /home/dataset-assist-0/czy/wjy/a100_stage3_eval_workspace.env
+mkdir -p "$PATHVLM_INSTALL_ROOT" "$PATHVLM_EVAL_ROOT" "$HF_HOME" \
+  "$CONDA_PKGS_DIRS" "$TMPDIR" "$PATHVLM_WORKSPACE_ROOT/logs"
+```
+
+模板不含凭据，不得向其中追加 token。
 
 PathMMU 已获授权时，在当前 shell 安全输入 Hugging Face 只读 token，避免写入 shell 历史和 Git：
 
@@ -115,6 +190,19 @@ git check-ignore formal_machine.env
 - 当前 `YiwuServer` 的正式环境选择 PyTorch 2.6.0 cu124 wheel；驱动 580.142 支持该
   runtime。系统 `nvcc 11.5` 不作为 PyTorch runtime，训练使用 Torch AdamW，避免依赖
   DeepSpeedCPUAdam 的本机 JIT 编译。
+
+A100 的路径和进程配置必须改为：
+
+```text
+INSTALL_ROOT=/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100
+BUNDLE_ROOT=/home/dataset-assist-0/czy/wjy/myr1
+SPLIT_ROOT=/home/dataset-assist-0/czy/wjy/myr1/data/pathmmu_image_disjoint_v2
+IMAGE_ROOT=/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+NPROC_PER_NODE=8
+```
+
+cu124 只在 A100 驱动审计确认兼容后使用；否则停止并记录，不得静默改版本。
 
 运行配置流程：
 
@@ -155,6 +243,15 @@ export CONDA_EXE="${CONDA_EXE:-/opt/miniconda3/bin/conda}"
 mkdir -p "$EVAL_ROOT"/{downloads,datasets,models,envs,reports,sources}
 "$HF_BIN" auth whoami
 df -h "$EVAL_ROOT"
+```
+
+在 A100 上不要复制上面的旧机器默认路径，使用：
+
+```bash
+source /home/dataset-assist-0/czy/wjy/a100_stage3_eval_workspace.env
+export EVAL_ROOT="$PATHVLM_EVAL_ROOT"
+export HF_BIN="$(command -v hf)"
+export CONDA_EXE="$(command -v conda)"
 ```
 
 外部资产不进入 Git。迁移前后至少保留 450 GiB 可用空间；空间不足时停止并报告，不自动
@@ -368,6 +465,11 @@ $EVAL_ROOT/
 
 ## 6. 执行任务的顺序
 
+两机分工生效后，本节 A/B 的既有命令仅用于理解历史正式门禁，不代表当前机器可以继续
+运行完整实验。当前机器只能在新的 4000-SFT protocol/manifest 明确授权后运行对应
+launcher。A100 在准备完成后按 `A100_STAGE3_EVAL_CODEX_START.md` 第 8 节执行所有其余
+阶段。
+
 ### A. 执行正式 SFT smoke
 
 仓库已经提供 `scripts/launch_formal_sft_smoke.sh`。它会生成可审计的
@@ -402,6 +504,22 @@ visual tensor 严格相同。该 smoke 必须标记 `formal_result: false`，完
 3. 再运行 RL 250/500/1000 规模实验和 seeds 42/43/44。
 4. Stage 3 Process Reward 的科学定义未敲定，未经用户确认不得正式训练。
 5. 最后冻结 prompt、checkpoint、解码和评分，再运行 test；test 永不用于选择。
+
+### D. A100 全量继承顺序
+
+1. 正式 bootstrap、外部数据和所有隔离环境准备；只做 import/integrity/preflight。
+2. A100 小步硬件门禁。
+3. 接收 4000-SFT 全部候选并逐文件验哈希；validation 选择只在 A100。
+4. 冻结 Stage 3 事件 JSON、外部确定性计分、judge 版本、penalty、fallback 和
+   0.3/0.4/0.5 敏感性，再做 smoke 和正式训练。
+5. 运行原文全部可复现基线及新增 PLIP/CONCH/UNI 等对比；保存原始生成。
+6. 运行 Chest CT、ISIC2020、OCT-C8、DR、PathVQA 和批准的额外病理/OOD 评测。
+7. 完成配对统计、视觉依赖子集、按数据源/器官/亚专科/题型/难度以及推理错误类型的
+   bad-case。
+8. 所有选择冻结后，PathMMU test 只运行一次；准备人工/专家评测材料。
+
+API 历史版本暂缓不等于从清单删除。服务商已退役时保留不可精确恢复的证据，并将官方
+后继模型明确标成 contemporary rerun。
 
 ## 7. Codex 每次汇报格式
 

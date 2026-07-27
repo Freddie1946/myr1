@@ -7,12 +7,13 @@ These instructions apply to every Codex/agent working in this repository, especi
 Before changing files or launching work, read completely:
 
 1. `FORMAL_MACHINE_CODEX_GUIDE.md`
-2. `CODEX_START_HERE.md`
-3. `docs/LATEST.md`
-4. The timestamped documents referenced by `docs/LATEST.md`
-5. `manuscript/README.md` and the materials in its mandatory reading order
-6. `protocol/training_plan.md`
-7. `protocol/code_hash_manifest_20260712_144811.json`
+2. `A100_STAGE3_EVAL_CODEX_START.md`
+3. `CODEX_START_HERE.md`
+4. `docs/LATEST.md`
+5. The timestamped documents referenced by `docs/LATEST.md`
+6. `manuscript/README.md` and the materials in its mandatory reading order
+7. `protocol/training_plan.md`
+8. `protocol/code_hash_manifest_20260712_144811.json`
 
 Do not rely on chat memory from another machine. The Git repository is the authoritative handoff record.
 
@@ -29,6 +30,11 @@ Do not rely on chat memory from another machine. The Git repository is the autho
 - Main formal runs target training seeds 42, 43, and 44. Do not select a favorable seed.
 - Save exact sample counts, data/model/code hashes, seeds, raw predictions, and online reward events.
 - Stage 3 Process Reward is reconstructed/completed work, not proven historical recovery. Do not invent its scientific definition.
+- Machine location does not cancel experiments. Under the 2026-07-27 split, the existing machine
+  runs only the separately frozen 4000-SFT training control; the eight-A100 machine owns Stage 3,
+  all validation/test/baselines/OOD work and every other retained future experiment.
+- The existing machine must not select the 4000-SFT checkpoint. It transfers all predeclared
+  candidates with exact hashes; the A100 machine performs validation selection.
 
 ## Current status that must not be misinterpreted
 

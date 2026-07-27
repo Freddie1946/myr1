@@ -378,7 +378,7 @@ def main() -> None:
         "hardware": {"host": socket.gethostname(), "cuda_visible_devices": gpu_ids,
                      "gpu_count": args.nproc_per_node, "before": hardware_before},
         "provenance": {
-            "repo_code_manifest": str(repo / "protocol" / "code_hash_manifest_20260719_172547.json"),
+            "repo_code_manifest": str(repo / "protocol" / "code_hash_manifest_20260727_203723.json"),
             "base_model_manifest": str(repo / "protocol" / "base_model_manifest.json"),
             "formal_data_manifest": str(install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json"),
             "preflight_report": str(preflight_path), "preflight_report_sha256": sha256(preflight_path),
@@ -396,7 +396,7 @@ def main() -> None:
     capture(["git", "-C", str(repo), "rev-parse", "HEAD"], snapshots / "git_commit.txt")
     capture(["git", "-C", str(llamafactory), "rev-parse", "HEAD"], snapshots / "llamafactory_git.txt")
     for source in (
-        repo / "protocol/code_hash_manifest_20260719_172547.json",
+        repo / "protocol/code_hash_manifest_20260727_203723.json",
         repo / "protocol/base_model_manifest.json",
         install / "data/pathmmu_image_disjoint_v2/formal_data_manifest.json",
         preflight_path,

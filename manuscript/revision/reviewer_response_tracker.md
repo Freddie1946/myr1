@@ -399,6 +399,12 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     download is blocked against the formal storage reserve. MedGemma gated access passes, but both
     Meta Llama 3.2 Vision repositories return 403. No weight/GPU/test use occurred. Supports R1-7 and
     R2-3 preparation.
+23. Split future execution across two formal machines without narrowing the scientific plan. The
+    existing machine is restricted to a separately frozen 4000-SFT training control; the new
+    eight-A100 machine owns Stage 3, all validation/test, all original/additional baselines, OOD and
+    remaining analyses. Added a memoryless personal-Codex bootstrap, workspace migration paths,
+    checkpoint-transfer gates and a complete inherited experiment order. No training/inference/test
+    occurred. Supports preparation across R1-2/R1-3/R1-7/R2-1/R2-3/R2-4/R2-5/R3-1/R3-4/R3-5/R3-6.
 
 ## Mandatory update rule
 

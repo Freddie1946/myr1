@@ -2,6 +2,19 @@
 
 Timestamp of this handoff: 2026-07-12 19:18:13 Asia/Shanghai
 
+## Current routing update: 2026-07-27
+
+The active two-machine handoff is now `A100_STAGE3_EVAL_CODEX_START.md` and
+`docs/20260727_203723_two_machine_a100_stage3_eval_handoff.md`. This older file remains required
+background, but its “current experimental truth” and next-action paragraphs are historical and must
+not override `docs/LATEST.md`.
+
+- Existing machine: only the separately frozen 4000-SFT training control; no validation/test.
+- New `/home/dataset-assist-0/czy/wjy` eight-A100 machine: Stage 3, all validation/test/baselines/OOD
+  and every other retained remaining experiment.
+- The repository plan is global. Moving work to A100 never means dropping it.
+- A100 must use its personal `CODEX_HOME=/home/dataset-assist-0/czy/wjy/.codex-wjy`.
+
 This repository replaces cross-machine chat memory. A new Codex session on the formal machine must treat the repository, timestamped documents, and run manifests as its source of truth.
 Use `FORMAL_MACHINE_CODEX_GUIDE.md` as the operational runbook.
 

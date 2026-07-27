@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260725_013154`
+Latest timestamp: `20260727_203723`
 
 Read in this order:
 
@@ -128,11 +128,17 @@ Read in this order:
 122. `../protocol/all_manuscript_baselines_manifest_20260725_011528.json`
 123. `20260725_013154_manuscript_baseline_metadata_and_access_audit.md`
 124. `../protocol/manuscript_baseline_metadata_manifest_20260725_013154.json`
+125. `20260727_203723_two_machine_a100_stage3_eval_handoff.md`
+126. `../protocol/a100_stage3_eval_handoff_manifest_20260727_203723.json`
+127. `../A100_STAGE3_EVAL_CODEX_START.md`
+128. `../formal_machine/a100_stage3_eval_workspace.env.example`
+129. `../protocol/a100_codex_bootstrap_prompt_20260727.txt`
+130. `../protocol/code_hash_manifest_20260727_203723.json`
 
-Current next action: obtain Meta Llama 3.2 Vision 11B/90B access, resolve the five hosted-model
-identities/provider contracts, and freeze selective file allowlists plus a storage destination for
-the nine missing local manuscript baselines. Their recognized weight files total 301.82 GiB, while
-unfiltered repositories total 487.18 GiB; `/home` has only about 506 GiB free and is already below
-the 550-GiB formal reserve. PLIP/CONCH/UNI remain additional. Do not bulk-download weights, run
-inference/training, allocate a GPU, clean storage, open formal PathMMU test, or start Stage 3 without
-the corresponding gate and authorization.
+Current next actions are machine-specific. Existing machine: freeze whether the 4000-SFT control is
+fresh-base/all-4000 or n3000-parent/additional-1000, then design its checkpoint/transfer policy;
+do not launch before approval and do not run validation/test. New A100 machine: after the complete
+handoff branch is pushed, install the personal Codex under
+`/home/dataset-assist-0/czy/wjy/.codex-wjy`, run the checked-in bootstrap prompt, audit hardware and
+prepare pinned data/models/isolated environments only. Training, inference, Stage 3 judge calls,
+paid APIs, cleanup and test remain separately gated.

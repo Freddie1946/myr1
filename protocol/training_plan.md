@@ -1,5 +1,18 @@
 # Training protocol outline
 
+## Machine responsibility split (frozen 2026-07-27)
+
+- Existing formal machine: only the next separately frozen 4000-SFT training control. It performs
+  no validation, checkpoint selection, baseline/OOD evaluation, final test or Stage 3. It saves all
+  predeclared candidates for hash-verified transfer.
+- New eight-A100 machine at `/home/dataset-assist-0/czy/wjy`: every validation/test, Stage 3,
+  baseline/OOD evaluation and all other retained remaining experiments. Machine location never
+  cancels an experiment.
+- The two machines write separate execution branches (`codex/sft4000` and
+  `codex/a100-stage3-eval`) and preserve immutable timestamped history.
+- Weights/checkpoints/raw outputs move outside Git with exact transfer manifests. Code, small
+  manifests and documentation move through Git.
+
 ## Stage 1 SFT
 
 - Framework: LLaMA-Factory.
@@ -15,6 +28,10 @@
   n=2000/n=3000 used ZeRO-2 fused AdamW; do not attribute every difference solely to data size.
 - Seed-42 Stage 2 candidate parent: validation-selected n=3000 epoch 3 (step 1125), subject to an
   exact parent/hash/load gate before Outcome GRPO.
+- Pending 4000-SFT control: do not launch until a new protocol chooses between (a) fresh pinned base
+  trained on all 4,000 SFT records and (b) selected n=3000 parent continued on an additional 1,000
+  SFT records. They answer different scientific questions. The existing machine trains and retains
+  candidates; A100 performs all validation selection.
 
 The old 7B full-fine-tuning configuration OOMed on 4x4090 at AdamW state allocation.
 The revised formal protocol is no longer method-selective: it requires full-parameter
@@ -49,6 +66,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Parent, process unit, supervision source, label space, aggregation, and online implementation must be frozen in a new timestamped protocol before training.
 - If an external judge is selected, every request, response, parser result, fallback, model version, decoding parameter, and cost record must be cached and auditable.
 - No historical-recovery claim is allowed unless provenance proves it.
+- Execution location: only the new eight-A100 machine.
+- Inherited direction: keep the original image-grounded two-part reasoning rubric, emit structured
+  judge events, and compute numerical penalties/reward deterministically outside the judge.
+- Required sensitivity: predeclare and run 0.3/0.4/0.5 after defining exactly which weight/penalty
+  each value controls. Do not retrofit the meaning after results.
 
 ## Evaluation
 
@@ -56,3 +78,10 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Test is the corrected 999-QA v2 split and is executed only after the protocol and checkpoints are
   frozen. It is never used for prompt, checkpoint, parser, seed, reward, or threshold selection.
 - OOD evaluation is stored separately from in-domain test results.
+- All validation and test inference now executes on the A100 machine, including selection of
+  transferred 4000-SFT candidates.
+- Required external/cross-modal reruns include Chest CT, ISIC2020, Retinal OCT-C8 and Diabetic
+  Retinopathy; PathVQA and approved additional pathology data are reported separately.
+- Every original manuscript baseline remains an obligation. PLIP/CONCH/UNI and other approved
+  pathology comparisons are additional rather than replacements. Historical API retirement must be
+  disclosed and must not be hidden by relabeling a successor.
