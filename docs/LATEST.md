@@ -196,6 +196,8 @@ Read in this order:
 190. `../protocol/stage3_kimi26_full_arm_prepared_20260730_204758.json`
 191. `20260730_211820_stage3_kimi26_full_arm_started.md`
 192. `../protocol/stage3_kimi26_full_arm_started_20260730_211820.json`
+193. `20260730_214244_sft4000_checkpoint_uploaded_to_private_hf.md`
+194. `../protocol/sft4000_hf_upload_completion_20260730_214244.json`
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2
@@ -258,3 +260,7 @@ passed, and the new 1,500-step run restarted from the frozen Stage2 parent on ei
 first optimizer step completed with finite nonzero gradients and the trainability/freeze gates
 passed. This arm is currently running and remains `formal_result: false` until it terminates and is
 validated; it is a contemporary Kimi comparison rather than recovery of the historical Judge.
+The fixed SFT4000 control epoch-2/step-250 model-only snapshot is now uploaded to the private
+Hugging Face repository `Freddie1946/PathVLM-R1-SFT-n4000-control-seed42-epoch2` at revision
+`31ecd18b9dc9de5c4118efde586bb625e4a6da06`. All manifest files are present remotely, and the LFS
+SHA-256 of all four safetensor shards matches the local frozen snapshot manifest.

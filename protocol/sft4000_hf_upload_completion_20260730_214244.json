@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T21:42:44+08:00",
+  "status": "uploaded_and_remote_verified",
+  "repo": "Freddie1946/PathVLM-R1-SFT-n4000-control-seed42-epoch2",
+  "private": true,
+  "revision": "31ecd18b9dc9de5c4118efde586bb625e4a6da06",
+  "local_source": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/epoch_snapshots/checkpoint-250",
+  "checkpoint": {
+    "model_only": true,
+    "resumable": false,
+    "epoch": 2,
+    "global_step": 250,
+    "snapshot_manifest_sha256": "d966b80a86a74495f35e0a2f34e2c66e1347a674f6db8fa96ac922afa8dc5e1c",
+    "model_index_sha256": "3067e9b0f35596ff3426a0d0ec8c982a51fa1e110c4fc30dcf3be9ea37409df6",
+    "tensor_count": 729,
+    "weight_shards": 4
+  },
+  "remote_verification": {
+    "revision_match": true,
+    "private": true,
+    "remote_file_count": 20,
+    "used_storage_bytes": 16595844048,
+    "readme_present": true,
+    "snapshot_manifest_present": true,
+    "all_manifest_files_present_and_sized": true,
+    "weight_lfs_sha256_match": {
+      "model-00001-of-00004.safetensors": true,
+      "model-00002-of-00004.safetensors": true,
+      "model-00003-of-00004.safetensors": true,
+      "model-00004-of-00004.safetensors": true
+    }
+  },
+  "weight_sha256": {
+    "model-00001-of-00004.safetensors": "761cc264f1c44b833daf62193766d469b9afc2d8745a70a6a7409654f3cb0fe3",
+    "model-00002-of-00004.safetensors": "58f44da7a633b594b02dd3dc499db3ae591e40dffc8266e1722b0c3b301895f6",
+    "model-00003-of-00004.safetensors": "b0c099c6ba00ac79c696bd93115d1d064720b893d5939dcd30cb536cb69de184",
+    "model-00004-of-00004.safetensors": "3e49f6b6e0f6ec9fa13d5c2fdc195a0742c655baab5d18454a196caa44bbd840"
+  }
+}
