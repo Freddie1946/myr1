@@ -1,0 +1,12 @@
+{
+  "checkpoint": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output",
+  "loaded": true,
+  "model_type": "qwen2_5_vl",
+  "hidden_size": 3584,
+  "num_hidden_layers": 28,
+  "total_parameters": 8292166656,
+  "torch_dtype_counts": {
+    "torch.bfloat16": 8292166656
+  },
+  "passed": true
+}

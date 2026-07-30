@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T22:50:23+08:00",
+  "status": "frozen_before_native_backend_inference",
+  "parent_contract": "protocol/external_vqa_common_contract_manifest_20260729_224503.json",
+  "contract_changes": false,
+  "frozen_inherited_properties": [
+    "datasets and record hashes",
+    "prompts",
+    "64-token cap",
+    "greedy BF16 decoding",
+    "PathVQA exact-match metrics",
+    "OmniMedVQA official SequenceMatcher metric",
+    "raw-output retention"
+  ],
+  "adapters": {
+    "shared_native_utils": {
+      "path": "scripts/external_vqa_native_utils.py",
+      "sha256": "e6dde85717c236ae07127657054f2c831862b3117088d6d3465fef440c971c6e"
+    },
+    "internvl": {
+      "path": "scripts/run_external_vqa_internvl.py",
+      "sha256": "cfcdbd055f7b5b3cd9fde47119780b586e2649413c2bc87b9ae0f79ba686f8fa",
+      "interface": "official model.chat with dynamic 448-pixel tiling, maximum 12 tiles"
+    },
+    "huatuogpt_vision": {
+      "path": "scripts/run_external_vqa_huatuo.py",
+      "sha256": "c0a19c0854fdb23b780cd99e3a56b8bc7062498bdb43a337a99a3366be283d79",
+      "interface": "repository-native HuatuoChatbot preprocessing and model.generate"
+    },
+    "omnimedvqa_matching": {
+      "path": "scripts/run_omnimedvqa_matching.py",
+      "sha256": "71d3953516b7b84968205ca5ad5e3a195ff34984c8d08f6cd5819799bb5941e9",
+      "interface": "raw option-text cosine similarity",
+      "models": [
+        "PLIP",
+        "CONCH"
+      ],
+      "comparability_note": "matching scores are a separate method class and are not generative official-SequenceMatcher scores"
+    }
+  },
+  "verification": {
+    "python_compilation": "passed",
+    "shared_utility_import": "passed",
+    "gpu_adapter_smokes": "pending"
+  }
+}

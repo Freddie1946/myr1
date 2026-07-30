@@ -1,0 +1,840 @@
+schema_version: 1
+run_id: sft4000_control_rl1000_seed0042_epoch02_20260729_212746
+status: completed
+formal_result: true
+scientific_role: 'causal control: selected n3000 SFT parent plus the exact Stage2
+  RL1000 records trained with ordinary supervised loss for two epochs'
+created_at: '2026-07-29T21:27:46.418624+08:00'
+parent:
+  path: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125
+  snapshot_manifest_sha256: 6c8708dd677f5ab1563e77317d86cd1b53cb9b969ebda09e4a312581a2b9f1f1
+  epoch: 3.0
+  global_step: 1125
+  model_type: qwen2_5_vl
+  weight_shards:
+  - model-00001-of-00004.safetensors
+  - model-00002-of-00004.safetensors
+  - model-00003-of-00004.safetensors
+  - model-00004-of-00004.safetensors
+  indexed_total_size: 16584333312
+  all_indexed_shards_present: true
+data:
+  version: pathmmu_image_disjoint_v2
+  scientific_role: same 1000 records used by Stage2 RL, now with gold CoT SFT targets
+  count: 1000
+  frozen_source: /home/dataset-assist-0/czy/wjy/myr1/data/pathmmu_image_disjoint_v2/subsets/rl/rl_1000_with_cot.json
+  frozen_source_sha256: 5ca2160068ab11f9908701e2eaa69ab1ebf6107a9b6b4fc265123eae40d88f44
+  rewritten_source: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/rl_1000.json
+  rewritten_source_sha256: 5a818b3b4f3c9e5e1a17579111ff3e21008cf8124c4a05cb74eb2dcd326bbd73
+  adapter: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/input_data/pathvlm_sft4000_rl_n1000.json
+  adapter_sha256: a18b91aeef1a41d6128c4bb92da1d6e84a2ceecb2f88d414b24d4d190dcdd4bd
+  dataset_info: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/input_data/dataset_info.json
+  dataset_info_sha256: baaf1228b172df484beb7da23f812be3a66cc986e6144a787c201906fb895b92
+  source_order_and_content_exact: true
+  all_image_paths_exist: true
+training:
+  optimizer_state: fresh branch optimizer; model weights continue from n3000 parent
+  epochs: 2
+  steps_per_epoch: 125
+  expected_global_steps: 250
+  global_batch_size: 8
+  learning_rate: 2.0e-05
+  scheduler: cosine
+  warmup_ratio: 0.03
+  seed: 42
+  language_model_trainable: true
+  vision_tower_frozen: true
+  multimodal_projector_frozen: true
+  checkpoint_selection: epoch 2 fixed by exposure-matched protocol; no validation/test
+    selection
+hardware:
+  host: ide-ba7127eb4fa14799a02e4cd789d2a2c7-7c6885
+  cuda_visible_devices:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  before:
+    gpus:
+    - index: 0
+      uuid: GPU-1ed682a4-6ba7-3f6b-255a-d50a401d9e8d
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    - index: 1
+      uuid: GPU-2a1cc6de-0897-060b-e168-47052039f7d9
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    - index: 2
+      uuid: GPU-5b30a0e7-8e02-d715-84e4-e19881383ce2
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    - index: 3
+      uuid: GPU-b229c96d-5b31-174a-a89f-0b3911b75972
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    - index: 4
+      uuid: GPU-e18b7f80-a389-b960-bdd4-aca426e7aa8e
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    - index: 5
+      uuid: GPU-369c8dcf-df4e-293a-2620-68a73c066cf0
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    - index: 6
+      uuid: GPU-30348fdf-4e3d-18bd-b744-fe6c77ea883e
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    - index: 7
+      uuid: GPU-136ccfa7-1b17-5345-fb63-ff633f0b9858
+      name: NVIDIA A100-SXM4-80GB
+      memory_total_mib: 81920
+      memory_used_mib: 0
+      memory_free_mib: 81153
+      utilization_percent: 0
+    compute_processes: []
+provenance:
+  protocol: /home/dataset-assist-0/czy/wjy/myr1/protocol/sft4000_control_n1000_seed42_manifest_20260729_014410.json
+  protocol_sha256: c1b26ce8d622db0e57a6285e57ae9f4b9b59d4a84d4d1d0578efce5452e72159
+  runner: /home/dataset-assist-0/czy/wjy/myr1/formal_machine/run_sft4000_control.py
+  runner_sha256: fccd99435a9faca3ba5632ad7a489422acde68ca6900806d8025bd9f2b55c74d
+  resolved_config_sha256: b5c22d83d0152cfc82713c480cb6ac9b21ac0c6453ff7bb026b3199734c47920
+  llamafactory: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/sources/LLaMA-Factory
+pathmmu_test_used_for_training_or_selection: false
+stage3_started: false
+completed_at: '2026-07-29T22:16:01.530913+08:00'
+trainer_state:
+  global_step: 250
+  epoch: 2.0
+  loss_history:
+  - 1.4833
+  - 1.5562
+  - 1.4726
+  - 1.3292
+  - 1.4306
+  - 1.3718
+  - 1.1553
+  - 1.4447
+  - 1.1934
+  - 1.2232
+  - 1.0387
+  - 1.1574
+  - 1.072
+  - 1.2776
+  - 1.0036
+  - 1.1583
+  - 1.0014
+  - 1.1861
+  - 1.1644
+  - 1.0557
+  - 1.3091
+  - 1.2853
+  - 1.1685
+  - 1.1583
+  - 1.1602
+  - 1.1543
+  - 1.0583
+  - 1.0032
+  - 1.1882
+  - 1.0414
+  - 1.1082
+  - 1.1076
+  - 1.183
+  - 1.1123
+  - 0.9481
+  - 1.0027
+  - 1.1404
+  - 1.2592
+  - 0.9765
+  - 1.0866
+  - 1.0505
+  - 1.3197
+  - 1.2583
+  - 1.0169
+  - 1.1058
+  - 1.1735
+  - 1.188
+  - 1.1746
+  - 1.1543
+  - 1.0179
+  - 1.1166
+  - 1.1271
+  - 1.0004
+  - 1.1683
+  - 1.1888
+  - 1.1245
+  - 1.289
+  - 1.0603
+  - 1.189
+  - 0.9907
+  - 1.1533
+  - 1.136
+  - 1.1907
+  - 0.9864
+  - 1.1558
+  - 1.0638
+  - 1.2951
+  - 1.2453
+  - 1.1631
+  - 1.1278
+  - 1.1022
+  - 1.0204
+  - 0.9756
+  - 1.1323
+  - 1.0167
+  - 1.3373
+  - 1.0439
+  - 1.076
+  - 1.1946
+  - 1.1522
+  - 1.057
+  - 1.133
+  - 1.243
+  - 1.066
+  - 1.0654
+  - 1.0695
+  - 0.9134
+  - 1.1036
+  - 1.0333
+  - 0.9729
+  - 1.1284
+  - 1.066
+  - 1.0474
+  - 1.2532
+  - 1.0084
+  - 1.2031
+  - 1.0047
+  - 1.0311
+  - 1.1009
+  - 0.9529
+  - 1.0537
+  - 1.0429
+  - 1.1472
+  - 1.1775
+  - 1.2464
+  - 1.1303
+  - 1.1245
+  - 1.0781
+  - 0.9656
+  - 1.0165
+  - 1.2617
+  - 1.2133
+  - 1.1187
+  - 1.234
+  - 1.1329
+  - 1.0786
+  - 1.1384
+  - 1.0602
+  - 1.136
+  - 1.1989
+  - 1.1102
+  - 0.9748
+  - 1.0682
+  - 1.2133
+  - 1.0927
+  - 0.4461
+  - 0.5261
+  - 0.6039
+  - 0.5837
+  - 0.4335
+  - 0.4144
+  - 0.5479
+  - 0.4593
+  - 0.4054
+  - 0.5245
+  - 0.4547
+  - 0.3767
+  - 0.4439
+  - 0.423
+  - 0.4445
+  - 0.4019
+  - 0.3355
+  - 0.4119
+  - 0.4744
+  - 0.4738
+  - 0.4194
+  - 0.4465
+  - 0.414
+  - 0.3544
+  - 0.367
+  - 0.3256
+  - 0.3674
+  - 0.3306
+  - 0.3693
+  - 0.3711
+  - 0.3413
+  - 0.358
+  - 0.4214
+  - 0.3605
+  - 0.4177
+  - 0.3127
+  - 0.321
+  - 0.3864
+  - 0.344
+  - 0.4285
+  - 0.3305
+  - 0.3879
+  - 0.382
+  - 0.2771
+  - 0.366
+  - 0.4241
+  - 0.4351
+  - 0.3354
+  - 0.3455
+  - 0.3792
+  - 0.301
+  - 0.3156
+  - 0.3763
+  - 0.2886
+  - 0.3545
+  - 0.3307
+  - 0.338
+  - 0.478
+  - 0.3417
+  - 0.3986
+  - 0.2893
+  - 0.2731
+  - 0.347
+  - 0.4085
+  - 0.2852
+  - 0.2532
+  - 0.3287
+  - 0.33
+  - 0.3439
+  - 0.3666
+  - 0.3183
+  - 0.4292
+  - 0.3007
+  - 0.388
+  - 0.3514
+  - 0.4316
+  - 0.3207
+  - 0.3207
+  - 0.4038
+  - 0.2784
+  - 0.4337
+  - 0.3091
+  - 0.3555
+  - 0.2792
+  - 0.3989
+  - 0.3292
+  - 0.3313
+  - 0.2955
+  - 0.3133
+  - 0.3515
+  - 0.3751
+  - 0.2695
+  - 0.4683
+  - 0.3671
+  - 0.4171
+  - 0.3831
+  - 0.4153
+  - 0.2435
+  - 0.3828
+  - 0.383
+  - 0.3164
+  - 0.3896
+  - 0.3966
+  - 0.3578
+  - 0.2656
+  - 0.3761
+  - 0.4283
+  - 0.2666
+  - 0.3691
+  - 0.3142
+  - 0.2376
+  - 0.3796
+  - 0.2687
+  - 0.4154
+  - 0.3541
+  - 0.2725
+  - 0.2741
+  - 0.3982
+  - 0.4634
+  - 0.3792
+  - 0.3564
+  - 0.3232
+  - 0.2976
+  - 0.3516
+  - 0.3691
+  gradient_history:
+  - 9.122410774230957
+  - 9.60173511505127
+  - 9.9636812210083
+  - 9.555237770080566
+  - 8.577560424804688
+  - 9.103362083435059
+  - 8.458073616027832
+  - 8.129995346069336
+  - 6.37393045425415
+  - 5.808566570281982
+  - 6.008401393890381
+  - 5.2823004722595215
+  - 4.720175743103027
+  - 5.072334289550781
+  - 4.53830099105835
+  - 5.06541633605957
+  - 4.711543560028076
+  - 4.488597393035889
+  - 5.201225757598877
+  - 4.589589595794678
+  - 5.020689964294434
+  - 4.952608585357666
+  - 5.309021472930908
+  - 5.111333847045898
+  - 5.133011817932129
+  - 5.198001861572266
+  - 4.994746208190918
+  - 5.030187606811523
+  - 5.226691246032715
+  - 4.7790422439575195
+  - 5.058029651641846
+  - 5.105255603790283
+  - 5.505289554595947
+  - 5.157639503479004
+  - 4.791178226470947
+  - 5.048829078674316
+  - 4.840186595916748
+  - 5.096824645996094
+  - 4.973447799682617
+  - 4.836546897888184
+  - 5.040116310119629
+  - 5.302027225494385
+  - 5.193669319152832
+  - 4.937196731567383
+  - 5.229907512664795
+  - 4.887691497802734
+  - 4.7346272468566895
+  - 4.9848198890686035
+  - 5.104736328125
+  - 4.4253106117248535
+  - 4.630624771118164
+  - 4.815617084503174
+  - 4.920986652374268
+  - 4.745513916015625
+  - 4.63663387298584
+  - 5.0588459968566895
+  - 4.863559722900391
+  - 4.761148929595947
+  - 4.850576400756836
+  - 4.703769683837891
+  - 4.866207599639893
+  - 5.090060710906982
+  - 4.715881824493408
+  - 4.618770599365234
+  - 5.15539026260376
+  - 4.735256671905518
+  - 5.687588691711426
+  - 5.380982398986816
+  - 5.209033966064453
+  - 5.6229400634765625
+  - 4.959988594055176
+  - 4.826312065124512
+  - 4.250895977020264
+  - 4.794458866119385
+  - 4.615403652191162
+  - 5.035961151123047
+  - 5.207169532775879
+  - 4.692526817321777
+  - 4.738304138183594
+  - 4.7863030433654785
+  - 5.263277053833008
+  - 4.610022068023682
+  - 4.884550094604492
+  - 5.352440357208252
+  - 4.865843296051025
+  - 4.984994888305664
+  - 4.5583014488220215
+  - 4.682377815246582
+  - 4.7361979484558105
+  - 4.596472263336182
+  - 4.800364971160889
+  - 4.245396614074707
+  - 4.410930156707764
+  - 4.53326416015625
+  - 4.873391151428223
+  - 5.005179405212402
+  - 4.439756870269775
+  - 5.096681118011475
+  - 4.319949150085449
+  - 4.714978218078613
+  - 4.9299092292785645
+  - 4.987598896026611
+  - 4.732440948486328
+  - 4.9838666915893555
+  - 5.19467830657959
+  - 4.628182411193848
+  - 5.030961513519287
+  - 4.9747772216796875
+  - 4.579380989074707
+  - 4.760096549987793
+  - 5.138401508331299
+  - 5.286724090576172
+  - 4.557950973510742
+  - 4.8120527267456055
+  - 4.965362548828125
+  - 3.957737922668457
+  - 4.83495569229126
+  - 4.7859206199646
+  - 5.3272809982299805
+  - 4.853671550750732
+  - 4.6313581466674805
+  - 4.381150245666504
+  - 4.30241060256958
+  - 4.658217430114746
+  - 4.701301574707031
+  - 3.3883543014526367
+  - 3.4786713123321533
+  - 3.227679491043091
+  - 3.53509521484375
+  - 3.306999683380127
+  - 3.2392046451568604
+  - 3.1286685466766357
+  - 3.4248385429382324
+  - 3.4377591609954834
+  - 3.418468952178955
+  - 3.2853012084960938
+  - 3.5083298683166504
+  - 3.211165428161621
+  - 3.598588228225708
+  - 3.5448365211486816
+  - 3.573089122772217
+  - 3.132136106491089
+  - 3.2844860553741455
+  - 3.3547704219818115
+  - 3.749267101287842
+  - 3.7657368183135986
+  - 3.822152614593506
+  - 3.460670232772827
+  - 4.099011421203613
+  - 3.5278782844543457
+  - 3.285447120666504
+  - 3.893832206726074
+  - 3.615119695663452
+  - 3.5166382789611816
+  - 3.672706365585327
+  - 3.4682488441467285
+  - 3.688603162765503
+  - 4.249772071838379
+  - 3.8115861415863037
+  - 4.015890598297119
+  - 3.6772780418395996
+  - 3.6279985904693604
+  - 3.911670684814453
+  - 3.4059908390045166
+  - 3.883350133895874
+  - 3.5677201747894287
+  - 3.701549768447876
+  - 4.146729469299316
+  - 3.587909698486328
+  - 4.017754077911377
+  - 4.271296977996826
+  - 4.168237686157227
+  - 3.5323781967163086
+  - 3.7177066802978516
+  - 3.9854063987731934
+  - 3.472801446914673
+  - 3.8357272148132324
+  - 4.034456729888916
+  - 3.524325132369995
+  - 4.089725971221924
+  - 3.63051700592041
+  - 3.750847339630127
+  - 4.282780170440674
+  - 3.490521192550659
+  - 4.500823020935059
+  - 3.60676908493042
+  - 3.7512733936309814
+  - 3.7917380332946777
+  - 4.178243637084961
+  - 3.471212148666382
+  - 3.714203357696533
+  - 3.6380999088287354
+  - 4.016400337219238
+  - 3.8251402378082275
+  - 3.8383257389068604
+  - 3.9574859142303467
+  - 4.224954605102539
+  - 3.756608724594116
+  - 4.4200286865234375
+  - 3.7089178562164307
+  - 4.16404390335083
+  - 3.4992401599884033
+  - 3.560661554336548
+  - 3.736625909805298
+  - 3.5060982704162598
+  - 4.199192523956299
+  - 3.6580705642700195
+  - 3.8371288776397705
+  - 4.020830154418945
+  - 3.807666301727295
+  - 4.153642654418945
+  - 4.070998191833496
+  - 3.8852453231811523
+  - 3.9791901111602783
+  - 3.862605333328247
+  - 4.0724663734436035
+  - 3.7195937633514404
+  - 4.07307767868042
+  - 3.9963905811309814
+  - 3.9669477939605713
+  - 3.8388359546661377
+  - 4.544527053833008
+  - 3.3547232151031494
+  - 4.076524257659912
+  - 3.821027994155884
+  - 3.694399356842041
+  - 4.0372700691223145
+  - 4.1401801109313965
+  - 4.290666103363037
+  - 3.4182732105255127
+  - 3.9440979957580566
+  - 4.071077346801758
+  - 3.3779385089874268
+  - 4.147686004638672
+  - 3.9028964042663574
+  - 3.4571244716644287
+  - 4.15559720993042
+  - 3.6177966594696045
+  - 4.142585277557373
+  - 3.649876356124878
+  - 3.9268643856048584
+  - 3.657787322998047
+  - 4.131047248840332
+  - 4.084376335144043
+  - 3.6779582500457764
+  - 3.4533865451812744
+  - 4.005708694458008
+  - 3.7561914920806885
+  - 3.8174664974212646
+  - 3.76747465133667
+trainability:
+  trainable_parameters: 7615616512
+  total_parameters: 8292166656
+  trainable_percent: 91.8411
+  vision_freeze_logged: true
+  projector_freeze_logged: true
+  passed: true
+retention:
+  snapshot_root: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/epoch_snapshots
+  count: 2
+  snapshots:
+  - path: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/epoch_snapshots/checkpoint-125
+    created_at: '2026-07-29T21:50:24.782610+08:00'
+    epoch: 1.0
+    files:
+    - name: added_tokens.json
+      sha256: 58b54bbe36fc752f79a24a271ef66a0a0830054b4dfad94bde757d851968060b
+      size_bytes: 605
+      transfer: hardlink
+    - name: chat_template.json
+      sha256: 94174d7176c52a7192f96fc34eb2cf23c7c2059d63cdbfadca1586ba89731fb7
+      size_bytes: 1049
+      transfer: hardlink
+    - name: config.json
+      sha256: 0e5cdc7ef06524318f8749bcf09e12a5b19ed007c7bef742ee1670a4044f4cf5
+      size_bytes: 1294
+      transfer: hardlink
+    - name: generation_config.json
+      sha256: 12a853a9c0f468c4bd321e1cf6b0d5929095eb01a078bf47fb2deffec1a4099e
+      size_bytes: 214
+      transfer: hardlink
+    - name: merges.txt
+      sha256: 8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5
+      size_bytes: 1671853
+      transfer: hardlink
+    - name: model-00001-of-00004.safetensors
+      sha256: b01a119144be455c75b5d0f0cab50b21ef901d7724347af68086d224c58f900f
+      size_bytes: 4968243304
+      transfer: hardlink
+    - name: model-00002-of-00004.safetensors
+      sha256: 06428eff31ca87dfc74c41b0d8b09a4ef080787d7222f6efbe92688eeaa235c9
+      size_bytes: 4991495816
+      transfer: hardlink
+    - name: model-00003-of-00004.safetensors
+      sha256: 55d05e6b4a810ebd84ec579cb7e8ff4ab17fa1080579f3ea92b541fb2bec4242
+      size_bytes: 4932751040
+      transfer: hardlink
+    - name: model-00004-of-00004.safetensors
+      sha256: e14141948f7cc614f12ac511e14258b11359bc4990dbda2e8ba2dcb48ea7fa33
+      size_bytes: 1691924384
+      transfer: hardlink
+    - name: model.safetensors.index.json
+      sha256: 3067e9b0f35596ff3426a0d0ec8c982a51fa1e110c4fc30dcf3be9ea37409df6
+      size_bytes: 57619
+      transfer: hardlink
+    - name: preprocessor_config.json
+      sha256: 549c158011407dfb750d9ec578047cf76f5bfe365cd0aa069a50137d3f98d9dd
+      size_bytes: 575
+      transfer: hardlink
+    - name: special_tokens_map.json
+      sha256: 76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd
+      size_bytes: 613
+      transfer: hardlink
+    - name: tokenizer.json
+      sha256: 9c5ae00e602b8860cbd784ba82a8aa14e8feecec692e7076590d014d7b7fdafa
+      size_bytes: 11421896
+      transfer: hardlink
+    - name: tokenizer_config.json
+      sha256: ca98fd99cfb1fdd5962ea6ab80e8abb4ace3b774ae5c5459ee7bd559c75c6ce7
+      size_bytes: 5800
+      transfer: hardlink
+    - name: trainer_state.json
+      sha256: 543625908c9021c3bff714325ad0265443332223b8b06b2ceb33186456a8f251
+      size_bytes: 20471
+      transfer: hardlink
+    - name: training_args.bin
+      sha256: ac96dd8c92d2f477a765ccebbc8eb61a647b4363a7cc6f3e0e77ec6b9d49dbc3
+      size_bytes: 7608
+      transfer: hardlink
+    - name: vocab.json
+      sha256: ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910
+      size_bytes: 2776833
+      transfer: hardlink
+    global_step: 125
+    model_only: true
+    resumable: false
+    schema_version: 1
+    snapshot_id: checkpoint-125
+    source_checkpoint: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125
+    total_file_bytes: 16600380974
+  - path: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/epoch_snapshots/checkpoint-250
+    created_at: '2026-07-29T22:15:08.014823+08:00'
+    epoch: 2.0
+    files:
+    - name: added_tokens.json
+      sha256: 58b54bbe36fc752f79a24a271ef66a0a0830054b4dfad94bde757d851968060b
+      size_bytes: 605
+      transfer: hardlink
+    - name: chat_template.json
+      sha256: 94174d7176c52a7192f96fc34eb2cf23c7c2059d63cdbfadca1586ba89731fb7
+      size_bytes: 1049
+      transfer: hardlink
+    - name: config.json
+      sha256: 0e5cdc7ef06524318f8749bcf09e12a5b19ed007c7bef742ee1670a4044f4cf5
+      size_bytes: 1294
+      transfer: hardlink
+    - name: generation_config.json
+      sha256: 12a853a9c0f468c4bd321e1cf6b0d5929095eb01a078bf47fb2deffec1a4099e
+      size_bytes: 214
+      transfer: hardlink
+    - name: merges.txt
+      sha256: 8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5
+      size_bytes: 1671853
+      transfer: hardlink
+    - name: model-00001-of-00004.safetensors
+      sha256: 761cc264f1c44b833daf62193766d469b9afc2d8745a70a6a7409654f3cb0fe3
+      size_bytes: 4968243304
+      transfer: hardlink
+    - name: model-00002-of-00004.safetensors
+      sha256: 58f44da7a633b594b02dd3dc499db3ae591e40dffc8266e1722b0c3b301895f6
+      size_bytes: 4991495816
+      transfer: hardlink
+    - name: model-00003-of-00004.safetensors
+      sha256: b0c099c6ba00ac79c696bd93115d1d064720b893d5939dcd30cb536cb69de184
+      size_bytes: 4932751040
+      transfer: hardlink
+    - name: model-00004-of-00004.safetensors
+      sha256: 3e49f6b6e0f6ec9fa13d5c2fdc195a0742c655baab5d18454a196caa44bbd840
+      size_bytes: 1691924384
+      transfer: hardlink
+    - name: model.safetensors.index.json
+      sha256: 3067e9b0f35596ff3426a0d0ec8c982a51fa1e110c4fc30dcf3be9ea37409df6
+      size_bytes: 57619
+      transfer: hardlink
+    - name: preprocessor_config.json
+      sha256: 549c158011407dfb750d9ec578047cf76f5bfe365cd0aa069a50137d3f98d9dd
+      size_bytes: 575
+      transfer: hardlink
+    - name: special_tokens_map.json
+      sha256: 76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd
+      size_bytes: 613
+      transfer: hardlink
+    - name: tokenizer.json
+      sha256: 9c5ae00e602b8860cbd784ba82a8aa14e8feecec692e7076590d014d7b7fdafa
+      size_bytes: 11421896
+      transfer: hardlink
+    - name: tokenizer_config.json
+      sha256: ca98fd99cfb1fdd5962ea6ab80e8abb4ace3b774ae5c5459ee7bd559c75c6ce7
+      size_bytes: 5800
+      transfer: hardlink
+    - name: trainer_state.json
+      sha256: 37f306d91249f19b2367d8a629cfc38aa6e0b1ebb57d5753e2428b3c04f84e3b
+      size_bytes: 40612
+      transfer: hardlink
+    - name: training_args.bin
+      sha256: ac96dd8c92d2f477a765ccebbc8eb61a647b4363a7cc6f3e0e77ec6b9d49dbc3
+      size_bytes: 7608
+      transfer: hardlink
+    - name: vocab.json
+      sha256: ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910
+      size_bytes: 2776833
+      transfer: hardlink
+    global_step: 250
+    model_only: true
+    resumable: false
+    schema_version: 1
+    snapshot_id: checkpoint-250
+    source_checkpoint: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250
+    total_file_bytes: 16600401115
+  observed_checkpoint_steps:
+  - 125
+  - 250
+  missing_observed_snapshot_steps: []
+  pending_errors: {}
+resources:
+  samples: 260
+  peak_gpu_memory_used_mib:
+    '0': 39331
+    '1': 39311
+    '2': 39311
+    '3': 39331
+    '4': 39231
+    '5': 39331
+    '6': 39311
+    '7': 39271
+  minimum_host_mem_available_kib: 878258148
+  peak_swap_used_kib: 0
+  minimum_disk_free_bytes: 6355954958336
+gates:
+  training_completed: true
+  global_step_250: true
+  both_epoch_snapshots_saved: true
+  both_full_resume_checkpoints_retained: true
+  final_checkpoint_reloaded: true
+  trainability_freeze_gate: true
+  losses_finite: true
+  gradients_finite_nonzero: true
+  language_tensor_changed: true
+  visual_tensor_exactly_equal: true
+  disk_reserve_maintained: true
+  pathmmu_test_not_used_for_training_or_selection: true
+  stage3_not_started: true
+outputs:
+  run_dir: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746
+  final_checkpoint: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output
+  fixed_evaluation_checkpoint: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/epoch_snapshots/checkpoint-250

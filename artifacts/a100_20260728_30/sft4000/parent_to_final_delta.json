@@ -1,0 +1,37 @@
+{
+  "parent": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125",
+  "child": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output",
+  "common_tensor_count": 729,
+  "tensors": {
+    "language": {
+      "name": "model.layers.0.self_attn.q_proj.weight",
+      "shape": [
+        3584,
+        3584
+      ],
+      "parent_dtype": "torch.bfloat16",
+      "child_dtype": "torch.bfloat16",
+      "numel": 12845056,
+      "changed_elements": 10225041,
+      "max_abs_delta": 0.0010006427764892578,
+      "mean_abs_delta": 0.00013975371257402003,
+      "l2_delta": 0.6547942161560059,
+      "exactly_equal": false
+    },
+    "visual": {
+      "name": "visual.blocks.0.attn.proj.weight",
+      "shape": [
+        1280,
+        1280
+      ],
+      "parent_dtype": "torch.bfloat16",
+      "child_dtype": "torch.bfloat16",
+      "numel": 1638400,
+      "changed_elements": 0,
+      "max_abs_delta": 0.0,
+      "mean_abs_delta": 0.0,
+      "l2_delta": 0.0,
+      "exactly_equal": true
+    }
+  }
+}

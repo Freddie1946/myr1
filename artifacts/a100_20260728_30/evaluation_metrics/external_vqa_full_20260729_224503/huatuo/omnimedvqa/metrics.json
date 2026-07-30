@@ -1,0 +1,61 @@
+{
+  "backend": "huatuogpt_vision_native",
+  "by_source": {
+    "Chest CT Scan": {
+      "count": 871,
+      "official_accuracy": 0.5361653272101033,
+      "official_correct": 467,
+      "strict_text_accuracy": 0.5361653272101033,
+      "strict_text_correct": 467
+    },
+    "Diabetic Retinopathy": {
+      "count": 2051,
+      "official_accuracy": 0.8303266699171136,
+      "official_correct": 1703,
+      "strict_text_accuracy": 0.8298391028766455,
+      "strict_text_correct": 1702
+    },
+    "ISIC2020": {
+      "count": 1580,
+      "official_accuracy": 0.5,
+      "official_correct": 790,
+      "strict_text_accuracy": 0.49936708860759493,
+      "strict_text_correct": 789
+    },
+    "Retinal OCT-C8": {
+      "count": 4016,
+      "official_accuracy": 0.7756474103585658,
+      "official_correct": 3115,
+      "strict_text_accuracy": 0.7651892430278885,
+      "strict_text_correct": 3073
+    }
+  },
+  "count": 8518,
+  "data_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json",
+  "data_sha256": "04ba0790410cd5de4c95689d349574b102034a153afa00d952e351d3c13991a7",
+  "do_sample": false,
+  "dtype": "bfloat16",
+  "empty_completion_count": 0,
+  "generation_cap_hit_count": 0,
+  "max_new_tokens": 64,
+  "maximum_generated_tokens": 50,
+  "mean_generated_tokens": 10.616224465837051,
+  "median_generated_tokens": 9.0,
+  "min_new_tokens": 1,
+  "model_config_sha256": "3d96adabfe401f3f533f98c66478324c01159370e55c58bfdea1191a642f9fb9",
+  "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/FreedomIntelligence--HuatuoGPT-Vision-7B--34dfcdbb7728ff38da865839f342b88c4cf6ef39",
+  "official_accuracy": 0.7131955858182673,
+  "official_correct": 6075,
+  "predictions_sha256": "85f54986a9e310f7d48c98d0ef1430a18eaf13de03ffc9e37525b870e2c8bd5b",
+  "primary_metric": "official_sequence_matcher_option_accuracy",
+  "prompt_template": "{question}Here are {option_count} candidate answers:{options} Only return what you think is the correct answer from the candidate answers, do not return any other irrelevant text!",
+  "quantization": "none",
+  "repetition_penalty": 1.0,
+  "schema_version": 1,
+  "selected_count": 8518,
+  "split_role": "external_test",
+  "status": "completed",
+  "strict_text_accuracy": 0.7080300540032871,
+  "strict_text_correct": 6031,
+  "task": "omnimedvqa"
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T22:20:00+08:00",
+  "status": "frozen_before_retry",
+  "supersedes_runner_hash_only_in": "protocol/pathmmu_test999_sft4000_stage2_launch_manifest_20260729_221640.json",
+  "failed_attempt": {
+    "scope": "two 16-record validation smokes",
+    "failure_stage": "Python module import before argument parsing, data loading, model loading or output-directory creation",
+    "test_accessed": false,
+    "predictions_created": false,
+    "cause": "the shared runner imported Gemma3ForConditionalGeneration eagerly although the Qwen environment's pinned Transformers 4.49.0 does not export that class"
+  },
+  "correction": {
+    "behavior": "lazy-import Gemma3ForConditionalGeneration only when --backend gemma3 is selected",
+    "qwen_prompt_changed": false,
+    "qwen_decoding_changed": false,
+    "qwen_parser_changed": false,
+    "runner": "scripts/run_pathmmu_qwen_diagnostic.py",
+    "old_runner_sha256": "4e435b9b138d0970eb54aa17cd5f5e848e655a01f56653cbe6a4504d051d03d2",
+    "new_runner_sha256": "fe16bb9ce1528ab23357577e426095a6abc269bf8646899e7512325b51f9f4d8"
+  },
+  "checks": {
+    "python_compile_passed": true,
+    "pathmmu_reward_tests_passed": true,
+    "validation_smoke_must_pass_before_test": true
+  }
+}

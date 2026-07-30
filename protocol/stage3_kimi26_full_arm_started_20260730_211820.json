@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T21:18:20+08:00",
+  "status": "running",
+  "formal_result": false,
+  "run_class": "complete_contemporary_kimi_stage3_arm",
+  "user_authorized_start": true,
+  "budget_hard_ceiling_usd": 30,
+  "run_root": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_20260730",
+  "parent": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+  "training": {
+    "records": 1000,
+    "epochs": 3,
+    "max_steps": 1500,
+    "seed": 42,
+    "data_seed": 42,
+    "global_completion_batch": 8,
+    "num_generations": 4,
+    "maximum_training_judge_requests": 12000,
+    "learning_rate": 1e-06,
+    "beta": 0.04,
+    "max_completion_length": 192,
+    "process_penalty": 0.4,
+    "save_steps": 500,
+    "model_only_epoch_snapshot_steps": [
+      500,
+      1000,
+      1500
+    ]
+  },
+  "judge": {
+    "model": "moonshotai/kimi-k2.6",
+    "provider": "inceptron",
+    "allow_fallbacks": false,
+    "zdr_required": true,
+    "data_collection": "deny",
+    "enforce_distillable_text": true,
+    "reasoning_enabled": false,
+    "max_token_parameter": "max_tokens",
+    "max_judge_tokens": 1024,
+    "evidence_target_characters": 160,
+    "evidence_absolute_max_characters": 512,
+    "minimum_request_interval_seconds": 4,
+    "retry_delays_seconds": [
+      15,
+      45,
+      90
+    ],
+    "maximum_total_unique_requests": 12001
+  },
+  "smoke": {
+    "status": "passed",
+    "generation_id": "gen-1785417110-jhJKpFOYmYIWDwy6icKr",
+    "served_provider": "Inceptron",
+    "cost_usd": 0.00072115,
+    "process_reward": 0.8,
+    "unresolved_reservations": 0
+  },
+  "trainability": {
+    "passed": true,
+    "language_total": 7615616512,
+    "language_trainable": 7615616512,
+    "visual_total": 676550144,
+    "visual_trainable": 0,
+    "projector_total": 44574464,
+    "projector_trainable": 0
+  },
+  "first_step": {
+    "completed": true,
+    "gradient_norm": 5.103901386260986,
+    "completion_length": 72.125,
+    "accuracy_reward": 1.0,
+    "format_reward": 1.0,
+    "process_reward": 0.7125000953674316,
+    "total_reward": 2.7125000953674316,
+    "kl": 0.0
+  },
+  "startup_budget_snapshot": {
+    "committed_spend_usd": 0.035974620000000006,
+    "completed_unique_requests": 32,
+    "in_flight_reservations": 1,
+    "budget_breached": false
+  }
+}

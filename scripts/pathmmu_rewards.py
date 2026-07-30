@@ -32,6 +32,11 @@ def choice_letter(text: str) -> str | None:
         match = re.search(pattern, value)
         if match:
             return match.group(1)
+    # Some otherwise valid VLM completions end with a bare option letter after free-form
+    # reasoning. Accept only the final standalone line; do not guess from letters in the body.
+    trailing_line = re.search(r"(?:^|\n)\s*([A-D])\s*$", value)
+    if trailing_line:
+        return trailing_line.group(1)
     # Accept a single unambiguous choice-like occurrence, but reject answers
     # that enumerate several options without selecting one.
     candidates = re.findall(r"\b([A-D])\s*[\)\].:]", value)

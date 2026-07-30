@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T22:08:21+08:00",
+  "status": "approved_for_launch",
+  "purpose": "PathMMU test999 Stage3-development diagnostic baseline",
+  "test_accessed": true,
+  "diagnostic_only": true,
+  "eligible_for_untouched_final_stage3_claim": false,
+  "model": {
+    "name": "OpenGVLab/InternVL3-8B",
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/OpenGVLab--InternVL3-8B--853e3a797a661694b1b8ece0cb72dc2b23e3dac9",
+    "config_sha256": "cd0c54d0aa85fcd979cd2af524c0c08e26cdca278f05e96b635f298e34afae39"
+  },
+  "data": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+    "sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+    "count": 999
+  },
+  "execution": {
+    "environment": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/envs/internvl3",
+    "runner": "scripts/run_pathmmu_internvl_diagnostic.py",
+    "runner_sha256": "ba9c18f61b41f0d934b2c345db9f72a0fee07da25d47a080bf11226fb381e284",
+    "rewards_sha256": "69c1bde669ee16de35dd8680f6f4590429e3830617498106be6b5d333664a56c",
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "do_sample": false,
+    "max_new_tokens": 1024,
+    "image_size": 448,
+    "maximum_tiles": 12,
+    "gpu": 5,
+    "output_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_development_20260728_220821/internvl"
+  },
+  "validation_smoke": {
+    "count": 2,
+    "choice_extracted": 2,
+    "format_correct": 2,
+    "empty_completion_count": 0,
+    "generation_cap_hit_count": 0,
+    "metrics_sha256": "099ac19556ade4ffe89fb1d73c292cd3f786dd4b1a59e2a2bf315bb836460f3f",
+    "predictions_sha256": "4b2e336414f61db8a6858fc772cedaac4bd51c729c1e867061005ddf5ccc76a1"
+  }
+}

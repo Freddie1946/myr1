@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T22:37:42+08:00",
+  "status": "completed",
+  "purpose": "pre-Stage3 PathMMU test999 development diagnostic",
+  "test_accessed": true,
+  "diagnostic_only": true,
+  "eligible_for_untouched_final_stage3_claim": false,
+  "stage3_started": false,
+  "data": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+    "sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+    "count": 999
+  },
+  "common_contract": {
+    "backend": "qwen2_5_vl",
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "decoding": "greedy",
+    "max_new_tokens": 1024,
+    "batch_size": 8,
+    "runner": "scripts/run_pathmmu_qwen_diagnostic.py",
+    "runner_sha256": "fe16bb9ce1528ab23357577e426095a6abc269bf8646899e7512325b51f9f4d8",
+    "parser": "scripts/pathmmu_rewards.py",
+    "parser_sha256": "69c1bde669ee16de35dd8680f6f4590429e3830617498106be6b5d333664a56c"
+  },
+  "results": {
+    "sft3000_parent": {
+      "correct": 582,
+      "count": 999,
+      "accuracy": 0.5825825825825826,
+      "format_correct": 997,
+      "choice_extracted": 997,
+      "empty_completion_count": 0,
+      "generation_cap_hit_count": 0,
+      "predictions_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/sft3000_parent_test999/predictions.jsonl",
+      "predictions_sha256": "3f397cb786398e2a96c7ed9cfcec7a3020c98f96e1605fd4a78faa6a15adfcfc",
+      "metrics_sha256": "cde056dd91600dcb9d404dc0233d14bce509824f719c3030ea04a76167c9ebb6"
+    },
+    "sft4000_control": {
+      "correct": 595,
+      "count": 999,
+      "accuracy": 0.5955955955955956,
+      "format_correct": 991,
+      "choice_extracted": 995,
+      "empty_completion_count": 0,
+      "generation_cap_hit_count": 0,
+      "predictions_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/sft4000_test999/predictions.jsonl",
+      "predictions_sha256": "55ea7f2b9446acccaa9e52de23c1d68aec9fd23f38cf9fea2f125dca01dd40e1",
+      "metrics_sha256": "21b99d6d64395e7cec0d78c74d54c8b65ffd07264bca1e758dc03021adac8f37"
+    },
+    "stage2_outcome_grpo": {
+      "correct": 609,
+      "count": 999,
+      "accuracy": 0.6096096096096096,
+      "format_correct": 999,
+      "choice_extracted": 999,
+      "empty_completion_count": 0,
+      "generation_cap_hit_count": 0,
+      "predictions_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/stage2_rl_test999/predictions.jsonl",
+      "predictions_sha256": "47e5b57d65bbada61fc9a3414220c5aa216ad152fa0174df0b30c7990b6790cc",
+      "metrics_sha256": "cc07e4cd66e7dce4fad9daab40f0f2fee99e1663f0b43876c663adcf8b44523e"
+    }
+  },
+  "paired_diagnostics": {
+    "sft3000_vs_sft4000": {
+      "sft3000_only_correct": 145,
+      "sft4000_only_correct": 158,
+      "both_correct": 437,
+      "both_wrong": 259,
+      "accuracy_delta_percentage_points_sft4000_minus_sft3000": 1.3013013013013013,
+      "exact_two_sided_mcnemar_p": 0.49064608451
+    },
+    "sft3000_vs_stage2_outcome_grpo": {
+      "sft3000_only_correct": 59,
+      "stage2_only_correct": 86,
+      "both_correct": 523,
+      "both_wrong": 331,
+      "accuracy_delta_percentage_points_stage2_minus_sft3000": 2.7027027027027026,
+      "exact_two_sided_mcnemar_p": 0.0304818146495
+    },
+    "sft4000_vs_stage2_outcome_grpo": {
+      "sft4000_only_correct": 142,
+      "stage2_only_correct": 156,
+      "both_correct": 453,
+      "both_wrong": 248,
+      "accuracy_delta_percentage_points_stage2_minus_sft4000": 1.4014014014014013,
+      "exact_two_sided_mcnemar_p": 0.451463375176
+    }
+  },
+  "joint_badcase_report": {
+    "model_count": 12,
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/pathmmu_test999_badcases_available12_20260729_2241",
+    "all_models_correct": 11,
+    "all_models_wrong": 23,
+    "prediction_disagreement": 988,
+    "summary_sha256": "1104acb5cd44ed0de8eb7458591586155efc3792171107e00a8539753d48b5a9",
+    "badcases_sha256": "f08619334df913b29180776cf523f7545fccc4cf42a4ea84f8f589e1b6542e43",
+    "badcase_index_sha256": "cab539b3bd5dab1d1290660db7b753f1e8a424b3c451aab3e4a6bc9b2f86f721"
+  },
+  "non_inference_startup_failures": [
+    {
+      "reason": "mistyped qwen environment directory",
+      "exit_code": 127,
+      "model_loaded": false,
+      "data_accessed": false,
+      "predictions_written": false
+    },
+    {
+      "reason": "used obsolete argument names and invalid split-role label",
+      "exit_code": 2,
+      "model_loaded": false,
+      "data_accessed": false,
+      "predictions_written": false
+    }
+  ],
+  "interpretation_limits": [
+    "These results precede Stage3 and are development diagnostics, not final Stage3 performance.",
+    "PathMMU test999 was already authorized for Stage3 diagnosis and cannot support an untouched-final claim.",
+    "The paired p-values are descriptive diagnostics for this one seed and one test split; they are not a substitute for the planned multi-seed analysis."
+  ]
+}

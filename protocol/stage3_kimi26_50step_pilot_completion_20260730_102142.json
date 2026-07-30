@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T10:21:42+08:00",
+  "status": "completed",
+  "formal_result": false,
+  "model_role": "engineering_stage3_pilot",
+  "parent": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+  "output": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/output_attempt03",
+  "checkpoint_50": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/output_attempt03/checkpoint-50",
+    "global_step": 50,
+    "model_shards": 4,
+    "optimizer_shards": 8,
+    "model_state_shards": 8,
+    "tensor_keys": 729,
+    "model_index_sha256": "3067e9b0f35596ff3426a0d0ec8c982a51fa1e110c4fc30dcf3be9ea37409df6",
+    "trainer_state_sha256": "1949fd7ef18cf97953b04c15f0182b141f9f65c8e07db981ed29591cdc24f779"
+  },
+  "training": {
+    "seed": 42,
+    "global_steps": 50,
+    "final_trajectory": {
+      "steps_1_25": "attempt03",
+      "steps_26_50": "attempt07_resume25"
+    },
+    "reward_events": {
+      "total": 1200,
+      "accuracy": 400,
+      "format": 400,
+      "process": 400
+    },
+    "reward_means": {
+      "accuracy": 0.685,
+      "format": 1.0,
+      "process": 0.646,
+      "total": 2.330999984741211
+    },
+    "gradient_norm": {
+      "minimum": 3.4788904190063477,
+      "maximum": 6.056132793426514,
+      "mean": 4.885117526054382
+    },
+    "kl": {
+      "minimum": 0.0,
+      "maximum": 0.0009765625,
+      "mean": 0.0001550912857055664
+    },
+    "train_loss": 0.0000041740069127627064,
+    "trainability": {
+      "language_total": 7615616512,
+      "language_trainable": 7615616512,
+      "visual_total": 676550144,
+      "visual_trainable": 0,
+      "projector_total": 44574464,
+      "projector_trainable": 0,
+      "passed": true
+    },
+    "train_state_audit_sha256": "7d9bdf1afe77d75ff103fbaacdd1dd6d812b9efd0087d87c7b959506e4690ed5"
+  },
+  "judge": {
+    "model": "moonshotai/kimi-k2.6",
+    "provider": "Inceptron",
+    "allow_fallbacks": false,
+    "zdr_required": true,
+    "data_collection": "deny",
+    "enforce_distillable_text": true,
+    "reasoning_enabled": false,
+    "penalty": 0.4,
+    "events_unchanged": true,
+    "mixed_response_contract_disclosure": {
+      "steps_1_25": {
+        "max_tokens": 640,
+        "evidence_absolute_max_characters": 160
+      },
+      "steps_26_50": {
+        "max_tokens": 1024,
+        "evidence_target_characters": 160,
+        "evidence_absolute_max_characters": 512
+      },
+      "formal_run_requirement": "restart_from_parent_with_one_fixed_contract"
+    },
+    "rate_limit_recovery": {
+      "minimum_request_start_interval_seconds": 4,
+      "retry_delays_seconds": [
+        15,
+        45,
+        90
+      ],
+      "attempt07_http_429_count": 0
+    }
+  },
+  "budget": {
+    "hard_ceiling_usd": 15,
+    "ledger_entries": 512,
+    "conservative_committed_spend_usd": 0.88919683,
+    "actual_key_usage_usd": 0.59393869,
+    "conservative_overstatement_usd": 0.29525814,
+    "unresolved_reservations": 0,
+    "budget_breached": false,
+    "conservative_full_reserve_settlements": 6,
+    "ledger_sha256": "b8d69f580ab0d807286c2f60625b60e2718b81a060a9e6443ead24602624e3a2"
+  },
+  "validation": {
+    "split": "validation_0385",
+    "test_accessed": false,
+    "data_sha256": "f52c9a412da579db8fb8bf52f6fa320e7c4ae9cb42b6cf1bdf62f77ab158dcf0",
+    "count": 385,
+    "correct": 243,
+    "accuracy": 0.6311688311688312,
+    "format_correct": 385,
+    "choice_extracted": 385,
+    "empty_completion_count": 0,
+    "generation_cap_hit_count": 0,
+    "maximum_generated_tokens": 157,
+    "stage2_historical_same_protocol": {
+      "correct": 241,
+      "count": 385,
+      "accuracy": 0.625974025974026,
+      "pilot_delta_correct": 2,
+      "pilot_delta_percentage_points": 0.5194805194805174,
+      "paired_test_available": false,
+      "reason": "full historical Stage2 validation predictions are not present on this machine"
+    },
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722",
+    "predictions_sha256": "146fb4a9c788accda041ed333c66f44f963a7e91682b54a0e303ce8877c70d13",
+    "metrics_sha256": "e8194c732c1bb869888c73c94b7894ee1fc073ebd0b06a1f90a379879a458f65",
+    "parallel_equivalence": {
+      "single_gpu_rows_compared": 19,
+      "completion_text_exact": true,
+      "token_count_exact": true,
+      "choice_exact": true,
+      "rewards_exact": true
+    }
+  },
+  "limitations": [
+    "This is a contemporary Kimi 2.6 engineering pilot, not the approved GPT-4o reconstruction.",
+    "The Judge response/evidence cap changed after checkpoint-25 while the six-event score stayed fixed.",
+    "Only one seed and fifty optimizer steps were run.",
+    "The validation delta is two items and is not a material-improvement claim."
+  ]
+}

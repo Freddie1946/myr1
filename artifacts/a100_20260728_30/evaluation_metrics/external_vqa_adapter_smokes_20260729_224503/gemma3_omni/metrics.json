@@ -1,0 +1,36 @@
+{
+  "backend": "gemma3",
+  "by_source": {
+    "Chest CT Scan": {
+      "count": 16,
+      "official_accuracy": 0.8125,
+      "official_correct": 13,
+      "strict_text_accuracy": 0.625,
+      "strict_text_correct": 10
+    }
+  },
+  "count": 16,
+  "data_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json",
+  "data_sha256": "04ba0790410cd5de4c95689d349574b102034a153afa00d952e351d3c13991a7",
+  "do_sample": false,
+  "dtype": "bfloat16",
+  "empty_completion_count": 0,
+  "generation_cap_hit_count": 4,
+  "max_new_tokens": 64,
+  "maximum_generated_tokens": 64,
+  "mean_generated_tokens": 21.875,
+  "median_generated_tokens": 3.0,
+  "model_config_sha256": "d718c800cdb5f40322010f57c6489944ab202b4622dc5f63e61b2a57d5df3b8e",
+  "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/google--medgemma-4b-it--290cda5eeccbee130f987c4ad74a59ae6f196408",
+  "official_accuracy": 0.8125,
+  "official_correct": 13,
+  "predictions_sha256": "2487fce43ffc5d5ede6b100ee94f11ba013c66ec2b0ee3d22dc28ee886683792",
+  "primary_metric": "official_sequence_matcher_option_accuracy",
+  "quantization": "none",
+  "schema_version": 1,
+  "split_role": "adapter_smoke",
+  "status": "completed",
+  "strict_text_accuracy": 0.625,
+  "strict_text_correct": 10,
+  "task": "omnimedvqa"
+}

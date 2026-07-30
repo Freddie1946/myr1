@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T00:45:32+08:00",
+  "formal_result": false,
+  "status": "cause_attribution_corrected",
+  "stage3_started": false,
+  "committed_spend_usd": 0,
+  "proven": {
+    "http_status": 403,
+    "message": "The request is prohibited due to a violation of provider Terms Of Service.",
+    "provider_name": null,
+    "provider_endpoint_selected": false,
+    "successful_generation_id": false,
+    "billing_changed": false,
+    "named_guardrail_pipeline_stage_returned": false
+  },
+  "not_proven": {
+    "specific_trigger_was_distillation": true,
+    "specific_trigger_was_medical_content": true,
+    "specific_trigger_was_account_or_provider_permission": true
+  },
+  "request_signals": [
+    "X-OpenRouter-Title: PathVLM-R1 Stage3 Pilot",
+    "PathVLM repository referer",
+    "pathology reasoning-process auditor system role",
+    "CANDIDATE COMPLETION TO AUDIT",
+    "reference answer",
+    "six structured process-quality events",
+    "malignant-lesion pathology question and image"
+  ],
+  "correct_conclusion": "router-level pre-provider block with generic TOS attribution; exact rule requires controlled differential diagnosis",
+  "compliance_boundary": {
+    "do_not_conceal_training_use": true,
+    "do_not_weaken_zdr_to_evade": true,
+    "do_not_bypass_provider_restriction": true,
+    "distillable_model_required_for_training_unless_explicit_permission": true
+  }
+}

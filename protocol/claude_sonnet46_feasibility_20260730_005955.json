@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T00:59:55+08:00",
+  "formal_result": false,
+  "status": "conditional_interface_feasibility_runtime_blocked",
+  "stage3_started": false,
+  "model": "anthropic/claude-sonnet-4.6",
+  "scope": {
+    "training_use": false,
+    "medical_content": false,
+    "real_dataset_content": false,
+    "synthetic_image": true,
+    "structured_output": true
+  },
+  "catalog": {
+    "input_modalities": [
+      "text",
+      "image",
+      "file"
+    ],
+    "output_modalities": [
+      "text"
+    ],
+    "context_length": 1000000,
+    "response_format_advertised": true,
+    "structured_outputs_advertised": true,
+    "prompt_usd_per_million_tokens": 3,
+    "completion_usd_per_million_tokens": 15
+  },
+  "attempts": [
+    {
+      "provider_only": "anthropic",
+      "zdr": true,
+      "data_collection": "deny",
+      "http_status": 404,
+      "reason": "no endpoints match Zero Data Retention",
+      "provider_endpoint_selected": false,
+      "billed": false
+    },
+    {
+      "provider_only": "anthropic",
+      "zdr": false,
+      "data_collection": "deny",
+      "http_status": 403,
+      "reason": "generic provider Terms-of-Service rejection",
+      "provider_endpoint_selected": false,
+      "billed": false
+    },
+    {
+      "provider_only": "azure",
+      "zdr": false,
+      "data_collection": "unspecified_for_synthetic_control",
+      "http_status": 403,
+      "reason": "generic provider Terms-of-Service rejection",
+      "provider_endpoint_selected": false,
+      "billed": false
+    }
+  ],
+  "billing_evidence": {
+    "key_usage_before_usd": 0,
+    "key_usage_after_usd": 0,
+    "account_total_usage_before_usd": 0.358321845,
+    "account_total_usage_after_usd": 0.358321845,
+    "successful_generation_ids": 0,
+    "paid_model_calls": 0
+  },
+  "conclusion": {
+    "catalog_interface_compatible": true,
+    "runtime_structured_output_verified": false,
+    "current_openrouter_key_runnable": false,
+    "written_permission_required_for_training": true,
+    "written_permission_alone_may_be_insufficient": true,
+    "provider_or_account_route_enablement_required": true,
+    "data_retention_decision_required": true,
+    "claude_code_changes_routing_eligibility": false
+  },
+  "security": {
+    "key_redaction_failure_occurred": true,
+    "key_rotation_required_before_further_api_activity": true
+  }
+}

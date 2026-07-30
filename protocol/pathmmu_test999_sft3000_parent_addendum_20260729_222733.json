@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T22:27:33+08:00",
+  "status": "frozen_before_launch",
+  "scientific_role": "complete the fixed parent/control/RL PathMMU development-diagnostic comparison",
+  "reason": "SFT3000 parent performance is required to interpret gains of the SFT4000 and Stage2 RL branches",
+  "model": {
+    "name": "SFT3000-parent-epoch3-step1125",
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125",
+    "hf_revision": "97aae0969edd2824191f7bf15cd67835c1794ecf",
+    "snapshot_manifest_sha256": "6c8708dd677f5ab1563e77317d86cd1b53cb9b969ebda09e4a312581a2b9f1f1",
+    "config_sha256": "e745df314085b566ad699d91b85f0844c0df5a745cdf409e132466dc3698451c",
+    "gpu": 0
+  },
+  "execution": {
+    "validation_smoke_count": 16,
+    "validation_smoke_required_before_test": true,
+    "test_count": 999,
+    "test_role": "pre-Stage3 development diagnostic",
+    "backend": "qwen2_5_vl",
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "do_sample": false,
+    "batch_size": 8,
+    "max_new_tokens": 1024,
+    "runner_sha256": "fe16bb9ce1528ab23357577e426095a6abc269bf8646899e7512325b51f9f4d8",
+    "parser_sha256": "69c1bde669ee16de35dd8680f6f4590429e3830617498106be6b5d333664a56c"
+  },
+  "checkpoint_selection_uses_test": false,
+  "stage3_started": false
+}

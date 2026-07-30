@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T23:24:21+08:00",
+  "formal_result": false,
+  "source": "user-provided manuscript identity clarification",
+  "manuscript_label": "Claude-4.5",
+  "correct_identity": "Claude Haiku 4.5",
+  "openrouter_model_id": "anthropic/claude-haiku-4.5",
+  "current_provider_model_id": "anthropic/claude-4.5-haiku-20251001",
+  "image_input": true,
+  "structured_outputs": true,
+  "prompt_usd_per_token_at_audit": 0.000001,
+  "completion_usd_per_token_at_audit": 0.000005,
+  "supersedes_identity_candidate": "anthropic/claude-sonnet-4.5",
+  "sonnet45_remaining_role": "optional_independent_stage3_secondary_judge",
+  "paid_api_calls": 0,
+  "stage3_started": false,
+  "execution_status": "identity_resolved_credentials_budget_and_launch_contract_pending"
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T21:51:33+08:00",
+  "status": "authorized_as_stage3_development_diagnostic",
+  "formal_result": false,
+  "dataset": {
+    "version": "pathmmu_image_disjoint_v2",
+    "split": "test_0999",
+    "count": 999,
+    "new_role": "pre_stage3_development_diagnostic",
+    "eligible_for_untouched_final_stage3_claim": false
+  },
+  "authorized_uses": [
+    "currently runnable local baseline diagnostic evaluation",
+    "selected Stage2 Outcome-GRPO diagnostic evaluation after exact checkpoint transfer",
+    "bad-case analysis",
+    "Stage3 strategy adjustment"
+  ],
+  "forbidden_claims": [
+    "untouched final Stage3 test",
+    "unbiased post-training confirmation",
+    "test never influenced Stage3 design"
+  ],
+  "reserved_final_confirmation": [
+    "PathVQA",
+    "OmniMedVQA Chest CT Scan",
+    "OmniMedVQA ISIC2020",
+    "OmniMedVQA Retinal OCT-C8",
+    "OmniMedVQA Diabetic Retinopathy"
+  ],
+  "execution_contract": {
+    "validation_smoke_required": true,
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "decoding": "greedy",
+    "max_new_tokens": 1024,
+    "raw_outputs_required": true,
+    "stage3_training_authorized": false
+  },
+  "stage2_checkpoint": {
+    "family": "Outcome-GRPO n1000 seed42",
+    "selected_epoch": 2,
+    "selected_step": 1000,
+    "old_machine_path": "/home/wjy/pathvlm_r1_v1_formal/runs/stage2_outcome_grpo/priority_n1000_seed0042/stage2_priority_n1000_seed0042_20260720_035156/formal_n1000_seed0042_epoch3/epoch_snapshots/checkpoint-1000",
+    "snapshot_manifest_sha256": "83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0",
+    "present_on_a100": false,
+    "substitution_allowed": false
+  }
+}

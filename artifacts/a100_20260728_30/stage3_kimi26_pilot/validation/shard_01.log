@@ -1,0 +1,22 @@
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:00,  4.74it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  6.19it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  6.74it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00,  7.24it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00,  6.73it/s]
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:629: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `1e-06` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+{
+  "count": 48,
+  "mean_accuracy_reward": 0.625,
+  "mean_format_reward": 1.0,
+  "choice_extracted_count": 48,
+  "empty_completion_count": 0,
+  "mean_generated_tokens": 80.33333333333333,
+  "median_generated_tokens": 76,
+  "maximum_generated_tokens": 126,
+  "eos_terminated_count": 48,
+  "generation_cap_hit_count": 0,
+  "max_new_tokens": 1024,
+  "do_sample": false,
+  "test_accessed": false,
+  "predictions_file": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/shards/shard_01/predictions.jsonl",
+  "chat_template_file": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/output_attempt03/chat_template.json",
+  "chat_template_sha256": "94174d7176c52a7192f96fc34eb2cf23c7c2059d63cdbfadca1586ba89731fb7"
+}

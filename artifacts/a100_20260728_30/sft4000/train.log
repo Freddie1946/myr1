@@ -1,0 +1,1976 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[2026-07-29 21:28:04,874] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:04,875] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:04,877] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:04,880] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:04,890] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:04,901] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:04,999] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:05,007] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-29 21:28:06,061] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-29 21:28:06,061] [INFO] [comm.py:683:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2026-07-29 21:28:06,061] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-29 21:28:06,062] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-29 21:28:06,062] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-29 21:28:06,062] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-29 21:28:06,062] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-29 21:28:06,118] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-29 21:28:06,135] [INFO] [comm.py:652:init_distributed] cdb=None
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 0, world size: 8, device: cuda:0, distributed training: True, compute dtype: torch.bfloat16
+[INFO|hub.py:302] 2026-07-29 21:28:07,256 >> Offline mode: forcing local_files_only=True
+[INFO|configuration_utils.py:697] 2026-07-29 21:28:07,256 >> loading configuration file /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125/config.json
+[INFO|configuration_utils.py:771] 2026-07-29 21:28:07,258 >> Model config Qwen2_5_VLConfig {
+  "_name_or_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125",
+  "architectures": [
+    "Qwen2_5_VLForConditionalGeneration"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "eos_token_id": 151645,
+  "hidden_act": "silu",
+  "hidden_size": 3584,
+  "image_token_id": 151655,
+  "initializer_range": 0.02,
+  "intermediate_size": 18944,
+  "max_position_embeddings": 128000,
+  "max_window_layers": 28,
+  "model_type": "qwen2_5_vl",
+  "num_attention_heads": 28,
+  "num_hidden_layers": 28,
+  "num_key_value_heads": 4,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": {
+    "mrope_section": [
+      16,
+      24,
+      24
+    ],
+    "rope_type": "default",
+    "type": "default"
+  },
+  "rope_theta": 1000000.0,
+  "sliding_window": 32768,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.49.0",
+  "use_cache": false,
+  "use_sliding_window": false,
+  "video_token_id": 151656,
+  "vision_config": {
+    "hidden_size": 1280,
+    "in_chans": 3,
+    "model_type": "qwen2_5_vl",
+    "spatial_patch_size": 14,
+    "tokens_per_second": 2,
+    "torch_dtype": "bfloat16"
+  },
+  "vision_end_token_id": 151653,
+  "vision_start_token_id": 151652,
+  "vision_token_id": 151654,
+  "vocab_size": 152064
+}
+
+[INFO|hub.py:302] 2026-07-29 21:28:07,258 >> Offline mode: forcing local_files_only=True
+[INFO|tokenization_utils_base.py:1930] 2026-07-29 21:28:07,268 >> Offline mode: forcing local_files_only=True
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,268 >> loading file vocab.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,268 >> loading file merges.txt
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,268 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,268 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,268 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,268 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,268 >> loading file chat_template.jinja
+[INFO|tokenization_utils_base.py:2313] 2026-07-29 21:28:07,566 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|hub.py:302] 2026-07-29 21:28:07,567 >> Offline mode: forcing local_files_only=True
+[INFO|hub.py:302] 2026-07-29 21:28:07,567 >> Offline mode: forcing local_files_only=True
+[INFO|image_processing_base.py:324] 2026-07-29 21:28:07,567 >> Offline mode: forcing local_files_only=True
+[INFO|image_processing_base.py:379] 2026-07-29 21:28:07,567 >> loading configuration file /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125/preprocessor_config.json
+[INFO|image_processing_base.py:324] 2026-07-29 21:28:07,569 >> Offline mode: forcing local_files_only=True
+[INFO|image_processing_base.py:379] 2026-07-29 21:28:07,569 >> loading configuration file /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125/preprocessor_config.json
+[WARNING|logging.py:329] 2026-07-29 21:28:07,569 >> Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[INFO|image_processing_base.py:434] 2026-07-29 21:28:07,570 >> Image processor Qwen2VLImageProcessor {
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "image_mean": [
+    0.48145466,
+    0.4578275,
+    0.40821073
+  ],
+  "image_processor_type": "Qwen2VLImageProcessor",
+  "image_std": [
+    0.26862954,
+    0.26130258,
+    0.27577711
+  ],
+  "max_pixels": 12845056,
+  "merge_size": 2,
+  "min_pixels": 3136,
+  "patch_size": 14,
+  "processor_class": "Qwen2_5_VLProcessor",
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "size": {
+    "longest_edge": 12845056,
+    "shortest_edge": 3136
+  },
+  "temporal_patch_size": 2
+}
+
+[INFO|tokenization_utils_base.py:1930] 2026-07-29 21:28:07,570 >> Offline mode: forcing local_files_only=True
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,570 >> loading file vocab.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,570 >> loading file merges.txt
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,570 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,570 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,570 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,571 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2048] 2026-07-29 21:28:07,571 >> loading file chat_template.jinja
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 5, world size: 8, device: cuda:5, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 1, world size: 8, device: cuda:1, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 3, world size: 8, device: cuda:3, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 2, world size: 8, device: cuda:2, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 4, world size: 8, device: cuda:4, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 7, world size: 8, device: cuda:7, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-07-29 21:28:07] llamafactory.hparams.parser:384 >> Process rank: 6, world size: 8, device: cuda:6, distributed training: True, compute dtype: torch.bfloat16
+[INFO|tokenization_utils_base.py:2313] 2026-07-29 21:28:07,931 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|processing_utils.py:694] 2026-07-29 21:28:07,931 >> Offline mode: forcing local_files_only=True
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[INFO|processing_utils.py:876] 2026-07-29 21:28:08,372 >> Processor Qwen2_5_VLProcessor:
+- image_processor: Qwen2VLImageProcessor {
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "image_mean": [
+    0.48145466,
+    0.4578275,
+    0.40821073
+  ],
+  "image_processor_type": "Qwen2VLImageProcessor",
+  "image_std": [
+    0.26862954,
+    0.26130258,
+    0.27577711
+  ],
+  "max_pixels": 12845056,
+  "merge_size": 2,
+  "min_pixels": 3136,
+  "patch_size": 14,
+  "processor_class": "Qwen2_5_VLProcessor",
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "size": {
+    "longest_edge": 12845056,
+    "shortest_edge": 3136
+  },
+  "temporal_patch_size": 2
+}
+
+- tokenizer: Qwen2TokenizerFast(name_or_path='/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125', vocab_size=151643, model_max_length=512, is_fast=True, padding_side='right', truncation_side='right', special_tokens={'eos_token': '<|im_end|>', 'pad_token': '<|endoftext|>', 'additional_special_tokens': ['<|im_start|>', '<|im_end|>', '<|object_ref_start|>', '<|object_ref_end|>', '<|box_start|>', '<|box_end|>', '<|quad_start|>', '<|quad_end|>', '<|vision_start|>', '<|vision_end|>', '<|vision_pad|>', '<|image_pad|>', '<|video_pad|>']}, clean_up_tokenization_spaces=False, added_tokens_decoder={
+	151643: AddedToken("<|endoftext|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151644: AddedToken("<|im_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151645: AddedToken("<|im_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151646: AddedToken("<|object_ref_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151647: AddedToken("<|object_ref_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151648: AddedToken("<|box_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151649: AddedToken("<|box_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151650: AddedToken("<|quad_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151651: AddedToken("<|quad_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151652: AddedToken("<|vision_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151653: AddedToken("<|vision_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151654: AddedToken("<|vision_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151655: AddedToken("<|image_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151656: AddedToken("<|video_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	151657: AddedToken("<tool_call>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	151658: AddedToken("</tool_call>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	151659: AddedToken("<|fim_prefix|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	151660: AddedToken("<|fim_middle|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	151661: AddedToken("<|fim_suffix|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	151662: AddedToken("<|fim_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	151663: AddedToken("<|repo_name|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	151664: AddedToken("<|file_sep|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+}
+)
+
+{
+  "processor_class": "Qwen2_5_VLProcessor"
+}
+
+[INFO|2026-07-29 21:28:08] llamafactory.data.template:157 >> Add <|im_end|> to stop words.
+[INFO|2026-07-29 21:28:08] llamafactory.data.loader:157 >> Loading dataset pathvlm_sft4000_rl_n1000.json...
+Setting num_proc from 16 back to 1 for the train split to disable multiprocessing as it only contains one shard.
+
+Generating train split: 0 examples [00:00, ? examples/s]
+Generating train split: 1000 examples [00:00, 24173.41 examples/s]
+
+Converting format of dataset (num_proc=16):   0%|          | 0/1000 [00:00<?, ? examples/s][rank6]:[W729 21:28:08.024781458 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 6]  using GPU 6 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank1]:[W729 21:28:08.048540917 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 1]  using GPU 1 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank4]:[W729 21:28:08.064118499 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 4]  using GPU 4 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+Traceback (most recent call last):
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/managers.py", line 599, in _run_server
+    server.serve_forever()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000008c789f4000000bcf'
+[rank5]:[W729 21:28:08.084495850 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 5]  using GPU 5 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+
+Converting format of dataset (num_proc=16): 100%|██████████| 1000/1000 [00:00<00:00, 6250.42 examples/s]
+[rank3]:[W729 21:28:08.117792168 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 3]  using GPU 3 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank7]:[W729 21:28:08.118652688 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 7]  using GPU 7 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank2]:[W729 21:28:08.174276077 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 2]  using GPU 2 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+[rank0]:[W729 21:28:09.605290627 ProcessGroupNCCL.cpp:4561] [PG ID 0 PG GUID 0 Rank 0]  using GPU 0 to perform barrier as devices used by this process are currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. Specify device_ids in barrier() to force use of a particular device, or call init_process_group() with a device_id.
+
+Running tokenizer on dataset (num_proc=16):   0%|          | 0/1000 [00:00<?, ? examples/s]
+Running tokenizer on dataset (num_proc=16):   6%|▋         | 63/1000 [00:01<00:27, 33.53 examples/s]
+Running tokenizer on dataset (num_proc=16):  25%|██▌       | 252/1000 [00:02<00:04, 153.56 examples/s]
+Running tokenizer on dataset (num_proc=16):  32%|███▏      | 315/1000 [00:02<00:03, 189.82 examples/s]
+Running tokenizer on dataset (num_proc=16):  38%|███▊      | 378/1000 [00:02<00:02, 236.66 examples/s]
+Running tokenizer on dataset (num_proc=16):  50%|█████     | 504/1000 [00:02<00:01, 296.56 examples/s]
+Running tokenizer on dataset (num_proc=16):  69%|██████▉   | 690/1000 [00:02<00:00, 450.95 examples/s]
+Running tokenizer on dataset (num_proc=16):  81%|████████▏ | 814/1000 [00:02<00:00, 514.96 examples/s]
+Running tokenizer on dataset (num_proc=16):  94%|█████████▍| 938/1000 [00:03<00:00, 511.57 examples/s]Traceback (most recent call last):
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/managers.py", line 599, in _run_server
+    server.serve_forever()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/site-packages/multiprocess/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000008c78a58000000bd2'
+
+Running tokenizer on dataset (num_proc=16): 100%|██████████| 1000/1000 [00:03<00:00, 291.09 examples/s]
+training example:
+input_ids:
+[151644, 8948, 198, 2610, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 151652, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151655, 151653, 28715, 389, 279, 88990, 4419, 11, 1128, 374, 279, 1429, 4363, 6993, 315, 279, 92117, 5267, 3798, 510, 32, 8, 60648, 11972, 93229, 834, 55078, 10530, 198, 33, 8, 8325, 1737, 18277, 10029, 93229, 834, 55078, 10530, 198, 34, 8, 7355, 622, 834, 55078, 10530, 448, 16645, 5944, 198, 35, 8, 11581, 39978, 453, 51179, 36040, 151645, 198, 151644, 77091, 198, 13708, 766, 16357, 6853, 315, 16645, 5944, 11, 9362, 315, 7100, 316, 52807, 11, 323, 17071, 40384, 774, 96092, 448, 20469, 30384, 14225, 4190, 4541, 2779, 52740, 323, 458, 518, 88115, 2779, 7042, 892, 374, 304, 1555, 448, 458, 28439, 11972, 93229, 834, 55078, 10530, 11, 537, 264, 64209, 92117, 476, 1632, 1737, 18277, 10029, 9387, 13, 22827, 11, 279, 17452, 653, 537, 5285, 448, 2477, 39978, 453, 51179, 36040, 3918, 26865, 1784, 9217, 23465, 8, 60648, 11972, 93229, 834, 55078, 10530, 522, 9217, 29, 151645, 198]
+inputs:
+<|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+<|vision_start|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|vision_end|>Based on the microscopic features, what is the most likely nature of the lesion?
+Options:
+A) Intermediate grade malignant neoplasm
+B) Well-differentiated malignant neoplasm
+C) Benign neoplasm with organized structure
+D) Non-neoplastic inflammation<|im_end|>
+<|im_start|>assistant
+<think>The lack of organized structure, presence of pleomorphism, and hyperchromatic nuclei with prominent nucleoli suggest active cell proliferation and an atypical cell population which is in line with an intermediate grade malignant neoplasm, not a benign lesion or well-differentiated cancer. Moreover, the characteristics do not align with non-neoplastic inflammation.</think><answer>A) Intermediate grade malignant neoplasm</answer><|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 13708, 766, 16357, 6853, 315, 16645, 5944, 11, 9362, 315, 7100, 316, 52807, 11, 323, 17071, 40384, 774, 96092, 448, 20469, 30384, 14225, 4190, 4541, 2779, 52740, 323, 458, 518, 88115, 2779, 7042, 892, 374, 304, 1555, 448, 458, 28439, 11972, 93229, 834, 55078, 10530, 11, 537, 264, 64209, 92117, 476, 1632, 1737, 18277, 10029, 9387, 13, 22827, 11, 279, 17452, 653, 537, 5285, 448, 2477, 39978, 453, 51179, 36040, 3918, 26865, 1784, 9217, 23465, 8, 60648, 11972, 93229, 834, 55078, 10530, 522, 9217, 29, 151645, 198]
+labels:
+<think>The lack of organized structure, presence of pleomorphism, and hyperchromatic nuclei with prominent nucleoli suggest active cell proliferation and an atypical cell population which is in line with an intermediate grade malignant neoplasm, not a benign lesion or well-differentiated cancer. Moreover, the characteristics do not align with non-neoplastic inflammation.</think><answer>A) Intermediate grade malignant neoplasm</answer><|im_end|>
+
+[INFO|hub.py:302] 2026-07-29 21:28:14,668 >> Offline mode: forcing local_files_only=True
+[INFO|configuration_utils.py:697] 2026-07-29 21:28:14,669 >> loading configuration file /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125/config.json
+[INFO|configuration_utils.py:771] 2026-07-29 21:28:14,671 >> Model config Qwen2_5_VLConfig {
+  "_name_or_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125",
+  "architectures": [
+    "Qwen2_5_VLForConditionalGeneration"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "eos_token_id": 151645,
+  "hidden_act": "silu",
+  "hidden_size": 3584,
+  "image_token_id": 151655,
+  "initializer_range": 0.02,
+  "intermediate_size": 18944,
+  "max_position_embeddings": 128000,
+  "max_window_layers": 28,
+  "model_type": "qwen2_5_vl",
+  "num_attention_heads": 28,
+  "num_hidden_layers": 28,
+  "num_key_value_heads": 4,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": {
+    "mrope_section": [
+      16,
+      24,
+      24
+    ],
+    "rope_type": "default",
+    "type": "default"
+  },
+  "rope_theta": 1000000.0,
+  "sliding_window": 32768,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.49.0",
+  "use_cache": false,
+  "use_sliding_window": false,
+  "video_token_id": 151656,
+  "vision_config": {
+    "hidden_size": 1280,
+    "in_chans": 3,
+    "model_type": "qwen2_5_vl",
+    "spatial_patch_size": 14,
+    "tokens_per_second": 2,
+    "torch_dtype": "bfloat16"
+  },
+  "vision_end_token_id": 151653,
+  "vision_start_token_id": 151652,
+  "vision_token_id": 151654,
+  "vocab_size": 152064
+}
+
+[INFO|modeling_utils.py:3641] 2026-07-29 21:28:14,707 >> Offline mode: forcing local_files_only=True
+[INFO|modeling_utils.py:3979] 2026-07-29 21:28:14,707 >> loading weights file /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125/model.safetensors.index.json
+[INFO|modeling_utils.py:1633] 2026-07-29 21:28:14,708 >> Instantiating Qwen2_5_VLForConditionalGeneration model under default dtype torch.bfloat16.
+[INFO|configuration_utils.py:1140] 2026-07-29 21:28:14,713 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "eos_token_id": 151645,
+  "use_cache": false
+}
+
+[INFO|modeling_utils.py:1633] 2026-07-29 21:28:14,713 >> Instantiating Qwen2_5_VisionTransformerPretrainedModel model under default dtype torch.bfloat16.
+
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.70s/it]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.71s/it]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.85s/it]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.75s/it]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.77s/it]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.78s/it]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.77s/it]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:02, 20.79s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.80s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.82s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.83s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.81s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.88s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.82s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.88s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:41<00:41, 20.87s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:01<00:20, 20.59s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:01<00:20, 20.60s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:02<00:20, 20.63s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:01<00:20, 20.60s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:01<00:20, 20.59s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:02<00:20, 20.62s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:02<00:20, 20.63s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [01:02<00:20, 20.64s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.56s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.45s/it]
+
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.59s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.48s/it]
+[INFO|modeling_utils.py:4970] 2026-07-29 21:29:24,723 >> All model checkpoint weights were used when initializing Qwen2_5_VLForConditionalGeneration.
+
+[INFO|modeling_utils.py:4978] 2026-07-29 21:29:24,723 >> All the weights of Qwen2_5_VLForConditionalGeneration were initialized from the model checkpoint at /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use Qwen2_5_VLForConditionalGeneration for predictions without further training.
+
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.57s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.45s/it]
+
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.56s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.46s/it]
+
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.58s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.46s/it]
+
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.56s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.46s/it]
+
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.58s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.47s/it]
+
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 15.59s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [01:09<00:00, 17.48s/it]
+[INFO|configuration_utils.py:1093] 2026-07-29 21:29:24,998 >> loading configuration file /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125/generation_config.json
+[INFO|configuration_utils.py:1140] 2026-07-29 21:29:24,999 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": [
+    151645,
+    151643
+  ],
+  "pad_token_id": 151643,
+  "repetition_penalty": 1.05,
+  "temperature": 1e-06
+}
+
+[INFO|2026-07-29 21:29:25] llamafactory.model.model_utils.checkpointing:157 >> Gradient checkpointing enabled.
+[INFO|2026-07-29 21:29:25] llamafactory.model.model_utils.attention:157 >> Using torch SDPA for faster training and inference.
+[INFO|2026-07-29 21:29:25] llamafactory.model.adapter:157 >> Upcasting trainable params to float32.
+[INFO|2026-07-29 21:29:25] llamafactory.model.adapter:157 >> Fine-tuning method: Full
+[INFO|2026-07-29 21:29:25] llamafactory.model.model_utils.visual:157 >> Set vision model not trainable: ['visual.patch_embed', 'visual.blocks'].
+[INFO|2026-07-29 21:29:25] llamafactory.model.model_utils.visual:157 >> Set multi model projector not trainable: visual.merger.
+[INFO|2026-07-29 21:29:26] llamafactory.model.loader:157 >> trainable params: 7,615,616,512 || all params: 8,292,166,656 || trainable%: 91.8411
+[INFO|trainer.py:746] 2026-07-29 21:29:26,519 >> Using auto half precision backend
+[2026-07-29 21:29:27,103] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed info: version=0.15.4, git-hash=unknown, git-branch=unknown
+[2026-07-29 21:29:27,103] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-29 21:29:28,184] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2026-07-29 21:29:28,186] [INFO] [logging.py:128:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2026-07-29 21:29:28,186] [INFO] [logging.py:128:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[2026-07-29 21:29:28,253] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed Basic Optimizer = AdamW
+[2026-07-29 21:29:28,253] [INFO] [utils.py:59:is_zero_supported_optimizer] Checking ZeRO support for optimizer=AdamW type=<class 'torch.optim.adamw.AdamW'>
+[2026-07-29 21:29:28,253] [INFO] [logging.py:128:log_dist] [Rank 0] Creating torch.bfloat16 ZeRO stage 2 optimizer
+[2026-07-29 21:29:28,253] [INFO] [stage_1_and_2.py:149:__init__] Reduce bucket size 500000000
+[2026-07-29 21:29:28,253] [INFO] [stage_1_and_2.py:150:__init__] Allgather bucket size 500000000
+[2026-07-29 21:29:28,253] [INFO] [stage_1_and_2.py:151:__init__] CPU Offload: False
+[2026-07-29 21:29:28,253] [INFO] [stage_1_and_2.py:152:__init__] Round robin gradient partitioning: False
+[2026-07-29 21:29:46,207] [INFO] [utils.py:781:see_memory_usage] Before initializing optimizer states
+[2026-07-29 21:29:46,208] [INFO] [utils.py:782:see_memory_usage] MA 18.99 GB         Max_MA 18.99 GB         CA 19.01 GB         Max_CA 19 GB 
+[2026-07-29 21:29:46,208] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 69.93 GB, percent = 6.9%
+[2026-07-29 21:29:46,523] [INFO] [utils.py:781:see_memory_usage] After initializing optimizer states
+[2026-07-29 21:29:46,523] [INFO] [utils.py:782:see_memory_usage] MA 18.99 GB         Max_MA 22.54 GB         CA 22.56 GB         Max_CA 23 GB 
+[2026-07-29 21:29:46,523] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 59.53 GB, percent = 5.9%
+[2026-07-29 21:29:46,523] [INFO] [stage_1_and_2.py:544:__init__] optimizer state initialized
+[2026-07-29 21:29:46,680] [INFO] [utils.py:781:see_memory_usage] After initializing ZeRO optimizer
+[2026-07-29 21:29:46,680] [INFO] [utils.py:782:see_memory_usage] MA 18.99 GB         Max_MA 18.99 GB         CA 22.56 GB         Max_CA 23 GB 
+[2026-07-29 21:29:46,680] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 59.55 GB, percent = 5.9%
+[2026-07-29 21:29:46,682] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer
+[2026-07-29 21:29:46,682] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed using configured LR scheduler = None
+[2026-07-29 21:29:46,682] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed LR Scheduler = None
+[2026-07-29 21:29:46,682] [INFO] [logging.py:128:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0, 0.0], mom=[(0.9, 0.999), (0.9, 0.999)]
+[2026-07-29 21:29:46,684] [INFO] [config.py:999:print] DeepSpeedEngine configuration:
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True, 'use_gds': False}
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   amp_enabled .................. False
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   amp_params ................... False
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   bfloat16_enabled ............. True
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   bfloat16_immediate_grad_update  False
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   checkpoint_parallel_write_pipeline  False
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   checkpoint_tag_validation_enabled  True
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   checkpoint_tag_validation_fail  False
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7fec346116f0>
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   communication_data_type ...... None
+[2026-07-29 21:29:46,684] [INFO] [config.py:1003:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   curriculum_enabled_legacy .... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   curriculum_params_legacy ..... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   data_efficiency_enabled ...... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   dataloader_drop_last ......... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   disable_allgather ............ False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   dump_state ................... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   dynamic_loss_scale_args ...... None
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_enabled ........... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_gas_boundary_resolution  1
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_layer_num ......... 0
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_max_iter .......... 100
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_stability ......... 1e-06
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_tol ............... 0.01
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   eigenvalue_verbose ........... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   elasticity_enabled ........... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   fp16_auto_cast ............... None
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   fp16_enabled ................. False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   fp16_master_weights_and_gradients  False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   global_rank .................. 0
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   grad_accum_dtype ............. None
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   gradient_accumulation_steps .. 1
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   gradient_clipping ............ 1.0
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   gradient_predivide_factor .... 1.0
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   graph_harvesting ............. False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   initial_dynamic_scale ........ 1
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   load_universal_checkpoint .... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   loss_scale ................... 1.0
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   memory_breakdown ............. False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   mics_hierarchial_params_gather  False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   mics_shard_size .............. -1
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName')
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   optimizer_legacy_fusion ...... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   optimizer_name ............... None
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   optimizer_params ............. None
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   pld_enabled .................. False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   pld_params ................... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   prescale_gradients ........... False
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   scheduler_name ............... None
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   scheduler_params ............. None
+[2026-07-29 21:29:46,685] [INFO] [config.py:1003:print]   seq_parallel_communication_data_type  torch.float32
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   sparse_attention ............. None
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   sparse_gradients_enabled ..... False
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   steps_per_print .............. inf
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   timers_config ................ enabled=True synchronized=True
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   train_batch_size ............. 8
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   train_micro_batch_size_per_gpu  1
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   use_data_before_expert_parallel_  False
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   use_node_local_storage ....... False
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   wall_clock_breakdown ......... False
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   weight_quantization_config ... None
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   world_size ................... 8
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   zero_allow_untested_optimizer  True
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   zero_config .................. stage=2 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500000000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=False use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   zero_enabled ................. True
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   zero_force_ds_cpu_optimizer .. True
+[2026-07-29 21:29:46,686] [INFO] [config.py:1003:print]   zero_optimization_stage ...... 2
+[2026-07-29 21:29:46,686] [INFO] [config.py:989:print_user_config]   json = {
+    "train_batch_size": 8, 
+    "train_micro_batch_size_per_gpu": 1, 
+    "gradient_accumulation_steps": 1, 
+    "gradient_clipping": 1.0, 
+    "zero_allow_untested_optimizer": true, 
+    "fp16": {
+        "enabled": false, 
+        "loss_scale": 0, 
+        "loss_scale_window": 1000, 
+        "initial_scale_power": 16, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1
+    }, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "zero_optimization": {
+        "stage": 2, 
+        "overlap_comm": true, 
+        "contiguous_gradients": true, 
+        "reduce_scatter": true, 
+        "reduce_bucket_size": 5.000000e+08, 
+        "allgather_partitions": true, 
+        "allgather_bucket_size": 5.000000e+08
+    }, 
+    "steps_per_print": inf
+}
+[INFO|trainer.py:2405] 2026-07-29 21:29:46,687 >> ***** Running training *****
+[INFO|trainer.py:2406] 2026-07-29 21:29:46,687 >>   Num examples = 1,000
+[INFO|trainer.py:2407] 2026-07-29 21:29:46,687 >>   Num Epochs = 2
+[INFO|trainer.py:2408] 2026-07-29 21:29:46,687 >>   Instantaneous batch size per device = 1
+[INFO|trainer.py:2411] 2026-07-29 21:29:46,687 >>   Total train batch size (w. parallel, distributed & accumulation) = 8
+[INFO|trainer.py:2412] 2026-07-29 21:29:46,687 >>   Gradient Accumulation steps = 1
+[INFO|trainer.py:2413] 2026-07-29 21:29:46,687 >>   Total optimization steps = 250
+[INFO|trainer.py:2414] 2026-07-29 21:29:46,689 >>   Number of trainable parameters = 7,615,616,512
+
+  0%|          | 0/250 [00:00<?, ?it/s]
+  0%|          | 1/250 [00:10<42:23, 10.22s/it]
+                                               
+{'loss': 1.4833, 'grad_norm': 9.122410774230957, 'learning_rate': 2.5e-06, 'epoch': 0.01}
+
+  0%|          | 1/250 [00:10<42:23, 10.22s/it]
+  1%|          | 2/250 [00:14<28:43,  6.95s/it]
+                                               
+{'loss': 1.5562, 'grad_norm': 9.60173511505127, 'learning_rate': 5e-06, 'epoch': 0.02}
+
+  1%|          | 2/250 [00:14<28:43,  6.95s/it]
+  1%|          | 3/250 [00:19<24:14,  5.89s/it]
+                                               
+{'loss': 1.4726, 'grad_norm': 9.9636812210083, 'learning_rate': 7.500000000000001e-06, 'epoch': 0.02}
+
+  1%|          | 3/250 [00:19<24:14,  5.89s/it]
+  2%|▏         | 4/250 [00:24<22:16,  5.43s/it]
+                                               
+{'loss': 1.3292, 'grad_norm': 9.555237770080566, 'learning_rate': 1e-05, 'epoch': 0.03}
+
+  2%|▏         | 4/250 [00:24<22:16,  5.43s/it]
+  2%|▏         | 5/250 [00:28<20:50,  5.11s/it]
+                                               
+{'loss': 1.4306, 'grad_norm': 8.577560424804688, 'learning_rate': 1.25e-05, 'epoch': 0.04}
+
+  2%|▏         | 5/250 [00:28<20:50,  5.11s/it]
+  2%|▏         | 6/250 [00:33<19:59,  4.92s/it]
+                                               
+{'loss': 1.3718, 'grad_norm': 9.103362083435059, 'learning_rate': 1.5000000000000002e-05, 'epoch': 0.05}
+
+  2%|▏         | 6/250 [00:33<19:59,  4.92s/it]
+  3%|▎         | 7/250 [00:37<19:23,  4.79s/it]
+                                               
+{'loss': 1.1553, 'grad_norm': 8.458073616027832, 'learning_rate': 1.7500000000000002e-05, 'epoch': 0.06}
+
+  3%|▎         | 7/250 [00:37<19:23,  4.79s/it]
+  3%|▎         | 8/250 [00:42<18:57,  4.70s/it]
+                                               
+{'loss': 1.4447, 'grad_norm': 8.129995346069336, 'learning_rate': 2e-05, 'epoch': 0.06}
+
+  3%|▎         | 8/250 [00:42<18:57,  4.70s/it]
+  4%|▎         | 9/250 [00:46<18:39,  4.65s/it]
+                                               
+{'loss': 1.1934, 'grad_norm': 6.37393045425415, 'learning_rate': 1.999915737775817e-05, 'epoch': 0.07}
+
+  4%|▎         | 9/250 [00:46<18:39,  4.65s/it]
+  4%|▍         | 10/250 [00:51<18:26,  4.61s/it]
+                                                
+{'loss': 1.2232, 'grad_norm': 5.808566570281982, 'learning_rate': 1.9996629653035128e-05, 'epoch': 0.08}
+
+  4%|▍         | 10/250 [00:51<18:26,  4.61s/it]
+  4%|▍         | 11/250 [00:55<18:14,  4.58s/it]
+                                                
+{'loss': 1.0387, 'grad_norm': 6.008401393890381, 'learning_rate': 1.999241725181428e-05, 'epoch': 0.09}
+
+  4%|▍         | 11/250 [00:55<18:14,  4.58s/it]
+  5%|▍         | 12/250 [01:00<18:08,  4.57s/it]
+                                                
+{'loss': 1.1574, 'grad_norm': 5.2823004722595215, 'learning_rate': 1.9986520883988233e-05, 'epoch': 0.1}
+
+  5%|▍         | 12/250 [01:00<18:08,  4.57s/it]
+  5%|▌         | 13/250 [01:04<17:59,  4.56s/it]
+                                                
+{'loss': 1.072, 'grad_norm': 4.720175743103027, 'learning_rate': 1.997894154323911e-05, 'epoch': 0.1}
+
+  5%|▌         | 13/250 [01:04<17:59,  4.56s/it]
+  6%|▌         | 14/250 [01:09<17:59,  4.57s/it]
+                                                
+{'loss': 1.2776, 'grad_norm': 5.072334289550781, 'learning_rate': 1.9969680506871138e-05, 'epoch': 0.11}
+
+  6%|▌         | 14/250 [01:09<17:59,  4.57s/it]
+  6%|▌         | 15/250 [01:14<17:50,  4.56s/it]
+                                                
+{'loss': 1.0036, 'grad_norm': 4.53830099105835, 'learning_rate': 1.995873933559535e-05, 'epoch': 0.12}
+
+  6%|▌         | 15/250 [01:14<17:50,  4.56s/it]
+  6%|▋         | 16/250 [01:18<17:42,  4.54s/it]
+                                                
+{'loss': 1.1583, 'grad_norm': 5.06541633605957, 'learning_rate': 1.9946119873266615e-05, 'epoch': 0.13}
+
+  6%|▋         | 16/250 [01:18<17:42,  4.54s/it]
+  7%|▋         | 17/250 [01:23<17:35,  4.53s/it]
+                                                
+{'loss': 1.0014, 'grad_norm': 4.711543560028076, 'learning_rate': 1.993182424657285e-05, 'epoch': 0.14}
+
+  7%|▋         | 17/250 [01:23<17:35,  4.53s/it]
+  7%|▋         | 18/250 [01:27<17:30,  4.53s/it]
+                                                
+{'loss': 1.1861, 'grad_norm': 4.488597393035889, 'learning_rate': 1.9915854864676665e-05, 'epoch': 0.14}
+
+  7%|▋         | 18/250 [01:27<17:30,  4.53s/it]
+  8%|▊         | 19/250 [01:32<17:24,  4.52s/it]
+                                                
+{'loss': 1.1644, 'grad_norm': 5.201225757598877, 'learning_rate': 1.989821441880933e-05, 'epoch': 0.15}
+
+  8%|▊         | 19/250 [01:32<17:24,  4.52s/it]
+  8%|▊         | 20/250 [01:37<17:52,  4.66s/it]
+                                                
+{'loss': 1.0557, 'grad_norm': 4.589589595794678, 'learning_rate': 1.9878905881817254e-05, 'epoch': 0.16}
+
+  8%|▊         | 20/250 [01:37<17:52,  4.66s/it]
+  8%|▊         | 21/250 [01:41<17:44,  4.65s/it]
+                                                
+{'loss': 1.3091, 'grad_norm': 5.020689964294434, 'learning_rate': 1.9857932507660983e-05, 'epoch': 0.17}
+
+  8%|▊         | 21/250 [01:41<17:44,  4.65s/it]
+  9%|▉         | 22/250 [01:46<17:29,  4.60s/it]
+                                                
+{'loss': 1.2853, 'grad_norm': 4.952608585357666, 'learning_rate': 1.9835297830866827e-05, 'epoch': 0.18}
+
+  9%|▉         | 22/250 [01:46<17:29,  4.60s/it]
+  9%|▉         | 23/250 [01:50<17:18,  4.57s/it]
+                                                
+{'loss': 1.1685, 'grad_norm': 5.309021472930908, 'learning_rate': 1.9811005665931205e-05, 'epoch': 0.18}
+
+  9%|▉         | 23/250 [01:50<17:18,  4.57s/it]
+ 10%|▉         | 24/250 [01:55<17:09,  4.55s/it]
+                                                
+{'loss': 1.1583, 'grad_norm': 5.111333847045898, 'learning_rate': 1.9785060106677818e-05, 'epoch': 0.19}
+
+ 10%|▉         | 24/250 [01:55<17:09,  4.55s/it]
+ 10%|█         | 25/250 [01:59<17:01,  4.54s/it]
+                                                
+{'loss': 1.1602, 'grad_norm': 5.133011817932129, 'learning_rate': 1.975746552556772e-05, 'epoch': 0.2}
+
+ 10%|█         | 25/250 [01:59<17:01,  4.54s/it]
+ 10%|█         | 26/250 [02:04<16:54,  4.53s/it]
+                                                
+{'loss': 1.1543, 'grad_norm': 5.198001861572266, 'learning_rate': 1.9728226572962474e-05, 'epoch': 0.21}
+
+ 10%|█         | 26/250 [02:04<16:54,  4.53s/it]
+ 11%|█         | 27/250 [02:08<16:57,  4.56s/it]
+                                                
+{'loss': 1.0583, 'grad_norm': 4.994746208190918, 'learning_rate': 1.9697348176340442e-05, 'epoch': 0.22}
+
+ 11%|█         | 27/250 [02:08<16:57,  4.56s/it]
+ 11%|█         | 28/250 [02:13<16:54,  4.57s/it]
+                                                
+{'loss': 1.0032, 'grad_norm': 5.030187606811523, 'learning_rate': 1.966483553946637e-05, 'epoch': 0.22}
+
+ 11%|█         | 28/250 [02:13<16:54,  4.57s/it]
+ 12%|█▏        | 29/250 [02:18<16:46,  4.55s/it]
+                                                
+{'loss': 1.1882, 'grad_norm': 5.226691246032715, 'learning_rate': 1.9630694141514467e-05, 'epoch': 0.23}
+
+ 12%|█▏        | 29/250 [02:18<16:46,  4.55s/it]
+ 12%|█▏        | 30/250 [02:22<16:38,  4.54s/it]
+                                                
+{'loss': 1.0414, 'grad_norm': 4.7790422439575195, 'learning_rate': 1.9594929736144978e-05, 'epoch': 0.24}
+
+ 12%|█▏        | 30/250 [02:22<16:38,  4.54s/it]
+ 12%|█▏        | 31/250 [02:27<16:31,  4.53s/it]
+                                                
+{'loss': 1.1082, 'grad_norm': 5.058029651641846, 'learning_rate': 1.955754835053459e-05, 'epoch': 0.25}
+
+ 12%|█▏        | 31/250 [02:27<16:31,  4.53s/it]
+ 13%|█▎        | 32/250 [02:31<16:26,  4.52s/it]
+                                                
+{'loss': 1.1076, 'grad_norm': 5.105255603790283, 'learning_rate': 1.9518556284360696e-05, 'epoch': 0.26}
+
+ 13%|█▎        | 32/250 [02:31<16:26,  4.52s/it]
+ 13%|█▎        | 33/250 [02:36<16:26,  4.55s/it]
+                                                
+{'loss': 1.183, 'grad_norm': 5.505289554595947, 'learning_rate': 1.947796010873974e-05, 'epoch': 0.26}
+
+ 13%|█▎        | 33/250 [02:36<16:26,  4.55s/it]
+ 14%|█▎        | 34/250 [02:40<16:19,  4.54s/it]
+                                                
+{'loss': 1.1123, 'grad_norm': 5.157639503479004, 'learning_rate': 1.9435766665119823e-05, 'epoch': 0.27}
+
+ 14%|█▎        | 34/250 [02:40<16:19,  4.54s/it]
+ 14%|█▍        | 35/250 [02:45<16:26,  4.59s/it]
+                                                
+{'loss': 0.9481, 'grad_norm': 4.791178226470947, 'learning_rate': 1.939198306412775e-05, 'epoch': 0.28}
+
+ 14%|█▍        | 35/250 [02:45<16:26,  4.59s/it]
+ 14%|█▍        | 36/250 [02:49<16:22,  4.59s/it]
+                                                
+{'loss': 1.0027, 'grad_norm': 5.048829078674316, 'learning_rate': 1.934661668437073e-05, 'epoch': 0.29}
+
+ 14%|█▍        | 36/250 [02:49<16:22,  4.59s/it]
+ 15%|█▍        | 37/250 [02:54<16:12,  4.56s/it]
+                                                
+{'loss': 1.1404, 'grad_norm': 4.840186595916748, 'learning_rate': 1.929967517119289e-05, 'epoch': 0.3}
+
+ 15%|█▍        | 37/250 [02:54<16:12,  4.56s/it]
+ 15%|█▌        | 38/250 [02:58<16:04,  4.55s/it]
+                                                
+{'loss': 1.2592, 'grad_norm': 5.096824645996094, 'learning_rate': 1.9251166435386837e-05, 'epoch': 0.3}
+
+ 15%|█▌        | 38/250 [02:58<16:04,  4.55s/it]
+ 16%|█▌        | 39/250 [03:03<16:03,  4.57s/it]
+                                                
+{'loss': 0.9765, 'grad_norm': 4.973447799682617, 'learning_rate': 1.920109865186052e-05, 'epoch': 0.31}
+
+ 16%|█▌        | 39/250 [03:03<16:03,  4.57s/it]
+ 16%|█▌        | 40/250 [03:08<15:54,  4.55s/it]
+                                                
+{'loss': 1.0866, 'grad_norm': 4.836546897888184, 'learning_rate': 1.9149480258259535e-05, 'epoch': 0.32}
+
+ 16%|█▌        | 40/250 [03:08<15:54,  4.55s/it]
+ 16%|█▋        | 41/250 [03:12<15:47,  4.53s/it]
+                                                
+{'loss': 1.0505, 'grad_norm': 5.040116310119629, 'learning_rate': 1.9096319953545186e-05, 'epoch': 0.33}
+
+ 16%|█▋        | 41/250 [03:12<15:47,  4.53s/it]
+ 17%|█▋        | 42/250 [03:17<15:41,  4.53s/it]
+                                                
+{'loss': 1.3197, 'grad_norm': 5.302027225494385, 'learning_rate': 1.9041626696528503e-05, 'epoch': 0.34}
+
+ 17%|█▋        | 42/250 [03:17<15:41,  4.53s/it]
+ 17%|█▋        | 43/250 [03:21<15:43,  4.56s/it]
+                                                
+{'loss': 1.2583, 'grad_norm': 5.193669319152832, 'learning_rate': 1.8985409704360457e-05, 'epoch': 0.34}
+
+ 17%|█▋        | 43/250 [03:21<15:43,  4.56s/it]
+ 18%|█▊        | 44/250 [03:26<15:35,  4.54s/it]
+                                                
+{'loss': 1.0169, 'grad_norm': 4.937196731567383, 'learning_rate': 1.892767845097864e-05, 'epoch': 0.35}
+
+ 18%|█▊        | 44/250 [03:26<15:35,  4.54s/it]
+ 18%|█▊        | 45/250 [03:30<15:29,  4.53s/it]
+                                                
+{'loss': 1.1058, 'grad_norm': 5.229907512664795, 'learning_rate': 1.886844266551068e-05, 'epoch': 0.36}
+
+ 18%|█▊        | 45/250 [03:30<15:29,  4.53s/it]
+ 18%|█▊        | 46/250 [03:35<15:33,  4.58s/it]
+                                                
+{'loss': 1.1735, 'grad_norm': 4.887691497802734, 'learning_rate': 1.8807712330634645e-05, 'epoch': 0.37}
+
+ 18%|█▊        | 46/250 [03:35<15:33,  4.58s/it]
+ 19%|█▉        | 47/250 [03:39<15:24,  4.55s/it]
+                                                
+{'loss': 1.188, 'grad_norm': 4.7346272468566895, 'learning_rate': 1.8745497680896722e-05, 'epoch': 0.38}
+
+ 19%|█▉        | 47/250 [03:39<15:24,  4.55s/it]
+ 19%|█▉        | 48/250 [03:44<15:16,  4.54s/it]
+                                                
+{'loss': 1.1746, 'grad_norm': 4.9848198890686035, 'learning_rate': 1.868180920098644e-05, 'epoch': 0.38}
+
+ 19%|█▉        | 48/250 [03:44<15:16,  4.54s/it]
+ 20%|█▉        | 49/250 [03:48<15:10,  4.53s/it]
+                                                
+{'loss': 1.1543, 'grad_norm': 5.104736328125, 'learning_rate': 1.861665762396974e-05, 'epoch': 0.39}
+
+ 20%|█▉        | 49/250 [03:48<15:10,  4.53s/it]
+ 20%|██        | 50/250 [03:53<15:04,  4.52s/it]
+                                                
+{'loss': 1.0179, 'grad_norm': 4.4253106117248535, 'learning_rate': 1.8550053929480202e-05, 'epoch': 0.4}
+
+ 20%|██        | 50/250 [03:53<15:04,  4.52s/it]
+ 20%|██        | 51/250 [03:57<14:58,  4.52s/it]
+                                                
+{'loss': 1.1166, 'grad_norm': 4.630624771118164, 'learning_rate': 1.8482009341868696e-05, 'epoch': 0.41}
+
+ 20%|██        | 51/250 [03:57<14:58,  4.52s/it]
+ 21%|██        | 52/250 [04:02<14:59,  4.54s/it]
+                                                
+{'loss': 1.1271, 'grad_norm': 4.815617084503174, 'learning_rate': 1.8412535328311813e-05, 'epoch': 0.42}
+
+ 21%|██        | 52/250 [04:02<14:59,  4.54s/it]
+ 21%|██        | 53/250 [04:07<14:54,  4.54s/it]
+                                                
+{'loss': 1.0004, 'grad_norm': 4.920986652374268, 'learning_rate': 1.834164359687937e-05, 'epoch': 0.42}
+
+ 21%|██        | 53/250 [04:07<14:54,  4.54s/it]
+ 22%|██▏       | 54/250 [04:11<14:48,  4.53s/it]
+                                                
+{'loss': 1.1683, 'grad_norm': 4.745513916015625, 'learning_rate': 1.826934609456129e-05, 'epoch': 0.43}
+
+ 22%|██▏       | 54/250 [04:11<14:48,  4.53s/it]
+ 22%|██▏       | 55/250 [04:16<14:47,  4.55s/it]
+                                                
+{'loss': 1.1888, 'grad_norm': 4.63663387298584, 'learning_rate': 1.8195655005254274e-05, 'epoch': 0.44}
+
+ 22%|██▏       | 55/250 [04:16<14:47,  4.55s/it]
+ 22%|██▏       | 56/250 [04:20<14:42,  4.55s/it]
+                                                
+{'loss': 1.1245, 'grad_norm': 5.0588459968566895, 'learning_rate': 1.8120582747708503e-05, 'epoch': 0.45}
+
+ 22%|██▏       | 56/250 [04:20<14:42,  4.55s/it]
+ 23%|██▎       | 57/250 [04:25<14:40,  4.56s/it]
+                                                
+{'loss': 1.289, 'grad_norm': 4.863559722900391, 'learning_rate': 1.804414197343476e-05, 'epoch': 0.46}
+
+ 23%|██▎       | 57/250 [04:25<14:40,  4.56s/it]
+ 23%|██▎       | 58/250 [04:29<14:32,  4.54s/it]
+                                                
+{'loss': 1.0603, 'grad_norm': 4.761148929595947, 'learning_rate': 1.796634556457236e-05, 'epoch': 0.46}
+
+ 23%|██▎       | 58/250 [04:29<14:32,  4.54s/it]
+ 24%|██▎       | 59/250 [04:34<14:25,  4.53s/it]
+                                                
+{'loss': 1.189, 'grad_norm': 4.850576400756836, 'learning_rate': 1.7887206631718202e-05, 'epoch': 0.47}
+
+ 24%|██▎       | 59/250 [04:34<14:25,  4.53s/it]
+ 24%|██▍       | 60/250 [04:38<14:21,  4.53s/it]
+                                                
+{'loss': 0.9907, 'grad_norm': 4.703769683837891, 'learning_rate': 1.780673851171728e-05, 'epoch': 0.48}
+
+ 24%|██▍       | 60/250 [04:38<14:21,  4.53s/it]
+ 24%|██▍       | 61/250 [04:43<14:18,  4.54s/it]
+                                                
+{'loss': 1.1533, 'grad_norm': 4.866207599639893, 'learning_rate': 1.7724954765415137e-05, 'epoch': 0.49}
+
+ 24%|██▍       | 61/250 [04:43<14:18,  4.54s/it]
+ 25%|██▍       | 62/250 [04:48<14:14,  4.54s/it]
+                                                
+{'loss': 1.136, 'grad_norm': 5.090060710906982, 'learning_rate': 1.7641869175372493e-05, 'epoch': 0.5}
+
+ 25%|██▍       | 62/250 [04:48<14:14,  4.54s/it]
+ 25%|██▌       | 63/250 [04:52<14:07,  4.53s/it]
+                                                
+{'loss': 1.1907, 'grad_norm': 4.715881824493408, 'learning_rate': 1.7557495743542586e-05, 'epoch': 0.5}
+
+ 25%|██▌       | 63/250 [04:52<14:07,  4.53s/it]
+ 26%|██▌       | 64/250 [04:57<14:01,  4.52s/it]
+                                                
+{'loss': 0.9864, 'grad_norm': 4.618770599365234, 'learning_rate': 1.7471848688911465e-05, 'epoch': 0.51}
+
+ 26%|██▌       | 64/250 [04:57<14:01,  4.52s/it]
+ 26%|██▌       | 65/250 [05:01<13:55,  4.52s/it]
+                                                
+{'loss': 1.1558, 'grad_norm': 5.15539026260376, 'learning_rate': 1.7384942445101772e-05, 'epoch': 0.52}
+
+ 26%|██▌       | 65/250 [05:01<13:55,  4.52s/it]
+ 26%|██▋       | 66/250 [05:06<13:50,  4.51s/it]
+                                                
+{'loss': 1.0638, 'grad_norm': 4.735256671905518, 'learning_rate': 1.72967916579403e-05, 'epoch': 0.53}
+
+ 26%|██▋       | 66/250 [05:06<13:50,  4.51s/it]
+ 27%|██▋       | 67/250 [05:10<13:47,  4.52s/it]
+                                                
+{'loss': 1.2951, 'grad_norm': 5.687588691711426, 'learning_rate': 1.7207411182989834e-05, 'epoch': 0.54}
+
+ 27%|██▋       | 67/250 [05:10<13:47,  4.52s/it]
+ 27%|██▋       | 68/250 [05:15<13:42,  4.52s/it]
+                                                
+{'loss': 1.2453, 'grad_norm': 5.380982398986816, 'learning_rate': 1.7116816083045603e-05, 'epoch': 0.54}
+
+ 27%|██▋       | 68/250 [05:15<13:42,  4.52s/it]
+ 28%|██▊       | 69/250 [05:19<13:37,  4.51s/it]
+                                                
+{'loss': 1.1631, 'grad_norm': 5.209033966064453, 'learning_rate': 1.7025021625596852e-05, 'epoch': 0.55}
+
+ 28%|██▊       | 69/250 [05:19<13:37,  4.51s/it]
+ 28%|██▊       | 70/250 [05:24<13:31,  4.51s/it]
+                                                
+{'loss': 1.1278, 'grad_norm': 5.6229400634765625, 'learning_rate': 1.6932043280253892e-05, 'epoch': 0.56}
+
+ 28%|██▊       | 70/250 [05:24<13:31,  4.51s/it]
+ 28%|██▊       | 71/250 [05:28<13:27,  4.51s/it]
+                                                
+{'loss': 1.1022, 'grad_norm': 4.959988594055176, 'learning_rate': 1.683789671614107e-05, 'epoch': 0.57}
+
+ 28%|██▊       | 71/250 [05:28<13:27,  4.51s/it]
+ 29%|██▉       | 72/250 [05:33<13:25,  4.52s/it]
+                                                
+{'loss': 1.0204, 'grad_norm': 4.826312065124512, 'learning_rate': 1.6742597799256182e-05, 'epoch': 0.58}
+
+ 29%|██▉       | 72/250 [05:33<13:25,  4.52s/it]
+ 29%|██▉       | 73/250 [05:37<13:23,  4.54s/it]
+                                                
+{'loss': 0.9756, 'grad_norm': 4.250895977020264, 'learning_rate': 1.6646162589796616e-05, 'epoch': 0.58}
+
+ 29%|██▉       | 73/250 [05:37<13:23,  4.54s/it]
+ 30%|██▉       | 74/250 [05:42<13:17,  4.53s/it]
+                                                
+{'loss': 1.1323, 'grad_norm': 4.794458866119385, 'learning_rate': 1.6548607339452853e-05, 'epoch': 0.59}
+
+ 30%|██▉       | 74/250 [05:42<13:17,  4.53s/it]
+ 30%|███       | 75/250 [05:46<13:11,  4.52s/it]
+                                                
+{'loss': 1.0167, 'grad_norm': 4.615403652191162, 'learning_rate': 1.644994848866964e-05, 'epoch': 0.6}
+
+ 30%|███       | 75/250 [05:46<13:11,  4.52s/it]
+ 30%|███       | 76/250 [05:51<13:06,  4.52s/it]
+                                                
+{'loss': 1.3373, 'grad_norm': 5.035961151123047, 'learning_rate': 1.6350202663875385e-05, 'epoch': 0.61}
+
+ 30%|███       | 76/250 [05:51<13:06,  4.52s/it]
+ 31%|███       | 77/250 [05:55<13:00,  4.51s/it]
+                                                
+{'loss': 1.0439, 'grad_norm': 5.207169532775879, 'learning_rate': 1.6249386674680186e-05, 'epoch': 0.62}
+
+ 31%|███       | 77/250 [05:55<13:00,  4.51s/it]
+ 31%|███       | 78/250 [06:00<12:56,  4.51s/it]
+                                                
+{'loss': 1.076, 'grad_norm': 4.692526817321777, 'learning_rate': 1.614751751104301e-05, 'epoch': 0.62}
+
+ 31%|███       | 78/250 [06:00<12:56,  4.51s/it]
+ 32%|███▏      | 79/250 [06:04<12:51,  4.51s/it]
+                                                
+{'loss': 1.1946, 'grad_norm': 4.738304138183594, 'learning_rate': 1.6044612340408466e-05, 'epoch': 0.63}
+
+ 32%|███▏      | 79/250 [06:04<12:51,  4.51s/it]
+ 32%|███▏      | 80/250 [06:09<12:46,  4.51s/it]
+                                                
+{'loss': 1.1522, 'grad_norm': 4.7863030433654785, 'learning_rate': 1.5940688504813664e-05, 'epoch': 0.64}
+
+ 32%|███▏      | 80/250 [06:09<12:46,  4.51s/it]
+ 32%|███▏      | 81/250 [06:13<12:48,  4.54s/it]
+                                                
+{'loss': 1.057, 'grad_norm': 5.263277053833008, 'learning_rate': 1.5835763517965676e-05, 'epoch': 0.65}
+
+ 32%|███▏      | 81/250 [06:13<12:48,  4.54s/it]
+ 33%|███▎      | 82/250 [06:18<12:41,  4.53s/it]
+                                                
+{'loss': 1.133, 'grad_norm': 4.610022068023682, 'learning_rate': 1.5729855062290024e-05, 'epoch': 0.66}
+
+ 33%|███▎      | 82/250 [06:18<12:41,  4.53s/it]
+ 33%|███▎      | 83/250 [06:22<12:35,  4.52s/it]
+                                                
+{'loss': 1.243, 'grad_norm': 4.884550094604492, 'learning_rate': 1.562298098595078e-05, 'epoch': 0.66}
+
+ 33%|███▎      | 83/250 [06:22<12:35,  4.52s/it]
+ 34%|███▎      | 84/250 [06:27<12:29,  4.52s/it]
+                                                
+{'loss': 1.066, 'grad_norm': 5.352440357208252, 'learning_rate': 1.551515929984271e-05, 'epoch': 0.67}
+
+ 34%|███▎      | 84/250 [06:27<12:29,  4.52s/it]
+ 34%|███▍      | 85/250 [06:31<12:28,  4.54s/it]
+                                                
+{'loss': 1.0654, 'grad_norm': 4.865843296051025, 'learning_rate': 1.5406408174555978e-05, 'epoch': 0.68}
+
+ 34%|███▍      | 85/250 [06:31<12:28,  4.54s/it]
+ 34%|███▍      | 86/250 [06:36<12:23,  4.53s/it]
+                                                
+{'loss': 1.0695, 'grad_norm': 4.984994888305664, 'learning_rate': 1.529674593731399e-05, 'epoch': 0.69}
+
+ 34%|███▍      | 86/250 [06:36<12:23,  4.53s/it]
+ 35%|███▍      | 87/250 [06:41<12:17,  4.52s/it]
+                                                
+{'loss': 0.9134, 'grad_norm': 4.5583014488220215, 'learning_rate': 1.5186191068884774e-05, 'epoch': 0.7}
+
+ 35%|███▍      | 87/250 [06:41<12:17,  4.52s/it]
+ 35%|███▌      | 88/250 [06:45<12:11,  4.52s/it]
+                                                
+{'loss': 1.1036, 'grad_norm': 4.682377815246582, 'learning_rate': 1.5074762200466557e-05, 'epoch': 0.7}
+
+ 35%|███▌      | 88/250 [06:45<12:11,  4.52s/it]
+ 36%|███▌      | 89/250 [06:50<12:06,  4.52s/it]
+                                                
+{'loss': 1.0333, 'grad_norm': 4.7361979484558105, 'learning_rate': 1.4962478110547918e-05, 'epoch': 0.71}
+
+ 36%|███▌      | 89/250 [06:50<12:06,  4.52s/it]
+ 36%|███▌      | 90/250 [06:54<12:01,  4.51s/it]
+                                                
+{'loss': 0.9729, 'grad_norm': 4.596472263336182, 'learning_rate': 1.4849357721743169e-05, 'epoch': 0.72}
+
+ 36%|███▌      | 90/250 [06:54<12:01,  4.51s/it]
+ 36%|███▋      | 91/250 [06:59<11:57,  4.51s/it]
+                                                
+{'loss': 1.1284, 'grad_norm': 4.800364971160889, 'learning_rate': 1.473542009760343e-05, 'epoch': 0.73}
+
+ 36%|███▋      | 91/250 [06:59<11:57,  4.51s/it]
+ 37%|███▋      | 92/250 [07:03<11:52,  4.51s/it]
+                                                
+{'loss': 1.066, 'grad_norm': 4.245396614074707, 'learning_rate': 1.4620684439403962e-05, 'epoch': 0.74}
+
+ 37%|███▋      | 92/250 [07:03<11:52,  4.51s/it]
+ 37%|███▋      | 93/250 [07:08<11:47,  4.51s/it]
+                                                
+{'loss': 1.0474, 'grad_norm': 4.410930156707764, 'learning_rate': 1.4505170082908269e-05, 'epoch': 0.74}
+
+ 37%|███▋      | 93/250 [07:08<11:47,  4.51s/it]
+ 38%|███▊      | 94/250 [07:12<11:43,  4.51s/it]
+                                                
+{'loss': 1.2532, 'grad_norm': 4.53326416015625, 'learning_rate': 1.438889649510956e-05, 'epoch': 0.75}
+
+ 38%|███▊      | 94/250 [07:12<11:43,  4.51s/it]
+ 38%|███▊      | 95/250 [07:17<11:38,  4.51s/it]
+                                                
+{'loss': 1.0084, 'grad_norm': 4.873391151428223, 'learning_rate': 1.4271883270950073e-05, 'epoch': 0.76}
+
+ 38%|███▊      | 95/250 [07:17<11:38,  4.51s/it]
+ 38%|███▊      | 96/250 [07:21<11:34,  4.51s/it]
+                                                
+{'loss': 1.2031, 'grad_norm': 5.005179405212402, 'learning_rate': 1.4154150130018867e-05, 'epoch': 0.77}
+
+ 38%|███▊      | 96/250 [07:21<11:34,  4.51s/it]
+ 39%|███▉      | 97/250 [07:26<11:29,  4.51s/it]
+                                                
+{'loss': 1.0047, 'grad_norm': 4.439756870269775, 'learning_rate': 1.4035716913228568e-05, 'epoch': 0.78}
+
+ 39%|███▉      | 97/250 [07:26<11:29,  4.51s/it]
+ 39%|███▉      | 98/250 [07:30<11:25,  4.51s/it]
+                                                
+{'loss': 1.0311, 'grad_norm': 5.096681118011475, 'learning_rate': 1.3916603579471705e-05, 'epoch': 0.78}
+
+ 39%|███▉      | 98/250 [07:30<11:25,  4.51s/it]
+ 40%|███▉      | 99/250 [07:35<11:20,  4.51s/it]
+                                                
+{'loss': 1.1009, 'grad_norm': 4.319949150085449, 'learning_rate': 1.3796830202257141e-05, 'epoch': 0.79}
+
+ 40%|███▉      | 99/250 [07:35<11:20,  4.51s/it]
+ 40%|████      | 100/250 [07:39<11:15,  4.51s/it]
+                                                 
+{'loss': 0.9529, 'grad_norm': 4.714978218078613, 'learning_rate': 1.3676416966327201e-05, 'epoch': 0.8}
+
+ 40%|████      | 100/250 [07:39<11:15,  4.51s/it]
+ 40%|████      | 101/250 [07:44<11:13,  4.52s/it]
+                                                 
+{'loss': 1.0537, 'grad_norm': 4.9299092292785645, 'learning_rate': 1.3555384164256048e-05, 'epoch': 0.81}
+
+ 40%|████      | 101/250 [07:44<11:13,  4.52s/it]
+ 41%|████      | 102/250 [07:48<11:08,  4.52s/it]
+                                                 
+{'loss': 1.0429, 'grad_norm': 4.987598896026611, 'learning_rate': 1.3433752193029888e-05, 'epoch': 0.82}
+
+ 41%|████      | 102/250 [07:48<11:08,  4.52s/it]
+ 41%|████      | 103/250 [07:53<11:03,  4.51s/it]
+                                                 
+{'loss': 1.1472, 'grad_norm': 4.732440948486328, 'learning_rate': 1.3311541550609566e-05, 'epoch': 0.82}
+
+ 41%|████      | 103/250 [07:53<11:03,  4.51s/it]
+ 42%|████▏     | 104/250 [07:57<10:58,  4.51s/it]
+                                                 
+{'loss': 1.1775, 'grad_norm': 4.9838666915893555, 'learning_rate': 1.318877283247619e-05, 'epoch': 0.83}
+
+ 42%|████▏     | 104/250 [07:57<10:58,  4.51s/it]
+ 42%|████▏     | 105/250 [08:02<10:56,  4.53s/it]
+                                                 
+{'loss': 1.2464, 'grad_norm': 5.19467830657959, 'learning_rate': 1.3065466728160253e-05, 'epoch': 0.84}
+
+ 42%|████▏     | 105/250 [08:02<10:56,  4.53s/it]
+ 42%|████▏     | 106/250 [08:06<10:51,  4.52s/it]
+                                                 
+{'loss': 1.1303, 'grad_norm': 4.628182411193848, 'learning_rate': 1.2941644017754964e-05, 'epoch': 0.85}
+
+ 42%|████▏     | 106/250 [08:06<10:51,  4.52s/it]
+ 43%|████▎     | 107/250 [08:11<10:46,  4.52s/it]
+                                                 
+{'loss': 1.1245, 'grad_norm': 5.030961513519287, 'learning_rate': 1.2817325568414299e-05, 'epoch': 0.86}
+
+ 43%|████▎     | 107/250 [08:11<10:46,  4.52s/it]
+ 43%|████▎     | 108/250 [08:15<10:41,  4.52s/it]
+                                                 
+{'loss': 1.0781, 'grad_norm': 4.9747772216796875, 'learning_rate': 1.2692532330836346e-05, 'epoch': 0.86}
+
+ 43%|████▎     | 108/250 [08:15<10:41,  4.52s/it]
+ 44%|████▎     | 109/250 [08:20<10:37,  4.52s/it]
+                                                 
+{'loss': 0.9656, 'grad_norm': 4.579380989074707, 'learning_rate': 1.2567285335732633e-05, 'epoch': 0.87}
+
+ 44%|████▎     | 109/250 [08:20<10:37,  4.52s/it]
+ 44%|████▍     | 110/250 [08:24<10:32,  4.51s/it]
+                                                 
+{'loss': 1.0165, 'grad_norm': 4.760096549987793, 'learning_rate': 1.2441605690283915e-05, 'epoch': 0.88}
+
+ 44%|████▍     | 110/250 [08:24<10:32,  4.51s/it]
+ 44%|████▍     | 111/250 [08:29<10:27,  4.51s/it]
+                                                 
+{'loss': 1.2617, 'grad_norm': 5.138401508331299, 'learning_rate': 1.2315514574583113e-05, 'epoch': 0.89}
+
+ 44%|████▍     | 111/250 [08:29<10:27,  4.51s/it]
+ 45%|████▍     | 112/250 [08:33<10:23,  4.52s/it]
+                                                 
+{'loss': 1.2133, 'grad_norm': 5.286724090576172, 'learning_rate': 1.218903323806595e-05, 'epoch': 0.9}
+
+ 45%|████▍     | 112/250 [08:33<10:23,  4.52s/it]
+ 45%|████▌     | 113/250 [08:38<10:21,  4.54s/it]
+                                                 
+{'loss': 1.1187, 'grad_norm': 4.557950973510742, 'learning_rate': 1.2062182995929883e-05, 'epoch': 0.9}
+
+ 45%|████▌     | 113/250 [08:38<10:21,  4.54s/it]
+ 46%|████▌     | 114/250 [08:42<10:15,  4.53s/it]
+                                                 
+{'loss': 1.234, 'grad_norm': 4.8120527267456055, 'learning_rate': 1.1934985225541998e-05, 'epoch': 0.91}
+
+ 46%|████▌     | 114/250 [08:42<10:15,  4.53s/it]
+ 46%|████▌     | 115/250 [08:47<10:10,  4.52s/it]
+                                                 
+{'loss': 1.1329, 'grad_norm': 4.965362548828125, 'learning_rate': 1.1807461362836382e-05, 'epoch': 0.92}
+
+ 46%|████▌     | 115/250 [08:47<10:10,  4.52s/it]
+ 46%|████▋     | 116/250 [08:51<10:04,  4.51s/it]
+                                                 
+{'loss': 1.0786, 'grad_norm': 3.957737922668457, 'learning_rate': 1.1679632898701649e-05, 'epoch': 0.93}
+
+ 46%|████▋     | 116/250 [08:51<10:04,  4.51s/it]
+ 47%|████▋     | 117/250 [08:56<09:59,  4.51s/it]
+                                                 
+{'loss': 1.1384, 'grad_norm': 4.83495569229126, 'learning_rate': 1.1551521375359207e-05, 'epoch': 0.94}
+
+ 47%|████▋     | 117/250 [08:56<09:59,  4.51s/it]
+ 47%|████▋     | 118/250 [09:00<09:54,  4.51s/it]
+                                                 
+{'loss': 1.0602, 'grad_norm': 4.7859206199646, 'learning_rate': 1.1423148382732854e-05, 'epoch': 0.94}
+
+ 47%|████▋     | 118/250 [09:00<09:54,  4.51s/it]
+ 48%|████▊     | 119/250 [09:05<09:54,  4.54s/it]
+                                                 
+{'loss': 1.136, 'grad_norm': 5.3272809982299805, 'learning_rate': 1.1294535554810356e-05, 'epoch': 0.95}
+
+ 48%|████▊     | 119/250 [09:05<09:54,  4.54s/it]
+ 48%|████▊     | 120/250 [09:10<09:48,  4.53s/it]
+                                                 
+{'loss': 1.1989, 'grad_norm': 4.853671550750732, 'learning_rate': 1.1165704565997593e-05, 'epoch': 0.96}
+
+ 48%|████▊     | 120/250 [09:10<09:48,  4.53s/it]
+ 48%|████▊     | 121/250 [09:14<09:43,  4.52s/it]
+                                                 
+{'loss': 1.1102, 'grad_norm': 4.6313581466674805, 'learning_rate': 1.103667712746589e-05, 'epoch': 0.97}
+
+ 48%|████▊     | 121/250 [09:14<09:43,  4.52s/it]
+ 49%|████▉     | 122/250 [09:19<09:38,  4.52s/it]
+                                                 
+{'loss': 0.9748, 'grad_norm': 4.381150245666504, 'learning_rate': 1.0907474983493144e-05, 'epoch': 0.98}
+
+ 49%|████▉     | 122/250 [09:19<09:38,  4.52s/it]
+ 49%|████▉     | 123/250 [09:23<09:33,  4.52s/it]
+                                                 
+{'loss': 1.0682, 'grad_norm': 4.30241060256958, 'learning_rate': 1.0778119907799399e-05, 'epoch': 0.98}
+
+ 49%|████▉     | 123/250 [09:23<09:33,  4.52s/it]
+ 50%|████▉     | 124/250 [09:28<09:30,  4.52s/it]
+                                                 
+{'loss': 1.2133, 'grad_norm': 4.658217430114746, 'learning_rate': 1.064863369987743e-05, 'epoch': 0.99}
+
+ 50%|████▉     | 124/250 [09:28<09:30,  4.52s/it]
+ 50%|█████     | 125/250 [09:32<09:23,  4.51s/it]
+                                                 
+{'loss': 1.0927, 'grad_norm': 4.701301574707031, 'learning_rate': 1.0519038181319e-05, 'epoch': 1.0}
+
+ 50%|█████     | 125/250 [09:32<09:23,  4.51s/it][INFO|trainer.py:3942] 2026-07-29 21:39:23,327 >> Saving model checkpoint to /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125
+[INFO|configuration_utils.py:423] 2026-07-29 21:39:23,332 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/config.json
+[INFO|configuration_utils.py:909] 2026-07-29 21:39:23,333 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/generation_config.json
+[INFO|modeling_utils.py:3048] 2026-07-29 21:40:34,633 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 21:40:34,725 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 21:40:34,725 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/special_tokens_map.json
+[2026-07-29 21:40:35,128] [INFO] [logging.py:128:log_dist] [Rank 0] [Torch] Checkpoint global_step125 is about to be saved!
+[2026-07-29 21:40:35,283] [INFO] [logging.py:128:log_dist] [Rank 0] Saving model checkpoint: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/global_step125/mp_rank_00_model_states.pt
+[2026-07-29 21:40:35,283] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/global_step125/mp_rank_00_model_states.pt...
+[2026-07-29 21:41:58,617] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/global_step125/mp_rank_00_model_states.pt.
+[2026-07-29 21:41:58,626] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/global_step125/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[2026-07-29 21:47:09,717] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/global_step125/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[2026-07-29 21:47:12,023] [INFO] [engine.py:3536:_save_zero_checkpoint] zero checkpoint saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/global_step125/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt
+[2026-07-29 21:47:12,023] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step125 is ready now!
+[INFO|image_processing_base.py:261] 2026-07-29 21:47:22,538 >> Image processor saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/preprocessor_config.json
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 21:47:22,632 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 21:47:22,635 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/special_tokens_map.json
+[INFO|processing_utils.py:638] 2026-07-29 21:47:23,335 >> chat template saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-125/chat_template.json
+
+ 50%|█████     | 126/250 [17:41<5:09:30, 149.76s/it]
+                                                    
+{'loss': 0.4461, 'grad_norm': 3.3883543014526367, 'learning_rate': 1.0389355192137379e-05, 'epoch': 1.01}
+
+ 50%|█████     | 126/250 [17:41<5:09:30, 149.76s/it]
+ 51%|█████     | 127/250 [17:45<3:37:44, 106.22s/it]
+                                                    
+{'loss': 0.5261, 'grad_norm': 3.4786713123321533, 'learning_rate': 1.0259606587086783e-05, 'epoch': 1.02}
+
+ 51%|█████     | 127/250 [17:45<3:37:44, 106.22s/it]
+ 51%|█████     | 128/250 [17:50<2:34:00, 75.74s/it] 
+                                                   
+{'loss': 0.6039, 'grad_norm': 3.227679491043091, 'learning_rate': 1.012981423197931e-05, 'epoch': 1.02}
+
+ 51%|█████     | 128/250 [17:50<2:34:00, 75.74s/it]
+ 52%|█████▏    | 129/250 [17:55<1:49:43, 54.41s/it]
+                                                   
+{'loss': 0.5837, 'grad_norm': 3.53509521484375, 'learning_rate': 1e-05, 'epoch': 1.03}
+
+ 52%|█████▏    | 129/250 [17:55<1:49:43, 54.41s/it]
+ 52%|█████▏    | 130/250 [17:59<1:18:53, 39.45s/it]
+                                                   
+{'loss': 0.4335, 'grad_norm': 3.306999683380127, 'learning_rate': 9.870185768020694e-06, 'epoch': 1.04}
+
+ 52%|█████▏    | 130/250 [17:59<1:18:53, 39.45s/it]
+ 52%|█████▏    | 131/250 [18:04<57:27, 28.97s/it]  
+                                                 
+{'loss': 0.4144, 'grad_norm': 3.2392046451568604, 'learning_rate': 9.740393412913219e-06, 'epoch': 1.05}
+
+ 52%|█████▏    | 131/250 [18:04<57:27, 28.97s/it]
+ 53%|█████▎    | 132/250 [18:08<42:35, 21.66s/it]
+                                                 
+{'loss': 0.5479, 'grad_norm': 3.1286685466766357, 'learning_rate': 9.610644807862625e-06, 'epoch': 1.06}
+
+ 53%|█████▎    | 132/250 [18:08<42:35, 21.66s/it]
+ 53%|█████▎    | 133/250 [18:13<32:11, 16.51s/it]
+                                                 
+{'loss': 0.4593, 'grad_norm': 3.4248385429382324, 'learning_rate': 9.480961818681004e-06, 'epoch': 1.06}
+
+ 53%|█████▎    | 133/250 [18:13<32:11, 16.51s/it]
+ 54%|█████▎    | 134/250 [18:17<24:58, 12.92s/it]
+                                                 
+{'loss': 0.4054, 'grad_norm': 3.4377591609954834, 'learning_rate': 9.351366300122569e-06, 'epoch': 1.07}
+
+ 54%|█████▎    | 134/250 [18:17<24:58, 12.92s/it]
+ 54%|█████▍    | 135/250 [18:22<20:00, 10.44s/it]
+                                                 
+{'loss': 0.5245, 'grad_norm': 3.418468952178955, 'learning_rate': 9.221880092200601e-06, 'epoch': 1.08}
+
+ 54%|█████▍    | 135/250 [18:22<20:00, 10.44s/it]
+ 54%|█████▍    | 136/250 [18:27<16:28,  8.67s/it]
+                                                 
+{'loss': 0.4547, 'grad_norm': 3.2853012084960938, 'learning_rate': 9.092525016506858e-06, 'epoch': 1.09}
+
+ 54%|█████▍    | 136/250 [18:27<16:28,  8.67s/it]
+ 55%|█████▍    | 137/250 [18:31<13:59,  7.43s/it]
+                                                 
+{'loss': 0.3767, 'grad_norm': 3.5083298683166504, 'learning_rate': 8.963322872534115e-06, 'epoch': 1.1}
+
+ 55%|█████▍    | 137/250 [18:31<13:59,  7.43s/it]
+ 55%|█████▌    | 138/250 [18:36<12:20,  6.61s/it]
+                                                 
+{'loss': 0.4439, 'grad_norm': 3.211165428161621, 'learning_rate': 8.83429543400241e-06, 'epoch': 1.1}
+
+ 55%|█████▌    | 138/250 [18:36<12:20,  6.61s/it]
+ 56%|█████▌    | 139/250 [18:40<11:07,  6.01s/it]
+                                                 
+{'loss': 0.423, 'grad_norm': 3.598588228225708, 'learning_rate': 8.705464445189646e-06, 'epoch': 1.11}
+
+ 56%|█████▌    | 139/250 [18:40<11:07,  6.01s/it]
+ 56%|█████▌    | 140/250 [18:45<10:23,  5.67s/it]
+                                                 
+{'loss': 0.4445, 'grad_norm': 3.5448365211486816, 'learning_rate': 8.576851617267151e-06, 'epoch': 1.12}
+
+ 56%|█████▌    | 140/250 [18:45<10:23,  5.67s/it]
+ 56%|█████▋    | 141/250 [18:50<09:40,  5.33s/it]
+                                                 
+{'loss': 0.4019, 'grad_norm': 3.573089122772217, 'learning_rate': 8.448478624640798e-06, 'epoch': 1.13}
+
+ 56%|█████▋    | 141/250 [18:50<09:40,  5.33s/it]
+ 57%|█████▋    | 142/250 [18:54<09:11,  5.11s/it]
+                                                 
+{'loss': 0.3355, 'grad_norm': 3.132136106491089, 'learning_rate': 8.320367101298351e-06, 'epoch': 1.14}
+
+ 57%|█████▋    | 142/250 [18:54<09:11,  5.11s/it]
+ 57%|█████▋    | 143/250 [18:59<08:47,  4.93s/it]
+                                                 
+{'loss': 0.4119, 'grad_norm': 3.2844860553741455, 'learning_rate': 8.19253863716362e-06, 'epoch': 1.14}
+
+ 57%|█████▋    | 143/250 [18:59<08:47,  4.93s/it]
+ 58%|█████▊    | 144/250 [19:03<08:31,  4.83s/it]
+                                                 
+{'loss': 0.4744, 'grad_norm': 3.3547704219818115, 'learning_rate': 8.065014774458004e-06, 'epoch': 1.15}
+
+ 58%|█████▊    | 144/250 [19:03<08:31,  4.83s/it]
+ 58%|█████▊    | 145/250 [19:08<08:17,  4.73s/it]
+                                                 
+{'loss': 0.4738, 'grad_norm': 3.749267101287842, 'learning_rate': 7.93781700407012e-06, 'epoch': 1.16}
+
+ 58%|█████▊    | 145/250 [19:08<08:17,  4.73s/it]
+ 58%|█████▊    | 146/250 [19:12<08:05,  4.67s/it]
+                                                 
+{'loss': 0.4194, 'grad_norm': 3.7657368183135986, 'learning_rate': 7.810966761934053e-06, 'epoch': 1.17}
+
+ 58%|█████▊    | 146/250 [19:12<08:05,  4.67s/it]
+ 59%|█████▉    | 147/250 [19:17<07:56,  4.62s/it]
+                                                 
+{'loss': 0.4465, 'grad_norm': 3.822152614593506, 'learning_rate': 7.684485425416888e-06, 'epoch': 1.18}
+
+ 59%|█████▉    | 147/250 [19:17<07:56,  4.62s/it]
+ 59%|█████▉    | 148/250 [19:22<07:50,  4.61s/it]
+                                                 
+{'loss': 0.414, 'grad_norm': 3.460670232772827, 'learning_rate': 7.558394309716088e-06, 'epoch': 1.18}
+
+ 59%|█████▉    | 148/250 [19:22<07:50,  4.61s/it]
+ 60%|█████▉    | 149/250 [19:26<07:42,  4.58s/it]
+                                                 
+{'loss': 0.3544, 'grad_norm': 4.099011421203613, 'learning_rate': 7.432714664267373e-06, 'epoch': 1.19}
+
+ 60%|█████▉    | 149/250 [19:26<07:42,  4.58s/it]
+ 60%|██████    | 150/250 [19:31<07:38,  4.59s/it]
+                                                 
+{'loss': 0.367, 'grad_norm': 3.5278782844543457, 'learning_rate': 7.307467669163655e-06, 'epoch': 1.2}
+
+ 60%|██████    | 150/250 [19:31<07:38,  4.59s/it]
+ 60%|██████    | 151/250 [19:35<07:32,  4.57s/it]
+                                                 
+{'loss': 0.3256, 'grad_norm': 3.285447120666504, 'learning_rate': 7.182674431585703e-06, 'epoch': 1.21}
+
+ 60%|██████    | 151/250 [19:35<07:32,  4.57s/it]
+ 61%|██████    | 152/250 [19:40<07:28,  4.58s/it]
+                                                 
+{'loss': 0.3674, 'grad_norm': 3.893832206726074, 'learning_rate': 7.058355982245038e-06, 'epoch': 1.22}
+
+ 61%|██████    | 152/250 [19:40<07:28,  4.58s/it]
+ 61%|██████    | 153/250 [19:44<07:25,  4.59s/it]
+                                                 
+{'loss': 0.3306, 'grad_norm': 3.615119695663452, 'learning_rate': 6.934533271839751e-06, 'epoch': 1.22}
+
+ 61%|██████    | 153/250 [19:44<07:25,  4.59s/it]
+ 62%|██████▏   | 154/250 [19:49<07:20,  4.59s/it]
+                                                 
+{'loss': 0.3693, 'grad_norm': 3.5166382789611816, 'learning_rate': 6.8112271675238154e-06, 'epoch': 1.23}
+
+ 62%|██████▏   | 154/250 [19:49<07:20,  4.59s/it]
+ 62%|██████▏   | 155/250 [19:54<07:15,  4.59s/it]
+                                                 
+{'loss': 0.3711, 'grad_norm': 3.672706365585327, 'learning_rate': 6.688458449390438e-06, 'epoch': 1.24}
+
+ 62%|██████▏   | 155/250 [19:54<07:15,  4.59s/it]
+ 62%|██████▏   | 156/250 [19:58<07:09,  4.57s/it]
+                                                 
+{'loss': 0.3413, 'grad_norm': 3.4682488441467285, 'learning_rate': 6.566247806970119e-06, 'epoch': 1.25}
+
+ 62%|██████▏   | 156/250 [19:58<07:09,  4.57s/it]
+ 63%|██████▎   | 157/250 [20:03<07:07,  4.59s/it]
+                                                 
+{'loss': 0.358, 'grad_norm': 3.688603162765503, 'learning_rate': 6.444615835743955e-06, 'epoch': 1.26}
+
+ 63%|██████▎   | 157/250 [20:03<07:07,  4.59s/it]
+ 63%|██████▎   | 158/250 [20:07<07:04,  4.62s/it]
+                                                 
+{'loss': 0.4214, 'grad_norm': 4.249772071838379, 'learning_rate': 6.323583033672799e-06, 'epoch': 1.26}
+
+ 63%|██████▎   | 158/250 [20:07<07:04,  4.62s/it]
+ 64%|██████▎   | 159/250 [20:12<06:57,  4.59s/it]
+                                                 
+{'loss': 0.3605, 'grad_norm': 3.8115861415863037, 'learning_rate': 6.203169797742862e-06, 'epoch': 1.27}
+
+ 64%|██████▎   | 159/250 [20:12<06:57,  4.59s/it]
+ 64%|██████▍   | 160/250 [20:17<06:52,  4.58s/it]
+                                                 
+{'loss': 0.4177, 'grad_norm': 4.015890598297119, 'learning_rate': 6.083396420528298e-06, 'epoch': 1.28}
+
+ 64%|██████▍   | 160/250 [20:17<06:52,  4.58s/it]
+ 64%|██████▍   | 161/250 [20:21<06:45,  4.56s/it]
+                                                 
+{'loss': 0.3127, 'grad_norm': 3.6772780418395996, 'learning_rate': 5.964283086771435e-06, 'epoch': 1.29}
+
+ 64%|██████▍   | 161/250 [20:21<06:45,  4.56s/it]
+ 65%|██████▍   | 162/250 [20:26<06:40,  4.55s/it]
+                                                 
+{'loss': 0.321, 'grad_norm': 3.6279985904693604, 'learning_rate': 5.845849869981137e-06, 'epoch': 1.3}
+
+ 65%|██████▍   | 162/250 [20:26<06:40,  4.55s/it]
+ 65%|██████▌   | 163/250 [20:30<06:36,  4.56s/it]
+                                                 
+{'loss': 0.3864, 'grad_norm': 3.911670684814453, 'learning_rate': 5.728116729049929e-06, 'epoch': 1.3}
+
+ 65%|██████▌   | 163/250 [20:30<06:36,  4.56s/it]
+ 66%|██████▌   | 164/250 [20:35<06:30,  4.55s/it]
+                                                 
+{'loss': 0.344, 'grad_norm': 3.4059908390045166, 'learning_rate': 5.611103504890444e-06, 'epoch': 1.31}
+
+ 66%|██████▌   | 164/250 [20:35<06:30,  4.55s/it]
+ 66%|██████▌   | 165/250 [20:39<06:26,  4.55s/it]
+                                                 
+{'loss': 0.4285, 'grad_norm': 3.883350133895874, 'learning_rate': 5.494829917091733e-06, 'epoch': 1.32}
+
+ 66%|██████▌   | 165/250 [20:39<06:26,  4.55s/it]
+ 66%|██████▋   | 166/250 [20:44<06:21,  4.55s/it]
+                                                 
+{'loss': 0.3305, 'grad_norm': 3.5677201747894287, 'learning_rate': 5.379315560596038e-06, 'epoch': 1.33}
+
+ 66%|██████▋   | 166/250 [20:44<06:21,  4.55s/it]
+ 67%|██████▋   | 167/250 [20:48<06:16,  4.54s/it]
+                                                 
+{'loss': 0.3879, 'grad_norm': 3.701549768447876, 'learning_rate': 5.26457990239657e-06, 'epoch': 1.34}
+
+ 67%|██████▋   | 167/250 [20:48<06:16,  4.54s/it]
+ 67%|██████▋   | 168/250 [20:53<06:11,  4.53s/it]
+                                                 
+{'loss': 0.382, 'grad_norm': 4.146729469299316, 'learning_rate': 5.1506422782568345e-06, 'epoch': 1.34}
+
+ 67%|██████▋   | 168/250 [20:53<06:11,  4.53s/it]
+ 68%|██████▊   | 169/250 [20:57<06:06,  4.52s/it]
+                                                 
+{'loss': 0.2771, 'grad_norm': 3.587909698486328, 'learning_rate': 5.037521889452084e-06, 'epoch': 1.35}
+
+ 68%|██████▊   | 169/250 [20:57<06:06,  4.52s/it]
+ 68%|██████▊   | 170/250 [21:02<06:01,  4.51s/it]
+                                                 
+{'loss': 0.366, 'grad_norm': 4.017754077911377, 'learning_rate': 4.925237799533445e-06, 'epoch': 1.36}
+
+ 68%|██████▊   | 170/250 [21:02<06:01,  4.51s/it]
+ 68%|██████▊   | 171/250 [21:06<05:58,  4.54s/it]
+                                                 
+{'loss': 0.4241, 'grad_norm': 4.271296977996826, 'learning_rate': 4.813808931115228e-06, 'epoch': 1.37}
+
+ 68%|██████▊   | 171/250 [21:06<05:58,  4.54s/it]
+ 69%|██████▉   | 172/250 [21:11<05:53,  4.53s/it]
+                                                 
+{'loss': 0.4351, 'grad_norm': 4.168237686157227, 'learning_rate': 4.703254062686017e-06, 'epoch': 1.38}
+
+ 69%|██████▉   | 172/250 [21:11<05:53,  4.53s/it]
+ 69%|██████▉   | 173/250 [21:16<05:50,  4.55s/it]
+                                                 
+{'loss': 0.3354, 'grad_norm': 3.5323781967163086, 'learning_rate': 4.593591825444028e-06, 'epoch': 1.38}
+
+ 69%|██████▉   | 173/250 [21:16<05:50,  4.55s/it]
+ 70%|██████▉   | 174/250 [21:20<05:47,  4.57s/it]
+                                                 
+{'loss': 0.3455, 'grad_norm': 3.7177066802978516, 'learning_rate': 4.4848407001572945e-06, 'epoch': 1.39}
+
+ 70%|██████▉   | 174/250 [21:20<05:47,  4.57s/it]
+ 70%|███████   | 175/250 [21:25<05:41,  4.55s/it]
+                                                 
+{'loss': 0.3792, 'grad_norm': 3.9854063987731934, 'learning_rate': 4.377019014049223e-06, 'epoch': 1.4}
+
+ 70%|███████   | 175/250 [21:25<05:41,  4.55s/it]
+ 70%|███████   | 176/250 [21:29<05:35,  4.54s/it]
+                                                 
+{'loss': 0.301, 'grad_norm': 3.472801446914673, 'learning_rate': 4.270144937709981e-06, 'epoch': 1.41}
+
+ 70%|███████   | 176/250 [21:29<05:35,  4.54s/it]
+ 71%|███████   | 177/250 [21:34<05:30,  4.53s/it]
+                                                 
+{'loss': 0.3156, 'grad_norm': 3.8357272148132324, 'learning_rate': 4.1642364820343276e-06, 'epoch': 1.42}
+
+ 71%|███████   | 177/250 [21:34<05:30,  4.53s/it]
+ 71%|███████   | 178/250 [21:38<05:25,  4.52s/it]
+                                                 
+{'loss': 0.3763, 'grad_norm': 4.034456729888916, 'learning_rate': 4.059311495186338e-06, 'epoch': 1.42}
+
+ 71%|███████   | 178/250 [21:38<05:25,  4.52s/it]
+ 72%|███████▏  | 179/250 [21:43<05:20,  4.52s/it]
+                                                 
+{'loss': 0.2886, 'grad_norm': 3.524325132369995, 'learning_rate': 3.955387659591538e-06, 'epoch': 1.43}
+
+ 72%|███████▏  | 179/250 [21:43<05:20,  4.52s/it]
+ 72%|███████▏  | 180/250 [21:47<05:17,  4.53s/it]
+                                                 
+{'loss': 0.3545, 'grad_norm': 4.089725971221924, 'learning_rate': 3.852482488956992e-06, 'epoch': 1.44}
+
+ 72%|███████▏  | 180/250 [21:47<05:17,  4.53s/it]
+ 72%|███████▏  | 181/250 [21:52<05:13,  4.54s/it]
+                                                 
+{'loss': 0.3307, 'grad_norm': 3.63051700592041, 'learning_rate': 3.7506133253198173e-06, 'epoch': 1.45}
+
+ 72%|███████▏  | 181/250 [21:52<05:13,  4.54s/it]
+ 73%|███████▎  | 182/250 [21:56<05:07,  4.53s/it]
+                                                 
+{'loss': 0.338, 'grad_norm': 3.750847339630127, 'learning_rate': 3.6497973361246153e-06, 'epoch': 1.46}
+
+ 73%|███████▎  | 182/250 [21:56<05:07,  4.53s/it]
+ 73%|███████▎  | 183/250 [22:01<05:04,  4.55s/it]
+                                                 
+{'loss': 0.478, 'grad_norm': 4.282780170440674, 'learning_rate': 3.550051511330361e-06, 'epoch': 1.46}
+
+ 73%|███████▎  | 183/250 [22:01<05:04,  4.55s/it]
+ 74%|███████▎  | 184/250 [22:05<04:59,  4.54s/it]
+                                                 
+{'loss': 0.3417, 'grad_norm': 3.490521192550659, 'learning_rate': 3.4513926605471504e-06, 'epoch': 1.47}
+
+ 74%|███████▎  | 184/250 [22:05<04:59,  4.54s/it]
+ 74%|███████▍  | 185/250 [22:10<04:54,  4.53s/it]
+                                                 
+{'loss': 0.3986, 'grad_norm': 4.500823020935059, 'learning_rate': 3.3538374102033865e-06, 'epoch': 1.48}
+
+ 74%|███████▍  | 185/250 [22:10<04:54,  4.53s/it]
+ 74%|███████▍  | 186/250 [22:14<04:49,  4.52s/it]
+                                                 
+{'loss': 0.2893, 'grad_norm': 3.60676908493042, 'learning_rate': 3.257402200743821e-06, 'epoch': 1.49}
+
+ 74%|███████▍  | 186/250 [22:14<04:49,  4.52s/it]
+ 75%|███████▍  | 187/250 [22:19<04:44,  4.51s/it]
+                                                 
+{'loss': 0.2731, 'grad_norm': 3.7512733936309814, 'learning_rate': 3.1621032838589307e-06, 'epoch': 1.5}
+
+ 75%|███████▍  | 187/250 [22:19<04:44,  4.51s/it]
+ 75%|███████▌  | 188/250 [22:23<04:39,  4.52s/it]
+                                                 
+{'loss': 0.347, 'grad_norm': 3.7917380332946777, 'learning_rate': 3.0679567197461135e-06, 'epoch': 1.5}
+
+ 75%|███████▌  | 188/250 [22:23<04:39,  4.52s/it]
+ 76%|███████▌  | 189/250 [22:28<04:35,  4.51s/it]
+                                                 
+{'loss': 0.4085, 'grad_norm': 4.178243637084961, 'learning_rate': 2.974978374403147e-06, 'epoch': 1.51}
+
+ 76%|███████▌  | 189/250 [22:28<04:35,  4.51s/it]
+ 76%|███████▌  | 190/250 [22:33<04:32,  4.54s/it]
+                                                 
+{'loss': 0.2852, 'grad_norm': 3.471212148666382, 'learning_rate': 2.8831839169543998e-06, 'epoch': 1.52}
+
+ 76%|███████▌  | 190/250 [22:33<04:32,  4.54s/it]
+ 76%|███████▋  | 191/250 [22:37<04:27,  4.53s/it]
+                                                 
+{'loss': 0.2532, 'grad_norm': 3.714203357696533, 'learning_rate': 2.7925888170101667e-06, 'epoch': 1.53}
+
+ 76%|███████▋  | 191/250 [22:37<04:27,  4.53s/it]
+ 77%|███████▋  | 192/250 [22:42<04:22,  4.53s/it]
+                                                 
+{'loss': 0.3287, 'grad_norm': 3.6380999088287354, 'learning_rate': 2.7032083420597e-06, 'epoch': 1.54}
+
+ 77%|███████▋  | 192/250 [22:42<04:22,  4.53s/it]
+ 77%|███████▋  | 193/250 [22:46<04:17,  4.53s/it]
+                                                 
+{'loss': 0.33, 'grad_norm': 4.016400337219238, 'learning_rate': 2.6150575548982295e-06, 'epoch': 1.54}
+
+ 77%|███████▋  | 193/250 [22:46<04:17,  4.53s/it]
+ 78%|███████▊  | 194/250 [22:51<04:13,  4.54s/it]
+                                                 
+{'loss': 0.3439, 'grad_norm': 3.8251402378082275, 'learning_rate': 2.528151311088537e-06, 'epoch': 1.55}
+
+ 78%|███████▊  | 194/250 [22:51<04:13,  4.54s/it]
+ 78%|███████▊  | 195/250 [22:55<04:08,  4.52s/it]
+                                                 
+{'loss': 0.3666, 'grad_norm': 3.8383257389068604, 'learning_rate': 2.4425042564574186e-06, 'epoch': 1.56}
+
+ 78%|███████▊  | 195/250 [22:55<04:08,  4.52s/it]
+ 78%|███████▊  | 196/250 [23:00<04:04,  4.52s/it]
+                                                 
+{'loss': 0.3183, 'grad_norm': 3.9574859142303467, 'learning_rate': 2.3581308246275103e-06, 'epoch': 1.57}
+
+ 78%|███████▊  | 196/250 [23:00<04:04,  4.52s/it]
+ 79%|███████▉  | 197/250 [23:04<03:59,  4.52s/it]
+                                                 
+{'loss': 0.4292, 'grad_norm': 4.224954605102539, 'learning_rate': 2.2750452345848684e-06, 'epoch': 1.58}
+
+ 79%|███████▉  | 197/250 [23:04<03:59,  4.52s/it]
+ 79%|███████▉  | 198/250 [23:09<03:54,  4.52s/it]
+                                                 
+{'loss': 0.3007, 'grad_norm': 3.756608724594116, 'learning_rate': 2.1932614882827196e-06, 'epoch': 1.58}
+
+ 79%|███████▉  | 198/250 [23:09<03:54,  4.52s/it]
+ 80%|███████▉  | 199/250 [23:13<03:50,  4.51s/it]
+                                                 
+{'loss': 0.388, 'grad_norm': 4.4200286865234375, 'learning_rate': 2.112793368281799e-06, 'epoch': 1.59}
+
+ 80%|███████▉  | 199/250 [23:13<03:50,  4.51s/it]
+ 80%|████████  | 200/250 [23:18<03:45,  4.51s/it]
+                                                 
+{'loss': 0.3514, 'grad_norm': 3.7089178562164307, 'learning_rate': 2.03365443542764e-06, 'epoch': 1.6}
+
+ 80%|████████  | 200/250 [23:18<03:45,  4.51s/it]
+ 80%|████████  | 201/250 [23:22<03:40,  4.51s/it]
+                                                 
+{'loss': 0.4316, 'grad_norm': 4.16404390335083, 'learning_rate': 1.9558580265652448e-06, 'epoch': 1.61}
+
+ 80%|████████  | 201/250 [23:22<03:40,  4.51s/it]
+ 81%|████████  | 202/250 [23:27<03:36,  4.51s/it]
+                                                 
+{'loss': 0.3207, 'grad_norm': 3.4992401599884033, 'learning_rate': 1.8794172522915022e-06, 'epoch': 1.62}
+
+ 81%|████████  | 202/250 [23:27<03:36,  4.51s/it]
+ 81%|████████  | 203/250 [23:31<03:33,  4.54s/it]
+                                                 
+{'loss': 0.3207, 'grad_norm': 3.560661554336548, 'learning_rate': 1.804344994745727e-06, 'epoch': 1.62}
+
+ 81%|████████  | 203/250 [23:31<03:33,  4.54s/it]
+ 82%|████████▏ | 204/250 [23:36<03:28,  4.52s/it]
+                                                 
+{'loss': 0.4038, 'grad_norm': 3.736625909805298, 'learning_rate': 1.730653905438714e-06, 'epoch': 1.63}
+
+ 82%|████████▏ | 204/250 [23:36<03:28,  4.52s/it]
+ 82%|████████▏ | 205/250 [23:40<03:24,  4.54s/it]
+                                                 
+{'loss': 0.2784, 'grad_norm': 3.5060982704162598, 'learning_rate': 1.6583564031206357e-06, 'epoch': 1.64}
+
+ 82%|████████▏ | 205/250 [23:40<03:24,  4.54s/it]
+ 82%|████████▏ | 206/250 [23:45<03:19,  4.53s/it]
+                                                 
+{'loss': 0.4337, 'grad_norm': 4.199192523956299, 'learning_rate': 1.587464671688187e-06, 'epoch': 1.65}
+
+ 82%|████████▏ | 206/250 [23:45<03:19,  4.53s/it]
+ 83%|████████▎ | 207/250 [23:49<03:14,  4.52s/it]
+                                                 
+{'loss': 0.3091, 'grad_norm': 3.6580705642700195, 'learning_rate': 1.5179906581313063e-06, 'epoch': 1.66}
+
+ 83%|████████▎ | 207/250 [23:49<03:14,  4.52s/it]
+ 83%|████████▎ | 208/250 [23:54<03:09,  4.52s/it]
+                                                 
+{'loss': 0.3555, 'grad_norm': 3.8371288776397705, 'learning_rate': 1.4499460705198e-06, 'epoch': 1.66}
+
+ 83%|████████▎ | 208/250 [23:54<03:09,  4.52s/it]
+ 84%|████████▎ | 209/250 [23:58<03:05,  4.51s/it]
+                                                 
+{'loss': 0.2792, 'grad_norm': 4.020830154418945, 'learning_rate': 1.383342376030261e-06, 'epoch': 1.67}
+
+ 84%|████████▎ | 209/250 [23:58<03:05,  4.51s/it]
+ 84%|████████▍ | 210/250 [24:03<03:00,  4.51s/it]
+                                                 
+{'loss': 0.3989, 'grad_norm': 3.807666301727295, 'learning_rate': 1.3181907990135624e-06, 'epoch': 1.68}
+
+ 84%|████████▍ | 210/250 [24:03<03:00,  4.51s/it]
+ 84%|████████▍ | 211/250 [24:07<02:55,  4.51s/it]
+                                                 
+{'loss': 0.3292, 'grad_norm': 4.153642654418945, 'learning_rate': 1.25450231910328e-06, 'epoch': 1.69}
+
+ 84%|████████▍ | 211/250 [24:07<02:55,  4.51s/it]
+ 85%|████████▍ | 212/250 [24:12<02:51,  4.51s/it]
+                                                 
+{'loss': 0.3313, 'grad_norm': 4.070998191833496, 'learning_rate': 1.1922876693653584e-06, 'epoch': 1.7}
+
+ 85%|████████▍ | 212/250 [24:12<02:51,  4.51s/it]
+ 85%|████████▌ | 213/250 [24:16<02:47,  4.54s/it]
+                                                 
+{'loss': 0.2955, 'grad_norm': 3.8852453231811523, 'learning_rate': 1.131557334489326e-06, 'epoch': 1.7}
+
+ 85%|████████▌ | 213/250 [24:16<02:47,  4.54s/it]
+ 86%|████████▌ | 214/250 [24:21<02:42,  4.53s/it]
+                                                 
+{'loss': 0.3133, 'grad_norm': 3.9791901111602783, 'learning_rate': 1.0723215490213635e-06, 'epoch': 1.71}
+
+ 86%|████████▌ | 214/250 [24:21<02:42,  4.53s/it]
+ 86%|████████▌ | 215/250 [24:25<02:38,  4.52s/it]
+                                                 
+{'loss': 0.3515, 'grad_norm': 3.862605333328247, 'learning_rate': 1.0145902956395449e-06, 'epoch': 1.72}
+
+ 86%|████████▌ | 215/250 [24:25<02:38,  4.52s/it]
+ 86%|████████▋ | 216/250 [24:30<02:33,  4.51s/it]
+                                                 
+{'loss': 0.3751, 'grad_norm': 4.0724663734436035, 'learning_rate': 9.583733034714982e-07, 'epoch': 1.73}
+
+ 86%|████████▋ | 216/250 [24:30<02:33,  4.51s/it]
+ 87%|████████▋ | 217/250 [24:34<02:28,  4.51s/it]
+                                                 
+{'loss': 0.2695, 'grad_norm': 3.7195937633514404, 'learning_rate': 9.036800464548157e-07, 'epoch': 1.74}
+
+ 87%|████████▋ | 217/250 [24:34<02:28,  4.51s/it]
+ 87%|████████▋ | 218/250 [24:39<02:24,  4.51s/it]
+                                                 
+{'loss': 0.4683, 'grad_norm': 4.07307767868042, 'learning_rate': 8.505197417404687e-07, 'epoch': 1.74}
+
+ 87%|████████▋ | 218/250 [24:39<02:24,  4.51s/it]
+ 88%|████████▊ | 219/250 [24:44<02:19,  4.51s/it]
+                                                 
+{'loss': 0.3671, 'grad_norm': 3.9963905811309814, 'learning_rate': 7.989013481394813e-07, 'epoch': 1.75}
+
+ 88%|████████▊ | 219/250 [24:44<02:19,  4.51s/it]
+ 88%|████████▊ | 220/250 [24:48<02:15,  4.51s/it]
+                                                 
+{'loss': 0.4171, 'grad_norm': 3.9669477939605713, 'learning_rate': 7.488335646131628e-07, 'epoch': 1.76}
+
+ 88%|████████▊ | 220/250 [24:48<02:15,  4.51s/it]
+ 88%|████████▊ | 221/250 [24:53<02:10,  4.51s/it]
+                                                 
+{'loss': 0.3831, 'grad_norm': 3.8388359546661377, 'learning_rate': 7.003248288071118e-07, 'epoch': 1.77}
+
+ 88%|████████▊ | 221/250 [24:53<02:10,  4.51s/it]
+ 89%|████████▉ | 222/250 [24:57<02:06,  4.51s/it]
+                                                 
+{'loss': 0.4153, 'grad_norm': 4.544527053833008, 'learning_rate': 6.53383315629268e-07, 'epoch': 1.78}
+
+ 89%|████████▉ | 222/250 [24:57<02:06,  4.51s/it]
+ 89%|████████▉ | 223/250 [25:02<02:01,  4.51s/it]
+                                                 
+{'loss': 0.2435, 'grad_norm': 3.3547232151031494, 'learning_rate': 6.08016935872251e-07, 'epoch': 1.78}
+
+ 89%|████████▉ | 223/250 [25:02<02:01,  4.51s/it]
+ 90%|████████▉ | 224/250 [25:06<01:57,  4.51s/it]
+                                                 
+{'loss': 0.3828, 'grad_norm': 4.076524257659912, 'learning_rate': 5.64233334880181e-07, 'epoch': 1.79}
+
+ 90%|████████▉ | 224/250 [25:06<01:57,  4.51s/it]
+ 90%|█████████ | 225/250 [25:11<01:52,  4.51s/it]
+                                                 
+{'loss': 0.383, 'grad_norm': 3.821027994155884, 'learning_rate': 5.22039891260262e-07, 'epoch': 1.8}
+
+ 90%|█████████ | 225/250 [25:11<01:52,  4.51s/it]
+ 90%|█████████ | 226/250 [25:15<01:48,  4.51s/it]
+                                                 
+{'loss': 0.3164, 'grad_norm': 3.694399356842041, 'learning_rate': 4.814437156393048e-07, 'epoch': 1.81}
+
+ 90%|█████████ | 226/250 [25:15<01:48,  4.51s/it]
+ 91%|█████████ | 227/250 [25:20<01:43,  4.51s/it]
+                                                 
+{'loss': 0.3896, 'grad_norm': 4.0372700691223145, 'learning_rate': 4.424516494654119e-07, 'epoch': 1.82}
+
+ 91%|█████████ | 227/250 [25:20<01:43,  4.51s/it]
+ 91%|█████████ | 228/250 [25:24<01:39,  4.51s/it]
+                                                 
+{'loss': 0.3966, 'grad_norm': 4.1401801109313965, 'learning_rate': 4.0507026385502747e-07, 'epoch': 1.82}
+
+ 91%|█████████ | 228/250 [25:24<01:39,  4.51s/it]
+ 92%|█████████▏| 229/250 [25:29<01:34,  4.51s/it]
+                                                 
+{'loss': 0.3578, 'grad_norm': 4.290666103363037, 'learning_rate': 3.693058584855369e-07, 'epoch': 1.83}
+
+ 92%|█████████▏| 229/250 [25:29<01:34,  4.51s/it]
+ 92%|█████████▏| 230/250 [25:33<01:30,  4.53s/it]
+                                                 
+{'loss': 0.2656, 'grad_norm': 3.4182732105255127, 'learning_rate': 3.3516446053363015e-07, 'epoch': 1.84}
+
+ 92%|█████████▏| 230/250 [25:33<01:30,  4.53s/it]
+ 92%|█████████▏| 231/250 [25:38<01:26,  4.53s/it]
+                                                 
+{'loss': 0.3761, 'grad_norm': 3.9440979957580566, 'learning_rate': 3.0265182365956213e-07, 'epoch': 1.85}
+
+ 92%|█████████▏| 231/250 [25:38<01:26,  4.53s/it]
+ 93%|█████████▎| 232/250 [25:42<01:22,  4.56s/it]
+                                                 
+{'loss': 0.4283, 'grad_norm': 4.071077346801758, 'learning_rate': 2.717734270375272e-07, 'epoch': 1.86}
+
+ 93%|█████████▎| 232/250 [25:42<01:22,  4.56s/it]
+ 93%|█████████▎| 233/250 [25:47<01:17,  4.54s/it]
+                                                 
+{'loss': 0.2666, 'grad_norm': 3.3779385089874268, 'learning_rate': 2.4253447443228106e-07, 'epoch': 1.86}
+
+ 93%|█████████▎| 233/250 [25:47<01:17,  4.54s/it]
+ 94%|█████████▎| 234/250 [25:51<01:12,  4.53s/it]
+                                                 
+{'loss': 0.3691, 'grad_norm': 4.147686004638672, 'learning_rate': 2.1493989332218468e-07, 'epoch': 1.87}
+
+ 94%|█████████▎| 234/250 [25:51<01:12,  4.53s/it]
+ 94%|█████████▍| 235/250 [25:56<01:07,  4.52s/it]
+                                                 
+{'loss': 0.3142, 'grad_norm': 3.9028964042663574, 'learning_rate': 1.889943340687961e-07, 'epoch': 1.88}
+
+ 94%|█████████▍| 235/250 [25:56<01:07,  4.52s/it]
+ 94%|█████████▍| 236/250 [26:00<01:03,  4.52s/it]
+                                                 
+{'loss': 0.2376, 'grad_norm': 3.4571244716644287, 'learning_rate': 1.6470216913317628e-07, 'epoch': 1.89}
+
+ 94%|█████████▍| 236/250 [26:00<01:03,  4.52s/it]
+ 95%|█████████▍| 237/250 [26:05<00:58,  4.53s/it]
+                                                 
+{'loss': 0.3796, 'grad_norm': 4.15559720993042, 'learning_rate': 1.4206749233902084e-07, 'epoch': 1.9}
+
+ 95%|█████████▍| 237/250 [26:05<00:58,  4.53s/it]
+ 95%|█████████▌| 238/250 [26:09<00:54,  4.52s/it]
+                                                 
+{'loss': 0.2687, 'grad_norm': 3.6177966594696045, 'learning_rate': 1.2109411818274851e-07, 'epoch': 1.9}
+
+ 95%|█████████▌| 238/250 [26:09<00:54,  4.52s/it]
+ 96%|█████████▌| 239/250 [26:14<00:49,  4.52s/it]
+                                                 
+{'loss': 0.4154, 'grad_norm': 4.142585277557373, 'learning_rate': 1.0178558119067316e-07, 'epoch': 1.91}
+
+ 96%|█████████▌| 239/250 [26:14<00:49,  4.52s/it]
+ 96%|█████████▌| 240/250 [26:18<00:45,  4.52s/it]
+                                                 
+{'loss': 0.3541, 'grad_norm': 3.649876356124878, 'learning_rate': 8.41451353233369e-08, 'epoch': 1.92}
+
+ 96%|█████████▌| 240/250 [26:18<00:45,  4.52s/it]
+ 96%|█████████▋| 241/250 [26:23<00:40,  4.53s/it]
+                                                 
+{'loss': 0.2725, 'grad_norm': 3.9268643856048584, 'learning_rate': 6.817575342714988e-08, 'epoch': 1.93}
+
+ 96%|█████████▋| 241/250 [26:23<00:40,  4.53s/it]
+ 97%|█████████▋| 242/250 [26:27<00:36,  4.52s/it]
+                                                 
+{'loss': 0.2741, 'grad_norm': 3.657787322998047, 'learning_rate': 5.388012673338661e-08, 'epoch': 1.94}
+
+ 97%|█████████▋| 242/250 [26:27<00:36,  4.52s/it]
+ 97%|█████████▋| 243/250 [26:32<00:31,  4.52s/it]
+                                                 
+{'loss': 0.3982, 'grad_norm': 4.131047248840332, 'learning_rate': 4.126066440464982e-08, 'epoch': 1.94}
+
+ 97%|█████████▋| 243/250 [26:32<00:31,  4.52s/it]
+ 98%|█████████▊| 244/250 [26:36<00:27,  4.51s/it]
+                                                 
+{'loss': 0.4634, 'grad_norm': 4.084376335144043, 'learning_rate': 3.03194931288664e-08, 'epoch': 1.95}
+
+ 98%|█████████▊| 244/250 [26:36<00:27,  4.51s/it]
+ 98%|█████████▊| 245/250 [26:41<00:22,  4.51s/it]
+                                                 
+{'loss': 0.3792, 'grad_norm': 3.6779582500457764, 'learning_rate': 2.10584567608918e-08, 'epoch': 1.96}
+
+ 98%|█████████▊| 245/250 [26:41<00:22,  4.51s/it]
+ 98%|█████████▊| 246/250 [26:46<00:18,  4.51s/it]
+                                                 
+{'loss': 0.3564, 'grad_norm': 3.4533865451812744, 'learning_rate': 1.3479116011769766e-08, 'epoch': 1.97}
+
+ 98%|█████████▊| 246/250 [26:46<00:18,  4.51s/it]
+ 99%|█████████▉| 247/250 [26:50<00:13,  4.51s/it]
+                                                 
+{'loss': 0.3232, 'grad_norm': 4.005708694458008, 'learning_rate': 7.582748185719357e-09, 'epoch': 1.98}
+
+ 99%|█████████▉| 247/250 [26:50<00:13,  4.51s/it]
+ 99%|█████████▉| 248/250 [26:55<00:09,  4.51s/it]
+                                                 
+{'loss': 0.2976, 'grad_norm': 3.7561914920806885, 'learning_rate': 3.3703469648760367e-09, 'epoch': 1.98}
+
+ 99%|█████████▉| 248/250 [26:55<00:09,  4.51s/it]
+100%|█████████▉| 249/250 [26:59<00:04,  4.51s/it]
+                                                 
+{'loss': 0.3516, 'grad_norm': 3.8174664974212646, 'learning_rate': 8.426222418311814e-10, 'epoch': 1.99}
+
+100%|█████████▉| 249/250 [26:59<00:04,  4.51s/it]
+100%|██████████| 250/250 [27:04<00:00,  4.50s/it]
+                                                 
+{'loss': 0.3691, 'grad_norm': 3.76747465133667, 'learning_rate': 0.0, 'epoch': 2.0}
+
+100%|██████████| 250/250 [27:04<00:00,  4.50s/it][INFO|trainer.py:3942] 2026-07-29 21:56:57,209 >> Saving model checkpoint to /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250
+[INFO|configuration_utils.py:423] 2026-07-29 21:56:57,214 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/config.json
+[INFO|configuration_utils.py:909] 2026-07-29 21:56:57,215 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/generation_config.json
+[INFO|modeling_utils.py:3048] 2026-07-29 21:57:57,150 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 21:57:57,152 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 21:57:57,153 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/special_tokens_map.json
+[2026-07-29 21:57:57,591] [INFO] [logging.py:128:log_dist] [Rank 0] [Torch] Checkpoint global_step250 is about to be saved!
+[2026-07-29 21:57:57,831] [INFO] [logging.py:128:log_dist] [Rank 0] Saving model checkpoint: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/mp_rank_00_model_states.pt
+[2026-07-29 21:57:57,831] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/mp_rank_00_model_states.pt...
+[2026-07-29 21:59:10,868] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/mp_rank_00_model_states.pt.
+[2026-07-29 21:59:10,877] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[2026-07-29 22:04:25,642] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[2026-07-29 22:04:25,645] [INFO] [engine.py:3536:_save_zero_checkpoint] zero checkpoint saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt
+[2026-07-29 22:04:25,646] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step250 is ready now!
+[INFO|image_processing_base.py:261] 2026-07-29 22:04:25,661 >> Image processor saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/preprocessor_config.json
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 22:04:25,734 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 22:04:25,735 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/special_tokens_map.json
+[INFO|processing_utils.py:638] 2026-07-29 22:04:26,310 >> chat template saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/chat_template.json
+[INFO|trainer.py:3942] 2026-07-29 22:04:33,174 >> Saving model checkpoint to /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250
+[INFO|configuration_utils.py:423] 2026-07-29 22:04:33,180 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/config.json
+[INFO|configuration_utils.py:909] 2026-07-29 22:04:33,181 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/generation_config.json
+[INFO|modeling_utils.py:3048] 2026-07-29 22:05:51,556 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 22:05:51,558 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 22:05:51,559 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/special_tokens_map.json
+[2026-07-29 22:05:52,251] [INFO] [logging.py:128:log_dist] [Rank 0] [Torch] Checkpoint global_step250 is about to be saved!
+[2026-07-29 22:05:52,399] [INFO] [logging.py:128:log_dist] [Rank 0] Saving model checkpoint: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/mp_rank_00_model_states.pt
+[2026-07-29 22:05:52,399] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/mp_rank_00_model_states.pt...
+[2026-07-29 22:07:22,873] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/mp_rank_00_model_states.pt.
+[2026-07-29 22:07:22,882] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[2026-07-29 22:12:48,697] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[2026-07-29 22:12:48,702] [INFO] [engine.py:3536:_save_zero_checkpoint] zero checkpoint saved /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/global_step250/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt
+[2026-07-29 22:12:48,702] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step250 is ready now!
+[INFO|image_processing_base.py:261] 2026-07-29 22:12:48,801 >> Image processor saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/preprocessor_config.json
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 22:12:48,803 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 22:12:48,804 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/special_tokens_map.json
+[INFO|processing_utils.py:638] 2026-07-29 22:12:49,598 >> chat template saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/checkpoint-250/chat_template.json
+[INFO|trainer.py:2657] 2026-07-29 22:12:49,598 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+
+                                                 
+{'train_runtime': 2582.9088, 'train_samples_per_second': 0.774, 'train_steps_per_second': 0.097, 'train_loss': 0.7531851348280907, 'epoch': 2.0}
+
+100%|██████████| 250/250 [43:02<00:00,  4.50s/it]
+100%|██████████| 250/250 [43:02<00:00, 10.33s/it]
+[INFO|image_processing_base.py:261] 2026-07-29 22:12:49,602 >> Image processor saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/preprocessor_config.json
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 22:12:49,604 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 22:12:49,605 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/special_tokens_map.json
+[INFO|processing_utils.py:638] 2026-07-29 22:12:50,304 >> chat template saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/chat_template.json
+[INFO|trainer.py:3942] 2026-07-29 22:12:55,915 >> Saving model checkpoint to /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output
+[INFO|configuration_utils.py:423] 2026-07-29 22:12:55,920 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/config.json
+[INFO|configuration_utils.py:909] 2026-07-29 22:12:55,922 >> Configuration saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/generation_config.json
+[INFO|modeling_utils.py:3048] 2026-07-29 22:14:14,731 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2500] 2026-07-29 22:14:14,733 >> tokenizer config file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2509] 2026-07-29 22:14:14,734 >> Special tokens file saved in /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/special_tokens_map.json
+***** train metrics *****
+  epoch                    =        2.0
+  total_flos               = 21841360GF
+  train_loss               =     0.7532
+  train_runtime            = 0:43:02.90
+  train_samples_per_second =      0.774
+  train_steps_per_second   =      0.097
+Figure saved at: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output/training_loss.png
+[WARNING|2026-07-29 22:14:15] llamafactory.extras.ploting:162 >> No metric eval_loss to plot.
+[WARNING|2026-07-29 22:14:15] llamafactory.extras.ploting:162 >> No metric eval_accuracy to plot.
+[INFO|modelcard.py:449] 2026-07-29 22:14:15,624 >> Dropping the following result as it does not have all the necessary fields:
+{'task': {'name': 'Causal Language Modeling', 'type': 'text-generation'}}

@@ -11,6 +11,9 @@ assert choice_letter("<answer>D) diagnosis</answer>") == "D"
 assert choice_letter("The answer is B.") == "B"
 assert choice_letter('<answer>{"option": "B") Melanocytes"}</answer>') == "B"
 assert choice_letter('<answer>{"answer": "C) Diagnosis"}</answer>') == "C"
+assert choice_letter("free-form reasoning\nD\n") == "D"
+assert choice_letter("A is plausible, B is less likely\nC") == "C"
+assert choice_letter("reasoning mentions A and B without a final choice") is None
 assert choice_letter(
     '<answer>{"Option A": "Keratinocytes", "Option B": "Melanocytes", '
     '"Option C": "Sebaceous cells", "Option D": "Fibroblasts"}</answer>'

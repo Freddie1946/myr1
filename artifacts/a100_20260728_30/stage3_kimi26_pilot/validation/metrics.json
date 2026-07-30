@@ -1,0 +1,106 @@
+{
+  "accuracy": 0.6311688311688312,
+  "chat_template_file": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/output_attempt03/chat_template.json",
+  "chat_template_sha256": "94174d7176c52a7192f96fc34eb2cf23c7c2059d63cdbfadca1586ba89731fb7",
+  "choice_extracted": 385,
+  "correct": 243,
+  "count": 385,
+  "data_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json",
+  "data_sha256": "f52c9a412da579db8fb8bf52f6fa320e7c4ae9cb42b6cf1bdf62f77ab158dcf0",
+  "do_sample": false,
+  "dtype": "bfloat16",
+  "empty_completion_count": 0,
+  "eos_terminated_count": 385,
+  "format_accuracy": 1.0,
+  "format_correct": 385,
+  "generation_cap_hit_count": 0,
+  "max_new_tokens": 1024,
+  "maximum_generated_tokens": 157,
+  "mean_generated_tokens": 76.11428571428571,
+  "median_generated_tokens": 73,
+  "model_config_sha256": "9f64a64c43dffe8b433c02c2dc3ef236b344829758f0928d520484ab3f08153c",
+  "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/output_attempt03",
+  "parallel_scheduling_only": true,
+  "per_gpu_batch_size": 1,
+  "predictions_file": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/predictions.jsonl",
+  "predictions_sha256": "146fb4a9c788accda041ed333c66f44f963a7e91682b54a0e303ce8877c70d13",
+  "quantization": "none",
+  "schema_version": 1,
+  "shards": [
+    {
+      "count": 48,
+      "end": 48,
+      "gpu": 0,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_00.json",
+      "sha256": "015368ae22eda6cd2877797cb5f8e659422a85b403a45c3788f975d2a026dd60",
+      "shard_id": 0,
+      "start": 0
+    },
+    {
+      "count": 48,
+      "end": 96,
+      "gpu": 1,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_01.json",
+      "sha256": "d95341575724be63e5c261a961ee55509317d252c46f0896974eeababde857ea",
+      "shard_id": 1,
+      "start": 48
+    },
+    {
+      "count": 48,
+      "end": 144,
+      "gpu": 2,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_02.json",
+      "sha256": "fae613d06021420d2088a19e2bbe53a62ef94286ebe1a650a0615a495a81feaf",
+      "shard_id": 2,
+      "start": 96
+    },
+    {
+      "count": 48,
+      "end": 192,
+      "gpu": 3,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_03.json",
+      "sha256": "8af3bc07f26457e2d8ef2681dae26781505402419b10c23158ed9c41262c3855",
+      "shard_id": 3,
+      "start": 144
+    },
+    {
+      "count": 48,
+      "end": 240,
+      "gpu": 4,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_04.json",
+      "sha256": "e67bc47dac135a43297b6116e15ee14242220cac7b95f891af8287ed8d332fc3",
+      "shard_id": 4,
+      "start": 192
+    },
+    {
+      "count": 48,
+      "end": 288,
+      "gpu": 5,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_05.json",
+      "sha256": "ff47a9a4477ee73581f4cf715da106c95a8b32dd7ce635171b9b31e826af3a26",
+      "shard_id": 5,
+      "start": 240
+    },
+    {
+      "count": 48,
+      "end": 336,
+      "gpu": 6,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_06.json",
+      "sha256": "0e3bd05828c0cbd6bc61bd9394c5d05e626555b3aeac3385d6e351820c525aa5",
+      "shard_id": 6,
+      "start": 288
+    },
+    {
+      "count": 49,
+      "end": 385,
+      "gpu": 7,
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_50step_seed42_20260730/validation_0385_postpilot_parallel_20260730_101722/inputs/shard_07.json",
+      "sha256": "01f12235885042b196af939c6178c597a2370a53388553aa421eafe38c46c305",
+      "shard_id": 7,
+      "start": 336
+    }
+  ],
+  "split_role": "validation_0385",
+  "status": "completed",
+  "test_accessed": false
+}

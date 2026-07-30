@@ -1,0 +1,20 @@
+{
+  "checkpoint": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output",
+  "loaded": true,
+  "model_type": "qwen2_5_vl",
+  "hidden_size": 3584,
+  "num_hidden_layers": 28,
+  "total_parameters": 8292166656,
+  "torch_dtype_counts": {
+    "torch.bfloat16": 8292166656
+  },
+  "passed": true
+}
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.22s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.30it/s]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.63it/s]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.26it/s]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.75it/s]

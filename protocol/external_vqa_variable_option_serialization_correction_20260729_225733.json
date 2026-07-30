@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T22:57:33+08:00",
+  "status": "corrected_and_resumed",
+  "parent_contract": "protocol/external_vqa_common_contract_manifest_20260729_224503.json",
+  "supersedes_runner_hashes_only": {
+    "qwen_runner_sha256": "0872f8ab8e016b97a68b4597f44cc265c7084f878e96431e4acf234872c8de3a",
+    "native_utils_sha256": "e6dde85717c236ae07127657054f2c831862b3117088d6d3465fef440c971c6e"
+  },
+  "dataset_fact_correction": {
+    "total_records": 8518,
+    "two_option_records": 1278,
+    "four_option_records": 7240,
+    "first_two_option_index": 541
+  },
+  "failure": {
+    "model": "MedVLM-R1",
+    "task": "OmniMedVQA",
+    "completed_predictions_before_failure": 541,
+    "last_completed_index": 540,
+    "cause": "output provenance serialization hard-indexed option_C and option_D after inference and scoring",
+    "prompt_affected": false,
+    "model_inputs_affected": false,
+    "scoring_affected": false,
+    "existing_predictions_changed": false
+  },
+  "correction": {
+    "description": "serialize only option keys present in the source record",
+    "qwen_runner_path": "scripts/run_external_vqa_qwen.py",
+    "qwen_runner_sha256": "1046928b95e6c223b540c32cd5093445b44a70af7e1aef4f3d3b3f4f68162a88",
+    "native_utils_path": "scripts/external_vqa_native_utils.py",
+    "native_utils_sha256": "42ad978871ea892de80fc8abce528a1df6150af509059a41ca3661899adea6fb",
+    "tests_path": "scripts/test_external_vqa_contract.py",
+    "tests_sha256": "7c22a6b525083b86ec42816070a3c985cc2b7b7f0b620d491c77c2c8e6a8687a",
+    "tests_passed": 6
+  },
+  "resume": {
+    "source_record_hash_validation": true,
+    "resume_from_index": 541,
+    "configuration_changed": false,
+    "prompt_or_metric_changed": false
+  }
+}

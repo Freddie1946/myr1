@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T00:39:15+08:00",
+  "formal_result": false,
+  "status": "blocked_pending_distillable_judge_decision",
+  "stage3_started": false,
+  "successful_paid_model_calls": 0,
+  "committed_spend_usd": 0,
+  "attempts": [
+    {
+      "ordinal": 1,
+      "http_status": 404,
+      "reason": "Azure endpoint supports max_completion_tokens rather than max_tokens under require_parameters",
+      "provider_endpoint_selected": false,
+      "billed": false,
+      "correction": "Judge output limit changed to max_completion_tokens=320"
+    },
+    {
+      "ordinal": 2,
+      "http_status": 403,
+      "reason": "request prohibited due to provider Terms of Service",
+      "provider_name": null,
+      "provider_endpoint_selected": false,
+      "billed": false,
+      "correction": "all training-use requests now require provider.enforce_distillable_text=true"
+    }
+  ],
+  "billing_evidence": {
+    "key_usage_before_usd": 0,
+    "key_usage_after_attempt_1_usd": 0,
+    "key_usage_after_attempt_2_usd": 0,
+    "account_total_usage_before_usd": 0.358321845,
+    "account_total_usage_after_attempt_1_usd": 0.358321845,
+    "account_total_usage_after_attempt_2_usd": 0.358321845,
+    "unbilled_reservations_released": 2,
+    "unresolved_reservations": 0,
+    "budget_breached": false
+  },
+  "compliance": {
+    "distillation_use": true,
+    "enforce_distillable_text": true,
+    "must_not_bypass_provider_terms_filter": true,
+    "gpt4o_2024_08_06_current_openrouter_training_use_runnable": false
+  },
+  "read_only_candidate_query": {
+    "filters": {
+      "input_modalities": "image",
+      "distillable": true,
+      "zdr": true,
+      "structured_outputs_post_filter": true
+    },
+    "matching_model_count": 23,
+    "shortlist": [
+      "qwen/qwen3-vl-235b-a22b-instruct",
+      "moonshotai/kimi-k3",
+      "moonshotai/kimi-k2.5",
+      "mistralai/mistral-small-2603",
+      "qwen/qwen2.5-vl-72b-instruct"
+    ]
+  },
+  "code": {
+    "scripts/stage3_openrouter_judge.py": "fdfde18cb40cb06e352d2323a1a1096d46ed6350245b7da9171dc0d70d56939e",
+    "scripts/test_stage3_openrouter_judge.py": "13f21cc014853fce9ff79b10d80c214469c7a2bc30b65e77c1bdd099466665c0",
+    "scripts/grpo_pathmmu.py": "3c20993b29420ff061246935422a4a44d3959fcb3bd34b8f62d79bc4702741ee"
+  },
+  "tests": {
+    "stage3_judge_tests_passed": 15,
+    "pathmmu_reward_regression_passed": true,
+    "initial_test_expectation_failure_corrected": true
+  },
+  "hardware_gate": {
+    "gpu_0_busy_with_authorized_internvl_omnimedvqa": true,
+    "gpus_1_through_7_idle": true,
+    "eight_gpu_stage3_ready": false
+  },
+  "decision_required": "freeze a compliant distillable Judge replacement or establish explicit permission compatible with GPT-4o training use"
+}

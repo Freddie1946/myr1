@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T01:35:29+08:00",
+  "formal_result": false,
+  "scope": "A100 preparation phases 1-3: environments, source pins, access and integrity only",
+  "execution": {
+    "training_run": false,
+    "model_inference_run": false,
+    "validation_selection_run": false,
+    "test_opened_for_decision": false,
+    "paid_api_request_run": false,
+    "gpu_workload_run": false
+  },
+  "machine": {
+    "workspace": "/home/dataset-assist-0/czy/wjy",
+    "repo_branch": "codex/a100-stage3-eval",
+    "repo_head": "e483e06adf2380923ace0998ee9211c300df59a7",
+    "gpu_count": 8,
+    "gpu_model": "NVIDIA A100-SXM4-80GB",
+    "driver": "580.65.06"
+  },
+  "source_revisions": {
+    "LLaMA-Factory": "e2299e261be852304bb1d370515078193ab12bd8",
+    "CONCH": "141cc09c7d4ff33d8eda562bd75169b457f71a62",
+    "UNI": "42715efc11722a496e0a67f3369505a8f277206c",
+    "PLIP": "f010f3d0bef20f4e8cc64cc26c301cbd26305fa1",
+    "LLaVA-Med": "30697ca50b5c29a8e955c99330b259776aef27b9",
+    "DeepSeek-VL2": "ef9f91e2b6426536b83294c11742c27be66361b1",
+    "InternVL": "2410d1dbf208f0e799459aff9376e5747dbf41a2",
+    "HuatuoGPT-Vision": "e1a52dcf6c0417f4b6ac1d378b01147280192fca",
+    "MedGemma-code": "a60a66024f6153496dfa9490dba12d4f1fbd092e"
+  },
+  "environment_gates": {
+    "formal_sft_core_import": "pass",
+    "formal_grpo_core_import": "pass",
+    "pathology_clip": "pass",
+    "qwen_vl": "pass",
+    "llama32_vision": "pass",
+    "deepseek_vl2": "pass",
+    "medgemma": "pass",
+    "internvl3": "pass_static_image_without_decord",
+    "huatuo_llava": "pass",
+    "llava_med": "pass",
+    "api_clients_import_only": "pass"
+  },
+  "data_gates": {
+    "pathmmu_revision": "054e64e56e599e9636024f1471d49ecae4a2784f",
+    "pathmmu_required_images": 3808,
+    "pathmmu_split_and_image_integrity": "pass",
+    "pathvqa_revision": "1685832883334b5bb5beaf4e4b333fdeecaa4ad9",
+    "pathvqa_rows": 6719,
+    "pathvqa_hashes": "pass",
+    "omnimedvqa_revision": "1ba51c28fc0773bdf7efb8396e5bcfd4227e22da",
+    "omnimedvqa_download": "in_progress"
+  },
+  "model_access": {
+    "authenticated_account": "Freddie1946",
+    "exact_revision_metadata_checks": "pass_for_all_13_checked_repositories",
+    "formal_qwen7_snapshot": "in_progress_resumable",
+    "remaining_baseline_weights": "not_yet_complete"
+  },
+  "known_blocks": [
+    "intermittent Hugging Face proxy TLS EOF; retries preserve verified HTTPS and partial files",
+    "formal preflight waits for exact Qwen7 snapshot",
+    "formal seed42 n3000 epoch3 step1125 checkpoint absent from A100",
+    "additional 1000 SFT examples not defined",
+    "hosted API identities, credentials and cost approval not frozen",
+    "common baseline evaluation protocol not frozen"
+  ]
+}

@@ -1,0 +1,159 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[2026-07-30 08:39:53,784] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:53,792] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:53,824] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:53,898] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:53,954] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:53,957] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:53,965] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:53,982] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:39:56,136] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:39:56,137] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:39:56,281] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:39:56,290] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:39:56,306] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:39:56,328] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:39:56,330] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:39:56,330] [INFO] [comm.py:683:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2026-07-30 08:39:56,337] [INFO] [comm.py:652:init_distributed] cdb=None
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank0]:     main()
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank0]:     trainer = Qwen2VLGRPOTrainer(
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank0]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank0]:     raise ValueError(
+[rank0]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank0]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank7]:     main()
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank7]:     trainer = Qwen2VLGRPOTrainer(
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank7]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank7]:     raise ValueError(
+[rank7]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank7]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank4]:     main()
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank4]:     trainer = Qwen2VLGRPOTrainer(
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank4]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank4]:     raise ValueError(
+[rank4]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank4]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+[rank0]:[W730 08:39:58.439874974 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank6]:     main()
+[rank6]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank6]:     trainer = Qwen2VLGRPOTrainer(
+[rank6]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank6]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank6]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank6]:     raise ValueError(
+[rank6]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank6]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank1]:     main()
+[rank1]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank1]:     trainer = Qwen2VLGRPOTrainer(
+[rank1]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank1]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank1]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank1]:     raise ValueError(
+[rank1]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank1]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank3]:     main()
+[rank3]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank3]:     trainer = Qwen2VLGRPOTrainer(
+[rank3]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank3]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank3]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank3]:     raise ValueError(
+[rank3]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank3]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank2]:     main()
+[rank2]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank2]:     trainer = Qwen2VLGRPOTrainer(
+[rank2]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank2]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank2]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank2]:     raise ValueError(
+[rank2]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank2]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank5]:     main()
+[rank5]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 151, in main
+[rank5]:     trainer = Qwen2VLGRPOTrainer(
+[rank5]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 256, in __init__
+[rank5]:     model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
+[rank5]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 567, in from_pretrained
+[rank5]:     raise ValueError(
+[rank5]: ValueError: Unrecognized configuration class <class 'transformers.models.qwen2_5_vl.configuration_qwen2_5_vl.Qwen2_5_VLConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+[rank5]: Model type should be one of AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DiffLlamaConfig, ElectraConfig, Emu3Config, ErnieConfig, FalconConfig, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, GitConfig, GlmConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeSharedConfig, HeliumConfig, JambaConfig, JetMoeConfig, LlamaConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MistralConfig, MixtralConfig, MllamaConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, XmodConfig, ZambaConfig, Zamba2Config.
+W0730 08:39:59.000000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3807334 closing signal SIGTERM
+W0730 08:39:59.000000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3807335 closing signal SIGTERM
+W0730 08:39:59.001000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3807336 closing signal SIGTERM
+W0730 08:39:59.001000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3807337 closing signal SIGTERM
+W0730 08:39:59.001000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3807338 closing signal SIGTERM
+W0730 08:39:59.001000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3807339 closing signal SIGTERM
+W0730 08:39:59.001000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3807340 closing signal SIGTERM
+E0730 08:40:00.618000 3807267 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 3807333) of binary: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/bin/python
+Traceback (most recent call last):
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-07-30_08:39:59
+  host      : ide-ba7127eb4fa14799a02e4cd789d2a2c7-7c6885
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3807333)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

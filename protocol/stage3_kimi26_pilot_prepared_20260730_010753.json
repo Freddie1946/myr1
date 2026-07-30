@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T01:07:53+08:00",
+  "formal_result": false,
+  "status": "prepared_waiting_external_gates",
+  "stage3_started": false,
+  "paid_kimi_calls": 0,
+  "user_decision": {
+    "judge_model": "moonshotai/kimi-k2.6",
+    "run_initial_version": true
+  },
+  "pilot": {
+    "parent": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+    "data": "pathmmu_image_disjoint_v2/rl_n1000",
+    "seed": 42,
+    "max_steps": 50,
+    "global_batch_size": 8,
+    "num_generations": 4,
+    "maximum_training_judge_calls": 400,
+    "maximum_total_judge_calls": 401,
+    "learning_rate": 0.000001,
+    "beta": 0.04,
+    "max_completion_length": 192,
+    "process_penalty": 0.4,
+    "budget_hard_ceiling_usd": 15
+  },
+  "judge": {
+    "model": "moonshotai/kimi-k2.6",
+    "initial_provider_candidate": "inceptron",
+    "allow_fallbacks": false,
+    "require_parameters": true,
+    "zdr_required": true,
+    "data_collection": "deny",
+    "enforce_distillable_text": true,
+    "structured_outputs": true,
+    "max_token_parameter": "max_tokens",
+    "max_judge_tokens": 320
+  },
+  "verification": {
+    "openrouter_image_distillable_zdr_filter_match": true,
+    "system_python_judge_tests_passed": 16,
+    "grpo_python_judge_tests_passed": 16,
+    "payload_dry_check_passed": true,
+    "python_compile_passed": true,
+    "bash_syntax_passed": true
+  },
+  "code_sha256": {
+    "scripts/stage3_openrouter_judge.py": "dd46867169b732c0a9fc95d961f6ffa02a75a0cdaac11074d7f809051da5c0c8",
+    "scripts/test_stage3_openrouter_judge.py": "dcc0486b547b492bb5106f8429bad449452c73918ef69a9786ae47bda04317d1",
+    "scripts/run_stage3_kimi26_smoke.py": "098029d99776a25837a8e012e607ee91169f1ba2018a66bef4493350018f5b26",
+    "scripts/launch_stage3_kimi26_pilot.sh": "a7ec56e839fd63b06aded6550c7b90b93794e8df652241b8667084f6886e4a4a"
+  },
+  "remaining_gates": {
+    "openrouter_key_rotation_required": true,
+    "paid_synthetic_smoke_required": true,
+    "all_eight_gpus_idle_required": true,
+    "gpu0_current_job": "InternVL OmniMedVQA",
+    "gpu0_progress_records": 4641,
+    "gpu0_total_records": 8518,
+    "interrupt_existing_evaluation": false
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T22:16:40+08:00",
+  "status": "frozen_before_launch",
+  "scientific_role": "pre-Stage3 PathMMU test999 development diagnostic",
+  "eligible_for_untouched_final_stage3_claim": false,
+  "data": {
+    "validation_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json",
+    "validation_sha256": "f52c9a412da579db8fb8bf52f6fa320e7c4ae9cb42b6cf1bdf62f77ab158dcf0",
+    "validation_smoke_count": 16,
+    "test_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+    "test_sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+    "test_count": 999,
+    "test_accessed": true
+  },
+  "models": {
+    "SFT4000-control-epoch2-step250": {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/epoch_snapshots/checkpoint-250",
+      "snapshot_manifest_sha256": "d966b80a86a74495f35e0a2f34e2c66e1347a674f6db8fa96ac922afa8dc5e1c",
+      "config_sha256": "0e5cdc7ef06524318f8749bcf09e12a5b19ed007c7bef742ee1670a4044f4cf5",
+      "gpu": 0
+    },
+    "Stage2-Outcome-GRPO-epoch2-step1000": {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+      "snapshot_manifest_sha256": "83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0",
+      "config_sha256": "6f2dfffa12f86881fe1929ed41c380921d21bd8ac43cd09a69ef6ff004a25061",
+      "gpu": 1
+    }
+  },
+  "execution": {
+    "runner": "scripts/run_pathmmu_qwen_diagnostic.py",
+    "runner_sha256": "4e435b9b138d0970eb54aa17cd5f5e848e655a01f56653cbe6a4504d051d03d2",
+    "parser": "scripts/pathmmu_rewards.py",
+    "parser_sha256": "69c1bde669ee16de35dd8680f6f4590429e3830617498106be6b5d333664a56c",
+    "backend": "qwen2_5_vl",
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "do_sample": false,
+    "batch_size": 8,
+    "max_new_tokens": 1024,
+    "raw_outputs_required": true,
+    "validation_smoke_required_before_test": true
+  },
+  "outputs": {
+    "root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640",
+    "sft4000_validation_smoke": "sft4000_validation_smoke16",
+    "stage2_validation_smoke": "stage2_rl_validation_smoke16",
+    "sft4000_test999": "sft4000_test999",
+    "stage2_test999": "stage2_rl_test999"
+  },
+  "checkpoint_selection_uses_test": false,
+  "stage3_started": false
+}

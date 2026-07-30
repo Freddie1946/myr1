@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T22:20:41+08:00",
+  "status": "blocked_before_test999",
+  "model": {
+    "name": "deepseek-ai/deepseek-vl2",
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/deepseek-ai--deepseek-vl2--f363772d1c47f4239dd844015b4bd53beb87951b",
+    "config_sha256": "d5dadaf4d41af00d569ac376bf09de4e28324c853b3ae0c7f6fed66f19fdcf8c"
+  },
+  "execution": {
+    "environment": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/envs/deepseek_vl2",
+    "source": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/sources/DeepSeek-VL2",
+    "runner": "scripts/run_pathmmu_deepseek_vl2_diagnostic.py",
+    "runner_sha256": "9f167ccd99fbd848a07c88153b0f6abf51b5f91266e01c239b96fe737174b484",
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "do_sample": false,
+    "max_new_tokens": 1024
+  },
+  "validation_smoke": {
+    "count": 1,
+    "hardware_and_inference_passed": true,
+    "nonempty_completion_count": 1,
+    "choice_extracted": 0,
+    "format_correct": 0,
+    "generation_cap_hit_count": 0,
+    "completion": "The image shows a densely fibrous matrix.",
+    "metrics_sha256": "79091b97f8387acce600c4b2c4862a144159da68629fe63d2bdcb022d610eb73",
+    "predictions_sha256": "397a586aed712cf976cd3f46e1412d9e1c7e1f8c78863f61da7c3017bff04327"
+  },
+  "decision": {
+    "launch_test999": false,
+    "reason": "The fixed common response contract did not yield an extractable option. Running 999 rows would confound response-contract failure with model accuracy.",
+    "forbidden_shortcuts": [
+      "silently score semantic option-text matching",
+      "change the shared test prompt after inspecting test999",
+      "quantize the model",
+      "report a parser-induced zero as model performance"
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T22:59:29+08:00",
+  "status": "available_local_diagnostics_completed",
+  "scientific_role": "pre-Stage3 development diagnostic",
+  "test_accessed": true,
+  "diagnostic_only": true,
+  "eligible_for_untouched_final_stage3_claim": false,
+  "data": {
+    "count": 999,
+    "sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549"
+  },
+  "generative_results": [
+    {
+      "model": "Lingshu-7B",
+      "correct": 583,
+      "accuracy": 0.5835835835835835,
+      "choice_extracted": 999,
+      "format_correct": 989,
+      "generation_cap_hit_count": 0,
+      "predictions_sha256": "5683b126492442d218e1678f8352724f874df3a52c270dac31b9c6a5bd16abe3",
+      "metrics_sha256": "166029f23a28ff28a4d56bc7f98dd04b78e567bd661330060b726ce75d601b40"
+    },
+    {
+      "model": "InternVL3-8B",
+      "correct": 553,
+      "accuracy": 0.5535535535535535,
+      "choice_extracted": 997,
+      "format_correct": 875,
+      "generation_cap_hit_count": 1,
+      "predictions_sha256": "a0373a1407c8956233dabfae6f86d044b29a1836194d80a776e0f8dfec46309c",
+      "metrics_sha256": "9b4646d16c411df46d7b08d44d25c519d96f8b6b61ed72ffeb68b6a06db5ba9e"
+    },
+    {
+      "model": "HuatuoGPT-Vision-7B",
+      "correct": 531,
+      "accuracy": 0.5315315315315315,
+      "choice_extracted": 961,
+      "format_correct": 76,
+      "generation_cap_hit_count": 0,
+      "predictions_sha256": "b4c03dbd3061e3bae6847fe454458b10adce030c4e90686a9ddee12f29d258fb",
+      "metrics_sha256": "13ff24e7b99ef560fb5307a88fc815dda2873f32be8fe1a8407502b5156890ea"
+    },
+    {
+      "model": "Qwen2.5-VL-7B-Instruct",
+      "correct": 485,
+      "accuracy": 0.4854854854854855,
+      "choice_extracted": 979,
+      "format_correct": 965,
+      "generation_cap_hit_count": 0,
+      "predictions_sha256": "c6bc2385a392212fb29203d27520361daaaac7616bb50b8db9046a61f688a703",
+      "metrics_sha256": "036802ab1e8baf3df7f5b0f7c4abf0c772098d6772699b2bcd336b10883534ca"
+    },
+    {
+      "model": "Qwen2.5-VL-3B-Instruct",
+      "correct": 449,
+      "accuracy": 0.4494494494494494,
+      "choice_extracted": 998,
+      "format_correct": 963,
+      "generation_cap_hit_count": 0,
+      "predictions_sha256": "aa7b7ee7185fcaa772b350b1574d38ee1e04bb95207c3511d3b6348c3bcc3b35",
+      "metrics_sha256": "e854ad82aa0523931255e5f8cc4d9a9e57dbbb92e494f60b23e96b481af6f5d2"
+    },
+    {
+      "model": "MedVLM-R1",
+      "correct": 413,
+      "accuracy": 0.4134134134134134,
+      "choice_extracted": 998,
+      "format_correct": 981,
+      "generation_cap_hit_count": 0,
+      "predictions_sha256": "79e2d84f855d1e02476976f25aa854e36fb470d90eace853b69672e59be9b00d",
+      "metrics_sha256": "48e9d007682b04371e1c2b72277d75dabf0205ce4d37d9c3ff7513da35c0de48"
+    },
+    {
+      "model": "MedGemma-4B-IT",
+      "correct": 400,
+      "accuracy": 0.4004004004004004,
+      "choice_extracted": 840,
+      "format_correct": 28,
+      "generation_cap_hit_count": 24,
+      "predictions_sha256": "b7c70a95ce7fdd8f9f689135598101119557a071f3de88803a2eb0d90a29b0a1",
+      "metrics_sha256": "ac3193072ff610bf872e17ec82742c99b0ec570b86316014576c5655ebc0eccc"
+    }
+  ],
+  "matching_results": [
+    {
+      "model": "CONCH",
+      "contract": "image to raw option text cosine similarity",
+      "correct": 338,
+      "accuracy": 0.3383383383383383,
+      "choice_extracted": 999,
+      "predictions_sha256": "1579e20f53b4ad1182ec509658ed3b862bd706f5269e3173722012a8aea75e5c",
+      "metrics_sha256": "23a81d2d6a3aa2c0c476231ab24798ed08ead2967d44dd902f4fb6b7c68c852b"
+    },
+    {
+      "model": "PLIP",
+      "contract": "image to raw option text cosine similarity",
+      "correct": 334,
+      "accuracy": 0.33433433433433435,
+      "choice_extracted": 999,
+      "predictions_sha256": "a01e043c384277af7f40f3e6e33d94a47b40c48d310b78c252fbfcb83ee04ca0",
+      "metrics_sha256": "f7a4ddce48ead1b6f133c8effd9e5f8357e70a25810be8b1ccbb62d22ca427a0"
+    }
+  ],
+  "joint_badcase_report": {
+    "root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/pathmmu_test999_badcases_available9_20260728_2252",
+    "all_models_wrong": 55,
+    "exactly_one_model_correct": 88,
+    "all_models_correct": 15,
+    "prediction_disagreement": 983,
+    "summary_sha256": "a5949622331aaf1e5ae80cfc1a8a9c8a1bd915e687095b7e53e05c346cf74418",
+    "badcases_sha256": "f9364af7dd32a1ce66d8da043683de99743df307dcfb5efa78625c0d272c5319",
+    "badcase_index_sha256": "bd5bf01820e5bac6a38ade1392c881e07cbf58ed160fc11cd5ab9f7ffa003640",
+    "artifact_manifest_sha256": "ad95372d960cebd1a9120277f986f8b940c185d0968fabb520c47feb7fcd13b1"
+  },
+  "not_scored": [
+    {
+      "model": "DeepSeek-VL2",
+      "reason": "nonempty natural-language output did not satisfy the extractable-letter response contract",
+      "gate": "protocol/pathmmu_deepseek_vl2_response_contract_gate_20260728_222041.json"
+    },
+    {
+      "model": "LLaVA-Med",
+      "reason": "nonempty semantic option text did not satisfy the extractable-letter response contract",
+      "gate": "protocol/pathmmu_llava_med_response_contract_gate_20260728_222938.json"
+    },
+    {
+      "model": "UNI",
+      "reason": "visual-only representation encoder; no approved VQA scoring contract"
+    },
+    {
+      "model": "Meta Llama 3.2 Vision 11B/90B",
+      "reason": "gated model weights not available"
+    },
+    {
+      "model": "hosted APIs",
+      "reason": "deferred by user"
+    }
+  ],
+  "stage2": {
+    "status": "blocked_on_exact_checkpoint_transfer",
+    "substitute_allowed": false,
+    "selected_checkpoint_source": "/home/wjy/pathvlm_r1_v1_formal/runs/stage2_outcome_grpo/priority_n1000_seed0042/stage2_priority_n1000_seed0042_20260720_035156/formal_n1000_seed0042_epoch3/epoch_snapshots/checkpoint-1000",
+    "snapshot_manifest_sha256": "83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0"
+  },
+  "training": {
+    "stage3_started": false,
+    "any_training_started_on_a100": false
+  }
+}

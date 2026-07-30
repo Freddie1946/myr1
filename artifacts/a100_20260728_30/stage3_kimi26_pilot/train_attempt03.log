@@ -1,0 +1,431 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[2026-07-30 08:46:10,112] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:10,135] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:10,199] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:10,348] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:10,355] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:10,356] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:10,358] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:10,361] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:46:11,705] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:46:11,705] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:46:11,721] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:46:11,721] [INFO] [comm.py:683:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2026-07-30 08:46:12,142] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:46:12,143] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:46:12,151] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:46:12,156] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:46:12,161] [INFO] [comm.py:652:init_distributed] cdb=None
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:12,956] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:13,621] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:13,656] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:13,710] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:13,717] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:13,736] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:13,745] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:46:13,760] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:16,244] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 729, num_elems = 8.29B
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.84s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.85s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.85s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.87s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.86s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.90s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.00s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.95s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.35s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.36s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.33s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.38s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.37s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.37s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.37s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.39s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.11s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.12s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.13s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.10s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.13s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.14s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.14s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.16s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.43s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.77s/it]
+Freezing vision modules...
+[2026-07-30 08:46:23,413] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.45s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.78s/it]
+Freezing vision modules...
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.45s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.79s/it]
+Freezing vision modules...
+[2026-07-30 08:46:23,441] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.46s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.46s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.79s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.79s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.46s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.79s/it]
+[2026-07-30 08:46:23,448] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Freezing vision modules...
+Freezing vision modules...
+Freezing vision modules...
+[2026-07-30 08:46:23,457] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:23,458] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:23,461] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.47s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.79s/it]
+Freezing vision modules...
+[2026-07-30 08:46:23,477] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.58s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.87s/it]
+Freezing vision modules...
+[2026-07-30 08:46:23,808] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s][2026-07-30 08:46:24,553] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 1458, num_elems = 16.58B
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.37s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.39s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.37s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.40s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.40s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.38s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.41s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.91s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.51s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.53s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.31s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.54s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.55s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.55s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.54s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.55s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.17s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.17s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.17s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.18s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.18s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.17s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.18s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.08s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.53s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.90s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.53s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.90s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.53s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.91s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.54s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.91s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.54s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.91s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.55s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.92s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.55s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.92s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.53s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.83s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+[2026-07-30 08:46:32,386] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:32,401] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+[2026-07-30 08:46:32,489] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:32,492] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+[2026-07-30 08:46:32,515] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:32,523] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:32,537] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+[2026-07-30 08:46:32,694] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed info: version=0.15.4, git-hash=unknown, git-branch=unknown
+[2026-07-30 08:46:32,694] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:46:32,709] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2026-07-30 08:46:32,712] [INFO] [logging.py:128:log_dist] [Rank 0] Creating ZeRO Offload
+[2026-07-30 08:46:32,872] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [begin]
+[2026-07-30 08:46:32,872] [INFO] [utils.py:782:see_memory_usage] MA 3.86 GB         Max_MA 5.89 GB         CA 6.07 GB         Max_CA 6 GB 
+[2026-07-30 08:46:32,872] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 30.67 GB, percent = 3.0%
+Parameter Offload: Total persistent parameters: 848896 in 368 params
+[2026-07-30 08:46:33,047] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [end]
+[2026-07-30 08:46:33,047] [INFO] [utils.py:782:see_memory_usage] MA 3.86 GB         Max_MA 3.86 GB         CA 6.07 GB         Max_CA 6 GB 
+[2026-07-30 08:46:33,047] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 30.67 GB, percent = 3.0%
+[2026-07-30 08:46:33,049] [INFO] [config.py:999:print] DeepSpeedEngine configuration:
+[2026-07-30 08:46:33,049] [INFO] [config.py:1003:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2026-07-30 08:46:33,049] [INFO] [config.py:1003:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True, 'use_gds': False}
+[2026-07-30 08:46:33,049] [INFO] [config.py:1003:print]   amp_enabled .................. False
+[2026-07-30 08:46:33,049] [INFO] [config.py:1003:print]   amp_params ................... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   bfloat16_enabled ............. True
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   bfloat16_immediate_grad_update  False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   checkpoint_parallel_write_pipeline  False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   checkpoint_tag_validation_enabled  True
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   checkpoint_tag_validation_fail  False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7f5160856920>
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   communication_data_type ...... None
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   curriculum_enabled_legacy .... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   curriculum_params_legacy ..... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   data_efficiency_enabled ...... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   dataloader_drop_last ......... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   disable_allgather ............ False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   dump_state ................... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   dynamic_loss_scale_args ...... None
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_enabled ........... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_gas_boundary_resolution  1
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_layer_num ......... 0
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_max_iter .......... 100
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_stability ......... 1e-06
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_tol ............... 0.01
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   eigenvalue_verbose ........... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   elasticity_enabled ........... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   fp16_auto_cast ............... None
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   fp16_enabled ................. False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   fp16_master_weights_and_gradients  False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   global_rank .................. 0
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   grad_accum_dtype ............. None
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   gradient_accumulation_steps .. 1
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   gradient_clipping ............ 1.0
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   gradient_predivide_factor .... 1.0
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   graph_harvesting ............. False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   initial_dynamic_scale ........ 1
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   load_universal_checkpoint .... False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   loss_scale ................... 1.0
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   memory_breakdown ............. False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   mics_hierarchial_params_gather  False
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   mics_shard_size .............. -1
+[2026-07-30 08:46:33,050] [INFO] [config.py:1003:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName')
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   optimizer_legacy_fusion ...... False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   optimizer_name ............... None
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   optimizer_params ............. None
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   pld_enabled .................. False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   pld_params ................... False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   prescale_gradients ........... False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   scheduler_name ............... None
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   scheduler_params ............. None
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   seq_parallel_communication_data_type  torch.float32
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   sparse_attention ............. None
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   sparse_gradients_enabled ..... False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   steps_per_print .............. inf
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   timers_config ................ enabled=True synchronized=True
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   train_batch_size ............. 8
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   train_micro_batch_size_per_gpu  1
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   use_data_before_expert_parallel_  False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   use_node_local_storage ....... False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   wall_clock_breakdown ......... False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   weight_quantization_config ... None
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   world_size ................... 8
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   zero_allow_untested_optimizer  True
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   zero_config .................. stage=3 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500000000 overlap_comm=False load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=DeepSpeedZeroOffloadOptimizerConfig(device='cpu', nvme_path=None, buffer_count=4, pin_memory=True, pipeline_read=False, pipeline_write=False, fast_init=False, ratio=1.0) sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=True use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   zero_enabled ................. True
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   zero_force_ds_cpu_optimizer .. False
+[2026-07-30 08:46:33,051] [INFO] [config.py:1003:print]   zero_optimization_stage ...... 3
+[2026-07-30 08:46:33,051] [INFO] [config.py:989:print_user_config]   json = {
+    "train_batch_size": 8, 
+    "train_micro_batch_size_per_gpu": 1, 
+    "gradient_accumulation_steps": 1, 
+    "gradient_clipping": 1.0, 
+    "zero_allow_untested_optimizer": true, 
+    "zero_force_ds_cpu_optimizer": false, 
+    "fp16": {
+        "enabled": false, 
+        "loss_scale": 0, 
+        "loss_scale_window": 1000, 
+        "initial_scale_power": 16, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1
+    }, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "zero_optimization": {
+        "stage": 3, 
+        "offload_optimizer": {
+            "device": "cpu", 
+            "pin_memory": true
+        }, 
+        "overlap_comm": false, 
+        "contiguous_gradients": true, 
+        "sub_group_size": 1.000000e+09, 
+        "reduce_bucket_size": "auto", 
+        "stage3_prefetch_bucket_size": "auto", 
+        "stage3_param_persistence_threshold": "auto", 
+        "stage3_max_live_parameters": 1.000000e+09, 
+        "stage3_max_reuse_distance": 1.000000e+09, 
+        "stage3_gather_16bit_weights_on_model_save": true
+    }, 
+    "steps_per_print": inf, 
+    "zero_optimization.reduce_bucket_size": 1.284506e+07, 
+    "zero_optimization.stage3_param_persistence_threshold": 3.584000e+04, 
+    "zero_optimization.stage3_prefetch_bucket_size": 1.156055e+07
+}
+PATHVLM_TRAINABILITY_JSON={"gates": {"language_fully_trainable": true, "language_nonempty": true, "projector_fully_frozen": true, "projector_nonempty": true, "visual_fully_frozen": true, "visual_nonempty": true}, "parameters": {"all": {"total": 8292166656, "trainable": 7615616512}, "language": {"total": 7615616512, "trainable": 7615616512}, "multimodal_projector": {"total": 44574464, "trainable": 0}, "visual": {"total": 676550144, "trainable": 0}}, "passed": true}
+Parameter Offload: Total persistent parameters: 848896 in 368 params
+  0%|          | 0/50 [00:00<?, ?it/s]/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+Invalidate trace cache @ step 0 and module 1522: cache has only 0 modules
+  2%|▏         | 1/50 [00:39<32:15, 39.50s/it]                                              {'loss': -0.0, 'grad_norm': 4.888922214508057, 'learning_rate': 9.8e-07, 'completion_length': 72.125, 'rewards/audited_accuracy_reward': 1.0, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.7250000834465027, 'reward': 2.7249999046325684, 'reward_std': 0.23716408014297485, 'kl': 0.0, 'clip_ratio': 0.0, 'epoch': 0.0}
+  2%|▏         | 1/50 [00:39<32:15, 39.50s/it]Invalidate trace cache @ step 0 and module 2283: cache has only 0 modules
+  4%|▍         | 2/50 [01:13<28:57, 36.20s/it]                                              {'loss': 0.0, 'grad_norm': 4.450979232788086, 'learning_rate': 9.6e-07, 'completion_length': 70.625, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.8000000715255737, 'reward': 2.6750001907348633, 'reward_std': 0.4678707420825958, 'kl': 3.552436828613281e-05, 'clip_ratio': 0.0, 'epoch': 0.0}
+  4%|▍         | 2/50 [01:13<28:57, 36.20s/it]Invalidate trace cache @ step 0 and module 3044: cache has only 0 modules
+  6%|▌         | 3/50 [01:55<30:24, 38.82s/it]                                              {'loss': 0.0, 'grad_norm': 4.379554271697998, 'learning_rate': 9.399999999999999e-07, 'completion_length': 71.5, 'rewards/audited_accuracy_reward': 0.375, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.38749998807907104, 'reward': 1.7625000476837158, 'reward_std': 0.4503217339515686, 'kl': 4.124641418457031e-05, 'clip_ratio': 0.0, 'epoch': 0.01}
+  6%|▌         | 3/50 [01:55<30:24, 38.82s/it]Invalidate trace cache @ step 0 and module 3805: cache has only 0 modules
+  8%|▊         | 4/50 [02:31<28:51, 37.64s/it]                                              {'loss': 0.0, 'grad_norm': 5.151289463043213, 'learning_rate': 9.2e-07, 'completion_length': 82.125, 'rewards/audited_accuracy_reward': 1.0, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.7750000357627869, 'reward': 2.7750000953674316, 'reward_std': 0.18660256266593933, 'kl': 9.775161743164062e-05, 'clip_ratio': 0.0, 'epoch': 0.01}
+  8%|▊         | 4/50 [02:31<28:51, 37.64s/it]Invalidate trace cache @ step 0 and module 4566: cache has only 0 modules
+ 10%|█         | 5/50 [03:05<27:23, 36.52s/it]                                              {'loss': 0.0, 'grad_norm': 5.51247501373291, 'learning_rate': 9e-07, 'completion_length': 96.5, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.75, 'reward': 2.625, 'reward_std': 0.6451714634895325, 'kl': 8.296966552734375e-05, 'clip_ratio': 0.0, 'epoch': 0.01}
+ 10%|█         | 5/50 [03:05<27:23, 36.52s/it]Invalidate trace cache @ step 0 and module 5327: cache has only 0 modules
+ 12%|█▏        | 6/50 [03:43<27:01, 36.86s/it]                                              {'loss': 0.0, 'grad_norm': 5.16118860244751, 'learning_rate': 8.799999999999999e-07, 'completion_length': 90.875, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5125000476837158, 'reward': 2.3874998092651367, 'reward_std': 0.4761430621147156, 'kl': 7.009506225585938e-05, 'clip_ratio': 0.0, 'epoch': 0.01}
+ 12%|█▏        | 6/50 [03:43<27:01, 36.86s/it]Invalidate trace cache @ step 0 and module 6088: cache has only 0 modules
+ 14%|█▍        | 7/50 [04:24<27:21, 38.18s/it]                                              {'loss': 0.0, 'grad_norm': 4.492328643798828, 'learning_rate': 8.599999999999999e-07, 'completion_length': 75.75, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5375000238418579, 'reward': 2.4124999046325684, 'reward_std': 0.5487653017044067, 'kl': 9.393692016601562e-05, 'clip_ratio': 0.0, 'epoch': 0.01}
+ 14%|█▍        | 7/50 [04:24<27:21, 38.18s/it]Invalidate trace cache @ step 0 and module 6849: cache has only 0 modules
+ 16%|█▌        | 8/50 [04:57<25:43, 36.74s/it]                                              {'loss': 0.0, 'grad_norm': 4.899424076080322, 'learning_rate': 8.399999999999999e-07, 'completion_length': 77.0, 'rewards/audited_accuracy_reward': 0.375, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5875000357627869, 'reward': 1.962499976158142, 'reward_std': 0.3622281849384308, 'kl': 2.0623207092285156e-05, 'clip_ratio': 0.0, 'epoch': 0.02}
+ 16%|█▌        | 8/50 [04:57<25:43, 36.74s/it]Invalidate trace cache @ step 0 and module 7610: cache has only 0 modules
+ 18%|█▊        | 9/50 [05:41<26:29, 38.77s/it]                                              {'loss': 0.0, 'grad_norm': 4.663163661956787, 'learning_rate': 8.199999999999999e-07, 'completion_length': 79.75, 'rewards/audited_accuracy_reward': 0.625, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.625, 'reward': 2.25, 'reward_std': 0.501848042011261, 'kl': 8.249282836914062e-05, 'clip_ratio': 0.0, 'epoch': 0.02}
+ 18%|█▊        | 9/50 [05:41<26:29, 38.77s/it]Invalidate trace cache @ step 0 and module 8371: cache has only 0 modules
+ 20%|██        | 10/50 [06:13<24:38, 36.95s/it]                                               {'loss': 0.0, 'grad_norm': 4.539061069488525, 'learning_rate': 8e-07, 'completion_length': 72.625, 'rewards/audited_accuracy_reward': 0.75, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.7875000238418579, 'reward': 2.5374999046325684, 'reward_std': 0.4784959554672241, 'kl': 8.916854858398438e-05, 'clip_ratio': 0.0, 'epoch': 0.02}
+ 20%|██        | 10/50 [06:13<24:38, 36.95s/it]Invalidate trace cache @ step 0 and module 9132: cache has only 0 modules
+ 22%|██▏       | 11/50 [06:45<22:59, 35.37s/it]                                               {'loss': 0.0, 'grad_norm': 4.012689590454102, 'learning_rate': 7.799999999999999e-07, 'completion_length': 74.75, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.9125000238418579, 'reward': 2.7874999046325684, 'reward_std': 0.42500001192092896, 'kl': 0.0002079010009765625, 'clip_ratio': 0.0, 'epoch': 0.02}
+ 22%|██▏       | 11/50 [06:45<22:59, 35.37s/it]Invalidate trace cache @ step 0 and module 9893: cache has only 0 modules
+ 24%|██▍       | 12/50 [07:26<23:31, 37.15s/it]                                               {'loss': 0.0, 'grad_norm': 5.429408550262451, 'learning_rate': 7.599999999999999e-07, 'completion_length': 76.125, 'rewards/audited_accuracy_reward': 0.125, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.29999998211860657, 'reward': 1.4249999523162842, 'reward_std': 0.4898715913295746, 'kl': 0.00017070770263671875, 'clip_ratio': 0.0, 'epoch': 0.02}
+ 24%|██▍       | 12/50 [07:26<23:31, 37.15s/it]Invalidate trace cache @ step 0 and module 10654: cache has only 0 modules
+ 26%|██▌       | 13/50 [08:04<22:56, 37.20s/it]                                               {'loss': 0.0, 'grad_norm': 5.508593559265137, 'learning_rate': 7.4e-07, 'completion_length': 86.875, 'rewards/audited_accuracy_reward': 0.5, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.625, 'reward': 2.125, 'reward_std': 0.08660256117582321, 'kl': 8.153915405273438e-05, 'clip_ratio': 0.0, 'epoch': 0.03}
+ 26%|██▌       | 13/50 [08:04<22:56, 37.20s/it]Invalidate trace cache @ step 0 and module 11415: cache has only 0 modules
+ 28%|██▊       | 14/50 [08:39<21:59, 36.66s/it]                                               {'loss': 0.0, 'grad_norm': 4.823653221130371, 'learning_rate': 7.2e-07, 'completion_length': 88.375, 'rewards/audited_accuracy_reward': 0.5, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5125000476837158, 'reward': 2.0124998092651367, 'reward_std': 0.6272156834602356, 'kl': 7.534027099609375e-05, 'clip_ratio': 0.0, 'epoch': 0.03}
+ 28%|██▊       | 14/50 [08:39<21:59, 36.66s/it]Invalidate trace cache @ step 0 and module 12176: cache has only 0 modules
+ 30%|███       | 15/50 [09:15<21:18, 36.54s/it]                                               {'loss': 0.0, 'grad_norm': 5.162280082702637, 'learning_rate': 7e-07, 'completion_length': 69.0, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.7000000476837158, 'reward': 2.5749998092651367, 'reward_std': 0.4291464388370514, 'kl': 0.0001373291015625, 'clip_ratio': 0.0, 'epoch': 0.03}
+ 30%|███       | 15/50 [09:15<21:18, 36.54s/it]Invalidate trace cache @ step 0 and module 12937: cache has only 0 modules
+ 32%|███▏      | 16/50 [09:49<20:14, 35.72s/it]                                               {'loss': 0.0, 'grad_norm': 5.4278788566589355, 'learning_rate': 6.800000000000001e-07, 'completion_length': 84.25, 'rewards/audited_accuracy_reward': 0.625, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.625, 'reward': 2.25, 'reward_std': 0.7724419832229614, 'kl': 0.0001373291015625, 'clip_ratio': 0.0, 'epoch': 0.03}
+ 32%|███▏      | 16/50 [09:49<20:14, 35.72s/it]Invalidate trace cache @ step 0 and module 13698: cache has only 0 modules
+ 34%|███▍      | 17/50 [10:24<19:32, 35.52s/it]                                               {'loss': 0.0, 'grad_norm': 4.411523818969727, 'learning_rate': 6.6e-07, 'completion_length': 74.125, 'rewards/audited_accuracy_reward': 0.5, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.4874999523162842, 'reward': 1.9874999523162842, 'reward_std': 0.2659142315387726, 'kl': 4.887580871582031e-05, 'clip_ratio': 0.0, 'epoch': 0.03}
+ 34%|███▍      | 17/50 [10:24<19:32, 35.52s/it]Invalidate trace cache @ step 0 and module 14459: cache has only 0 modules
+ 36%|███▌      | 18/50 [10:58<18:35, 34.85s/it]                                               {'loss': 0.0, 'grad_norm': 5.837836265563965, 'learning_rate': 6.4e-07, 'completion_length': 72.875, 'rewards/audited_accuracy_reward': 0.5, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5874999761581421, 'reward': 2.0875000953674316, 'reward_std': 0.1249999850988388, 'kl': 0.0001621246337890625, 'clip_ratio': 0.0, 'epoch': 0.04}
+ 36%|███▌      | 18/50 [10:58<18:35, 34.85s/it]Invalidate trace cache @ step 0 and module 15220: cache has only 0 modules
+ 38%|███▊      | 19/50 [11:29<17:26, 33.77s/it]                                               {'loss': 0.0, 'grad_norm': 4.036614418029785, 'learning_rate': 6.2e-07, 'completion_length': 86.375, 'rewards/audited_accuracy_reward': 0.625, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.7124999761581421, 'reward': 2.3375000953674316, 'reward_std': 0.38160842657089233, 'kl': 0.00019073486328125, 'clip_ratio': 0.0, 'epoch': 0.04}
+ 38%|███▊      | 19/50 [11:29<17:26, 33.77s/it]Invalidate trace cache @ step 0 and module 15981: cache has only 0 modules
+ 40%|████      | 20/50 [12:03<16:55, 33.86s/it]                                               {'loss': 0.0, 'grad_norm': 4.9443039894104, 'learning_rate': 6e-07, 'completion_length': 77.625, 'rewards/audited_accuracy_reward': 0.125, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.4125000238418579, 'reward': 1.5374999046325684, 'reward_std': 0.4309025704860687, 'kl': 0.00021266937255859375, 'clip_ratio': 0.0, 'epoch': 0.04}
+ 40%|████      | 20/50 [12:03<16:55, 33.86s/it]Invalidate trace cache @ step 0 and module 16742: cache has only 0 modules
+ 42%|████▏     | 21/50 [12:40<16:54, 34.97s/it]                                               {'loss': 0.0, 'grad_norm': 5.204959392547607, 'learning_rate': 5.8e-07, 'completion_length': 91.125, 'rewards/audited_accuracy_reward': 0.375, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5, 'reward': 1.875, 'reward_std': 0.42728984355926514, 'kl': 0.00011539459228515625, 'clip_ratio': 0.0, 'epoch': 0.04}
+ 42%|████▏     | 21/50 [12:40<16:54, 34.97s/it]Invalidate trace cache @ step 0 and module 17503: cache has only 0 modules
+ 44%|████▍     | 22/50 [13:15<16:15, 34.83s/it]                                               {'loss': 0.0, 'grad_norm': 5.672749996185303, 'learning_rate': 5.6e-07, 'completion_length': 72.375, 'rewards/audited_accuracy_reward': 1.0, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.7875001430511475, 'reward': 2.7874999046325684, 'reward_std': 0.18273504078388214, 'kl': 2.110004425048828e-05, 'clip_ratio': 0.0, 'epoch': 0.04}
+ 44%|████▍     | 22/50 [13:15<16:15, 34.83s/it]Invalidate trace cache @ step 0 and module 18264: cache has only 0 modules
+ 46%|████▌     | 23/50 [13:54<16:14, 36.09s/it]                                               {'loss': 0.0, 'grad_norm': 3.99934983253479, 'learning_rate': 5.4e-07, 'completion_length': 84.875, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.9125000238418579, 'reward': 2.7874999046325684, 'reward_std': 0.36142078042030334, 'kl': 0.00015544891357421875, 'clip_ratio': 0.0, 'epoch': 0.05}
+ 46%|████▌     | 23/50 [13:54<16:14, 36.09s/it]Invalidate trace cache @ step 0 and module 19025: cache has only 0 modules
+ 48%|████▊     | 24/50 [14:31<15:45, 36.36s/it]                                               {'loss': 0.0, 'grad_norm': 3.6289546489715576, 'learning_rate': 5.2e-07, 'completion_length': 74.375, 'rewards/audited_accuracy_reward': 0.5, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.6125000715255737, 'reward': 2.112499952316284, 'reward_std': 0.06291530281305313, 'kl': 8.916854858398438e-05, 'clip_ratio': 0.0, 'epoch': 0.05}
+ 48%|████▊     | 24/50 [14:31<15:45, 36.36s/it]Invalidate trace cache @ step 0 and module 19786: cache has only 0 modules
+ 50%|█████     | 25/50 [15:11<15:38, 37.53s/it]                                               {'loss': 0.0, 'grad_norm': 5.642928123474121, 'learning_rate': 5e-07, 'completion_length': 91.25, 'rewards/audited_accuracy_reward': 0.75, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.6500000357627869, 'reward': 2.4000000953674316, 'reward_std': 0.6360454559326172, 'kl': 0.00016880035400390625, 'clip_ratio': 0.0, 'epoch': 0.05}
+ 50%|█████     | 25/50 [15:11<15:38, 37.53s/it]/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+Invalidate trace cache @ step 0 and module 20547: cache has only 0 modules
+ 52%|█████▏    | 26/50 [22:10<1:00:47, 151.97s/it]                                                  {'loss': 0.0, 'grad_norm': 5.0414838790893555, 'learning_rate': 4.8e-07, 'completion_length': 77.125, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5250000357627869, 'reward': 2.3999998569488525, 'reward_std': 0.5246021747589111, 'kl': 6.4849853515625e-05, 'clip_ratio': 0.0, 'epoch': 0.05}
+ 52%|█████▏    | 26/50 [22:10<1:00:47, 151.97s/it]Invalidate trace cache @ step 0 and module 21308: cache has only 0 modules
+ 54%|█████▍    | 27/50 [22:42<44:26, 115.93s/it]                                                  {'loss': 0.0, 'grad_norm': 4.960230350494385, 'learning_rate': 4.6e-07, 'completion_length': 87.125, 'rewards/audited_accuracy_reward': 0.75, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.8500000238418579, 'reward': 2.5999999046325684, 'reward_std': 0.5194933414459229, 'kl': 7.534027099609375e-05, 'clip_ratio': 0.0, 'epoch': 0.05}
+ 54%|█████▍    | 27/50 [22:42<44:26, 115.93s/it]Invalidate trace cache @ step 0 and module 22069: cache has only 0 modules
+ 56%|█████▌    | 28/50 [23:16<33:29, 91.35s/it]                                                {'loss': 0.0, 'grad_norm': 5.0577898025512695, 'learning_rate': 4.3999999999999997e-07, 'completion_length': 74.25, 'rewards/audited_accuracy_reward': 0.375, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.5250000357627869, 'reward': 1.899999976158142, 'reward_std': 0.46764737367630005, 'kl': 0.00016689300537109375, 'clip_ratio': 0.0, 'epoch': 0.06}
+ 56%|█████▌    | 28/50 [23:16<33:29, 91.35s/it]Invalidate trace cache @ step 0 and module 22830: cache has only 0 modules
+ 58%|█████▊    | 29/50 [23:50<25:58, 74.21s/it]                                               {'loss': 0.0, 'grad_norm': 3.6213388442993164, 'learning_rate': 4.1999999999999995e-07, 'completion_length': 98.625, 'rewards/audited_accuracy_reward': 1.0, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.9750000238418579, 'reward': 2.9749999046325684, 'reward_std': 0.04999999329447746, 'kl': 0.000156402587890625, 'clip_ratio': 0.0, 'epoch': 0.06}
+ 58%|█████▊    | 29/50 [23:50<25:58, 74.21s/it]Invalidate trace cache @ step 0 and module 23591: cache has only 0 modules
+ 60%|██████    | 30/50 [24:32<21:30, 64.54s/it]                                               {'loss': 0.0, 'grad_norm': 4.299137115478516, 'learning_rate': 4e-07, 'completion_length': 89.5, 'rewards/audited_accuracy_reward': 0.125, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.44999998807907104, 'reward': 1.5750000476837158, 'reward_std': 0.43811702728271484, 'kl': 0.0001678466796875, 'clip_ratio': 0.0, 'epoch': 0.06}
+ 60%|██████    | 30/50 [24:32<21:30, 64.54s/it]Invalidate trace cache @ step 0 and module 24352: cache has only 0 modules
+ 62%|██████▏   | 31/50 [25:06<17:32, 55.41s/it]                                               {'loss': 0.0, 'grad_norm': 5.10031795501709, 'learning_rate': 3.7999999999999996e-07, 'completion_length': 81.125, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.762499988079071, 'reward': 2.637500047683716, 'reward_std': 0.4881044030189514, 'kl': 0.00021839141845703125, 'clip_ratio': 0.0, 'epoch': 0.06}
+ 62%|██████▏   | 31/50 [25:06<17:32, 55.41s/it]Invalidate trace cache @ step 0 and module 25113: cache has only 0 modules
+ 64%|██████▍   | 32/50 [25:40<14:40, 48.92s/it]                                               {'loss': 0.0, 'grad_norm': 5.411474704742432, 'learning_rate': 3.6e-07, 'completion_length': 80.0, 'rewards/audited_accuracy_reward': 0.875, 'rewards/audited_format_reward': 1.0, 'rewards/audited_process_reward': 0.6624999642372131, 'reward': 2.5374999046325684, 'reward_std': 0.3954516649246216, 'kl': 0.00015163421630859375, 'clip_ratio': 0.0, 'epoch': 0.06}
+ 64%|██████▍   | 32/50 [25:40<14:40, 48.92s/it][rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank7]:     main()
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 172, in main
+[rank7]:     train_result = trainer.train(resume_from_checkpoint=resume)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 2241, in train
+[rank7]:     return inner_training_loop(
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 2548, in _inner_training_loop
+[rank7]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 3698, in training_step
+[rank7]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 682, in compute_loss
+[rank7]:     inputs = self._generate_and_score_completions(inputs, model)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 622, in _generate_and_score_completions
+[rank7]:     output_reward_func = reward_func(prompts=prompts, completions=completions, **reward_kwargs)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 65, in audited_process_reward
+[rank7]:     rewards = process_reward(completions, solution, **kwargs)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 1004, in process_reward
+[rank7]:     judge.judge_one(
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 851, in judge_one
+[rank7]:     self._parse_response(response)
+[rank7]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 703, in _parse_response
+[rank7]:     raise ValueError(f"unexpected finish reason: {choice.get('finish_reason')}")
+[rank7]: ValueError: unexpected finish reason: length
+W0730 09:12:59.217000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3810419 closing signal SIGTERM
+W0730 09:12:59.218000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3810420 closing signal SIGTERM
+W0730 09:12:59.219000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3810421 closing signal SIGTERM
+W0730 09:12:59.219000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3810422 closing signal SIGTERM
+W0730 09:12:59.219000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3810423 closing signal SIGTERM
+W0730 09:12:59.220000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3810424 closing signal SIGTERM
+W0730 09:12:59.220000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3810425 closing signal SIGTERM
+E0730 09:13:06.509000 3810353 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 7 (pid: 3810426) of binary: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/bin/python
+Traceback (most recent call last):
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-07-30_09:12:59
+  host      : ide-ba7127eb4fa14799a02e4cd789d2a2c7-7c6885
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 3810426)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

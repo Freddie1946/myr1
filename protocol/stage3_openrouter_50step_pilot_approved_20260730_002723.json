@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T00:27:23+08:00",
+  "formal_result": false,
+  "status": "approved_frozen_before_execution",
+  "stage3_started": false,
+  "paid_model_calls": 0,
+  "user_approvals": {
+    "pilot_spend_ceiling_usd": 15,
+    "six_event_schema": true,
+    "penalty": 0.4
+  },
+  "parent": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+    "epoch": 2,
+    "step": 1000
+  },
+  "data": {
+    "split": "rl_n1000",
+    "count": 1000,
+    "validation_answers_in_judge": false,
+    "test_access_for_selection": false
+  },
+  "training": {
+    "seed": 42,
+    "max_steps": 50,
+    "global_batch_size": 8,
+    "num_generations": 4,
+    "maximum_completions": 400,
+    "maximum_judge_calls_before_cache_hits": 400,
+    "reward_functions": [
+      "accuracy",
+      "format",
+      "process"
+    ],
+    "maximum_reward_audit_events": 1200,
+    "max_completion_length": 192,
+    "learning_rate": 0.000001,
+    "beta": 0.04,
+    "language_model_trainable": true,
+    "vision_tower_frozen": true,
+    "multimodal_projector_frozen": true
+  },
+  "judge": {
+    "openrouter_model_id": "openai/gpt-4o-2024-08-06",
+    "provider": "azure",
+    "zdr_required": true,
+    "allow_fallbacks": false,
+    "structured_outputs": true,
+    "penalty": 0.4,
+    "events": [
+      "image_feature_analysis_present",
+      "option_elimination_present",
+      "medical_knowledge_support_present",
+      "histological_definition_error",
+      "logical_contradiction",
+      "outdated_or_incorrect_pathology_criterion"
+    ],
+    "process_reward": "mean(max(0,1-0.4*missing_integrity_count),max(0,1-0.4*present_knowledge_error_count))",
+    "answer_derived_fallback": false,
+    "persistent_failure_action": "abort_and_preserve"
+  },
+  "budget": {
+    "scope": "api_smoke_and_training",
+    "hard_ceiling_usd": 15,
+    "provider_side_limit_present": false,
+    "client_side_fail_closed": true,
+    "interprocess_reservations": true,
+    "unknown_cost_action": "retain_reservation_and_abort"
+  },
+  "post_pilot_evaluation": "validation_0385_only",
+  "proposal_correction": {
+    "old_maximum_judge_calls": 800,
+    "corrected_maximum_judge_calls": 400,
+    "reason": "50 optimizer steps times 8 global completions; Stage2 event count had included two reward functions"
+  },
+  "remaining_execution_gates": [
+    "offline schema/cache/ledger/mock transport tests pass",
+    "one non-training paid API smoke passes",
+    "all eight GPUs are idle",
+    "parent, data, environment and disk preflight pass"
+  ]
+}

@@ -41,6 +41,11 @@ The original decision PDF remains authoritative; comments below are concise para
 - Evidence/actions: historical GPT scoring scripts and the manuscript rubric have been audited, but
   no valid expert-score dataset has been collected.
 - Status: `pending-experiment`.
+- Protocol change: on 2026-07-28 the user explicitly authorized PathMMU v2 test999 baseline and
+  selected Stage 2 diagnostic runs for bad-case analysis and Stage 3 strategy adjustment. Therefore
+  test999 is no longer eligible to support an untouched final Stage 3 claim. PathVQA and
+  OmniMedVQA remain reserved for independent post-Stage-3 confirmation. Evidence:
+  `docs/20260728_215133_pathmmu_test999_reclassified_as_stage3_development_diagnostic.md`.
 - Remaining: approve sampling/rubric, collect expert scores, run agreement statistics, report limits.
 
 ### R1-2 — Add representative failure-case analysis
@@ -107,6 +112,11 @@ The original decision PDF remains authoritative; comments below are concise para
   `docs/20260725_011528_all_manuscript_baselines_mandatory.md`. The fixed-revision metadata/storage
   audit is `docs/20260725_013154_manuscript_baseline_metadata_and_access_audit.md`: MedGemma access
   passes, Meta Llama Vision 11B/90B access returns 403, and bulk download is storage-blocked.
+  The new A100 preparation now has all isolated baseline environments, the fixed formal preflight
+  and external data audit passing. Fixed-revision weight staging is active; actual Meta Llama
+  11B/90B weight requests still require repository approval despite readable metadata. See
+  `docs/20260728_021824_a100_core_preflight_and_external_asset_audit_completed.md` and
+  `docs/20260728_015359_llama_vision_weight_access_gate.md`.
 - Status: `partial`.
 
 ### R1-8 — Add a color scale to Figure 7
@@ -186,7 +196,10 @@ The original decision PDF remains authoritative; comments below are concise para
 - Evidence path: `docs/20260725_010533_baseline_access_and_environment_status.md` and
   `docs/20260725_011528_all_manuscript_baselines_mandatory.md`, with exact local-model metadata and
   current access/storage gates in
-  `docs/20260725_013154_manuscript_baseline_metadata_and_access_audit.md`.
+  `docs/20260725_013154_manuscript_baseline_metadata_and_access_audit.md`. New-machine environments,
+  fixed formal preflight, pathology weights, Qwen 3B and MedVLM-R1 size gates, and the remaining
+  download/access gates are recorded in
+  `docs/20260728_021824_a100_core_preflight_and_external_asset_audit_completed.md`.
 - Status: `partial`.
 
 ### R2-4 — Fully specify and validate GPT-4o reward execution
@@ -234,6 +247,8 @@ The original decision PDF remains authoritative; comments below are concise para
   All four OmniMedVQA sources and the 6,719-QA PathVQA test are now present; exact-content audits
   pass against formal PathMMU v2, but no inference or statistical result exists.
 - Evidence path: `docs/20260725_004340_external_evaluation_assets_and_baseline_environment_prepared.md`.
+  The same fixed archives were independently staged and audited on the A100 machine; see
+  `docs/20260728_021824_a100_core_preflight_and_external_asset_audit_completed.md`.
 - Status: `pending-experiment`.
 
 ## Reviewer 3
@@ -294,6 +309,12 @@ The original decision PDF remains authoritative; comments below are concise para
   variance and a nonzero update. The priority formal RL n=1000/seed42 arm is now complete; n=250,
   n=500, other SFT/RL combinations and seeds 43/44 remain deferred. See
   `docs/20260722_014643_validation_1024_attempt02_completed.md`.
+- Additional control evidence: the exact selected SFT3000 parent was continued for two ordinary
+  SFT epochs on the same ordered RL1000 records used by Stage2. On the development-classified
+  PathMMU test999 split, SFT3000/SFT4000/Stage2 scored 582/595/609. This exposure-matched control
+  shows that ordinary continuation accounts for part, but not all, of the Stage2 point-estimate
+  gain. It remains one seed and does not complete the requested scaling matrix. Evidence:
+  `docs/20260729_223742_pathmmu_sft3000_sft4000_stage2_diagnostics_completed.md`.
 - Frozen priority under the user's revision-time constraint was n=1000/seed42 first from the selected
   n=3000 epoch-3 SFT parent after a 50-step save/resume/full-validation pilot. That priority arm is
   complete; RL 250/500 and other SFT/RL combinations are deferred, so the systematic RL scale request
@@ -309,7 +330,10 @@ The original decision PDF remains authoritative; comments below are concise para
   paired predictions; mean/std across training seeds; Wilson/bootstrap CIs and McNemar/paired tests.
 - Evidence/actions: seed-42 n=2000/n=3000 SFT and Outcome-GRPO n=1000 are complete with paired raw
   validation outputs. Seeds 43/44 and final confidence intervals/paired statistical comparisons are
-  not complete.
+  not complete. The pre-Stage3 PathMMU diagnostic now also preserves paired raw predictions for
+  SFT3000, SFT4000 and Stage2. Exact two-sided McNemar p-values are 0.490646, 0.030482 and 0.451463
+  respectively; none is below 0.05 after Holm correction across the three exploratory comparisons.
+  This is diagnostic evidence only and does not replace the planned multi-seed final analysis.
 - Status: `pending-experiment`.
 
 ### R3-7 — Avoid GPT-4o reward/evaluator circularity
@@ -405,6 +429,52 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     remaining analyses. Added a memoryless personal-Codex bootstrap, workspace migration paths,
     checkpoint-transfer gates and a complete inherited experiment order. No training/inference/test
     occurred. Supports preparation across R1-2/R1-3/R1-7/R2-1/R2-3/R2-4/R2-5/R3-1/R3-4/R3-5/R3-6.
+24. Completed the new A100 formal preflight with all 22 gates true and independently staged/audited
+    the fixed OmniMedVQA four-source and PathVQA assets with zero missing images and zero
+    exact-content overlap against formal PathMMU. Built all isolated baseline environments; all
+    non-Llama local weight queues now pass exact-size and index-reference gates, while Meta Llama
+    11B/90B remain repository-approval gated. The user approved PathMMU contract items 1/2/5,
+    deferred hosted APIs, and retained items 3/4 for discussion. No model inference, training, paid
+    API call or test selection occurred. Supports
+    R1-7/R2-3/R2-5/R3-1/R3-4 preparation.
+25. Before any new-machine test inference, recorded the user decision to use PathMMU v2 test999
+    scores and bad cases to adjust Stage 3. Reclassified test999 as a development diagnostic and
+    reserved PathVQA/OmniMedVQA for independent post-Stage-3 confirmation. The exact selected Stage
+    2 checkpoint remains transfer-blocked; no substitute is allowed. No inference or Stage 3
+    training occurred in the decision step.
+26. Completed the first four authorized PathMMU test999 development diagnostics: Lingshu-7B
+    583/999, Qwen2.5-VL-7B 485/999, Qwen2.5-VL-3B 449/999 and MedVLM-R1 413/999. Preserved raw
+    predictions and generated a joint bad-case package with 162 all-model-wrong and 232
+    one-model-only-correct cases. MedGemma, InternVL and HuatuoGPT-Vision remained in progress at
+    this ledger update. DeepSeek-VL2 passed single-GPU BF16 inference but failed the fixed
+    extractable-answer response-contract smoke; it was not run on test999. LLaVA-Med also produced
+    nonempty natural-language option text without an extractable letter and was stopped before
+    test999 instead of being assigned a parser-induced zero. Evidence:
+    `docs/20260728_222041_pathmmu_test999_first_four_baseline_results_and_badcases.md` and
+    `protocol/pathmmu_deepseek_vl2_response_contract_gate_20260728_222041.json` plus
+    `protocol/pathmmu_llava_med_response_contract_gate_20260728_222938.json`. These results are
+    development diagnostics only and cannot support an untouched final Stage-3 claim. The selected
+    Stage-2 checkpoint is still absent, and Stage-3 training has not started.
+27. Completed every currently runnable local PathMMU development diagnostic with an approved
+    scoring contract. Generative scores are Lingshu 583/999, InternVL 553/999, Huatuo 531/999,
+    Qwen7 485/999, Qwen3 449/999, MedVLM-R1 413/999 and MedGemma 400/999. Approved image-text
+    matching scores are CONCH 338/999 and PLIP 334/999. Rebuilt a nine-model joint package with 55
+    all-wrong and 88 sole-model-correct cases, retaining raw completions or four-option similarity
+    scores. UNI remains representation-only; DeepSeek-VL2/LLaVA-Med failed the validation
+    extractable-letter gate; Meta Llama weights and hosted APIs remain externally gated. Evidence:
+    `docs/20260728_225929_pathmmu_test999_available_baselines_completed.md` and
+    `protocol/pathmmu_test999_available_baselines_completion_manifest_20260728_225929.json`.
+    Stage-2 is still blocked on exact checkpoint transfer, and no Stage-3 or other A100 training
+    was started.
+28. Downloaded the exact fixed SFT3000 and selected Stage2 checkpoints, completed the
+    exposure-matched two-epoch SFT4000 control with all trainability/freeze/save/reload gates, and
+    evaluated the three checkpoints under one PathMMU test999 development protocol. Scores were
+    SFT3000 582/999, SFT4000 595/999 and Stage2 609/999. The paired net gains were +13, +27 and +14
+    for SFT4000-minus-SFT3000, Stage2-minus-SFT3000 and Stage2-minus-SFT4000. A twelve-model bad-case
+    package now contains 23 all-model-wrong cases. Evidence:
+    `docs/20260729_223742_pathmmu_sft3000_sft4000_stage2_diagnostics_completed.md` and
+    `protocol/pathmmu_test999_sft3000_sft4000_stage2_completion_manifest_20260729_223742.json`.
+    These remain pre-Stage3 diagnostics; Stage3 has not started.
 
 ## Mandatory update rule
 

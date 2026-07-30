@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T22:18:30+08:00",
+  "status": "approved_for_launch",
+  "purpose": "PathMMU test999 Stage3-development diagnostic baseline",
+  "test_accessed": true,
+  "diagnostic_only": true,
+  "eligible_for_untouched_final_stage3_claim": false,
+  "model": {
+    "name": "FreedomIntelligence/HuatuoGPT-Vision-7B",
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/FreedomIntelligence--HuatuoGPT-Vision-7B--34dfcdbb7728ff38da865839f342b88c4cf6ef39",
+    "config_sha256": "3d96adabfe401f3f533f98c66478324c01159370e55c58bfdea1191a642f9fb9"
+  },
+  "data": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+    "sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+    "count": 999
+  },
+  "execution": {
+    "environment": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/envs/huatuo_llava",
+    "source": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/sources/HuatuoGPT-Vision",
+    "runner": "scripts/run_pathmmu_huatuo_diagnostic.py",
+    "runner_sha256": "52d8c11f461b0fc9ca2b3227a5bd806bdedf7cc16da64e1d9e7dc4ce3c2d9707",
+    "rewards_sha256": "69c1bde669ee16de35dd8680f6f4590429e3830617498106be6b5d333664a56c",
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "do_sample": false,
+    "max_new_tokens": 1024,
+    "min_new_tokens": 1,
+    "repetition_penalty": 1.0,
+    "gpu": 7,
+    "output_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_development_20260728_221830/huatuo"
+  },
+  "validation_smoke": {
+    "count": 2,
+    "correct": 2,
+    "choice_extracted": 2,
+    "format_correct": 0,
+    "empty_completion_count": 0,
+    "generation_cap_hit_count": 0,
+    "metrics_sha256": "da12d6921632ac56b5668c8b7302d97ae38ac2e0476097af7459ba917f442360",
+    "predictions_sha256": "9967db93f3bfb5dacdca9c0137e1b04244c6523e967b99eb8df9d2a3dafa31f9",
+    "note": "Choice extraction passed; strict think-tag formatting did not."
+  }
+}

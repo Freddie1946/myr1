@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-30T00:21:31+08:00",
+  "formal_result": false,
+  "status": "failed_closed_missing_secret_file",
+  "expected_path": "/home/dataset-assist-0/czy/wjy/.secrets/openrouter.env",
+  "secret_directory_exists": true,
+  "secret_directory_mode": "0700",
+  "secret_file_exists": false,
+  "alternate_workspace_match_found": false,
+  "credential_read": false,
+  "authentication_verified": false,
+  "paid_api_calls": 0,
+  "stage3_started": false
+}

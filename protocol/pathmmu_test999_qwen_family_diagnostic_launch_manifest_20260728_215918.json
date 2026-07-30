@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T21:59:18+08:00",
+  "status": "frozen_for_launch",
+  "formal_result": false,
+  "scope": "pre-Stage3 PathMMU test999 development diagnostic for four Qwen-family-compatible models",
+  "reclassification_manifest": "protocol/pathmmu_test999_development_reclassification_manifest_20260728_215133.json",
+  "data": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+    "sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+    "count": 999,
+    "role": "Stage3 development diagnostic",
+    "eligible_for_untouched_final_stage3_claim": false
+  },
+  "code": {
+    "scripts/run_pathmmu_qwen_diagnostic.py": "ba967b9cf25d7f86208fbd2da52b55b95f3d44b9f9cc130c5c3519347e270905",
+    "scripts/pathmmu_rewards.py": "324900cab77448661d04814e474d4f347b7c7a6a26199cf76fe2f51542e3616f"
+  },
+  "execution": {
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "do_sample": false,
+    "batch_size": 8,
+    "max_new_tokens": 1024,
+    "raw_outputs_required": true,
+    "resume_without_regeneration": true,
+    "gpu_map": {
+      "Qwen2.5-VL-7B-Instruct": 0,
+      "Qwen2.5-VL-3B-Instruct": 1,
+      "Lingshu-7B": 2,
+      "MedVLM-R1": 3
+    }
+  },
+  "models": {
+    "Qwen2.5-VL-7B-Instruct": {
+      "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+      "config_sha256": "77d9ec7321cc572e3579e2c84799c9cadaded63c49ce93b101733349fc330c43",
+      "smoke_metrics_sha256": "9766b623ec485d40f9c7ae1c538344306394166f675154d6f8e0f0324f7385e5"
+    },
+    "Qwen2.5-VL-3B-Instruct": {
+      "revision": "66285546d2b821cf421d4f5eb2576359d3770cd3",
+      "config_sha256": "7ed3eed5be6924cc800e8a5e53fc405c1aab1aaf36bad65c33403b36c56827f5",
+      "smoke_metrics_sha256": "6674f244c9df7843122336ee5ab504218e2e2b98764367e1882cfed9149de65a"
+    },
+    "Lingshu-7B": {
+      "revision": "b98aecd41dfd9d7545a6b8e2f4743ae8471bd7a9",
+      "config_sha256": "c73e1f81f374d903872f2833f066b8cd081037d72f8c0f436d06fa7b7cc82ea5",
+      "smoke_metrics_sha256": "739eaa237cb23e640a085e9b78d84c89ce59043ec100ecee85d2d6fe6dea1d9d"
+    },
+    "MedVLM-R1": {
+      "revision": "d256f2cfdf98c6872c1dc9f20b7dd52f49374fe9",
+      "config_sha256": "3bbebffaad84362a985198e878334a0afd0b43d643838ae026af608d60626af0",
+      "smoke_metrics_sha256": "192a2707030c428bff4efd2201bddb2a16c055196f88292034516dd5eaae8844"
+    }
+  },
+  "stage2": {
+    "selected_checkpoint": "Outcome-GRPO n1000 seed42 epoch2 step1000",
+    "present_on_a100": false,
+    "substitution_allowed": false,
+    "status": "blocked_exact_transfer"
+  },
+  "reserved_untouched_ood": true,
+  "stage3_training_started": false
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T22:06:17+08:00",
+  "status": "frozen_for_launch",
+  "formal_result": false,
+  "scope": "pre-Stage3 PathMMU test999 MedGemma development diagnostic",
+  "reclassification_manifest": "protocol/pathmmu_test999_development_reclassification_manifest_20260728_215133.json",
+  "data": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+    "sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+    "count": 999,
+    "role": "Stage3 development diagnostic"
+  },
+  "model": {
+    "id": "google/medgemma-4b-it",
+    "revision": "290cda5eeccbee130f987c4ad74a59ae6f196408",
+    "config_sha256": "d718c800cdb5f40322010f57c6489944ab202b4622dc5f63e61b2a57d5df3b8e"
+  },
+  "code": {
+    "scripts/run_pathmmu_qwen_diagnostic.py": "4e435b9b138d0970eb54aa17cd5f5e848e655a01f56653cbe6a4504d051d03d2",
+    "scripts/pathmmu_rewards.py": "69c1bde669ee16de35dd8680f6f4590429e3830617498106be6b5d333664a56c"
+  },
+  "validation_smoke": {
+    "metrics_sha256": "8b2531bf8be00c0c6972535417ac2cc6dad3935d298ab0b546e3bf0ccc26c74d",
+    "count": 4,
+    "choice_extracted": 4,
+    "format_correct": 0,
+    "empty_completion_count": 0,
+    "generation_cap_hit_count": 0
+  },
+  "execution": {
+    "gpu": 4,
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "do_sample": false,
+    "batch_size": 4,
+    "max_new_tokens": 1024,
+    "parser_policy": "accept strict answer tag or a final standalone A-D line; retain strict-format failure separately",
+    "raw_outputs_required": true
+  },
+  "eligible_for_untouched_final_stage3_claim": false,
+  "reserved_untouched_ood": true,
+  "stage3_training_started": false
+}

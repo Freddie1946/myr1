@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T22:33:08+08:00",
+  "status": "approved_for_launch",
+  "purpose": "PathMMU test999 Stage3-development diagnostic image-text matching baselines",
+  "test_accessed": true,
+  "diagnostic_only": true,
+  "eligible_for_untouched_final_stage3_claim": false,
+  "contract": {
+    "task": "image_to_raw_option_text_matching",
+    "option_text_template": "{raw_option_text}",
+    "similarity": "cosine similarity of normalized projected image and text embeddings",
+    "prediction": "argmax over A/B/C/D",
+    "dtype": "bfloat16",
+    "quantization": "none",
+    "runner": "scripts/run_pathmmu_matching_diagnostic.py",
+    "runner_sha256": "d4f7f845cf84f470830c90d8ad7d7732499bf36bf9b4345f856659383d14c34c"
+  },
+  "data": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+    "sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+    "count": 999
+  },
+  "models": {
+    "plip": {
+      "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/vinid--plip--67ade53ddd32195868f422585f72698ef5d15094",
+      "revision": "67ade53ddd32195868f422585f72698ef5d15094",
+      "weight_sha256": "98a7f8d2a1f4a8fc8f6dedb3a16ff7efbe02a7ef67c93904c80bca9767c69630",
+      "validation_count": 4,
+      "validation_choice_extracted": 4,
+      "validation_metrics_sha256": "57f449a03443b772dc97d1529b9b333e908f86cd0a85f87372abedaa92f94f30",
+      "validation_predictions_sha256": "e19387f5f6b7eaf09e0326cc9b8e212016f31dd2f447ecbcacbfaff5ef0d1c73",
+      "gpu": 0,
+      "output_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_matching_20260728_223308/plip"
+    },
+    "conch": {
+      "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/MahmoodLab--CONCH--f9ca9f877171a28ade80228fb195ac5d79003357",
+      "revision": "f9ca9f877171a28ade80228fb195ac5d79003357",
+      "weight_sha256": "40a9644b9ba0e83a74576e0a5e5f7313599fa9c9cdaf3c20f8a3e271b0e9ae7c",
+      "validation_count": 4,
+      "validation_choice_extracted": 4,
+      "validation_metrics_sha256": "d52eb7970d742143d0d0a4188ba7642a2acc2f761a07a9909eaa752c2fdbeb5b",
+      "validation_predictions_sha256": "ddd9c3b722aa68d6123bf4ef7bb145610766f9440e0d564d0f27fad1ad5d1e0b",
+      "gpu": 1,
+      "output_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_matching_20260728_223308/conch"
+    }
+  },
+  "note": "These encoders are image-text matching baselines, not generative VQA models. UNI remains a separate visual-representation baseline and is not scored by this contract."
+}

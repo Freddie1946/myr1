@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.3383383383383383,
+  "backend": "conch",
+  "choice_extracted": 999,
+  "correct": 338,
+  "count": 999,
+  "data_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json",
+  "data_sha256": "3420c8ff2f1642801a5ecebd21271f4e7de5877d6459814473ddbcdda996b549",
+  "diagnostic_only": true,
+  "dtype": "bfloat16",
+  "eligible_for_untouched_final_stage3_claim": false,
+  "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/MahmoodLab--CONCH--f9ca9f877171a28ade80228fb195ac5d79003357",
+  "option_text_template": "{raw_option_text}",
+  "predictions_sha256": "1579e20f53b4ad1182ec509658ed3b862bd706f5269e3173722012a8aea75e5c",
+  "quantization": "none",
+  "schema_version": 1,
+  "selected_count": 999,
+  "split_role": "test999_development",
+  "status": "completed",
+  "task": "image_to_raw_option_text_matching",
+  "test_accessed": true
+}

@@ -1,0 +1,57 @@
+{
+  "backend": "qwen2_vl",
+  "by_source": {
+    "Chest CT Scan": {
+      "count": 871,
+      "official_accuracy": 0.39265212399540755,
+      "official_correct": 342,
+      "strict_text_accuracy": 0.08495981630309989,
+      "strict_text_correct": 74
+    },
+    "Diabetic Retinopathy": {
+      "count": 2051,
+      "official_accuracy": 0.6723549488054608,
+      "official_correct": 1379,
+      "strict_text_accuracy": 0.05314480741101901,
+      "strict_text_correct": 109
+    },
+    "ISIC2020": {
+      "count": 1580,
+      "official_accuracy": 0.3278481012658228,
+      "official_correct": 518,
+      "strict_text_accuracy": 0.2189873417721519,
+      "strict_text_correct": 346
+    },
+    "Retinal OCT-C8": {
+      "count": 4016,
+      "official_accuracy": 0.5405876494023905,
+      "official_correct": 2171,
+      "strict_text_accuracy": 0.075199203187251,
+      "strict_text_correct": 302
+    }
+  },
+  "count": 8518,
+  "data_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json",
+  "data_sha256": "04ba0790410cd5de4c95689d349574b102034a153afa00d952e351d3c13991a7",
+  "do_sample": false,
+  "dtype": "bfloat16",
+  "empty_completion_count": 0,
+  "generation_cap_hit_count": 507,
+  "max_new_tokens": 64,
+  "maximum_generated_tokens": 64,
+  "mean_generated_tokens": 19.3192063864757,
+  "median_generated_tokens": 17.0,
+  "model_config_sha256": "3bbebffaad84362a985198e878334a0afd0b43d643838ae026af608d60626af0",
+  "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/JZPeterPan--MedVLM-R1--d256f2cfdf98c6872c1dc9f20b7dd52f49374fe9",
+  "official_accuracy": 0.5177271660014088,
+  "official_correct": 4410,
+  "predictions_sha256": "a43da77112931af489b77fc97df4d8ac59781a778765d20faeaa6beccc16920f",
+  "primary_metric": "official_sequence_matcher_option_accuracy",
+  "quantization": "none",
+  "schema_version": 1,
+  "split_role": "external_test",
+  "status": "completed",
+  "strict_text_accuracy": 0.09755811223291852,
+  "strict_text_correct": 831,
+  "task": "omnimedvqa"
+}

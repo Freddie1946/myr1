@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260727_203723`
+Latest timestamp: `20260730_102142`
 
 Read in this order:
 
@@ -134,11 +134,127 @@ Read in this order:
 128. `../formal_machine/a100_stage3_eval_workspace.env.example`
 129. `../protocol/a100_codex_bootstrap_prompt_20260727.txt`
 130. `../protocol/code_hash_manifest_20260727_203723.json`
+131. `20260728_013529_a100_preparation_phases_1_3_progress.md`
+132. `../protocol/a100_eval_environment_preparation_manifest_20260728_013529.json`
+133. `20260728_014950_baseline_evaluation_contract_decisions_pending.md`
+134. `20260728_015359_llama_vision_weight_access_gate.md`
+135. `20260728_021824_a100_core_preflight_and_external_asset_audit_completed.md`
+136. `../protocol/a100_core_preflight_completion_manifest_20260728_021824.json`
+137. `20260728_213918_baseline_contract_partial_approval_and_weight_staging.md`
+138. `../protocol/baseline_contract_partial_approval_manifest_20260728_213918.json`
+139. `20260728_215133_pathmmu_test999_reclassified_as_stage3_development_diagnostic.md`
+140. `../protocol/pathmmu_test999_development_reclassification_manifest_20260728_215133.json`
+141. `20260728_215918_pathmmu_test999_qwen_family_diagnostic_launch.md`
+142. `../protocol/pathmmu_test999_qwen_family_diagnostic_launch_manifest_20260728_215918.json`
+143. `../protocol/pathmmu_test999_medgemma_diagnostic_launch_manifest_20260728_220617.json`
+144. `../protocol/pathmmu_test999_internvl_diagnostic_launch_manifest_20260728_220821.json`
+145. `../protocol/pathmmu_test999_huatuo_diagnostic_launch_manifest_20260728_221830.json`
+146. `20260728_222041_pathmmu_test999_first_four_baseline_results_and_badcases.md`
+147. `../protocol/pathmmu_deepseek_vl2_response_contract_gate_20260728_222041.json`
+148. `../protocol/pathmmu_llava_med_response_contract_gate_20260728_222938.json`
+149. `../protocol/pathmmu_test999_pathology_matching_launch_manifest_20260728_223308.json`
+150. `20260728_225929_pathmmu_test999_available_baselines_completed.md`
+151. `20260729_014410_sft4000_control_and_external_eval_authorized.md`
+152. `../protocol/sft4000_control_n1000_seed42_manifest_20260729_014410.json`
+153. `20260729_221640_sft4000_control_completed_and_pathmmu_diagnostics_frozen.md`
+154. `../protocol/pathmmu_test999_sft4000_stage2_launch_manifest_20260729_221640.json`
+155. `20260729_222000_pathmmu_qwen_runner_import_correction.md`
+156. `../protocol/pathmmu_test999_sft4000_stage2_import_correction_20260729_222000.json`
+157. `../protocol/pathmmu_test999_sft3000_parent_addendum_20260729_222733.json`
+158. `20260729_223742_pathmmu_sft3000_sft4000_stage2_diagnostics_completed.md`
+159. `../protocol/pathmmu_test999_sft3000_sft4000_stage2_completion_manifest_20260729_223742.json`
+160. `../protocol/pathmmu_test999_available_baselines_completion_manifest_20260728_225929.json`
+161. `20260729_224503_external_vqa_contract_frozen.md`
+162. `../protocol/external_vqa_common_contract_manifest_20260729_224503.json`
+163. `20260729_225023_external_vqa_native_adapters_frozen.md`
+164. `../protocol/external_vqa_native_adapter_addendum_20260729_225023.json`
+165. `20260729_225733_external_vqa_variable_option_serialization_correction.md`
+166. `../protocol/external_vqa_variable_option_serialization_correction_20260729_225733.json`
+167. `20260729_231550_openrouter_hosted_baseline_and_stage3_judge_audit.md`
+168. `../protocol/openrouter_hosted_baseline_stage3_judge_audit_20260729_231550.json`
+169. `20260729_232421_claude45_identity_corrected_to_haiku45.md`
+170. `../protocol/claude45_haiku45_identity_addendum_20260729_232421.json`
+171. `20260730_001946_stage3_50step_openrouter_pilot_proposed.md`
+172. `../protocol/stage3_openrouter_50step_pilot_proposal_20260730_001946.json`
+173. `20260730_002131_stage3_openrouter_key_gate_attempt01_missing_file.md`
+174. `../protocol/stage3_openrouter_key_gate_attempt01_20260730_002131.json`
+175. `20260730_002345_stage3_openrouter_key_gate_passed.md`
+176. `../protocol/stage3_openrouter_key_gate_passed_20260730_002345.json`
+177. `20260730_002723_stage3_50step_openrouter_pilot_approved.md`
+178. `../protocol/stage3_openrouter_50step_pilot_approved_20260730_002723.json`
+179. `20260730_003915_stage3_openrouter_smoke_blocked_by_distillation_terms.md`
+180. `../protocol/stage3_openrouter_smoke_blocked_20260730_003915.json`
+181. `20260730_004532_stage3_403_cause_attribution_corrected.md`
+182. `../protocol/stage3_403_cause_attribution_correction_20260730_004532.json`
+183. `20260730_005955_claude_sonnet46_nontraining_feasibility_check.md`
+184. `../protocol/claude_sonnet46_feasibility_20260730_005955.json`
+185. `20260730_010753_stage3_kimi26_pilot_prepared_waiting_gates.md`
+186. `../protocol/stage3_kimi26_pilot_prepared_20260730_010753.json`
+187. `20260730_102142_stage3_kimi26_50step_pilot_completed.md`
+188. `../protocol/stage3_kimi26_50step_pilot_completion_20260730_102142.json`
+189. `20260730_204758_stage3_kimi26_full_arm_prepared_waiting_budget.md`
+190. `../protocol/stage3_kimi26_full_arm_prepared_20260730_204758.json`
+191. `20260730_211820_stage3_kimi26_full_arm_started.md`
+192. `../protocol/stage3_kimi26_full_arm_started_20260730_211820.json`
 
-Current next actions are machine-specific. Existing machine: freeze whether the 4000-SFT control is
-fresh-base/all-4000 or n3000-parent/additional-1000, then design its checkpoint/transfer policy;
-do not launch before approval and do not run validation/test. New A100 machine: after the complete
-handoff branch is pushed, install the personal Codex under
-`/home/dataset-assist-0/czy/wjy/.codex-wjy`, run the checked-in bootstrap prompt, audit hardware and
-prepare pinned data/models/isolated environments only. Training, inference, Stage 3 judge calls,
-paid APIs, cleanup and test remain separately gated.
+The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
+SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2
+Outcome-GRPO scored 609/999 (60.96%). The twelve-model joint bad-case package contains 23 all-wrong
+cases and 988 prediction-disagreement cases. These are pre-Stage3 development diagnostics, not
+untouched final results. The next action is to freeze common PathVQA and OmniMedVQA contracts,
+evaluate every scientifically compatible available local baseline, and audit anomalously high
+results for disclosed source-data reuse, exact test overlap, near-duplicate risk, or opaque
+training data. The common PathVQA/OmniMedVQA prompt, generation, scoring and model-compatibility
+contract is now frozen before inference, and its deterministic tests pass. Stage3 remains
+unstarted. DeepSeek-VL2 and LLaVA-Med require separate native external-task adapter gates; UNI is
+representation-only. Hosted models/APIs,
+unavailable Meta Llama weights, Stage3 judge calls, paid APIs and cleanup remain separately gated.
+The current OpenRouter audit found no live endpoints for Qwen-VL-Plus, Claude-3.5-Haiku,
+Grok-4-Fast or Llama 3.2 Vision 11B/90B and no current Doubao 1.5 Vision catalog entry. Claude
+Sonnet 4.5 is runnable if the manuscript's ambiguous Claude-4.5 identity is confirmed.
+`openai/gpt-4o-2024-08-06` is the recommended historically aligned Stage3 judge candidate; it is
+live with image and strict structured-output support, but its use still requires a frozen Stage3
+protocol, external credentials and an explicit paid-call budget.
+The user subsequently resolved the manuscript's ambiguous `Claude-4.5` row as Claude Haiku 4.5.
+Its frozen OpenRouter candidate is `anthropic/claude-haiku-4.5`; Sonnet 4.5 is not the manuscript
+baseline.
+The user requested an initial Stage3 run. A 50-step, seed-42, penalty-0.4 GPT-4o 2024-08-06
+OpenRouter pilot with a USD 15 hard cap and validation-only post-check is now explicitly approved
+and frozen. Inspection corrected the maximum Judge-call count from 800 to 400: 50 steps times 8
+global completions. With accuracy, format and process, the maximum reward-audit count is 1,200.
+The first credential gate found the mode-0700 secret directory but no `openrouter.env` file.
+Authentication, paid calls and Stage3 therefore remain unstarted until the hidden-input/file-write
+sequence is completed.
+The corrected secret handoff passed: mode 0600, paid account, successful authentication and about
+USD 19.64 available credit. No model call had occurred at that gate. The user has since approved
+the client-side USD 15 ceiling and six-event penalty-0.4 contract. Offline tests, one paid API
+smoke, eight-idle-GPU preflight, training and validation remain.
+The Judge implementation now passes fifteen CUDA-free tests. Two OpenRouter smoke attempts were
+rejected before provider selection: first because Azure requires `max_completion_tokens`, then
+because GPT-4o training/distillation use was prohibited by the provider Terms-of-Service filter.
+Both were proven unbilled (key usage remained USD 0 and account total usage remained exactly
+USD 0.358321845), and their conservative reservations were audit-released. Training remains
+unstarted. The client now requires OpenRouter's `enforce_distillable_text=true`; proceeding
+requires a frozen distillable vision-Judge replacement or explicit compatible provider
+permission. A read-only live query found 23 image+ZDR+distillable structured-output candidates.
+The exact 403 cause attribution is subsequently corrected: the generic response proves a
+pre-provider TOS block but does not name the firing rule. Distillation remains a material
+compliance constraint for the intended online reward use, while medical content or another
+provider/account permission rule remains possible. Controlled, truthfully described differential
+requests are required to distinguish these causes; no restriction will be concealed or bypassed.
+The user then selected the distillable multimodal `moonshotai/kimi-k2.6` Judge. The engineering
+pilot completed 50 optimizer steps and saved a full checkpoint plus gathered model. The final
+trajectory has exactly 1,200 reward events; mean accuracy/format/process rewards are
+`0.685/1.000/0.646`. Conservative API accounting is USD `0.88919683`, actual key usage is
+USD `0.59393869`, unresolved reservations are zero and the USD 15 gate was not breached. The
+frozen validation385 post-check scored 243/385 (63.12%) versus the Stage2 parent's historical
+241/385 (62.60%), a two-item point-estimate increase that is not a material-improvement claim.
+This remains `formal_result: false`: the first and second halves used different Judge
+response/evidence caps after a structured-decoding recovery, although the six events and penalty
+0.4 were unchanged. A formal run must restart from the frozen parent with one Judge contract.
+The user then authorized the complete Kimi-specific Stage3 validation arm with the separately
+prepared USD 30 client-side hard ceiling. Its exact 1,024-token/512-character Judge contract smoke
+passed, and the new 1,500-step run restarted from the frozen Stage2 parent on eight A100 GPUs. The
+first optimizer step completed with finite nonzero gradients and the trainability/freeze gates
+passed. This arm is currently running and remains `formal_result: false` until it terminates and is
+validated; it is a contemporary Kimi comparison rather than recovery of the historical Judge.

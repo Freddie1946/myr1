@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.25,
+  "backend": "conch",
+  "choice_extracted": 4,
+  "correct": 1,
+  "count": 4,
+  "data_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json",
+  "data_sha256": "f52c9a412da579db8fb8bf52f6fa320e7c4ae9cb42b6cf1bdf62f77ab158dcf0",
+  "diagnostic_only": false,
+  "dtype": "bfloat16",
+  "eligible_for_untouched_final_stage3_claim": null,
+  "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/MahmoodLab--CONCH--f9ca9f877171a28ade80228fb195ac5d79003357",
+  "option_text_template": "{raw_option_text}",
+  "predictions_sha256": "ddd9c3b722aa68d6123bf4ef7bb145610766f9440e0d564d0f27fad1ad5d1e0b",
+  "quantization": "none",
+  "schema_version": 1,
+  "selected_count": 4,
+  "split_role": "validation_smoke",
+  "status": "completed",
+  "task": "image_to_raw_option_text_matching",
+  "test_accessed": false
+}

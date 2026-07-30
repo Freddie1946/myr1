@@ -1,0 +1,392 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[2026-07-30 08:41:33,784] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:33,797] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:33,832] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:33,914] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:33,931] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:33,951] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:33,952] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:33,968] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-30 08:41:35,623] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:41:35,623] [INFO] [comm.py:683:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2026-07-30 08:41:35,641] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:41:35,646] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:41:35,661] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:41:35,669] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:41:35,675] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:41:35,680] [INFO] [comm.py:652:init_distributed] cdb=None
+[2026-07-30 08:41:35,733] [INFO] [comm.py:652:init_distributed] cdb=None
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:41:36,649] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:41:37,235] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:41:37,259] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:37,264] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:41:37,270] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:41:37,279] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:37,282] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loaded 1000 samples from /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json
+[2026-07-30 08:41:37,292] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:40,034] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 729, num_elems = 8.29B
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.10s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.05s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.03s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.05s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.07s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.13s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.08s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.13s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.43s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.45s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.48s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.50s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.51s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.49s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.49s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.50s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.19s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.22s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.20s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.23s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.21s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.22s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.21s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.24s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.48s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.84s/it]
+Freezing vision modules...
+[2026-07-30 08:41:47,535] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.50s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.85s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.50s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.88s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.87s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.87s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.50s/it]Freezing vision modules...
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.86s/it]
+Freezing vision modules...
+Freezing vision modules...
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.50s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.86s/it]
+Freezing vision modules...
+Freezing vision modules...
+Freezing vision modules...
+[2026-07-30 08:41:47,568] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:47,568] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:47,568] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:47,569] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:47,573] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:47,574] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.63s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.95s/it]
+Freezing vision modules...
+[2026-07-30 08:41:47,916] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s][2026-07-30 08:41:49,117] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 1458, num_elems = 16.58B
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.06s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.09s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.12s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.10s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.09s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.09s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.10s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.69s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.46s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.46s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.47s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.49s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.50s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.30s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.49s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.49s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.22s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.21s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.22s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.22s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.23s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.23s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.23s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.14s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.52s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.88s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.52s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.87s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.87s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.52s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.87s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.87s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.52s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.88s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.53s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.88s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.59s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.86s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+[2026-07-30 08:41:56,992] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:56,992] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+[2026-07-30 08:41:57,021] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:57,025] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:57,036] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:57,039] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:57,039] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py:365: UserWarning: Setting max_prompt_length is currently not supported, it has been set to None
+  warnings.warn("Setting max_prompt_length is currently not supported, it has been set to None")
+[2026-07-30 08:41:57,320] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed info: version=0.15.4, git-hash=unknown, git-branch=unknown
+[2026-07-30 08:41:57,321] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 8
+[2026-07-30 08:41:57,336] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2026-07-30 08:41:57,338] [INFO] [logging.py:128:log_dist] [Rank 0] Creating ZeRO Offload
+[2026-07-30 08:41:57,500] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [begin]
+[2026-07-30 08:41:57,500] [INFO] [utils.py:782:see_memory_usage] MA 3.86 GB         Max_MA 5.89 GB         CA 6.07 GB         Max_CA 6 GB 
+[2026-07-30 08:41:57,500] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 31.19 GB, percent = 3.1%
+Parameter Offload: Total persistent parameters: 848896 in 368 params
+[2026-07-30 08:41:57,671] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [end]
+[2026-07-30 08:41:57,671] [INFO] [utils.py:782:see_memory_usage] MA 3.86 GB         Max_MA 3.86 GB         CA 6.07 GB         Max_CA 6 GB 
+[2026-07-30 08:41:57,671] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 31.21 GB, percent = 3.1%
+[2026-07-30 08:41:57,673] [INFO] [config.py:999:print] DeepSpeedEngine configuration:
+[2026-07-30 08:41:57,673] [INFO] [config.py:1003:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2026-07-30 08:41:57,673] [INFO] [config.py:1003:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True, 'use_gds': False}
+[2026-07-30 08:41:57,673] [INFO] [config.py:1003:print]   amp_enabled .................. False
+[2026-07-30 08:41:57,673] [INFO] [config.py:1003:print]   amp_params ................... False
+[2026-07-30 08:41:57,673] [INFO] [config.py:1003:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   bfloat16_enabled ............. True
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   bfloat16_immediate_grad_update  False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   checkpoint_parallel_write_pipeline  False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   checkpoint_tag_validation_enabled  True
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   checkpoint_tag_validation_fail  False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7f1676b2eb60>
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   communication_data_type ...... None
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   curriculum_enabled_legacy .... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   curriculum_params_legacy ..... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   data_efficiency_enabled ...... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   dataloader_drop_last ......... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   disable_allgather ............ False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   dump_state ................... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   dynamic_loss_scale_args ...... None
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_enabled ........... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_gas_boundary_resolution  1
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_layer_num ......... 0
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_max_iter .......... 100
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_stability ......... 1e-06
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_tol ............... 0.01
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   eigenvalue_verbose ........... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   elasticity_enabled ........... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   fp16_auto_cast ............... None
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   fp16_enabled ................. False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   fp16_master_weights_and_gradients  False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   global_rank .................. 0
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   grad_accum_dtype ............. None
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   gradient_accumulation_steps .. 1
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   gradient_clipping ............ 1.0
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   gradient_predivide_factor .... 1.0
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   graph_harvesting ............. False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   initial_dynamic_scale ........ 1
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   load_universal_checkpoint .... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   loss_scale ................... 1.0
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   memory_breakdown ............. False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   mics_hierarchial_params_gather  False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   mics_shard_size .............. -1
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName')
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   optimizer_legacy_fusion ...... False
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   optimizer_name ............... None
+[2026-07-30 08:41:57,674] [INFO] [config.py:1003:print]   optimizer_params ............. None
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   pld_enabled .................. False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   pld_params ................... False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   prescale_gradients ........... False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   scheduler_name ............... None
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   scheduler_params ............. None
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   seq_parallel_communication_data_type  torch.float32
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   sparse_attention ............. None
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   sparse_gradients_enabled ..... False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   steps_per_print .............. inf
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   timers_config ................ enabled=True synchronized=True
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   train_batch_size ............. 8
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   train_micro_batch_size_per_gpu  1
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   use_data_before_expert_parallel_  False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   use_node_local_storage ....... False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   wall_clock_breakdown ......... False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   weight_quantization_config ... None
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   world_size ................... 8
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   zero_allow_untested_optimizer  True
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   zero_config .................. stage=3 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500000000 overlap_comm=False load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=DeepSpeedZeroOffloadOptimizerConfig(device='cpu', nvme_path=None, buffer_count=4, pin_memory=True, pipeline_read=False, pipeline_write=False, fast_init=False, ratio=1.0) sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=True use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   zero_enabled ................. True
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   zero_force_ds_cpu_optimizer .. False
+[2026-07-30 08:41:57,675] [INFO] [config.py:1003:print]   zero_optimization_stage ...... 3
+[2026-07-30 08:41:57,675] [INFO] [config.py:989:print_user_config]   json = {
+    "train_batch_size": 8, 
+    "train_micro_batch_size_per_gpu": 1, 
+    "gradient_accumulation_steps": 1, 
+    "gradient_clipping": 1.0, 
+    "zero_allow_untested_optimizer": true, 
+    "zero_force_ds_cpu_optimizer": false, 
+    "fp16": {
+        "enabled": false, 
+        "loss_scale": 0, 
+        "loss_scale_window": 1000, 
+        "initial_scale_power": 16, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1
+    }, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "zero_optimization": {
+        "stage": 3, 
+        "offload_optimizer": {
+            "device": "cpu", 
+            "pin_memory": true
+        }, 
+        "overlap_comm": false, 
+        "contiguous_gradients": true, 
+        "sub_group_size": 1.000000e+09, 
+        "reduce_bucket_size": "auto", 
+        "stage3_prefetch_bucket_size": "auto", 
+        "stage3_param_persistence_threshold": "auto", 
+        "stage3_max_live_parameters": 1.000000e+09, 
+        "stage3_max_reuse_distance": 1.000000e+09, 
+        "stage3_gather_16bit_weights_on_model_save": true
+    }, 
+    "steps_per_print": inf, 
+    "zero_optimization.reduce_bucket_size": 1.284506e+07, 
+    "zero_optimization.stage3_param_persistence_threshold": 3.584000e+04, 
+    "zero_optimization.stage3_prefetch_bucket_size": 1.156055e+07
+}
+PATHVLM_TRAINABILITY_JSON={"gates": {"language_fully_trainable": true, "language_nonempty": true, "projector_fully_frozen": true, "projector_nonempty": true, "visual_fully_frozen": true, "visual_nonempty": true}, "parameters": {"all": {"total": 8292166656, "trainable": 7615616512}, "language": {"total": 7615616512, "trainable": 7615616512}, "multimodal_projector": {"total": 44574464, "trainable": 0}, "visual": {"total": 676550144, "trainable": 0}}, "passed": true}
+Parameter Offload: Total persistent parameters: 848896 in 368 params
+  0%|          | 0/50 [00:00<?, ?it/s]/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank4]:     main()
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 172, in main
+[rank4]:     train_result = trainer.train(resume_from_checkpoint=resume)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 2241, in train
+[rank4]:     return inner_training_loop(
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 2548, in _inner_training_loop
+[rank4]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 3698, in training_step
+[rank4]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 682, in compute_loss
+[rank4]:     inputs = self._generate_and_score_completions(inputs, model)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 622, in _generate_and_score_completions
+[rank4]:     output_reward_func = reward_func(prompts=prompts, completions=completions, **reward_kwargs)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 65, in audited_process_reward
+[rank4]:     rewards = process_reward(completions, solution, **kwargs)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 1002, in process_reward
+[rank4]:     judge.judge_one(
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 849, in judge_one
+[rank4]:     self._parse_response(response)
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 708, in _parse_response
+[rank4]:     events = validate_events(json.loads(content))
+[rank4]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 147, in validate_events
+[rank4]:     raise ValueError(f"Judge evidence exceeds the local 400-character ceiling: {name}")
+[rank4]: ValueError: Judge evidence exceeds the local 400-character ceiling: histological_definition_error
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 200, in <module>
+[rank0]:     main()
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 172, in main
+[rank0]:     train_result = trainer.train(resume_from_checkpoint=resume)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 2241, in train
+[rank0]:     return inner_training_loop(
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 2548, in _inner_training_loop
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/transformers/trainer.py", line 3698, in training_step
+[rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 682, in compute_loss
+[rank0]:     inputs = self._generate_and_score_completions(inputs, model)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py", line 622, in _generate_and_score_completions
+[rank0]:     output_reward_func = reward_func(prompts=prompts, completions=completions, **reward_kwargs)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py", line 65, in audited_process_reward
+[rank0]:     rewards = process_reward(completions, solution, **kwargs)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 1002, in process_reward
+[rank0]:     judge.judge_one(
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 849, in judge_one
+[rank0]:     self._parse_response(response)
+[rank0]:   File "/home/dataset-assist-0/czy/wjy/myr1/scripts/stage3_openrouter_judge.py", line 701, in _parse_response
+[rank0]:     raise ValueError(f"unexpected finish reason: {choice.get('finish_reason')}")
+[rank0]: ValueError: unexpected finish reason: length
+  0%|          | 0/50 [00:22<?, ?it/s]
+W0730 08:42:34.931000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3808322 closing signal SIGTERM
+W0730 08:42:34.932000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3808323 closing signal SIGTERM
+W0730 08:42:34.932000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3808324 closing signal SIGTERM
+W0730 08:42:34.932000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3808325 closing signal SIGTERM
+W0730 08:42:34.933000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3808327 closing signal SIGTERM
+W0730 08:42:34.933000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3808328 closing signal SIGTERM
+W0730 08:42:34.933000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3808329 closing signal SIGTERM
+E0730 08:42:42.022000 3808256 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 4 (pid: 3808326) of binary: /home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/bin/python
+Traceback (most recent call last):
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/dataset-assist-0/czy/wjy/myr1/scripts/grpo_pathmmu.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-07-30_08:42:34
+  host      : ide-ba7127eb4fa14799a02e4cd789d2a2c7-7c6885
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 3808326)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

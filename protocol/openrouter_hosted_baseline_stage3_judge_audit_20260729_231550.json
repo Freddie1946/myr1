@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-29T23:15:50+08:00",
+  "formal_result": false,
+  "scope": "read-only OpenRouter hosted-baseline and Stage3-judge availability audit",
+  "paid_api_calls": 0,
+  "credentials_accessed": false,
+  "stage3_started": false,
+  "catalogs": [
+    "https://openrouter.ai/api/v1/models",
+    "https://openrouter.ai/api/v1/models/:author/:slug/endpoints",
+    "https://openrouter.ai/api/v1/endpoints/zdr"
+  ],
+  "historical_baselines": [
+    {
+      "manuscript_name": "Doubao-1.5-vision",
+      "openrouter_id": null,
+      "live_endpoint_count": 0,
+      "status": "not_recoverable_via_openrouter"
+    },
+    {
+      "manuscript_name": "Qwen-VL-Plus",
+      "openrouter_id": "qwen/qwen-vl-plus",
+      "live_endpoint_count": 0,
+      "status": "historical_page_no_live_endpoint"
+    },
+    {
+      "manuscript_name": "Claude-3.5-Haiku",
+      "openrouter_id": "anthropic/claude-3.5-haiku",
+      "live_endpoint_count": 0,
+      "status": "historical_page_no_live_endpoint"
+    },
+    {
+      "manuscript_name": "Grok-4-Fast",
+      "openrouter_id": "x-ai/grok-4-fast",
+      "live_endpoint_count": 0,
+      "status": "historical_page_no_live_endpoint"
+    },
+    {
+      "manuscript_name": "LLaMA3.2-90B",
+      "openrouter_id": "meta-llama/llama-3.2-90b-vision-instruct",
+      "live_endpoint_count": 0,
+      "status": "historical_page_no_live_endpoint"
+    },
+    {
+      "manuscript_name": "Claude-4.5",
+      "candidate_openrouter_id": "anthropic/claude-sonnet-4.5",
+      "provider_model_id": "anthropic/claude-4.5-sonnet-20250929",
+      "live_endpoint_count_minimum": 1,
+      "status": "runnable_if_user_confirms_sonnet_identity"
+    },
+    {
+      "manuscript_name": "LLaMA3.2-11B",
+      "openrouter_id": "meta-llama/llama-3.2-11b-vision-instruct",
+      "live_endpoint_count": 0,
+      "status": "historical_page_no_live_endpoint"
+    }
+  ],
+  "stage3_primary_judge_candidate": {
+    "openrouter_id": "openai/gpt-4o-2024-08-06",
+    "live_provider_tags": [
+      "openai",
+      "azure"
+    ],
+    "image_input": true,
+    "structured_outputs": true,
+    "temperature": true,
+    "seed": true,
+    "prompt_usd_per_token": 0.0000025,
+    "completion_usd_per_token": 0.00001,
+    "zdr_exact_model_endpoint_observed": "azure",
+    "historical_identity_proven": false,
+    "claim": "frozen_reconstruction_candidate"
+  },
+  "independent_secondary_judge_candidates": [
+    "anthropic/claude-sonnet-4.5",
+    "google/gemini-2.5-pro"
+  ],
+  "contemporary_comparison_candidates_not_historical_replacements": [
+    "x-ai/grok-4.20",
+    "x-ai/grok-4.5",
+    "meta-llama/llama-4-maverick",
+    "qwen/qwen3-vl-235b-a22b-instruct"
+  ],
+  "estimated_stage3_events_per_arm": 24000,
+  "gpt4o_estimated_inference_usd_per_arm_before_image_variation_retries_and_platform_fee": {
+    "low": 37.2,
+    "high": 109.2,
+    "assumed_input_tokens_per_event": [
+      500,
+      1500
+    ],
+    "assumed_output_tokens_per_event": [
+      30,
+      80
+    ]
+  },
+  "execution_gates": [
+    "user confirms ambiguous Claude-4.5 identity",
+    "user approves historical-only versus separately labelled contemporary comparison scope",
+    "Stage3 scientific protocol and JSON schema frozen",
+    "judge provider/model/routing/privacy/retry policy frozen",
+    "OpenRouter key supplied outside Git",
+    "separate maximum paid budgets approved",
+    "non-test non-training usage and schema smoke passes"
+  ]
+}

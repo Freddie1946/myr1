@@ -19,6 +19,7 @@ from grpo_pathmmu_audit import (
 from open_r1 import grpo_rec
 from open_r1.trainer import Qwen2VLGRPOTrainer
 from pathmmu_rewards import accuracy_reward, format_reward
+from stage3_openrouter_judge import process_reward
 from trl import TrlParser, get_peft_config
 from transformers import TrainerCallback
 
@@ -57,6 +58,14 @@ def audited_format_reward(completions, solution=None, **kwargs):
     solutions = aligned_solutions(solution, len(completions))
     metadata = aligned_source_metadata(kwargs, len(completions))
     append_audit_events("format", list(completions), solutions, rewards, metadata)
+    return rewards
+
+
+def audited_process_reward(completions, solution, **kwargs):
+    rewards = process_reward(completions, solution, **kwargs)
+    solutions = aligned_solutions(solution, len(completions))
+    metadata = aligned_source_metadata(kwargs, len(completions))
+    append_audit_events("process", list(completions), solutions, rewards, metadata)
     return rewards
 
 
@@ -130,6 +139,7 @@ class EpochSnapshotCallback(TrainerCallback):
 def main() -> None:
     grpo_rec.reward_funcs_registry["accuracy"] = audited_accuracy_reward
     grpo_rec.reward_funcs_registry["format"] = audited_format_reward
+    grpo_rec.reward_funcs_registry["process"] = audited_process_reward
     parser = TrlParser((grpo_rec.GRPOScriptArguments, grpo_rec.GRPOConfig, grpo_rec.GRPOModelConfig))
     script_args, training_args, model_args = parser.parse_args_and_config()
 

@@ -1,0 +1,41 @@
+{
+  "accuracy": 0.3870626907724818,
+  "backend": "conch",
+  "by_source": {
+    "Chest CT Scan": {
+      "accuracy": 0.3582089552238806,
+      "correct": 312,
+      "count": 871
+    },
+    "Diabetic Retinopathy": {
+      "accuracy": 0.5309605070697221,
+      "correct": 1089,
+      "count": 2051
+    },
+    "ISIC2020": {
+      "accuracy": 0.9284810126582278,
+      "correct": 1467,
+      "count": 1580
+    },
+    "Retinal OCT-C8": {
+      "accuracy": 0.10682270916334662,
+      "correct": 429,
+      "count": 4016
+    }
+  },
+  "correct": 3297,
+  "count": 8518,
+  "data_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json",
+  "data_sha256": "04ba0790410cd5de4c95689d349574b102034a153afa00d952e351d3c13991a7",
+  "dtype": "bfloat16",
+  "matching_contract": "image_to_raw_option_text_cosine_similarity",
+  "model_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/MahmoodLab--CONCH--f9ca9f877171a28ade80228fb195ac5d79003357",
+  "predictions_sha256": "1888c0b1484e6193f4c5a8e692aa332e16ac2641f370303246e0a0de10991648",
+  "primary_metric": "raw_option_text_cosine_matching_accuracy",
+  "quantization": "none",
+  "schema_version": 1,
+  "selected_count": 8518,
+  "split_role": "external_test",
+  "status": "completed",
+  "task": "omnimedvqa"
+}
