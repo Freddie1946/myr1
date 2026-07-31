@@ -31,6 +31,17 @@ class PathVQALLMJudgeTests(unittest.TestCase):
                 '{"correct":true,"reason":"x","error_type":"unclear"}'
             )
 
+    def test_bounded_reason_overrun_is_accepted(self):
+        reason = "x" * 200
+        value = parse_judgment(
+            '{"correct":false,"reason":"' + reason + '","error_type":"unclear"}'
+        )
+        self.assertEqual(len(value["reason"]), 200)
+        with self.assertRaises(ValueError):
+            parse_judgment(
+                '{"correct":false,"reason":"' + "x" * 241 + '","error_type":"unclear"}'
+            )
+
     def test_cache_key_covers_semantic_inputs(self):
         base = cache_key("q", "a", "c", "m")
         self.assertEqual(base, cache_key("q", "a", "c", "m"))
@@ -44,6 +55,9 @@ class PathVQALLMJudgeTests(unittest.TestCase):
             served_model_matches("gpt-4.1-mini", "gpt-4.1-mini-2025-04-14")
         )
         self.assertFalse(served_model_matches("gpt-4.1-mini", "gpt-4.1"))
+        self.assertTrue(
+            served_model_matches("gpt-5-mini", "gpt-5-mini-2025-08-07")
+        )
 
 
 if __name__ == "__main__":

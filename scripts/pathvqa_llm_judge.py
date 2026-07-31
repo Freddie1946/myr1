@@ -47,6 +47,7 @@ ERROR_TYPES = {
 }
 ALLOWED_SERVED_MODELS = {
     "gpt-4.1-mini": {"gpt-4.1-mini", "gpt-4.1-mini-2025-04-14"},
+    "gpt-5-mini": {"gpt-5-mini", "gpt-5-mini-2025-08-07"},
     "claude-sonnet-4-6": {"claude-sonnet-4-6"},
 }
 
@@ -81,7 +82,9 @@ def parse_judgment(content: str) -> dict[str, Any]:
         raise ValueError("PathVQA judge returned an invalid field set")
     if type(value["correct"]) is not bool:
         raise ValueError("PathVQA judge correct field is not boolean")
-    if not isinstance(value["reason"], str) or len(value["reason"]) > 120:
+    # The prompt requests 120 characters. Accept a bounded overrun so a valid
+    # semantic verdict is not discarded solely for gateway/model verbosity.
+    if not isinstance(value["reason"], str) or len(value["reason"]) > 240:
         raise ValueError("PathVQA judge reason is invalid")
     if value["error_type"] not in ERROR_TYPES:
         raise ValueError("PathVQA judge error_type is invalid")
@@ -115,6 +118,13 @@ def request_judgment(
         "response_format": {"type": "json_object"},
         "stream": False,
     }
+    if model == "gpt-5-mini":
+        # GPT-5 mini is a reasoning model. Keep the comparison inexpensive and
+        # deterministic while leaving enough room for billed reasoning tokens.
+        payload.pop("temperature")
+        payload.pop("max_tokens")
+        payload["reasoning_effort"] = "minimal"
+        payload["max_completion_tokens"] = 256
     request = urllib.request.Request(
         API_URL,
         data=canonical_json(payload).encode(),

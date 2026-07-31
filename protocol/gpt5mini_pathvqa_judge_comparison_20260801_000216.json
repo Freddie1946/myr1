@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T00:02:16+08:00",
+  "calibration_gold_is_pathologist_annotated": false,
+  "cases": 30,
+  "requested_model": "gpt-5-mini",
+  "served_model": "gpt-5-mini-2025-08-07",
+  "upstream_provenance_independently_verified": false,
+  "reasoning_effort": "minimal",
+  "max_completion_tokens": 256,
+  "potentially_billed_rejected_reason_length_calls": 1,
+  "conservatively_counted_paid_calls": 31,
+  "gpt5mini": {
+    "true_positive": 7,
+    "true_negative": 15,
+    "false_positive": 0,
+    "false_negative": 8,
+    "accuracy": 0.7333333333333333,
+    "mean_prompt_tokens": 319.43333333333334,
+    "mean_completion_tokens": 41.13333333333333,
+    "mean_reasoning_tokens": 0.0,
+    "mean_latency_seconds": 11.584013367323982,
+    "estimated_usd_per_request": 0.000162125,
+    "estimated_usd_one_model": 0.544253625,
+    "estimated_usd_ten_models": 5.44253625,
+    "estimated_usd_sixteen_models": 8.708058
+  },
+  "gpt41mini_reference": {
+    "true_positive": 13,
+    "true_negative": 15,
+    "false_positive": 0,
+    "false_negative": 2,
+    "accuracy": 0.9333333333333333,
+    "mean_latency_seconds": 3.1836345552505616,
+    "estimated_usd_per_request": 0.00017137333333333335
+  },
+  "decision": "do_not_replace_gpt41mini_under_current_prompt",
+  "full_judge_started": false,
+  "artifact_sha256": "25086cdb277fafee551f3e345d63fa89614047d22d68baca3a5fa958d1ba4482"
+}
