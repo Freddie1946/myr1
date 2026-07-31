@@ -41,6 +41,9 @@ class ExternalVQAContractTests(unittest.TestCase):
         self.assertFalse(score["strict_exact_match"])
         self.assertAlmostEqual(score["official_token_overlap_score"], 2 / 6)
         self.assertAlmostEqual(score["official_token_f1_score"], 0.5)
+        self.assertAlmostEqual(score["sentence_bleu_1"], 2 / 6)
+        self.assertAlmostEqual(score["sentence_bleu_2"], (2 / 6 * 1 / 5) ** 0.5)
+        self.assertEqual(score["sentence_bleu_3"], 0.0)
 
     def test_omni_official_mapping(self):
         score = omnimed_score("Optical Coherence Tomography", OMNI)

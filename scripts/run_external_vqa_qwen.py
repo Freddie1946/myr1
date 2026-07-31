@@ -145,6 +145,15 @@ def summarize(
                 "paper_free_form_macro_token_f1": statistics.fmean(
                     row["repository_token_f1_score"] for row in free
                 ),
+                "paper_free_form_sentence_bleu_1": statistics.fmean(
+                    row["sentence_bleu_1"] for row in free
+                ),
+                "paper_free_form_sentence_bleu_2": statistics.fmean(
+                    row["sentence_bleu_2"] for row in free
+                ),
+                "paper_free_form_sentence_bleu_3": statistics.fmean(
+                    row["sentence_bleu_3"] for row in free
+                ),
             }
         )
     else:

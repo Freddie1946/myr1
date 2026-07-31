@@ -34,11 +34,11 @@
     ]
   },
   "code_sha256": {
-    "scripts/external_vqa_contract.py": "d9f00071b20f2680620cf97c6c29d0f56d16cc5c74cf28f720fbdd1c8f426b33",
-    "scripts/external_vqa_native_utils.py": "a5769fb59a235aa30f8466e2db1493e9558ca76f1676f09a0291e44c4d171abc",
-    "scripts/run_external_vqa_qwen.py": "5f04f53072d02591823b9b0bf286258535b1b4a87df2bdaddcc3dbaaee7f9249",
+    "scripts/external_vqa_contract.py": "3a8b3ed94d6171e6795f95b7da9640d9ce83aaecbd1fc0c734e0f974f5de173a",
+    "scripts/external_vqa_native_utils.py": "dd842ef9c5b56c03f61dfd40bb61f792be12198e25df8566c30ceea2a3133a75",
+    "scripts/run_external_vqa_qwen.py": "86d4c3225c27f9a66c601f419cb82ccb23f6974339e6dd261a12264886d2cc87",
     "scripts/run_external_vqa_huatuo.py": "3f9447a8a6dba9a17218b9ff5cf01562dcbea1587ecb839a3bc7b5323adef263",
     "scripts/run_external_vqa_internvl.py": "6bc4dafff937a8a815b6eae2785057311a974730d8a1b44402eefa1c7f149377",
-    "scripts/rescore_external_vqa_predictions_v2.py": "b264642eac98201ecf5b2b93199ba6fd36dc3b3564d12b055b76a753baa89b15"
+    "scripts/rescore_external_vqa_predictions_v2.py": "8d8426d6c26a0e2eeaba42a85c73c5cfca8656466493b6827f3f59d5eb67274c"
   }
 }

@@ -60,6 +60,9 @@ regeneration.
 | SFT4000 | 30.34% | 0.00% | 2.86% |
 | Stage2 RL | 49.64% | 0.09% | 3.15% |
 
+The corresponding open-ended sentence BLEU-1/2/3 values are `1.52/0.14/0.04`
+for SFT3000, `1.09/0.12/0.02` for SFT4000, and `1.66/0.20/0.04` for Stage2.
+
 The correction confirms that the previous single PathVQA number was unsuitable,
 but it also confirms a real open-ended weakness: answer extraction alone does
 not turn the free-form result into a strong score.
@@ -109,4 +112,3 @@ gates are a separate credential, an explicit budget, and provider account/data
 terms.  Public catalog visibility alone does not authenticate the actual model
 route or guarantee image support, so each frozen slug needs a one-item paid
 identity/vision smoke before full evaluation.
-

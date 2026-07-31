@@ -51,6 +51,15 @@ def pathvqa_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
                 "repository_token_f1_mean": statistics.fmean(
                     s["official_token_f1_score"] for s in selected
                 ),
+                "sentence_bleu_1_mean": statistics.fmean(
+                    s["sentence_bleu_1"] for s in selected
+                ),
+                "sentence_bleu_2_mean": statistics.fmean(
+                    s["sentence_bleu_2"] for s in selected
+                ),
+                "sentence_bleu_3_mean": statistics.fmean(
+                    s["sentence_bleu_3"] for s in selected
+                ),
                 "contract_aligned_exact_accuracy": sum(
                     s["contract_aligned_exact_match"] for s in selected
                 ) / len(selected),

@@ -6,6 +6,7 @@ from __future__ import annotations
 import difflib
 import hashlib
 import json
+import math
 import re
 import string
 import unicodedata
@@ -98,6 +99,44 @@ def pathvqa_official_token_f1(completion: str, answer: str) -> float:
     return 2 * precision * recall / (precision + recall)
 
 
+def pathvqa_sentence_bleu(completion: str, answer: str, maximum_order: int) -> float:
+    """Deterministic sentence BLEU-N with uniform weights and no smoothing."""
+
+    if maximum_order not in (1, 2, 3):
+        raise ValueError("PathVQA BLEU order must be 1, 2, or 3")
+    # Preserve token order; the counter helper above intentionally does not.
+    candidate_tokens = re.sub("[^a-zA-Z ]", "", str(completion)).lower().split()
+    reference_tokens = re.sub("[^a-zA-Z ]", "", str(answer)).lower().split()
+    if not candidate_tokens or not reference_tokens:
+        return 0.0
+    precisions = []
+    for order in range(1, maximum_order + 1):
+        candidate_ngrams: dict[tuple[str, ...], int] = defaultdict(int)
+        reference_ngrams: dict[tuple[str, ...], int] = defaultdict(int)
+        for index in range(len(candidate_tokens) - order + 1):
+            candidate_ngrams[tuple(candidate_tokens[index : index + order])] += 1
+        for index in range(len(reference_tokens) - order + 1):
+            reference_ngrams[tuple(reference_tokens[index : index + order])] += 1
+        denominator = sum(candidate_ngrams.values())
+        if not denominator:
+            return 0.0
+        clipped = sum(
+            min(count, reference_ngrams.get(ngram, 0))
+            for ngram, count in candidate_ngrams.items()
+        )
+        if not clipped:
+            return 0.0
+        precisions.append(clipped / denominator)
+    brevity_penalty = (
+        1.0
+        if len(candidate_tokens) > len(reference_tokens)
+        else math.exp(1.0 - len(reference_tokens) / len(candidate_tokens))
+    )
+    return brevity_penalty * math.exp(
+        sum(math.log(value) for value in precisions) / maximum_order
+    )
+
+
 def extract_pathvqa_answer(completion: str, answer_type: str) -> tuple[str, str]:
     """Target-blind extraction for models that insist on a reasoning wrapper."""
 
@@ -134,6 +173,9 @@ def pathvqa_score(completion: str, answer: str) -> dict[str, Any]:
         "strict_exact_match": predicted == target,
         "repository_token_overlap_score": pathvqa_official_token_overlap(completion, answer),
         "repository_token_f1_score": pathvqa_official_token_f1(completion, answer),
+        "sentence_bleu_1": pathvqa_sentence_bleu(completion, answer, 1),
+        "sentence_bleu_2": pathvqa_sentence_bleu(completion, answer, 2),
+        "sentence_bleu_3": pathvqa_sentence_bleu(completion, answer, 3),
         # Compatibility aliases for the short-lived v2 draft scorer.
         "official_token_overlap_score": pathvqa_official_token_overlap(completion, answer),
         "official_token_f1_score": pathvqa_official_token_f1(completion, answer),
