@@ -62,7 +62,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 
 ## Stage 3 Process GRPO
 
-- Status: reconstructed/completed work whose scientific definition is still pending user agreement.
+- Status: the future execution sequence, coefficient sensitivity, multi-Judge roles, expert sample,
+  recovery behavior and evaluation separation were approved on 2026-08-01 in
+  `stage3_future_training_plan_approved_20260801_010917.json`.  That approval currently authorizes
+  protocol freezing, offline sensitivity and two GPT-4o smokes only; paid training has a separate
+  measured-cost gate.
 - Parent, process unit, supervision source, label space, aggregation, and online implementation must be frozen in a new timestamped protocol before training.
 - If an external judge is selected, every request, response, parser result, fallback, model version, decoding parameter, and cost record must be cached and auditable.
 - No historical-recovery claim is allowed unless provenance proves it.

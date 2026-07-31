@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T01:09:17+08:00",
+  "status": "approved_plan_limited_execution_started",
+  "working_draft_path": "/home/dataset-assist-0/czy/wjy/STAGE3_FUTURE_TRAINING_PLAN_20260801.md",
+  "working_draft_sha256": "7b185558a768c8edaf2f307406c32b24905dea0513cbc2408c34ffbd73788061",
+  "authorized_now": [
+    "freeze_and_push_protocol",
+    "offline_penalty_sensitivity",
+    "one_synthetic_gpt4o_contract_smoke",
+    "one_validation_image_gpt4o_cost_smoke"
+  ],
+  "not_yet_authorized": [
+    "paid_100_step_coefficient_training",
+    "full_1500_step_stage3_training",
+    "new_test_inference"
+  ],
+  "parent_seed42": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+  "offline_coefficients": [0.2, 0.3, 0.4, 0.5, 0.6],
+  "online_pilot_coefficients": [0.3, 0.4, 0.5],
+  "pilot_initial_steps": 100,
+  "pilot_extension_steps_if_ambiguous": 300,
+  "historical_primary_judge": "gpt-4o-2024-08-06",
+  "required_robustness_judge": "kimi-k2.6",
+  "third_judge": "pending_independent_candidate",
+  "expert_default": {
+    "cases": 40,
+    "experts": 2,
+    "split": {
+      "apparently_correct": 10,
+      "incomplete_reasoning": 10,
+      "medical_knowledge_error": 10,
+      "difficult_rare_ambiguous": 10
+    }
+  },
+  "formal_stage3": {
+    "records": 1000,
+    "epochs": 3,
+    "max_steps": 1500,
+    "global_completion_batch": 8,
+    "num_generations": 4,
+    "maximum_training_judge_requests": 12000,
+    "learning_rate": 1e-6,
+    "beta": 0.04,
+    "max_completion_length": 192,
+    "save_steps": 100,
+    "save_total_limit": 2,
+    "epoch_snapshot_steps": [500, 1000, 1500]
+  },
+  "fallback": {
+    "retry_delays_seconds": [15, 45, 90],
+    "process_reward_cap": 0.5,
+    "maximum_total": 24,
+    "maximum_consecutive": 4,
+    "maximum_recoveries": 3,
+    "cross_segment_cache_reuse": false
+  },
+  "selection_split": "validation385",
+  "test999_used_for_selection": false,
+  "test999_claimed_untouched": false,
+  "preliminary_cost_usd": {
+    "gpt4o_per_call_from_kimi_token_migration": 0.0058560332271279025,
+    "gpt4o_one_100step_arm": 4.684826581702322,
+    "gpt4o_three_100step_arms": 14.054479745106965,
+    "gpt4o_one_1500step_arm": 70.27239872553483,
+    "authorization": false
+  }
+}

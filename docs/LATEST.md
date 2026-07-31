@@ -213,6 +213,8 @@ Read in this order:
 207. `../protocol/pathvqa_gpt41mini_manual_calibration_cases_20260731.json`
 208. `20260801_000216_gpt5mini_pathvqa_judge_comparison.md`
 209. `../protocol/gpt5mini_pathvqa_judge_comparison_20260801_000216.json`
+210. `20260801_010917_stage3_future_training_plan_approved.md`
+211. `../protocol/stage3_future_training_plan_approved_20260801_010917.json`
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2

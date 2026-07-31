@@ -75,9 +75,13 @@ The original decision PDF remains authoritative; comments below are concise para
 - Comment: explain the empirical or theoretical basis for deducting 0.4 per missing/error step.
 - Planned response: treat 0.4 as a heuristic unless historical evidence proves otherwise; perform a
   frozen sensitivity analysis (for example 0.3/0.4/0.5) and report ranking/agreement robustness.
+- 2026-08-01 update: the user approved an offline 0.2--0.6 diagnostic followed by matched GPT-4o
+  0.3/0.4/0.5 training pilots selected on validation only.  The approved execution record is
+  `protocol/stage3_future_training_plan_approved_20260801_010917.json`; no paid pilot has started.
 - Evidence/actions: Stage 3 implementation/provenance audit found no complete historical online
   process-reward training implementation. No basis has been invented.
-- Status: `blocked-decision`.
+- Status: `in-progress` (protocol approved; offline sensitivity and bounded smoke verification are
+  authorized, while paid pilots remain behind a measured-cost approval gate).
 - Remaining: freeze Stage 3 process unit, rubric, aggregation, model/version, and sensitivity protocol.
 
 ### R1-5 — Break the GPT-4o training/evaluation circularity
