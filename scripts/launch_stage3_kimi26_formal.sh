@@ -132,6 +132,11 @@ expected_marker = {
     "reasoning_enabled": False,
     "minimum_request_interval_seconds": 4,
     "retry_delays_seconds": [15, 45, 90],
+    "cache_reuse_across_training_segments": False,
+    "rule_fallback_enabled": True,
+    "rule_fallback_total_limit": 24,
+    "rule_fallback_consecutive_limit": 4,
+    "rule_fallback_max_reward": 0.5,
     "budget_limit_usd": budget_limit,
     "max_unique_requests": 12001,
     "unresolved_reservations": 0,
@@ -215,9 +220,13 @@ export PATHVLM_OPENROUTER_ENFORCE_DISTILLABLE_TEXT="true"
 export PATHVLM_OPENROUTER_REASONING_ENABLED="false"
 export PATHVLM_OPENROUTER_MIN_REQUEST_INTERVAL_SECONDS="4"
 export PATHVLM_OPENROUTER_RETRY_DELAYS_SECONDS="15,45,90"
+export PATHVLM_OPENROUTER_CACHE_NAMESPACE="$SEGMENT_ID"
 export PATHVLM_OPENROUTER_LIMIT_USD="$PATHVLM_STAGE3_FORMAL_BUDGET_USD"
 export PATHVLM_OPENROUTER_RESERVE_USD="0.05"
 export PATHVLM_OPENROUTER_MAX_UNIQUE_REQUESTS="$MAX_UNIQUE_REQUESTS"
+export PATHVLM_STAGE3_RULE_FALLBACK_ENABLED="true"
+export PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT="24"
+export PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT="4"
 export PATHVLM_TRAIN_STATE_AUDIT_NAME="kimi26_full3epoch_train_state_audit.json"
 export PATHVLM_EPOCH_SNAPSHOT_STEPS="500,1000,1500"
 export PATHVLM_EPOCH_SNAPSHOT_DIR="$EPOCH_SNAPSHOT_DIR"

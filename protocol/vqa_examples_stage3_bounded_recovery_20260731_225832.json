@@ -17,6 +17,7 @@
     "ambiguous_transport_same_request_retry": false,
     "ambiguous_reservation_settlement": "full_reserved_amount",
     "checkpoint_fallback": "latest_structurally_complete_checkpoint",
+    "cache_reuse_across_training_segments": false,
     "max_recoveries": 3,
     "default_reward_on_failure": null,
     "cuda_free_tests_passed": 25,

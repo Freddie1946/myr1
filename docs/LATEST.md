@@ -206,6 +206,8 @@ Read in this order:
 200. `../protocol/external_vqa_scoring_v2_stage3_pause_aigcbest_addendum_20260731_221000.json`
 201. `20260731_225832_vqa_examples_and_stage3_bounded_recovery.md`
 202. `../protocol/vqa_examples_stage3_bounded_recovery_20260731_225832.json`
+203. `20260731_231650_pathvqa_llm_judge_stage3_rule_fallback_and_aigcbest_smoke.md`
+204. `../protocol/pathvqa_llm_judge_stage3_rule_fallback_aigcbest_smoke_20260731_231650.json`
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2

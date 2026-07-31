@@ -8,6 +8,7 @@ import http.client
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from stage3_openrouter_judge import (
@@ -18,12 +19,15 @@ from stage3_openrouter_judge import (
     BudgetLedger,
     InvalidJSONResponseBody,
     OpenRouterJudge,
+    RuleFallbackLimitExceeded,
+    RuleFallbackLimiter,
     TransportFailure,
     TransportResponse,
     _read_json_response_body,
     make_cache_key,
     response_schema,
     score_events,
+    structural_rule_fallback,
     validate_events,
 )
 
@@ -163,6 +167,18 @@ class SchemaAndScoringTests(unittest.TestCase):
             changed[field] += "x"
             self.assertNotEqual(first, make_cache_key(**changed))
 
+    def test_structural_rule_fallback_is_target_blind_and_capped(self):
+        completion = (
+            "<think>The image shows atypical nuclei and gland architecture. Option B is "
+            "unlikely because these features are characteristic of adenocarcinoma.</think>"
+            "<answer>A</answer>"
+        )
+        reward, features = structural_rule_fallback(completion)
+        self.assertEqual(reward, 0.5)
+        self.assertTrue(all(features.values()))
+        empty_reward, _ = structural_rule_fallback("<answer>A</answer>")
+        self.assertEqual(empty_reward, 0.0)
+
 
 class LedgerTests(unittest.TestCase):
     def test_reserve_commit_and_cap(self):
@@ -235,6 +251,34 @@ class LedgerTests(unittest.TestCase):
 
     def test_frozen_default_includes_smoke_plus_training(self):
         self.assertEqual(DEFAULT_MAX_UNIQUE_REQUESTS, 401)
+
+
+class RuleFallbackLimiterTests(unittest.TestCase):
+    def test_consecutive_limit_stops_fifth_and_success_resets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            limiter = RuleFallbackLimiter(
+                Path(directory) / "fallback.json", total_limit=6, consecutive_limit=4
+            )
+            for index in range(4):
+                limiter.record_fallback({"index": index})
+            with self.assertRaises(RuleFallbackLimitExceeded):
+                limiter.record_fallback({"index": 4})
+            limiter.record_judge_success()
+            state = limiter.record_fallback({"index": 5})
+            self.assertEqual(state["total_used"], 5)
+            self.assertEqual(state["consecutive_used"], 1)
+
+    def test_total_limit_persists_across_successes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            limiter = RuleFallbackLimiter(
+                Path(directory) / "fallback.json", total_limit=2, consecutive_limit=1
+            )
+            limiter.record_fallback({})
+            limiter.record_judge_success()
+            limiter.record_fallback({})
+            limiter.record_judge_success()
+            with self.assertRaises(RuleFallbackLimitExceeded):
+                limiter.record_fallback({})
 
 
 class JudgeTests(unittest.TestCase):
@@ -417,6 +461,66 @@ class JudgeTests(unittest.TestCase):
                 )
             self.assertEqual(len(calls), 1)
             self.assertEqual(len(judge.ledger.snapshot()["reservations"]), 1)
+
+    def test_enabled_rule_fallback_settles_ambiguous_reservation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+
+            def transport(*args):
+                raise TransportFailure("connection closed without response")
+
+            judge = OpenRouterJudge(
+                Path(directory) / "judge",
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(),
+            )
+            with patch.dict(
+                "os.environ", {"PATHVLM_STAGE3_RULE_FALLBACK_ENABLED": "true"}
+            ):
+                with self.assertRaisesRegex(RuntimeError, "connection closed"):
+                    judge.judge_one(
+                        image_path=str(image),
+                        image_sha256=digest,
+                        problem="q",
+                        solution="A",
+                        completion="c",
+                    )
+            snapshot = judge.ledger.snapshot()
+            self.assertFalse(snapshot["reservations"])
+            self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.05)
+
+    def test_cache_namespace_prevents_cross_segment_reuse(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                return response_for(event_payload())
+
+            arguments = dict(
+                image_path=str(image), image_sha256=digest,
+                problem="q", solution="A", completion="c",
+            )
+            root = Path(directory) / "judge"
+            with patch.dict(
+                "os.environ", {"PATHVLM_OPENROUTER_CACHE_NAMESPACE": "segment00"}
+            ):
+                first = OpenRouterJudge(
+                    root, transport=transport, api_key="test-only-not-real",
+                    retry_delays=(),
+                )
+                first.judge_one(**arguments)
+            with patch.dict(
+                "os.environ", {"PATHVLM_OPENROUTER_CACHE_NAMESPACE": "segment01"}
+            ):
+                second = OpenRouterJudge(
+                    root, transport=transport, api_key="test-only-not-real",
+                    retry_delays=(),
+                )
+                second.judge_one(**arguments)
+            self.assertEqual(len(calls), 2)
 
     def test_billed_invalid_response_is_committed(self):
         with tempfile.TemporaryDirectory() as directory:

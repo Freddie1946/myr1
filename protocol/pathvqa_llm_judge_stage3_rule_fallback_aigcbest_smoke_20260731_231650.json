@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-07-31T23:16:50+08:00",
+  "pathvqa": {
+    "total": 6719,
+    "free_form_llm_judge_eligible": 3357,
+    "yes_no_llm_judge_eligible": 0,
+    "judge_model": "claude-sonnet-4-6",
+    "calibration_indices": [1, 25],
+    "calibration_expected_results_observed": true,
+    "estimated_usd_per_free_form_answer": 0.001608,
+    "estimated_usd_one_model": 5.398056,
+    "estimated_usd_triad": 16.194168,
+    "estimated_usd_twenty_models": 107.96112,
+    "full_run_authorized": false
+  },
+  "omnimedvqa": {
+    "llm_judge_enabled": false,
+    "scoring": "target_blind_final_answer_extraction_then_option_scoring"
+  },
+  "stage3": {
+    "cache_reuse_across_training_segments": false,
+    "rule_fallback": {
+      "enabled": true,
+      "target_blind": true,
+      "maximum_reward": 0.5,
+      "total_limit": 24,
+      "consecutive_limit": 4,
+      "requires_threshold_approval_before_formal_restart": true
+    },
+    "formal_restart_started": false
+  },
+  "aigcbest_qwen_vl_plus_smoke": {
+    "status": "passed",
+    "model": "qwen-vl-plus",
+    "omnimedvqa_index": 4,
+    "response": "D) CT.",
+    "prompt_tokens": 177,
+    "completion_tokens": 5,
+    "latency_seconds": 3.9400326940231025,
+    "estimated_request_cost_usd": 0.0001516,
+    "estimated_both_datasets_usd": 2.232,
+    "recommended_cap_with_contingency_usd": 3.0,
+    "artifact_sha256": "7a2a3f3bfddb67d2e57176b42ac401c5e291366e2c849616a54c52b78c040d61",
+    "full_run_authorized": false
+  },
+  "sonnet_judge_smoke_artifact_sha256": "38cc164dda85ec3c712eda7324ceba6e29a1bfd585ae24e219cc29a709d9084c",
+  "cuda_free_tests_passed": 43
+}

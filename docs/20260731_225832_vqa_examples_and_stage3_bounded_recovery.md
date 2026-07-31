@@ -66,7 +66,8 @@ similarity selected C.  The truncation flag must still be retained for audit.
 - On a failed training segment, conservatively settle every unresolved reservation at its full
   reserved amount, then resume from the newest structurally complete 100-step checkpoint.
 - If failure occurs before the first checkpoint, preserve the partial output and restart from the
-  frozen Stage2 parent while retaining successful judge cache records.
+  frozen Stage2 parent. Each training segment uses a separate cache namespace, so a restarted
+  segment does not reuse prior judge responses.
 - Allow at most three recoveries (four launches total).  Repeated deterministic failure therefore
   stops instead of entering an infinite restart loop.
 - Never fabricate a judge event or substitute a default process reward.

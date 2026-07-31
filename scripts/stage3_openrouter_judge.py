@@ -10,6 +10,7 @@ import http.client
 import json
 import mimetypes
 import os
+import re
 import socket
 import threading
 import time
@@ -505,6 +506,14 @@ class InvalidJSONResponseBody(ValueError):
         self.incomplete_read = incomplete_read
 
 
+class JudgeUnavailableForRuleFallback(RuntimeError):
+    """An unavailable transport was conservatively billed and may use local fallback."""
+
+
+class RuleFallbackLimitExceeded(RuntimeError):
+    """The bounded local fallback contract refuses further rule rewards."""
+
+
 Transport = Callable[[dict[str, Any], str, float], TransportResponse]
 
 
@@ -656,7 +665,12 @@ class OpenRouterJudge:
         reasoning_enabled: bool | None = None,
     ):
         self.root = root
-        self.cache_dir = root / "cache"
+        cache_namespace = os.getenv("PATHVLM_OPENROUTER_CACHE_NAMESPACE", "").strip()
+        if cache_namespace and not re.fullmatch(r"[A-Za-z0-9_.-]+", cache_namespace):
+            raise ValueError("invalid PATHVLM_OPENROUTER_CACHE_NAMESPACE")
+        self.cache_dir = (
+            root / "cache" / cache_namespace if cache_namespace else root / "cache"
+        )
         self.audit_dir = root / "audit"
         self.ledger = BudgetLedger(
             root / "budget_ledger.json",
@@ -990,6 +1004,7 @@ class OpenRouterJudge:
                 )
             except Exception as exc:
                 failure_status = "failed_reservation_retained"
+                fallback_exception: JudgeUnavailableForRuleFallback | None = None
                 response_record = None
                 if response is not None:
                     response_record = {
@@ -1019,6 +1034,23 @@ class OpenRouterJudge:
                         },
                     )
                     failure_status = "failed_billed_response_committed"
+                elif env_bool("PATHVLM_STAGE3_RULE_FALLBACK_ENABLED", False) and isinstance(
+                    exc, TransportFailure
+                ):
+                    self.ledger.commit(
+                        cache_key,
+                        self.ledger.reserve_usd,
+                        {
+                            "generation_id": "",
+                            "model": self.model_id,
+                            "provider": "",
+                            "request_sha256": request_sha256,
+                            "status": "ambiguous_transport_conservatively_settled_for_rule_fallback",
+                            "error": f"{type(exc).__name__}: {exc}",
+                        },
+                    )
+                    failure_status = "failed_ambiguous_transport_settled_for_rule_fallback"
+                    fallback_exception = JudgeUnavailableForRuleFallback(str(exc))
                 else:
                     self.ledger.retain_failed_reservation(
                         cache_key,
@@ -1038,6 +1070,8 @@ class OpenRouterJudge:
                         **(source_metadata or {}),
                     }
                 )
+                if fallback_exception is not None:
+                    raise fallback_exception from exc
                 raise
 
             self.ledger.commit(
@@ -1118,6 +1152,139 @@ def _aligned(values: Any, count: int, name: str) -> list[Any]:
     return result
 
 
+def structural_rule_fallback(completion: str) -> tuple[float, dict[str, bool]]:
+    """A target-blind, capped structural reward used only during brief judge outages."""
+
+    text = completion_text(completion)
+    think_match = re.search(r"<think\b[^>]*>(.*?)(?:</think\s*>|$)", text, re.I | re.S)
+    answer_match = re.search(r"<answer\b[^>]*>(.*?)(?:</answer\s*>|$)", text, re.I | re.S)
+    reasoning = think_match.group(1).strip() if think_match else ""
+    lower = reasoning.lower()
+    features = {
+        "nonempty_reasoning_and_answer": bool(reasoning and answer_match and answer_match.group(1).strip()),
+        "image_grounding_language": bool(
+            re.search(
+                r"\b(image|slide|section|field|cells?|nuclei|nuclear|cytoplasm|stroma|"
+                r"gland|architecture|lesion|tumou?r|tissue|histolog|morpholog|stain)\w*\b",
+                lower,
+            )
+        ),
+        "comparison_or_elimination": bool(
+            re.search(
+                r"\b(option|choice|eliminat|exclude|unlikely|less likely|rather than|"
+                r"whereas|in contrast|does not fit|not consistent)\w*\b",
+                lower,
+            )
+        ),
+        "medical_support_language": bool(
+            re.search(
+                r"\b(because|therefore|consistent with|suggest|indicat|characteristic|"
+                r"diagnos|criterion|feature|support)\w*\b",
+                lower,
+            )
+        ),
+    }
+    reward = (
+        0.15 * features["nonempty_reasoning_and_answer"]
+        + 0.15 * features["image_grounding_language"]
+        + 0.10 * features["comparison_or_elimination"]
+        + 0.10 * features["medical_support_language"]
+    )
+    return reward, features
+
+
+class RuleFallbackLimiter:
+    """Inter-process total and consecutive caps for structural fallback rewards."""
+
+    def __init__(self, path: Path, *, total_limit: int, consecutive_limit: int):
+        if total_limit <= 0 or consecutive_limit <= 0 or consecutive_limit > total_limit:
+            raise ValueError("invalid Stage3 rule fallback limits")
+        self.path = path
+        self.lock_path = path.with_suffix(path.suffix + ".lock")
+        self.total_limit = total_limit
+        self.consecutive_limit = consecutive_limit
+
+    def _default(self) -> dict[str, Any]:
+        return {
+            "schema_version": 1,
+            "total_limit": self.total_limit,
+            "consecutive_limit": self.consecutive_limit,
+            "total_used": 0,
+            "consecutive_used": 0,
+            "events": [],
+            "updated_at": now_iso(),
+        }
+
+    def _read(self) -> dict[str, Any]:
+        if not self.path.exists():
+            return self._default()
+        state = json.loads(self.path.read_text(encoding="utf-8"))
+        expected = {
+            "total_limit": self.total_limit,
+            "consecutive_limit": self.consecutive_limit,
+        }
+        mismatch = {
+            key: {"expected": value, "actual": state.get(key)}
+            for key, value in expected.items()
+            if state.get(key) != value
+        }
+        if mismatch:
+            raise RuleFallbackLimitExceeded(f"rule fallback contract mismatch: {mismatch}")
+        return state
+
+    def _lock(self):
+        self.lock_path.parent.mkdir(parents=True, exist_ok=True)
+        handle = self.lock_path.open("a+")
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        return handle
+
+    def record_fallback(self, metadata: dict[str, Any]) -> dict[str, Any]:
+        handle = self._lock()
+        try:
+            state = self._read()
+            next_total = int(state["total_used"]) + 1
+            next_consecutive = int(state["consecutive_used"]) + 1
+            if next_total > self.total_limit:
+                raise RuleFallbackLimitExceeded(
+                    f"rule fallback total limit reached: {self.total_limit}"
+                )
+            if next_consecutive > self.consecutive_limit:
+                raise RuleFallbackLimitExceeded(
+                    f"rule fallback consecutive limit reached: {self.consecutive_limit}"
+                )
+            state["total_used"] = next_total
+            state["consecutive_used"] = next_consecutive
+            state["events"].append(
+                {"timestamp": now_iso(), "event": "fallback", **metadata}
+            )
+            state["updated_at"] = now_iso()
+            atomic_json(self.path, state)
+            return state
+        finally:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+            handle.close()
+
+    def record_judge_success(self) -> None:
+        handle = self._lock()
+        try:
+            state = self._read()
+            if int(state["consecutive_used"]) == 0:
+                return
+            state["events"].append(
+                {
+                    "timestamp": now_iso(),
+                    "event": "judge_success_resets_consecutive_failures",
+                    "prior_consecutive_used": int(state["consecutive_used"]),
+                }
+            )
+            state["consecutive_used"] = 0
+            state["updated_at"] = now_iso()
+            atomic_json(self.path, state)
+        finally:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+            handle.close()
+
+
 def process_reward(completions, solution, **kwargs):
     count = len(completions)
     solutions = _aligned(solution, count, "solution")
@@ -1136,23 +1303,63 @@ def process_reward(completions, solution, **kwargs):
             os.getenv("PATHVLM_OPENROUTER_MAX_UNIQUE_REQUESTS", "401")
         ),
     )
+    fallback_enabled = env_bool("PATHVLM_STAGE3_RULE_FALLBACK_ENABLED", False)
+    fallback_limiter = (
+        RuleFallbackLimiter(
+            Path(root_text) / "rule_fallback_ledger.json",
+            total_limit=int(os.getenv("PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT", "24")),
+            consecutive_limit=int(
+                os.getenv("PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT", "4")
+            ),
+        )
+        if fallback_enabled
+        else None
+    )
     rewards = []
     for index in range(count):
-        rewards.append(
-            judge.judge_one(
+        completion = completion_text(completions[index])
+        source_metadata = {
+            "record_index": int(record_indices[index]),
+            "rank": int(os.getenv("RANK", "0")),
+            "local_rank": int(os.getenv("LOCAL_RANK", "0")),
+            "training_segment": os.getenv(
+                "PATHVLM_TRAINING_SEGMENT", "unspecified"
+            ),
+        }
+        try:
+            reward = judge.judge_one(
                 image_path=str(image_paths[index]),
                 image_sha256=str(image_hashes[index]),
                 problem=str(problems[index]),
                 solution=str(solutions[index]),
-                completion=completion_text(completions[index]),
-                source_metadata={
-                    "record_index": int(record_indices[index]),
-                    "rank": int(os.getenv("RANK", "0")),
-                    "local_rank": int(os.getenv("LOCAL_RANK", "0")),
-                    "training_segment": os.getenv(
-                        "PATHVLM_TRAINING_SEGMENT", "unspecified"
-                    ),
-                },
+                completion=completion,
+                source_metadata=source_metadata,
             )
-        )
+            if fallback_limiter is not None:
+                fallback_limiter.record_judge_success()
+        except JudgeUnavailableForRuleFallback as exc:
+            if fallback_limiter is None:
+                raise
+            reward, features = structural_rule_fallback(completion)
+            state = fallback_limiter.record_fallback(
+                {
+                    **source_metadata,
+                    "reward": reward,
+                    "features": features,
+                    "judge_error": str(exc),
+                    "completion_sha256": sha256_bytes(completion.encode("utf-8")),
+                }
+            )
+            judge._append_audit(
+                {
+                    "timestamp": now_iso(),
+                    "status": "bounded_structural_rule_fallback",
+                    "process_reward": reward,
+                    "features": features,
+                    "fallback_total_used": state["total_used"],
+                    "fallback_consecutive_used": state["consecutive_used"],
+                    **source_metadata,
+                }
+            )
+        rewards.append(reward)
     return rewards
