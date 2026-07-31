@@ -219,6 +219,7 @@ Read in this order:
 213. `../protocol/stage3_sensitivity_gpt4o_smoke_20260801_012103.json`
 214. `20260801_013252_gpt4o_coefficient_pilots_launch.md`
 215. `../protocol/stage3_gpt4o_coefficient_pilots_launch_20260801_013252.json`
+216. `20260801_014011_gpt4o_pilot_supervision_started.md`
 
 The approved Stage3 plan is now published at commit `adaf6ff`.  Offline penalty sensitivity over
 2,784 non-smoke cached judgments is complete, and both bounded AIGCBest
