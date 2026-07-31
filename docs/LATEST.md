@@ -215,6 +215,13 @@ Read in this order:
 209. `../protocol/gpt5mini_pathvqa_judge_comparison_20260801_000216.json`
 210. `20260801_010917_stage3_future_training_plan_approved.md`
 211. `../protocol/stage3_future_training_plan_approved_20260801_010917.json`
+212. `20260801_012103_stage3_sensitivity_and_gpt4o_smoke.md`
+213. `../protocol/stage3_sensitivity_gpt4o_smoke_20260801_012103.json`
+
+The approved Stage3 plan is now published at commit `adaf6ff`.  Offline penalty sensitivity over
+2,784 non-smoke cached judgments is complete, and both bounded AIGCBest
+`gpt-4o-2024-08-06` smokes passed for a combined estimated cost of $0.0083575.  No paid training
+has started.  Three matched 100-step coefficient pilots remain behind a new explicit $18 cost cap.
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2

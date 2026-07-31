@@ -77,12 +77,15 @@ The original decision PDF remains authoritative; comments below are concise para
   frozen sensitivity analysis (for example 0.3/0.4/0.5) and report ranking/agreement robustness.
 - 2026-08-01 update: the user approved an offline 0.2--0.6 diagnostic followed by matched GPT-4o
   0.3/0.4/0.5 training pilots selected on validation only.  The approved execution record is
-  `protocol/stage3_future_training_plan_approved_20260801_010917.json`; no paid pilot has started.
+  `protocol/stage3_future_training_plan_approved_20260801_010917.json`.  The offline diagnostic over
+  2,784 non-smoke judgments and both bounded GPT-4o smokes are complete in
+  `protocol/stage3_sensitivity_gpt4o_smoke_20260801_012103.json`; no paid pilot has started.
 - Evidence/actions: Stage 3 implementation/provenance audit found no complete historical online
   process-reward training implementation. No basis has been invented.
 - Status: `in-progress` (protocol approved; offline sensitivity and bounded smoke verification are
   authorized, while paid pilots remain behind a measured-cost approval gate).
-- Remaining: freeze Stage 3 process unit, rubric, aggregation, model/version, and sensitivity protocol.
+- Remaining: obtain the separate cost approval, run the matched 0.3/0.4/0.5 pilots, select on the
+  frozen validation endpoint, and report the sensitivity without claiming a post hoc theory.
 
 ### R1-5 — Break the GPT-4o training/evaluation circularity
 

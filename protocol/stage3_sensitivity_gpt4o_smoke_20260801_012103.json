@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T01:21:03+08:00",
+  "status": "complete_at_paid_cost_gate",
+  "authorization": {
+    "approved_actions": [
+      "freeze approved future plan",
+      "offline cached penalty sensitivity",
+      "one synthetic GPT-4o smoke",
+      "one PathMMU validation GPT-4o smoke"
+    ],
+    "paid_training_authorized": false,
+    "formal_stage3_authorized": false,
+    "test_inference_run": false
+  },
+  "approved_plan_commit": "adaf6ff",
+  "offline_analysis": {
+    "script": "scripts/analyze_stage3_penalty_sensitivity.py",
+    "network_calls": 0,
+    "paid_calls": 0,
+    "coefficients": [0.2, 0.3, 0.4, 0.5, 0.6],
+    "reference_coefficient": 0.4,
+    "non_smoke_record_counts": {
+      "pilot50": 499,
+      "kimi_attempt01": 2197,
+      "kimi_attempt02": 88,
+      "total": 2784
+    },
+    "output": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/stage3_penalty_sensitivity_20260801/offline_sensitivity_20260801_011622.json",
+    "output_sha256": "a13db8cb2b1663f6e1a22769c8c049ee8d440f9a06563ca9209287db61bda3c7",
+    "conclusion": "ranking is highly correlated but clipping and within-group advantages differ; retain matched online 0.3/0.4/0.5 pilots"
+  },
+  "aigcbest_gpt4o_smokes": {
+    "script": "scripts/run_aigcbest_stage3_gpt4o_smoke.py",
+    "requested_model": "gpt-4o-2024-08-06",
+    "served_model_exact_match": true,
+    "input_usd_per_million_tokens": 2.5,
+    "output_usd_per_million_tokens": 10.0,
+    "retry_count_total": 0,
+    "requests": [
+      {
+        "kind": "synthetic",
+        "status": "passed",
+        "prompt_tokens": 870,
+        "completion_tokens": 115,
+        "estimated_cost_usd": 0.003325,
+        "process_reward_at_0_4": 0.8,
+        "result": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/aigcbest_gpt4o_stage3_smoke_20260801/synthetic_result.json",
+        "result_sha256": "c8c264f34b4e1b46bf50b557b43963fb89c56a6a0c577fd9e1abbacfcb97dbe4"
+      },
+      {
+        "kind": "pathmmu_validation_index_0",
+        "status": "passed",
+        "prompt_tokens": 1465,
+        "completion_tokens": 137,
+        "estimated_cost_usd": 0.0050325,
+        "process_reward_at_0_4": 1.0,
+        "result": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/aigcbest_gpt4o_stage3_smoke_20260801/pathmmu_validation_result.json",
+        "result_sha256": "d6d1d148b712044be874e950a462a0d87ce6a30e15ca541addbebd175adfc148"
+      }
+    ],
+    "total_estimated_cost_usd": 0.0083575,
+    "usage_endpoint_note": "quota-style before/after counters are not treated as a reliable dollar ledger"
+  },
+  "next_paid_gate": {
+    "status": "awaiting_explicit_user_approval",
+    "scope": "three matched 100-step GPT-4o pilots at penalties 0.3, 0.4 and 0.5",
+    "maximum_unique_calls_total": 2400,
+    "maximum_unique_calls_per_pilot": 800,
+    "historical_token_mix_point_estimate_usd": 14.054484,
+    "requested_total_cap_usd": 18.0,
+    "requested_per_pilot_cap_usd": 6.0,
+    "formal_1500_step_run_included": false
+  },
+  "tests": {
+    "command": "PYTHONPATH=scripts python3 -m unittest scripts/test_analyze_stage3_penalty_sensitivity.py scripts/test_run_aigcbest_stage3_gpt4o_smoke.py",
+    "tests_run": 6,
+    "status": "passed"
+  }
+}
