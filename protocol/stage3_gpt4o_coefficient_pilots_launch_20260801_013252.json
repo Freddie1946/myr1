@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T01:32:52+08:00",
+  "status": "authorized_prelaunch",
+  "authorization": {
+    "user_approved": true,
+    "coefficients": [0.3, 0.4, 0.5],
+    "steps_per_arm": 100,
+    "maximum_http_attempts_per_arm": 800,
+    "maximum_usd_per_arm": 6.0,
+    "maximum_usd_total": 18.0,
+    "formal_1500_step_run_authorized": false,
+    "new_test_inference_authorized": false
+  },
+  "execution_order": [0.3, 0.4, 0.5],
+  "parent": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+    "snapshot_manifest_sha256": "83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0",
+    "epoch": 2,
+    "global_step": 1000,
+    "seed": 42
+  },
+  "judge": {
+    "gateway": "aigcbest",
+    "model": "gpt-4o-2024-08-06",
+    "schema": "pathvlm_stage3_process_events_v1",
+    "max_tokens": 320,
+    "input_usd_per_million_tokens": 2.5,
+    "output_usd_per_million_tokens": 10.0,
+    "per_attempt_reserve_usd": 0.02,
+    "retry_delays_seconds": [15, 45, 90],
+    "http_attempts_include_retries": true,
+    "cross_arm_cache_reuse": false
+  },
+  "fallback": {
+    "enabled": true,
+    "maximum_reward": 0.5,
+    "maximum_total_per_arm": 24,
+    "maximum_consecutive_per_arm": 4
+  },
+  "training": {
+    "records": 1000,
+    "global_completion_batch": 8,
+    "num_generations": 4,
+    "learning_rate": 0.000001,
+    "beta": 0.04,
+    "max_completion_length": 192,
+    "save_steps": 100,
+    "save_total_limit": 2,
+    "seed": 42,
+    "data_seed": 42,
+    "automatic_restarts": 0
+  },
+  "selection": {
+    "split": "pathmmu_validation385",
+    "test999_used": false
+  },
+  "implementation": [
+    "scripts/stage3_aigcbest_judge.py",
+    "scripts/launch_stage3_gpt4o_penalty_pilot.sh",
+    "scripts/grpo_pathmmu.py",
+    "scripts/test_stage3_aigcbest_judge.py"
+  ],
+  "prelaunch_tests": {
+    "count": 41,
+    "status": "passed"
+  },
+  "training_started_at_record_time": false
+}

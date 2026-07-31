@@ -19,7 +19,10 @@ from grpo_pathmmu_audit import (
 from open_r1 import grpo_rec
 from open_r1.trainer import Qwen2VLGRPOTrainer
 from pathmmu_rewards import accuracy_reward, format_reward
-from stage3_openrouter_judge import process_reward
+if os.getenv("PATHVLM_STAGE3_JUDGE_BACKEND", "openrouter") == "aigcbest":
+    from stage3_aigcbest_judge import process_reward
+else:
+    from stage3_openrouter_judge import process_reward
 from trl import TrlParser, get_peft_config
 from transformers import TrainerCallback
 

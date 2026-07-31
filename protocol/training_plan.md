@@ -65,8 +65,9 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Status: the future execution sequence, coefficient sensitivity, multi-Judge roles, expert sample,
   recovery behavior and evaluation separation were approved on 2026-08-01 in
   `stage3_future_training_plan_approved_20260801_010917.json`.  The authorized offline sensitivity
-  and two GPT-4o smokes are complete in `stage3_sensitivity_gpt4o_smoke_20260801_012103.json`;
-  no paid training is authorized, and three 100-step pilots are awaiting a separate $18 gate.
+  and two GPT-4o smokes are complete in `stage3_sensitivity_gpt4o_smoke_20260801_012103.json`.
+  The user then approved the separate $18 gate for the matched 0.3/0.4/0.5 100-step pilots in
+  `stage3_gpt4o_coefficient_pilots_launch_20260801_013252.json`; a formal run remains unauthorized.
 - Parent, process unit, supervision source, label space and aggregation are frozen by the approved
   contract; the launch implementation must conform to it and pass a timestamped preflight.
 - If an external judge is selected, every request, response, parser result, fallback, model version, decoding parameter, and cost record must be cached and auditable.
@@ -75,8 +76,8 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Inherited direction: keep the original image-grounded two-part reasoning rubric, emit structured
   judge events, and compute numerical penalties/reward deterministically outside the judge.
 - Required sensitivity: the zero-cost 0.2--0.6 cache analysis is complete.  The matched online
-  0.3/0.4/0.5 pilots remain pending explicit cost approval; do not retrofit their meaning or select
-  on test.
+  0.3/0.4/0.5 pilots are authorized under strict per-arm attempt and cost caps; do not retrofit their
+  meaning or select on test.
 
 ## Evaluation
 
