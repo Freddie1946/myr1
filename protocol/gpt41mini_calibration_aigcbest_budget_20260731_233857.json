@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-07-31T23:38:57+08:00",
+  "stage3_reward_ranges": {
+    "accuracy": [0.0, 1.0],
+    "format": [0.0, 1.0],
+    "llm_process": [0.0, 1.0],
+    "structural_fallback_process": [0.0, 0.5],
+    "normal_total_max": 3.0,
+    "fallback_total_max": 2.5
+  },
+  "gpt41mini_calibration": {
+    "requested_model": "gpt-4.1-mini",
+    "served_model": "gpt-4.1-mini-2025-04-14",
+    "cases": 30,
+    "positive_gold": 15,
+    "negative_gold": 15,
+    "true_positive": 13,
+    "true_negative": 15,
+    "false_positive": 0,
+    "false_negative": 2,
+    "accuracy": 0.9333333333333333,
+    "correct_precision": 1.0,
+    "correct_recall": 0.8666666666666667,
+    "mean_prompt_tokens": 320.43333333333334,
+    "mean_completion_tokens": 27.0,
+    "mean_latency_seconds": 3.1836345552505616,
+    "estimated_usd_per_judgment": 0.00017137333333333335,
+    "labels_are_pathologist_gold": false,
+    "initial_alias_rejected_request_potentially_billed": 1
+  },
+  "judge_budget_estimates_usd": {
+    "one_model_3357_free_form": 0.57530028,
+    "current_ten_models": 5.7530028,
+    "current_ten_plus_six_hosted": 9.20480448,
+    "recommended_current_ten_cap": 7.0,
+    "recommended_sixteen_cap": 11.0
+  },
+  "hosted_baseline_budget_estimates_usd": {
+    "qwen-vl-plus": 2.2319888,
+    "doubao-1.5-vision-pro-250328": 8.534628,
+    "grok-4-fast-non-reasoning": 0.5579972,
+    "claude-haiku-4-5-20251001": 3.064436,
+    "llama-3.2-11b-vision-instruct": 5.250632,
+    "llama-3.2-90b-vision-instruct": 16.081236,
+    "nominal_total": 35.720918,
+    "total_with_15_percent_contingency": 41.0790557,
+    "recommended_sequential_hard_caps_total": 44.0,
+    "suggested_overall_authorization": 45.0
+  },
+  "full_judge_started": false,
+  "full_hosted_baseline_started": false,
+  "stage3_started": false
+}

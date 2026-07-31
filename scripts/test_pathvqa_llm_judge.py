@@ -2,7 +2,7 @@
 
 import unittest
 
-from pathvqa_llm_judge import cache_key, parse_judgment
+from pathvqa_llm_judge import cache_key, parse_judgment, served_model_matches
 
 
 class PathVQALLMJudgeTests(unittest.TestCase):
@@ -38,6 +38,12 @@ class PathVQALLMJudgeTests(unittest.TestCase):
         self.assertNotEqual(base, cache_key("q", "a2", "c", "m"))
         self.assertNotEqual(base, cache_key("q", "a", "c2", "m"))
         self.assertNotEqual(base, cache_key("q", "a", "c", "m2"))
+
+    def test_frozen_gpt_alias_expansion_is_allowed(self):
+        self.assertTrue(
+            served_model_matches("gpt-4.1-mini", "gpt-4.1-mini-2025-04-14")
+        )
+        self.assertFalse(served_model_matches("gpt-4.1-mini", "gpt-4.1"))
 
 
 if __name__ == "__main__":

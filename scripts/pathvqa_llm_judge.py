@@ -45,6 +45,10 @@ ERROR_TYPES = {
     "correct", "omission", "contradiction", "related_but_not_answer",
     "materially_false_extra_claim", "unclear",
 }
+ALLOWED_SERVED_MODELS = {
+    "gpt-4.1-mini": {"gpt-4.1-mini", "gpt-4.1-mini-2025-04-14"},
+    "claude-sonnet-4-6": {"claude-sonnet-4-6"},
+}
 
 
 def canonical_json(value: Any) -> str:
@@ -86,6 +90,12 @@ def parse_judgment(content: str) -> dict[str, Any]:
     return value
 
 
+def served_model_matches(requested: str, served: Any) -> bool:
+    if served is None:
+        return True
+    return str(served) in ALLOWED_SERVED_MODELS.get(requested, {requested})
+
+
 def request_judgment(
     *, api_key: str, model: str, question: str, reference: str, candidate: str,
     timeout_seconds: float,
@@ -115,7 +125,7 @@ def request_judgment(
     with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
         body = json.loads(response.read().decode("utf-8"))
     latency = time.monotonic() - started
-    if body.get("model") not in {None, model}:
+    if not served_model_matches(model, body.get("model")):
         raise ValueError(f"served model differs: {body.get('model')!r}")
     choices = body.get("choices")
     if not isinstance(choices, list) or len(choices) != 1:
