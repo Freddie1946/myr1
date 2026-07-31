@@ -14,12 +14,14 @@ RUN_DIR="${PATHVLM_STAGE3_RUN_DIR:-$INSTALL_ROOT/runs/stage3_process_grpo/kimi26
 PARENT_ALIAS="$RUN_DIR/parent_Qwen2.5-VL-Stage2-epoch02-step1000"
 OUTPUT_DIR="$RUN_DIR/output"
 JUDGE_ROOT="$RUN_DIR/judge"
-REWARD_LOG_DIR="$RUN_DIR/reward_audit"
 EPOCH_SNAPSHOT_DIR="$RUN_DIR/epoch_model_snapshots"
 SMOKE_MARKER="$RUN_DIR/kimi26_formal_contract_smoke_passed.json"
-TRAIN_LOG="$RUN_DIR/train.log"
 MASTER_PORT="${PATHVLM_STAGE3_MASTER_PORT:-29641}"
-SAVE_STEPS="${PATHVLM_STAGE3_SAVE_STEPS:-500}"
+SAVE_STEPS="${PATHVLM_STAGE3_SAVE_STEPS:-100}"
+SEGMENT_ID="${PATHVLM_STAGE3_SEGMENT_ID:-segment00}"
+RESUME_FROM="${PATHVLM_STAGE3_RESUME_FROM_CHECKPOINT:-}"
+REWARD_LOG_DIR="$RUN_DIR/reward_audit/$SEGMENT_ID"
+TRAIN_LOG="$RUN_DIR/train_${SEGMENT_ID}.log"
 MAX_UNIQUE_REQUESTS=12001
 
 : "${PATHVLM_STAGE3_FORMAL_BUDGET_USD:?Set the separately approved Kimi formal-arm budget}"
@@ -30,6 +32,10 @@ if [[ ! "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
 fi
 if [[ ! "$SAVE_STEPS" =~ ^[1-9][0-9]*$ ]] || (( 500 % SAVE_STEPS != 0 )); then
   echo "PATHVLM_STAGE3_SAVE_STEPS must be a positive divisor of 500" >&2
+  exit 2
+fi
+if [[ ! "$SEGMENT_ID" =~ ^[A-Za-z0-9_.-]+$ ]]; then
+  echo "PATHVLM_STAGE3_SEGMENT_ID contains unsafe characters: $SEGMENT_ID" >&2
   exit 2
 fi
 if [[ ! -x "$PYTHON" ]]; then
@@ -52,8 +58,22 @@ if [[ ! -f "$SMOKE_MARKER" ]]; then
   echo "Formal Kimi contract smoke marker is missing: $SMOKE_MARKER" >&2
   exit 2
 fi
-if [[ -e "$OUTPUT_DIR" ]]; then
-  echo "Refusing to overwrite existing Stage3 output: $OUTPUT_DIR" >&2
+if [[ -n "$RESUME_FROM" ]]; then
+  if [[ ! -d "$OUTPUT_DIR" || ! -d "$RESUME_FROM" ]]; then
+    echo "Resume requires an existing output directory and checkpoint" >&2
+    exit 2
+  fi
+  resolved_output="$(readlink -f "$OUTPUT_DIR")"
+  resolved_resume="$(readlink -f "$RESUME_FROM")"
+  if [[ "$(dirname "$resolved_resume")" != "$resolved_output" ]]; then
+    echo "Resume checkpoint must be an immediate child of $resolved_output" >&2
+    exit 2
+  fi
+  "$PYTHON" "$REPO_ROOT/scripts/stage3_checkpoint_recovery.py" \
+    validate "$resolved_resume" --world-size 8 >/dev/null
+  RESUME_FROM="$resolved_resume"
+elif [[ -e "$OUTPUT_DIR" ]]; then
+  echo "Refusing to overwrite existing Stage3 output without a validated resume: $OUTPUT_DIR" >&2
   exit 2
 fi
 
@@ -183,7 +203,7 @@ export DEBUG_MODE="false"
 export PATHVLM_REQUIRE_SOURCE_AUDIT="true"
 export PATHVLM_IMAGE_HASH_MANIFEST="$IMAGE_HASH_MANIFEST"
 export PATHVLM_REWARD_LOG_DIR="$REWARD_LOG_DIR"
-export PATHVLM_TRAINING_SEGMENT="kimi26_stage3_full3epoch_seed42"
+export PATHVLM_TRAINING_SEGMENT="kimi26_stage3_full3epoch_seed42_${SEGMENT_ID}"
 export PATHVLM_STAGE3_JUDGE_ROOT="$JUDGE_ROOT"
 export PATHVLM_OPENROUTER_MODEL_ID="moonshotai/kimi-k2.6"
 export PATHVLM_OPENROUTER_PROVIDER_ONLY="inceptron"
@@ -201,6 +221,11 @@ export PATHVLM_OPENROUTER_MAX_UNIQUE_REQUESTS="$MAX_UNIQUE_REQUESTS"
 export PATHVLM_TRAIN_STATE_AUDIT_NAME="kimi26_full3epoch_train_state_audit.json"
 export PATHVLM_EPOCH_SNAPSHOT_STEPS="500,1000,1500"
 export PATHVLM_EPOCH_SNAPSHOT_DIR="$EPOCH_SNAPSHOT_DIR"
+if [[ -n "$RESUME_FROM" ]]; then
+  export PATHVLM_RESUME_FROM_CHECKPOINT="$RESUME_FROM"
+else
+  unset PATHVLM_RESUME_FROM_CHECKPOINT || true
+fi
 
 cd "$REPO_ROOT/vendor/open-r1-multimodal"
 cmd=(
@@ -240,5 +265,6 @@ cmd=(
   --remove_unused_columns false
 )
 
-printf 'Starting full Kimi 2.6 Stage3 arm; log=%s\n' "$TRAIN_LOG"
+printf 'Starting full Kimi 2.6 Stage3 arm; segment=%s resume=%s log=%s\n' \
+  "$SEGMENT_ID" "${RESUME_FROM:-none}" "$TRAIN_LOG"
 "${cmd[@]}" 2>&1 | tee "$TRAIN_LOG"

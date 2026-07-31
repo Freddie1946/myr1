@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-07-31T22:58:32+08:00",
+  "external_vqa": {
+    "pathvqa_open_ended": true,
+    "omnimedvqa_open_ended": false,
+    "pathvqa_example_indices": [1, 25],
+    "omnimedvqa_example_indices": [4, 17],
+    "source_run": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/stage2_rl"
+  },
+  "stage3_recovery_contract": {
+    "status": "implemented_and_tested_not_started",
+    "save_steps": 100,
+    "save_total_limit": 2,
+    "epoch_snapshot_steps": [500, 1000, 1500],
+    "explicit_transient_retry_delays_seconds": [15, 45, 90],
+    "ambiguous_transport_same_request_retry": false,
+    "ambiguous_reservation_settlement": "full_reserved_amount",
+    "checkpoint_fallback": "latest_structurally_complete_checkpoint",
+    "max_recoveries": 3,
+    "default_reward_on_failure": null,
+    "cuda_free_tests_passed": 25,
+    "real_checkpoint_validator_passed_step": 50,
+    "paid_smoke_run": false,
+    "formal_restart_run": false
+  },
+  "storage": {
+    "full_checkpoint_gib_approx": 102,
+    "retained_full_checkpoints": 2,
+    "available_tib_approx": 5.4
+  },
+  "aigcbest": {
+    "secret_mode": "0600",
+    "catalog_http_status": 200,
+    "catalog_model_count": 1342,
+    "paid_request_sent": false,
+    "evaluation_image_sent": false
+  }
+}

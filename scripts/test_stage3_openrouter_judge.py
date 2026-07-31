@@ -16,6 +16,7 @@ from stage3_openrouter_judge import (
     MODEL_ID,
     BudgetError,
     BudgetLedger,
+    InvalidJSONResponseBody,
     OpenRouterJudge,
     TransportFailure,
     TransportResponse,
@@ -86,8 +87,18 @@ class SchemaAndScoringTests(unittest.TestCase):
 
     def test_genuinely_truncated_json_still_fails_closed(self):
         body = _IncompleteBody(b'{"id":"gen-test","choices":[')
-        with self.assertRaises(json.JSONDecodeError):
+        with self.assertRaises(InvalidJSONResponseBody) as caught:
             _read_json_response_body(body)
+        self.assertTrue(caught.exception.incomplete_read)
+
+    def test_invalid_complete_json_is_distinguished_from_chunk_trailer(self):
+        class Body:
+            def read(self):
+                return b'{"id":'
+
+        with self.assertRaises(InvalidJSONResponseBody) as caught:
+            _read_json_response_body(Body())
+        self.assertFalse(caught.exception.incomplete_read)
 
     def test_schema_is_strict_and_complete(self):
         schema = response_schema()
@@ -380,6 +391,60 @@ class JudgeTests(unittest.TestCase):
                 next(iter(reservations.values()))["status"],
                 "unresolved_potentially_billed_failure",
             )
+
+    def test_ambiguous_connection_failure_is_not_retried(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                raise TransportFailure("connection closed without response")
+
+            judge = OpenRouterJudge(
+                Path(directory) / "judge",
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(0.0, 0.0, 0.0),
+            )
+            with self.assertRaises(TransportFailure):
+                judge.judge_one(
+                    image_path=str(image),
+                    image_sha256=digest,
+                    problem="q",
+                    solution="A",
+                    completion="c",
+                )
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(len(judge.ledger.snapshot()["reservations"]), 1)
+
+    def test_billed_invalid_response_is_committed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+
+            def transport(*args):
+                response = response_for(event_payload(), cost=0.003)
+                response.body["choices"] = []
+                return response
+
+            judge = OpenRouterJudge(
+                Path(directory) / "judge",
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(),
+            )
+            with self.assertRaises(ValueError):
+                judge.judge_one(
+                    image_path=str(image),
+                    image_sha256=digest,
+                    problem="q",
+                    solution="A",
+                    completion="c",
+                )
+            snapshot = judge.ledger.snapshot()
+            self.assertFalse(snapshot["reservations"])
+            self.assertEqual(snapshot["completed_unique_requests"], 1)
+            self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.003)
 
     def test_non_frozen_provider_response_is_rejected_and_billed(self):
         with tempfile.TemporaryDirectory() as directory:

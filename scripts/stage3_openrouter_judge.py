@@ -496,6 +496,15 @@ class TransportFailure(RuntimeError):
         self.body = body
 
 
+class InvalidJSONResponseBody(ValueError):
+    """A success-status response body that cannot be verified as complete JSON."""
+
+    def __init__(self, message: str, *, raw: bytes, incomplete_read: bool):
+        super().__init__(message)
+        self.raw = raw
+        self.incomplete_read = incomplete_read
+
+
 Transport = Callable[[dict[str, Any], str, float], TransportResponse]
 
 
@@ -509,15 +518,33 @@ def _read_json_response_body(response: Any) -> dict[str, Any]:
     supplied body; genuinely truncated JSON continues to fail closed.
     """
 
+    incomplete_read = False
     try:
         raw = response.read()
     except http.client.IncompleteRead as exc:
         raw = exc.partial
+        incomplete_read = True
     if not isinstance(raw, bytes):
-        raise TypeError("HTTP response body must be bytes")
-    value = json.loads(raw.decode("utf-8"))
+        raise InvalidJSONResponseBody(
+            "HTTP response body must be bytes",
+            raw=b"",
+            incomplete_read=incomplete_read,
+        )
+    try:
+        value = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        qualifier = "incomplete" if incomplete_read else "invalid"
+        raise InvalidJSONResponseBody(
+            f"OpenRouter returned {qualifier} JSON: {exc}",
+            raw=raw,
+            incomplete_read=incomplete_read,
+        ) from exc
     if not isinstance(value, dict):
-        raise ValueError("OpenRouter response body must be a JSON object")
+        raise InvalidJSONResponseBody(
+            "OpenRouter response body must be a JSON object",
+            raw=raw,
+            incomplete_read=incomplete_read,
+        )
     return value
 
 
@@ -541,10 +568,21 @@ def default_transport(
     started = time.monotonic()
     try:
         with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+            status = int(response.status)
+            headers = {key.lower(): value for key, value in response.headers.items()}
+            try:
+                body = _read_json_response_body(response)
+            except InvalidJSONResponseBody as exc:
+                raise TransportFailure(
+                    str(exc),
+                    status=status,
+                    headers=headers,
+                    body=exc.raw.decode("utf-8", errors="replace")[:4000],
+                ) from exc
             return TransportResponse(
-                status=int(response.status),
-                headers={key.lower(): value for key, value in response.headers.items()},
-                body=_read_json_response_body(response),
+                status=status,
+                headers=headers,
+                body=body,
                 latency_seconds=time.monotonic() - started,
             )
     except urllib.error.HTTPError as exc:
@@ -938,7 +976,10 @@ class OpenRouterJudge:
                                 "body": exc.body,
                             }
                         )
-                        if exc.status not in TRANSIENT_STATUS and exc.status is not None:
+                        # Retry only explicit router rejections. A connection-level
+                        # failure may already have reached and billed the provider;
+                        # the checkpoint supervisor handles that ambiguous case.
+                        if exc.status not in TRANSIENT_STATUS:
                             raise
                         if attempt_number == len(delays):
                             raise
