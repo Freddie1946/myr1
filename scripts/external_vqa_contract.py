@@ -9,6 +9,7 @@ import json
 import re
 import string
 import unicodedata
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -54,14 +55,91 @@ def pathvqa_answer_type(answer: str) -> str:
     return "yes_no" if normalize_short_answer(answer) in {"yes", "no"} else "free_form"
 
 
+def _pathvqa_official_words(value: str) -> dict[str, int]:
+    """Mirror PathVQA's published ``split_sentence(..., 1)`` tokenization."""
+
+    words: dict[str, int] = defaultdict(int)
+    for word in re.sub("[^a-zA-Z ]", "", str(value)).lower().strip().split():
+        words[word] += 1
+    return dict(words)
+
+
+def pathvqa_official_token_overlap(completion: str, answer: str) -> float:
+    """Mirror the repository's unfortunately named ``calculate_exactmatch`` code."""
+
+    candidate = _pathvqa_official_words(completion)
+    reference = _pathvqa_official_words(answer)
+    total = sum(candidate.values())
+    if not total:
+        return 0.0
+    # The official source counts each distinct reference word once when present.
+    return sum(word in candidate for word in reference) / total
+
+
+def pathvqa_official_token_f1(completion: str, answer: str) -> float:
+    """Mirror the PathVQA repository's ``calculate_f1score`` implementation."""
+
+    candidate = _pathvqa_official_words(completion)
+    reference = _pathvqa_official_words(answer)
+    if not candidate or not reference:
+        return 0.0
+    true_positive = false_positive = false_negative = 0
+    for word in set(candidate) | set(reference):
+        if word in candidate and word in reference:
+            true_positive += candidate[word]
+        elif word in candidate:
+            false_positive += candidate[word]
+        else:
+            false_negative += reference[word]
+    if not true_positive:
+        return 0.0
+    precision = true_positive / (true_positive + false_positive)
+    recall = true_positive / (true_positive + false_negative)
+    return 2 * precision * recall / (precision + recall)
+
+
+def extract_pathvqa_answer(completion: str, answer_type: str) -> tuple[str, str]:
+    """Target-blind extraction for models that insist on a reasoning wrapper."""
+
+    tagged = re.findall(
+        r"<answer\b[^>]*>\s*(.*?)(?:</answer\s*>|$)", str(completion), re.I | re.S
+    )
+    if tagged:
+        return tagged[-1].strip().rstrip("</ "), "answer_tag"
+    if answer_type == "yes_no":
+        marked = re.findall(
+            r"(?:final\s+answer|answer)\s*(?:is|:)\s*\b(yes|no)\b",
+            str(completion),
+            re.I,
+        )
+        if marked:
+            return marked[-1].lower(), "answer_marker"
+        leading = re.match(r"^\s*(yes|no)\b", str(completion), re.I)
+        if leading:
+            return leading.group(1).lower(), "leading_yes_no"
+    return str(completion).strip(), "raw_completion"
+
+
 def pathvqa_score(completion: str, answer: str) -> dict[str, Any]:
     predicted = normalize_short_answer(completion)
     target = normalize_short_answer(answer)
+    answer_type = pathvqa_answer_type(answer)
+    extracted, extraction_source = extract_pathvqa_answer(completion, answer_type)
     return {
         "normalized_completion": predicted,
         "normalized_target": target,
-        "answer_type": pathvqa_answer_type(answer),
+        "answer_type": answer_type,
+        # Retained for compatibility with frozen v1 prediction files.
         "exact_match": predicted == target,
+        "strict_exact_match": predicted == target,
+        "repository_token_overlap_score": pathvqa_official_token_overlap(completion, answer),
+        "repository_token_f1_score": pathvqa_official_token_f1(completion, answer),
+        # Compatibility aliases for the short-lived v2 draft scorer.
+        "official_token_overlap_score": pathvqa_official_token_overlap(completion, answer),
+        "official_token_f1_score": pathvqa_official_token_f1(completion, answer),
+        "contract_aligned_answer": extracted,
+        "contract_aligned_answer_source": extraction_source,
+        "contract_aligned_exact_match": normalize_short_answer(extracted) == target,
     }
 
 
@@ -102,6 +180,24 @@ def official_most_similar_option(completion: str, texts: list[str]) -> tuple[int
     return similarities.index(max(similarities)), similarities
 
 
+def extract_omnimed_answer(completion: str) -> tuple[str, str]:
+    """Extract a target-blind final answer before applying the official matcher."""
+
+    tagged = re.findall(
+        r"<answer\b[^>]*>\s*(.*?)(?:</answer\s*>|$)", str(completion), re.I | re.S
+    )
+    if tagged:
+        return tagged[-1].strip().rstrip("</ "), "answer_tag"
+    marked = re.findall(
+        r"(?:final\s+answer|answer)\s*(?:is|:)\s*(.+?)(?:\n|$)",
+        str(completion),
+        re.I,
+    )
+    if marked:
+        return marked[-1].strip(), "answer_marker"
+    return str(completion).strip(), "raw_completion"
+
+
 def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
     letters, texts = omnimed_options(record)
     target = omnimed_target_choice(record)
@@ -114,6 +210,19 @@ def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
         if normalize_short_answer(text) == normalized_completion
     ]
     strict_predicted = strict_matches[0] if len(strict_matches) == 1 else None
+    aligned_answer, aligned_source = extract_omnimed_answer(completion)
+    explicit_letter = re.match(
+        r"^\s*\(?\s*([A-D])(?=[\s).,:;\-]|$)", aligned_answer, re.I
+    )
+    if explicit_letter and explicit_letter.group(1).upper() in letters:
+        aligned_predicted = explicit_letter.group(1).upper()
+        aligned_similarities = None
+    else:
+        aligned_index, aligned_similarities_list = official_most_similar_option(
+            aligned_answer, texts
+        )
+        aligned_predicted = letters[aligned_index] if aligned_index is not None else None
+        aligned_similarities = dict(zip(letters, aligned_similarities_list))
     return {
         "target_choice": target,
         "official_predicted_choice": predicted,
@@ -121,6 +230,11 @@ def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
         "official_most_similar_correct": predicted == target,
         "strict_text_predicted_choice": strict_predicted,
         "strict_text_correct": strict_predicted == target,
+        "contract_aligned_answer": aligned_answer,
+        "contract_aligned_answer_source": aligned_source,
+        "contract_aligned_predicted_choice": aligned_predicted,
+        "contract_aligned_option_similarities": aligned_similarities,
+        "contract_aligned_correct": aligned_predicted == target,
         "normalized_completion": normalized_completion,
     }
 

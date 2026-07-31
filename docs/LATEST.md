@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260731_215500`
+Latest timestamp: `20260731_221000`
 
 Read in this order:
 
@@ -202,6 +202,8 @@ Read in this order:
 196. `20260731_215500_external_vqa_badcase_analysis.md`
 197. `20260731_215500_aigcbest_closed_baseline_provider_gate.md`
 198. `../protocol/stage3_restart_external_vqa_badcase_manifest_20260731_215500.json`
+199. `20260731_221000_external_vqa_scoring_correction_stage3_pause_and_aigcbest.md`
+200. `../protocol/external_vqa_scoring_v2_stage3_pause_aigcbest_addendum_20260731_221000.json`
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2

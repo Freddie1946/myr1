@@ -42,7 +42,9 @@ def eos_ids(value: int | list[int] | tuple[int, ...] | None) -> set[int]:
     return {int(item) for item in value}
 
 
-def load_existing(path: Path, records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def load_existing(
+    path: Path, records: list[dict[str, Any]], task: str
+) -> list[dict[str, Any]]:
     if not path.exists():
         return []
     rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
@@ -53,6 +55,9 @@ def load_existing(path: Path, records: list[dict[str, Any]]) -> list[dict[str, A
             raise ValueError("existing predictions exceed selected records")
         if row.get("source_record_sha256") != record_sha256(records[index]):
             raise ValueError(f"source record changed at row {index}")
+        # Permit a run started under scorer v1 to resume under the additive v2
+        # contract without regenerating or silently keeping stale in-memory scores.
+        row.update(score_record(task, row["completion"], records[index]))
     return rows
 
 
@@ -107,7 +112,20 @@ def summarize(
         correct = sum(row["exact_match"] for row in rows)
         common.update(
             {
-                "primary_metric": "normalized_exact_match",
+                "primary_metric": "pathvqa_paper_metric_family_by_answer_type",
+                "repository_token_overlap_mean_diagnostic": statistics.fmean(
+                    row["official_token_overlap_score"] for row in rows
+                ),
+                "repository_token_f1_mean": statistics.fmean(
+                    row["official_token_f1_score"] for row in rows
+                ),
+                "contract_aligned_exact_correct": sum(
+                    row["contract_aligned_exact_match"] for row in rows
+                ),
+                "contract_aligned_exact_accuracy": sum(
+                    row["contract_aligned_exact_match"] for row in rows
+                ) / len(rows),
+                "legacy_strict_exact_metric": "normalized_whole_completion_exact_match",
                 "correct": correct,
                 "accuracy": correct / len(rows),
                 "yes_no_count": len(yes_no),
@@ -118,10 +136,20 @@ def summarize(
                 "free_form_correct": sum(row["exact_match"] for row in free),
                 "free_form_accuracy": sum(row["exact_match"] for row in free)
                 / len(free),
+                "paper_yes_no_contract_aligned_accuracy": sum(
+                    row["contract_aligned_exact_match"] for row in yes_no
+                ) / len(yes_no),
+                "paper_free_form_strict_exact_accuracy": sum(
+                    row["strict_exact_match"] for row in free
+                ) / len(free),
+                "paper_free_form_macro_token_f1": statistics.fmean(
+                    row["repository_token_f1_score"] for row in free
+                ),
             }
         )
     else:
         official_correct = sum(row["official_most_similar_correct"] for row in rows)
+        aligned_correct = sum(row["contract_aligned_correct"] for row in rows)
         strict_correct = sum(row["strict_text_correct"] for row in rows)
         by_source = {}
         for source in sorted({row["dataset"] for row in rows}):
@@ -140,10 +168,19 @@ def summarize(
                     row["strict_text_correct"] for row in selected
                 )
                 / len(selected),
+                "contract_aligned_correct": sum(
+                    row["contract_aligned_correct"] for row in selected
+                ),
+                "contract_aligned_accuracy": sum(
+                    row["contract_aligned_correct"] for row in selected
+                ) / len(selected),
             }
         common.update(
             {
-                "primary_metric": "official_sequence_matcher_option_accuracy",
+                "primary_metric": "contract_aligned_sequence_matcher_option_accuracy",
+                "contract_aligned_correct": aligned_correct,
+                "contract_aligned_accuracy": aligned_correct / len(rows),
+                "official_raw_completion_metric": "official_sequence_matcher_option_accuracy",
                 "official_correct": official_correct,
                 "official_accuracy": official_correct / len(rows),
                 "strict_text_correct": strict_correct,
@@ -207,7 +244,7 @@ def main() -> None:
             raise ValueError("resume configuration differs")
     else:
         write_json(config_path, config)
-    rows = load_existing(predictions_path, records)
+    rows = load_existing(predictions_path, records, args.task)
 
     processor = AutoProcessor.from_pretrained(args.model, local_files_only=True)
     processor.tokenizer.padding_side = "left"
@@ -316,9 +353,9 @@ def main() -> None:
         completed = batch_start + len(batch_records)
         if completed % 100 < args.batch_size or completed == len(records):
             if args.task == "pathvqa":
-                correct = sum(row["exact_match"] for row in rows)
+                correct = sum(row["contract_aligned_exact_match"] for row in rows)
             else:
-                correct = sum(row["official_most_similar_correct"] for row in rows)
+                correct = sum(row["contract_aligned_correct"] for row in rows)
             print(
                 json.dumps(
                     {"completed": completed, "total": len(records), "correct": correct}

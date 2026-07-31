@@ -6,14 +6,14 @@ vision-capable entries relevant to the manuscript, including GPT-4o
 11B/90B, Qwen VL Plus and Kimi K2.6.  The unauthenticated `/v1/models` endpoint
 returns HTTP 401, and this workspace contains no credential for this provider.
 
-More importantly, the provider's public notice at
-`https://api2.aigcbest.top/api/notice` explicitly states that the service is not
-provided to users in mainland China and instructs restricted users to stop
-using it.  This machine/user context is mainland China.  No paid request and no
-PathVQA/OmniMedVQA image was sent to this provider.
+The provider's public notice at `https://api2.aigcbest.top/api/notice` excludes
+users in mainland China.  The user subsequently clarified that they are located
+in Taiwan, not mainland China.  The prior conclusion that this notice excluded
+the user was therefore incorrect and is withdrawn.  No paid request and no
+PathVQA/OmniMedVQA image had been sent before this correction.
 
-This is a provider-eligibility gate, not merely a missing-key gate.  It must not
-be bypassed.  Closed-model baselines should instead use official or otherwise
-compliant providers, or be executed by a lawfully eligible collaborator under
-written authorization and a separately frozen data/price/privacy contract.
-
+Provider eligibility is no longer blocked by that particular notice.  Execution
+still requires a provider-specific credential, an explicit paid-evaluation
+budget, and confirmation of the account terms/data-handling contract.  The
+workspace currently contains only an OpenRouter credential, not an AIGCBest
+credential.

@@ -148,7 +148,7 @@ def main() -> None:
             raise ValueError("resume configuration differs")
     else:
         write_json(config_path, config)
-    rows = load_existing(predictions_path, records)
+    rows = load_existing(predictions_path, records, args.task)
 
     tokenizer = AutoTokenizer.from_pretrained(
         args.model, trust_remote_code=True, use_fast=False, local_files_only=True
@@ -187,7 +187,11 @@ def main() -> None:
         append_row(predictions_path, row)
         rows.append(row)
         if (index + 1) % 100 == 0 or index + 1 == len(records):
-            key = "exact_match" if args.task == "pathvqa" else "official_most_similar_correct"
+            key = (
+                "contract_aligned_exact_match"
+                if args.task == "pathvqa"
+                else "contract_aligned_correct"
+            )
             print(
                 json.dumps(
                     {

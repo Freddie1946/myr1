@@ -8,7 +8,7 @@ import statistics
 from pathlib import Path
 from typing import Any
 
-from external_vqa_contract import record_sha256, sha256_file
+from external_vqa_contract import record_sha256, score_record, sha256_file
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -18,7 +18,9 @@ def write_json(path: Path, payload: object) -> None:
     )
 
 
-def load_existing(path: Path, records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def load_existing(
+    path: Path, records: list[dict[str, Any]], task: str
+) -> list[dict[str, Any]]:
     if not path.exists():
         return []
     rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
@@ -29,6 +31,7 @@ def load_existing(path: Path, records: list[dict[str, Any]]) -> list[dict[str, A
             raise ValueError("existing predictions exceed selected records")
         if row.get("source_record_sha256") != record_sha256(records[index]):
             raise ValueError(f"source record changed at row {index}")
+        row.update(score_record(task, row["completion"], records[index]))
     return rows
 
 
@@ -63,7 +66,20 @@ def summarize(
         correct = sum(row["exact_match"] for row in rows)
         result.update(
             {
-                "primary_metric": "normalized_exact_match",
+                "primary_metric": "pathvqa_paper_metric_family_by_answer_type",
+                "repository_token_overlap_mean_diagnostic": statistics.fmean(
+                    row["official_token_overlap_score"] for row in rows
+                ),
+                "repository_token_f1_mean": statistics.fmean(
+                    row["official_token_f1_score"] for row in rows
+                ),
+                "contract_aligned_exact_correct": sum(
+                    row["contract_aligned_exact_match"] for row in rows
+                ),
+                "contract_aligned_exact_accuracy": sum(
+                    row["contract_aligned_exact_match"] for row in rows
+                ) / len(rows),
+                "legacy_strict_exact_metric": "normalized_whole_completion_exact_match",
                 "correct": correct,
                 "accuracy": correct / len(rows),
                 "yes_no_count": len(yes_no),
@@ -74,10 +90,20 @@ def summarize(
                 "free_form_correct": sum(row["exact_match"] for row in free),
                 "free_form_accuracy": sum(row["exact_match"] for row in free)
                 / len(free),
+                "paper_yes_no_contract_aligned_accuracy": sum(
+                    row["contract_aligned_exact_match"] for row in yes_no
+                ) / len(yes_no),
+                "paper_free_form_strict_exact_accuracy": sum(
+                    row["strict_exact_match"] for row in free
+                ) / len(free),
+                "paper_free_form_macro_token_f1": statistics.fmean(
+                    row["repository_token_f1_score"] for row in free
+                ),
             }
         )
     else:
         official = sum(row["official_most_similar_correct"] for row in rows)
+        aligned = sum(row["contract_aligned_correct"] for row in rows)
         strict = sum(row["strict_text_correct"] for row in rows)
         by_source = {}
         for source in sorted({row["dataset"] for row in rows}):
@@ -96,10 +122,19 @@ def summarize(
                     row["strict_text_correct"] for row in selected
                 )
                 / len(selected),
+                "contract_aligned_correct": sum(
+                    row["contract_aligned_correct"] for row in selected
+                ),
+                "contract_aligned_accuracy": sum(
+                    row["contract_aligned_correct"] for row in selected
+                ) / len(selected),
             }
         result.update(
             {
-                "primary_metric": "official_sequence_matcher_option_accuracy",
+                "primary_metric": "contract_aligned_sequence_matcher_option_accuracy",
+                "contract_aligned_correct": aligned,
+                "contract_aligned_accuracy": aligned / len(rows),
+                "official_raw_completion_metric": "official_sequence_matcher_option_accuracy",
                 "official_correct": official,
                 "official_accuracy": official / len(rows),
                 "strict_text_correct": strict,
