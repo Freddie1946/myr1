@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import http.client
 import json
 import tempfile
 import unittest
@@ -18,11 +19,20 @@ from stage3_openrouter_judge import (
     OpenRouterJudge,
     TransportFailure,
     TransportResponse,
+    _read_json_response_body,
     make_cache_key,
     response_schema,
     score_events,
     validate_events,
 )
+
+
+class _IncompleteBody:
+    def __init__(self, partial: bytes):
+        self.partial = partial
+
+    def read(self):
+        raise http.client.IncompleteRead(self.partial)
 
 
 def event_payload(*, integrity: bool = True, errors: bool = False):
@@ -69,6 +79,16 @@ def response_for(
 
 
 class SchemaAndScoringTests(unittest.TestCase):
+    def test_complete_json_from_missing_chunk_trailer_is_accepted(self):
+        payload = {"id": "gen-test", "choices": []}
+        body = _IncompleteBody(json.dumps(payload).encode("utf-8"))
+        self.assertEqual(_read_json_response_body(body), payload)
+
+    def test_genuinely_truncated_json_still_fails_closed(self):
+        body = _IncompleteBody(b'{"id":"gen-test","choices":[')
+        with self.assertRaises(json.JSONDecodeError):
+            _read_json_response_body(body)
+
     def test_schema_is_strict_and_complete(self):
         schema = response_schema()
         self.assertFalse(schema["additionalProperties"])

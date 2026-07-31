@@ -6,6 +6,7 @@ from __future__ import annotations
 import base64
 import fcntl
 import hashlib
+import http.client
 import json
 import mimetypes
 import os
@@ -498,6 +499,28 @@ class TransportFailure(RuntimeError):
 Transport = Callable[[dict[str, Any], str, float], TransportResponse]
 
 
+def _read_json_response_body(response: Any) -> dict[str, Any]:
+    """Read a JSON body, accepting a complete body from a truncated chunk trailer.
+
+    Some HTTP/1.1 relays deliver every JSON byte and then close the connection before
+    sending the terminal zero-length chunk.  ``http.client`` raises ``IncompleteRead``
+    in that case even though ``exc.partial`` is a complete, parseable response.  It is
+    safe to use the partial bytes only when strict JSON parsing reaches the end of the
+    supplied body; genuinely truncated JSON continues to fail closed.
+    """
+
+    try:
+        raw = response.read()
+    except http.client.IncompleteRead as exc:
+        raw = exc.partial
+    if not isinstance(raw, bytes):
+        raise TypeError("HTTP response body must be bytes")
+    value = json.loads(raw.decode("utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError("OpenRouter response body must be a JSON object")
+    return value
+
+
 def default_transport(
     payload: dict[str, Any], api_key: str, timeout_seconds: float
 ) -> TransportResponse:
@@ -518,11 +541,10 @@ def default_transport(
     started = time.monotonic()
     try:
         with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
-            raw = response.read().decode("utf-8")
             return TransportResponse(
                 status=int(response.status),
                 headers={key.lower(): value for key, value in response.headers.items()},
-                body=json.loads(raw),
+                body=_read_json_response_body(response),
                 latency_seconds=time.monotonic() - started,
             )
     except urllib.error.HTTPError as exc:

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "timestamp_local": "2026-07-31T21:55:00+08:00",
+  "stage3": {
+    "attempt01_status": "failed_at_step_274_of_1500",
+    "root_cause": "http.client.IncompleteRead(176 bytes read)",
+    "model_failure": false,
+    "resumable_checkpoint_available": false,
+    "attempt01_conservatively_settled_usd": 2.78313963,
+    "attempt01_unresolved_reservations": 0,
+    "attempt02_status": "running",
+    "attempt02_root": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_attempt02_20260731",
+    "attempt02_hard_cap_usd": 27.21686037,
+    "overall_authorized_hard_cap_usd": 30.0,
+    "save_steps": 100,
+    "formal_hyperparameters_changed": false
+  },
+  "external_vqa": {
+    "source_run": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503",
+    "report": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/external_vqa_badcases_20260731/badcase_analysis.json",
+    "report_sha256": "4258de843014270e0645cc1b2cbbe19826eee92e116d53989ef48d7052dfcbd2",
+    "formal_metrics_preserved": true,
+    "alternative_parsers_diagnostic_only": true
+  },
+  "aigcbest": {
+    "paid_requests_sent": 0,
+    "medical_images_sent": 0,
+    "status": "blocked_by_explicit_mainland_china_service_exclusion"
+  },
+  "code_sha256": {
+    "scripts/stage3_openrouter_judge.py": "d355fe4c433b9e664a750a3a0e46c7e8b5a0dda5fc8557ef78008b9438bc8039",
+    "scripts/test_stage3_openrouter_judge.py": "c11ad833e6bbc078a5617cdd39cc7a96252653c6175044fceba2f715f157e610",
+    "scripts/launch_stage3_kimi26_formal.sh": "60c29b0744fba8cd7e8948561f5c84b7f3c27418ca4f943608e6c41006e8f4ec",
+    "scripts/analyze_external_vqa_badcases.py": "958043eb4f167e4aa73a3542b2ab26a32915ae02fa2fb0dc9d939f2c942992fd"
+  }
+}

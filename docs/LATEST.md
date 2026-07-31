@@ -1,6 +1,6 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260730_102142`
+Latest timestamp: `20260731_215500`
 
 Read in this order:
 
@@ -198,6 +198,10 @@ Read in this order:
 192. `../protocol/stage3_kimi26_full_arm_started_20260730_211820.json`
 193. `20260730_214244_sft4000_checkpoint_uploaded_to_private_hf.md`
 194. `../protocol/sft4000_hf_upload_completion_20260730_214244.json`
+195. `20260731_215500_stage3_kimi26_attempt01_failure_and_attempt02_restart.md`
+196. `20260731_215500_external_vqa_badcase_analysis.md`
+197. `20260731_215500_aigcbest_closed_baseline_provider_gate.md`
+198. `../protocol/stage3_restart_external_vqa_badcase_manifest_20260731_215500.json`
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2
@@ -211,13 +215,21 @@ contract is now frozen before inference, and its deterministic tests pass. Stage
 unstarted. DeepSeek-VL2 and LLaVA-Med require separate native external-task adapter gates; UNI is
 representation-only. Hosted models/APIs,
 unavailable Meta Llama weights, Stage3 judge calls, paid APIs and cleanup remain separately gated.
-The current OpenRouter audit found no live endpoints for Qwen-VL-Plus, Claude-3.5-Haiku,
+The earlier OpenRouter audit found no live endpoints for Qwen-VL-Plus, Claude-3.5-Haiku,
 Grok-4-Fast or Llama 3.2 Vision 11B/90B and no current Doubao 1.5 Vision catalog entry. Claude
 Sonnet 4.5 is runnable if the manuscript's ambiguous Claude-4.5 identity is confirmed.
 `openai/gpt-4o-2024-08-06` is the recommended historically aligned Stage3 judge candidate; it is
 live with image and strict structured-output support, but its use still requires a frozen Stage3
 protocol, external credentials and an explicit paid-call budget.
 The user subsequently resolved the manuscript's ambiguous `Claude-4.5` row as Claude Haiku 4.5.
+The first formal Kimi 2.6 Stage3 run stopped at step 274/1500 because an upstream chunked HTTP
+response ended without its terminal chunk; no resumable checkpoint existed. Its unresolved calls
+were conservatively settled, the transport was corrected without weakening fail-closed parsing,
+and attempt 02 started from the same Stage2 parent with 100-step resumable saves. The two run caps
+together remain exactly within the approved USD 30 ceiling. The external-VQA bad-case audit shows
+both severe answer-format/scorer mismatch and genuine modality-domain errors. AIGCBest advertises
+the desired vision baselines but explicitly excludes mainland-China users, so no paid request or
+medical image was sent there.
 Its frozen OpenRouter candidate is `anthropic/claude-haiku-4.5`; Sonnet 4.5 is not the manuscript
 baseline.
 The user requested an initial Stage3 run. A 50-step, seed-42, penalty-0.4 GPT-4o 2024-08-06

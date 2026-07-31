@@ -19,12 +19,17 @@ EPOCH_SNAPSHOT_DIR="$RUN_DIR/epoch_model_snapshots"
 SMOKE_MARKER="$RUN_DIR/kimi26_formal_contract_smoke_passed.json"
 TRAIN_LOG="$RUN_DIR/train.log"
 MASTER_PORT="${PATHVLM_STAGE3_MASTER_PORT:-29641}"
+SAVE_STEPS="${PATHVLM_STAGE3_SAVE_STEPS:-500}"
 MAX_UNIQUE_REQUESTS=12001
 
 : "${PATHVLM_STAGE3_FORMAL_BUDGET_USD:?Set the separately approved Kimi formal-arm budget}"
 
 if [[ ! "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
   echo "PATHVLM_STAGE3_FORMAL_BUDGET_USD must be a positive number" >&2
+  exit 2
+fi
+if [[ ! "$SAVE_STEPS" =~ ^[1-9][0-9]*$ ]] || (( 500 % SAVE_STEPS != 0 )); then
+  echo "PATHVLM_STAGE3_SAVE_STEPS must be a positive divisor of 500" >&2
   exit 2
 fi
 if [[ ! -x "$PYTHON" ]]; then
@@ -226,7 +231,7 @@ cmd=(
   --num_iterations 1
   --max_steps 1500
   --save_strategy steps
-  --save_steps 500
+  --save_steps "$SAVE_STEPS"
   --save_total_limit 2
   --save_only_model false
   --report_to none
