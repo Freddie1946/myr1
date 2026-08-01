@@ -2,10 +2,28 @@
 
 import unittest
 
-from pathvqa_llm_judge import cache_key, parse_judgment, served_model_matches
+from pathvqa_llm_judge import cache_key, parse_judgment, semantic_inputs, served_model_matches
 
 
 class PathVQALLMJudgeTests(unittest.TestCase):
+    def test_hosted_smoke_semantic_input_schema(self):
+        row = {
+            "completion": "positively",
+            "score": {
+                "answer_type": "free_form",
+                "contract_aligned_answer_source": "raw_completion",
+                "semantic_judge_input": {
+                    "question": "how are the histone subunits charged?",
+                    "reference": "positively charged",
+                    "candidate": "positively",
+                },
+            },
+        }
+        self.assertEqual(
+            semantic_inputs(row),
+            ("how are the histone subunits charged?", "positively charged", "positively", "raw_completion"),
+        )
+
     def test_valid_correct_and_error(self):
         self.assertTrue(parse_judgment(
             '{"correct":true,"reason":"Equivalent.","error_type":"correct"}'

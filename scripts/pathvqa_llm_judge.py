@@ -99,6 +99,23 @@ def served_model_matches(requested: str, served: Any) -> bool:
     return str(served) in ALLOWED_SERVED_MODELS.get(requested, {requested})
 
 
+def semantic_inputs(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    """Read either an original external-VQA row or the hosted smoke schema."""
+
+    if all(key in row for key in ("question", "answer", "answer_type")):
+        candidate, source = extract_pathvqa_answer(row["completion"], str(row["answer_type"]))
+        return str(row["question"]), str(row["answer"]), candidate, source
+    score = row.get("score")
+    semantic = score.get("semantic_judge_input") if isinstance(score, dict) else None
+    if not isinstance(semantic, dict) or set(semantic) != {"question", "reference", "candidate"}:
+        raise ValueError("prediction row has no recognized PathVQA semantic-judge input")
+    source = str(score.get("contract_aligned_answer_source", "hosted_score_record"))
+    return (
+        str(semantic["question"]), str(semantic["reference"]),
+        str(semantic["candidate"]), source,
+    )
+
+
 def request_judgment(
     *, api_key: str, model: str, question: str, reference: str, candidate: str,
     timeout_seconds: float,
@@ -189,11 +206,11 @@ def main() -> None:
         for row in rows:
             if selected_indices is not None and int(row["index"]) not in selected_indices:
                 continue
-            answer = str(row["answer"])
-            if str(row.get("answer_type")) != "free_form":
+            answer_type = str(row.get("answer_type") or row.get("score", {}).get("answer_type"))
+            if answer_type != "free_form":
                 continue
-            candidate, source = extract_pathvqa_answer(row["completion"], "free_form")
-            key = cache_key(row["question"], answer, candidate, args.model)
+            question, answer, candidate, source = semantic_inputs(row)
+            key = cache_key(question, answer, candidate, args.model)
             if key in existing:
                 continue
             if paid >= args.max_paid_requests:
@@ -201,7 +218,7 @@ def main() -> None:
             judgment, metadata = request_judgment(
                 api_key=api_key,
                 model=args.model,
-                question=str(row["question"]),
+                question=question,
                 reference=answer,
                 candidate=candidate,
                 timeout_seconds=args.timeout_seconds,
