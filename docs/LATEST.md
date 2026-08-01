@@ -231,6 +231,22 @@ Read in this order:
 225. `../protocol/gpt4o_penalty_case_and_rollout_analysis_20260801_173514.json`
 226. `20260801_181414_stage3_fault_tolerance_hardening_and_coefficient_interpretation.md`
 227. `../protocol/stage3_fault_tolerance_hardening_20260801_181414.json`
+228. `20260801_182543_stage3_coefficient_frozen_aigcbest_hardening_and_launch_boundary.md`
+229. `../protocol/stage3_coefficient_freeze_and_aigcbest_hardening_20260801_182543.json`
+
+The earlier shorthand that the 100-step pilots established coefficient insensitivity is corrected.
+Their point estimates increase monotonically and the experiment has limited power; it detected no
+statistically distinguishable paired difference but cannot exclude a beneficial larger-penalty
+trend.  The user confirmed the original three-event scale-design rationale and formally froze 0.4
+as an a-priori mechanistic/historical setting, not as the empirically best pilot arm.  The 300-step
+extension remains cancelled.
+
+The GPT-4o/AIGCBest client now follows the same fail-closed transport principle as the Kimi path:
+only explicit transient HTTP statuses are retried; ambiguous connection/HTTP-200 body failures are
+not resent; billed model/schema mismatch stops; and cache hits do not reset the outage counter.
+Forty-four CUDA-free Stage3 tests pass.  Kimi retains USD 26.71782984 under its existing USD 30
+aggregate gate.  A complete GPT-4o arm and hosted baseline runs still require separate paid caps.
+Local PathVQA/OmniMedVQA baseline reruns are authorized but queued behind eight-GPU Stage3.
 
 The user cancelled the 300-step coefficient extension.  The 100-step experiment is now interpreted
 as evidence of local robustness over 0.3--0.5, not evidence that 0.4 is statistically optimal.  A

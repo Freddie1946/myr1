@@ -17,6 +17,7 @@ from typing import Any, Callable
 from stage3_openrouter_judge import (
     BudgetLedger,
     InterprocessRateLimiter,
+    InvalidJSONResponseBody,
     JudgeUnavailableForRuleFallback,
     RuleFallbackLimiter,
     SCHEMA_VERSION,
@@ -24,6 +25,7 @@ from stage3_openrouter_judge import (
     TRANSIENT_STATUS,
     TransportFailure,
     TransportResponse,
+    _read_json_response_body,
     _aligned,
     _image_payload,
     atomic_json,
@@ -136,23 +138,15 @@ def default_transport(
     started = time.monotonic()
     try:
         with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
-            raw = response.read()
             try:
-                body = json.loads(raw.decode("utf-8"))
-            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                body = _read_json_response_body(response)
+            except InvalidJSONResponseBody as exc:
                 raise TransportFailure(
                     f"AIGCBest returned invalid JSON: {exc}",
                     status=int(response.status),
                     headers={key.lower(): value for key, value in response.headers.items()},
-                    body=raw.decode("utf-8", errors="replace")[:4000],
+                    body=exc.raw.decode("utf-8", errors="replace")[:4000],
                 ) from exc
-            if not isinstance(body, dict):
-                raise TransportFailure(
-                    "AIGCBest response is not a JSON object",
-                    status=int(response.status),
-                    headers={key.lower(): value for key, value in response.headers.items()},
-                    body=str(body)[:4000],
-                )
             return TransportResponse(
                 status=int(response.status),
                 headers={key.lower(): value for key, value in response.headers.items()},
@@ -209,6 +203,7 @@ class AigcBestJudge:
         self.audit_dir = root / "audit" / namespace
         self.penalty = penalty
         self.transport = transport
+        self.last_result_source: str | None = None
         self.api_key = api_key if api_key is not None else os.getenv("AIGCBEST_API_KEY", "")
         self.timeout_seconds = timeout_seconds
         self.retry_delays = retry_delays
@@ -309,6 +304,7 @@ class AigcBestJudge:
         completion: str,
         source_metadata: dict[str, Any] | None = None,
     ) -> float:
+        self.last_result_source = None
         image = Path(image_path).resolve()
         cache_key = make_cache_key(
             image_sha256=image_sha256,
@@ -334,6 +330,7 @@ class AigcBestJudge:
                     "timestamp": now_iso(), "cache_key": cache_key, "cache_hit": True,
                     "process_reward": scores["process"], **(source_metadata or {}),
                 })
+                self.last_result_source = "cache"
                 return float(scores["process"])
             if not self.api_key:
                 raise RuntimeError("AIGCBEST_API_KEY is not set")
@@ -385,7 +382,19 @@ class AigcBestJudge:
                             "cost_usd": billed,
                             "error": f"{type(exc).__name__}: {exc}",
                         })
-                        continue
+                        self._append_audit({
+                            "timestamp": now_iso(),
+                            "cache_key": cache_key,
+                            "cache_hit": False,
+                            "status": "terminal_billed_response_validation_failure",
+                            "attempts": attempts,
+                            "error": f"{type(exc).__name__}: {exc}",
+                            **(source_metadata or {}),
+                        })
+                        # A model/provider/schema mismatch is not an outage.
+                        # Retrying it could multiply spend and conceal contract
+                        # drift, so fail the training segment immediately.
+                        raise
                     self.ledger.commit(attempt_id, cost, {
                         "cache_key": cache_key,
                         "attempt_number": attempt_number,
@@ -418,7 +427,11 @@ class AigcBestJudge:
                         "error": str(exc),
                         "body": exc.body,
                     })
-                    if exc.status not in TRANSIENT_STATUS and exc.status is not None:
+                    # Retry only explicit transient HTTP statuses.  A
+                    # connection-level failure (status=None) or HTTP-200
+                    # truncated/invalid body has ambiguous billing state and
+                    # must not be resent in this process.
+                    if exc.status not in TRANSIENT_STATUS:
                         break
             if events is None or scores is None or response is None:
                 self._append_audit({
@@ -463,6 +476,7 @@ class AigcBestJudge:
                 "usage": response.body.get("usage"), "attempts": attempts,
                 "cache_path": str(cache_path), **(source_metadata or {}),
             })
+            self.last_result_source = "remote"
             return float(scores["process"])
 
 
@@ -522,7 +536,10 @@ def process_reward(completions, solution, **kwargs):
                 completion=completion,
                 source_metadata=metadata,
             )
-            if fallback_limiter is not None:
+            if (
+                fallback_limiter is not None
+                and judge.last_result_source == "remote"
+            ):
                 fallback_limiter.record_judge_success()
         except JudgeUnavailableForRuleFallback as exc:
             if fallback_limiter is None:

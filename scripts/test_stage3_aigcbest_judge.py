@@ -18,6 +18,10 @@ from stage3_aigcbest_judge import (
     request_cost,
     score_events_at_penalty,
 )
+from stage3_openrouter_judge import (
+    JudgeUnavailableForRuleFallback,
+    TransportFailure,
+)
 
 
 def events() -> dict:
@@ -82,10 +86,12 @@ class JudgeTests(unittest.TestCase):
                     image_path=str(image), image_sha256=digest, problem="p", solution="s",
                     completion="c", source_metadata={"record_index": 1},
                 )
+                self.assertEqual(judge.last_result_source, "remote")
                 second = judge.judge_one(
                     image_path=str(image), image_sha256=digest, problem="p", solution="s",
                     completion="c", source_metadata={"record_index": 1},
                 )
+                self.assertEqual(judge.last_result_source, "cache")
                 self.assertEqual(first, second)
                 self.assertEqual(len(calls), 1)
                 ledger = judge.ledger.snapshot()
@@ -94,6 +100,103 @@ class JudgeTests(unittest.TestCase):
                 cache = next((Path(directory) / "judge" / "cache" / "segment").rglob("*.json"))
                 record = json.loads(cache.read_text())
                 self.assertIn("embedded-image-omitted", record["request"]["messages"][1]["content"][1]["image_url"]["url"])
+
+    def test_ambiguous_connection_failure_is_not_retried(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / "image.png"
+            image.write_bytes(b"png")
+            digest = __import__("hashlib").sha256(b"png").hexdigest()
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                raise TransportFailure("connection closed", status=None)
+
+            with patch.dict(os.environ, {"PATHVLM_AIGCBEST_CACHE_NAMESPACE": "segment"}):
+                judge = AigcBestJudge(
+                    Path(directory) / "judge", penalty=0.4, transport=transport,
+                    api_key="secret", limit_usd=1, reserve_usd=0.02,
+                    max_http_attempts=8, retry_delays=(0, 0, 0),
+                    minimum_request_interval_seconds=0,
+                )
+                with self.assertRaises(JudgeUnavailableForRuleFallback):
+                    judge.judge_one(
+                        image_path=str(image), image_sha256=digest, problem="p",
+                        solution="s", completion="c",
+                    )
+                self.assertEqual(len(calls), 1)
+                ledger = judge.ledger.snapshot()
+                self.assertEqual(ledger["completed_unique_requests"], 1)
+                self.assertAlmostEqual(ledger["committed_spend_usd"], 0.02)
+
+    def test_explicit_transient_status_retries_then_succeeds(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / "image.png"
+            image.write_bytes(b"png")
+            digest = __import__("hashlib").sha256(b"png").hexdigest()
+            body = {
+                "id": "response-1",
+                "model": MODEL_ID,
+                "choices": [{"finish_reason": "stop", "message": {"content": json.dumps(events())}}],
+                "usage": {"prompt_tokens": 1000, "completion_tokens": 100},
+            }
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                if len(calls) < 3:
+                    raise TransportFailure("rate limited", status=429)
+                return TransportResponse(
+                    status=200, headers={}, body=body, latency_seconds=0.1
+                )
+
+            with patch.dict(os.environ, {"PATHVLM_AIGCBEST_CACHE_NAMESPACE": "segment"}):
+                judge = AigcBestJudge(
+                    Path(directory) / "judge", penalty=0.4, transport=transport,
+                    api_key="secret", limit_usd=1, reserve_usd=0.02,
+                    max_http_attempts=8, retry_delays=(0, 0),
+                    minimum_request_interval_seconds=0,
+                )
+                reward = judge.judge_one(
+                    image_path=str(image), image_sha256=digest, problem="p",
+                    solution="s", completion="c",
+                )
+                self.assertEqual(reward, score_events_at_penalty(events(), 0.4)["process"])
+                self.assertEqual(len(calls), 3)
+                self.assertEqual(judge.ledger.snapshot()["completed_unique_requests"], 3)
+
+    def test_model_mismatch_is_terminal_and_not_retried(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / "image.png"
+            image.write_bytes(b"png")
+            digest = __import__("hashlib").sha256(b"png").hexdigest()
+            body = {
+                "id": "response-1",
+                "model": "wrong-model",
+                "choices": [{"finish_reason": "stop", "message": {"content": json.dumps(events())}}],
+                "usage": {"prompt_tokens": 1000, "completion_tokens": 100},
+            }
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                return TransportResponse(
+                    status=200, headers={}, body=body, latency_seconds=0.1
+                )
+
+            with patch.dict(os.environ, {"PATHVLM_AIGCBEST_CACHE_NAMESPACE": "segment"}):
+                judge = AigcBestJudge(
+                    Path(directory) / "judge", penalty=0.4, transport=transport,
+                    api_key="secret", limit_usd=1, reserve_usd=0.02,
+                    max_http_attempts=8, retry_delays=(0, 0, 0),
+                    minimum_request_interval_seconds=0,
+                )
+                with self.assertRaisesRegex(ValueError, "mismatched"):
+                    judge.judge_one(
+                        image_path=str(image), image_sha256=digest, problem="p",
+                        solution="s", completion="c",
+                    )
+                self.assertEqual(len(calls), 1)
 
     def test_invalid_penalty_and_token_ceiling_fail(self) -> None:
         with tempfile.TemporaryDirectory() as directory, patch.dict(

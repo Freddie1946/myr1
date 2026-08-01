@@ -503,6 +503,14 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260801_181414_stage3_fault_tolerance_hardening_and_coefficient_interpretation.md` and
     `protocol/stage3_fault_tolerance_hardening_20260801_181414.json`.  Supports R2-1/R2-4/R3-5/R3-6
     engineering reproducibility; no full Stage3 efficacy or expert-validity claim is made.
+30. Corrected the coefficient interpretation after noting the monotonic 100-step point estimates
+    and limited power: the pilots do not prove insensitivity.  Froze 0.4 only as the pre-existing
+    three-event scale setting, for which zero/one/two/three event counts map to
+    1.0/0.6/0.2/0.0, and retained 0.3/0.5 as sensitivity bounds.  Hardened the GPT-4o/AIGCBest
+    transport so ambiguous requests are not resent and contract mismatches stop.  Evidence:
+    `docs/20260801_182543_stage3_coefficient_frozen_aigcbest_hardening_and_launch_boundary.md` and
+    `protocol/stage3_coefficient_freeze_and_aigcbest_hardening_20260801_182543.json`.  No efficacy
+    result or claim of coefficient optimality is added.
 
 ## Mandatory update rule
 

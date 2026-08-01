@@ -90,12 +90,21 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   cancelled the 300-step extension.  These pilots establish local sensitivity/robustness, not an
   empirically optimal coefficient.  The proposed use of 0.4 is as the prior historical and
   reward-geometry setting; it remains formally unfrozen pending acceptance of that justification.
+- Coefficient freeze correction (2026-08-01): the 100-step point estimates are monotonic and the
+  short single-seed experiment cannot prove insensitivity.  The user accepted the three-event
+  scale rationale and froze 0.4 as an a-priori mechanistic/historical setting rather than an
+  empirically optimal pilot choice.  The 300-step extension is cancelled.  See
+  `stage3_coefficient_freeze_and_aigcbest_hardening_20260801_182543.json`.
 - Recovery hardening update (2026-08-01): automatic relaunch is now whitelist-only.  Recognized
   transient Judge transport and the consecutive-outage circuit breaker may recover; user
   interrupt, OOM/disk/numeric, budget, identity/schema, source/contract, total-fallback and
   unknown failures stop.  Only a fresh remote Judge success resets the outage counter, and the
   automatic recovery cap cannot exceed three.  See
   `stage3_fault_tolerance_hardening_20260801_181414.json`.
+- GPT-4o client hardening update (2026-08-01): AIGCBest retries only explicit transient HTTP
+  statuses; ambiguous connection/body failures are not resent, billed identity/schema failures
+  stop, and only a fresh remote success resets the outage counter.  The complete GPT-4o arm still
+  requires a separate formal budget.
 
 ## Evaluation
 
