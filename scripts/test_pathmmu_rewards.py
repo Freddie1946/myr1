@@ -8,6 +8,8 @@ def wrapped(text: str):
 
 
 assert choice_letter("<answer>D) diagnosis</answer>") == "D"
+assert choice_letter("<answer>\n**A) diagnosis**\n\nExplanation</answer>") == "A"
+assert choice_letter("<answer>__D)__ diagnosis\nExplanation</answer>") == "D"
 assert choice_letter("The answer is B.") == "B"
 assert choice_letter('<answer>{"option": "B") Melanocytes"}</answer>') == "B"
 assert choice_letter('<answer>{"answer": "C) Diagnosis"}</answer>') == "C"

@@ -26,7 +26,7 @@ def choice_letter(text: str) -> str | None:
     patterns = (
         r'"(?:FINAL[_ ]?ANSWER|ANSWER|OPTION|CHOICE)"\s*:\s*"?\s*([A-D])(?:\b|\s*[\)])',
         r"\b(?:FINAL\s+ANSWER|ANSWER|OPTION|CHOICE)\s*(?:IS|:|=)\s*([A-D])\b",
-        r"^\s*([A-D])(?:\s*[\)\].:]|\s*$)",
+        r"^\s*(?:\*\*|__)?\s*([A-D])\s*(?:\*\*|__)?(?:\s*[\)\].:]|\s*$)",
     )
     for pattern in patterns:
         match = re.search(pattern, value)
