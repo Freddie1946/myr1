@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T14:38:32+08:00",
+  "status": "stopped_awaiting_recovery_decision",
+  "automatic_restart_performed": false,
+  "gpus_idle": true,
+  "arms": {
+    "0.3": {
+      "global_step": 100,
+      "checkpoint_100_complete": true,
+      "http_attempts": 800,
+      "cache_records": 800,
+      "fallbacks": 0,
+      "committed_spend_usd": 4.122074999999998,
+      "supervision_passed": true
+    },
+    "0.4": {
+      "global_step": 100,
+      "checkpoint_100_complete": true,
+      "http_attempts": 800,
+      "cache_records": 799,
+      "fallbacks": 0,
+      "committed_spend_usd": 4.130779999999996,
+      "billed_response_failed_validation": 1,
+      "supervision_passed": true
+    },
+    "0.5": {
+      "global_step": 99,
+      "checkpoint_available": false,
+      "committed_http_attempts": 794,
+      "unresolved_reservations": 6,
+      "cache_records": 792,
+      "process_reward_records": 792,
+      "fallbacks": 0,
+      "committed_spend_usd": 4.122265000000005,
+      "conservative_unresolved_reserve_usd": 0.12,
+      "failure": "physical HTTP attempt ceiling reached while reserving the final eight logical judgments"
+    }
+  },
+  "conservative_budget": {
+    "approved_total_usd": 18.0,
+    "accounted_total_usd": 12.495119999999998,
+    "remaining_usd": 5.504880000000002
+  },
+  "proposed_not_authorized_recovery": {
+    "fresh_from_fixed_stage2_parent": true,
+    "new_run_directory": true,
+    "cache_reuse": false,
+    "logical_judgments": 800,
+    "maximum_physical_http_attempts": 824,
+    "maximum_usd": 5.5,
+    "requires_user_approval": true
+  },
+  "validation385_started": false,
+  "test999_accessed": false
+}

@@ -83,6 +83,10 @@ The original decision PDF remains authoritative; comments below are concise para
 - 2026-08-01 launch update: the user approved the separate $18 gate for three matched 100-step
   GPT-4o pilots.  Exact attempt accounting, cost caps and no-automatic-restart behavior are frozen
   in `protocol/stage3_gpt4o_coefficient_pilots_launch_20260801_013252.json`.
+- 2026-08-01 execution update: 0.3 and 0.4 completed; 0.5 stopped after step 99 when retry overhead
+  exhausted the physical-attempt cap.  It has no checkpoint and was not restarted.  The exact
+  failure and remaining aggregate budget are recorded in
+  `protocol/gpt4o_pilot_progress_0p5_attempt_cap_stop_20260801_143832.json`.
 - Evidence/actions: Stage 3 implementation/provenance audit found no complete historical online
   process-reward training implementation. No basis has been invented.
 - Status: `in-progress` (protocol approved; offline sensitivity and bounded smoke verification are

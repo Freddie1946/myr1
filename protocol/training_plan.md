@@ -78,6 +78,10 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Required sensitivity: the zero-cost 0.2--0.6 cache analysis is complete.  The matched online
   0.3/0.4/0.5 pilots are authorized under strict per-arm attempt and cost caps; do not retrofit their
   meaning or select on test.
+- Execution update (2026-08-01): 0.3 and 0.4 completed 100 steps.  The 0.5 arm stopped after step
+  99 because two prior retry attempts left insufficient room under the 800-physical-attempt ceiling
+  for all eight final logical judgments.  It has no checkpoint and was not restarted.  See
+  `gpt4o_pilot_progress_0p5_attempt_cap_stop_20260801_143832.json`.
 
 ## Evaluation
 
