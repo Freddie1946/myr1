@@ -225,25 +225,30 @@ Read in this order:
 219. `20260801_144436_gpt4o_0p5_fresh_recovery_approved.md`
 220. `../protocol/gpt4o_0p5_fresh_recovery_approved_20260801_144436.json`
 221. `20260801_144907_gpt4o_recovery_and_validation_supervision.md`
+222. `20260801_163520_gpt4o_penalty_pilots_complete.md`
+223. `../protocol/gpt4o_penalty_pilots_complete_20260801_163520.json`
 
-The approved Stage3 plan is now published at commit `adaf6ff`.  Offline penalty sensitivity over
-2,784 non-smoke cached judgments is complete, and both bounded AIGCBest
-`gpt-4o-2024-08-06` smokes passed for a combined estimated cost of $0.0083575.  No paid training
-had started at the smoke record.  The user subsequently approved a strict $18 gate for three
-matched 100-step coefficient pilots; their immutable launch contract is entry 215.
+The three matched GPT-4o 100-step coefficient pilots and their common PathMMU validation385 runs
+are complete; entry 222 is the current result and interpretation. Accuracy was 60.78%, 61.56%
+and 62.34% for penalties 0.3, 0.4 and 0.5 respectively. The point estimates are monotonic, but
+paired differences are not statistically significant. The complete paid-pilot accounting,
+including the conservatively settled stopped 0.5 arm, is $16.6228825 under the approved $18 gate.
+This sensitivity result does not itself freeze a coefficient for the formal long run.
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2
 Outcome-GRPO scored 609/999 (60.96%). The twelve-model joint bad-case package contains 23 all-wrong
 cases and 988 prediction-disagreement cases. These are pre-Stage3 development diagnostics, not
-untouched final results. The next action is to freeze common PathVQA and OmniMedVQA contracts,
-evaluate every scientifically compatible available local baseline, and audit anomalously high
+untouched final results. The next external-evaluation action is to evaluate every scientifically
+compatible available local baseline and audit anomalously high
 results for disclosed source-data reuse, exact test overlap, near-duplicate risk, or opaque
 training data. The common PathVQA/OmniMedVQA prompt, generation, scoring and model-compatibility
-contract is now frozen before inference, and its deterministic tests pass. Stage3 remains
-unstarted. DeepSeek-VL2 and LLaVA-Med require separate native external-task adapter gates; UNI is
+contract is now frozen before inference, and its deterministic tests pass. The formal long Stage3
+run remains unstarted; only bounded development pilots have run. DeepSeek-VL2 and LLaVA-Med
+require separate native external-task adapter gates; UNI is
 representation-only. Hosted models/APIs,
-unavailable Meta Llama weights, Stage3 judge calls, paid APIs and cleanup remain separately gated.
+unavailable Meta Llama weights, further Stage3 Judge calls, further paid APIs and cleanup remain
+separately gated.
 The earlier OpenRouter audit found no live endpoints for Qwen-VL-Plus, Claude-3.5-Haiku,
 Grok-4-Fast or Llama 3.2 Vision 11B/90B and no current Doubao 1.5 Vision catalog entry. Claude
 Sonnet 4.5 is runnable if the manuscript's ambiguous Claude-4.5 identity is confirmed.

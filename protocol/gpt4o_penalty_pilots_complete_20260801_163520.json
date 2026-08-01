@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T16:35:20+08:00",
+  "status": "complete",
+  "run_class": "matched_100step_coefficient_pilot",
+  "formal_result": false,
+  "judge": {
+    "gateway": "aigcbest",
+    "model": "gpt-4o-2024-08-06"
+  },
+  "arms": {
+    "0.3": {
+      "global_step": 100,
+      "checkpoint_100_complete": true,
+      "process_reward_records": 800,
+      "http_attempts": 800,
+      "cache_records": 800,
+      "fallbacks": 0,
+      "committed_spend_usd": 4.122074999999998,
+      "validation": {
+        "count": 385,
+        "correct": 234,
+        "accuracy": 0.6077922077922078,
+        "format_accuracy": 1.0,
+        "choice_extracted": 385,
+        "metrics_sha256": "b52a65ffe568b28682409330e80e8811339aeba5d6400262b90ee95154d6ea9f",
+        "predictions_sha256": "b54fc1581c5b93f3552e2c075f04bc677326bb6f1271d34aa50a0fea9b2adfd9"
+      }
+    },
+    "0.4": {
+      "global_step": 100,
+      "checkpoint_100_complete": true,
+      "process_reward_records": 800,
+      "http_attempts": 800,
+      "cache_records": 799,
+      "fallbacks": 0,
+      "committed_spend_usd": 4.130779999999996,
+      "validation": {
+        "count": 385,
+        "correct": 237,
+        "accuracy": 0.6155844155844156,
+        "format_accuracy": 1.0,
+        "choice_extracted": 385,
+        "metrics_sha256": "da19ed08b5f019704b0a0a13997655ad14f29e27e993f98e0836eef2beb100a0",
+        "predictions_sha256": "73270c48e1b38e761b676bf380ad363a3ea22c544260ef89c31d5abe19db273e"
+      }
+    },
+    "0.5_recovery_fresh01": {
+      "global_step": 100,
+      "checkpoint_100_complete": true,
+      "cache_reuse": false,
+      "automatic_restart_performed": false,
+      "process_reward_records": 800,
+      "http_attempts": 803,
+      "cache_records": 800,
+      "fallbacks": 0,
+      "committed_spend_usd": 4.127762499999998,
+      "unresolved_reservations": 0,
+      "budget_breached": false,
+      "train_state_audit_sha256": "7801a10398c184cd638a2cef7594bd2e35dc4bc9dc426ec5edac4ef12b4f43dd",
+      "checkpoint_trainer_state_sha256": "2b637ffd0d71d00793de2e04aa7271fce9658fa0dc4fd53fc239b297be113d4e",
+      "supervision_validation_sha256": "b1ca269e99a16128d75b884d4d637d3c49f41783414a8483736462a7c110bc66",
+      "validation": {
+        "count": 385,
+        "correct": 240,
+        "accuracy": 0.6233766233766234,
+        "format_accuracy": 1.0,
+        "choice_extracted": 385,
+        "metrics_sha256": "e596c65ece3adf883d96858c412559e09c87b37cd0c4f2d6380f7fbe546e1f51",
+        "predictions_sha256": "1f6e32c3972ce95565ad1d8c1904dd3e42456719d22b8cca29f3b8c72a1a77fc"
+      }
+    }
+  },
+  "paired_comparisons": {
+    "method": {
+      "test": "exact two-sided McNemar",
+      "interval": "paired percentile bootstrap",
+      "bootstrap_resamples": 20000,
+      "bootstrap_seed": 42
+    },
+    "0.3_to_0.4": {
+      "improved": 11,
+      "regressed": 8,
+      "accuracy_change_percentage_points": 0.7792207792207793,
+      "exact_p": 0.6476058959960938,
+      "bootstrap_95_percentage_points": [-1.2987012987012987, 3.116883116883117]
+    },
+    "0.4_to_0.5": {
+      "improved": 14,
+      "regressed": 11,
+      "accuracy_change_percentage_points": 0.7792207792207793,
+      "exact_p": 0.6900379657745361,
+      "bootstrap_95_percentage_points": [-1.8181818181818181, 3.3766233766233764]
+    },
+    "0.3_to_0.5": {
+      "improved": 15,
+      "regressed": 9,
+      "accuracy_change_percentage_points": 1.5584415584415585,
+      "exact_p": 0.30745625495910645,
+      "bootstrap_95_percentage_points": [-0.7792207792207793, 4.1558441558441555]
+    }
+  },
+  "interpretation": {
+    "point_estimates_monotonic": true,
+    "paired_differences_statistically_significant": false,
+    "supports_stability_over_penalty_range_0.3_to_0.5": true,
+    "supports_selecting_0.5_as_conclusively_best": false,
+    "formal_coefficient_decision_frozen_by_this_record": false
+  },
+  "aggregate_budget": {
+    "approved_usd": 18.0,
+    "completed_0.3_usd": 4.122074999999998,
+    "completed_0.4_usd": 4.130779999999996,
+    "settled_original_failed_0.5_usd": 4.242265000000002,
+    "completed_recovery_0.5_usd": 4.127762499999998,
+    "total_usd": 16.622882499999996,
+    "remaining_usd": 1.3771175000000042,
+    "settled_original_0.5_ledger_sha256": "36196250acb7d899b7cae33b87ed9a5d381b02fae81e4f652d0d73a01599756f"
+  },
+  "supervisor_status_sha256": "17cf470fe1772407edc45ffa02ec6e0fbaa01c5035404b9a02886ff35d731ac2",
+  "validation385_completed": true,
+  "test999_accessed": false,
+  "formal_long_stage3_started": false,
+  "further_paid_action_performed": false
+}
