@@ -45,6 +45,12 @@ TRANSIENT_HTTP_STATUSES = {408, 429, 500, 502, 503, 529}
 RETRY_DELAYS_SECONDS = (5, 15)
 
 
+class SmokeFailure(RuntimeError):
+    def __init__(self, message: str, evidence: dict[str, Any]):
+        super().__init__(message)
+        self.evidence = evidence
+
+
 def canonical_json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
@@ -170,26 +176,42 @@ def request_case(api_key: str, model: str, case: dict[str, Any]) -> dict[str, An
             if status in TRANSIENT_HTTP_STATUSES and attempt <= len(RETRY_DELAYS_SECONDS):
                 time.sleep(RETRY_DELAYS_SECONDS[attempt - 1])
                 continue
-            raise RuntimeError(f"terminal HTTP {status}: {raw[:500]}") from exc
+            try:
+                raw_response: Any = json.loads(raw)
+            except json.JSONDecodeError:
+                raw_response = raw
+            raise SmokeFailure(
+                f"terminal HTTP {status}: {raw[:500]}",
+                {"http_status": status, "attempts": attempts, "raw_response": raw_response},
+            ) from exc
         except (TimeoutError, urllib.error.URLError) as exc:
             # Delivery is ambiguous; do not risk a duplicate paid request.
-            raise RuntimeError(f"ambiguous transport failure, not retried: {exc}") from exc
+            raise SmokeFailure(
+                f"ambiguous transport failure, not retried: {exc}",
+                {"http_status": None, "attempts": attempts, "raw_response": None},
+            ) from exc
         latency = time.monotonic() - started
         attempts.append({"attempt": attempt, "http_status": status, "latency_seconds": latency})
         body = json.loads(raw)
         choices = body.get("choices")
         if status != 200 or not isinstance(choices, list) or len(choices) != 1:
-            raise RuntimeError("successful HTTP response lacks exactly one choice")
+            raise SmokeFailure(
+                "successful HTTP response lacks exactly one choice",
+                {"http_status": status, "attempts": attempts, "raw_response": body},
+            )
         served = body.get("model")
-        if served != model:
-            raise RuntimeError(f"served-model mismatch: requested={model!r}, served={served!r}")
         choice = choices[0]
         content = choice.get("message", {}).get("content")
+        validation_errors = []
+        if served != model:
+            validation_errors.append(
+                f"served-model mismatch: requested={model!r}, served={served!r}"
+            )
         if not isinstance(content, str) or not content.strip():
-            raise RuntimeError("empty hosted-model response")
+            validation_errors.append("empty hosted-model response")
         if not choice.get("finish_reason"):
-            raise RuntimeError("missing finish_reason")
-        return {
+            validation_errors.append("missing finish_reason")
+        result = {
             "http_status": status,
             "safe_response_headers": safe_headers,
             "attempts": attempts,
@@ -197,9 +219,11 @@ def request_case(api_key: str, model: str, case: dict[str, Any]) -> dict[str, An
             "served_model": served,
             "finish_reason": choice.get("finish_reason"),
             "usage": body.get("usage"),
-            "completion": content,
+            "completion": content if isinstance(content, str) else "",
             "raw_response": body,
+            "validation_errors": validation_errors,
         }
+        return result
     raise AssertionError("unreachable")
 
 
@@ -246,8 +270,32 @@ def main() -> None:
 
     cases = load_fixed_cases()
     completed = []
+    terminal_failure = None
     for case in cases:
-        response = request_case(api_key, args.model, case)
+        try:
+            response = request_case(api_key, args.model, case)
+        except SmokeFailure as exc:
+            terminal_failure = {
+                "schema_version": 1,
+                "recorded_at": datetime.now(timezone.utc).isoformat(),
+                "formal_result": False,
+                "purpose": "adapter_behavior_only_not_model_selection",
+                "requested_model": args.model,
+                "case_id": case["case_id"],
+                "task": case["task"],
+                "index": case["index"],
+                "source_record_sha256": case["source_record_sha256"],
+                "image_path": str(case["image"]),
+                "image_sha256": case["image_sha256"],
+                "prompt": case["prompt"],
+                "prompt_sha256": hashlib.sha256(case["prompt"].encode()).hexdigest(),
+                "max_tokens": case["max_tokens"],
+                "status": "failed",
+                "error": str(exc),
+                **exc.evidence,
+            }
+            append_jsonl(predictions, terminal_failure)
+            break
         row = {
             "schema_version": 1,
             "recorded_at": datetime.now(timezone.utc).isoformat(),
@@ -268,20 +316,30 @@ def main() -> None:
         }
         append_jsonl(predictions, row)
         completed.append(row)
+        if response["validation_errors"]:
+            terminal_failure = row
+            break
 
+    passed = terminal_failure is None and len(completed) == len(cases)
     summary = {
         "schema_version": 1,
         "recorded_at": datetime.now(timezone.utc).isoformat(),
-        "status": "passed",
+        "status": "passed" if passed else "failed",
         "formal_result": False,
         "accuracy_used_for_selection": False,
         "requested_model": args.model,
-        "served_models": sorted({row["served_model"] for row in completed}),
+        "served_models": sorted({str(row["served_model"]) for row in completed}),
         "case_ids": [row["case_id"] for row in completed],
         "all_images_accepted": len(completed) == len(cases),
         "all_responses_nonempty": all(bool(row["completion"].strip()) for row in completed),
         "all_finish_reasons_present": all(bool(row["finish_reason"]) for row in completed),
         "all_scoring_paths_executed": all(isinstance(row["score"], dict) for row in completed),
+        "terminal_failure_case": terminal_failure.get("case_id") if terminal_failure else None,
+        "terminal_failure_error": (
+            terminal_failure.get("error")
+            if terminal_failure and "error" in terminal_failure
+            else terminal_failure.get("validation_errors") if terminal_failure else None
+        ),
         "predictions": str(predictions),
         "dataset_sha256": {
             "pathmmu_validation": sha256_file(PATHMMU_DATA),
@@ -291,6 +349,8 @@ def main() -> None:
     }
     atomic_json(summary_path, summary)
     print(canonical_json(summary))
+    if not passed:
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":

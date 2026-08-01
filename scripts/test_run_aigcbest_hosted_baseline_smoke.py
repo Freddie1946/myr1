@@ -10,7 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from run_aigcbest_hosted_baseline_smoke import load_fixed_cases, make_payload, score_case
+from run_aigcbest_hosted_baseline_smoke import (
+    SmokeFailure, load_fixed_cases, make_payload, score_case
+)
 
 
 class HostedBaselineSmokeTests(unittest.TestCase):
@@ -45,6 +47,10 @@ class HostedBaselineSmokeTests(unittest.TestCase):
             self.assertIsInstance(score, dict)
         free_form = score_case(self.cases[1], completions["pathvqa"])
         self.assertTrue(free_form["semantic_judge_required_for_full_score"])
+
+    def test_failure_evidence_is_attached(self):
+        failure = SmokeFailure("terminal", {"http_status": 404, "raw_response": {"error": {}}})
+        self.assertEqual(failure.evidence["http_status"], 404)
 
 
 if __name__ == "__main__":
