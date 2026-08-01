@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T18:52:28+08:00",
+  "status": "passed",
+  "formal_result": false,
+  "paid_calls": 0,
+  "training_started": false,
+  "run_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_full3epoch_seed42_20260801",
+  "launcher_commit": "ccf1ddc",
+  "checks": {
+    "frozen_artifact_hashes": "passed",
+    "authenticated_model_catalog": "passed",
+    "public_pricing_contract": "passed",
+    "git_clean": "passed",
+    "eight_idle_a100_gpus": "passed",
+    "minimum_free_storage_500_gib": "passed"
+  },
+  "baseline_full_evaluation_gate": "fixed_behavioral_smoke_required"
+}

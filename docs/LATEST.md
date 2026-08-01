@@ -1,8 +1,13 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260731_221000`
+Latest timestamp: `20260801_185228`
 
 Read in this order:
+
+0. `20260801_185228_gpt4o_formal_preflight_passed.md`
+0. `20260801_184826_gpt4o_formal_launcher_and_execution_order_frozen.md`
+0. `../protocol/gpt4o_formal_preflight_result_20260801_185228.json`
+0. `../protocol/gpt4o_formal_launcher_frozen_20260801_184826.json`
 
 1. `20260712_134550_stage_overview_and_plan.md`
 2. `20260712_134550_stage1_sft_debug_log.md`
