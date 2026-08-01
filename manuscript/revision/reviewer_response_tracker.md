@@ -529,6 +529,16 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260801_191001_hosted_baseline_behavioral_smoke_results.md` and
     `protocol/hosted_baseline_behavioral_smoke_manifest_20260801_191001.json`. Supports R1-7 and
     R2-3; smoke accuracy is not a model-selection or efficacy result.
+33. Audited Doubao replacements and local Llama feasibility. Fixed exact identities
+    `doubao-seed-1-6-vision-250815` and `doubao-seed-2-0-mini-260428` both passed the four-case
+    visual adapter/scoring smoke and GPT-5 mini PathVQA judge path. The 1.6 Vision dated model is
+    the lineage-based continuity replacement and began PathMMU test999; 2.0 Mini remains an
+    optional stronger contemporary baseline. Llama 3.2 Vision local inference is technically
+    supported by the prepared Mllama environment and available 8xA100 resources, but both official
+    HF repositories return rejected gated-access 403s and the local directories contain no
+    weights. Evidence: `docs/20260801_194327_doubao_replacement_and_local_llama_feasibility.md` and
+    `protocol/doubao_replacement_llama_local_feasibility_20260801_194327.json`. Supports R1-7 and
+    R2-3; no mirror/substitute weight is accepted as an official Llama baseline.
 
 ## Mandatory update rule
 

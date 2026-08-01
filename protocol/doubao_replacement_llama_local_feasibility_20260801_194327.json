@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T19:43:27+08:00",
+  "formal_result": false,
+  "doubao": {
+    "continuity_replacement": "doubao-seed-1-6-vision-250815",
+    "continuity_smoke": "passed",
+    "continuity_pathmmu_full_status": "running",
+    "optional_stronger_baseline": "doubao-seed-2-0-mini-260428",
+    "optional_stronger_smoke": "passed",
+    "optional_stronger_full_status": "not_started",
+    "selection_by_smoke_accuracy": false
+  },
+  "llama_local": {
+    "technically_feasible": true,
+    "download_authorized": false,
+    "blocker": "official_huggingface_gated_access_rejected_403",
+    "llama11_revision": "9eb2daaa8597bf192a8b0e73f848f3a102794df5",
+    "llama11_transformers_weight_bytes": 21340560870,
+    "llama90_revision": "e305d2a43a4adc6987308fe7d896fb8ec5f1a5d8",
+    "llama90_transformers_weight_bytes": 177186907758,
+    "local_weights_present": false,
+    "recommended_gpu_count": {"llama11": 1, "llama90": 8},
+    "run_after_stage3": true
+  }
+}

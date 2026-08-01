@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260801_191524`
+Latest timestamp: `20260801_194327`
 
 Read in this order:
+
+0. `20260801_194327_doubao_replacement_and_local_llama_feasibility.md`
+0. `../protocol/doubao_replacement_llama_local_feasibility_20260801_194327.json`
 
 0. `20260801_191524_hosted_pathmmu_full_evaluations_started.md`
 0. `../protocol/hosted_pathmmu_full_launch_manifest_20260801_191524.json`
