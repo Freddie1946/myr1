@@ -518,6 +518,17 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260801_184826_gpt4o_formal_launcher_and_execution_order_frozen.md` and
     `protocol/gpt4o_formal_launcher_frozen_20260801_184826.json`.  This is preparation, not an
     efficacy or baseline result.
+32. Ran the fixed hosted-baseline behavioral gate before any full hosted evaluation. Qwen-VL-Plus
+    and Haiku 4.5 passed exact-identity four-case smokes; an explicitly requested contemporary
+    Grok 4.3 also passed. The historical Grok-4-Fast and Llama 3.2 90B aliases redirected to other
+    model families, Llama 3.2 11B had no endpoint, and the dated Doubao endpoint returned 404, so
+    none may be silently reported under the historical labels. The gate also caught and corrected
+    a target-blind OmniMedVQA parsing failure for an exact option on the first response line, while
+    preserving the legacy full-response similarity metric. GPT-5 mini schema-valid PathVQA
+    semantic-judge smokes passed for the three runnable identities. Evidence:
+    `docs/20260801_191001_hosted_baseline_behavioral_smoke_results.md` and
+    `protocol/hosted_baseline_behavioral_smoke_manifest_20260801_191001.json`. Supports R1-7 and
+    R2-3; smoke accuracy is not a model-selection or efficacy result.
 
 ## Mandatory update rule
 

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T19:10:01+08:00",
+  "status": "completed_with_identity_failures",
+  "formal_result": false,
+  "accuracy_used_for_selection": false,
+  "evidence_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/hosted_baseline_behavioral_smoke_20260801",
+  "fixed_cases": ["pathmmu_0", "pathvqa_1", "pathvqa_3", "omnimedvqa_0"],
+  "exact_identity_passed": [
+    "qwen-vl-plus",
+    "claude-haiku-4-5-20251001",
+    "grok-4.3"
+  ],
+  "historical_identity_failed": {
+    "doubao-1.5-vision-pro-250328": "terminal_404_endpoint_absent_or_inaccessible",
+    "grok-4-fast-non-reasoning": "served_grok-4.3",
+    "llama-3.2-11b-vision-instruct": "no_upstream_endpoint",
+    "llama-3.2-90b-vision-instruct": "served_llama4_maverick_fp8"
+  },
+  "alias_candidate_not_yet_accepted": {
+    "Doubao-1.5-vision-pro-32k": "served_doubao-1-5-vision-pro-32k-250115"
+  },
+  "pathvqa_semantic_judge_smoke": {
+    "requested_model": "gpt-5-mini",
+    "served_model": "gpt-5-mini-2025-08-07",
+    "schema_valid_for_models": [
+      "qwen-vl-plus",
+      "claude-haiku-4-5-20251001",
+      "grok-4.3"
+    ]
+  },
+  "omnimedvqa_scoring_correction": {
+    "target_blind": true,
+    "rule": "exact_first_nonempty_line_matches_one_unique_option_before_similarity",
+    "legacy_metric_preserved": true,
+    "repository_commit": "413deaa"
+  },
+  "full_evaluations_started": false
+}

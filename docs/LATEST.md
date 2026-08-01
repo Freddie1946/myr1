@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260801_185228`
+Latest timestamp: `20260801_191001`
 
 Read in this order:
+
+0. `20260801_191001_hosted_baseline_behavioral_smoke_results.md`
+0. `../protocol/hosted_baseline_behavioral_smoke_manifest_20260801_191001.json`
 
 0. `20260801_185228_gpt4o_formal_preflight_passed.md`
 0. `20260801_184826_gpt4o_formal_launcher_and_execution_order_frozen.md`
