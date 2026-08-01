@@ -492,6 +492,17 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260729_223742_pathmmu_sft3000_sft4000_stage2_diagnostics_completed.md` and
     `protocol/pathmmu_test999_sft3000_sft4000_stage2_completion_manifest_20260729_223742.json`.
     These remain pre-Stage3 diagnostics; Stage3 has not started.
+29. Completed the matched 0.3/0.4/0.5 GPT-4o 100-step sensitivity pilots and the retained-rollout
+    audit without using test999 for selection.  The paired differences are nonsignificant, so the
+    result supports local coefficient robustness rather than an empirical claim that 0.4 is best.
+    The user cancelled a 300-step extension; the proposed 0.4 setting is instead justified as a
+    pre-existing historical/mechanistic setting whose sensitivity was checked, and remains
+    formally unfrozen pending acceptance.  Hardened Stage3 recovery so only classified transient
+    Judge outages may relaunch; interrupts, resource/numeric, budget, identity/schema,
+    source/contract, total-fallback and unknown failures stop.  Evidence:
+    `docs/20260801_181414_stage3_fault_tolerance_hardening_and_coefficient_interpretation.md` and
+    `protocol/stage3_fault_tolerance_hardening_20260801_181414.json`.  Supports R2-1/R2-4/R3-5/R3-6
+    engineering reproducibility; no full Stage3 efficacy or expert-validity claim is made.
 
 ## Mandatory update rule
 

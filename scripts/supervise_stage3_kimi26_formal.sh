@@ -35,8 +35,8 @@ if [[ "$SAVE_STEPS" != "100" ]]; then
   echo "This recovery contract requires PATHVLM_STAGE3_SAVE_STEPS=100" >&2
   exit 2
 fi
-if [[ ! "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] || (( MAX_RECOVERIES > 10 )); then
-  echo "PATHVLM_STAGE3_MAX_RECOVERIES must be an integer from 0 through 10" >&2
+if [[ ! "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] || (( MAX_RECOVERIES > 3 )); then
+  echo "PATHVLM_STAGE3_MAX_RECOVERIES must be an integer from 0 through 3" >&2
   exit 2
 fi
 if [[ ! "$BASE_PORT" =~ ^[1-9][0-9]*$ ]] || (( BASE_PORT + MAX_RECOVERIES > 65535 )); then
@@ -112,12 +112,48 @@ for (( launch_index=0; launch_index<=MAX_RECOVERIES; launch_index++ )); do
     exit 0
   fi
 
+  train_log="$RUN_DIR/train_${segment}.log"
+  set +e
+  failure_classification="$($PYTHON "$RECOVERY" classify --log "$train_log")"
+  classification_status=$?
+  set -e
+  if (( classification_status != 0 )); then
+    failure_classification="{\"action\":\"stop\",\"category\":\"failure_classifier_error\",\"classifier_exit_status\":$classification_status,\"log\":\"$train_log\"}"
+  fi
+  recovery_action="$($PYTHON - "$failure_classification" <<'PY'
+import json
+import sys
+print(json.loads(sys.argv[1])["action"])
+PY
+)"
+
   settlement="$($PYTHON "$RECOVERY" settle \
     --ledger "$JUDGE_LEDGER" \
     --limit-usd "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" \
     --reserve-usd "$RESERVE_USD" \
     --max-unique-requests "$MAX_UNIQUE_REQUESTS" \
     --reason "$segment exited with status $launch_status")"
+
+  if [[ "$recovery_action" != "recover" ]]; then
+    event_json="$($PYTHON - "$segment" "$launch_index" "$launch_status" \
+      "$resume_from" "$settlement" "$failure_classification" <<'PY'
+import json
+import sys
+print(json.dumps({
+    "event": "segment_failed_terminal",
+    "segment": sys.argv[1],
+    "launch_index": int(sys.argv[2]),
+    "exit_status": int(sys.argv[3]),
+    "resumed_from": sys.argv[4],
+    "settlement": json.loads(sys.argv[5]),
+    "failure_classification": json.loads(sys.argv[6]),
+}, separators=(",", ":")))
+PY
+)"
+    record_event "$event_json"
+    echo "Stage3 stopped without automatic retry: $failure_classification" >&2
+    exit "$launch_status"
+  fi
 
   set +e
   next_resume="$($PYTHON "$RECOVERY" latest --output-dir "$OUTPUT_DIR" --world-size 8 --path-only 2>/dev/null)"
@@ -129,7 +165,7 @@ for (( launch_index=0; launch_index<=MAX_RECOVERIES; launch_index++ )); do
     echo "Checkpoint discovery after failure returned status $latest_status" >&2
     exit "$latest_status"
   fi
-  event_json="$($PYTHON - "$segment" "$launch_index" "$launch_status" "$resume_from" "$next_resume" "$settlement" <<'PY'
+  event_json="$($PYTHON - "$segment" "$launch_index" "$launch_status" "$resume_from" "$next_resume" "$settlement" "$failure_classification" <<'PY'
 import json
 import sys
 print(json.dumps({
@@ -140,6 +176,7 @@ print(json.dumps({
     "resumed_from": sys.argv[4],
     "next_resume": sys.argv[5],
     "settlement": json.loads(sys.argv[6]),
+    "failure_classification": json.loads(sys.argv[7]),
 }, separators=(",", ":")))
 PY
 )"

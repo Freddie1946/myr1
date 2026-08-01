@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import http.client
 import json
+import multiprocessing
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -81,6 +82,14 @@ def response_for(
         },
         latency_seconds=0.01,
     )
+
+
+def record_fallback_in_subprocess(arguments):
+    path, index = arguments
+    limiter = RuleFallbackLimiter(
+        Path(path), total_limit=16, consecutive_limit=16
+    )
+    limiter.record_fallback({"index": index})
 
 
 class SchemaAndScoringTests(unittest.TestCase):
@@ -254,6 +263,20 @@ class LedgerTests(unittest.TestCase):
 
 
 class RuleFallbackLimiterTests(unittest.TestCase):
+    def test_interprocess_updates_are_atomic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "fallback.json"
+            context = multiprocessing.get_context("fork")
+            with context.Pool(processes=4) as pool:
+                pool.map(
+                    record_fallback_in_subprocess,
+                    [(str(path), index) for index in range(12)],
+                )
+            state = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(state["total_used"], 12)
+            self.assertEqual(state["consecutive_used"], 12)
+            self.assertEqual(len(state["events"]), 12)
+
     def test_consecutive_limit_stops_fifth_and_success_resets(self):
         with tempfile.TemporaryDirectory() as directory:
             limiter = RuleFallbackLimiter(
@@ -313,7 +336,9 @@ class JudgeTests(unittest.TestCase):
                 "source_metadata": {"record_index": 7},
             }
             self.assertEqual(judge.judge_one(**arguments), 1.0)
+            self.assertEqual(judge.last_result_source, "remote")
             self.assertEqual(judge.judge_one(**arguments), 1.0)
+            self.assertEqual(judge.last_result_source, "cache")
             self.assertEqual(len(calls), 1)
             request = calls[0][0]
             self.assertEqual(request["provider"]["only"], ["azure"])

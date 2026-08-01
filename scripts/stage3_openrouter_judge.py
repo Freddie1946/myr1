@@ -679,6 +679,11 @@ class OpenRouterJudge:
             max_unique_requests=max_unique_requests,
         )
         self.transport = transport
+        # Exposed only so the process-level outage circuit breaker can
+        # distinguish a real remote recovery from a local cache hit.  A cache
+        # hit is valid reward evidence, but it does not prove that the Judge
+        # endpoint is reachable again.
+        self.last_result_source: str | None = None
         self.api_key = api_key if api_key is not None else os.getenv("OPENROUTER_API_KEY", "")
         self.timeout_seconds = float(timeout_seconds)
         if retry_delays is None:
@@ -895,6 +900,7 @@ class OpenRouterJudge:
         completion: str,
         source_metadata: dict[str, Any] | None = None,
     ) -> float:
+        self.last_result_source = None
         image = Path(image_path).resolve()
         cache_key = make_cache_key(
             image_sha256=image_sha256,
@@ -938,6 +944,7 @@ class OpenRouterJudge:
                         **(source_metadata or {}),
                     }
                 )
+                self.last_result_source = "cache"
                 return float(scores["process"])
 
             if not self.api_key:
@@ -1137,6 +1144,7 @@ class OpenRouterJudge:
                     **(source_metadata or {}),
                 }
             )
+            self.last_result_source = "remote"
             return float(scores["process"])
         finally:
             fcntl.flock(lock_handle.fileno(), fcntl.LOCK_UN)
@@ -1335,7 +1343,10 @@ def process_reward(completions, solution, **kwargs):
                 completion=completion,
                 source_metadata=source_metadata,
             )
-            if fallback_limiter is not None:
+            if (
+                fallback_limiter is not None
+                and judge.last_result_source == "remote"
+            ):
                 fallback_limiter.record_judge_success()
         except JudgeUnavailableForRuleFallback as exc:
             if fallback_limiter is None:

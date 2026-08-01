@@ -9,6 +9,7 @@ import unittest
 from pathlib import Path
 
 from stage3_checkpoint_recovery import (
+    classify_training_failure,
     latest_complete_checkpoint,
     settle_unresolved,
     validate_complete_checkpoint,
@@ -105,6 +106,51 @@ class SettlementTests(unittest.TestCase):
             self.assertEqual(first["settled_count"], 1)
             self.assertEqual(second["settled_count"], 0)
             self.assertAlmostEqual(second["committed_spend_usd"], 0.05)
+
+
+class FailureClassificationTests(unittest.TestCase):
+    def classify(self, text: str):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "train.log"
+            path.write_text(text, encoding="utf-8")
+            return classify_training_failure(path)
+
+    def test_consecutive_judge_outage_is_recoverable(self):
+        result = self.classify(
+            "RuleFallbackLimitExceeded: rule fallback consecutive limit reached: 4"
+        )
+        self.assertEqual(result["action"], "recover")
+        self.assertEqual(result["category"], "consecutive_judge_outage")
+
+    def test_incomplete_read_is_recoverable(self):
+        result = self.classify("http.client.IncompleteRead: IncompleteRead(0 bytes read)")
+        self.assertEqual(result["action"], "recover")
+
+    def test_interrupt_oom_budget_and_identity_stop(self):
+        for message, category in (
+            ("KeyboardInterrupt", "user_interrupt"),
+            ("torch.OutOfMemoryError: CUDA out of memory", "resource_or_numeric_failure"),
+            ("BudgetError: hard cap refuses next reservation", "budget_or_request_gate"),
+            ("served model mismatch: expected x", "judge_identity_or_schema_mismatch"),
+        ):
+            with self.subTest(message=message):
+                result = self.classify(message)
+                self.assertEqual(result["action"], "stop")
+                self.assertEqual(result["category"], category)
+
+    def test_total_fallback_limit_and_unknown_failure_stop(self):
+        total = self.classify("rule fallback total limit reached: 24")
+        self.assertEqual(total["action"], "stop")
+        self.assertEqual(total["category"], "total_rule_fallback_limit")
+        unknown = self.classify("some new distributed failure")
+        self.assertEqual(unknown["action"], "stop")
+        self.assertEqual(unknown["category"], "unknown_failure_fail_closed")
+
+    def test_missing_log_stops(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = classify_training_failure(Path(directory) / "missing.log")
+        self.assertEqual(result["action"], "stop")
+        self.assertEqual(result["category"], "missing_training_log")
 
 
 if __name__ == "__main__":

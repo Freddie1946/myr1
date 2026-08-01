@@ -85,6 +85,17 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Recovery update (2026-08-01): the user approved conservative settlement of the six unresolved
   reservations and one fresh, no-cache 0.5 rerun with 800 logical judgments, at most 824 physical
   attempts and a $5.50 cap.  See `gpt4o_0p5_fresh_recovery_approved_20260801_144436.json`.
+- Coefficient interpretation update (2026-08-01): all three 100-step pilots and matched
+  validation runs completed, with no statistically significant paired difference.  The user
+  cancelled the 300-step extension.  These pilots establish local sensitivity/robustness, not an
+  empirically optimal coefficient.  The proposed use of 0.4 is as the prior historical and
+  reward-geometry setting; it remains formally unfrozen pending acceptance of that justification.
+- Recovery hardening update (2026-08-01): automatic relaunch is now whitelist-only.  Recognized
+  transient Judge transport and the consecutive-outage circuit breaker may recover; user
+  interrupt, OOM/disk/numeric, budget, identity/schema, source/contract, total-fallback and
+  unknown failures stop.  Only a fresh remote Judge success resets the outage counter, and the
+  automatic recovery cap cannot exceed three.  See
+  `stage3_fault_tolerance_hardening_20260801_181414.json`.
 
 ## Evaluation
 

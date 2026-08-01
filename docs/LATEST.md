@@ -229,6 +229,22 @@ Read in this order:
 223. `../protocol/gpt4o_penalty_pilots_complete_20260801_163520.json`
 224. `20260801_173514_gpt4o_penalty_case_and_rollout_analysis.md`
 225. `../protocol/gpt4o_penalty_case_and_rollout_analysis_20260801_173514.json`
+226. `20260801_181414_stage3_fault_tolerance_hardening_and_coefficient_interpretation.md`
+227. `../protocol/stage3_fault_tolerance_hardening_20260801_181414.json`
+
+The user cancelled the 300-step coefficient extension.  The 100-step experiment is now interpreted
+as evidence of local robustness over 0.3--0.5, not evidence that 0.4 is statistically optimal.  A
+revised proposal would retain 0.4 as the prior historical/mechanistic setting: among the three
+tested candidates it preserves four ordered per-subscale severity levels and reaches zero exactly
+when all three events fail.  This justification is pending user acceptance, so the formal
+coefficient remains unfrozen.
+
+Stage3 fault tolerance is now fail-closed.  Automatic restart is whitelisted only for recognized
+transient Judge transport or consecutive Judge-outage failures.  Interrupt, OOM/disk/numeric,
+budget, identity/schema, source/contract, total-fallback and unknown failures stop after
+conservative reservation settlement.  Cache hits no longer masquerade as remote recovery, and
+the automatic recovery cap is fixed at three.  Forty-one CUDA-free Stage3 tests and historical Kimi-log
+replay pass; no paid call, training or test access occurred.
 
 The three matched GPT-4o 100-step coefficient pilots and their common PathMMU validation385 runs
 are complete; entry 222 is the current result and interpretation. Accuracy was 60.78%, 61.56%

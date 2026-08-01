@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T18:14:14+08:00",
+  "status": "offline_hardening_complete",
+  "formal_result": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "training_started": false,
+  "test_accessed": false,
+  "coefficient_decision": {
+    "extend_to_300_steps": false,
+    "formal_coefficient_frozen": false,
+    "proposed_coefficient": 0.4,
+    "proposed_role": "a_priori_historical_and_reward_geometry_setting_not_empirical_optimum",
+    "sensitivity_interpretation": "locally_robust_over_0.3_to_0.5"
+  },
+  "recovery_policy": {
+    "automatic_recovery": "whitelist_only",
+    "recoverable_categories": [
+      "consecutive_judge_outage",
+      "transient_judge_transport"
+    ],
+    "unknown_failure_action": "stop",
+    "maximum_automatic_recoveries": 3,
+    "cache_hit_resets_remote_outage_counter": false,
+    "real_remote_success_resets_remote_outage_counter": true,
+    "unresolved_reservations_settled_before_exit_or_recovery": true
+  },
+  "historical_log_replay": {
+    "kimi_attempt01": "recover_transient_judge_transport_http_client_incomplete_read",
+    "kimi_attempt02": "stop_user_interrupt_keyboard_interrupt"
+  },
+  "verification": {
+    "cuda_free_stage3_tests_passed": 41,
+    "judge_and_recovery_tests_passed": 36,
+    "shell_syntax_passed": true,
+    "git_diff_check_passed": true
+  },
+  "code_sha256": {
+    "scripts/stage3_openrouter_judge.py": "55f4500319a0081fce4272d2bb7d69e6e19864384b6c1d5cf6b518083d7bff49",
+    "scripts/stage3_checkpoint_recovery.py": "062735215110fb6652cb7eb26d0bb4d394e27dfb10526a2270ff344b0c291ebe",
+    "scripts/supervise_stage3_kimi26_formal.sh": "7d698b34bd7ac19c0002a586af6df5ffb4e25675142559f938b69f19a448cbaf",
+    "scripts/test_stage3_openrouter_judge.py": "2e9648aed9fddc623b8028a4ea8c459e79b07c0b9a9152f97c713038b0f67cf1",
+    "scripts/test_stage3_checkpoint_recovery.py": "65e8cd19756f3c2ba8d227f1f54114ae42ddc54537f3f2262a5f8927e7a723e6"
+  }
+}

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import fcntl
+import hashlib
 import json
 import os
 from datetime import datetime, timezone
@@ -14,8 +15,138 @@ from typing import Any
 from stage3_openrouter_judge import BudgetLedger
 
 
+LOG_TAIL_BYTES = 8 * 1024 * 1024
+
+# Recovery is intentionally a whitelist.  Distributed launchers commonly
+# collapse every worker exception into exit status 1, so an exit code alone
+# cannot distinguish a transient Judge outage from a scientific/configuration
+# failure.  Unknown failures stop for human diagnosis instead of being retried.
+TERMINAL_FAILURE_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    (
+        "user_interrupt",
+        ("KeyboardInterrupt", "got signal: 2", "SIGINT", "signal 2"),
+    ),
+    (
+        "budget_or_request_gate",
+        (
+            "BudgetError",
+            "hard cap refuses",
+            "maximum unique OpenRouter request count reached",
+            "budget breached",
+        ),
+    ),
+    (
+        "judge_identity_or_schema_mismatch",
+        (
+            "served model mismatch",
+            "served provider is not in frozen provider set",
+            "Judge output keys differ",
+            "Judge evidence keys differ",
+            "Judge event is not boolean",
+        ),
+    ),
+    (
+        "source_or_contract_drift",
+        (
+            "image SHA-256 mismatch",
+            "source audit",
+            "contract mismatch",
+            "adapter count mismatch",
+        ),
+    ),
+    (
+        "resource_or_numeric_failure",
+        (
+            "CUDA out of memory",
+            "OutOfMemoryError",
+            "No space left on device",
+            "NaN",
+            "nan loss",
+            "Inf detected",
+        ),
+    ),
+    (
+        "total_rule_fallback_limit",
+        ("rule fallback total limit reached",),
+    ),
+)
+
+RECOVERABLE_FAILURE_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    (
+        "consecutive_judge_outage",
+        ("rule fallback consecutive limit reached",),
+    ),
+    (
+        "transient_judge_transport",
+        (
+            "http.client.IncompleteRead",
+            "OpenRouter transport failure",
+            "JudgeUnavailableForRuleFallback",
+        ),
+    ),
+)
+
+
 def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def _read_log_tail(path: Path, *, maximum_bytes: int = LOG_TAIL_BYTES) -> bytes:
+    if maximum_bytes <= 0:
+        raise ValueError("maximum log-tail bytes must be positive")
+    with path.open("rb") as handle:
+        handle.seek(0, os.SEEK_END)
+        size = handle.tell()
+        handle.seek(max(0, size - maximum_bytes), os.SEEK_SET)
+        return handle.read()
+
+
+def classify_training_failure(log_path: Path) -> dict[str, Any]:
+    """Classify a failed distributed launch under a fail-closed recovery policy."""
+
+    path = log_path.resolve()
+    if not path.is_file():
+        return {
+            "action": "stop",
+            "category": "missing_training_log",
+            "matched_pattern": None,
+            "log": str(path),
+        }
+    raw = _read_log_tail(path)
+    text = raw.decode("utf-8", errors="replace")
+    for category, patterns in TERMINAL_FAILURE_PATTERNS:
+        for pattern in patterns:
+            if pattern in text:
+                return {
+                    "action": "stop",
+                    "category": category,
+                    "matched_pattern": pattern,
+                    "log": str(path),
+                    "log_bytes": path.stat().st_size,
+                    "tail_bytes": len(raw),
+                    "tail_sha256": hashlib.sha256(raw).hexdigest(),
+                }
+    for category, patterns in RECOVERABLE_FAILURE_PATTERNS:
+        for pattern in patterns:
+            if pattern in text:
+                return {
+                    "action": "recover",
+                    "category": category,
+                    "matched_pattern": pattern,
+                    "log": str(path),
+                    "log_bytes": path.stat().st_size,
+                    "tail_bytes": len(raw),
+                    "tail_sha256": hashlib.sha256(raw).hexdigest(),
+                }
+    return {
+        "action": "stop",
+        "category": "unknown_failure_fail_closed",
+        "matched_pattern": None,
+        "log": str(path),
+        "log_bytes": path.stat().st_size,
+        "tail_bytes": len(raw),
+        "tail_sha256": hashlib.sha256(raw).hexdigest(),
+    }
 
 
 def validate_complete_checkpoint(path: Path, *, world_size: int = 8) -> dict[str, Any]:
@@ -197,6 +328,10 @@ def parse_args() -> argparse.Namespace:
     settle.add_argument("--max-unique-requests", type=int, default=12001)
     settle.add_argument("--reason", required=True)
 
+    classify = subparsers.add_parser("classify")
+    classify.add_argument("--log", type=Path, required=True)
+    classify.add_argument("--action-only", action="store_true")
+
     event = subparsers.add_parser("event")
     event.add_argument("--audit", type=Path, required=True)
     event.add_argument("--json", required=True)
@@ -225,6 +360,9 @@ def main() -> None:
                 sort_keys=True,
             )
         )
+    elif args.command == "classify":
+        result = classify_training_failure(args.log)
+        print(result["action"] if args.action_only else json.dumps(result, sort_keys=True))
     else:
         value = json.loads(args.json)
         if not isinstance(value, dict):
