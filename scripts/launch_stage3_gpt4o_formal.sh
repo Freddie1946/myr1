@@ -72,9 +72,16 @@ if [[ -n "$RESUME_FROM" ]]; then
   "$PYTHON" "$REPO_ROOT/scripts/stage3_checkpoint_recovery.py" \
     validate "$resolved_resume" --world-size 8 >/dev/null
   RESUME_FROM="$resolved_resume"
+  # PyTorch 2.6 changed torch.load's default to weights_only=True.  DeepSpeed
+  # optimizer states contain its own ZeroStageEnum and therefore require full
+  # deserialization.  This is restricted to a locally-created checkpoint that
+  # passed the complete 8-rank checkpoint validator above.
+  export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD="1"
 elif [[ -e "$OUTPUT_DIR" ]]; then
   echo "Refusing existing output without a validated resume" >&2
   exit 2
+else
+  unset TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD || true
 fi
 
 set -a
@@ -166,7 +173,8 @@ value={"schema_version":1,"created_at":datetime.now(timezone.utc).isoformat(),"s
 "maximum_physical_http_attempts":12360,"maximum_logical_judgments":12000,
 "retry_delays_seconds":[15,45,90],"rule_fallback_total_limit":24,
 "rule_fallback_consecutive_limit":4,"max_steps":1500,"save_steps":100,
-"segment":segment,"resume_from":resume or None,"test_accessed":False}
+"segment":segment,"resume_from":resume or None,
+"trusted_local_checkpoint_full_deserialization":bool(resume),"test_accessed":False}
 Path(path).write_text(json.dumps(value,indent=2,sort_keys=True)+"\n")
 PY
 

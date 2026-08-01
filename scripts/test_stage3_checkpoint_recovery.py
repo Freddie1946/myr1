@@ -132,6 +132,10 @@ class FailureClassificationTests(unittest.TestCase):
             ("torch.OutOfMemoryError: CUDA out of memory", "resource_or_numeric_failure"),
             ("BudgetError: hard cap refuses next reservation", "budget_or_request_gate"),
             ("served model mismatch: expected x", "judge_identity_or_schema_mismatch"),
+            (
+                "_pickle.UnpicklingError: Weights only load failed.",
+                "checkpoint_deserialization_compatibility",
+            ),
         ):
             with self.subTest(message=message):
                 result = self.classify(message)

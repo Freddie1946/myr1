@@ -53,8 +53,14 @@ class FormalContractTests(unittest.TestCase):
         self.assertIn('PATHVLM_STAGE3_MAX_RECOVERIES:-3', text)
         self.assertIn('classify --log "$train_log"', text)
         self.assertIn('"event":"failure_classifier_error"', text)
+        self.assertIn('PATHVLM_STAGE3_START_INDEX', text)
         self.assertIn('if [[ "$recovery_action" != "recover" ]]', text)
         self.assertIn('--world-size 8', text)
+
+    def test_resume_enables_trusted_local_checkpoint_deserialization(self):
+        text = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn('export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD="1"', text)
+        self.assertIn('trusted_local_checkpoint_full_deserialization', text)
 
 
 if __name__ == "__main__":

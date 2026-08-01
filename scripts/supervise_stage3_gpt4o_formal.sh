@@ -18,8 +18,11 @@ OUTPUT_DIR="$RUN_DIR/output"
 JUDGE_LEDGER="$RUN_DIR/judge/budget_ledger.json"
 SUPERVISOR_AUDIT="$RUN_DIR/supervisor_recovery_audit.jsonl"
 MAX_RECOVERIES="${PATHVLM_STAGE3_MAX_RECOVERIES:-3}"
+START_INDEX="${PATHVLM_STAGE3_START_INDEX:-0}"
 BASE_PORT="${PATHVLM_STAGE3_MASTER_PORT:-29740}"
 [[ "$MAX_RECOVERIES" =~ ^[0-3]$ ]] || { echo "Recoveries must be 0 through 3" >&2; exit 2; }
+[[ "$START_INDEX" =~ ^[0-3]$ ]] || { echo "Start index must be 0 through 3" >&2; exit 2; }
+(( START_INDEX <= MAX_RECOVERIES )) || { echo "Start index exceeds recovery limit" >&2; exit 2; }
 [[ "$BASE_PORT" =~ ^[1-9][0-9]*$ ]] || exit 2
 [[ -x "$PYTHON" && -f "$LAUNCHER" && -f "$RECOVERY" ]] || exit 2
 
@@ -37,7 +40,7 @@ archive_incomplete_output() {
 }
 
 resume_from=""
-for (( launch_index=0; launch_index<=MAX_RECOVERIES; launch_index++ )); do
+for (( launch_index=START_INDEX; launch_index<=MAX_RECOVERIES; launch_index++ )); do
   segment="segment$(printf '%02d' "$launch_index")"
   if [[ -d "$OUTPUT_DIR" ]]; then
     set +e

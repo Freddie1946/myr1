@@ -66,6 +66,10 @@ TERMINAL_FAILURE_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
         ),
     ),
     (
+        "checkpoint_deserialization_compatibility",
+        ("Weights only load failed",),
+    ),
+    (
         "total_rule_fallback_limit",
         ("rule fallback total limit reached",),
     ),
