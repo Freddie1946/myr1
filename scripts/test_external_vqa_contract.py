@@ -62,6 +62,17 @@ class ExternalVQAContractTests(unittest.TestCase):
         self.assertEqual(score["contract_aligned_predicted_choice"], "B")
         self.assertTrue(score["contract_aligned_correct"])
 
+    def test_omni_exact_leading_option_text_precedes_explanation(self):
+        completion = (
+            "CT\n\nThe image has CT slice geometry. Angiography is a distractor "
+            "mentioned later in this explanation."
+        )
+        score = omnimed_score(completion, OMNI)
+        self.assertEqual(score["contract_aligned_predicted_choice"], "C")
+        self.assertEqual(
+            score["contract_aligned_prediction_source"], "exact_leading_option_text"
+        )
+
     def test_incomplete_answer_tag_is_extractable(self):
         answer, source = extract_omnimed_answer("<think>x</think><answer>C) CT</")
         self.assertEqual((answer, source), ("C) CT", "answer_tag"))

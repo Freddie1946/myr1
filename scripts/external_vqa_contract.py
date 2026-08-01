@@ -259,12 +259,27 @@ def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
     if explicit_letter and explicit_letter.group(1).upper() in letters:
         aligned_predicted = explicit_letter.group(1).upper()
         aligned_similarities = None
+        aligned_prediction_source = "explicit_leading_choice_letter"
     else:
-        aligned_index, aligned_similarities_list = official_most_similar_option(
-            aligned_answer, texts
+        first_line = next(
+            (line.strip() for line in aligned_answer.splitlines() if line.strip()), ""
         )
-        aligned_predicted = letters[aligned_index] if aligned_index is not None else None
-        aligned_similarities = dict(zip(letters, aligned_similarities_list))
+        leading_matches = [
+            letter
+            for letter, text in zip(letters, texts)
+            if normalize_short_answer(first_line) == normalize_short_answer(text)
+        ]
+        if len(leading_matches) == 1:
+            aligned_predicted = leading_matches[0]
+            aligned_similarities = None
+            aligned_prediction_source = "exact_leading_option_text"
+        else:
+            aligned_index, aligned_similarities_list = official_most_similar_option(
+                aligned_answer, texts
+            )
+            aligned_predicted = letters[aligned_index] if aligned_index is not None else None
+            aligned_similarities = dict(zip(letters, aligned_similarities_list))
+            aligned_prediction_source = "official_option_similarity"
     return {
         "target_choice": target,
         "official_predicted_choice": predicted,
@@ -275,6 +290,7 @@ def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
         "contract_aligned_answer": aligned_answer,
         "contract_aligned_answer_source": aligned_source,
         "contract_aligned_predicted_choice": aligned_predicted,
+        "contract_aligned_prediction_source": aligned_prediction_source,
         "contract_aligned_option_similarities": aligned_similarities,
         "contract_aligned_correct": aligned_predicted == target,
         "normalized_completion": normalized_completion,
