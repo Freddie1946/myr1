@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T17:35:14+08:00",
+  "status": "complete",
+  "analysis_type": "offline_matched_stage3_penalty_case_analysis",
+  "formal_result": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "test999_accessed": false,
+  "analysis_artifact": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_penalty_case_analysis_20260801/case_analysis.json",
+    "sha256": "b329b645f6c7c38dcee02b308da2b999e3e5c77becf08ee1e08f200b33e021f1",
+    "bytes": 112021
+  },
+  "analysis_code": {
+    "script": "scripts/analyze_stage3_penalty_cases.py",
+    "script_sha256": "457ef712155831beac34481113ec247b9a1425cca3d7fb6e16541f1e5a9cd7cd",
+    "test": "scripts/test_analyze_stage3_penalty_cases.py",
+    "test_sha256": "5a0ea50d1d624f5e96d2e881312de45a2d8248ea1333fe73bead62bb3197df85"
+  },
+  "rollout_retention": {
+    "successful_arms": ["0.3", "0.4", "0.5_recovery_fresh01"],
+    "unique_rollouts_per_arm": 800,
+    "source_records_per_arm": 200,
+    "generations_per_source_record": 4,
+    "reward_types": ["accuracy", "format", "process"],
+    "serialized_audit_rows_per_arm": 2400,
+    "full_completion_retained": true,
+    "question_solution_image_hash_retained": true,
+    "judge_six_events_and_evidence_retained": true,
+    "original_stopped_0.5_completed_rollouts_retained_separately": 792,
+    "stored_locally": true,
+    "committed_to_git": false,
+    "included_in_model_weight_checkpoint": false
+  },
+  "training_summary": {
+    "answer_accuracy": {"0.3": 0.68625, "0.4": 0.69, "0.5": 0.68375},
+    "format_accuracy": {"0.3": 1.0, "0.4": 1.0, "0.5": 0.99875},
+    "histological_definition_error_rate": {"0.3": 0.35125, "0.4": 0.342929, "0.5": 0.3725},
+    "logical_contradiction_rate": {"0.3": 0.055, "0.4": 0.046308, "0.5": 0.0375},
+    "aligned_0.4_to_0.5_event_transitions": {
+      "logical_contradiction_false_to_true": 22,
+      "logical_contradiction_true_to_false": 29,
+      "histological_error_false_to_true": 130,
+      "histological_error_true_to_false": 106
+    },
+    "process_reward_means_not_cross_coefficient_quality_comparable": true
+  },
+  "validation_summary": {
+    "count": 385,
+    "unanimous_correctness_count": 351,
+    "disagreement_case_count": 34,
+    "arm_order_for_patterns": ["0.3", "0.4", "0.5"],
+    "patterns": {
+      "001": [104, 170, 216, 223, 286, 335, 347],
+      "011": [25, 106, 129, 142, 253, 309, 336, 362],
+      "010": [9, 217, 258],
+      "110": [92, 133, 204, 279, 289, 313, 369, 372],
+      "101": [148, 187, 267, 291, 298, 307, 367],
+      "100": [34]
+    },
+    "provisional_0.5_only_content_gains": [104, 216, 223, 335, 347],
+    "0.5_only_answer_gains_with_rationale_concern": [170, 286],
+    "provisional_0.5_regressions_relative_to_0.4": [9, 92, 133, 217, 258, 279, 289, 313, 369, 372],
+    "answer_only_scoring_artifact_or_high_priority_expert_review": [34, 204, 253],
+    "additional_context_or_semantic_risk": [142, 170, 267, 286, 298, 307, 336],
+    "manual_review_is_not_pathologist_reannotation": true
+  },
+  "interpretation": {
+    "0.5_uniformly_improves_reasoning": false,
+    "0.5_reduces_explicit_contradiction_rate": true,
+    "0.5_reduces_histological_definition_error_rate": false,
+    "validation_gain_contains_genuine_fixes_regressions_and_answer_only_artifacts": true,
+    "conservative_primary_coefficient_recommendation": 0.4,
+    "recommendation_is_authorization": false,
+    "formal_coefficient_frozen": false
+  }
+}

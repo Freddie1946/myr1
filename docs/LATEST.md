@@ -227,6 +227,8 @@ Read in this order:
 221. `20260801_144907_gpt4o_recovery_and_validation_supervision.md`
 222. `20260801_163520_gpt4o_penalty_pilots_complete.md`
 223. `../protocol/gpt4o_penalty_pilots_complete_20260801_163520.json`
+224. `20260801_173514_gpt4o_penalty_case_and_rollout_analysis.md`
+225. `../protocol/gpt4o_penalty_case_and_rollout_analysis_20260801_173514.json`
 
 The three matched GPT-4o 100-step coefficient pilots and their common PathMMU validation385 runs
 are complete; entry 222 is the current result and interpretation. Accuracy was 60.78%, 61.56%
@@ -234,6 +236,13 @@ and 62.34% for penalties 0.3, 0.4 and 0.5 respectively. The point estimates are 
 paired differences are not statistically significant. The complete paid-pilot accounting,
 including the conservatively settled stopped 0.5 arm, is $16.6228825 under the approved $18 gate.
 This sensitivity result does not itself freeze a coefficient for the formal long run.
+
+The complete offline 34-case and retained-rollout analysis is entry 224. It finds that 0.5's
+higher validation point estimate mixes plausible corrections, clear regressions and answer-only
+scoring artifacts. Training rollouts show fewer explicit contradictions at 0.5 but more
+histological-definition errors. If a coefficient must be selected before more evidence, the
+analysis recommends 0.4 as the conservative primary default while retaining 0.3 and 0.5 as
+reported sensitivity arms; this recommendation is not a frozen formal-run decision.
 
 The exact checkpoint downloads, SFT4000 control and common-protocol PathMMU triad are complete.
 SFT3000 scored 582/999 (58.26%), SFT4000 scored 595/999 (59.56%), and selected Stage2
