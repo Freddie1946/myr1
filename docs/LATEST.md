@@ -233,6 +233,15 @@ Read in this order:
 227. `../protocol/stage3_fault_tolerance_hardening_20260801_181414.json`
 228. `20260801_182543_stage3_coefficient_frozen_aigcbest_hardening_and_launch_boundary.md`
 229. `../protocol/stage3_coefficient_freeze_and_aigcbest_hardening_20260801_182543.json`
+230. `20260801_184826_gpt4o_formal_launcher_and_execution_order_frozen.md`
+231. `../protocol/gpt4o_formal_launcher_frozen_20260801_184826.json`
+
+The user authorized GPT-4o Stage3 first with compatible non-GPU hosted baselines in parallel,
+GPU-local baselines next, and Kimi Stage3 last.  The user requested no USD budget ceiling and
+declined a 4+4-GPU smoke.  The formal GPT-4o eight-GPU launcher/supervisor is prepared with 12,000
+logical and at most 12,360 physical requests; USD 247.20 is only the finite ledger capacity implied
+by the attempt cap, not a user budget or expected cost.  Every baseline must pass frozen behavioral
+smokes before full evaluation.
 
 The earlier shorthand that the 100-step pilots established coefficient insensitivity is corrected.
 Their point estimates increase monotonically and the experiment has limited power; it detected no

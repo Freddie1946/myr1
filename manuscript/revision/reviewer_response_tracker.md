@@ -511,6 +511,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260801_182543_stage3_coefficient_frozen_aigcbest_hardening_and_launch_boundary.md` and
     `protocol/stage3_coefficient_freeze_and_aigcbest_hardening_20260801_182543.json`.  No efficacy
     result or claim of coefficient optimality is added.
+31. Prepared the complete GPT-4o seed-42 Stage3 launcher with immutable parent/data/smoke hashes,
+    bounded physical requests, classified checkpoint recovery and 500/1000/1500 snapshots.  Froze
+    the user-ordered execution sequence and the rule that every hosted/local baseline must pass
+    fixed behavioral smoke cases before full evaluation.  Evidence:
+    `docs/20260801_184826_gpt4o_formal_launcher_and_execution_order_frozen.md` and
+    `protocol/gpt4o_formal_launcher_frozen_20260801_184826.json`.  This is preparation, not an
+    efficacy or baseline result.
 
 ## Mandatory update rule
 

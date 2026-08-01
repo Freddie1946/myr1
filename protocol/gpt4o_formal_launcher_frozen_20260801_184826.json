@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T18:48:26+08:00",
+  "status": "prepared_not_started",
+  "formal_result": false,
+  "paid_calls": 0,
+  "training_started": false,
+  "execution_order": [
+    "gpt4o_stage3_with_parallel_non_gpu_hosted_baselines",
+    "gpu_local_baseline_full_evaluations",
+    "kimi26_stage3"
+  ],
+  "formal_contract": {
+    "judge": "gpt-4o-2024-08-06",
+    "gateway": "aigcbest",
+    "penalty": 0.4,
+    "max_steps": 1500,
+    "logical_judgments": 12000,
+    "maximum_physical_http_attempts": 12360,
+    "user_usd_budget_limit": null,
+    "technical_accounting_capacity_usd": 247.2,
+    "expected_usd_from_pilot": 61.96,
+    "save_steps": 100,
+    "save_total_limit": 2,
+    "epoch_snapshot_steps": [500, 1000, 1500],
+    "maximum_recoveries": 3,
+    "world_size": 8
+  },
+  "baseline_gate": {
+    "fixed_smoke_before_full": true,
+    "smoke_may_select_by_accuracy": false,
+    "four_plus_four_gpu_smoke_requested": false
+  },
+  "verification": {
+    "static_contract_tests_passed": 4,
+    "shell_syntax_passed": true,
+    "git_diff_check_passed": true
+  },
+  "code_sha256": {
+    "scripts/launch_stage3_gpt4o_formal.sh": "5ca6ecc97c7d7fc855d424d0591272b1aeb44731f1a2e979fecb66f809b214bb",
+    "scripts/supervise_stage3_gpt4o_formal.sh": "bd3bb3bcd8d85a832eea00e55496c069dccc73f5acb67adb53a92064e26568ca",
+    "scripts/test_stage3_gpt4o_formal_contract.py": "a701daedd66ebef0bb86b21975b49b794658e5e5ec60eb516117baebff4b75cb"
+  }
+}

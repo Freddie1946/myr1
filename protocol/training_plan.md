@@ -105,6 +105,13 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   statuses; ambiguous connection/body failures are not resent, billed identity/schema failures
   stop, and only a fresh remote success resets the outage counter.  The complete GPT-4o arm still
   requires a separate formal budget.
+- Formal execution update (2026-08-01): the user removed the USD stopping threshold and ordered
+  GPT-4o Stage3 plus non-GPU hosted baselines first, GPU-local baselines second and Kimi Stage3
+  last.  The physical request cap, bounded retries/fallback and full cost audit remain mandatory.
+  The prepared GPT-4o launcher uses 12,000 logical and at most 12,360 physical attempts; its USD
+  247.20 ledger value is technical capacity, not an expected spend.  Every baseline receives a
+  fixed behavioral smoke before full evaluation.  See
+  `gpt4o_formal_launcher_frozen_20260801_184826.json`.
 
 ## Evaluation
 
