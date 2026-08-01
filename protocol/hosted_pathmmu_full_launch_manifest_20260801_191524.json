@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T19:15:24+08:00",
+  "status": "running",
+  "formal_result": false,
+  "task": "pathmmu_test999",
+  "runner_commit": "342f0c7",
+  "models": [
+    {"requested": "qwen-vl-plus", "label": "exact_contemporary"},
+    {"requested": "claude-haiku-4-5-20251001", "label": "exact_contemporary"},
+    {"requested": "grok-4.3", "label": "contemporary_replacement_or_additional_not_grok4fast"}
+  ],
+  "workers_per_model": 2,
+  "temperature": 0,
+  "max_tokens": 1024,
+  "maximum_physical_attempts_per_record": 3,
+  "ambiguous_transport_retry": false,
+  "early_observation": {
+    "total_records": 22,
+    "failed_records": 0,
+    "retried_requests": 0,
+    "identity_mismatches": 0,
+    "unparseable_choices": 0
+  },
+  "evidence_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/hosted_baseline_full_20260801"
+}

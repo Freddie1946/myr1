@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260801_191001`
+Latest timestamp: `20260801_191524`
 
 Read in this order:
+
+0. `20260801_191524_hosted_pathmmu_full_evaluations_started.md`
+0. `../protocol/hosted_pathmmu_full_launch_manifest_20260801_191524.json`
 
 0. `20260801_191001_hosted_baseline_behavioral_smoke_results.md`
 0. `../protocol/hosted_baseline_behavioral_smoke_manifest_20260801_191001.json`
