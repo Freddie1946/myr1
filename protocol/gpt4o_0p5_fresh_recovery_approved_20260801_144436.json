@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-01T14:44:36+08:00",
+  "status": "approved_prelaunch",
+  "source_failure_record": "gpt4o_pilot_progress_0p5_attempt_cap_stop_20260801_143832.json",
+  "authorization": {
+    "user_approved": true,
+    "settle_prior_unresolved_reservations": 6,
+    "settlement_per_reservation_usd": 0.02,
+    "fresh_recovery_run": true,
+    "cache_reuse": false,
+    "logical_judgments": 800,
+    "maximum_physical_http_attempts": 824,
+    "maximum_retry_attempts": 24,
+    "maximum_recovery_usd": 5.5,
+    "automatic_restart": false
+  },
+  "recovery": {
+    "id": "fresh01",
+    "penalty": 0.5,
+    "steps": 100,
+    "save_steps": 100,
+    "run_directory": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_penalty_0p5_100step_seed42_20260801_recovery_fresh01",
+    "parent_manifest_sha256": "83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0",
+    "judge_model": "gpt-4o-2024-08-06",
+    "new_judge_root": true
+  },
+  "aggregate_budget": {
+    "original_limit_usd": 18.0,
+    "conservative_prior_accounting_usd": 12.495119999999998,
+    "recovery_limit_usd": 5.5,
+    "maximum_conservative_total_usd": 17.995119999999998
+  },
+  "validation385_started": false,
+  "test999_accessed": false
+}

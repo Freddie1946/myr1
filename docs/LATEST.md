@@ -222,6 +222,8 @@ Read in this order:
 216. `20260801_014011_gpt4o_pilot_supervision_started.md`
 217. `20260801_143832_gpt4o_pilot_progress_and_0p5_attempt_cap_stop.md`
 218. `../protocol/gpt4o_pilot_progress_0p5_attempt_cap_stop_20260801_143832.json`
+219. `20260801_144436_gpt4o_0p5_fresh_recovery_approved.md`
+220. `../protocol/gpt4o_0p5_fresh_recovery_approved_20260801_144436.json`
 
 The approved Stage3 plan is now published at commit `adaf6ff`.  Offline penalty sensitivity over
 2,784 non-smoke cached judgments is complete, and both bounded AIGCBest

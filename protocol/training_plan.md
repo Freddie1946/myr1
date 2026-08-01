@@ -82,6 +82,9 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   99 because two prior retry attempts left insufficient room under the 800-physical-attempt ceiling
   for all eight final logical judgments.  It has no checkpoint and was not restarted.  See
   `gpt4o_pilot_progress_0p5_attempt_cap_stop_20260801_143832.json`.
+- Recovery update (2026-08-01): the user approved conservative settlement of the six unresolved
+  reservations and one fresh, no-cache 0.5 rerun with 800 logical judgments, at most 824 physical
+  attempts and a $5.50 cap.  See `gpt4o_0p5_fresh_recovery_approved_20260801_144436.json`.
 
 ## Evaluation
 

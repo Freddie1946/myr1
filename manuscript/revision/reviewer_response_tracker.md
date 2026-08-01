@@ -87,6 +87,9 @@ The original decision PDF remains authoritative; comments below are concise para
   exhausted the physical-attempt cap.  It has no checkpoint and was not restarted.  The exact
   failure and remaining aggregate budget are recorded in
   `protocol/gpt4o_pilot_progress_0p5_attempt_cap_stop_20260801_143832.json`.
+- 2026-08-01 recovery update: a single fresh, no-cache 0.5 recovery was approved with a separately
+  bounded 24-attempt retry allowance and $5.50 cap; the contract is
+  `protocol/gpt4o_0p5_fresh_recovery_approved_20260801_144436.json`.
 - Evidence/actions: Stage 3 implementation/provenance audit found no complete historical online
   process-reward training implementation. No basis has been invented.
 - Status: `in-progress` (protocol approved; offline sensitivity and bounded smoke verification are

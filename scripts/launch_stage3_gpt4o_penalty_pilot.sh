@@ -30,15 +30,30 @@ case "$PENALTY" in
   *) echo "Usage: $0 {0.3|0.4|0.5}" >&2; exit 2 ;;
 esac
 
+RECOVERY_ID="${PATHVLM_STAGE3_RECOVERY_ID:-}"
+RUN_SUFFIX=""
+RUN_TAG="$TAG"
+if [[ -n "$RECOVERY_ID" ]]; then
+  if [[ "$PENALTY" != "0.5" || "$RECOVERY_ID" != "fresh01" ]]; then
+    echo "Only the approved penalty-0.5 recovery id fresh01 is permitted" >&2
+    exit 2
+  fi
+  BUDGET_USD="5.5"
+  MAX_HTTP_ATTEMPTS="824"
+  DEFAULT_PORT="29715"
+  RUN_SUFFIX="_recovery_fresh01"
+  RUN_TAG="${TAG}_recovery_fresh01"
+fi
+
 MASTER_PORT="${PATHVLM_STAGE3_MASTER_PORT:-$DEFAULT_PORT}"
-RUN_DIR="$INSTALL_ROOT/runs/stage3_process_grpo/gpt4o_penalty_${TAG}_100step_seed42_20260801"
+RUN_DIR="$INSTALL_ROOT/runs/stage3_process_grpo/gpt4o_penalty_${TAG}_100step_seed42_20260801${RUN_SUFFIX}"
 PARENT_ALIAS="$RUN_DIR/parent_Qwen2.5-VL-Stage2-epoch02-step1000"
 OUTPUT_DIR="$RUN_DIR/output"
 JUDGE_ROOT="$RUN_DIR/judge"
 REWARD_LOG_DIR="$RUN_DIR/reward_audit"
 TRAIN_LOG="$RUN_DIR/train.log"
 PREFLIGHT="$RUN_DIR/launch_preflight.json"
-SEGMENT="gpt4o_stage3_penalty_${TAG}_100step_seed42"
+SEGMENT="gpt4o_stage3_penalty_${RUN_TAG}_100step_seed42"
 
 [[ -x "$PYTHON" ]] || { echo "GRPO Python is missing: $PYTHON" >&2; exit 2; }
 [[ -f "$PARENT_MANIFEST" && -f "$PARENT/model.safetensors.index.json" ]] || {
@@ -189,14 +204,15 @@ available_bytes="$(df --output=avail -B1 "$INSTALL_ROOT" | tail -n 1 | tr -d ' '
 
 mkdir -p "$RUN_DIR" "$JUDGE_ROOT" "$REWARD_LOG_DIR"
 ln -s "$PARENT" "$PARENT_ALIAS"
-"$PYTHON" - "$PREFLIGHT" "$REPO_ROOT" "$PENALTY" "$MASTER_PORT" <<'PY'
+"$PYTHON" - "$PREFLIGHT" "$REPO_ROOT" "$PENALTY" "$MASTER_PORT" \
+  "$BUDGET_USD" "$MAX_HTTP_ATTEMPTS" "$RECOVERY_ID" <<'PY'
 import json
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-path, repo, penalty, port = sys.argv[1:]
+path, repo, penalty, port, budget, max_attempts, recovery_id = sys.argv[1:]
 commit = subprocess.check_output(
     ["/home/dataset-assist-0/czy/wjy/.local-git/usr/bin/git", "-C", repo, "rev-parse", "HEAD"],
     text=True,
@@ -212,13 +228,15 @@ value = {
     "judge_gateway": "aigcbest",
     "judge_model": "gpt-4o-2024-08-06",
     "penalty": float(penalty),
-    "budget_limit_usd": 6.0,
-    "maximum_http_attempts": 800,
+    "budget_limit_usd": float(budget),
+    "maximum_http_attempts": int(max_attempts),
     "per_attempt_reserve_usd": 0.02,
     "retry_delays_seconds": [15, 45, 90],
     "rule_fallback_total_limit": 24,
     "rule_fallback_consecutive_limit": 4,
     "automatic_training_restarts": 0,
+    "recovery_id": recovery_id or None,
+    "cache_reuse": False,
     "max_steps": 100,
     "save_steps": 100,
     "master_port": int(port),
@@ -253,7 +271,7 @@ export PATHVLM_AIGCBEST_RETRY_DELAYS_SECONDS="15,45,90"
 export PATHVLM_STAGE3_RULE_FALLBACK_ENABLED="true"
 export PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT="24"
 export PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT="4"
-export PATHVLM_TRAIN_STATE_AUDIT_NAME="gpt4o_penalty_${TAG}_train_state_audit.json"
+export PATHVLM_TRAIN_STATE_AUDIT_NAME="gpt4o_penalty_${RUN_TAG}_train_state_audit.json"
 
 cd "$REPO_ROOT/vendor/open-r1-multimodal"
 cmd=(
