@@ -1,0 +1,23 @@
+{
+  "timestamp_cst": "2026-08-02T15:38:19+08:00",
+  "formal_result": false,
+  "status": "scheduled_upload_attempt_failed_current_script_dry_run_passed",
+  "failed_invocation": {
+    "stamp": "20260802_153001",
+    "cause": "script file changed while an existing Bash invocation was between retries",
+    "remote_upload_completed": false,
+    "upload_history_advanced": false,
+    "last_uploaded_hash_advanced": false,
+    "local_audit_preserved": true,
+    "training_or_evaluation_affected": false
+  },
+  "last_verified_remote_revision": "06a0de6b8a940fddeeba0ee011212a2cfc0e8f6e",
+  "current_script_verification": {
+    "dry_run_stamp": "20260802_153819",
+    "dry_run_status": "passed",
+    "aggregate_manifest_sha256": "c74355e67884390b371b8a84782b2338aeabc91d6fc8f4522ff6989e11ee04a4",
+    "network_used": false
+  },
+  "operational_invariant": "Do not modify periodic_experiment_audit_and_backup.sh while periodic.lock is held.",
+  "next_action": "Allow the 16:00 cron invocation to run the complete wall-clock-bounded script."
+}

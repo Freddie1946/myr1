@@ -653,6 +653,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_153555_periodic_hf_wallclock_timeout_correction.md` and
     `protocol/periodic_hf_wallclock_timeout_correction_20260802_153555.json`. Supports R3-7
     disaster-recovery reproducibility; no efficacy result is affected.
+48. Recorded that the 15:30 backup invocation failed after its script was edited while the old
+    Bash process was between retries. It produced no remote commit and advanced no success state;
+    the local audit and prior verified remote revision remain intact. The complete corrected
+    script then passed a no-network dry run, and future edits are prohibited while its lock is
+    held. Evidence: `docs/20260802_153819_periodic_backup_live_edit_attempt_failure.md` and
+    `protocol/periodic_backup_live_edit_failure_20260802_153819.json`. Supports R3-7 audit
+    honesty; training and evaluation results are unaffected.
 
 ## Mandatory update rule
 

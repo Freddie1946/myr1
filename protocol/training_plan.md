@@ -162,6 +162,10 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   upload calls have 60-second and 600-second wall-clock limits respectively, while retaining the
   existing three attempts and fail-closed state advancement. See
   `periodic_hf_wallclock_timeout_correction_20260802_153555.json`.
+- Periodic live-edit failure record (2026-08-02): the 15:30 wrapper failed without upload or state
+  advancement because its script changed while the old Bash process was between retries. The
+  complete corrected script subsequently passed a no-network dry run; do not edit it while
+  `periodic.lock` is held. See `periodic_backup_live_edit_failure_20260802_153819.json`.
 - PathVQA semantic completion correction (2026-08-02): completion is no longer inferred from
   Judge-row plus skip counts versus all 6,719 cases. A fail-closed finalizer reconstructs every
   successful free-form cache key, scores duplicate-content cases individually, keeps failed

@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_153555`
+Latest timestamp: `20260802_153819`
 
 Read in this order:
+
+0. `20260802_153819_periodic_backup_live_edit_attempt_failure.md`
+0. `../protocol/periodic_backup_live_edit_failure_20260802_153819.json`
 
 0. `20260802_153555_periodic_hf_wallclock_timeout_correction.md`
 0. `../protocol/periodic_hf_wallclock_timeout_correction_20260802_153555.json`
