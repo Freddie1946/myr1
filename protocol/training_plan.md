@@ -157,6 +157,12 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   reward-audit files, three Judge state/ledger files and active PathVQA evidence. The remote tree
   has 52 files and 102,977,672 bytes including its two manifests. See
   `corrected_periodic_hf_backup_verified_20260802_150310.json`.
+- PathVQA semantic completion correction (2026-08-02): completion is no longer inferred from
+  Judge-row plus skip counts versus all 6,719 cases. A fail-closed finalizer reconstructs every
+  successful free-form cache key, scores duplicate-content cases individually, keeps failed
+  predictions wrong, excludes audited historical verdicts for failed predictions, and combines
+  the result with deterministic yes/no scoring. See
+  `pathvqa_semantic_finalizer_prepared_20260802_151307.json`.
 
 ## Evaluation
 

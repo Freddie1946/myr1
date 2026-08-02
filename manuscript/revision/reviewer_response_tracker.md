@@ -630,6 +630,14 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_150310_corrected_periodic_hf_backup_verified.md` and
     `protocol/corrected_periodic_hf_backup_verified_20260802_150310.json`. Supports R2-4/R3-7
     off-machine reproducibility; mutable live state will still be frozen after completion.
+45. Replaced the invalid PathVQA semantic completion heuristic with a fail-closed per-case
+    finalizer. It reconstructs content cache keys for all successful free-form predictions,
+    permits one paid verdict to score duplicate-content cases individually, keeps failed
+    generations wrong, excludes two validated historical Haiku verdicts attached to failed
+    predictions, and combines free-form semantics with target-blind yes/no exact scoring. Evidence:
+    `docs/20260802_151307_pathvqa_semantic_finalizer_and_completion_gate_prepared.md` and
+    `protocol/pathvqa_semantic_finalizer_prepared_20260802_151307.json`. Supports R2-3/R3-7
+    evaluation validity; active passes remain incomplete and no final score is claimed.
 
 ## Mandatory update rule
 

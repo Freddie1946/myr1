@@ -104,17 +104,20 @@ def pathvqa_summary(root):
     predictions = jsonl_summary(root / "predictions.jsonl")
     judgments = jsonl_summary(root / "gpt-5-mini_semantic_judgments.jsonl")
     skipped = jsonl_summary(root / "gpt-5-mini_semantic_judgments_skipped_predictions.jsonl")
+    semantic_metrics_path = root / "gpt-5-mini_semantic_metrics.json"
+    semantic_metrics = (
+        json_value(semantic_metrics_path) if semantic_metrics_path.is_file() else None
+    )
     return {
         "predictions": predictions,
         "semantic_judgments": judgments,
         "skipped_predictions": skipped,
-        "accounted_predictions": judgments["rows"] + skipped["rows"],
-        "complete": (
-            predictions["rows"] > 0
-            and judgments["rows"] + skipped["rows"] == predictions["rows"]
-            and not any(
-                item["invalid_json_rows"] for item in (predictions, judgments, skipped)
-            )
+        "unique_judgments_plus_skips": judgments["rows"] + skipped["rows"],
+        "semantic_metrics": semantic_metrics,
+        "complete": bool(
+            isinstance(semantic_metrics, dict)
+            and semantic_metrics.get("status") == "completed"
+            and semantic_metrics.get("expected_count") == predictions["rows"]
         ),
     }
 
@@ -213,6 +216,7 @@ for pair in "qwen_vl_plus:$QWEN_PATHVQA" "claude_haiku_4_5:$HAIKU_PATHVQA"; do
     predictions.jsonl metrics.json run_config.json \
     gpt-5-mini_semantic_judgments.jsonl \
     gpt-5-mini_semantic_judgments_skipped_predictions.jsonl \
+    gpt-5-mini_semantic_metrics.json \
     judge_retry_20260802.log; do
     stage_file "$root/$name" "pathvqa_semantic_judge/$label/$name"
   done

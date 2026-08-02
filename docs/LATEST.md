@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_150310`
+Latest timestamp: `20260802_151307`
 
 Read in this order:
+
+0. `20260802_151307_pathvqa_semantic_finalizer_and_completion_gate_prepared.md`
+0. `../protocol/pathvqa_semantic_finalizer_prepared_20260802_151307.json`
 
 0. `20260802_150310_corrected_periodic_hf_backup_verified.md`
 0. `../protocol/corrected_periodic_hf_backup_verified_20260802_150310.json`

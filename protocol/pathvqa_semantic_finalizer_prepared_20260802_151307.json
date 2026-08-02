@@ -1,0 +1,41 @@
+{
+  "timestamp_cst": "2026-08-02T15:13:07+08:00",
+  "formal_result": false,
+  "status": "prepared_active_runs_incomplete",
+  "scoring_contract": {
+    "yes_no": "target-blind contract-aligned exact match; no LLM Judge",
+    "free_form": "GPT-5-mini semantic verdict mapped by frozen content cache key",
+    "failed_predictions": "retained in denominator and scored wrong",
+    "duplicate_semantic_keys": "one paid verdict may score multiple identical-content cases",
+    "historical_verdict_for_failed_prediction": "validated, disclosed and excluded"
+  },
+  "completion_gate": {
+    "all_prediction_indices_exactly_0_through_6718": true,
+    "all_successful_free_form_cache_keys_present": true,
+    "all_failed_free_form_predictions_have_skip_audit": true,
+    "no_unexplained_extra_judgments_or_skips": true,
+    "source_metrics_recomputed": true,
+    "judge_requested_and_served_identity_verified": true,
+    "output_written_only_after_all_gates": true
+  },
+  "code_sha256": {
+    "scripts/finalize_pathvqa_semantic_evaluation.py": "802aff7fe928469a6f98fe7d716d36a8bd7b5989a744e2e033bc6fcd5a4343cb",
+    "scripts/test_finalize_pathvqa_semantic_evaluation.py": "34d2034e0b015118cb5c6bd6ad09e4bf695fe11b339e8bb102e1b947553ce271",
+    "scripts/periodic_experiment_audit_and_backup.sh": "d54b1953d0778aac480c2f481eb4df4e3a51eaaa991363dbeb64dac862f598b2"
+  },
+  "verification": {
+    "unit_tests_passed": 12,
+    "python_compile": "passed",
+    "bash_syntax": "passed",
+    "qwen_real_run_exit_status": 3,
+    "qwen_missing_unique_keys_at_check": 942,
+    "qwen_missing_skips_at_check": 4,
+    "haiku_real_run_exit_status": 3,
+    "haiku_missing_unique_keys_at_check": 1153,
+    "haiku_missing_skips_at_check": 0,
+    "premature_final_outputs_written": false,
+    "paid_requests": 0,
+    "new_inference": false
+  },
+  "next_action": "After each active Judge worker exits, run the finalizer; only exit status 0 and a hash-bound completed metric authorize immutable result backup."
+}
