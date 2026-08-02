@@ -24,6 +24,7 @@ RESERVE_USD="0.02"
 # derived from the physical-attempt cap, not a spending target or selection gate.
 ACCOUNTING_CAPACITY_USD="247.20"
 MAX_JUDGE_TOKENS=320
+RETRY_JUDGE_TOKEN_CAPS="512,768"
 
 : "${PATHVLM_STAGE3_RUN_DIR:?Set a dedicated GPT-4o formal run directory}"
 RUN_DIR="$(readlink -m "$PATHVLM_STAGE3_RUN_DIR")"
@@ -171,7 +172,9 @@ value={"schema_version":1,"created_at":datetime.now(timezone.utc).isoformat(),"s
 "judge_gateway":"aigcbest","judge_model":"gpt-4o-2024-08-06","penalty":0.4,
 "user_usd_budget_limit":None,"technical_accounting_capacity_usd":247.2,
 "maximum_physical_http_attempts":12360,"maximum_logical_judgments":12000,
-"retry_delays_seconds":[15,45,90],"rule_fallback_total_limit":24,
+"retry_delays_seconds":[15,45,90],"retry_judge_token_caps":[512,768],
+"ambiguous_transport_retry":True,"retryable_response_validation":True,
+"rule_fallback_total_limit":24,
 "rule_fallback_consecutive_limit":4,"max_steps":1500,"save_steps":100,
 "segment":segment,"resume_from":resume or None,
 "trusted_local_checkpoint_full_deserialization":bool(resume),"test_accessed":False}
@@ -195,6 +198,7 @@ export PATHVLM_AIGCBEST_LIMIT_USD="$ACCOUNTING_CAPACITY_USD"
 export PATHVLM_AIGCBEST_RESERVE_USD="$RESERVE_USD"
 export PATHVLM_AIGCBEST_MAX_HTTP_ATTEMPTS="$MAX_HTTP_ATTEMPTS"
 export PATHVLM_AIGCBEST_MAX_JUDGE_TOKENS="$MAX_JUDGE_TOKENS"
+export PATHVLM_AIGCBEST_RETRY_JUDGE_TOKEN_CAPS="$RETRY_JUDGE_TOKEN_CAPS"
 export PATHVLM_AIGCBEST_MIN_REQUEST_INTERVAL_SECONDS="1"
 export PATHVLM_AIGCBEST_RETRY_DELAYS_SECONDS="15,45,90"
 export PATHVLM_STAGE3_RULE_FALLBACK_ENABLED="true"

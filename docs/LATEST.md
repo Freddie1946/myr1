@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260801_194327`
+Latest timestamp: `20260802_134947`
 
 Read in this order:
+
+0. `20260802_134947_stage3_and_pathvqa_bounded_retry_recovery.md`
+0. `../protocol/stage3_pathvqa_bounded_retry_recovery_20260802_134947.json`
 
 0. `20260801_194327_doubao_replacement_and_local_llama_feasibility.md`
 0. `../protocol/doubao_replacement_llama_local_feasibility_20260801_194327.json`

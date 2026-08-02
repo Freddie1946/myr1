@@ -539,6 +539,17 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     weights. Evidence: `docs/20260801_194327_doubao_replacement_and_local_llama_feasibility.md` and
     `protocol/doubao_replacement_llama_local_feasibility_20260801_194327.json`. Supports R1-7 and
     R2-3; no mirror/substitute weight is accepted as an official Llama baseline.
+34. Corrected the formal GPT-4o Stage3 and PathVQA semantic-Judge recovery behavior after a billed
+    truncated Stage3 response stopped the arm at step 820 and strict PathVQA handling stopped two
+    resumable Judge passes.  The later user authorization permits bounded, fully audited retries
+    for ambiguous transport, truncation and response-schema failures while keeping identity,
+    refusal and non-transient contract failures terminal.  Stage3 recovery is from the validated
+    step-800 eight-rank checkpoint; the first-attempt 320-token contract, penalty 0.4, reward
+    events and total/consecutive fallback bounds are unchanged.  Failed PathVQA predictions are
+    explicitly skipped rather than fabricated.  Evidence:
+    `docs/20260802_134947_stage3_and_pathvqa_bounded_retry_recovery.md` and
+    `protocol/stage3_pathvqa_bounded_retry_recovery_20260802_134947.json`.  Supports R2-4 and R3-7
+    reproducibility; it is an engineering recovery record, not an efficacy result.
 
 ## Mandatory update rule
 

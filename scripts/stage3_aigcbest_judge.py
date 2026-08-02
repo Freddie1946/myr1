@@ -48,10 +48,19 @@ DEFAULT_LIMIT_USD = 6.0
 DEFAULT_RESERVE_USD = 0.02
 DEFAULT_MAX_HTTP_ATTEMPTS = 800
 DEFAULT_MAX_JUDGE_TOKENS = 320
+DEFAULT_RETRY_JUDGE_TOKEN_CAPS = (512, 768)
 ALLOWED_PILOT_PENALTIES = {0.3, 0.4, 0.5}
 
 
 Transport = Callable[[dict[str, Any], str, float], TransportResponse]
+
+
+class RetryableJudgeResponseError(ValueError):
+    """A billed response whose transient output can be retried safely."""
+
+
+class TerminalJudgeResponseError(ValueError):
+    """A response proving identity, refusal, or request-contract drift."""
 
 
 def score_events_at_penalty(value: Any, penalty: float) -> dict[str, float | int]:
@@ -103,6 +112,7 @@ def make_cache_key(
     completion: str,
     penalty: float,
     max_judge_tokens: int,
+    retry_judge_token_caps: tuple[int, ...] = DEFAULT_RETRY_JUDGE_TOKEN_CAPS,
 ) -> str:
     contract = {
         "schema_version": SCHEMA_VERSION,
@@ -111,6 +121,7 @@ def make_cache_key(
         "model": MODEL_ID,
         "penalty": penalty,
         "max_judge_tokens": max_judge_tokens,
+        "retry_judge_token_caps": list(retry_judge_token_caps),
         "temperature": 0,
         "seed": 42,
         "system_prompt_sha256": sha256_bytes(SYSTEM_PROMPT.encode("utf-8")),
@@ -185,6 +196,7 @@ class AigcBestJudge:
         reserve_usd: float = DEFAULT_RESERVE_USD,
         max_http_attempts: int = DEFAULT_MAX_HTTP_ATTEMPTS,
         max_judge_tokens: int = DEFAULT_MAX_JUDGE_TOKENS,
+        retry_judge_token_caps: tuple[int, ...] = DEFAULT_RETRY_JUDGE_TOKEN_CAPS,
         timeout_seconds: float = 180.0,
         retry_delays: tuple[float, ...] = (15.0, 45.0, 90.0),
         minimum_request_interval_seconds: float = 1.0,
@@ -193,6 +205,12 @@ class AigcBestJudge:
             raise ValueError(f"pilot penalty must be one of {sorted(ALLOWED_PILOT_PENALTIES)}")
         if max_judge_tokens != DEFAULT_MAX_JUDGE_TOKENS:
             raise ValueError(f"pilot max_judge_tokens must equal {DEFAULT_MAX_JUDGE_TOKENS}")
+        if (
+            not retry_judge_token_caps
+            or any(type(cap) is not int or cap <= max_judge_tokens for cap in retry_judge_token_caps)
+            or tuple(sorted(set(retry_judge_token_caps))) != retry_judge_token_caps
+        ):
+            raise ValueError("retry judge token caps must be unique increasing integers above 320")
         if any(delay < 0 for delay in retry_delays):
             raise ValueError("retry delays cannot be negative")
         namespace = os.getenv("PATHVLM_AIGCBEST_CACHE_NAMESPACE", "").strip()
@@ -208,6 +226,7 @@ class AigcBestJudge:
         self.timeout_seconds = timeout_seconds
         self.retry_delays = retry_delays
         self.max_judge_tokens = max_judge_tokens
+        self.retry_judge_token_caps = retry_judge_token_caps
         self.ledger = BudgetLedger(
             root / "budget_ledger.json",
             limit_usd=limit_usd,
@@ -219,7 +238,8 @@ class AigcBestJudge:
         )
 
     def _request_payload(
-        self, *, image_url: str, problem: str, solution: str, completion: str
+        self, *, image_url: str, problem: str, solution: str, completion: str,
+        max_tokens: int | None = None,
     ) -> dict[str, Any]:
         text = (
             "QUESTION:\n"
@@ -252,7 +272,7 @@ class AigcBestJudge:
             "temperature": 0,
             "seed": 42,
             "stream": False,
-            "max_tokens": self.max_judge_tokens,
+            "max_tokens": self.max_judge_tokens if max_tokens is None else max_tokens,
         }
 
     def _append_audit(self, event: dict[str, Any]) -> None:
@@ -273,25 +293,41 @@ class AigcBestJudge:
     ) -> tuple[dict[str, Any], dict[str, float | int], float, str]:
         body = response.body
         if body.get("error") or body.get("model") != MODEL_ID:
-            raise ValueError(f"invalid or mismatched AIGCBest response model: {body.get('model')!r}")
+            raise TerminalJudgeResponseError(
+                f"invalid or mismatched AIGCBest response model: {body.get('model')!r}"
+            )
         choices = body.get("choices")
         if not isinstance(choices, list) or len(choices) != 1:
-            raise ValueError("AIGCBest response must contain exactly one choice")
+            raise RetryableJudgeResponseError(
+                "AIGCBest response must contain exactly one choice"
+            )
         choice = choices[0]
-        if not isinstance(choice, dict) or choice.get("finish_reason") != "stop":
-            raise ValueError(f"unexpected finish reason: {getattr(choice, 'get', lambda *_: None)('finish_reason')!r}")
+        finish_reason = getattr(choice, "get", lambda *_: None)("finish_reason")
+        if finish_reason == "length":
+            raise RetryableJudgeResponseError("unexpected finish reason: 'length'")
+        if not isinstance(choice, dict) or finish_reason != "stop":
+            raise TerminalJudgeResponseError(
+                f"unexpected finish reason: {finish_reason!r}"
+            )
         message = choice.get("message")
-        if not isinstance(message, dict) or message.get("refusal"):
-            raise ValueError("AIGCBest response is missing content or contains a refusal")
+        if isinstance(message, dict) and message.get("refusal"):
+            raise TerminalJudgeResponseError("AIGCBest response contains a refusal")
+        if not isinstance(message, dict):
+            raise RetryableJudgeResponseError("AIGCBest response is missing its message")
         content = message.get("content")
         if not isinstance(content, str):
-            raise ValueError("AIGCBest response content is not a string")
-        events = validate_events(json.loads(content))
+            raise RetryableJudgeResponseError("AIGCBest response content is not a string")
+        try:
+            events = validate_events(json.loads(content))
+        except (json.JSONDecodeError, TypeError, ValueError) as exc:
+            raise RetryableJudgeResponseError(
+                f"AIGCBest response event schema is invalid: {exc}"
+            ) from exc
         scores = score_events_at_penalty(events, self.penalty)
         cost = request_cost(body.get("usage"))
         response_id = body.get("id")
         if not isinstance(response_id, str) or not response_id:
-            raise ValueError("AIGCBest response lacks an id")
+            raise TerminalJudgeResponseError("AIGCBest response lacks an id")
         return events, scores, cost, response_id
 
     def judge_one(
@@ -313,6 +349,7 @@ class AigcBestJudge:
             completion=completion,
             penalty=self.penalty,
             max_judge_tokens=self.max_judge_tokens,
+            retry_judge_token_caps=self.retry_judge_token_caps,
         )
         cache_path = self.cache_dir / cache_key[:2] / f"{cache_key}.json"
         lock_path = cache_path.with_suffix(".lock")
@@ -335,10 +372,6 @@ class AigcBestJudge:
             if not self.api_key:
                 raise RuntimeError("AIGCBEST_API_KEY is not set")
             image_url, image_bytes = _image_payload(image, image_sha256)
-            payload = self._request_payload(
-                image_url=image_url, problem=problem, solution=solution, completion=completion
-            )
-            request_sha256 = sha256_bytes(canonical_json(payload).encode("utf-8"))
             attempts: list[dict[str, Any]] = []
             last_error: Exception | None = None
             response: TransportResponse | None = None
@@ -346,15 +379,29 @@ class AigcBestJudge:
             scores: dict[str, float | int] | None = None
             cost = 0.0
             response_id = ""
+            retryable_response_failures = 0
             for attempt_number, delay in enumerate((0.0, *self.retry_delays), 1):
                 if delay:
                     time.sleep(delay)
+                max_tokens = (
+                    self.max_judge_tokens
+                    if retryable_response_failures == 0
+                    else self.retry_judge_token_caps[
+                        min(retryable_response_failures - 1, len(self.retry_judge_token_caps) - 1)
+                    ]
+                )
+                payload = self._request_payload(
+                    image_url=image_url, problem=problem, solution=solution,
+                    completion=completion, max_tokens=max_tokens,
+                )
+                request_sha256 = sha256_bytes(canonical_json(payload).encode("utf-8"))
                 attempt_id = f"{cache_key}:http:{uuid.uuid4().hex}"
                 self.ledger.reserve(attempt_id, {
                     "cache_key": cache_key,
                     "attempt_number": attempt_number,
                     "model": MODEL_ID,
                     "request_sha256": request_sha256,
+                    "max_tokens": max_tokens,
                 })
                 try:
                     self.rate_limiter.wait()
@@ -362,7 +409,7 @@ class AigcBestJudge:
                     try:
                         parsed = self._parse_response(response)
                         events, scores, cost, response_id = parsed
-                    except Exception as exc:
+                    except (RetryableJudgeResponseError, TerminalJudgeResponseError) as exc:
                         last_error = exc
                         try:
                             billed = request_cost(response.body.get("usage"))
@@ -373,6 +420,7 @@ class AigcBestJudge:
                             "attempt_number": attempt_number,
                             "status": "billed_response_failed_validation",
                             "error": f"{type(exc).__name__}: {exc}",
+                            "max_tokens": max_tokens,
                         })
                         attempts.append({
                             "attempt": attempt_number,
@@ -381,7 +429,14 @@ class AigcBestJudge:
                             "status": "billed_response_failed_validation",
                             "cost_usd": billed,
                             "error": f"{type(exc).__name__}: {exc}",
+                            "max_tokens": max_tokens,
+                            "raw_response": response.body,
                         })
+                        if isinstance(exc, RetryableJudgeResponseError):
+                            retryable_response_failures += 1
+                            if attempt_number < len((0.0, *self.retry_delays)):
+                                continue
+                            break
                         self._append_audit({
                             "timestamp": now_iso(),
                             "cache_key": cache_key,
@@ -409,6 +464,7 @@ class AigcBestJudge:
                         "status": "completed",
                         "response_id": response_id,
                         "cost_usd": cost,
+                        "max_tokens": max_tokens,
                     })
                     break
                 except TransportFailure as exc:
@@ -418,6 +474,7 @@ class AigcBestJudge:
                         "attempt_number": attempt_number,
                         "status": "ambiguous_failure_conservatively_billed",
                         "error": f"{type(exc).__name__}: {exc}",
+                        "max_tokens": max_tokens,
                     })
                     attempts.append({
                         "attempt": attempt_number,
@@ -426,13 +483,22 @@ class AigcBestJudge:
                         "reserved_cost_usd": self.ledger.reserve_usd,
                         "error": str(exc),
                         "body": exc.body,
+                        "max_tokens": max_tokens,
                     })
-                    # Retry only explicit transient HTTP statuses.  A
-                    # connection-level failure (status=None) or HTTP-200
-                    # truncated/invalid body has ambiguous billing state and
-                    # must not be resent in this process.
-                    if exc.status not in TRANSIENT_STATUS:
-                        break
+                    retryable_transport = (
+                        exc.status is None or exc.status == 200 or exc.status in TRANSIENT_STATUS
+                    )
+                    if retryable_transport:
+                        continue
+                    self._append_audit({
+                        "timestamp": now_iso(), "cache_key": cache_key,
+                        "cache_hit": False,
+                        "status": "terminal_nontransient_transport_failure",
+                        "attempts": attempts,
+                        "error": f"{type(exc).__name__}: {exc}",
+                        **(source_metadata or {}),
+                    })
+                    raise
             if events is None or scores is None or response is None:
                 self._append_audit({
                     "timestamp": now_iso(), "cache_key": cache_key, "cache_hit": False,
@@ -496,6 +562,11 @@ def process_reward(completions, solution, **kwargs):
         for value in os.getenv("PATHVLM_AIGCBEST_RETRY_DELAYS_SECONDS", "15,45,90").split(",")
         if value.strip()
     )
+    retry_token_caps = tuple(
+        int(value.strip())
+        for value in os.getenv("PATHVLM_AIGCBEST_RETRY_JUDGE_TOKEN_CAPS", "512,768").split(",")
+        if value.strip()
+    )
     judge = AigcBestJudge(
         Path(root_text),
         penalty=penalty,
@@ -503,6 +574,7 @@ def process_reward(completions, solution, **kwargs):
         reserve_usd=float(os.getenv("PATHVLM_AIGCBEST_RESERVE_USD", "0.02")),
         max_http_attempts=int(os.getenv("PATHVLM_AIGCBEST_MAX_HTTP_ATTEMPTS", "800")),
         max_judge_tokens=int(os.getenv("PATHVLM_AIGCBEST_MAX_JUDGE_TOKENS", "320")),
+        retry_judge_token_caps=retry_token_caps,
         retry_delays=retry_delays,
         minimum_request_interval_seconds=float(
             os.getenv("PATHVLM_AIGCBEST_MIN_REQUEST_INTERVAL_SECONDS", "1")

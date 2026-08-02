@@ -101,16 +101,111 @@ class JudgeTests(unittest.TestCase):
                 record = json.loads(cache.read_text())
                 self.assertIn("embedded-image-omitted", record["request"]["messages"][1]["content"][1]["image_url"]["url"])
 
-    def test_ambiguous_connection_failure_is_not_retried(self) -> None:
+    def test_ambiguous_connection_failure_retries_then_succeeds(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             image = Path(directory) / "image.png"
             image.write_bytes(b"png")
             digest = __import__("hashlib").sha256(b"png").hexdigest()
             calls = []
 
+            body = {
+                "id": "response-1",
+                "model": MODEL_ID,
+                "choices": [{"finish_reason": "stop", "message": {"content": json.dumps(events())}}],
+                "usage": {"prompt_tokens": 1000, "completion_tokens": 100},
+            }
+
             def transport(*args):
                 calls.append(1)
-                raise TransportFailure("connection closed", status=None)
+                if len(calls) == 1:
+                    raise TransportFailure("connection closed", status=None)
+                return TransportResponse(
+                    status=200, headers={}, body=body, latency_seconds=0.1
+                )
+
+            with patch.dict(os.environ, {"PATHVLM_AIGCBEST_CACHE_NAMESPACE": "segment"}):
+                judge = AigcBestJudge(
+                    Path(directory) / "judge", penalty=0.4, transport=transport,
+                    api_key="secret", limit_usd=1, reserve_usd=0.02,
+                    max_http_attempts=8, retry_delays=(0, 0, 0),
+                    minimum_request_interval_seconds=0,
+                )
+                judge.judge_one(
+                    image_path=str(image), image_sha256=digest, problem="p",
+                    solution="s", completion="c",
+                )
+                self.assertEqual(len(calls), 2)
+                ledger = judge.ledger.snapshot()
+                self.assertEqual(ledger["completed_unique_requests"], 2)
+                self.assertAlmostEqual(ledger["committed_spend_usd"], 0.0235)
+
+    def test_length_response_retries_with_larger_cap(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / "image.png"
+            image.write_bytes(b"png")
+            digest = __import__("hashlib").sha256(b"png").hexdigest()
+            calls = []
+
+            def transport(payload, *args):
+                calls.append(payload["max_tokens"])
+                finish_reason = "length" if len(calls) == 1 else "stop"
+                return TransportResponse(
+                    status=200,
+                    headers={},
+                    body={
+                        "id": f"response-{len(calls)}",
+                        "model": MODEL_ID,
+                        "choices": [{
+                            "finish_reason": finish_reason,
+                            "message": {"content": json.dumps(events())},
+                        }],
+                        "usage": {"prompt_tokens": 1000, "completion_tokens": 100},
+                    },
+                    latency_seconds=0.1,
+                )
+
+            with patch.dict(os.environ, {"PATHVLM_AIGCBEST_CACHE_NAMESPACE": "segment"}):
+                judge = AigcBestJudge(
+                    Path(directory) / "judge", penalty=0.4, transport=transport,
+                    api_key="secret", limit_usd=1, reserve_usd=0.02,
+                    max_http_attempts=8, retry_delays=(0, 0, 0),
+                    minimum_request_interval_seconds=0,
+                )
+                judge.judge_one(
+                    image_path=str(image), image_sha256=digest, problem="p",
+                    solution="s", completion="c",
+                )
+                self.assertEqual(calls, [320, 512])
+                cache = next((Path(directory) / "judge" / "cache" / "segment").rglob("*.json"))
+                record = json.loads(cache.read_text())
+                self.assertEqual(
+                    [attempt["status"] for attempt in record["attempts"]],
+                    ["billed_response_failed_validation", "completed"],
+                )
+
+    def test_repeated_invalid_schema_exhausts_to_rule_fallback_signal(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / "image.png"
+            image.write_bytes(b"png")
+            digest = __import__("hashlib").sha256(b"png").hexdigest()
+            calls = []
+
+            def transport(payload, *args):
+                calls.append(payload["max_tokens"])
+                return TransportResponse(
+                    status=200,
+                    headers={},
+                    body={
+                        "id": f"response-{len(calls)}",
+                        "model": MODEL_ID,
+                        "choices": [{
+                            "finish_reason": "stop",
+                            "message": {"content": '{"unexpected":true}'},
+                        }],
+                        "usage": {"prompt_tokens": 1000, "completion_tokens": 20},
+                    },
+                    latency_seconds=0.1,
+                )
 
             with patch.dict(os.environ, {"PATHVLM_AIGCBEST_CACHE_NAMESPACE": "segment"}):
                 judge = AigcBestJudge(
@@ -124,10 +219,7 @@ class JudgeTests(unittest.TestCase):
                         image_path=str(image), image_sha256=digest, problem="p",
                         solution="s", completion="c",
                     )
-                self.assertEqual(len(calls), 1)
-                ledger = judge.ledger.snapshot()
-                self.assertEqual(ledger["completed_unique_requests"], 1)
-                self.assertAlmostEqual(ledger["committed_spend_usd"], 0.02)
+                self.assertEqual(calls, [320, 512, 768, 768])
 
     def test_explicit_transient_status_retries_then_succeeds(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

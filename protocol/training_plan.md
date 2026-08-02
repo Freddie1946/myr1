@@ -105,6 +105,15 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   statuses; ambiguous connection/body failures are not resent, billed identity/schema failures
   stop, and only a fresh remote success resets the outage counter.  The complete GPT-4o arm still
   requires a separate formal budget.
+- Bounded-retry correction (2026-08-02): after the formal arm stopped at step 820 on a single
+  `finish_reason=length` response, the user explicitly superseded the no-resend rule for transient
+  failures.  Ambiguous transport and response JSON/schema/truncation failures now receive at most
+  four physical attempts, all conservatively audited; response-validation retries use token caps
+  512 then 768 after the unchanged 320-token first attempt.  Exhaustion enters the unchanged
+  total-24/consecutive-4 structural fallback limiter.  Identity mismatch, refusal and proven
+  non-transient contract failures remain terminal.  Recovery uses the independently validated
+  eight-rank checkpoint at step 800.  See
+  `stage3_pathvqa_bounded_retry_recovery_20260802_134947.json`.
 - Formal execution update (2026-08-01): the user removed the USD stopping threshold and ordered
   GPT-4o Stage3 plus non-GPU hosted baselines first, GPU-local baselines second and Kimi Stage3
   last.  The physical request cap, bounded retries/fallback and full cost audit remain mandatory.

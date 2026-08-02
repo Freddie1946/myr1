@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-02T13:49:47+08:00",
+  "status": "bounded_retry_implemented_and_offline_verified",
+  "formal_result": false,
+  "source_commit_before_change": "21afc0e",
+  "network_calls_during_change": 0,
+  "paid_calls_during_change": 0,
+  "gpu_training_during_change": false,
+  "stage3_recovery": {
+    "failed_after_optimizer_step": 820,
+    "resume_checkpoint_step": 800,
+    "resume_checkpoint_validated_world_size": 8,
+    "initial_max_judge_tokens": 320,
+    "retry_max_judge_tokens": [512, 768],
+    "maximum_physical_attempts_per_logical_judgment": 4,
+    "ambiguous_transport_retry": true,
+    "retryable_response_validation": [
+      "finish_reason_length",
+      "invalid_json",
+      "invalid_event_schema",
+      "missing_choice_or_content"
+    ],
+    "terminal_without_retry": [
+      "served_model_mismatch",
+      "refusal",
+      "nontransient_http_failure",
+      "missing_response_identity"
+    ],
+    "fallback_total_limit": 24,
+    "fallback_consecutive_limit": 4,
+    "global_physical_attempt_limit": 12360
+  },
+  "pathvqa_semantic_judge": {
+    "maximum_physical_attempts_per_case": 3,
+    "retry_invalid_verdict_schema": true,
+    "failed_prediction_policy": "skip_with_deduplicated_audit",
+    "exhausted_retry_policy": "record_failure_and_continue",
+    "served_model_mismatch_terminal": true
+  },
+  "verification": {
+    "stage3_tests_passed": 51,
+    "pathvqa_and_hosted_tests_passed": 11,
+    "python_compile_passed": true,
+    "shell_syntax_passed": true,
+    "git_diff_check_passed": true
+  },
+  "code_sha256": {
+    "scripts/stage3_aigcbest_judge.py": "1ee986a32ef1c820b9a608d2d204358e9ca7e2b48a5cad15f905ad74ac67dade",
+    "scripts/test_stage3_aigcbest_judge.py": "b031f9ec407a2a31a64a7e766e965819a553a43c64c85860df331dc5fa796f04",
+    "scripts/pathvqa_llm_judge.py": "919731a494f8101a67439e5dc0e86ccfbe2d473bea6d8588533614828c1337a8",
+    "scripts/test_pathvqa_llm_judge.py": "eb75a769de28148b101deb02619fd8865eb7bc7dfe72801428e247b968471e98",
+    "scripts/launch_stage3_gpt4o_formal.sh": "ea3d6112a961db6a6f5315ed05ade84b19b2e3098786a9eb3cc89a8e95ebb179"
+  }
+}
