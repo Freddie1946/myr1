@@ -15,6 +15,9 @@ HF_REPO_ID="${PATHVLM_EVALUATION_BACKUP_REPO:-Freddie1946/PathVLM-R1-Revision-Ev
 HF_REMOTE_ROOT="${PATHVLM_PERIODIC_HF_REMOTE_ROOT:-live/active_experiments}"
 HF_BIN="${HF_BIN:-/usr/local/bin/hf}"
 PYTHON="${PYTHON:-/usr/bin/python3}"
+TIMEOUT_BIN="${TIMEOUT_BIN:-/usr/bin/timeout}"
+HF_AUTH_TIMEOUT_SECONDS="${PATHVLM_HF_AUTH_TIMEOUT_SECONDS:-60}"
+HF_UPLOAD_TIMEOUT_SECONDS="${PATHVLM_HF_UPLOAD_TIMEOUT_SECONDS:-600}"
 export HF_HOME="${HF_HOME:-$WORKSPACE_ROOT/cache/huggingface}"
 
 [[ -d "$REPO_ROOT" && -d "$STAGE3_RUN_ROOT" && -d "$EVAL_ROOT" ]] || {
@@ -22,6 +25,15 @@ export HF_HOME="${HF_HOME:-$WORKSPACE_ROOT/cache/huggingface}"
   exit 2
 }
 [[ -x "$PYTHON" ]] || { echo "Python is missing: $PYTHON" >&2; exit 2; }
+[[ -x "$TIMEOUT_BIN" ]] || { echo "timeout is missing: $TIMEOUT_BIN" >&2; exit 2; }
+[[ "$HF_AUTH_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ ]] || {
+  echo "Invalid HF auth timeout: $HF_AUTH_TIMEOUT_SECONDS" >&2
+  exit 2
+}
+[[ "$HF_UPLOAD_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ ]] || {
+  echo "Invalid HF upload timeout: $HF_UPLOAD_TIMEOUT_SECONDS" >&2
+  exit 2
+}
 mkdir -p "$STATE_ROOT" "$AUDIT_ROOT"
 
 exec 9>"$STATE_ROOT/periodic.lock"
@@ -280,7 +292,8 @@ fi
 authenticated=false
 for delay in 0 15 45; do
   (( delay == 0 )) || sleep "$delay"
-  if "$HF_BIN" auth whoami >/dev/null 2>&1; then
+  if "$TIMEOUT_BIN" --signal=TERM --kill-after=5s "${HF_AUTH_TIMEOUT_SECONDS}s" \
+    "$HF_BIN" auth whoami >/dev/null 2>&1; then
     authenticated=true
     break
   fi
@@ -295,7 +308,9 @@ uploaded=false
 UPLOAD_RESULT=""
 for delay in 0 15 45; do
   (( delay == 0 )) || sleep "$delay"
-  if UPLOAD_RESULT="$($HF_BIN upload "$HF_REPO_ID" "$STAGING" "$HF_REMOTE_ROOT" \
+  if UPLOAD_RESULT="$($TIMEOUT_BIN --signal=TERM --kill-after=5s \
+    "${HF_UPLOAD_TIMEOUT_SECONDS}s" "$HF_BIN" upload \
+    "$HF_REPO_ID" "$STAGING" "$HF_REMOTE_ROOT" \
     --repo-type dataset \
     --commit-message "Periodic active experiment backup $STAMP" \
     --commit-description "Mutable disaster-recovery copy; see snapshot_manifest.json for exact hashes. No model weights or credentials." \

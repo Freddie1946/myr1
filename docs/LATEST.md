@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_152807`
+Latest timestamp: `20260802_153555`
 
 Read in this order:
+
+0. `20260802_153555_periodic_hf_wallclock_timeout_correction.md`
+0. `../protocol/periodic_hf_wallclock_timeout_correction_20260802_153555.json`
 
 0. `20260802_152807_aggregate_smoke_policy_frozen.md`
 0. `../protocol/aggregate_local_baseline_smoke_policy_20260802_152807.json`

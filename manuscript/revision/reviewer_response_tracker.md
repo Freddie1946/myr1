@@ -645,6 +645,14 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_152807_aggregate_smoke_policy_frozen.md` and
     `protocol/aggregate_local_baseline_smoke_policy_20260802_152807.json`. Supports R1-7/R2-3
     evaluation reproducibility; this is an engineering gate and makes no efficacy claim.
+47. Corrected the periodic private-HF transport after a reset followed by a hung authentication
+    process showed that attempt-count bounds alone were insufficient. Future authentication and
+    upload calls have explicit wall-clock limits while preserving three attempts, content-hash
+    verification and fail-closed state advancement. Only the exact stuck HF child was terminated;
+    training and evaluation were untouched. Evidence:
+    `docs/20260802_153555_periodic_hf_wallclock_timeout_correction.md` and
+    `protocol/periodic_hf_wallclock_timeout_correction_20260802_153555.json`. Supports R3-7
+    disaster-recovery reproducibility; no efficacy result is affected.
 
 ## Mandatory update rule
 

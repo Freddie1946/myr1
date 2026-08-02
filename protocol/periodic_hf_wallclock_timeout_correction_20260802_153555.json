@@ -1,0 +1,36 @@
+{
+  "timestamp_cst": "2026-08-02T15:35:55+08:00",
+  "formal_result": false,
+  "status": "wallclock_timeout_correction_prepared_current_retry_pending",
+  "observed_failure": {
+    "cron_stamp": "20260802_153001",
+    "first_auth_attempt": "connection_reset_by_peer",
+    "second_auth_attempt": "hung_without_wallclock_bound",
+    "terminated_pid": 4103880,
+    "signal": "SIGTERM",
+    "training_or_evaluation_process_signalled": false
+  },
+  "future_invocation_contract": {
+    "authentication_attempts": 3,
+    "authentication_timeout_seconds": 60,
+    "upload_attempts": 3,
+    "upload_timeout_seconds": 600,
+    "retry_delays_seconds": [15, 45],
+    "timeout_counts_as_failed_attempt": true,
+    "state_advances_only_after_success": true,
+    "exhaustion": "fail_closed_for_invocation"
+  },
+  "code_sha256": {
+    "scripts/periodic_experiment_audit_and_backup.sh": "fa952aae9d2826c9f4bb6c3b40307bfd96020dfa43881f7e409490cc0f713140"
+  },
+  "verification": {
+    "bash_syntax": "passed",
+    "invalid_zero_timeout_exit_status": 2,
+    "synthetic_timeout_exit_status": 124,
+    "stage3_step_after_intervention": 915,
+    "stage3_total_fallback": 2,
+    "stage3_consecutive_fallback": 0,
+    "current_remote_upload": "pending"
+  },
+  "next_action": "Observe the current invocation outcome without further intervention; future cron invocations use the wall-clock bounds."
+}

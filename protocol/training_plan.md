@@ -157,6 +157,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   reward-audit files, three Judge state/ledger files and active PathVQA evidence. The remote tree
   has 52 files and 102,977,672 bytes including its two manifests. See
   `corrected_periodic_hf_backup_verified_20260802_150310.json`.
+- Periodic-HF wall-clock correction (2026-08-02): a reset followed by a hung `hf auth whoami`
+  showed that attempt-count limits alone did not bound cron duration. Future authentication and
+  upload calls have 60-second and 600-second wall-clock limits respectively, while retaining the
+  existing three attempts and fail-closed state advancement. See
+  `periodic_hf_wallclock_timeout_correction_20260802_153555.json`.
 - PathVQA semantic completion correction (2026-08-02): completion is no longer inferred from
   Judge-row plus skip counts versus all 6,719 cases. A fail-closed finalizer reconstructs every
   successful free-form cache key, scores duplicate-content cases individually, keeps failed
