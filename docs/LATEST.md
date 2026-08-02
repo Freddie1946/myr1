@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_141632`
+Latest timestamp: `20260802_142834`
 
 Read in this order:
+
+0. `20260802_142834_stage3_post_training_validation_pipeline_prepared.md`
+0. `../protocol/stage3_post_training_validation_pipeline_20260802_142834.json`
 
 0. `20260802_141632_evaluation_results_private_hf_backup.md`
 0. `../protocol/evaluation_results_private_hf_backup_20260802_141632.json`

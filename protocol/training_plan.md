@@ -121,6 +121,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   247.20 ledger value is technical capacity, not an expected spend.  Every baseline receives a
   fixed behavioral smoke before full evaluation.  See
   `gpt4o_formal_launcher_frozen_20260801_184826.json`.
+- Post-training validation preparation (2026-08-02): a fail-closed snapshot verifier and formal
+  three-epoch validation385 wrapper are prepared.  After training completion, model-only snapshots
+  at 500/1000/1500 are verified file-by-file, evaluated separately, and selected by higher
+  accuracy, then higher strict-format accuracy, then the earlier epoch.  Test999 remains excluded.
+  See `stage3_post_training_validation_pipeline_20260802_142834.json`.
 
 ## Evaluation
 

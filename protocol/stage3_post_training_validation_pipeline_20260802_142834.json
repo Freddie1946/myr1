@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-02T14:28:34+08:00",
+  "status": "prepared_not_run",
+  "formal_result": false,
+  "active_training_modified": false,
+  "gpu_inference_run": false,
+  "paid_requests": 0,
+  "test_accessed": false,
+  "snapshot_steps": [500, 1000, 1500],
+  "snapshot_epochs": [1, 2, 3],
+  "selection_split": "pathmmu_validation_0385",
+  "selection_tie_break": [
+    "higher_correct",
+    "higher_format_correct",
+    "earlier_epoch"
+  ],
+  "entry_points": {
+    "snapshot_verifier": "scripts/verify_checkpoint_snapshot.py",
+    "validation_wrapper": "scripts/run_stage3_formal_validation.sh",
+    "selector": "scripts/select_stage3_validation_checkpoint.py",
+    "inherited_parallel_runner": "scripts/run_stage3_validation385_parallel.sh"
+  },
+  "verification": {
+    "new_unit_tests_passed": 7,
+    "python_compilation_passed": true,
+    "shell_syntax_passed": true,
+    "git_diff_check_passed": true
+  },
+  "code_sha256": {
+    "scripts/verify_checkpoint_snapshot.py": "70c88474f8b8b9ccc5308bebea38cb9b3e1425e4f1302ee7ad3d200fe4467271",
+    "scripts/select_stage3_validation_checkpoint.py": "ac6f81c4ccf4b3316230b3b2917931536dc2c38dfc31398e0b987c3c6330793c",
+    "scripts/run_stage3_formal_validation.sh": "f624977737711a83d4beba4cf5a035f0e479171ecdb8cafd8362ed99d5175c4c",
+    "scripts/test_verify_checkpoint_snapshot.py": "8bee7127e41f270e14391c259c5604f7c14bccf44612fa0d7abba070b214672c",
+    "scripts/test_select_stage3_validation_checkpoint.py": "62f2a4a6d8587ec128895d2e77ccbf8ab2bf4fc3d1fb18db546d964b10772a27"
+  }
+}

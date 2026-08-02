@@ -560,6 +560,15 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_141632_evaluation_results_private_hf_backup.md` and
     `protocol/evaluation_results_private_hf_backup_20260802_141632.json`.  This is provenance and
     disaster-recovery support for R1-7/R2-3/R2-4/R3-7, not a new efficacy result.
+36. Prepared a fail-closed post-training selection pipeline for each complete Stage3 Judge arm.
+    The pipeline verifies every file in the step-500/1000/1500 model-only snapshots, runs the
+    fixed 385-record validation split on all three, verifies prediction hashes and source/model
+    identity, and applies only the frozen accuracy/format/earlier-epoch tie-break.  PathMMU
+    test999 is excluded.  Seven unit tests and shell/Python static checks pass; no GPU inference or
+    paid call occurred during preparation.  Evidence:
+    `docs/20260802_142834_stage3_post_training_validation_pipeline_prepared.md` and
+    `protocol/stage3_post_training_validation_pipeline_20260802_142834.json`.  Supports R2-4 and
+    R3-7 reproducibility; the pipeline is prepared but no full-arm validation result is claimed.
 
 ## Mandatory update rule
 
