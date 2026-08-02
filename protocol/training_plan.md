@@ -148,6 +148,10 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   globally scoped. The immutable completed-results snapshot is unaffected. Separate traversals are
   now used and passed a corrected dry run; remote completion remains to be verified. See
   `periodic_backup_nested_path_filter_correction_20260802_145957.json`.
+- Scheduled-HF transport correction (2026-08-02): the 15:00 cron ran but its first HF
+  authentication request was reset by the peer, so no commit was created. Authentication and
+  upload now each use at most three attempts with 15/45-second delays; exhaustion remains
+  fail-closed for that invocation. See `periodic_hf_transport_retry_correction_20260802_150132.json`.
 
 ## Evaluation
 

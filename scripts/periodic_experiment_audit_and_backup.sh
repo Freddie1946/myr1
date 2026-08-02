@@ -273,12 +273,38 @@ if [[ "${PATHVLM_PERIODIC_BACKUP_DRY_RUN:-false}" == "true" ]]; then
 fi
 
 [[ -x "$HF_BIN" ]] || { echo "Hugging Face CLI is missing: $HF_BIN" >&2; exit 2; }
-"$HF_BIN" auth whoami >/dev/null
-UPLOAD_RESULT="$($HF_BIN upload "$HF_REPO_ID" "$STAGING" "$HF_REMOTE_ROOT" \
-  --repo-type dataset \
-  --commit-message "Periodic active experiment backup $STAMP" \
-  --commit-description "Mutable disaster-recovery copy; see snapshot_manifest.json for exact hashes. No model weights or credentials." \
-  --quiet)"
+authenticated=false
+for delay in 0 15 45; do
+  (( delay == 0 )) || sleep "$delay"
+  if "$HF_BIN" auth whoami >/dev/null 2>&1; then
+    authenticated=true
+    break
+  fi
+  echo "$STAMP HF authentication check failed; bounded retry follows" >&2
+done
+[[ "$authenticated" == "true" ]] || {
+  echo "$STAMP HF authentication failed after three attempts" >&2
+  exit 3
+}
+
+uploaded=false
+UPLOAD_RESULT=""
+for delay in 0 15 45; do
+  (( delay == 0 )) || sleep "$delay"
+  if UPLOAD_RESULT="$($HF_BIN upload "$HF_REPO_ID" "$STAGING" "$HF_REMOTE_ROOT" \
+    --repo-type dataset \
+    --commit-message "Periodic active experiment backup $STAMP" \
+    --commit-description "Mutable disaster-recovery copy; see snapshot_manifest.json for exact hashes. No model weights or credentials." \
+    --quiet)"; then
+    uploaded=true
+    break
+  fi
+  echo "$STAMP HF upload failed; bounded retry follows" >&2
+done
+[[ "$uploaded" == "true" ]] || {
+  echo "$STAMP HF upload failed after three attempts" >&2
+  exit 4
+}
 printf '%s\n' "$AGGREGATE_SHA256" > "$LAST_HASH_PATH"
 printf '%s\t%s\t%s\n' "$STAMP" "$AGGREGATE_SHA256" "$UPLOAD_RESULT" >> "$STATE_ROOT/upload_history.tsv"
 echo "$STAMP audit and private HF backup completed: $UPLOAD_RESULT"

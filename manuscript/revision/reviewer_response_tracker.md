@@ -616,6 +616,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     dry run. Evidence: `docs/20260802_145957_periodic_backup_nested_path_filter_correction.md` and
     `protocol/periodic_backup_nested_path_filter_correction_20260802_145957.json`. Supports honest
     R2-4/R3-7 provenance; corrected remote verification remains pending.
+43. Observed the first scheduled 15:00 cron invocation and recorded its transient HF
+    authentication connection reset without advancing the remote or local completed-upload state.
+    Added bounded three-attempt authentication and upload retries with 15/45-second delays;
+    exhaustion remains visible and terminal per invocation. Evidence:
+    `docs/20260802_150132_periodic_hf_transport_retry_correction.md` and
+    `protocol/periodic_hf_transport_retry_correction_20260802_150132.json`. Supports R3-7
+    operational reproducibility; corrected remote upload verification remains pending.
 
 ## Mandatory update rule
 

@@ -1,0 +1,34 @@
+{
+  "timestamp_cst": "2026-08-02T15:01:32+08:00",
+  "formal_result": false,
+  "status": "retry_hardened_pending_real_upload",
+  "scheduled_invocation": {
+    "timestamp_cst": "2026-08-02T15:00:00+08:00",
+    "cron_ran": true,
+    "failure_stage": "hf auth whoami",
+    "failure_class": "httpx.ConnectError",
+    "failure_message": "[Errno 104] Connection reset by peer",
+    "remote_commit_created": false,
+    "local_uploaded_hash_advanced": false
+  },
+  "correction": {
+    "authentication_max_attempts": 3,
+    "upload_max_attempts": 3,
+    "retry_delays_seconds": [
+      15,
+      45
+    ],
+    "infinite_retry": false,
+    "credentials_logged_or_committed": false
+  },
+  "script": {
+    "path": "scripts/periodic_experiment_audit_and_backup.sh",
+    "sha256": "63fd3e16c7a83d4fe948b786e12674a24f9931a66bdc0e80c21fb971aaf55d64"
+  },
+  "verification": {
+    "bash_syntax": "passed",
+    "no_network_dry_run": "passed",
+    "dry_run_aggregate_manifest_sha256": "755a1934693a1846ba5657c0a7be013c51074ec8e1965855cf1179e4ccda5465"
+  },
+  "next_action": "Run a real corrected backup and verify nested Stage3 reward-audit and judge-ledger files at the new private-HF revision."
+}
