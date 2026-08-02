@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_151307`
+Latest timestamp: `20260802_152807`
 
 Read in this order:
+
+0. `20260802_152807_aggregate_smoke_policy_frozen.md`
+0. `../protocol/aggregate_local_baseline_smoke_policy_20260802_152807.json`
 
 0. `20260802_151307_pathvqa_semantic_finalizer_and_completion_gate_prepared.md`
 0. `../protocol/pathvqa_semantic_finalizer_prepared_20260802_151307.json`

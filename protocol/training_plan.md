@@ -186,3 +186,7 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   prepared but unrun.  Each task requires a fixed smoke after GPT-4o Stage3 releases the GPUs.
   The prior PathMMU extractable-answer smoke failure remains terminal for that contract and is not
   converted into a post-test parser.  See `deepseek_vl2_external_vqa_adapter_20260802_143841.json`.
+- Local-baseline smoke policy update (2026-08-02): smoke is an aggregate adapter-behavior gate,
+  not an accuracy gate. At least 80% of outputs must be nonempty and contract-parseable, at most
+  20% may hit the generation cap, and PathVQA must cover both answer types. Wrong answers are
+  never corrected or re-Judged. See `aggregate_local_baseline_smoke_policy_20260802_152807.json`.

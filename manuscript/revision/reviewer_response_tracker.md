@@ -638,6 +638,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_151307_pathvqa_semantic_finalizer_and_completion_gate_prepared.md` and
     `protocol/pathvqa_semantic_finalizer_prepared_20260802_151307.json`. Supports R2-3/R3-7
     evaluation validity; active passes remain incomplete and no final score is claimed.
+46. Froze the local GPU-baseline smoke criterion as aggregate adapter behavior rather than answer
+    accuracy. The verifier checks immutable artifact identity plus nonempty, parseable and
+    generation-cap rates; wrong answers remain untouched and cannot trigger per-case repair or
+    re-Judging. Five unit tests and three existing real output schemas passed. Evidence:
+    `docs/20260802_152807_aggregate_smoke_policy_frozen.md` and
+    `protocol/aggregate_local_baseline_smoke_policy_20260802_152807.json`. Supports R1-7/R2-3
+    evaluation reproducibility; this is an engineering gate and makes no efficacy claim.
 
 ## Mandatory update rule
 

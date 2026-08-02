@@ -1,0 +1,39 @@
+{
+  "timestamp_cst": "2026-08-02T15:28:07+08:00",
+  "formal_result": false,
+  "status": "policy_and_verifier_frozen",
+  "scope": "future fixed local GPU-baseline adapter smokes",
+  "policy": {
+    "accuracy_used_as_gate": false,
+    "individual_wrong_answers_modified_or_rejudged": false,
+    "minimum_nonempty_rate": 0.8,
+    "minimum_parseable_rate": 0.8,
+    "maximum_generation_cap_hit_rate": 0.2,
+    "pathvqa_requires_free_form_and_yes_no": true,
+    "aggregate_failure_action": "stop full run and repair adapter; never correct cases"
+  },
+  "fail_closed_artifact_checks": [
+    "status and split role",
+    "source data SHA-256",
+    "model config SHA-256",
+    "predictions SHA-256",
+    "expected row count",
+    "ordered contiguous indices",
+    "per-row source-record SHA-256 presence"
+  ],
+  "code_sha256": {
+    "scripts/verify_local_baseline_smoke.py": "ddd92241af3b740f4073fc5d5a6726ab43d1b2481c8688d50c7d419a38098e0a",
+    "scripts/test_verify_local_baseline_smoke.py": "5961ce7975ab76d6ed560c34a6263d983beb592131cabfea1d2714e3d6703499"
+  },
+  "verification": {
+    "unit_tests_passed": 5,
+    "python_compile": "passed",
+    "real_schema_pathmmu": "passed_16_of_16_parseable",
+    "real_schema_pathvqa": "passed_14_of_16_parseable_accuracy_not_gated",
+    "real_schema_omnimedvqa": "passed_16_of_16_parseable_one_cap_hit",
+    "predictions_modified": false,
+    "paid_requests": 0,
+    "new_inference": false
+  },
+  "next_action": "Apply after each fixed Llama/DeepSeek local smoke once GPT-4o Stage3 and validation release the GPUs."
+}
