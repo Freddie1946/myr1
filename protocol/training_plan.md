@@ -138,6 +138,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   GPT-4o supervisor remains the sole recovery owner. Changed non-weight Stage3 and PathVQA evidence
   is content-hashed and copied to the private evaluation-results HF dataset. See
   `periodic_audit_private_hf_backup_prepared_20260802_145416.json`.
+- Monitoring/backup execution (2026-08-02): the `batchcom` crontab and cron daemon are active at
+  minute 0/30, and the first 50,919,746-byte remote rolling tree was verified at private-HF
+  revision `0f0fb0561194284e6f7b40a201b74881e1628d9b`. The rolling copy is mutable disaster recovery;
+  completed outputs still require an immutable increment. See
+  `periodic_audit_private_hf_backup_enabled_20260802_145732.json`.
 
 ## Evaluation
 

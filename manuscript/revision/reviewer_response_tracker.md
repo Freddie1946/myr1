@@ -601,6 +601,14 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_145416_periodic_audit_and_private_hf_backup_prepared.md` and
     `protocol/periodic_audit_private_hf_backup_prepared_20260802_145416.json`. Supports R2-4/R3-7
     provenance and recovery; no efficacy claim is made.
+41. Enabled the `batchcom` minute-0/minute-30 cron audit and verified its first private-HF rolling
+    backup at revision `0f0fb0561194284e6f7b40a201b74881e1628d9b`. The remote live tree contains
+    25 files and 50,919,746 bytes, including exact manifests but no weights or credentials. The
+    existing immutable 241-file completed-results snapshot is retained separately; final active
+    outputs will receive another immutable increment. Evidence:
+    `docs/20260802_145732_periodic_audit_and_private_hf_backup_enabled.md` and
+    `protocol/periodic_audit_private_hf_backup_enabled_20260802_145732.json`. Supports R2-4/R3-7
+    off-machine reproducibility; no efficacy claim is made.
 
 ## Mandatory update rule
 

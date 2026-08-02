@@ -1,0 +1,40 @@
+{
+  "timestamp_cst": "2026-08-02T14:57:32+08:00",
+  "formal_result": false,
+  "status": "enabled_and_first_backup_verified",
+  "scheduler": {
+    "type": "system_cron",
+    "user": "batchcom",
+    "timezone": "Asia/Shanghai",
+    "expression": "0,30 * * * *",
+    "foreground_wait_loop": false,
+    "crontab_sha256": "fa69e2060204080b3f448f765e0dea62d8b030be3dad03a5b1db181ee37310c8",
+    "cron_daemon_running": true,
+    "cron_daemon_pid_at_verification": 4092626
+  },
+  "first_rolling_backup": {
+    "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "private_verified": true,
+    "revision": "0f0fb0561194284e6f7b40a201b74881e1628d9b",
+    "prefix": "live/active_experiments",
+    "source_file_count": 23,
+    "source_total_bytes": 50916530,
+    "source_aggregate_manifest_sha256": "bd8548c4142dd616a0ff7c9ad70d3b82a366548aaa8b74f2e0cc9b537f22c7fe",
+    "remote_file_count_including_two_manifests": 25,
+    "remote_total_bytes_including_two_manifests": 50919746,
+    "contains_model_weights": false,
+    "contains_credentials": false
+  },
+  "existing_immutable_backup": {
+    "prefix": "snapshots/20260802_initial_static",
+    "revision": "8e4348a96eb7164de0b39eb5d5a7018203674fc8",
+    "file_count": 241,
+    "total_bytes": 338397446
+  },
+  "process_control": {
+    "periodic_auditor_can_restart_or_stop_training": false,
+    "immediate_recovery_owner": "scripts/supervise_stage3_gpt4o_formal.sh"
+  },
+  "finalization_policy": "Upload completed and validated PathVQA/GPT-4o raw outputs as a new immutable HF dataset increment; upload validated model-only Stage3 snapshot separately to a private HF model repository."
+}
