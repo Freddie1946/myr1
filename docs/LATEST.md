@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_134947`
+Latest timestamp: `20260802_141632`
 
 Read in this order:
+
+0. `20260802_141632_evaluation_results_private_hf_backup.md`
+0. `../protocol/evaluation_results_private_hf_backup_20260802_141632.json`
 
 0. `20260802_134947_stage3_and_pathvqa_bounded_retry_recovery.md`
 0. `../protocol/stage3_pathvqa_bounded_retry_recovery_20260802_134947.json`

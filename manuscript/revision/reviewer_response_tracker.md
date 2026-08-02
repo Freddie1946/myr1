@@ -550,6 +550,16 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_134947_stage3_and_pathvqa_bounded_retry_recovery.md` and
     `protocol/stage3_pathvqa_bounded_retry_recovery_20260802_134947.json`.  Supports R2-4 and R3-7
     reproducibility; it is an engineering recovery record, not an efficacy result.
+35. Added a verified off-machine backup for all currently static A100 evaluation artifacts.  The
+    private HF dataset snapshot at revision `8e4348a96eb7164de0b39eb5d5a7018203674fc8`
+    contains 241 files (338,397,446 bytes) covering external-VQA, hosted-baseline smoke/full,
+    PathMMU diagnostic and SFT4000/Stage2 results.  Active PathVQA semantic-Judge outputs are
+    deliberately excluded until completion and will be added as an immutable increment.  Source,
+    summaries and exact recovery metadata remain on GitHub; in-progress Stage3 optimizer
+    checkpoints remain local to avoid active-run I/O contention.  Evidence:
+    `docs/20260802_141632_evaluation_results_private_hf_backup.md` and
+    `protocol/evaluation_results_private_hf_backup_20260802_141632.json`.  This is provenance and
+    disaster-recovery support for R1-7/R2-3/R2-4/R3-7, not a new efficacy result.
 
 ## Mandatory update rule
 

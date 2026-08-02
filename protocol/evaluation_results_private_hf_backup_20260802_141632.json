@@ -1,0 +1,66 @@
+{
+  "timestamp_cst": "2026-08-02T14:16:32+08:00",
+  "formal_result": false,
+  "backup_kind": "private_huggingface_dataset_static_snapshot",
+  "repository": {
+    "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "private_verified": true,
+    "revision": "8e4348a96eb7164de0b39eb5d5a7018203674fc8",
+    "snapshot_prefix": "snapshots/20260802_initial_static"
+  },
+  "inventory": {
+    "file_count": 241,
+    "total_bytes": 338397446,
+    "aggregate_manifest_sha256": "c6f5779c7256c47e506f2d5c6deb4c6aab52fa7cabbdea799dfe7a71d9f1a867",
+    "aggregate_manifest_serialization": "sorted <run-root>\\t<relative-path>\\t<size>\\t<file-sha256>\\n",
+    "run_roots": [
+      {
+        "name": "external_vqa_full_20260729_224503",
+        "file_count": 66,
+        "bytes": 177399822
+      },
+      {
+        "name": "hosted_baseline_behavioral_smoke_20260801",
+        "file_count": 25,
+        "bytes": 118564
+      },
+      {
+        "name": "hosted_baseline_full_20260801",
+        "file_count": 47,
+        "bytes": 141427679
+      },
+      {
+        "name": "pathmmu_diagnostic",
+        "file_count": 85,
+        "bytes": 14810633
+      },
+      {
+        "name": "pathmmu_sft4000_stage2_20260729_221640",
+        "file_count": 18,
+        "bytes": 4640748
+      }
+    ]
+  },
+  "excluded_while_mutable": [
+    "**/gpt-5-mini_semantic_judgments*.jsonl",
+    "**/judge_retry_20260802.log",
+    "**/*.lock"
+  ],
+  "next_increment": "Upload validated final PathVQA semantic-judge outputs after both active passes complete.",
+  "stage3_checkpoint_backup": {
+    "hf_uploaded": false,
+    "reason": "Training is active; avoid 16-GiB model-snapshot and 102-GiB full-checkpoint I/O contention.",
+    "local_model_snapshot": "epoch_model_snapshots/checkpoint-500",
+    "local_full_recovery_checkpoints": [
+      "output/checkpoint-700",
+      "output/checkpoint-800"
+    ],
+    "planned_action": "Upload a validated model-only milestone/final snapshot and manifest after a safe boundary; retain rolling full optimizer checkpoints locally."
+  },
+  "monitoring": {
+    "human_audit_interval_minutes": 30,
+    "foreground_wait_loop": false,
+    "immediate_failure_handler": "scripts/supervise_stage3_gpt4o_formal.sh"
+  }
+}
