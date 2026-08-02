@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_150132`
+Latest timestamp: `20260802_150310`
 
 Read in this order:
+
+0. `20260802_150310_corrected_periodic_hf_backup_verified.md`
+0. `../protocol/corrected_periodic_hf_backup_verified_20260802_150310.json`
 
 0. `20260802_150132_periodic_hf_transport_retry_correction.md`
 0. `../protocol/periodic_hf_transport_retry_correction_20260802_150132.json`

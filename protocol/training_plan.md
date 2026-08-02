@@ -152,6 +152,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   authentication request was reset by the peer, so no commit was created. Authentication and
   upload now each use at most three attempts with 15/45-second delays; exhaustion remains
   fail-closed for that invocation. See `periodic_hf_transport_retry_correction_20260802_150132.json`.
+- Corrected live-backup completion (2026-08-02): private-HF revision
+  `06a0de6b8a940fddeeba0ee011212a2cfc0e8f6e` was recursively verified with all 24 Stage3 rank
+  reward-audit files, three Judge state/ledger files and active PathVQA evidence. The remote tree
+  has 52 files and 102,977,672 bytes including its two manifests. See
+  `corrected_periodic_hf_backup_verified_20260802_150310.json`.
 
 ## Evaluation
 

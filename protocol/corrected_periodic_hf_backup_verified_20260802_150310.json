@@ -1,0 +1,46 @@
+{
+  "timestamp_cst": "2026-08-02T15:03:10+08:00",
+  "formal_result": false,
+  "status": "corrected_live_backup_verified",
+  "repository": {
+    "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "private_verified": true,
+    "revision": "06a0de6b8a940fddeeba0ee011212a2cfc0e8f6e",
+    "prefix": "live/active_experiments"
+  },
+  "source_manifest": {
+    "file_count": 50,
+    "total_bytes": 102971181,
+    "aggregate_manifest_sha256": "ea9879387baa8adba0b3f4f3daed2ad1d8499177b94ac2a209bef0fe15231378",
+    "contains_model_weights": false,
+    "contains_credentials": false
+  },
+  "remote_tree": {
+    "file_count_including_two_manifests": 52,
+    "total_bytes_including_two_manifests": 102977672,
+    "stage3_reward_audit_file_count": 24,
+    "stage3_reward_audit_bytes": 48166242,
+    "stage3_judge_file_count": 3,
+    "stage3_judge_bytes": 3628620,
+    "stage3_judge_files": [
+      "judge/budget_ledger.json",
+      "judge/rate_limit.json",
+      "judge/rule_fallback_ledger.json"
+    ]
+  },
+  "scheduler": {
+    "expression": "0,30 * * * *",
+    "timezone": "Asia/Shanghai",
+    "hf_authentication_max_attempts": 3,
+    "hf_upload_max_attempts": 3,
+    "retry_delays_seconds": [
+      15,
+      45
+    ],
+    "auditor_process_control": false,
+    "immediate_recovery_owner": "scripts/supervise_stage3_gpt4o_formal.sh"
+  },
+  "supersedes_for_live_recovery": "0f0fb0561194284e6f7b40a201b74881e1628d9b",
+  "immutable_completed_results_revision_unchanged": "8e4348a96eb7164de0b39eb5d5a7018203674fc8"
+}

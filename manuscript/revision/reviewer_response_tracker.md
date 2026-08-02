@@ -623,6 +623,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_150132_periodic_hf_transport_retry_correction.md` and
     `protocol/periodic_hf_transport_retry_correction_20260802_150132.json`. Supports R3-7
     operational reproducibility; corrected remote upload verification remains pending.
+44. Completed and recursively verified the corrected private-HF live backup at revision
+    `06a0de6b8a940fddeeba0ee011212a2cfc0e8f6e`: all 24 Stage3 rank reward-audit files, three Judge
+    ledger/state files and active PathVQA evidence are present. The 52-file, 102,977,672-byte remote
+    tree includes exact manifests and no weights or credentials. Evidence:
+    `docs/20260802_150310_corrected_periodic_hf_backup_verified.md` and
+    `protocol/corrected_periodic_hf_backup_verified_20260802_150310.json`. Supports R2-4/R3-7
+    off-machine reproducibility; mutable live state will still be frozen after completion.
 
 ## Mandatory update rule
 
