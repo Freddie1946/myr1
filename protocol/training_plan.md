@@ -171,6 +171,12 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   were left intact. The final 16:00 audit completed locally but its three bounded HF authentication
   attempts failed closed. Future status checks are on demand only. See
   `periodic_monitoring_disabled_20260802_160833.json`.
+- Hosted semantic completion (2026-08-02): Qwen-VL-Plus and Claude Haiku 4.5 now have finalized
+  full PathVQA mixed semantic scores, completing their approved PathMMU/PathVQA/OmniMedVQA
+  evaluation sets. No case was manually corrected. The 14-file final semantic package was
+  re-downloaded and hash-verified at private-HF revision
+  `6dd3ef5a73d3b7603991adff7b2fd17a9883e390`. See
+  `hosted_semantic_evaluation_completion_20260802_214734.json`.
 - PathVQA semantic completion correction (2026-08-02): completion is no longer inferred from
   Judge-row plus skip counts versus all 6,719 cases. A fail-closed finalizer reconstructs every
   successful free-form cache key, scores duplicate-content cases individually, keeps failed

@@ -1,0 +1,62 @@
+{
+  "timestamp_cst": "2026-08-02T21:47:34+08:00",
+  "formal_result": true,
+  "status": "qwen_and_haiku_three_task_evaluations_complete_pathvqa_semantics_backed_up",
+  "scoring_contract": {
+    "pathvqa_yes_no": "target-blind deterministic exact match",
+    "pathvqa_free_form": "GPT-5-mini semantic Judge v1",
+    "failed_predictions": "retained in denominator and scored wrong",
+    "manual_case_correction": false,
+    "pathmmu_test999_class": "development_diagnostic"
+  },
+  "results": {
+    "qwen_vl_plus": {
+      "pathmmu": {"correct": 547, "total": 999, "accuracy": 0.5475475475475475},
+      "omnimedvqa": {"correct": 6151, "total": 8518, "accuracy": 0.7222026535164964},
+      "pathvqa": {
+        "correct": 2507,
+        "total": 6719,
+        "accuracy": 0.37312100014883165,
+        "yes_no_accuracy": 0.6757882212968471,
+        "free_form_accuracy_all_cases": 0.07000297885016384,
+        "failed_free_form_predictions": 11
+      }
+    },
+    "claude_haiku_4_5": {
+      "pathmmu": {"correct": 466, "total": 999, "accuracy": 0.46693386773547096},
+      "omnimedvqa": {"correct": 4783, "total": 8518, "accuracy": 0.562176774800188},
+      "pathvqa": {
+        "correct": 1544,
+        "total": 6719,
+        "accuracy": 0.22979610061020986,
+        "yes_no_accuracy": 0.40303390838786435,
+        "free_form_accuracy_all_cases": 0.05630026809651475,
+        "failed_free_form_predictions": 3,
+        "excluded_historical_failed_prediction_judgments": 2
+      }
+    }
+  },
+  "pathvqa_final_metric_sha256": {
+    "qwen_vl_plus": "896a7f29c393355bc690a374013da3bc4a6f1a962824b5d9da0fb5e854e768ec",
+    "claude_haiku_4_5": "0c885bbb7b071e9f0e2a95a30639a408720001bda31efb6973a0e7bf0318b9db"
+  },
+  "verification": {
+    "unit_tests_passed": 12,
+    "finalizer_paid_requests": 0,
+    "qwen_completion_gate": "passed",
+    "haiku_completion_gate": "passed"
+  },
+  "private_hf_backup": {
+    "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "revision": "6dd3ef5a73d3b7603991adff7b2fd17a9883e390",
+    "prefix": "snapshots/20260802_pathvqa_semantic_final",
+    "data_file_count": 14,
+    "data_bytes": 53547579,
+    "manifest_sha256": "f323c6d1f8d7f2623459df4b86ef58386a8b95923b29feb17f4e93975a05929a",
+    "remote_files_re_downloaded_and_verified": 14,
+    "contains_credentials": false,
+    "contains_model_weights": false
+  },
+  "next_action": "Finish GPT-4o Stage3, verify epoch snapshots, run validation385 selection, then begin fixed local GPU-baseline smokes."
+}

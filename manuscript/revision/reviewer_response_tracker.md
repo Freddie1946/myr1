@@ -667,6 +667,14 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_160833_periodic_monitoring_disabled_by_user.md` and
     `protocol/periodic_monitoring_disabled_20260802_160833.json`. Supports R3-7 audit honesty;
     this scheduling change does not alter any efficacy result.
+50. Finalized the full Qwen-VL-Plus and Claude Haiku 4.5 PathVQA evaluations with deterministic
+    yes/no scoring and frozen GPT-5-mini free-form semantic scoring, completing both models'
+    three-task PathMMU/PathVQA/OmniMedVQA evaluation sets. Failed predictions remain wrong and no
+    case was manually corrected. The complete 14-file semantic package was downloaded again and
+    hash-verified from private-HF revision `6dd3ef5a73d3b7603991adff7b2fd17a9883e390`.
+    Evidence: `docs/20260802_214734_hosted_semantic_evaluation_completed_and_backed_up.md` and
+    `protocol/hosted_semantic_evaluation_completion_20260802_214734.json`. Supports R1-7/R2-3;
+    PathMMU test999 remains explicitly classified as development diagnostic evidence.
 
 ## Mandatory update rule
 

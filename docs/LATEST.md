@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_160833`
+Latest timestamp: `20260802_214734`
 
 Read in this order:
+
+0. `20260802_214734_hosted_semantic_evaluation_completed_and_backed_up.md`
+0. `../protocol/hosted_semantic_evaluation_completion_20260802_214734.json`
 
 0. `20260802_160833_periodic_monitoring_disabled_by_user.md`
 0. `../protocol/periodic_monitoring_disabled_20260802_160833.json`
