@@ -210,3 +210,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   not an accuracy gate. At least 80% of outputs must be nonempty and contract-parseable, at most
   20% may hit the generation cap, and PathVQA must cover both answer types. Wrong answers are
   never corrected or re-Judged. See `aggregate_local_baseline_smoke_policy_20260802_152807.json`.
+- Stage3 selection and local-baseline execution update (2026-08-03): GPT-4o Stage3 completed
+  1,500 steps and validation385 selected epoch 2 at 247/385. Its 18-file model-only snapshot is
+  hash-verified at private-HF revision `3ade3cffd46b64abc864ed9f271b47632810ec9c`. Full shard
+  hashes are frozen for both ModelScope Llama mirrors. Llama 11B PathMMU and OmniMedVQA plus
+  DeepSeek-VL2 PathVQA and OmniMedVQA passed aggregate smokes and entered full execution; Llama
+  11B PathVQA failed the frozen generation-cap gate and is not run full. Llama 90B remains queued
+  before the final Kimi arm. See
+  `gpt4o_stage3_selection_hf_and_local_baselines_20260803_011601.json`.

@@ -300,6 +300,8 @@ Read in this order:
 229. `../protocol/stage3_coefficient_freeze_and_aigcbest_hardening_20260801_182543.json`
 230. `20260801_184826_gpt4o_formal_launcher_and_execution_order_frozen.md`
 231. `../protocol/gpt4o_formal_launcher_frozen_20260801_184826.json`
+232. `20260803_011601_gpt4o_stage3_selected_uploaded_and_local_gpu_baselines_started.md`
+233. `../protocol/gpt4o_stage3_selection_hf_and_local_baselines_20260803_011601.json`
 
 The user authorized GPT-4o Stage3 first with compatible non-GPU hosted baselines in parallel,
 GPU-local baselines next, and Kimi Stage3 last.  The user requested no USD budget ceiling and
@@ -425,3 +427,9 @@ The fixed SFT4000 control epoch-2/step-250 model-only snapshot is now uploaded t
 Hugging Face repository `Freddie1946/PathVLM-R1-SFT-n4000-control-seed42-epoch2` at revision
 `31ecd18b9dc9de5c4118efde586bb625e4a6da06`. All manifest files are present remotely, and the LFS
 SHA-256 of all four safetensor shards matches the local frozen snapshot manifest.
+
+GPT-4o Stage3 completed all 1,500 steps and the frozen validation385 pipeline selected epoch 2
+(247/385). The selected model-only snapshot is independently verified at private-HF revision
+`3ade3cffd46b64abc864ed9f271b47632810ec9c`. Llama 11B and DeepSeek-VL2 aggregate smokes have run:
+eligible full tasks are active, while Llama 11B PathVQA is withheld after a predeclared cap-hit
+gate failure. Llama 90B remains queued for all-eight-GPU execution, followed by Kimi Stage3.

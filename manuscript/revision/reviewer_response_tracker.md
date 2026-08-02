@@ -675,6 +675,15 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     Evidence: `docs/20260802_214734_hosted_semantic_evaluation_completed_and_backed_up.md` and
     `protocol/hosted_semantic_evaluation_completion_20260802_214734.json`. Supports R1-7/R2-3;
     PathMMU test999 remains explicitly classified as development diagnostic evidence.
+51. Completed GPT-4o Stage3, selected epoch 2 solely on the frozen PathMMU validation385 split,
+    and independently verified its 18-file model-only snapshot at private-HF revision
+    `3ade3cffd46b64abc864ed9f271b47632810ec9c`. Full ModelScope-mirror Llama shard hashes and fixed
+    aggregate GPU smokes are now recorded. Eligible Llama 11B and DeepSeek-VL2 full tasks are
+    running; Llama 11B PathVQA is withheld after its predeclared cap-hit gate failed, without
+    post-hoc prompt/parser repair. Evidence:
+    `docs/20260803_011601_gpt4o_stage3_selected_uploaded_and_local_gpu_baselines_started.md` and
+    `protocol/gpt4o_stage3_selection_hf_and_local_baselines_20260803_011601.json`. Supports
+    R1-7/R2-3/R3-7 reproducibility; no queued local-baseline or Kimi efficacy result is claimed.
 
 ## Mandatory update rule
 

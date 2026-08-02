@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-03T01:16:01+08:00",
+  "gpt4o_stage3": {
+    "run_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_full3epoch_seed42_20260801",
+    "completed_steps": 1500,
+    "committed_spend_usd": 63.12758000000005,
+    "completed_unique_judge_requests": 12275,
+    "rule_fallback_total": 2,
+    "rule_fallback_consecutive": 0,
+    "validation_split": "pathmmu_validation_0385",
+    "test_accessed_by_selection": false,
+    "candidates": [
+      {"step": 500, "epoch": 1, "correct": 234, "count": 385, "format_correct": 385},
+      {"step": 1000, "epoch": 2, "correct": 247, "count": 385, "format_correct": 385},
+      {"step": 1500, "epoch": 3, "correct": 245, "count": 385, "format_correct": 385}
+    ],
+    "selected_step": 1000,
+    "selected_epoch": 2
+  },
+  "private_hf_model": {
+    "repo_id": "Freddie1946/PathVLM-R1-Process-GRPO-GPT4o-n1000-seed42-epoch2",
+    "revision": "3ade3cffd46b64abc864ed9f271b47632810ec9c",
+    "private": true,
+    "verified_file_count": 18,
+    "verified_total_bytes": 16600833380,
+    "remote_verification_sha256": "7b690a04eb5e2fd5095ce2a5cae1e2aa5c9688d90c33a1fb021724aad8154048",
+    "optimizer_state_uploaded": false
+  },
+  "mllama_weight_hashes": {
+    "source_disclosure": "ModelScope-sourced mirrors; official Hugging Face access remains gated",
+    "llama32_11b": {"shards": 5, "manifest_sha256": "1e66b76d15507c98edaf53e808be17408c461fb4c40c24cd160125477b551108"},
+    "llama32_90b": {"shards": 37, "manifest_sha256": "f83427eb07d33b2786206034f0789d7723b206522eadcb8d4ac83a77aa376b41"}
+  },
+  "aggregate_smokes": [
+    {"model": "Llama-3.2-11B-Vision-Instruct", "task": "pathmmu", "count": 16, "nonempty": 16, "parseable": 13, "cap_hits": 0, "status": "passed"},
+    {"model": "Llama-3.2-11B-Vision-Instruct", "task": "pathvqa", "count": 16, "nonempty": 16, "cap_hits": 9, "status": "failed_cap_hit_rate"},
+    {"model": "Llama-3.2-11B-Vision-Instruct", "task": "omnimedvqa", "count": 16, "nonempty": 16, "parseable": 16, "cap_hits": 3, "status": "passed"},
+    {"model": "DeepSeek-VL2", "task": "pathvqa", "count": 16, "nonempty": 16, "parseable": 14, "cap_hits": 0, "status": "passed"},
+    {"model": "DeepSeek-VL2", "task": "omnimedvqa", "count": 16, "nonempty": 16, "parseable": 16, "cap_hits": 0, "status": "passed"}
+  ],
+  "full_runs": {
+    "running": [
+      "Llama-3.2-11B PathMMU test999 development diagnostic",
+      "Llama-3.2-11B OmniMedVQA external test",
+      "DeepSeek-VL2 PathVQA external test",
+      "DeepSeek-VL2 OmniMedVQA external test"
+    ],
+    "not_launched_after_failed_gate": ["Llama-3.2-11B PathVQA"],
+    "queued": ["Llama-3.2-90B fixed smokes and eligible full runs"]
+  },
+  "kimi": {
+    "status": "queued_last",
+    "openrouter_available_usd": 27.312309725,
+    "retained_authorization_usd": 26.71782984,
+    "budget_gate": "passed"
+  }
+}
