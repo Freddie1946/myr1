@@ -594,6 +594,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_145005_kimi_stage3_bounded_retry_hardening_prepared.md` and
     `protocol/stage3_kimi26_bounded_retry_hardening_20260802_145005.json`. Supports R2-4/R3-7
     recovery reproducibility; the arm is unlaunched and no Kimi efficacy claim is made.
+40. Prepared a machine-side half-hour audit and private-HF rolling disaster-recovery backup for
+    active GPT-4o Stage3 and PathVQA semantic-Judge evidence. The auditor records process,
+    checkpoint, budget/fallback, JSON-integrity, GPU and disk state but cannot control training;
+    the classified supervisor remains the only recovery owner. Evidence:
+    `docs/20260802_145416_periodic_audit_and_private_hf_backup_prepared.md` and
+    `protocol/periodic_audit_private_hf_backup_prepared_20260802_145416.json`. Supports R2-4/R3-7
+    provenance and recovery; no efficacy claim is made.
 
 ## Mandatory update rule
 

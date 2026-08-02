@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_145005`
+Latest timestamp: `20260802_145416`
 
 Read in this order:
+
+0. `20260802_145416_periodic_audit_and_private_hf_backup_prepared.md`
+0. `../protocol/periodic_audit_private_hf_backup_prepared_20260802_145416.json`
 
 0. `20260802_145005_kimi_stage3_bounded_retry_hardening_prepared.md`
 0. `../protocol/stage3_kimi26_bounded_retry_hardening_20260802_145005.json`

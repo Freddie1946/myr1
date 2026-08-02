@@ -1,0 +1,31 @@
+{
+  "timestamp_cst": "2026-08-02T14:54:16+08:00",
+  "formal_result": false,
+  "status": "prepared_pending_installation",
+  "schedule": "minute 0 and minute 30 of every hour",
+  "foreground_wait_loop": false,
+  "recovery_owner": "scripts/supervise_stage3_gpt4o_formal.sh",
+  "periodic_auditor_may_restart_training": false,
+  "backup": {
+    "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "private": true,
+    "rolling_prefix": "live/active_experiments",
+    "content_hash_skip": true,
+    "model_weights_included": false,
+    "credentials_included": false
+  },
+  "script": {
+    "path": "scripts/periodic_experiment_audit_and_backup.sh",
+    "sha256": "461be674ae69d4261497fc45e069de6a068bd202a8b4ff25e0876f29bd26e4ad"
+  },
+  "dry_run": {
+    "status": "passed",
+    "network_upload": false,
+    "aggregate_manifest_sha256": "8c00bb78b29bf4ca830e6a312424fc773f5e1d774cf05037e35d2d4c82be3fd7",
+    "gpt4o_latest_observed_step": 871,
+    "reward_audit_invalid_json_rows": 0,
+    "pathvqa_judge_invalid_json_rows": 0
+  },
+  "next_action": "Commit and push, install crontab entry, then perform and verify the first real private-HF rolling backup."
+}

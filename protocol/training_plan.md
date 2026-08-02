@@ -133,6 +133,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   smoke-plus-training ledger ceiling is 12,361 physical attempts; the arm remains unlaunched and
   last in the approved execution order. See
   `stage3_kimi26_bounded_retry_hardening_20260802_145005.json`.
+- Monitoring/backup preparation (2026-08-02): replace foreground polling with a machine-side
+  half-hour cron audit. The auditor is read-only with respect to process control; the classified
+  GPT-4o supervisor remains the sole recovery owner. Changed non-weight Stage3 and PathVQA evidence
+  is content-hashed and copied to the private evaluation-results HF dataset. See
+  `periodic_audit_private_hf_backup_prepared_20260802_145416.json`.
 
 ## Evaluation
 
