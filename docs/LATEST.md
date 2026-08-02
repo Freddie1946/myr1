@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_145732`
+Latest timestamp: `20260802_145957`
 
 Read in this order:
+
+0. `20260802_145957_periodic_backup_nested_path_filter_correction.md`
+0. `../protocol/periodic_backup_nested_path_filter_correction_20260802_145957.json`
 
 0. `20260802_145732_periodic_audit_and_private_hf_backup_enabled.md`
 0. `../protocol/periodic_audit_private_hf_backup_enabled_20260802_145732.json`

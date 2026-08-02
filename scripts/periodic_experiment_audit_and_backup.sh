@@ -199,10 +199,11 @@ stage_file() {
 while IFS= read -r -d '' source; do
   stage_file "$source" "stage3_gpt4o/${source#"$STAGE3_RUN_ROOT"/}"
 done < <(
-  find "$STAGE3_RUN_ROOT" -type f \
-    \( -path '*/reward_audit/*' -o -path '*/judge/*.json' -o -maxdepth 1 -name '*.json' \
-       -o -maxdepth 1 -name '*.jsonl' -o -maxdepth 1 -name '*.log' \) \
+  find "$STAGE3_RUN_ROOT" -maxdepth 1 -type f \
+    \( -name '*.json' -o -name '*.jsonl' -o -name '*.log' \) \
     ! -name '*.lock' -print0
+  find "$STAGE3_RUN_ROOT/reward_audit" -type f -name '*.jsonl' -print0
+  find "$STAGE3_RUN_ROOT/judge" -maxdepth 1 -type f -name '*.json' -print0
 )
 
 for pair in "qwen_vl_plus:$QWEN_PATHVQA" "claude_haiku_4_5:$HAIKU_PATHVQA"; do

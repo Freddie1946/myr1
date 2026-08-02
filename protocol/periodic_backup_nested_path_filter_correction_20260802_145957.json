@@ -1,0 +1,24 @@
+{
+  "timestamp_cst": "2026-08-02T14:59:57+08:00",
+  "formal_result": false,
+  "status": "code_corrected_pending_remote_verification",
+  "affected_revision": "0f0fb0561194284e6f7b40a201b74881e1628d9b",
+  "affected_scope": "first mutable live/active_experiments backup only",
+  "unaffected_scope": "immutable snapshots/20260802_initial_static backup",
+  "observed_omission": [
+    "stage3_gpt4o/reward_audit/**/*.jsonl",
+    "stage3_gpt4o/judge/*.json"
+  ],
+  "root_cause": "GNU find -maxdepth 1 is a global traversal option, not a branch-local expression predicate.",
+  "correction": "Use separate explicit find traversals for Stage3 top-level files, nested reward audit JSONL files, and judge JSON ledgers.",
+  "script": {
+    "path": "scripts/periodic_experiment_audit_and_backup.sh",
+    "sha256": "f43f7786489c2a839adfdb1f40d4cc3645a05f819ab0e557c1e5ff201e5891bf"
+  },
+  "corrected_dry_run": {
+    "status": "passed",
+    "network_upload": false,
+    "aggregate_manifest_sha256": "0c03f728b7e9388935e3fb32b97dd7f7031e339d274610e7693bc726beac4b33"
+  },
+  "next_action": "Run the corrected backup and verify nested reward-audit and judge-ledger files at the resulting private-HF revision."
+}

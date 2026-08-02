@@ -609,6 +609,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_145732_periodic_audit_and_private_hf_backup_enabled.md` and
     `protocol/periodic_audit_private_hf_backup_enabled_20260802_145732.json`. Supports R2-4/R3-7
     off-machine reproducibility; no efficacy claim is made.
+42. Corrected the first live-backup scope after remote inspection showed that GNU `find -maxdepth`
+    had excluded nested Stage3 reward-audit and Judge-ledger files. The first HF live revision is
+    retained as a partial snapshot; the immutable 241-file completed-results snapshot was
+    unaffected. Separate explicit traversals now cover the omitted paths and passed a no-network
+    dry run. Evidence: `docs/20260802_145957_periodic_backup_nested_path_filter_correction.md` and
+    `protocol/periodic_backup_nested_path_filter_correction_20260802_145957.json`. Supports honest
+    R2-4/R3-7 provenance; corrected remote verification remains pending.
 
 ## Mandatory update rule
 

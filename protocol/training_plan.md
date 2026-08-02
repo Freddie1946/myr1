@@ -143,6 +143,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   revision `0f0fb0561194284e6f7b40a201b74881e1628d9b`. The rolling copy is mutable disaster recovery;
   completed outputs still require an immutable increment. See
   `periodic_audit_private_hf_backup_enabled_20260802_145732.json`.
+- Rolling-backup filter correction (2026-08-02): remote verification showed the first live
+  revision omitted nested Stage3 reward-audit and Judge-ledger paths because `find -maxdepth` was
+  globally scoped. The immutable completed-results snapshot is unaffected. Separate traversals are
+  now used and passed a corrected dry run; remote completion remains to be verified. See
+  `periodic_backup_nested_path_filter_correction_20260802_145957.json`.
 
 ## Evaluation
 
