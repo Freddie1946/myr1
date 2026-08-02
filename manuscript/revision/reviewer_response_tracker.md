@@ -578,6 +578,14 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_143422_modelscope_llama32_snapshots_and_local_adapter_prepared.md` and
     `protocol/modelscope_llama32_local_adapter_20260802_143422.json`.  Supports R1-7/R2-3; smoke
     and full evaluation remain pending after GPT-4o Stage3.
+38. Prepared an isolated official-interface DeepSeek-VL2 adapter for PathVQA and OmniMedVQA while
+    preserving its prior PathMMU response-contract failure.  The external adapter uses the shared
+    frozen prompts, deterministic scorer, source hashes and append-only recovery, but has not
+    loaded weights or accessed either test set.  Both task-specific smokes remain mandatory after
+    Stage3 releases the GPUs.  Evidence:
+    `docs/20260802_143841_deepseek_vl2_external_vqa_adapter_prepared.md` and
+    `protocol/deepseek_vl2_external_vqa_adapter_20260802_143841.json`.  Supports R1-7/R2-3;
+    no DeepSeek external score is claimed yet.
 
 ## Mandatory update rule
 

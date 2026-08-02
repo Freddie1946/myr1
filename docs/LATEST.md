@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_143422`
+Latest timestamp: `20260802_143841`
 
 Read in this order:
+
+0. `20260802_143841_deepseek_vl2_external_vqa_adapter_prepared.md`
+0. `../protocol/deepseek_vl2_external_vqa_adapter_20260802_143841.json`
 
 0. `20260802_143422_modelscope_llama32_snapshots_and_local_adapter_prepared.md`
 0. `../protocol/modelscope_llama32_local_adapter_20260802_143422.json`

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-02T14:38:41+08:00",
+  "status": "adapter_prepared_smoke_pending",
+  "formal_result": false,
+  "model_id": "deepseek-ai/deepseek-vl2",
+  "revision": "f363772d1c47f4239dd844015b4bd53beb87951b",
+  "local_model": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/models/deepseek-ai--deepseek-vl2--f363772d1c47f4239dd844015b4bd53beb87951b",
+  "runner": "scripts/run_external_vqa_deepseek_vl2.py",
+  "tasks": ["pathvqa", "omnimedvqa"],
+  "gpu_inference_run": false,
+  "test_accessed": false,
+  "pathmmu_contract_status": "validation_smoke_failed_extractable_answer; test999_not_run",
+  "full_run_gates": [
+    "pathvqa adapter smoke",
+    "omnimedvqa adapter smoke",
+    "fixed source/model hashes",
+    "all eight Stage3 GPUs released"
+  ],
+  "verification": {
+    "isolated_environment_import_help_passed": true,
+    "python_compilation_passed": true,
+    "relevant_tests_passed": 14,
+    "gpu_weight_load_attempted": false
+  },
+  "code_sha256": {
+    "scripts/run_external_vqa_deepseek_vl2.py": "b2ddfae682554a5975392ae081d277177c61e2fc8e053b2a31741eabe6545c9e",
+    "scripts/test_run_external_vqa_deepseek_vl2.py": "f31650c3dab96e0f2d957d8069548b83be3dd54bc0af0c56afb4deda98b172ba"
+  }
+}

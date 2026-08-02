@@ -145,3 +145,7 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   Mllama adapter is prepared but unrun.  Official HF access remains gated, so mirror provenance
   must be disclosed.  Full shard hashes and fixed PathMMU/PathVQA/OmniMedVQA smokes are mandatory
   before the post-Stage3 full runs.  See `modelscope_llama32_local_adapter_20260802_143422.json`.
+- DeepSeek-VL2 external-evaluation update (2026-08-02): its native PathVQA/OmniMedVQA adapter is
+  prepared but unrun.  Each task requires a fixed smoke after GPT-4o Stage3 releases the GPUs.
+  The prior PathMMU extractable-answer smoke failure remains terminal for that contract and is not
+  converted into a post-test parser.  See `deepseek_vl2_external_vqa_adapter_20260802_143841.json`.
