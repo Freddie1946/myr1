@@ -1,0 +1,58 @@
+{
+  "timestamp_cst": "2026-08-02T14:50:05+08:00",
+  "formal_result": false,
+  "status": "prepared_not_launched",
+  "arm": "kimi26_full3epoch_seed42_fresh",
+  "judge": {
+    "model": "moonshotai/kimi-k2.6",
+    "provider_only": [
+      "inceptron"
+    ],
+    "logical_training_judgments": 12000,
+    "retry_capacity": 360,
+    "paid_smoke_requests": 1,
+    "maximum_physical_requests_shared_ledger": 12361,
+    "maximum_physical_attempts_per_logical_judgment": 4,
+    "retry_delays_seconds": [
+      15,
+      45,
+      90
+    ],
+    "rule_fallback_total_limit": 24,
+    "rule_fallback_consecutive_limit": 4,
+    "rule_fallback_max_reward": 0.5
+  },
+  "retryable": [
+    "ambiguous_transport",
+    "explicit_transient_http_status",
+    "truncated_or_malformed_json",
+    "retryable_event_schema_or_finish_reason_failure"
+  ],
+  "terminal_without_retry": [
+    "model_or_provider_identity_mismatch",
+    "refusal",
+    "missing_usage_accounting",
+    "non_transient_contract_failure"
+  ],
+  "budget": {
+    "authorized_usd": 30.0,
+    "prior_failed_attempts_usd": 3.28217016,
+    "remaining_usd": 26.71782984
+  },
+  "code_sha256": {
+    "scripts/stage3_openrouter_judge.py": "b7dca200eb935cf0702b65e528dd80a48284f130dd2a3827b1d1467092cd564f",
+    "scripts/run_stage3_kimi26_formal_smoke.py": "33bc04a3bba1d3c2286dd1681991a48d2980dde8e2731833bce0ca0547e6fd00",
+    "scripts/launch_stage3_kimi26_formal.sh": "0904f4ac8ba2e7b19c22fd10f78034eb98224407b57b0160cbfc4b689e529ca6",
+    "scripts/supervise_stage3_kimi26_formal.sh": "8e69e226c33f1d3ad778ca283cda93c5adba561577537372d02907c93ac7175b",
+    "scripts/test_stage3_openrouter_judge.py": "50d79fb216b15d04231a78ed071fa7f2139d2d5240c684ab0645fdd7af4695f9"
+  },
+  "verification": {
+    "python_and_shell_static_checks": "passed",
+    "openrouter_and_checkpoint_tests_passed": 38,
+    "additional_stage3_tests_passed": 26,
+    "paid_requests": 0,
+    "training_started": false,
+    "test_accessed": false
+  },
+  "execution_order": "after GPT-4o Stage3 validation and runnable GPU-local baselines"
+}

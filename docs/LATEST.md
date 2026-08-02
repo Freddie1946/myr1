@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_143841`
+Latest timestamp: `20260802_145005`
 
 Read in this order:
+
+0. `20260802_145005_kimi_stage3_bounded_retry_hardening_prepared.md`
+0. `../protocol/stage3_kimi26_bounded_retry_hardening_20260802_145005.json`
 
 0. `20260802_143841_deepseek_vl2_external_vqa_adapter_prepared.md`
 0. `../protocol/deepseek_vl2_external_vqa_adapter_20260802_143841.json`

@@ -430,7 +430,7 @@ class JudgeTests(unittest.TestCase):
             self.assertEqual(request["max_tokens"], 640)
             self.assertNotIn("max_completion_tokens", request)
 
-    def test_persistent_transport_failure_retains_reservation(self):
+    def test_persistent_transient_failure_retries_and_is_conservatively_billed(self):
         with tempfile.TemporaryDirectory() as directory:
             image, digest = self._source(directory)
             calls = []
@@ -454,14 +454,12 @@ class JudgeTests(unittest.TestCase):
                     completion="c",
                 )
             self.assertEqual(len(calls), 3)
-            reservations = judge.ledger.snapshot()["reservations"]
-            self.assertEqual(len(reservations), 1)
-            self.assertEqual(
-                next(iter(reservations.values()))["status"],
-                "unresolved_potentially_billed_failure",
-            )
+            snapshot = judge.ledger.snapshot()
+            self.assertFalse(snapshot["reservations"])
+            self.assertEqual(snapshot["completed_unique_requests"], 3)
+            self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.15)
 
-    def test_ambiguous_connection_failure_is_not_retried(self):
+    def test_ambiguous_connection_failure_receives_bounded_retries(self):
         with tempfile.TemporaryDirectory() as directory:
             image, digest = self._source(directory)
             calls = []
@@ -484,8 +482,76 @@ class JudgeTests(unittest.TestCase):
                     solution="A",
                     completion="c",
                 )
+            self.assertEqual(len(calls), 4)
+            snapshot = judge.ledger.snapshot()
+            self.assertFalse(snapshot["reservations"])
+            self.assertEqual(snapshot["completed_unique_requests"], 4)
+            self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.20)
+
+    def test_retryable_malformed_response_then_success_records_two_attempts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                if len(calls) == 1:
+                    response = response_for(event_payload(), cost=0.003)
+                    response.body["choices"][0]["message"]["content"] = "{truncated"
+                    return response
+                return response_for(event_payload(), cost=0.002)
+
+            judge = OpenRouterJudge(
+                Path(directory) / "judge",
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(0.0,),
+            )
+            reward = judge.judge_one(
+                image_path=str(image),
+                image_sha256=digest,
+                problem="q",
+                solution="A",
+                completion="c",
+            )
+            self.assertEqual(reward, 1.0)
+            self.assertEqual(len(calls), 2)
+            snapshot = judge.ledger.snapshot()
+            self.assertFalse(snapshot["reservations"])
+            self.assertEqual(snapshot["completed_unique_requests"], 2)
+            self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.005)
+            cache_files = list((Path(directory) / "judge" / "cache").rglob("*.json"))
+            cache = json.loads(cache_files[0].read_text(encoding="utf-8"))
+            self.assertEqual(len(cache["attempts"]), 2)
+            self.assertTrue(cache["attempts"][0]["retryable"])
+
+    def test_identity_mismatch_is_terminal_without_retry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                return response_for(event_payload(), model="redirected/model")
+
+            judge = OpenRouterJudge(
+                Path(directory) / "judge",
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(0.0, 0.0, 0.0),
+            )
+            with self.assertRaisesRegex(ValueError, "served model mismatch"):
+                judge.judge_one(
+                    image_path=str(image),
+                    image_sha256=digest,
+                    problem="q",
+                    solution="A",
+                    completion="c",
+                )
             self.assertEqual(len(calls), 1)
-            self.assertEqual(len(judge.ledger.snapshot()["reservations"]), 1)
+            snapshot = judge.ledger.snapshot()
+            self.assertFalse(snapshot["reservations"])
+            self.assertEqual(snapshot["completed_unique_requests"], 1)
 
     def test_enabled_rule_fallback_settles_ambiguous_reservation(self):
         with tempfile.TemporaryDirectory() as directory:

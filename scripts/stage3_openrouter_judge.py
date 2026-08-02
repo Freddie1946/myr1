@@ -17,6 +17,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -506,6 +507,10 @@ class InvalidJSONResponseBody(ValueError):
         self.incomplete_read = incomplete_read
 
 
+class RetryableResponseValidationError(ValueError):
+    """A billed response is malformed/truncated but does not violate frozen identity."""
+
+
 class JudgeUnavailableForRuleFallback(RuntimeError):
     """An unavailable transport was conservatively billed and may use local fallback."""
 
@@ -840,7 +845,9 @@ class OpenRouterJudge:
     ) -> tuple[dict[str, Any], dict[str, float | int], float, str, str, dict[str, Any]]:
         body = response.body
         if not isinstance(body, dict) or body.get("error"):
-            raise ValueError("OpenRouter success response contains an error")
+            raise RetryableResponseValidationError(
+                "OpenRouter success response contains an error"
+            )
         if body.get("model") != self.model_id:
             raise ValueError(
                 f"served model mismatch: expected {self.model_id}, "
@@ -848,19 +855,30 @@ class OpenRouterJudge:
             )
         choices = body.get("choices")
         if not isinstance(choices, list) or len(choices) != 1:
-            raise ValueError("OpenRouter response must contain exactly one choice")
+            raise RetryableResponseValidationError(
+                "OpenRouter response must contain exactly one choice"
+            )
         choice = choices[0]
         if choice.get("error") or choice.get("finish_reason") == "error":
-            raise ValueError("OpenRouter choice contains a provider error")
+            raise RetryableResponseValidationError(
+                "OpenRouter choice contains a provider error"
+            )
         if choice.get("finish_reason") not in {"stop", None}:
-            raise ValueError(f"unexpected finish reason: {choice.get('finish_reason')}")
+            raise RetryableResponseValidationError(
+                f"unexpected finish reason: {choice.get('finish_reason')}"
+            )
         message = choice.get("message")
         if not isinstance(message, dict) or message.get("refusal"):
             raise ValueError("Judge response is missing content or contains a refusal")
         content = message.get("content")
         if not isinstance(content, str):
-            raise ValueError("Judge content is not a string")
-        events = validate_events(json.loads(content))
+            raise RetryableResponseValidationError("Judge content is not a string")
+        try:
+            events = validate_events(json.loads(content))
+        except (json.JSONDecodeError, ValueError, TypeError) as exc:
+            raise RetryableResponseValidationError(
+                f"Judge event response failed validation: {exc}"
+            ) from exc
         scores = score_events(events)
         usage = body.get("usage")
         if not isinstance(usage, dict) or not isinstance(usage.get("cost"), (int, float)):
@@ -957,81 +975,119 @@ class OpenRouterJudge:
                 completion=completion,
             )
             request_sha256 = sha256_bytes(canonical_json(request_payload).encode("utf-8"))
-            self.ledger.reserve(
-                cache_key,
-                {
-                    "model": self.model_id,
-                    "providers": list(self.provider_slugs),
-                    "request_sha256": request_sha256,
-                },
-            )
             attempts: list[dict[str, Any]] = []
             response: TransportResponse | None = None
+            parsed: tuple[
+                dict[str, Any],
+                dict[str, float | int],
+                float,
+                str,
+                str,
+                dict[str, Any],
+            ] | None = None
+            terminal_exception: Exception | None = None
+            fallback_exception: JudgeUnavailableForRuleFallback | None = None
             delays = (0.0, *self.retry_delays)
-            try:
-                for attempt_number, delay in enumerate(delays, 1):
-                    if delay:
-                        time.sleep(delay)
-                    try:
-                        self.rate_limiter.wait()
-                        response = self.transport(
-                            request_payload, self.api_key, self.timeout_seconds
-                        )
-                        attempts.append(
-                            {
-                                "attempt": attempt_number,
-                                "status": response.status,
-                                "latency_seconds": response.latency_seconds,
-                                "generation_id_header": response.headers.get(
-                                    "x-generation-id"
-                                ),
-                            }
-                        )
-                        break
-                    except TransportFailure as exc:
-                        attempts.append(
-                            {
-                                "attempt": attempt_number,
-                                "status": exc.status,
-                                "error": str(exc),
-                                "body": exc.body,
-                            }
-                        )
-                        # Retry only explicit router rejections. A connection-level
-                        # failure may already have reached and billed the provider;
-                        # the checkpoint supervisor handles that ambiguous case.
-                        if exc.status not in TRANSIENT_STATUS:
-                            raise
-                        if attempt_number == len(delays):
-                            raise
-                if response is None:
-                    raise RuntimeError("transport returned no response")
-                events, scores, cost, generation_id, provider, generation_metadata = (
-                    self._parse_response(response)
+            for attempt_number, delay in enumerate(delays, 1):
+                if delay:
+                    time.sleep(delay)
+                attempt_id = f"{cache_key}:http:{uuid.uuid4().hex}"
+                self.ledger.reserve(
+                    attempt_id,
+                    {
+                        "logical_cache_key": cache_key,
+                        "attempt_number": attempt_number,
+                        "model": self.model_id,
+                        "providers": list(self.provider_slugs),
+                        "request_sha256": request_sha256,
+                    },
                 )
-            except Exception as exc:
-                failure_status = "failed_reservation_retained"
-                fallback_exception: JudgeUnavailableForRuleFallback | None = None
-                response_record = None
-                if response is not None:
-                    response_record = {
-                        "status": response.status,
-                        "headers": response.headers,
-                        "body": response.body,
-                        "latency_seconds": response.latency_seconds,
+                response = None
+                try:
+                    self.rate_limiter.wait()
+                    response = self.transport(
+                        request_payload, self.api_key, self.timeout_seconds
+                    )
+                except TransportFailure as exc:
+                    retryable = exc.status is None or exc.status in TRANSIENT_STATUS
+                    attempt = {
+                        "attempt": attempt_number,
+                        "status": exc.status,
+                        "error": str(exc),
+                        "body": exc.body,
+                        "retryable": retryable,
                     }
-                failure_cost = (
-                    response.body.get("usage", {}).get("cost")
-                    if response is not None
-                    and isinstance(response.body, dict)
-                    and isinstance(response.body.get("usage"), dict)
-                    else None
+                    attempts.append(attempt)
+                    if retryable:
+                        self.ledger.commit(
+                            attempt_id,
+                            self.ledger.reserve_usd,
+                            {
+                                "logical_cache_key": cache_key,
+                                "attempt_number": attempt_number,
+                                "generation_id": "",
+                                "model": self.model_id,
+                                "provider": "",
+                                "request_sha256": request_sha256,
+                                "status": "retryable_transport_conservatively_billed",
+                                "error": f"{type(exc).__name__}: {exc}",
+                            },
+                        )
+                        attempt["settlement"] = "conservative_reserve_committed"
+                        if attempt_number < len(delays):
+                            continue
+                        if env_bool("PATHVLM_STAGE3_RULE_FALLBACK_ENABLED", False):
+                            fallback_exception = JudgeUnavailableForRuleFallback(str(exc))
+                        else:
+                            terminal_exception = exc
+                        break
+                    self.ledger.retain_failed_reservation(
+                        attempt_id,
+                        error=f"{type(exc).__name__}: {exc}",
+                        attempts=1,
+                    )
+                    attempt["settlement"] = "reservation_retained"
+                    terminal_exception = exc
+                    break
+
+                attempts.append(
+                    {
+                        "attempt": attempt_number,
+                        "status": response.status,
+                        "latency_seconds": response.latency_seconds,
+                        "generation_id_header": response.headers.get("x-generation-id"),
+                    }
                 )
-                if isinstance(failure_cost, (int, float)) and failure_cost >= 0:
+                try:
+                    parsed = self._parse_response(response)
+                except Exception as exc:
+                    failure_cost = (
+                        response.body.get("usage", {}).get("cost")
+                        if isinstance(response.body, dict)
+                        and isinstance(response.body.get("usage"), dict)
+                        else None
+                    )
+                    if not isinstance(failure_cost, (int, float)) or failure_cost < 0:
+                        self.ledger.retain_failed_reservation(
+                            attempt_id,
+                            error=f"{type(exc).__name__}: {exc}",
+                            attempts=1,
+                        )
+                        attempts[-1].update(
+                            {
+                                "validation_error": f"{type(exc).__name__}: {exc}",
+                                "retryable": False,
+                                "settlement": "reservation_retained",
+                            }
+                        )
+                        terminal_exception = exc
+                        break
                     self.ledger.commit(
-                        cache_key,
+                        attempt_id,
                         float(failure_cost),
                         {
+                            "logical_cache_key": cache_key,
+                            "attempt_number": attempt_number,
                             "generation_id": str(response.body.get("id") or ""),
                             "model": self.model_id,
                             "provider": str(response.body.get("provider") or ""),
@@ -1040,57 +1096,72 @@ class OpenRouterJudge:
                             "error": f"{type(exc).__name__}: {exc}",
                         },
                     )
-                    failure_status = "failed_billed_response_committed"
-                elif env_bool("PATHVLM_STAGE3_RULE_FALLBACK_ENABLED", False) and isinstance(
-                    exc, TransportFailure
-                ):
-                    self.ledger.commit(
-                        cache_key,
-                        self.ledger.reserve_usd,
+                    retryable = isinstance(exc, RetryableResponseValidationError)
+                    attempts[-1].update(
                         {
-                            "generation_id": "",
-                            "model": self.model_id,
-                            "provider": "",
-                            "request_sha256": request_sha256,
-                            "status": "ambiguous_transport_conservatively_settled_for_rule_fallback",
-                            "error": f"{type(exc).__name__}: {exc}",
-                        },
+                            "validation_error": f"{type(exc).__name__}: {exc}",
+                            "retryable": retryable,
+                            "settlement": "reported_cost_committed",
+                            "cost_usd": float(failure_cost),
+                        }
                     )
-                    failure_status = "failed_ambiguous_transport_settled_for_rule_fallback"
-                    fallback_exception = JudgeUnavailableForRuleFallback(str(exc))
-                else:
-                    self.ledger.retain_failed_reservation(
-                        cache_key,
-                        error=f"{type(exc).__name__}: {exc}",
-                        attempts=len(attempts),
-                    )
+                    if retryable and attempt_number < len(delays):
+                        continue
+                    if retryable and env_bool(
+                        "PATHVLM_STAGE3_RULE_FALLBACK_ENABLED", False
+                    ):
+                        fallback_exception = JudgeUnavailableForRuleFallback(str(exc))
+                    else:
+                        terminal_exception = exc
+                    break
+
+                events, scores, cost, generation_id, provider, generation_metadata = parsed
+                self.ledger.commit(
+                    attempt_id,
+                    cost,
+                    {
+                        "logical_cache_key": cache_key,
+                        "attempt_number": attempt_number,
+                        "generation_id": generation_id,
+                        "model": self.model_id,
+                        "provider": provider,
+                        "request_sha256": request_sha256,
+                        "status": "completed",
+                    },
+                )
+                attempts[-1].update(
+                    {
+                        "retryable": False,
+                        "settlement": "reported_cost_committed",
+                        "cost_usd": cost,
+                    }
+                )
+                break
+
+            if parsed is None:
+                failure_status = (
+                    "judge_unavailable_after_bounded_attempts"
+                    if fallback_exception is not None
+                    else "terminal_judge_failure"
+                )
                 self._append_audit(
                     {
                         "timestamp": now_iso(),
                         "cache_key": cache_key,
                         "cache_hit": False,
                         "status": failure_status,
-                        "error": f"{type(exc).__name__}: {exc}",
+                        "error": f"{type(fallback_exception or terminal_exception).__name__}: "
+                        f"{fallback_exception or terminal_exception}",
                         "attempts": attempts,
-                        "response": response_record,
                         "request_sha256": request_sha256,
                         **(source_metadata or {}),
                     }
                 )
                 if fallback_exception is not None:
-                    raise fallback_exception from exc
-                raise
-
-            self.ledger.commit(
-                cache_key,
-                cost,
-                {
-                    "generation_id": generation_id,
-                    "model": self.model_id,
-                    "provider": provider,
-                    "request_sha256": request_sha256,
-                },
-            )
+                    raise fallback_exception
+                if terminal_exception is None:
+                    raise RuntimeError("Judge attempts ended without a classified result")
+                raise terminal_exception
             cache_record = {
                 "schema_version": 1,
                 "created_at": now_iso(),

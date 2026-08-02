@@ -25,7 +25,7 @@ PROVIDER = "inceptron"
 MAX_JUDGE_TOKENS = 1024
 EVIDENCE_TARGET_CHARACTERS = 160
 EVIDENCE_MAX_CHARACTERS = 512
-MAX_UNIQUE_REQUESTS = 12001
+MAX_UNIQUE_REQUESTS = 12361
 
 
 def png_chunk(kind: bytes, data: bytes) -> bytes:
@@ -152,8 +152,11 @@ def main() -> None:
         )
     ledger = judge.ledger.snapshot()
     reservations = ledger.get("reservations", {})
-    if ledger.get("completed_unique_requests") != 1 or reservations:
-        raise RuntimeError("formal smoke budget ledger did not settle exactly one request")
+    physical_attempts = int(ledger.get("completed_unique_requests", 0))
+    if not 1 <= physical_attempts <= 4 or reservations:
+        raise RuntimeError(
+            "formal smoke ledger must settle one through four physical attempts"
+        )
 
     payload = {
         "schema_version": 1,
@@ -184,6 +187,8 @@ def main() -> None:
         "rule_fallback_max_reward": 0.5,
         "budget_limit_usd": args.budget_limit_usd,
         "max_unique_requests": MAX_UNIQUE_REQUESTS,
+        "maximum_physical_attempts_per_logical_judgment": 4,
+        "smoke_physical_attempts": physical_attempts,
         "unresolved_reservations": len(reservations),
         "budget_ledger": str(run_dir / "judge" / "budget_ledger.json"),
         "cache_record": str(cache_path),

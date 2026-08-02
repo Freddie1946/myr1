@@ -22,7 +22,7 @@ SEGMENT_ID="${PATHVLM_STAGE3_SEGMENT_ID:-segment00}"
 RESUME_FROM="${PATHVLM_STAGE3_RESUME_FROM_CHECKPOINT:-}"
 REWARD_LOG_DIR="$RUN_DIR/reward_audit/$SEGMENT_ID"
 TRAIN_LOG="$RUN_DIR/train_${SEGMENT_ID}.log"
-MAX_UNIQUE_REQUESTS=12001
+MAX_UNIQUE_REQUESTS=12361
 
 : "${PATHVLM_STAGE3_FORMAL_BUDGET_USD:?Set the separately approved Kimi formal-arm budget}"
 
@@ -138,7 +138,8 @@ expected_marker = {
     "rule_fallback_consecutive_limit": 4,
     "rule_fallback_max_reward": 0.5,
     "budget_limit_usd": budget_limit,
-    "max_unique_requests": 12001,
+    "max_unique_requests": 12361,
+    "maximum_physical_attempts_per_logical_judgment": 4,
     "unresolved_reservations": 0,
 }
 mismatch = {

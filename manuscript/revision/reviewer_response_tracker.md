@@ -586,6 +586,14 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_143841_deepseek_vl2_external_vqa_adapter_prepared.md` and
     `protocol/deepseek_vl2_external_vqa_adapter_20260802_143841.json`.  Supports R1-7/R2-3;
     no DeepSeek external score is claimed yet.
+39. Hardened the future fresh Kimi 2.6 Stage3 arm to use separately audited physical attempts,
+    bounded retry for ambiguous transport and malformed/truncated/schema-invalid responses, and
+    the pre-existing total-24/consecutive-4 structural-fallback circuit breaker. Identity,
+    refusal, accounting and non-transient contract failures remain fail-closed. The smoke plus
+    12,000 logical training judgments share a 12,361-physical-attempt ledger. Evidence:
+    `docs/20260802_145005_kimi_stage3_bounded_retry_hardening_prepared.md` and
+    `protocol/stage3_kimi26_bounded_retry_hardening_20260802_145005.json`. Supports R2-4/R3-7
+    recovery reproducibility; the arm is unlaunched and no Kimi efficacy claim is made.
 
 ## Mandatory update rule
 

@@ -126,6 +126,13 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   at 500/1000/1500 are verified file-by-file, evaluated separately, and selected by higher
   accuracy, then higher strict-format accuracy, then the earlier epoch.  Test999 remains excluded.
   See `stage3_post_training_validation_pipeline_20260802_142834.json`.
+- Kimi bounded-retry preparation (2026-08-02): the fresh arm retries ambiguous transport and
+  retryable response-validation failures at most three times after the first physical request,
+  records each physical attempt separately, and only then enters the unchanged bounded structural
+  fallback. Identity/refusal/accounting/non-transient failures remain terminal. The shared
+  smoke-plus-training ledger ceiling is 12,361 physical attempts; the arm remains unlaunched and
+  last in the approved execution order. See
+  `stage3_kimi26_bounded_retry_hardening_20260802_145005.json`.
 
 ## Evaluation
 
