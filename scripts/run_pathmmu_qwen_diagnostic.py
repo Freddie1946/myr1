@@ -118,7 +118,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", required=True, type=Path)
     parser.add_argument(
-        "--backend", required=True, choices=("gemma3", "qwen2_vl", "qwen2_5_vl")
+        "--backend",
+        required=True,
+        choices=("gemma3", "mllama", "qwen2_vl", "qwen2_5_vl"),
     )
     parser.add_argument("--data", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
@@ -206,18 +208,29 @@ def main() -> None:
         from transformers import Gemma3ForConditionalGeneration
 
         model_class = Gemma3ForConditionalGeneration
+    elif args.backend == "mllama":
+        from transformers import MllamaForConditionalGeneration
+
+        model_class = MllamaForConditionalGeneration
     else:
         model_class = {
             "qwen2_vl": Qwen2VLForConditionalGeneration,
             "qwen2_5_vl": Qwen2_5_VLForConditionalGeneration,
         }[args.backend]
-    model = model_class.from_pretrained(
-        args.model,
-        local_files_only=True,
-        torch_dtype=torch.bfloat16,
-        attn_implementation="sdpa",
-        low_cpu_mem_usage=True,
-    ).to("cuda")
+    load_kwargs = {
+        "local_files_only": True,
+        "torch_dtype": torch.bfloat16,
+        "attn_implementation": "sdpa",
+        "low_cpu_mem_usage": True,
+    }
+    if args.backend == "mllama":
+        load_kwargs["device_map"] = "auto"
+        load_kwargs["max_memory"] = {
+            index: "76GiB" for index in range(torch.cuda.device_count())
+        }
+        model = model_class.from_pretrained(args.model, **load_kwargs)
+    else:
+        model = model_class.from_pretrained(args.model, **load_kwargs).to("cuda")
     model.eval()
     # Some medical checkpoints persist sampling-only defaults. They are irrelevant under greedy
     # decoding, but clear them explicitly so the frozen execution log is unambiguous.
@@ -255,7 +268,8 @@ def main() -> None:
         inputs = processor(
             text=prompts, images=processor_images, return_tensors="pt", padding=True
         )
-        inputs = {key: value.to("cuda") for key, value in inputs.items()}
+        input_device = next(model.parameters()).device
+        inputs = {key: value.to(input_device) for key, value in inputs.items()}
         with torch.inference_mode():
             generated = model.generate(
                 **inputs,

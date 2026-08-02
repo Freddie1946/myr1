@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_142834`
+Latest timestamp: `20260802_143422`
 
 Read in this order:
+
+0. `20260802_143422_modelscope_llama32_snapshots_and_local_adapter_prepared.md`
+0. `../protocol/modelscope_llama32_local_adapter_20260802_143422.json`
 
 0. `20260802_142834_stage3_post_training_validation_pipeline_prepared.md`
 0. `../protocol/stage3_post_training_validation_pipeline_20260802_142834.json`

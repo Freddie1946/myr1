@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-02T14:34:22+08:00",
+  "status": "snapshots_structurally_complete_adapter_prepared_smoke_pending",
+  "formal_result": false,
+  "gpu_inference_run": false,
+  "test_accessed": false,
+  "source_disclosure": "ModelScope-sourced mirrors; official Hugging Face access remains gated",
+  "models": [
+    {
+      "manuscript_row": "LLaMA3.2-11B",
+      "architecture": "MllamaForConditionalGeneration",
+      "local_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/models/Llama-3.2-11B-Vision-Instruct-modelscope-master",
+      "shard_count": 5,
+      "weight_bytes": 21340560870,
+      "config_sha256": "db708a72a246253fdf8aa3837a5f0b80ac1960692495ce05cb3101833128e845",
+      "model_index_sha256": "c81a7fb0d03b4516763e5c173a76880eff9e4ad5c5ff5b5240a1563e357bccd5",
+      "full_weight_sha256_manifest": null
+    },
+    {
+      "manuscript_row": "LLaMA3.2-90B",
+      "architecture": "MllamaForConditionalGeneration",
+      "local_path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/models/Llama-3.2-90B-Vision-Instruct-modelscope-master",
+      "shard_count": 37,
+      "weight_bytes": 177186907758,
+      "config_sha256": "367178a632da6fe82d83b659ac9cfad70a858e38b4aa5e6883acf34e81df8d80",
+      "model_index_sha256": "0d6130d36c2087b9c3e4123a50834688c00539964b431136931e99693458583c",
+      "full_weight_sha256_manifest": null
+    }
+  ],
+  "shared_files": {
+    "chat_template_sha256": "35c61ab44d90032f77a24d564596be3460b7288621803aa8500d6697bc952111",
+    "license_sha256": "0b4284c1f87029e67654c7953afa16279961632cf73dcfe33374c4c2f298fa35",
+    "use_policy_sha256": "40e2777d7faa6beaf98400654170f414d8ab29b921b5163ad4ea0a1d39894201"
+  },
+  "required_before_full_evaluation": [
+    "per-shard SHA-256 manifests",
+    "PathMMU validation response-contract smoke",
+    "PathVQA adapter/scoring smoke",
+    "OmniMedVQA adapter/scoring smoke"
+  ],
+  "supplemental_downloads": [
+    {
+      "model_id": "Qwen/Qwen3.5-4B",
+      "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "weight_bytes": 9319828096,
+      "manuscript_baseline": false
+    },
+    {
+      "model_id": "nvidia/LocateAnything-3B",
+      "revision": "c32291ca5e996f5a7a485845b4f57a233936bba0",
+      "weight_bytes": 7661427376,
+      "manuscript_baseline": false,
+      "task_note": "localization/grounding architecture; not assigned a generative VQA contract"
+    }
+  ],
+  "verification": {
+    "real_snapshot_structure_passed": 2,
+    "relevant_unit_tests_passed": 13,
+    "python_compilation_passed": true,
+    "runner_import_help_passed": true,
+    "gpu_weight_load_attempted": false
+  },
+  "code_sha256": {
+    "scripts/run_external_vqa_qwen.py": "81edd14a7920b735ef7327aaed3107692774ae7ce351a81aab3a10064c184ba4",
+    "scripts/run_pathmmu_qwen_diagnostic.py": "f4a42a1e946b334ef1cf4762a17434ba772e722de440dc29436395f954242f7c",
+    "scripts/verify_mllama_modelscope_snapshot.py": "74f98ee68c826c54c82456527c3dedb17496521240c9c7c79290e4b25482e59a",
+    "scripts/test_verify_mllama_modelscope_snapshot.py": "b86b0c3741f3dd735f69f123336ef88a91d934f553ba97459f51aceab10e0e31"
+  }
+}

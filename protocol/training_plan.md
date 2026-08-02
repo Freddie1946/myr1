@@ -140,3 +140,8 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
 - Every original manuscript baseline remains an obligation. PLIP/CONCH/UNI and other approved
   pathology comparisons are additional rather than replacements. Historical API retirement must be
   disclosed and must not be hidden by relabeling a successor.
+- Llama execution update (2026-08-02): ModelScope-sourced Llama 3.2 Vision 11B/90B directories are
+  structurally complete and match the previously recorded official weight-byte totals.  The local
+  Mllama adapter is prepared but unrun.  Official HF access remains gated, so mirror provenance
+  must be disclosed.  Full shard hashes and fixed PathMMU/PathVQA/OmniMedVQA smokes are mandatory
+  before the post-Stage3 full runs.  See `modelscope_llama32_local_adapter_20260802_143422.json`.

@@ -569,6 +569,15 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260802_142834_stage3_post_training_validation_pipeline_prepared.md` and
     `protocol/stage3_post_training_validation_pipeline_20260802_142834.json`.  Supports R2-4 and
     R3-7 reproducibility; the pipeline is prepared but no full-arm validation result is claimed.
+37. Reclassified the two Llama 3.2 Vision manuscript baselines from absent weights to
+    ModelScope-mirror snapshots that are structurally complete and exactly match the official
+    metadata weight-byte totals.  Official HF access remains gated and mirror provenance will be
+    disclosed; byte-equivalence is not claimed before full shard hashing.  Added an unrun BF16
+    Mllama adapter for fixed PathMMU, PathVQA and OmniMedVQA contracts, including eight-GPU 90B
+    placement without quantization.  Evidence:
+    `docs/20260802_143422_modelscope_llama32_snapshots_and_local_adapter_prepared.md` and
+    `protocol/modelscope_llama32_local_adapter_20260802_143422.json`.  Supports R1-7/R2-3; smoke
+    and full evaluation remain pending after GPT-4o Stage3.
 
 ## Mandatory update rule
 
