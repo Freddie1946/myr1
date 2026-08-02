@@ -166,6 +166,11 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   advancement because its script changed while the old Bash process was between retries. The
   complete corrected script subsequently passed a no-network dry run; do not edit it while
   `periodic.lock` is held. See `periodic_backup_live_edit_failure_20260802_153819.json`.
+- Monitoring cancellation (2026-08-02): the user cancelled proactive timed巡检. The managed
+  minute-0/minute-30 crontab entry was removed while training supervisor and semantic-Judge workers
+  were left intact. The final 16:00 audit completed locally but its three bounded HF authentication
+  attempts failed closed. Future status checks are on demand only. See
+  `periodic_monitoring_disabled_20260802_160833.json`.
 - PathVQA semantic completion correction (2026-08-02): completion is no longer inferred from
   Judge-row plus skip counts versus all 6,719 cases. A fail-closed finalizer reconstructs every
   successful free-form cache key, scores duplicate-content cases individually, keeps failed

@@ -1,8 +1,11 @@
 # Latest recovery pointer
 
-Latest timestamp: `20260802_153819`
+Latest timestamp: `20260802_160833`
 
 Read in this order:
+
+0. `20260802_160833_periodic_monitoring_disabled_by_user.md`
+0. `../protocol/periodic_monitoring_disabled_20260802_160833.json`
 
 0. `20260802_153819_periodic_backup_live_edit_attempt_failure.md`
 0. `../protocol/periodic_backup_live_edit_failure_20260802_153819.json`

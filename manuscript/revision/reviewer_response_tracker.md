@@ -660,6 +660,13 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     held. Evidence: `docs/20260802_153819_periodic_backup_live_edit_attempt_failure.md` and
     `protocol/periodic_backup_live_edit_failure_20260802_153819.json`. Supports R3-7 audit
     honesty; training and evaluation results are unaffected.
+49. Removed the managed half-hour cron entry after the user cancelled proactive timed monitoring.
+    The final 16:00 audit completed locally and its three wall-clock-bounded HF authentication
+    attempts failed closed without advancing remote state. Training supervisor and both semantic
+    Judge workers remain active; future status checks are on demand. Evidence:
+    `docs/20260802_160833_periodic_monitoring_disabled_by_user.md` and
+    `protocol/periodic_monitoring_disabled_20260802_160833.json`. Supports R3-7 audit honesty;
+    this scheduling change does not alter any efficacy result.
 
 ## Mandatory update rule
 

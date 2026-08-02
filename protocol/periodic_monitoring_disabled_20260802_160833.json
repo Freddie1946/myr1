@@ -1,0 +1,42 @@
+{
+  "timestamp_cst": "2026-08-02T16:08:33+08:00",
+  "formal_result": false,
+  "status": "periodic_monitoring_disabled_by_user",
+  "schedule": {
+    "managed_cron_entry_present": false,
+    "remaining_batchcom_crontab_sha256": "cc3d84599cb147882b1a18d330c7a87be5389895e923e57218d01e400954eb85",
+    "system_cron_daemon_stopped": false,
+    "reason": "system infrastructure may serve unrelated users",
+    "future_status_mode": "on_demand_only"
+  },
+  "final_scheduled_invocation": {
+    "stamp": "20260802_160001",
+    "local_audit_completed": true,
+    "authentication_attempts_exhausted": 3,
+    "remote_upload_completed": false,
+    "success_state_advanced": false,
+    "bounded_timeout_behavior": "passed_fail_closed"
+  },
+  "last_verified_remote_revision": "06a0de6b8a940fddeeba0ee011212a2cfc0e8f6e",
+  "on_demand_snapshot": {
+    "timestamp_cst": "2026-08-02T16:07:56+08:00",
+    "stage3_step": 956,
+    "stage3_max_steps": 1500,
+    "committed_judge_spend_usd": 40.667082500000035,
+    "completed_physical_requests": 7922,
+    "inflight_reservations": 6,
+    "budget_breached": false,
+    "fallback_total": 2,
+    "fallback_consecutive": 0,
+    "qwen_semantic_judgment_rows": 2002,
+    "haiku_semantic_judgment_rows": 2631,
+    "semantic_metrics_complete": false
+  },
+  "unaffected_processes": [
+    "Stage3 classified supervisor",
+    "eight-rank GPT-4o Stage3 training",
+    "Qwen PathVQA semantic Judge",
+    "Haiku PathVQA semantic Judge"
+  ],
+  "next_action": "Do not perform proactive timed audits; inspect only on user request or when continuing an explicitly authorized post-training action."
+}
