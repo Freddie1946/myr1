@@ -302,6 +302,7 @@ Read in this order:
 231. `../protocol/gpt4o_formal_launcher_frozen_20260801_184826.json`
 232. `20260803_011601_gpt4o_stage3_selected_uploaded_and_local_gpu_baselines_started.md`
 233. `../protocol/gpt4o_stage3_selection_hf_and_local_baselines_20260803_011601.json`
+234. `20260803_013500_local_gpu_to_kimi_fail_closed_sequence.md`
 
 The user authorized GPT-4o Stage3 first with compatible non-GPU hosted baselines in parallel,
 GPU-local baselines next, and Kimi Stage3 last.  The user requested no USD budget ceiling and

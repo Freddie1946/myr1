@@ -218,3 +218,8 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   11B PathVQA failed the frozen generation-cap gate and is not run full. Llama 90B remains queued
   before the final Kimi arm. See
   `gpt4o_stage3_selection_hf_and_local_baselines_20260803_011601.json`.
+- Remaining-sequence update (2026-08-03): a fail-closed sequencer now waits for and verifies the
+  four active 11B/DeepSeek full runs, applies independent frozen gates to each 90B task, executes
+  only eligible 90B full runs, and launches the fresh Kimi arm last under its retained
+  `$26.71782984` ceiling. It exits after the first Kimi segment start and does not continue
+  monitoring. See `../docs/20260803_013500_local_gpu_to_kimi_fail_closed_sequence.md`.
