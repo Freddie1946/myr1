@@ -19,11 +19,13 @@ from stage3_openrouter_judge import (
     BudgetError,
     BudgetLedger,
     InvalidJSONResponseBody,
+    JudgeUnavailableForRuleFallback,
     OpenRouterJudge,
     RuleFallbackLimitExceeded,
     RuleFallbackLimiter,
     TransportFailure,
     TransportResponse,
+    default_transport,
     _read_json_response_body,
     make_cache_key,
     response_schema,
@@ -112,6 +114,29 @@ class SchemaAndScoringTests(unittest.TestCase):
         with self.assertRaises(InvalidJSONResponseBody) as caught:
             _read_json_response_body(Body())
         self.assertFalse(caught.exception.incomplete_read)
+
+    def test_default_transport_marks_invalid_success_body_as_ambiguous(self):
+        class Response:
+            status = 200
+            headers = {"x-generation-id": "gen-ambiguous"}
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return False
+
+            def read(self):
+                return b'{"id":"gen-ambiguous","choices":['
+
+        with patch("urllib.request.urlopen", return_value=Response()):
+            with self.assertRaises(TransportFailure) as caught:
+                default_transport({"model": "test"}, "test-key", 1.0)
+        self.assertEqual(caught.exception.status, 200)
+        self.assertTrue(caught.exception.ambiguous_success_body)
+        self.assertEqual(
+            caught.exception.headers.get("x-generation-id"), "gen-ambiguous"
+        )
 
     def test_schema_is_strict_and_complete(self):
         schema = response_schema()
@@ -487,6 +512,78 @@ class JudgeTests(unittest.TestCase):
             self.assertFalse(snapshot["reservations"])
             self.assertEqual(snapshot["completed_unique_requests"], 4)
             self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.20)
+
+    def test_ambiguous_success_body_is_not_resent_and_can_fallback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                raise TransportFailure(
+                    "OpenRouter returned incomplete JSON",
+                    status=200,
+                    headers={"x-generation-id": "gen-ambiguous"},
+                    body='{"id":"gen-ambiguous","choices":[',
+                    ambiguous_success_body=True,
+                )
+
+            judge = OpenRouterJudge(
+                Path(directory) / "judge",
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(0.0, 0.0, 0.0),
+            )
+            with patch.dict(
+                "os.environ", {"PATHVLM_STAGE3_RULE_FALLBACK_ENABLED": "true"}
+            ):
+                with self.assertRaises(JudgeUnavailableForRuleFallback):
+                    judge.judge_one(
+                        image_path=str(image),
+                        image_sha256=digest,
+                        problem="q",
+                        solution="A",
+                        completion="c",
+                    )
+            self.assertEqual(len(calls), 1)
+            snapshot = judge.ledger.snapshot()
+            self.assertFalse(snapshot["reservations"])
+            self.assertEqual(snapshot["completed_unique_requests"], 1)
+            self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.05)
+            self.assertEqual(
+                snapshot["history"][-1]["status"],
+                "ambiguous_success_body_conservatively_billed",
+            )
+
+    def test_ambiguous_success_body_without_fallback_remains_terminal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                raise TransportFailure(
+                    "OpenRouter returned invalid JSON",
+                    status=200,
+                    ambiguous_success_body=True,
+                )
+
+            judge = OpenRouterJudge(
+                Path(directory) / "judge",
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(0.0, 0.0),
+            )
+            with self.assertRaises(TransportFailure):
+                judge.judge_one(
+                    image_path=str(image),
+                    image_sha256=digest,
+                    problem="q",
+                    solution="A",
+                    completion="c",
+                )
+            self.assertEqual(len(calls), 1)
+            self.assertFalse(judge.ledger.snapshot()["reservations"])
 
     def test_retryable_malformed_response_then_success_records_two_attempts(self):
         with tempfile.TemporaryDirectory() as directory:

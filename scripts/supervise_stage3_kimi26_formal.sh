@@ -21,6 +21,7 @@ SMOKE_MARKER="$RUN_DIR/kimi26_formal_contract_smoke_passed.json"
 SUPERVISOR_AUDIT="$RUN_DIR/supervisor_recovery_audit.jsonl"
 SAVE_STEPS="${PATHVLM_STAGE3_SAVE_STEPS:-100}"
 MAX_RECOVERIES="${PATHVLM_STAGE3_MAX_RECOVERIES:-3}"
+START_LAUNCH_INDEX="${PATHVLM_STAGE3_START_LAUNCH_INDEX:-0}"
 BASE_PORT="${PATHVLM_STAGE3_MASTER_PORT:-29641}"
 
 expected_parent="$INSTALL_ROOT/runs/stage3_process_grpo"
@@ -37,6 +38,10 @@ if [[ "$SAVE_STEPS" != "100" ]]; then
 fi
 if [[ ! "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] || (( MAX_RECOVERIES > 3 )); then
   echo "PATHVLM_STAGE3_MAX_RECOVERIES must be an integer from 0 through 3" >&2
+  exit 2
+fi
+if [[ ! "$START_LAUNCH_INDEX" =~ ^[0-9]+$ ]] || (( START_LAUNCH_INDEX > MAX_RECOVERIES )); then
+  echo "PATHVLM_STAGE3_START_LAUNCH_INDEX must be an integer from 0 through PATHVLM_STAGE3_MAX_RECOVERIES" >&2
   exit 2
 fi
 if [[ ! "$BASE_PORT" =~ ^[1-9][0-9]*$ ]] || (( BASE_PORT + MAX_RECOVERIES > 65535 )); then
@@ -74,7 +79,7 @@ archive_incomplete_output() {
 }
 
 resume_from=""
-for (( launch_index=0; launch_index<=MAX_RECOVERIES; launch_index++ )); do
+for (( launch_index=START_LAUNCH_INDEX; launch_index<=MAX_RECOVERIES; launch_index++ )); do
   segment="segment$(printf '%02d' "$launch_index")"
   if [[ -d "$OUTPUT_DIR" ]]; then
     set +e

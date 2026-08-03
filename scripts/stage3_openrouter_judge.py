@@ -491,11 +491,13 @@ class TransportFailure(RuntimeError):
         status: int | None = None,
         headers: dict[str, str] | None = None,
         body: str = "",
+        ambiguous_success_body: bool = False,
     ):
         super().__init__(message)
         self.status = status
         self.headers = headers or {}
         self.body = body
+        self.ambiguous_success_body = bool(ambiguous_success_body)
 
 
 class InvalidJSONResponseBody(ValueError):
@@ -592,6 +594,11 @@ def default_transport(
                     status=status,
                     headers=headers,
                     body=exc.raw.decode("utf-8", errors="replace")[:4000],
+                    # A 2xx response proves that the provider accepted the request,
+                    # but an incomplete/invalid body cannot prove its exact cost or
+                    # safely identify a response to retry.  The caller therefore
+                    # settles the reserve once and may use the bounded local fallback.
+                    ambiguous_success_body=200 <= status < 300,
                 ) from exc
             return TransportResponse(
                 status=status,
@@ -1018,6 +1025,39 @@ class OpenRouterJudge:
                         "retryable": retryable,
                     }
                     attempts.append(attempt)
+                    if exc.ambiguous_success_body:
+                        self.ledger.commit(
+                            attempt_id,
+                            self.ledger.reserve_usd,
+                            {
+                                "logical_cache_key": cache_key,
+                                "attempt_number": attempt_number,
+                                "generation_id": str(
+                                    exc.headers.get("x-generation-id") or ""
+                                ),
+                                "model": self.model_id,
+                                "provider": "",
+                                "request_sha256": request_sha256,
+                                "status": "ambiguous_success_body_conservatively_billed",
+                                "error": f"{type(exc).__name__}: {exc}",
+                            },
+                        )
+                        attempt.update(
+                            {
+                                "retryable": False,
+                                "fallback_eligible": True,
+                                "settlement": "conservative_reserve_committed",
+                            }
+                        )
+                        if env_bool(
+                            "PATHVLM_STAGE3_RULE_FALLBACK_ENABLED", False
+                        ):
+                            fallback_exception = JudgeUnavailableForRuleFallback(
+                                str(exc)
+                            )
+                        else:
+                            terminal_exception = exc
+                        break
                     if retryable:
                         self.ledger.commit(
                             attempt_id,
