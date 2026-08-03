@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-03T21:35:00+08:00",
+  "status": "segment01_running_first_step_verified",
+  "run_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803",
+  "failed_segment": {
+    "id": "segment00",
+    "last_completed_step": 19,
+    "checkpoint_available": false,
+    "category": "http_200_incomplete_json_body",
+    "not_oom": true,
+    "not_budget_breach": true,
+    "not_identity_mismatch": true,
+    "preserved_output": "failed_precheckpoint_outputs/segment01-prelaunch-output"
+  },
+  "ledger_after_terminal_settlement": {
+    "limit_usd": 26.71782984,
+    "committed_spend_usd": 0.59327564,
+    "completed_unique_requests": 161,
+    "reservations": 0,
+    "budget_breached": false
+  },
+  "hardening": {
+    "commit": "c914fd3",
+    "ambiguous_2xx_remote_retry": false,
+    "conservative_reserve_commit_usd": 0.05,
+    "bounded_target_blind_rule_fallback": true,
+    "fallback_total_limit": 24,
+    "fallback_consecutive_limit": 4,
+    "identity_provider_source_schema_budget_gates_unchanged": true,
+    "regression_tests_passed": 46
+  },
+  "recovery_segment": {
+    "id": "segment01",
+    "resume_from": null,
+    "restart_from_frozen_stage2_parent": true,
+    "cache_namespace": "segment01",
+    "master_port": 29642,
+    "save_steps": 100,
+    "max_steps": 1500,
+    "first_step_seconds": 78.54,
+    "first_step_verified": true
+  }
+}
