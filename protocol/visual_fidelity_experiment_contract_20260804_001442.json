@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-04T00:14:42+08:00",
+  "status": "frozen_before_model_visualization_outputs",
+  "scientific_claim": "post_hoc_patch_occlusion_fidelity_not_attention_or_causal_localization",
+  "panel": {
+    "path": "protocol/visual_fidelity_panel_v1_20260804.json",
+    "sha256": "0c7e09a2e870abdb07b63df9cca1a410c73c9922e996bede9771777b636280e8",
+    "split": "pathmmu_validation_0385",
+    "case_count": 24,
+    "unique_image_count": 24,
+    "target_choice_counts": {"A": 6, "B": 6, "C": 6, "D": 6},
+    "selection_uses_model_outputs": false,
+    "primary_display_panel_indices": [0, 3, 6, 9, 12, 15, 18, 21]
+  },
+  "model_arms": [
+    {
+      "label": "sft3000",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125"
+    },
+    {
+      "label": "sft4000",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/output"
+    },
+    {
+      "label": "stage2_outcome_grpo",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000"
+    },
+    {
+      "label": "stage3_gpt4o",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_full3epoch_seed42_20260801/epoch_model_snapshots/checkpoint-1000"
+    },
+    {
+      "label": "stage3_kimi26",
+      "path_source": "kimi validation_0385_epochs/selection.json selected_model_path",
+      "path": null
+    }
+  ],
+  "parameters": {
+    "grid_rows": 6,
+    "grid_columns": 6,
+    "occlusion_fill": "per_image_rgb_channel_mean",
+    "importance": "log_normalized_target_option_probability_drop",
+    "option_probability": "softmax_over_next_token_logits_for_A_B_C_D",
+    "fractions": [0.0, 0.1, 0.25, 0.5, 0.75, 1.0],
+    "random_permutations_per_case": 5,
+    "heatmap_color_scale": "shared_symmetric_within_model_with_numeric_colorbar"
+  },
+  "primary_metrics": [
+    "deletion_auc_advantage",
+    "insertion_auc_advantage",
+    "top_25pct_comprehensiveness",
+    "random_25pct_comprehensiveness",
+    "fixed_panel_answer_accuracy"
+  ],
+  "expert_region_annotations_available": false,
+  "lesion_iou_claim_allowed": false,
+  "tests_passed": 7
+}
