@@ -223,3 +223,9 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   only eligible 90B full runs, and launches the fresh Kimi arm last under its retained
   `$26.71782984` ceiling. It exits after the first Kimi segment start and does not continue
   monitoring. See `../docs/20260803_013500_local_gpu_to_kimi_fail_closed_sequence.md`.
+- Local-baseline completion and Kimi launch update (2026-08-03): all seven eligible local full
+  runs completed and passed artifact-integrity verification; all three Llama 90B smokes passed.
+  The fresh Kimi contract smoke passed against Inceptron under the retained `$26.71782984` ceiling,
+  and the bounded eight-worker Stage3 supervisor entered `segment00`. Per the approved stopping
+  boundary, continued Codex monitoring is not required. See
+  `local_gpu_baselines_completed_kimi_stage3_launched_20260803_145524.json`.
