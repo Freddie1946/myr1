@@ -1,5 +1,12 @@
 # Latest recovery pointer
 
+Current result-table addendum:
+
+0. `20260804_003226_current_evaluation_results_closed_question_only.md`
+
+This addendum follows the current reporting decision to exclude all PathVQA free-form statistics
+and shows the verified three-dataset coverage, partial runs and compatibility-gated omissions.
+
 Latest timestamp: `20260802_214734`
 
 Read in this order:
