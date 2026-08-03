@@ -67,6 +67,7 @@ def verify(
     minimum_nonempty_rate: float,
     minimum_parseable_rate: float,
     maximum_cap_hit_rate: float,
+    expected_pathvqa_answer_scope: str | None = None,
 ) -> dict[str, Any]:
     if task not in {"pathmmu", "pathvqa", "omnimedvqa"}:
         raise ValueError(f"unsupported task: {task}")
@@ -99,6 +100,10 @@ def verify(
     # they share one adapter and one split-role vocabulary.
     if task != "pathmmu":
         expected_metrics["task"] = task
+    if expected_pathvqa_answer_scope is not None:
+        if task != "pathvqa" or expected_pathvqa_answer_scope not in {"all", "yes_no_only"}:
+            raise ValueError("PathVQA answer scope is invalid for this smoke")
+        expected_metrics["answer_scope"] = expected_pathvqa_answer_scope
     mismatches = {
         key: {"expected": value, "actual": metrics.get(key)}
         for key, value in expected_metrics.items()
@@ -137,9 +142,14 @@ def verify(
         }
     if task == "pathvqa":
         types = {str(row.get("answer_type") or "") for row in rows}
-        if types != {"yes_no", "free_form"}:
+        required_types = (
+            {"yes_no"}
+            if expected_pathvqa_answer_scope == "yes_no_only"
+            else {"yes_no", "free_form"}
+        )
+        if types != required_types:
             failures["answer_type_coverage"] = {
-                "required": ["free_form", "yes_no"], "actual": sorted(types)
+                "required": sorted(required_types), "actual": sorted(types)
             }
     if failures:
         raise ValueError(f"aggregate smoke behavior failed: {failures}")
@@ -171,6 +181,7 @@ def verify(
         "predictions_sha256": expected_metrics["predictions_sha256"],
         "data_sha256": expected_data_sha256,
         "model_config_sha256": expected_model_config_sha256,
+        "pathvqa_answer_scope": expected_pathvqa_answer_scope,
     }
 
 
@@ -185,6 +196,9 @@ def main() -> None:
     parser.add_argument("--minimum-nonempty-rate", type=float, default=0.80)
     parser.add_argument("--minimum-parseable-rate", type=float, default=0.80)
     parser.add_argument("--maximum-cap-hit-rate", type=float, default=0.20)
+    parser.add_argument(
+        "--expected-pathvqa-answer-scope", choices=("all", "yes_no_only")
+    )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     try:
@@ -198,6 +212,7 @@ def main() -> None:
             minimum_nonempty_rate=args.minimum_nonempty_rate,
             minimum_parseable_rate=args.minimum_parseable_rate,
             maximum_cap_hit_rate=args.maximum_cap_hit_rate,
+            expected_pathvqa_answer_scope=args.expected_pathvqa_answer_scope,
         )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         raise SystemExit(f"Local baseline smoke verification failed: {exc}") from exc

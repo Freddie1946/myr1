@@ -229,3 +229,12 @@ Before any formal SFT run, complete the one-step save/reload/resume gate specifi
   and the bounded eight-worker Stage3 supervisor entered `segment00`. Per the approved stopping
   boundary, continued Codex monitoring is not required. See
   `local_gpu_baselines_completed_kimi_stage3_launched_20260803_145524.json`.
+- Post-Kimi scope correction and non-GPU preparation (2026-08-04): the unrun selected-model
+  evaluation pipeline now excludes postponed PathVQA free-form work while retaining PathMMU,
+  PathVQA's 3,362 yes/no questions and OmniMedVQA for GPT-4o/Kimi. A single-shot entry point is
+  prepared for Kimi validation selection, six closed-question evaluations and the frozen five-arm
+  perturbation-fidelity experiment. It
+  never waits for Kimi and was not launched. Twenty-four CPU tests passed. The 79-file completed
+  Llama/DeepSeek result tree was independently re-downloaded and verified at private-HF revision
+  `e71610e68ddc7e2df59e081247f075aec9755f93`. See
+  `post_kimi_closed_eval_visual_and_backup_20260804_005148.json`.

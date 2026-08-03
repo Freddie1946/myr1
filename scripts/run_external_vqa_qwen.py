@@ -61,6 +61,23 @@ def load_existing(
     return rows
 
 
+def select_answer_scope(
+    task: str, answer_scope: str, records: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    if task != "pathvqa":
+        if answer_scope != "all":
+            raise ValueError("answer scope applies only to PathVQA")
+        return records
+    if answer_scope == "all":
+        return records
+    if answer_scope == "yes_no_only":
+        selected = [row for row in records if row.get("answer_type") == "yes_no"]
+        if len(selected) != 3362:
+            raise ValueError(f"expected 3362 PathVQA yes/no records, got {len(selected)}")
+        return selected
+    raise ValueError(f"unsupported PathVQA answer scope: {answer_scope}")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", required=True, choices=("pathvqa", "omnimedvqa"))
@@ -79,6 +96,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--pathvqa-answer-scope",
+        choices=("all", "yes_no_only"),
+        default="all",
+    )
     return parser.parse_args()
 
 
@@ -112,35 +134,36 @@ def summarize(
         yes_no = [row for row in rows if row["answer_type"] == "yes_no"]
         free = [row for row in rows if row["answer_type"] == "free_form"]
         correct = sum(row["exact_match"] for row in rows)
-        common.update(
-            {
-                "primary_metric": "pathvqa_paper_metric_family_by_answer_type",
-                "repository_token_overlap_mean_diagnostic": statistics.fmean(
-                    row["official_token_overlap_score"] for row in rows
-                ),
-                "repository_token_f1_mean": statistics.fmean(
-                    row["official_token_f1_score"] for row in rows
-                ),
-                "contract_aligned_exact_correct": sum(
-                    row["contract_aligned_exact_match"] for row in rows
-                ),
-                "contract_aligned_exact_accuracy": sum(
-                    row["contract_aligned_exact_match"] for row in rows
-                ) / len(rows),
-                "legacy_strict_exact_metric": "normalized_whole_completion_exact_match",
-                "correct": correct,
-                "accuracy": correct / len(rows),
-                "yes_no_count": len(yes_no),
-                "yes_no_correct": sum(row["exact_match"] for row in yes_no),
-                "yes_no_accuracy": sum(row["exact_match"] for row in yes_no)
-                / len(yes_no),
+        pathvqa_metrics = {
+            "primary_metric": "pathvqa_paper_metric_family_by_answer_type",
+            "answer_scope": args.pathvqa_answer_scope,
+            "repository_token_overlap_mean_diagnostic": statistics.fmean(
+                row["official_token_overlap_score"] for row in rows
+            ),
+            "repository_token_f1_mean": statistics.fmean(
+                row["official_token_f1_score"] for row in rows
+            ),
+            "contract_aligned_exact_correct": sum(
+                row["contract_aligned_exact_match"] for row in rows
+            ),
+            "contract_aligned_exact_accuracy": sum(
+                row["contract_aligned_exact_match"] for row in rows
+            ) / len(rows),
+            "legacy_strict_exact_metric": "normalized_whole_completion_exact_match",
+            "correct": correct,
+            "accuracy": correct / len(rows),
+            "yes_no_count": len(yes_no),
+            "yes_no_correct": sum(row["exact_match"] for row in yes_no),
+            "yes_no_accuracy": sum(row["exact_match"] for row in yes_no) / len(yes_no),
+            "paper_yes_no_contract_aligned_accuracy": sum(
+                row["contract_aligned_exact_match"] for row in yes_no
+            ) / len(yes_no),
+        }
+        if args.pathvqa_answer_scope == "all":
+            pathvqa_metrics.update({
                 "free_form_count": len(free),
                 "free_form_correct": sum(row["exact_match"] for row in free),
-                "free_form_accuracy": sum(row["exact_match"] for row in free)
-                / len(free),
-                "paper_yes_no_contract_aligned_accuracy": sum(
-                    row["contract_aligned_exact_match"] for row in yes_no
-                ) / len(yes_no),
+                "free_form_accuracy": sum(row["exact_match"] for row in free) / len(free),
                 "paper_free_form_strict_exact_accuracy": sum(
                     row["strict_exact_match"] for row in free
                 ) / len(free),
@@ -156,8 +179,14 @@ def summarize(
                 "paper_free_form_sentence_bleu_3": statistics.fmean(
                     row["sentence_bleu_3"] for row in free
                 ),
-            }
-        )
+            })
+        else:
+            pathvqa_metrics.update({
+                "primary_metric": "pathvqa_yes_no_contract_aligned_accuracy",
+                "free_form_count": 0,
+                "free_form_inference_excluded": True,
+            })
+        common.update(pathvqa_metrics)
     else:
         official_correct = sum(row["official_most_similar_correct"] for row in rows)
         aligned_correct = sum(row["contract_aligned_correct"] for row in rows)
@@ -212,6 +241,7 @@ def main() -> None:
     expected = 6719 if args.task == "pathvqa" else 8518
     if len(records) != expected:
         raise ValueError(f"expected {expected} records, got {len(records)}")
+    records = select_answer_scope(args.task, args.pathvqa_answer_scope, records)
     if args.limit is not None:
         if args.split_role != "adapter_smoke":
             raise ValueError("only adapter smoke permits --limit")
@@ -247,6 +277,7 @@ def main() -> None:
         "do_sample": False,
         "max_new_tokens": args.max_new_tokens,
         "batch_size": args.batch_size,
+        "answer_scope": args.pathvqa_answer_scope if args.task == "pathvqa" else "all",
         "resume": args.resume,
     }
     if config_path.exists():

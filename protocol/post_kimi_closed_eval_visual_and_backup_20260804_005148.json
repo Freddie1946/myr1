@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-04T00:51:48+08:00",
+  "status": "non_gpu_preparation_and_local_baseline_backup_completed",
+  "formal_result": false,
+  "gpu_work_started": false,
+  "background_monitoring_started": false,
+  "pathvqa_scope": {
+    "yes_no": "retained_for_3362_case_inference",
+    "free_form": "postponed_and_excluded",
+    "semantic_judge": "postponed_and_excluded",
+    "combined_score": "postponed_and_excluded"
+  },
+  "post_kimi_sequence": {
+    "entry_point": "scripts/run_post_kimi_closed_evaluations_and_visuals.sh",
+    "waits_for_training": false,
+    "requires_terminal_training_completed_event": true,
+    "stages": [
+      "kimi_validation385_three_epoch_selection",
+      "gpt4o_and_kimi_pathmmu_pathvqa_yesno_omnimedvqa_smoke_and_full",
+      "five_arm_visual_fidelity",
+      "visual_fidelity_verification_and_comparison"
+    ]
+  },
+  "tests": {
+    "shell_syntax": "passed",
+    "python_compile": "passed",
+    "cpu_unit_tests_passed": 24
+  },
+  "private_hf_backup": {
+    "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "private": true,
+    "revision": "e71610e68ddc7e2df59e081247f075aec9755f93",
+    "prefix": "snapshots/20260804_local_gpu_baselines",
+    "source": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/local_gpu_baselines_20260803",
+    "file_count": 79,
+    "total_bytes": 58862418,
+    "aggregate_manifest_sha256": "55aaf72168d979b37519238314b5ca87dd04ef87d7560c20626fef0d78c08085",
+    "verification": "fixed_revision_redownload_and_recursive_diff_passed",
+    "contains_model_weights": false,
+    "contains_credentials": false
+  },
+  "code_sha256": {
+    "scripts/run_stage3_selected_full_evaluations.sh": "f07013ddd7edd6e99a0efff20690be38a520daf9879a5040998654140e9d5854",
+    "scripts/run_post_kimi_closed_evaluations_and_visuals.sh": "ae02499d289072a8ac8aaf99508bc600c235e46b43648aa3c631604a6668f0f5",
+    "scripts/run_external_vqa_qwen.py": "d4f4e746b6a82ece88771ba05a7ee6bda28bce93a1a0973dc86b63a3841ba278",
+    "scripts/test_run_external_vqa_qwen_scope.py": "f88f02eaae42d99d2abc6809a00c429562058eb67f98d1edfdf8b97fe3ba232f",
+    "scripts/verify_local_baseline_smoke.py": "e587216b4c6967fa2314e245f99bc1fcf5feb02ced6b84dfe4ad450e2dabdef4",
+    "scripts/test_verify_local_baseline_smoke.py": "64910edd1f1aeb72f0432d340d89eb6b22a971eaad48fab6722ed77f2e9a4ae3",
+    "scripts/verify_local_baseline_full.py": "832e46684a13cbcb897762dd44a80a96af697a9d34c8d53aad99320c6c3e3392",
+    "scripts/test_verify_local_baseline_full.py": "1fe194c2304b50840d018133c3d07d0043dd99c2dfe296ea27c96a2d4eff1dc5",
+    "scripts/verify_visual_fidelity_run.py": "0fd057fdcdd3c236a0387773c1ed520af3ed235b4edab88444f0896718395fe2",
+    "scripts/test_verify_visual_fidelity_run.py": "1d8dce22b0bcefcebc1f53c0e792c3d8c88339d5312dc6b2639b5d03ba6f2042",
+    "scripts/summarize_visual_fidelity_runs.py": "6e4abba64768e2f2a7d195a3e1900fd9010c26706143eac0d6c392ee3c4b7aaf",
+    "scripts/test_summarize_visual_fidelity_runs.py": "9d757e967b9eee06b51ee9a90d1568cabe52f67db0250c25f56ff7d0c0e8ff85"
+  },
+  "remaining": [
+    "kimi_training_completion",
+    "kimi_validation_and_selection",
+    "stage3_closed_question_evaluations",
+    "five_arm_visual_fidelity_execution",
+    "selected_kimi_checkpoint_backup",
+    "final_output_backup_statistics_and_badcases"
+  ]
+}

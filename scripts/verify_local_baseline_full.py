@@ -46,6 +46,7 @@ def verify(
     expected_split_role: str,
     expected_data_sha256: str,
     expected_model_config_sha256: str,
+    expected_pathvqa_answer_scope: str | None = None,
 ) -> dict[str, Any]:
     if task not in {"pathmmu", "pathvqa", "omnimedvqa"}:
         raise ValueError(f"unsupported task: {task}")
@@ -95,6 +96,11 @@ def verify(
     else:
         expected_metrics["task"] = task
         expected_config["task"] = task
+    if expected_pathvqa_answer_scope is not None:
+        if task != "pathvqa" or expected_pathvqa_answer_scope not in {"all", "yes_no_only"}:
+            raise ValueError("PathVQA answer scope is invalid for this full run")
+        expected_metrics["answer_scope"] = expected_pathvqa_answer_scope
+        expected_config["answer_scope"] = expected_pathvqa_answer_scope
 
     mismatches: dict[str, Any] = {}
     for artifact_name, artifact, expected in (
@@ -139,6 +145,7 @@ def verify(
         "data_sha256": expected_data_sha256,
         "model_config_sha256": expected_model_config_sha256,
         "individual_answers_modified_or_rejudged": False,
+        "pathvqa_answer_scope": expected_pathvqa_answer_scope,
     }
 
 
@@ -154,6 +161,9 @@ def main() -> None:
     parser.add_argument("--expected-split-role", required=True)
     parser.add_argument("--expected-data-sha256", required=True)
     parser.add_argument("--expected-model-config-sha256", required=True)
+    parser.add_argument(
+        "--expected-pathvqa-answer-scope", choices=("all", "yes_no_only")
+    )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     try:
@@ -166,6 +176,7 @@ def main() -> None:
             expected_split_role=args.expected_split_role,
             expected_data_sha256=args.expected_data_sha256,
             expected_model_config_sha256=args.expected_model_config_sha256,
+            expected_pathvqa_answer_scope=args.expected_pathvqa_answer_scope,
         )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         raise SystemExit(f"Local baseline full verification failed: {exc}") from exc

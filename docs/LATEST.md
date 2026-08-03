@@ -1,5 +1,14 @@
 # Latest recovery pointer
 
+Latest non-GPU preparation and immutable backup:
+
+0. `20260804_005148_post_kimi_pipeline_and_local_baseline_backup.md`
+0. `../protocol/post_kimi_closed_eval_visual_and_backup_20260804_005148.json`
+
+This record provides the single-shot post-Kimi closed-question/visual-fidelity entry point and the
+verified private-HF backup of completed Aug 3 local GPU baselines. It does not claim that Kimi,
+Stage3 selected-model evaluations or visualization runs are complete.
+
 Current result-table addendum:
 
 0. `20260804_003226_current_evaluation_results_closed_question_only.md`

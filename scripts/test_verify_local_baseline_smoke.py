@@ -12,16 +12,14 @@ from verify_local_baseline_smoke import verify
 
 
 class VerifyLocalBaselineSmokeTests(unittest.TestCase):
-    def fixture(self, root: Path, task: str, rows):
+    def fixture(self, root: Path, task: str, rows, answer_scope=None):
         predictions = root / "predictions.jsonl"
         predictions.write_text(
             "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8"
         )
         digest = hashlib.sha256(predictions.read_bytes()).hexdigest()
         metrics = root / "metrics.json"
-        metrics.write_text(
-            json.dumps(
-                {
+        value = {
                     "status": "completed",
                     "task": task,
                     "split_role": "validation_smoke" if task == "pathmmu" else "adapter_smoke",
@@ -29,13 +27,13 @@ class VerifyLocalBaselineSmokeTests(unittest.TestCase):
                     "data_sha256": "d" * 64,
                     "model_config_sha256": "m" * 64,
                     "predictions_sha256": digest,
-                }
-            ),
-            encoding="utf-8",
-        )
+        }
+        if answer_scope is not None:
+            value["answer_scope"] = answer_scope
+        metrics.write_text(json.dumps(value), encoding="utf-8")
         return metrics, predictions
 
-    def run_verify(self, task, metrics, predictions, count):
+    def run_verify(self, task, metrics, predictions, count, answer_scope=None):
         return verify(
             task=task,
             metrics_path=metrics,
@@ -46,6 +44,7 @@ class VerifyLocalBaselineSmokeTests(unittest.TestCase):
             minimum_nonempty_rate=0.80,
             minimum_parseable_rate=0.80,
             maximum_cap_hit_rate=0.20,
+            expected_pathvqa_answer_scope=answer_scope,
         )
 
     def test_wrong_but_parseable_pathmmu_answer_passes(self):
@@ -83,6 +82,20 @@ class VerifyLocalBaselineSmokeTests(unittest.TestCase):
             metrics, predictions = self.fixture(Path(directory), "pathvqa", rows)
             result = self.run_verify("pathvqa", metrics, predictions, 2)
             self.assertEqual(result["parseable_rate"], 1.0)
+
+    def test_pathvqa_yes_no_only_scope_does_not_require_free_form(self):
+        with tempfile.TemporaryDirectory() as directory:
+            rows = [
+                {"index": 0, "source_record_sha256": "a" * 64, "completion": "yes", "answer_type": "yes_no", "normalized_completion": "yes", "reached_generation_cap": False},
+                {"index": 1, "source_record_sha256": "b" * 64, "completion": "no", "answer_type": "yes_no", "normalized_completion": "no", "reached_generation_cap": False},
+            ]
+            metrics, predictions = self.fixture(
+                Path(directory), "pathvqa", rows, answer_scope="yes_no_only"
+            )
+            result = self.run_verify(
+                "pathvqa", metrics, predictions, 2, answer_scope="yes_no_only"
+            )
+            self.assertEqual(result["parseable_count"], 2)
 
     def test_empty_or_unparseable_output_fails_aggregate_gate(self):
         with tempfile.TemporaryDirectory() as directory:

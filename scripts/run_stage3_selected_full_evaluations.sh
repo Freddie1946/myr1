@@ -130,9 +130,10 @@ value = {
     },
     "tasks": {
         "pathmmu": {"count": 999, "split_role": "test999_development"},
-        "pathvqa": {"count": 6719, "split_role": "external_test"},
+        "pathvqa_yes_no": {"count": 3362, "split_role": "external_test"},
         "omnimedvqa": {"count": 8518, "split_role": "external_test"},
     },
+    "pathvqa_free_form_status": "postponed_by_user_and_excluded_from_this_run",
     "smoke_count_per_model_task": 16,
     "accuracy_used_as_smoke_gate": False,
     "repository_commit": sys.argv[6],
@@ -167,21 +168,26 @@ run_smoke() {
       --data "$data" --output-dir "$output" --split-role validation_smoke \
       --batch-size 1 --limit 16 >"$log" 2>&1
   else
+    local scope=()
+    [[ "$task" != "pathvqa" ]] || scope=(--pathvqa-answer-scope yes_no_only)
     "$PYTHON" "$EXTERNAL_RUNNER" --task "$task" --model "$model" \
       --backend qwen2_5_vl --data "$data" --output-dir "$output" \
-      --split-role adapter_smoke --batch-size 8 --limit 16 >"$log" 2>&1
+      --split-role adapter_smoke --batch-size 8 --limit 16 "${scope[@]}" >"$log" 2>&1
   fi
 }
 
 verify_smoke() {
   local label="$1" model="$2" task="$3" data_sha="$4"
   local output="$RUN_ROOT/$label/${task}_smoke16"
+  local scope=()
+  [[ "$task" != "pathvqa" ]] || scope=(--expected-pathvqa-answer-scope yes_no_only)
   "$PYTHON" "$SMOKE_VERIFY" --task "$task" --metrics "$output/metrics.json" \
     --predictions "$output/predictions.jsonl" --expected-count 16 \
     --expected-data-sha256 "$data_sha" \
     --expected-model-config-sha256 "$(model_config_sha "$model")" \
     --minimum-nonempty-rate 0.80 --minimum-parseable-rate 0.80 \
-    --maximum-cap-hit-rate 0.20 --output "$output/smoke_gate.json" >/dev/null
+    --maximum-cap-hit-rate 0.20 "${scope[@]}" \
+    --output "$output/smoke_gate.json" >/dev/null
 }
 
 run_full() {
@@ -190,9 +196,12 @@ run_full() {
   if [[ "$task" == "pathmmu" ]]; then
     suffix="pathmmu_test999"; count=999; split="test999_development"
   elif [[ "$task" == "pathvqa" ]]; then
-    suffix="pathvqa_full6719"; count=6719; split="external_test"
-  else
+    suffix="pathvqa_yesno3362"; count=3362; split="external_test"
+  elif [[ "$task" == "omnimedvqa" ]]; then
     suffix="omnimedvqa_full8518"; count=8518; split="external_test"
+  else
+    echo "Unsupported Stage3 evaluation task: $task" >&2
+    return 2
   fi
   output="$RUN_ROOT/$label/$suffix"
   log="$RUN_ROOT/logs/${label}_${suffix}.log"
@@ -207,9 +216,11 @@ run_full() {
       --data "$data" --output-dir "$output" --split-role "$split" \
       --batch-size 1 "${resume[@]}" >"$log" 2>&1
   else
+    local scope=()
+    [[ "$task" != "pathvqa" ]] || scope=(--pathvqa-answer-scope yes_no_only)
     "$PYTHON" "$EXTERNAL_RUNNER" --task "$task" --model "$model" \
       --backend qwen2_5_vl --data "$data" --output-dir "$output" \
-      --split-role "$split" --batch-size 8 "${resume[@]}" >"$log" 2>&1
+      --split-role "$split" --batch-size 8 "${scope[@]}" "${resume[@]}" >"$log" 2>&1
   fi
 }
 
@@ -219,16 +230,21 @@ verify_full() {
   if [[ "$task" == "pathmmu" ]]; then
     suffix="pathmmu_test999"; count=999; split="test999_development"
   elif [[ "$task" == "pathvqa" ]]; then
-    suffix="pathvqa_full6719"; count=6719; split="external_test"
-  else
+    suffix="pathvqa_yesno3362"; count=3362; split="external_test"
+  elif [[ "$task" == "omnimedvqa" ]]; then
     suffix="omnimedvqa_full8518"; count=8518; split="external_test"
+  else
+    echo "Unsupported Stage3 verification task: $task" >&2
+    return 2
   fi
   output="$RUN_ROOT/$label/$suffix"
+  local scope=()
+  [[ "$task" != "pathvqa" ]] || scope=(--expected-pathvqa-answer-scope yes_no_only)
   "$PYTHON" "$FULL_VERIFY" --task "$task" --metrics "$output/metrics.json" \
     --predictions "$output/predictions.jsonl" --run-config "$output/run_config.json" \
     --expected-count "$count" --expected-split-role "$split" \
     --expected-data-sha256 "$data_sha" \
-    --expected-model-config-sha256 "$(model_config_sha "$model")" \
+    --expected-model-config-sha256 "$(model_config_sha "$model")" "${scope[@]}" \
     --output "$output/full_integrity_verified.json" >/dev/null
 }
 
@@ -245,7 +261,7 @@ SPECS=(
   "stage3_kimi26|$KIMI_MODEL|omnimedvqa|$OMNI|5|$OMNI_SHA"
 )
 
-record_event "smoke_phase_started" "six native Stage3 model-task checks"
+record_event "smoke_phase_started" "six closed-question Stage3 model-task checks"
 pids=()
 for spec in "${SPECS[@]}"; do
   IFS='|' read -r label model task data gpu data_sha <<<"$spec"
@@ -269,7 +285,7 @@ FULL_SPECS=(
   "stage3_kimi26|$KIMI_MODEL|pathvqa|$PATHVQA|4|$PATHVQA_SHA"
   "stage3_kimi26|$KIMI_MODEL|omnimedvqa|$OMNI|5|$OMNI_SHA"
 )
-record_event "full_phase_started" "six full Stage3 model-task evaluations"
+record_event "full_phase_started" "six full closed-question Stage3 model-task evaluations"
 pids=()
 for spec in "${FULL_SPECS[@]}"; do
   IFS='|' read -r label model task data gpu data_sha <<<"$spec"
@@ -284,4 +300,37 @@ for spec in "${FULL_SPECS[@]}"; do
   verify_full "$label" "$model" "$task" "$data_sha"
 done
 record_event "full_phase_verified" "all six count/hash/source gates passed"
+"$PYTHON" - "$RUN_ROOT/completed.json" "$EVENTS" <<'PY'
+import datetime
+import hashlib
+import json
+import os
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+root = path.parent
+artifacts = []
+for label in ("stage3_gpt4o", "stage3_kimi26"):
+    for suffix in ("pathmmu_test999", "pathvqa_yesno3362", "omnimedvqa_full8518"):
+        value = root / label / suffix / "full_integrity_verified.json"
+        if not value.is_file():
+            raise SystemExit(f"missing full-integrity artifact: {value}")
+        artifacts.append({
+            "path": str(value.relative_to(root)),
+            "sha256": hashlib.sha256(value.read_bytes()).hexdigest(),
+        })
+result = {
+    "schema_version": 1,
+    "status": "completed",
+    "completed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    "pathvqa_scope": "yes_no_only",
+    "pathvqa_free_form_inference": False,
+    "artifacts": artifacts,
+    "events": str(Path(sys.argv[2]).resolve()),
+}
+temporary = path.with_suffix(".tmp")
+temporary.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+os.replace(temporary, path)
+PY
 echo "Stage3 selected-model full evaluations completed and verified: $RUN_ROOT"

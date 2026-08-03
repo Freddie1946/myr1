@@ -684,6 +684,18 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `docs/20260803_011601_gpt4o_stage3_selected_uploaded_and_local_gpu_baselines_started.md` and
     `protocol/gpt4o_stage3_selection_hf_and_local_baselines_20260803_011601.json`. Supports
     R1-7/R2-3/R3-7 reproducibility; no queued local-baseline or Kimi efficacy result is claimed.
+52. Completed all currently useful non-GPU preparation without monitoring or interfering with the
+    active Kimi arm. The future selected-model evaluation scope now excludes postponed PathVQA
+    free-form work and retains GPT-4o/Kimi PathMMU, PathVQA yes/no and OmniMedVQA. Added a
+    fail-closed single-shot
+    Kimi validation/evaluation/five-arm perturbation-fidelity entry point, strict per-arm visual
+    artifact verification and a five-arm comparison packager; twenty-four CPU tests pass and no model
+    inference was run. The complete 79-file Aug 3 Llama/DeepSeek result tree was re-downloaded and
+    hash-verified at private-HF revision `e71610e68ddc7e2df59e081247f075aec9755f93`.
+    Evidence: `docs/20260804_005148_post_kimi_pipeline_and_local_baseline_backup.md` and
+    `protocol/post_kimi_closed_eval_visual_and_backup_20260804_005148.json`. Supports
+    R1-7/R2-3/R2-4/R3-7 reproducibility; Kimi completion, final Stage3 evaluations and visual
+    results remain pending and no efficacy or localization claim is made.
 
 ## Mandatory update rule
 
