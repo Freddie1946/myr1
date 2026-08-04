@@ -46,4 +46,3 @@ recovery index 3, checkpoint cadence 100, and automatic discovery/resume from ch
   `893c96c1c061b9c5b1aaac12371b648ab2dda6e211c06b55801bb43f76fc965f`
 - `scripts/test_stage3_kimi26_recovery_contract.py`:
   `0ae308deedfc13ecc8bde3506eba42d6d0ee9c5fec9cedb4c42fe619b7d6b56b`
-
