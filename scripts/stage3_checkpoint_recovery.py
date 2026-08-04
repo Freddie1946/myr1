@@ -84,6 +84,7 @@ RECOVERABLE_FAILURE_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
         "transient_judge_transport",
         (
             "http.client.IncompleteRead",
+            "OpenRouter HTTP 520",
             "OpenRouter transport failure",
             "JudgeUnavailableForRuleFallback",
         ),

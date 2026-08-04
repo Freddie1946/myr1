@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-04T21:31:49+08:00",
+  "formal_result": false,
+  "status": "http520_fix_verified_resume_waiting_gates",
+  "failure": {
+    "run": "kimi26_full3epoch_seed42_fresh_20260803",
+    "last_completed_optimizer_step": 255,
+    "status_code": 520,
+    "body": "error code: 520\n",
+    "classification": "transient_router_or_origin_failure",
+    "failed_rank": 2
+  },
+  "fix": {
+    "http_520_retryable": true,
+    "maximum_physical_attempts_per_logical_judgment": 4,
+    "retry_delays_seconds": [15, 45, 90],
+    "rule_fallback_total_limit": 24,
+    "rule_fallback_consecutive_limit": 4,
+    "supervisor_http520_recoverable": true,
+    "safe_response_headers_audited": [
+      "cf-ray",
+      "retry-after",
+      "x-generation-id",
+      "x-openrouter-request-id",
+      "x-request-id"
+    ]
+  },
+  "verification": {
+    "openrouter_and_checkpoint_tests_passed": 43,
+    "aigcbest_shared_transport_tests_passed": 10,
+    "paid_synthetic_smoke": {
+      "status": "passed",
+      "physical_attempts": 1,
+      "cost_usd": 0.00072797,
+      "generation_id": "gen-1785850126-lYJqjWSzjtMujySl4Ltk",
+      "model": "moonshotai/kimi-k2.6",
+      "provider": "Inceptron"
+    }
+  },
+  "checkpoint": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/output/checkpoint-200",
+    "status": "complete",
+    "global_step": 200,
+    "model_shards": 4,
+    "optimizer_state_files": 8,
+    "model_state_files": 8,
+    "rng_state_files": 8
+  },
+  "request_cap_gate": {
+    "current_cap": 12361,
+    "current_settled_physical_requests": 2223,
+    "future_logical_requests_from_step_200": 10400,
+    "discarded_or_unattributed_physical_requests": 615,
+    "minimum_revised_cap_preserving_original_retry_capacity": 12976,
+    "remaining_retry_capacity_under_proposed_cap": 353,
+    "approval": "pending"
+  },
+  "gpu_gate": {
+    "status": "blocked",
+    "gpu": 0,
+    "occupying_pid": 533179,
+    "used_memory_mib": 69426,
+    "process_modified": false
+  },
+  "training_restarted": false,
+  "code_sha256": {
+    "scripts/stage3_openrouter_judge.py": "5a42a8c8f000a94c47f264824a0c2fb0983e6487f9f4f891b179e7b58f06cb48",
+    "scripts/stage3_checkpoint_recovery.py": "1b6242d9bf484864f724d9084ac838fa2608bdd72d4505e30a518faea6a04aee",
+    "scripts/test_stage3_openrouter_judge.py": "69a4ddccb8cad20b9f03d8e2c9041827f86149b9f40e1925a54bc9a31e95e190",
+    "scripts/test_stage3_checkpoint_recovery.py": "8d845c65dd702c44430487dcc68af7cf25c5261732e8d6ba3640d5fde4516650"
+  }
+}

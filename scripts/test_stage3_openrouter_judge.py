@@ -484,6 +484,57 @@ class JudgeTests(unittest.TestCase):
             self.assertEqual(snapshot["completed_unique_requests"], 3)
             self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.15)
 
+    def test_http_520_retries_and_audits_only_safe_response_headers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            calls = []
+
+            def transport(*args):
+                calls.append(1)
+                if len(calls) == 1:
+                    raise TransportFailure(
+                        "OpenRouter HTTP 520",
+                        status=520,
+                        headers={
+                            "cf-ray": "test-ray",
+                            "set-cookie": "must-not-be-audited",
+                            "x-request-id": "test-request",
+                        },
+                        body="error code: 520\n",
+                    )
+                return response_for(event_payload())
+
+            root = Path(directory) / "judge"
+            judge = OpenRouterJudge(
+                root,
+                transport=transport,
+                api_key="test-only-not-real",
+                retry_delays=(0.0,),
+            )
+            self.assertEqual(
+                judge.judge_one(
+                    image_path=str(image),
+                    image_sha256=digest,
+                    problem="q",
+                    solution="A",
+                    completion="c",
+                ),
+                1.0,
+            )
+            self.assertEqual(len(calls), 2)
+            audit_path = next((root / "audit").glob("rank_*.jsonl"))
+            audit = json.loads(audit_path.read_text(encoding="utf-8").splitlines()[-1])
+            first_attempt = audit["attempts"][0]
+            self.assertTrue(first_attempt["retryable"])
+            self.assertEqual(
+                first_attempt["response_headers"],
+                {"cf-ray": "test-ray", "x-request-id": "test-request"},
+            )
+            self.assertNotIn("set-cookie", first_attempt["response_headers"])
+            snapshot = judge.ledger.snapshot()
+            self.assertEqual(snapshot["completed_unique_requests"], 2)
+            self.assertAlmostEqual(snapshot["committed_spend_usd"], 0.051)
+
     def test_ambiguous_connection_failure_receives_bounded_retries(self):
         with tempfile.TemporaryDirectory() as directory:
             image, digest = self._source(directory)

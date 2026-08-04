@@ -126,6 +126,13 @@ class FailureClassificationTests(unittest.TestCase):
         result = self.classify("http.client.IncompleteRead: IncompleteRead(0 bytes read)")
         self.assertEqual(result["action"], "recover")
 
+    def test_openrouter_http_520_is_recoverable(self):
+        result = self.classify(
+            "stage3_openrouter_judge.TransportFailure: OpenRouter HTTP 520"
+        )
+        self.assertEqual(result["action"], "recover")
+        self.assertEqual(result["category"], "transient_judge_transport")
+
     def test_interrupt_oom_budget_and_identity_stop(self):
         for message, category in (
             ("KeyboardInterrupt", "user_interrupt"),

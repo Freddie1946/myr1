@@ -1,5 +1,15 @@
 # Latest recovery pointer
 
+Latest Kimi Stage3 HTTP 520 correction and resume gates:
+
+0. `20260804_213149_kimi_http520_retry_fix_and_resume_gates.md`
+0. `../protocol/kimi_http520_retry_fix_resume_gates_20260804_213149.json`
+
+The Judge and supervisor correction is locally verified and a fresh paid synthetic smoke passed.
+Training is not running: GPU 0 is occupied by an unrelated process, and increasing the exhausted
+shared physical-request capacity from 12,361 to the calculated minimum 12,976 awaits explicit
+approval.
+
 Latest non-GPU preparation and immutable backup:
 
 0. `20260804_005148_post_kimi_pipeline_and_local_baseline_backup.md`

@@ -35,7 +35,14 @@ DEFAULT_RESERVE_USD = 0.05
 DEFAULT_MAX_UNIQUE_REQUESTS = 401  # one smoke plus at most 400 training items
 EVIDENCE_TARGET_CHARACTERS = 160
 EVIDENCE_MAX_CHARACTERS = 512
-TRANSIENT_STATUS = {408, 429, 500, 502, 503, 529}
+TRANSIENT_STATUS = {408, 429, 500, 502, 503, 520, 529}
+AUDIT_RESPONSE_HEADERS = (
+    "cf-ray",
+    "retry-after",
+    "x-generation-id",
+    "x-openrouter-request-id",
+    "x-request-id",
+)
 INTEGRITY_EVENTS = (
     "image_feature_analysis_present",
     "option_elimination_present",
@@ -73,6 +80,16 @@ def canonical_json(value: Any) -> str:
 
 def normalize_provider(value: Any) -> str:
     return "".join(character for character in str(value).lower() if character.isalnum())
+
+
+def audit_response_headers(headers: dict[str, str]) -> dict[str, str]:
+    """Retain request-tracing headers without logging cookies or credentials."""
+
+    return {
+        name: str(headers[name])[:512]
+        for name in AUDIT_RESPONSE_HEADERS
+        if headers.get(name)
+    }
 
 
 def env_bool(name: str, default: bool) -> bool:
@@ -1022,6 +1039,7 @@ class OpenRouterJudge:
                         "status": exc.status,
                         "error": str(exc),
                         "body": exc.body,
+                        "response_headers": audit_response_headers(exc.headers),
                         "retryable": retryable,
                     }
                     attempts.append(attempt)
