@@ -1,5 +1,15 @@
 # Latest recovery pointer
 
+Latest Kimi segment02 pre-training checkpoint-load failure and correction:
+
+0. `20260804_231344_kimi_segment02_checkpoint_load_failure_and_correction.md`
+0. `../protocol/kimi_segment02_checkpoint_load_failure_correction_20260804_231344.json`
+
+Segment02 stopped before any optimizer step or Judge call because the full Kimi launcher omitted
+the already established PyTorch 2.6 trusted-local-checkpoint compatibility setting. The scoped
+fix and a fail-closed atomic request-cap migration command pass 58 tests; segment03 is not yet
+claimed as started by this record.
+
 Latest approved Kimi recovery-cap configuration and GPU gate:
 
 0. `20260804_230014_kimi_request_cap_approved_resume_ready_gpu_blocked.md`

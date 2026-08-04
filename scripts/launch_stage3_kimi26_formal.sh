@@ -75,9 +75,12 @@ if [[ -n "$RESUME_FROM" ]]; then
   "$PYTHON" "$REPO_ROOT/scripts/stage3_checkpoint_recovery.py" \
     validate "$resolved_resume" --world-size 8 >/dev/null
   RESUME_FROM="$resolved_resume"
+  export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD="1"
 elif [[ -e "$OUTPUT_DIR" ]]; then
   echo "Refusing to overwrite existing Stage3 output without a validated resume: $OUTPUT_DIR" >&2
   exit 2
+else
+  unset TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD || true
 fi
 
 "$PYTHON" - "$DATASET" "$IMAGE_HASH_MANIFEST" "$SMOKE_MARKER" \

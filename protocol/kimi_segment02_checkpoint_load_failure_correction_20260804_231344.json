@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-04T23:13:44+08:00",
+  "formal_result": false,
+  "status": "segment02_pretraining_checkpoint_load_failure_corrected",
+  "segment": {
+    "id": "segment02",
+    "launch_index": 2,
+    "resume_checkpoint_step": 200,
+    "optimizer_steps_completed": 0,
+    "judge_requests": 0,
+    "failure": "PyTorch_2.6_weights_only_rejected_trusted_local_deepspeed_state"
+  },
+  "ledger": {
+    "completed_unique_requests": 2223,
+    "committed_spend_usd": 4.015588330000004,
+    "reservations": 0,
+    "on_disk_request_cap": 12361,
+    "approved_request_cap": 12976,
+    "migration_status": "prepared_not_applied"
+  },
+  "correction": {
+    "trusted_local_resume_full_deserialization": true,
+    "fresh_run_setting_cleared": true,
+    "locked_atomic_request_cap_migration": true,
+    "request_cap_decrease_forbidden": true,
+    "unresolved_reservation_migration_forbidden": true
+  },
+  "verification": {
+    "tests_passed": 58,
+    "shell_syntax": "passed",
+    "python_compile": "passed",
+    "gpus_idle": 8,
+    "next_segment_started": false
+  },
+  "code_sha256": {
+    "scripts/stage3_checkpoint_recovery.py": "d7f7501eb8631ac52ed45d152ce95ffef8105154892eaab8f7ad45ef933e344d",
+    "scripts/launch_stage3_kimi26_formal.sh": "c4fb15228b0e4ac9e8561fde8bd0c58a15504dabd2aed9ba89576407066e7dda",
+    "scripts/test_stage3_checkpoint_recovery.py": "267f20d574483e6ef53fb39bc4f277700cebd241f7e586126481db936a8731b1",
+    "scripts/test_stage3_kimi26_recovery_contract.py": "f13d86f47976916fa89cc83c50436fefe43a5fe17166a18312ecc1e3c8f9adde"
+  }
+}

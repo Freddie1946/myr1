@@ -45,6 +45,8 @@ class KimiRecoveryContractTests(unittest.TestCase):
             self.assertIn(fragment, launcher)
         self.assertIn('PATHVLM_STAGE3_MAX_RECOVERIES:-3', supervisor)
         self.assertIn('--world-size 8', supervisor)
+        self.assertIn('export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD="1"', launcher)
+        self.assertIn('unset TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD || true', launcher)
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from stage3_openrouter_judge import BudgetLedger
+from stage3_openrouter_judge import BudgetLedger, atomic_json
 
 
 LOG_TAIL_BYTES = 8 * 1024 * 1024
@@ -302,6 +302,69 @@ def settle_unresolved(
     }
 
 
+def raise_request_cap(
+    ledger_path: Path,
+    *,
+    limit_usd: float,
+    reserve_usd: float,
+    old_max_unique_requests: int,
+    new_max_unique_requests: int,
+    reason: str,
+) -> dict[str, Any]:
+    """Atomically raise a settled ledger's request cap with an audit amendment."""
+
+    if new_max_unique_requests <= old_max_unique_requests:
+        raise ValueError("new request cap must be greater than the old request cap")
+    if not reason.strip():
+        raise ValueError("request-cap amendment reason must not be empty")
+    path = ledger_path.resolve()
+    if not path.is_file():
+        raise ValueError(f"budget ledger does not exist: {path}")
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        value = json.loads(path.read_text(encoding="utf-8"))
+        expected = {
+            "limit_usd": float(limit_usd),
+            "reserve_usd": float(reserve_usd),
+            "max_unique_requests": int(old_max_unique_requests),
+        }
+        mismatch = {
+            key: {"expected": expected_value, "actual": value.get(key)}
+            for key, expected_value in expected.items()
+            if value.get(key) != expected_value
+        }
+        if mismatch:
+            raise ValueError(f"budget ledger pre-amendment contract mismatch: {mismatch}")
+        if value.get("reservations"):
+            raise ValueError("cannot amend request cap while reservations are unresolved")
+        completed = int(value.get("completed_unique_requests", -1))
+        if completed < 0 or completed > old_max_unique_requests:
+            raise ValueError("budget ledger completed-request count is invalid")
+        if new_max_unique_requests < completed:
+            raise ValueError("new request cap is below the completed-request count")
+        amendment = {
+            "timestamp": now_iso(),
+            "field": "max_unique_requests",
+            "old_value": int(old_max_unique_requests),
+            "new_value": int(new_max_unique_requests),
+            "reason": reason.strip(),
+        }
+        value.setdefault("contract_amendments", []).append(amendment)
+        value["max_unique_requests"] = int(new_max_unique_requests)
+        value["updated_at"] = now_iso()
+        atomic_json(path, value)
+        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+    return {
+        "status": "request_cap_raised",
+        "ledger": str(path),
+        "completed_unique_requests": completed,
+        "old_max_unique_requests": int(old_max_unique_requests),
+        "new_max_unique_requests": int(new_max_unique_requests),
+        "amendment": amendment,
+    }
+
+
 def append_event(path: Path, event: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     lock_path = path.with_suffix(path.suffix + ".lock")
@@ -333,6 +396,14 @@ def parse_args() -> argparse.Namespace:
     settle.add_argument("--max-unique-requests", type=int, default=12001)
     settle.add_argument("--reason", required=True)
 
+    raise_cap = subparsers.add_parser("raise-request-cap")
+    raise_cap.add_argument("--ledger", type=Path, required=True)
+    raise_cap.add_argument("--limit-usd", type=float, required=True)
+    raise_cap.add_argument("--reserve-usd", type=float, default=0.05)
+    raise_cap.add_argument("--old-max-unique-requests", type=int, required=True)
+    raise_cap.add_argument("--new-max-unique-requests", type=int, required=True)
+    raise_cap.add_argument("--reason", required=True)
+
     classify = subparsers.add_parser("classify")
     classify.add_argument("--log", type=Path, required=True)
     classify.add_argument("--action-only", action="store_true")
@@ -360,6 +431,20 @@ def main() -> None:
                     limit_usd=args.limit_usd,
                     reserve_usd=args.reserve_usd,
                     max_unique_requests=args.max_unique_requests,
+                    reason=args.reason,
+                ),
+                sort_keys=True,
+            )
+        )
+    elif args.command == "raise-request-cap":
+        print(
+            json.dumps(
+                raise_request_cap(
+                    args.ledger,
+                    limit_usd=args.limit_usd,
+                    reserve_usd=args.reserve_usd,
+                    old_max_unique_requests=args.old_max_unique_requests,
+                    new_max_unique_requests=args.new_max_unique_requests,
                     reason=args.reason,
                 ),
                 sort_keys=True,

@@ -11,6 +11,7 @@ from pathlib import Path
 from stage3_checkpoint_recovery import (
     classify_training_failure,
     latest_complete_checkpoint,
+    raise_request_cap,
     settle_unresolved,
     validate_complete_checkpoint,
 )
@@ -106,6 +107,49 @@ class SettlementTests(unittest.TestCase):
             self.assertEqual(first["settled_count"], 1)
             self.assertEqual(second["settled_count"], 0)
             self.assertAlmostEqual(second["committed_spend_usd"], 0.05)
+
+
+class RequestCapAmendmentTests(unittest.TestCase):
+    def test_settled_ledger_cap_can_only_be_raised_with_audit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "ledger.json"
+            old = BudgetLedger(
+                path, limit_usd=1.0, reserve_usd=0.05, max_unique_requests=10
+            )
+            old.reserve("one", {})
+            old.commit("one", 0.01, {"status": "completed"})
+            result = raise_request_cap(
+                path,
+                limit_usd=1.0,
+                reserve_usd=0.05,
+                old_max_unique_requests=10,
+                new_max_unique_requests=15,
+                reason="approved recovery allowance",
+            )
+            self.assertEqual(result["status"], "request_cap_raised")
+            amended = BudgetLedger(
+                path, limit_usd=1.0, reserve_usd=0.05, max_unique_requests=15
+            ).snapshot()
+            self.assertEqual(amended["completed_unique_requests"], 1)
+            self.assertEqual(amended["contract_amendments"][-1]["old_value"], 10)
+            self.assertEqual(amended["contract_amendments"][-1]["new_value"], 15)
+
+    def test_cap_amendment_rejects_unresolved_reservations(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "ledger.json"
+            ledger = BudgetLedger(
+                path, limit_usd=1.0, reserve_usd=0.05, max_unique_requests=10
+            )
+            ledger.reserve("one", {})
+            with self.assertRaisesRegex(ValueError, "reservations are unresolved"):
+                raise_request_cap(
+                    path,
+                    limit_usd=1.0,
+                    reserve_usd=0.05,
+                    old_max_unique_requests=10,
+                    new_max_unique_requests=15,
+                    reason="must fail",
+                )
 
 
 class FailureClassificationTests(unittest.TestCase):
