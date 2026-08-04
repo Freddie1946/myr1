@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-04T23:20:00+08:00",
+  "formal_result": false,
+  "status": "segment03_resume_verified_running",
+  "segment": {
+    "id": "segment03",
+    "launch_index": 3,
+    "final_predeclared_recovery_index": true,
+    "resume_checkpoint_step": 200,
+    "max_steps": 1500,
+    "save_steps": 100,
+    "supervisor_pid": 660299,
+    "launcher_pid": 660305,
+    "torch_distributed_pid": 660325,
+    "master_port": 29644,
+    "workers": 8
+  },
+  "checkpoint_validation": {
+    "model_shards": 4,
+    "optimizer_states": 8,
+    "model_states": 8,
+    "rng_states": 8,
+    "trusted_local_full_deserialization_enabled": true
+  },
+  "resume_verification": {
+    "optimizer_state_loaded": true,
+    "rng_state_loaded": true,
+    "weights_only_failure_recurred": false,
+    "first_verified_step": 201,
+    "latest_verified_step": 202,
+    "step_201": {
+      "loss": 0.0003,
+      "reward": 2.6374998092651367,
+      "kl": 0.007232666015625
+    },
+    "step_202": {
+      "loss": 0.0002,
+      "reward": 2.450000047683716,
+      "kl": 0.00433349609375
+    },
+    "gpu_workers_verified": 8,
+    "sampled_sm_utilization_percent_range": [81, 98]
+  },
+  "runtime_ledger_observation": {
+    "completed_unique_requests": 2239,
+    "committed_spend_usd": 4.031979790000004,
+    "in_flight_reservations": 8,
+    "observation_is_final_settlement": false
+  },
+  "logs": {
+    "supervisor": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/supervisor_resume_segment03_20260804_231710.log",
+    "training": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/train_segment03.log",
+    "recovery_audit": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/supervisor_recovery_audit.jsonl"
+  },
+  "guardrail": {
+    "training_complete": false,
+    "blind_restart_if_segment03_fails": false,
+    "preserve_logs_and_audit_on_failure": true
+  },
+  "code_commit": "05468f8a232e1423f1fdf421123c0574fb5ce45c"
+}

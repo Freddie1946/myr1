@@ -1,5 +1,15 @@
 # Latest recovery pointer
 
+Latest verified Kimi segment03 resume:
+
+0. `20260804_232000_kimi_segment03_resume_verified.md`
+0. `../protocol/kimi_segment03_resume_verified_20260804_232000.json`
+
+Segment03 resumed from the structurally validated checkpoint-200 and passed the segment02
+PyTorch 2.6 checkpoint-load failure point. Optimizer and RNG state restoration succeeded, all
+eight workers are active, and resumed metrics were recorded at steps 201 and 202. The run remains
+in progress and is not claimed as complete.
+
 Latest Kimi segment02 pre-training checkpoint-load failure and correction:
 
 0. `20260804_231344_kimi_segment02_checkpoint_load_failure_and_correction.md`
