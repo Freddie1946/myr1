@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-04T23:00:14+08:00",
+  "formal_result": false,
+  "status": "request_cap_approved_resume_ready_gpu_blocked",
+  "approval": {
+    "physical_request_cap": 12976,
+    "prior_physical_request_cap": 12361,
+    "increment": 615,
+    "usd_ledger_ceiling": 26.71782984,
+    "usd_ceiling_changed": false
+  },
+  "resume": {
+    "checkpoint_global_step": 200,
+    "start_launch_index": 2,
+    "maximum_recovery_index": 3,
+    "next_segment": "segment02",
+    "save_steps": 100,
+    "training_started": false
+  },
+  "verification": {
+    "tests_passed": 56,
+    "shell_syntax": "passed",
+    "checkpoint_status": "complete",
+    "model_shards": 4,
+    "optimizer_state_files": 8,
+    "model_state_files": 8,
+    "rng_state_files": 8
+  },
+  "gpu_gate": {
+    "status": "blocked",
+    "gpu_count": 8,
+    "occupying_pids": [618758, 618759, 618760, 618761, 618762, 618763, 618764, 618765],
+    "occupying_workspace": "/home/dataset-assist-0/czy/zw/AFI-VLA",
+    "approximate_memory_mib_per_gpu": 36946,
+    "processes_modified": false
+  },
+  "code_sha256": {
+    "scripts/launch_stage3_kimi26_formal.sh": "38e1744b20a63c94feaee422618356e962931a7e5f86c9a31c7c8c8c55b58b37",
+    "scripts/supervise_stage3_kimi26_formal.sh": "893c96c1c061b9c5b1aaac12371b648ab2dda6e211c06b55801bb43f76fc965f",
+    "scripts/test_stage3_kimi26_recovery_contract.py": "0ae308deedfc13ecc8bde3506eba42d6d0ee9c5fec9cedb4c42fe619b7d6b56b"
+  }
+}

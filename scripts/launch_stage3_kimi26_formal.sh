@@ -22,7 +22,10 @@ SEGMENT_ID="${PATHVLM_STAGE3_SEGMENT_ID:-segment00}"
 RESUME_FROM="${PATHVLM_STAGE3_RESUME_FROM_CHECKPOINT:-}"
 REWARD_LOG_DIR="$RUN_DIR/reward_audit/$SEGMENT_ID"
 TRAIN_LOG="$RUN_DIR/train_${SEGMENT_ID}.log"
-MAX_UNIQUE_REQUESTS=12361
+# The original 12,361 cap remains recorded in the paid smoke marker. Two failed
+# segments consumed 615 requests outside the retained checkpoint-200 trajectory;
+# the user approved adding exactly those attempts for recovery on 2026-08-04.
+MAX_UNIQUE_REQUESTS=12976
 
 : "${PATHVLM_STAGE3_FORMAL_BUDGET_USD:?Set the separately approved Kimi formal-arm budget}"
 
@@ -78,7 +81,7 @@ elif [[ -e "$OUTPUT_DIR" ]]; then
 fi
 
 "$PYTHON" - "$DATASET" "$IMAGE_HASH_MANIFEST" "$SMOKE_MARKER" \
-  "$MASTER_PORT" "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" <<'PY'
+  "$MASTER_PORT" "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" "$MAX_UNIQUE_REQUESTS" <<'PY'
 import hashlib
 import json
 import socket
@@ -90,6 +93,12 @@ hash_manifest_path = Path(sys.argv[2])
 smoke_marker_path = Path(sys.argv[3])
 port = int(sys.argv[4])
 budget_limit = float(sys.argv[5])
+max_unique_requests = int(sys.argv[6])
+
+if max_unique_requests != 12976:
+    raise SystemExit(
+        f"Kimi recovery request cap mismatch: {max_unique_requests} != 12976"
+    )
 
 yaml_text = dataset_yaml.read_text(encoding="utf-8")
 json_lines = [

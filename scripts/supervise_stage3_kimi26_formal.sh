@@ -8,7 +8,7 @@ INSTALL_ROOT="$WORKSPACE_ROOT/pathvlm_r1_v1_a100"
 PYTHON="$INSTALL_ROOT/envs/grpo/bin/python"
 LAUNCHER="$REPO_ROOT/scripts/launch_stage3_kimi26_formal.sh"
 RECOVERY="$REPO_ROOT/scripts/stage3_checkpoint_recovery.py"
-MAX_UNIQUE_REQUESTS=12361
+MAX_UNIQUE_REQUESTS=12976
 RESERVE_USD=0.05
 
 : "${PATHVLM_STAGE3_RUN_DIR:?Set a dedicated Stage3 run directory}"

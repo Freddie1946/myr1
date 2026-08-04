@@ -1,5 +1,14 @@
 # Latest recovery pointer
 
+Latest approved Kimi recovery-cap configuration and GPU gate:
+
+0. `20260804_230014_kimi_request_cap_approved_resume_ready_gpu_blocked.md`
+0. `../protocol/kimi_request_cap_approved_resume_ready_20260804_230014.json`
+
+The approved 12,976 physical-request recovery cap is frozen and verified. The checkpoint-200
+segment02 resume is ready but not running because all eight GPUs are occupied by independent
+AFI-VLA processes; none were modified.
+
 Latest Kimi Stage3 HTTP 520 correction and resume gates:
 
 0. `20260804_213149_kimi_http520_retry_fix_and_resume_gates.md`
