@@ -93,6 +93,47 @@ def model_prompt(processor: Any, problem: str) -> str:
     return processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
 
+def find_unique_subsequence(sequence: list[int], subsequence: list[int]) -> int:
+    """Return the start of a uniquely occurring nonempty token subsequence."""
+    if not subsequence:
+        raise ValueError("subsequence must not be empty")
+    starts = [
+        index
+        for index in range(len(sequence) - len(subsequence) + 1)
+        if sequence[index : index + len(subsequence)] == subsequence
+    ]
+    if len(starts) != 1:
+        raise ValueError(
+            f"expected one subsequence occurrence, found {len(starts)}"
+        )
+    return starts[0]
+
+
+def question_option_query_positions(
+    tokenizer: Any,
+    input_ids: torch.Tensor,
+    *,
+    last_image_position: int,
+) -> tuple[torch.Tensor, list[str]]:
+    """Select only question/option queries, excluding the fixed format suffix."""
+    ids = input_ids.tolist()
+    suffix_ids = tokenizer.encode(PROMPT_SUFFIX, add_special_tokens=False)
+    suffix_start = find_unique_subsequence(ids, suffix_ids)
+    special_ids = set(tokenizer.all_special_ids)
+    positions = []
+    tokens = []
+    for position in range(last_image_position + 1, suffix_start):
+        token_id = ids[position]
+        token = tokenizer.decode([token_id], skip_special_tokens=False)
+        if token_id in special_ids or not token.strip():
+            continue
+        positions.append(position)
+        tokens.append(token)
+    if not positions:
+        raise ValueError("no question/option query tokens were selected")
+    return torch.tensor(positions, dtype=torch.long), tokens
+
+
 def resized_map(values: np.ndarray, width: int, height: int) -> np.ndarray:
     grid = Image.fromarray(values.astype(np.float32), mode="F")
     return np.asarray(grid.resize((width, height), resample=Image.Resampling.BILINEAR))
@@ -203,8 +244,15 @@ def main() -> None:
         visual_positions = image_positions.to("cuda")
         text_query_start = int(image_positions[-1]) + 1
         text_query_positions = torch.arange(text_query_start, inputs["input_ids"].shape[1], device="cuda")
+        question_query_positions_cpu, question_query_tokens = question_option_query_positions(
+            processor.tokenizer,
+            inputs["input_ids"][0],
+            last_image_position=int(image_positions[-1]),
+        )
+        question_query_positions = question_query_positions_cpu.to("cuda")
         last_query_maps = []
         blog_text_query_maps = []
+        question_options_query_maps = []
         visual_mass_by_layer = []
         for attention in output.attentions:
             last_raw = (
@@ -225,14 +273,28 @@ def main() -> None:
                 .cpu()
                 .numpy()
             )
+            question_raw = (
+                attention[0, :, question_query_positions, :]
+                .mean(dim=(0, 1))
+                .index_select(0, visual_positions)
+                .float()
+                .detach()
+                .cpu()
+                .numpy()
+            )
             last_query_maps.append(normalize_attention(last_raw).reshape(grid_rows, grid_columns))
             blog_text_query_maps.append(normalize_attention(text_raw).reshape(grid_rows, grid_columns))
+            question_options_query_maps.append(
+                normalize_attention(question_raw).reshape(grid_rows, grid_columns)
+            )
             visual_mass_by_layer.append(float(last_raw.sum()))
 
         last4 = np.mean(last_query_maps[-4:], axis=0)
         blog_all = np.mean(blog_text_query_maps, axis=0)
+        question_options_all = np.mean(question_options_query_maps, axis=0)
         last4 /= last4.sum()
         blog_all /= blog_all.sum()
+        question_options_all /= question_options_all.sum()
         option_logits = output.logits[0, -1, [ids[0] for ids in option_ids]].float()
         option_probabilities = torch.softmax(option_logits, dim=0).detach().cpu().tolist()
         predicted_choice = OPTION_LETTERS[int(torch.argmax(option_logits))]
@@ -287,6 +349,12 @@ def main() -> None:
             "last_query_last4_order": np.argsort(-last4.reshape(-1)).tolist(),
             "blog_text_query_all_layers_attention": blog_all.tolist(),
             "blog_text_query_all_layers_order": np.argsort(-blog_all.reshape(-1)).tolist(),
+            "question_options_query_token_positions": question_query_positions_cpu.tolist(),
+            "question_options_query_tokens": question_query_tokens,
+            "question_options_query_all_layers_attention": question_options_all.tolist(),
+            "question_options_query_all_layers_order": np.argsort(
+                -question_options_all.reshape(-1)
+            ).tolist(),
             "target_option_margin": float(option_margin(option_logits, target_index).detach()),
             "target_grad_attention_last4": target_direct.tolist(),
             "target_grad_attention_last4_order": np.argsort(-target_direct.reshape(-1)).tolist(),
@@ -299,6 +367,9 @@ def main() -> None:
             "predicted_chefer_style_rollout_order": np.argsort(-predicted_rollout.reshape(-1)).tolist(),
             "last_query_layer_maps": [values.tolist() for values in last_query_maps],
             "blog_text_query_layer_maps": [values.tolist() for values in blog_text_query_maps],
+            "question_options_query_layer_maps": [
+                values.tolist() for values in question_options_query_maps
+            ],
             "target_grad_attention_layer_maps": [values.tolist() for values in target_layers],
             "predicted_grad_attention_layer_maps": [values.tolist() for values in predicted_layers],
         }
@@ -314,6 +385,12 @@ def main() -> None:
             image,
             blog_all,
             "Post-image text queries, all layers",
+        )
+        save_triptych(
+            args.output_dir / f"case_{panel_index:02d}_question_options_all_layers.png",
+            image,
+            question_options_all,
+            "Question/option text queries, all layers",
         )
         save_layer_grid(
             args.output_dir / f"case_{panel_index:02d}_last_query_layers.png",

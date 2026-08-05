@@ -30,6 +30,13 @@ from compute_external_roi_overlap import (
 METHODS = {
     "last_query": "last_query_layer_maps",
     "blog_text_query": "blog_text_query_layer_maps",
+    "question_options_query": "question_options_query_layer_maps",
+}
+
+LAYER_BANDS = {
+    "early_0_7": (0, 8),
+    "middle_8_17": (8, 18),
+    "late_18_27": (18, 28),
 }
 
 
@@ -152,7 +159,11 @@ def render_metric_curves(path: Path, records: list[dict[str, Any]]) -> None:
         ("pointing_game_hit", "Pointing-game hit rate", (0, 1.05)),
         ("roi_attention_enrichment", "ROI attention enrichment", (0, None)),
     )
-    colors = {"last_query": "#3366cc", "blog_text_query": "#cc5500"}
+    colors = {
+        "last_query": "#3366cc",
+        "blog_text_query": "#cc5500",
+        "question_options_query": "#138a63",
+    }
     for method in METHODS:
         method_rows = [row for row in records if row["method"] == method]
         for axis, (metric, label, limits) in zip(axes, metric_specs):
@@ -178,6 +189,49 @@ def render_metric_curves(path: Path, records: list[dict[str, Any]]) -> None:
         axis.legend(fontsize=8)
     figure.savefig(path, dpi=180)
     plt.close(figure)
+
+
+def summarize_layer_bands(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    summaries = []
+    metrics = ("iou", "pointing_game_hit", "roi_attention_enrichment")
+    for method in METHODS:
+        method_rows = [row for row in records if row["method"] == method]
+        if not method_rows:
+            continue
+        layer_count = len(method_rows[0]["layers"])
+        for band, (start, stop) in LAYER_BANDS.items():
+            if stop > layer_count:
+                raise ValueError(
+                    f"layer band {band} requires {stop} layers, found {layer_count}"
+                )
+            case_means = {
+                metric: [
+                    float(np.mean([layer[metric] for layer in row["layers"][start:stop]]))
+                    for row in method_rows
+                ]
+                for metric in metrics
+            }
+            summaries.append(
+                {
+                    "method": method,
+                    "band": band,
+                    "layers": list(range(start, stop)),
+                    "case_count": len(method_rows),
+                    "case_mean_values": case_means,
+                    "mean": {
+                        metric: float(np.mean(values))
+                        for metric, values in case_means.items()
+                    },
+                    "sample_std": {
+                        metric: float(np.std(values, ddof=1)) if len(values) > 1 else 0.0
+                        for metric, values in case_means.items()
+                    },
+                    "cases_with_roi_enrichment_above_one": int(
+                        sum(value > 1.0 for value in case_means["roi_attention_enrichment"])
+                    ),
+                }
+            )
+    return summaries
 
 
 def main() -> None:
@@ -246,12 +300,17 @@ def main() -> None:
             )
 
     render_metric_curves(args.output_dir / "layer_metric_curves.png", output_records)
+    layer_band_summary = summarize_layer_bands(output_records)
     result = {
         "schema_version": 1,
         "created_at": datetime.now(timezone.utc).isoformat(),
         "status": "completed_pilot",
         "formal_result": False,
         "selection_policy": "no_primary_layer_selected",
+        "layer_band_policy": {
+            "kind": "predefined_descriptive_bands_not_layer_selection",
+            "bands": {name: list(bounds) for name, bounds in LAYER_BANDS.items()},
+        },
         "top_fraction": args.top_fraction,
         "annotation_kind": "external_model_pseudo_reference_roi_not_expert_ground_truth",
         "annotation_model": args.annotation_model,
@@ -261,6 +320,7 @@ def main() -> None:
         },
         "attention_inputs": attention_inputs,
         "records": output_records,
+        "layer_band_summary": layer_band_summary,
     }
     (args.output_dir / "layer_metrics.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

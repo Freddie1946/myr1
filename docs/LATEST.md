@@ -1,5 +1,16 @@
 # Latest recovery pointer
 
+Latest Grok budget resume and layerwise attention calibration pilot:
+
+0. `20260806_013800_grok_budget_resume_and_layerwise_attention_pilot.md`
+0. `../protocol/grok_budget_resume_layerwise_attention_pilot_20260806_013800.json`
+
+The Grok arm restored the full step-200 optimizer state, resumed paid Judge calls,
+and produced new optimizer steps under the amended USD 100 protective ceiling.
+Separately, the four-case attention pilot now compares all 28 layers under three
+query definitions, including a tokenizer-audited question/options-only method.
+No primary layer is selected and the external-model ROIs remain pseudo labels.
+
 Latest completed GPT-4o visual-fidelity arm and active partial full evaluation:
 
 0. `20260805_222015_gpt4o_visual_completed_and_partial_full_eval_started.md`

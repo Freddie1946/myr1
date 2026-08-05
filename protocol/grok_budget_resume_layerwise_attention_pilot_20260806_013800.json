@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-05T17:38:00Z",
+  "grok_stage3": {
+    "run_id": "grok43_full3epoch_seed42_20260805_attempt02",
+    "segment": "segment01",
+    "resume_checkpoint_step": 200,
+    "latest_observed_completed_step": 217,
+    "limit_usd": 100.0,
+    "max_unique_requests": 12360,
+    "observed_committed_spend_usd": 9.81205875,
+    "observed_completed_unique_requests": 2097,
+    "status": "running_not_complete"
+  },
+  "attention_pilot": {
+    "status": "completed_calibration_pilot",
+    "formal_result": false,
+    "panel_indices": [3, 6, 15, 21],
+    "query_methods": [
+      "last_query",
+      "blog_text_query",
+      "question_options_query"
+    ],
+    "primary_layer_selected": false,
+    "predefined_layer_bands": {
+      "early": [0, 7],
+      "middle": [8, 17],
+      "late": [18, 27]
+    },
+    "annotation_kind": "external_model_pseudo_reference_roi_not_expert_ground_truth",
+    "annotation_model": "claude-sonnet-4-6",
+    "top_area_fraction": 0.1,
+    "result_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/attention_layer_analysis_question_options_20260806/layer_metrics.json",
+    "result_sha256": "ab406234c489a8750dd695ad1a9e2769162b51efd13684afa275150f8e1c2cd3",
+    "claim_boundary": "descriptive calibration only; attention is not a causal explanation"
+  }
+}
