@@ -190,6 +190,73 @@ def annotate(
     return result
 
 
+def annotate_with_retries(
+    *,
+    key: str,
+    model: str,
+    case: dict[str, Any],
+    timeout: int,
+    max_tokens: int,
+    max_attempts: int,
+    retry_delay_seconds: float,
+    annotate_fn: Any = annotate,
+) -> dict[str, Any]:
+    """Retry transport and validation failures while preserving an audit trail."""
+    if max_attempts < 1:
+        raise ValueError("max_attempts must be at least one")
+    history = []
+    final: dict[str, Any] | None = None
+    for attempt in range(1, max_attempts + 1):
+        try:
+            final = annotate_fn(
+                key=key,
+                model=model,
+                case=case,
+                timeout=timeout,
+                max_tokens=max_tokens,
+            )
+            history.append(
+                {
+                    "attempt": attempt,
+                    "status": final["status"],
+                    "response_id": final.get("response_id"),
+                    "served_model": final.get("served_model"),
+                    "finish_reason": final.get("finish_reason"),
+                    "usage": final.get("usage", {}),
+                    "validation_error": final.get("validation_error"),
+                }
+            )
+            if final["status"] == "validated":
+                break
+        except Exception as error:  # Preserve per-case progress across transient API failures.
+            history.append(
+                {
+                    "attempt": attempt,
+                    "status": "request_error",
+                    "error": f"{type(error).__name__}: {error}",
+                }
+            )
+            final = {
+                "status": "request_failed",
+                "panel_index": case["panel_index"],
+                "source_index": case["index"],
+                "source_record_sha256": case["source_record_sha256"],
+                "image": str(Path(case["image"]).resolve()),
+                "image_sha256": case["image_sha256"],
+                "target_choice": case["target_choice"],
+                "max_tokens": max_tokens,
+                "requested_model": model,
+                "annotation": None,
+                "validation_error": history[-1]["error"],
+            }
+        if attempt < max_attempts and retry_delay_seconds:
+            time.sleep(retry_delay_seconds)
+    assert final is not None
+    final["attempt_count"] = len(history)
+    final["attempt_history"] = history
+    return final
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--panel", type=Path, required=True)
@@ -198,6 +265,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--panel-index", action="append", type=int, required=True)
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--max-tokens", type=int, default=768)
+    parser.add_argument("--max-attempts", type=int, default=3)
+    parser.add_argument("--retry-delay-seconds", type=float, default=2.0)
     return parser.parse_args()
 
 
@@ -229,17 +298,24 @@ def main() -> None:
         "models": args.model,
         "panel_indices": requested_indices,
         "blinded_to_heatmaps": True,
+        "retry_policy": {
+            "max_attempts_per_case": args.max_attempts,
+            "retry_delay_seconds": args.retry_delay_seconds,
+            "retry_on": ["request_error", "invalid_annotation"],
+        },
         "results": results,
     }
     for model in args.model:
         for panel_index in requested_indices:
             results.append(
-                annotate(
+                annotate_with_retries(
                     key=key,
                     model=model,
                     case=cases[panel_index],
                     timeout=args.timeout,
                     max_tokens=args.max_tokens,
+                    max_attempts=args.max_attempts,
+                    retry_delay_seconds=args.retry_delay_seconds,
                 )
             )
             atomic_json(args.output, record)

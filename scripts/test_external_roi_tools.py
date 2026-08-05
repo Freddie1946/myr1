@@ -1,7 +1,11 @@
 import unittest
 
 from compute_external_roi_overlap import mask_area, overlap
-from run_external_roi_annotations import parse_json_object, validate_annotation
+from run_external_roi_annotations import (
+    annotate_with_retries,
+    parse_json_object,
+    validate_annotation,
+)
 from run_external_heatmap_critique import validate as validate_critique
 from run_attention_visualization_pilot import normalize_attention, option_margin
 from run_external_attention_method_critique import validate as validate_method_critique
@@ -39,6 +43,39 @@ class ExternalRoiToolsTest(unittest.TestCase):
 
     def test_parse_json_after_explanation(self):
         self.assertEqual(parse_json_object('Result follows:\n{"a": 1}\nDone.'), {"a": 1})
+
+    def test_annotation_retry_preserves_attempt_history(self):
+        calls = []
+
+        def fake_annotate(**kwargs):
+            calls.append(kwargs)
+            if len(calls) == 1:
+                return {"status": "invalid_annotation", "validation_error": "bad JSON"}
+            return {"status": "validated", "annotation": {"evidence_type": "diffuse"}}
+
+        case = {
+            "panel_index": 1,
+            "index": 2,
+            "source_record_sha256": "source",
+            "image": "/tmp/image.png",
+            "image_sha256": "image",
+            "target_choice": "A",
+        }
+        result = annotate_with_retries(
+            key="key",
+            model="model",
+            case=case,
+            timeout=1,
+            max_tokens=10,
+            max_attempts=3,
+            retry_delay_seconds=0,
+            annotate_fn=fake_annotate,
+        )
+        self.assertEqual(result["status"], "validated")
+        self.assertEqual(result["attempt_count"], 2)
+        self.assertEqual([row["status"] for row in result["attempt_history"]], [
+            "invalid_annotation", "validated"
+        ])
 
     def test_mask_area_handles_overlap(self):
         self.assertAlmostEqual(mask_area([(0, 0, 0.5, 1), (0.25, 0, 0.75, 1)]), 0.75)

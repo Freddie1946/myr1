@@ -252,23 +252,33 @@ def main() -> None:
             attention_records[row["panel_index"]] = row
 
     annotation_payload = json.loads(args.annotations.read_text())
-    annotations = {
+    validated_annotations = {
         row["panel_index"]: row["annotation"]
         for row in annotation_payload["results"]
         if row.get("requested_model") == args.annotation_model
         and row.get("status") == "validated"
         and isinstance(row.get("annotation"), dict)
-        and row["annotation"].get("evidence_type") in {"focal", "multifocal"}
     }
-    missing = sorted(set(attention_records) - set(annotations))
+    missing = sorted(set(attention_records) - set(validated_annotations))
     if missing:
-        raise ValueError(f"missing validated spatial annotations for cases: {missing}")
+        raise ValueError(f"missing validated annotations for cases: {missing}")
 
     output_records = []
+    excluded_spatial_cases = []
     for panel_index in sorted(attention_records):
         row = attention_records[panel_index]
+        annotation = validated_annotations[panel_index]
+        if annotation.get("evidence_type") not in {"focal", "multifocal"}:
+            excluded_spatial_cases.append(
+                {
+                    "panel_index": panel_index,
+                    "evidence_type": annotation.get("evidence_type"),
+                    "reason": annotation.get("reason"),
+                }
+            )
+            continue
         image = Image.open(row["image"]).convert("RGB")
-        boxes = reference_boxes(annotations[panel_index])
+        boxes = reference_boxes(annotation)
         for method, field in METHODS.items():
             maps = [np.asarray(values, dtype=np.float64) for values in row[field]]
             metrics = layer_metrics(maps, boxes, args.top_fraction)
@@ -299,6 +309,8 @@ def main() -> None:
                 }
             )
 
+    if not output_records:
+        raise ValueError("no focal or multifocal cases are spatially evaluable")
     render_metric_curves(args.output_dir / "layer_metric_curves.png", output_records)
     layer_band_summary = summarize_layer_bands(output_records)
     result = {
@@ -314,6 +326,9 @@ def main() -> None:
         "top_fraction": args.top_fraction,
         "annotation_kind": "external_model_pseudo_reference_roi_not_expert_ground_truth",
         "annotation_model": args.annotation_model,
+        "input_case_count": len(attention_records),
+        "spatially_evaluable_case_count": len(attention_records) - len(excluded_spatial_cases),
+        "excluded_spatial_cases": excluded_spatial_cases,
         "annotations": {
             "path": str(args.annotations.resolve()),
             "sha256": sha256_file(args.annotations),
@@ -330,6 +345,7 @@ def main() -> None:
             {
                 "status": result["status"],
                 "cases": len(attention_records),
+                "spatially_evaluable_cases": result["spatially_evaluable_case_count"],
                 "methods": len(METHODS),
                 "output": str(args.output_dir.resolve()),
             },

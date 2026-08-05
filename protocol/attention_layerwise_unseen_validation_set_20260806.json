@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-05T17:42:00Z",
+  "status": "frozen_before_annotation_or_attention_generation",
+  "source_panel": "protocol/visual_fidelity_panel_v1_20260804.json",
+  "calibration_panel_indices": [3, 6, 15, 21],
+  "unseen_validation_panel_indices": [
+    0, 1, 2, 4, 5, 7, 8, 9, 10, 11,
+    12, 13, 14, 16, 17, 18, 19, 20, 22, 23
+  ],
+  "annotation_contract": {
+    "provider_gateway": "aigcbest",
+    "requested_model": "claude-sonnet-4-6",
+    "blinded_to_heatmaps": true,
+    "sees_question_choices_and_dataset_reference_answer": true,
+    "coordinate_system": "normalized_integer_xyxy_0_1000",
+    "max_boxes": 6,
+    "allowed_evidence_types": [
+      "focal",
+      "multifocal",
+      "diffuse",
+      "not_localizable"
+    ],
+    "max_attempts_per_case": 3,
+    "max_tokens": 1024
+  },
+  "analysis_contract": {
+    "query_methods": [
+      "last_query",
+      "blog_text_query",
+      "question_options_query"
+    ],
+    "layer_bands": {
+      "early": [0, 7],
+      "middle": [8, 17],
+      "late": [18, 27]
+    },
+    "top_area_fraction": 0.1,
+    "exclude_from_spatial_overlap": ["diffuse", "not_localizable"],
+    "primary_layer_selection": "none"
+  },
+  "claim_boundary": "external-model pseudo labels only; expert validation remains required"
+}

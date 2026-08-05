@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-05T18:00:00Z",
+  "status": "completed_unseen_validation",
+  "formal_result": false,
+  "frozen_contract": "protocol/attention_layerwise_unseen_validation_set_20260806.json",
+  "calibration_panel_indices": [3, 6, 15, 21],
+  "unseen_panel_case_count": 20,
+  "annotation": {
+    "requested_model": "claude-sonnet-4-6",
+    "served_models": ["claude-sonnet-4-6"],
+    "blinded_to_heatmaps": true,
+    "validated_first_attempt": 20,
+    "prompt_tokens": 27583,
+    "completion_tokens": 1990,
+    "evidence_type_counts": {
+      "focal": 2,
+      "multifocal": 3,
+      "diffuse": 12,
+      "not_localizable": 3
+    },
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/external_roi_unseen_validation_claude46_20260806/annotations.json",
+    "sha256": "a62d73d551b6b7a6482cc4cbae357a86643c3c0786d69debb602fd135e3891ea"
+  },
+  "spatial_validation": {
+    "panel_indices": [1, 2, 9, 10, 20],
+    "case_count": 5,
+    "model_correct_count": 2,
+    "query_method": "question_options_query",
+    "primary_layer_selected": false,
+    "middle_band_mean_iou": 0.1167,
+    "middle_band_mean_pointing_hit": 0.36,
+    "middle_band_mean_roi_enrichment": 1.429,
+    "late_band_mean_iou": 0.1112,
+    "late_band_mean_pointing_hit": 0.46,
+    "late_band_mean_roi_enrichment": 1.346,
+    "attention_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/attention_unseen_validation_spatial_20260806/attention_results.json",
+    "attention_sha256": "2c4797c7d1eca578fbb39e707b5640791c14fa5d76de81e4e8c335fc780a246c",
+    "metrics_path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/attention_layer_analysis_unseen_validation_20260806/layer_metrics.json",
+    "metrics_sha256": "74d2520bc07023f6424fec916eb70ffa5db95974ab3247790a3c8e4e3f1c4570"
+  },
+  "claim_boundary": "directional layer-band replication using external-model pseudo labels; not expert localization and not causal decision explanation"
+}

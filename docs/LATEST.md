@@ -1,5 +1,17 @@
 # Latest recovery pointer
 
+Latest layerwise-attention unseen validation:
+
+0. `20260806_020000_attention_unseen_validation_completed.md`
+0. `../protocol/attention_layerwise_unseen_validation_result_20260806_020000.json`
+
+The remaining 20 cases were frozen before new annotations or heatmaps. Claude
+Sonnet 4.6 classified only five as spatially boxable; 12 were diffuse and three
+were not localizable. On the five held-out spatial cases, the predefined
+question/options middle/late attention trend replicated directionally, with
+large per-case variance and only 2/5 model answers correct. No single layer or
+causal explanation claim is selected.
+
 Latest Grok budget resume and layerwise attention calibration pilot:
 
 0. `20260806_013800_grok_budget_resume_and_layerwise_attention_pilot.md`
