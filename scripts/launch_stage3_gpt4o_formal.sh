@@ -172,7 +172,7 @@ done
 available_bytes="$(df --output=avail -B1 "$INSTALL_ROOT" | tail -n 1 | tr -d ' ')"
 (( available_bytes >= 500 * 1024 * 1024 * 1024 )) || { echo "Less than 500 GiB free" >&2; exit 2; }
 if [[ "${PATHVLM_STAGE3_PREFLIGHT_ONLY:-false}" == "true" ]]; then
-  echo "Formal GPT-4o Stage3 static/read-only preflight passed"
+  echo "Formal Stage3 static/read-only preflight passed for Judge $MODEL_ID"
   exit 0
 fi
 
