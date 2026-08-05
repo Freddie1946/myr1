@@ -14,6 +14,10 @@ RUNNER="$REPO/scripts/run_visual_fidelity_experiment.py"
 VERIFY="$REPO/scripts/verify_visual_fidelity_run.py"
 SNAPSHOT_VERIFY="$REPO/scripts/verify_checkpoint_snapshot.py"
 GPU="${PATHVLM_STAGE3_GPT4O_VISUAL_GPU:-3}"
+SHARED_GPU_MODE="${PATHVLM_ALLOW_SHARED_GPU_WITH_STAGE3:-false}"
+SHARED_OWNER="${PATHVLM_SHARED_GPU_OWNER_RUN_DIR:-}"
+SHARED_MAX_USED_MIB="${PATHVLM_SHARED_GPU_MAX_INITIAL_USED_MIB:-30000}"
+SHARED_MIN_FREE_MIB="${PATHVLM_SHARED_GPU_MIN_FREE_MIB:-45000}"
 
 : "${PATHVLM_STAGE3_GPT4O_VISUAL_ROOT:?Set a dedicated GPT-4o visual-fidelity root}"
 ROOT="$(readlink -m "$PATHVLM_STAGE3_GPT4O_VISUAL_ROOT")"
@@ -22,6 +26,28 @@ case "$ROOT" in
   *) echo "Visual-fidelity root must be a child of $EVAL/runs" >&2; exit 2 ;;
 esac
 [[ "$GPU" =~ ^[0-7]$ ]] || { echo "Invalid visual-fidelity GPU: $GPU" >&2; exit 2; }
+[[ "$SHARED_GPU_MODE" == "true" || "$SHARED_GPU_MODE" == "false" ]] || {
+  echo "PATHVLM_ALLOW_SHARED_GPU_WITH_STAGE3 must be true or false" >&2; exit 2;
+}
+[[ "$SHARED_MAX_USED_MIB" =~ ^[1-9][0-9]*$ && "$SHARED_MIN_FREE_MIB" =~ ^[1-9][0-9]*$ ]] || {
+  echo "Shared GPU memory thresholds must be positive integers" >&2; exit 2;
+}
+if [[ "$SHARED_GPU_MODE" == "true" ]]; then
+  : "${SHARED_OWNER:?Shared GPU mode requires PATHVLM_SHARED_GPU_OWNER_RUN_DIR}"
+  SHARED_OWNER="$(readlink -f "$SHARED_OWNER")"
+  case "$SHARED_OWNER" in
+    "$INSTALL/runs/stage3_process_grpo"/*) ;;
+    *) echo "Shared GPU owner must be a Stage3 run" >&2; exit 2 ;;
+  esac
+  worker_count="$(
+    { pgrep -af -- "$SHARED_OWNER/output" || true; } |
+      { grep -F 'grpo_pathmmu.py' || true; } | wc -l
+  )"
+  (( worker_count >= 8 )) || { echo "Shared Stage3 owner has only $worker_count live workers" >&2; exit 2; }
+  grep -q 'rewards/audited_process_reward' "$SHARED_OWNER/train_segment00.log" || {
+    echo "Shared Stage3 owner has not completed an optimizer step" >&2; exit 2;
+  }
+fi
 for path in "$PYTHON" "$MODEL" "$PANEL" "$RUNNER" "$VERIFY" "$SNAPSHOT_VERIFY"; do
   [[ -e "$path" ]] || { echo "Required visual-fidelity input is missing: $path" >&2; exit 2; }
 done
@@ -29,8 +55,18 @@ done
   echo "Visual-fidelity panel hash mismatch" >&2; exit 2;
 }
 "$PYTHON" "$SNAPSHOT_VERIFY" "$MODEL" --expected-step 1000 --expected-epoch 2 >/dev/null
-used="$(nvidia-smi --id="$GPU" --query-gpu=memory.used --format=csv,noheader,nounits | tr -d '[:space:]')"
-(( used <= 10 )) || { echo "Visual-fidelity GPU $GPU is not idle: ${used} MiB" >&2; exit 2; }
+IFS=',' read -r used total < <(
+  nvidia-smi --id="$GPU" --query-gpu=memory.used,memory.total --format=csv,noheader,nounits
+)
+used="${used//[[:space:]]/}"
+total="${total//[[:space:]]/}"
+if [[ "$SHARED_GPU_MODE" == "true" ]]; then
+  (( used <= SHARED_MAX_USED_MIB && total - used >= SHARED_MIN_FREE_MIB )) || {
+    echo "Visual GPU $GPU fails shared-memory admission: used=$used total=$total MiB" >&2; exit 2;
+  }
+else
+  (( used <= 10 )) || { echo "Visual-fidelity GPU $GPU is not idle: ${used} MiB" >&2; exit 2; }
+fi
 
 OUTPUT="$ROOT/stage3_gpt4o"
 LOG="$ROOT/stage3_gpt4o.log"
@@ -54,7 +90,8 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false
 "$PYTHON" "$VERIFY" --metrics "$OUTPUT/metrics.json" \
   --expected-label stage3_gpt4o --expected-model "$MODEL" \
   --expected-panel-sha256 "$PANEL_SHA" --output "$VERIFICATION" >/dev/null
-"$PYTHON" - "$COMPLETED" "$OUTPUT/metrics.json" "$VERIFICATION" "$REPO" <<'PY'
+"$PYTHON" - "$COMPLETED" "$OUTPUT/metrics.json" "$VERIFICATION" "$REPO" \
+  "$SHARED_GPU_MODE" "$SHARED_OWNER" "$SHARED_MAX_USED_MIB" "$SHARED_MIN_FREE_MIB" <<'PY'
 import datetime
 import hashlib
 import json
@@ -72,6 +109,12 @@ value = {
     "completed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     "model_label": "stage3_gpt4o",
     "five_arm_comparison_completed": False,
+    "gpu_admission": {
+        "mode": "shared_with_stage3" if sys.argv[5] == "true" else "idle_exclusive",
+        "stage3_owner_run": sys.argv[6] or None,
+        "maximum_initial_used_mib": int(sys.argv[7]),
+        "minimum_initial_free_mib": int(sys.argv[8]),
+    },
     "metrics": str(metrics.resolve()),
     "metrics_sha256": hashlib.sha256(metrics.read_bytes()).hexdigest(),
     "verification": str(verification.resolve()),

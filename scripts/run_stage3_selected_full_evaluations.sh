@@ -53,6 +53,40 @@ case "$RUN_ROOT" in
   *) echo "Evaluation root must be a child of $EVAL/runs" >&2; exit 2 ;;
 esac
 
+SHARED_GPU_MODE="${PATHVLM_ALLOW_SHARED_GPU_WITH_STAGE3:-false}"
+SHARED_OWNER="${PATHVLM_SHARED_GPU_OWNER_RUN_DIR:-}"
+SHARED_MAX_USED_MIB="${PATHVLM_SHARED_GPU_MAX_INITIAL_USED_MIB:-30000}"
+SHARED_MIN_FREE_MIB="${PATHVLM_SHARED_GPU_MIN_FREE_MIB:-45000}"
+[[ "$SHARED_GPU_MODE" == "true" || "$SHARED_GPU_MODE" == "false" ]] || {
+  echo "PATHVLM_ALLOW_SHARED_GPU_WITH_STAGE3 must be true or false" >&2; exit 2;
+}
+[[ "$SHARED_MAX_USED_MIB" =~ ^[1-9][0-9]*$ && "$SHARED_MIN_FREE_MIB" =~ ^[1-9][0-9]*$ ]] || {
+  echo "Shared GPU memory thresholds must be positive integers" >&2; exit 2;
+}
+if [[ "$SHARED_GPU_MODE" == "true" ]]; then
+  : "${SHARED_OWNER:?Shared GPU mode requires PATHVLM_SHARED_GPU_OWNER_RUN_DIR}"
+  SHARED_OWNER="$(readlink -f "$SHARED_OWNER")"
+  case "$SHARED_OWNER" in
+    "$INSTALL/runs/stage3_process_grpo"/*) ;;
+    *) echo "Shared GPU owner must be a Stage3 run" >&2; exit 2 ;;
+  esac
+fi
+
+verify_shared_owner() {
+  [[ "$SHARED_GPU_MODE" == "true" ]] || return 0
+  local worker_count
+  worker_count="$(
+    { pgrep -af -- "$SHARED_OWNER/output" || true; } |
+      { grep -F 'grpo_pathmmu.py' || true; } | wc -l
+  )"
+  (( worker_count >= 8 )) || {
+    echo "Shared Stage3 owner has only $worker_count live workers" >&2; return 1;
+  }
+  grep -q 'rewards/audited_process_reward' "$SHARED_OWNER/train_segment00.log" || {
+    echo "Shared Stage3 owner has not completed an optimizer step" >&2; return 1;
+  }
+}
+
 for path in "$PYTHON" "$PATHMMU_RUNNER" "$EXTERNAL_RUNNER" "$SMOKE_VERIFY" \
   "$FULL_VERIFY" "$SNAPSHOT_VERIFY" \
   "$PATHMMU_VALID" "$PATHMMU_TEST" "$PATHVQA" "$OMNI"; do
@@ -137,11 +171,22 @@ if (( RUN_KIMI == 1 )); then
   REQUIRED_GPUS+=("${KIMI_GPUS[@]}")
 fi
 declare -A SEEN_GPUS=()
+verify_shared_owner
 for gpu in "${REQUIRED_GPUS[@]}"; do
   [[ -z "${SEEN_GPUS[$gpu]:-}" ]] || { echo "GPU $gpu is assigned to multiple evaluations" >&2; exit 2; }
   SEEN_GPUS[$gpu]=1
-  used="$(nvidia-smi --id="$gpu" --query-gpu=memory.used --format=csv,noheader,nounits | tr -d '[:space:]')"
-  (( used <= 10 )) || { echo "GPU $gpu is not idle: ${used} MiB" >&2; exit 2; }
+  IFS=',' read -r used total < <(
+    nvidia-smi --id="$gpu" --query-gpu=memory.used,memory.total --format=csv,noheader,nounits
+  )
+  used="${used//[[:space:]]/}"
+  total="${total//[[:space:]]/}"
+  if [[ "$SHARED_GPU_MODE" == "true" ]]; then
+    (( used <= SHARED_MAX_USED_MIB && total - used >= SHARED_MIN_FREE_MIB )) || {
+      echo "GPU $gpu fails shared-memory admission: used=$used total=$total MiB" >&2; exit 2;
+    }
+  else
+    (( used <= 10 )) || { echo "GPU $gpu is not idle: ${used} MiB" >&2; exit 2; }
+  fi
 done
 
 mkdir -p "$RUN_ROOT/logs"
@@ -171,7 +216,7 @@ PY
 }
 
 "$PYTHON" - "$CONTRACT" "$EVAL_ARMS" "$GPT_MODEL" "$GPT_STEP" "$KIMI_MODEL" "$KIMI_STEP" \
-  "$GIT_COMMIT" <<'PY'
+  "$GIT_COMMIT" "$SHARED_GPU_MODE" "$SHARED_OWNER" "$SHARED_MAX_USED_MIB" "$SHARED_MIN_FREE_MIB" <<'PY'
 import json
 import os
 import sys
@@ -197,6 +242,12 @@ value = {
     "smoke_count_per_model_task": 16,
     "accuracy_used_as_smoke_gate": False,
     "repository_commit": sys.argv[7],
+    "gpu_admission": {
+        "mode": "shared_with_stage3" if sys.argv[8] == "true" else "idle_exclusive",
+        "stage3_owner_run": sys.argv[9] or None,
+        "maximum_initial_used_mib": int(sys.argv[10]),
+        "minimum_initial_free_mib": int(sys.argv[11]),
+    },
 }
 if path.exists():
     prior = json.loads(path.read_text(encoding="utf-8"))
@@ -343,6 +394,7 @@ for spec in "${SPECS[@]}"; do
   verify_smoke "$label" "$model" "$task" "$data_sha"
 done
 record_event "smoke_phase_passed" "accuracy was not a gate"
+verify_shared_owner || { record_event "shared_stage3_owner_failed_after_smoke"; exit 3; }
 
 FULL_SPECS=()
 for spec in "${SPECS[@]}"; do

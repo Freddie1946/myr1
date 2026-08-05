@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-05T22:07:16+08:00",
+  "status": "parallel_gpu_admission_prepared",
+  "formal_result": false,
+  "authorization": "user_authorized_other_evaluations_and_experiments_beside_grok_stage3",
+  "stage3_owner": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/grok43_full3epoch_seed42_20260805_attempt02",
+  "parallel_scope": [
+    "gpt4o_selected_pathmmu_test999",
+    "gpt4o_selected_pathvqa_yesno3362",
+    "gpt4o_selected_omnimedvqa8518",
+    "gpt4o_selected_visual_fidelity_24"
+  ],
+  "excluded_scope": [
+    "pathvqa_free_form",
+    "stopped_hosted_grok_external_baselines",
+    "doubao"
+  ],
+  "gpu_admission": {
+    "default_mode": "idle_exclusive",
+    "shared_mode_requires_explicit_opt_in": true,
+    "maximum_initial_used_mib": 30000,
+    "minimum_initial_free_mib": 45000,
+    "minimum_live_stage3_workers": 8,
+    "requires_completed_stage3_optimizer_step": true,
+    "recheck_after_three_dataset_smoke": true,
+    "secondary_failure_must_not_stop_owner": true
+  },
+  "gemini35_nothinking_smoke": {
+    "provider": "aigcbest",
+    "requested_model": "gemini-3.5-flash-nothinking",
+    "served_model": "gemini-3.5-flash",
+    "status": "failed_exact_identity_gate",
+    "retry_count": 0,
+    "training_call": false,
+    "estimated_cost_usd": 0.005394,
+    "report_sha256": "a22340ab73a61ea4595a2f3bf84de5278a92194f81c3a8e13cbcfa3ba60042ab"
+  },
+  "tests": {
+    "shell_syntax": "passed",
+    "shared_admission_static": 4,
+    "evaluation_scope_and_integrity": 13,
+    "visual_fidelity": 11,
+    "formal_visual_environment": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/sft"
+  },
+  "code_sha256": {
+    "scripts/run_stage3_selected_full_evaluations.sh": "928d9d4f00337d45d7e964f7ca560be0c4d2255d7320995e28680aa4a5064642",
+    "scripts/run_stage3_gpt4o_visual_fidelity.sh": "3acb825e2f05f92d4c233ecdebb51674b870d542916b5aac0ff75e58fe93da19",
+    "scripts/test_stage3_parallel_gpu_admission_contract.py": "09ebbff545f7c7f85485e00dd40f8bdfb75bca553f88947d2f3e6d3c9c666fb4"
+  },
+  "repository_parent_commit": "dc28ca5e266adc91177f58ba49ca58220497e46f"
+}

@@ -1,5 +1,17 @@
 # Latest recovery pointer
 
+Latest Grok-parallel GPU admission preparation and Gemini 3.5 no-thinking route audit:
+
+0. `20260805_220716_grok_parallel_gpt4o_admission_and_gemini35_route_audit.md`
+0. `../protocol/grok_parallel_gpt4o_admission_gemini35_audit_20260805_220716.json`
+
+The user authorized useful evaluations and experiments to run beside the active Grok Stage3 arm.
+The prepared opt-in admission mode retains the default idle-GPU gate, requires the Grok owner to
+have eight live workers and a completed optimizer step, and requires at least 45 GiB free per
+secondary GPU. GPT-4o three-dataset evaluation rechecks the owner after its 16-case smokes before
+full inference. The AIGCBest `gemini-3.5-flash-nothinking` route returned the base identity
+`gemini-3.5-flash`; it is not eligible as a distinct exact-identity Judge candidate.
+
 Latest approved Kimi balance continuation and verified HTTP 429 recovery:
 
 0. `20260805_195300_kimi_balance_429_recovery_segment06_verified.md`
