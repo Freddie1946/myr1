@@ -580,6 +580,52 @@ def raise_fallback_consecutive_cap(
     }
 
 
+def raise_rate_limit_interval(
+    state_path: Path,
+    *,
+    old_interval_seconds: float,
+    new_interval_seconds: float,
+    reason: str,
+) -> dict[str, Any]:
+    """Atomically increase a settled inter-process request interval."""
+
+    if new_interval_seconds <= old_interval_seconds:
+        raise ValueError("new request interval must be greater than the old interval")
+    if not reason.strip():
+        raise ValueError("rate-limit amendment reason must not be empty")
+    path = state_path.resolve()
+    if not path.is_file():
+        raise ValueError(f"rate-limit state does not exist: {path}")
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        value = json.loads(path.read_text(encoding="utf-8"))
+        actual = value.get("minimum_interval_seconds")
+        if actual != float(old_interval_seconds):
+            raise ValueError(
+                "rate-limit pre-amendment contract mismatch: "
+                f"expected {old_interval_seconds}, found {actual}"
+            )
+        amendment = {
+            "timestamp": now_iso(),
+            "field": "minimum_interval_seconds",
+            "old_value": float(old_interval_seconds),
+            "new_value": float(new_interval_seconds),
+            "reason": reason.strip(),
+        }
+        value.setdefault("contract_amendments", []).append(amendment)
+        value["minimum_interval_seconds"] = float(new_interval_seconds)
+        atomic_json(path, value)
+        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+    return {
+        "status": "rate_limit_interval_raised",
+        "state": str(path),
+        "old_interval_seconds": float(old_interval_seconds),
+        "new_interval_seconds": float(new_interval_seconds),
+        "amendment": amendment,
+    }
+
+
 def append_event(path: Path, event: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     lock_path = path.with_suffix(path.suffix + ".lock")
@@ -647,6 +693,12 @@ def parse_args() -> argparse.Namespace:
         "--new-consecutive-limit", type=int, required=True
     )
     raise_fallback_consecutive.add_argument("--reason", required=True)
+
+    raise_rate_interval = subparsers.add_parser("raise-rate-limit-interval")
+    raise_rate_interval.add_argument("--state", type=Path, required=True)
+    raise_rate_interval.add_argument("--old-interval-seconds", type=float, required=True)
+    raise_rate_interval.add_argument("--new-interval-seconds", type=float, required=True)
+    raise_rate_interval.add_argument("--reason", required=True)
 
     classify = subparsers.add_parser("classify")
     classify.add_argument("--log", type=Path, required=True)
@@ -730,6 +782,18 @@ def main() -> None:
                     total_limit=args.total_limit,
                     old_consecutive_limit=args.old_consecutive_limit,
                     new_consecutive_limit=args.new_consecutive_limit,
+                    reason=args.reason,
+                ),
+                sort_keys=True,
+            )
+        )
+    elif args.command == "raise-rate-limit-interval":
+        print(
+            json.dumps(
+                raise_rate_limit_interval(
+                    args.state,
+                    old_interval_seconds=args.old_interval_seconds,
+                    new_interval_seconds=args.new_interval_seconds,
                     reason=args.reason,
                 ),
                 sort_keys=True,

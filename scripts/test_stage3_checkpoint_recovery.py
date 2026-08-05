@@ -14,6 +14,7 @@ from stage3_checkpoint_recovery import (
     raise_budget_and_request_caps,
     raise_fallback_consecutive_cap,
     raise_fallback_total_cap,
+    raise_rate_limit_interval,
     raise_request_cap,
     settle_unresolved,
     validate_complete_checkpoint,
@@ -255,6 +256,32 @@ class RequestCapAmendmentTests(unittest.TestCase):
             self.assertEqual(amended["consecutive_used"], 4)
             self.assertEqual(amended["total_used"], 23)
             self.assertEqual(len(amended["events"]), 1)
+
+    def test_rate_limit_interval_raise_preserves_last_request(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "rate_limit.json"
+            path.write_text(
+                json.dumps({
+                    "schema_version": 1,
+                    "minimum_interval_seconds": 4.0,
+                    "last_request_started_at_epoch": 123.0,
+                    "last_request_started_at": "before",
+                    "pid": 7,
+                    "hostname": "test",
+                }),
+                encoding="utf-8",
+            )
+            result = raise_rate_limit_interval(
+                path,
+                old_interval_seconds=4.0,
+                new_interval_seconds=8.0,
+                reason="provider cooldown",
+            )
+            self.assertEqual(result["status"], "rate_limit_interval_raised")
+            amended = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(amended["minimum_interval_seconds"], 8.0)
+            self.assertEqual(amended["last_request_started_at_epoch"], 123.0)
+            self.assertEqual(amended["contract_amendments"][0]["old_value"], 4.0)
 
 
 class FailureClassificationTests(unittest.TestCase):

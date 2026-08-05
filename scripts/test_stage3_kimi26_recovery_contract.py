@@ -45,13 +45,14 @@ class KimiRecoveryContractTests(unittest.TestCase):
         ):
             self.assertIn(fragment, launcher)
         self.assertIn('PATHVLM_STAGE3_MAX_RECOVERIES:-3', supervisor)
-        self.assertIn('MAX_RECOVERIES > 5', supervisor)
+        self.assertIn('MAX_RECOVERIES > 6', supervisor)
         self.assertIn('--world-size 8', supervisor)
         self.assertIn('export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD="1"', launcher)
         self.assertIn('unset TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD || true', launcher)
         self.assertIn('PATHVLM_STAGE3_ALLOW_SHARED_GPUS:-false', launcher)
         self.assertIn('PATHVLM_STAGE3_SHARED_GPU_MIN_FREE_MIB:-30720', launcher)
         self.assertIn('PATHVLM_STAGE3_MIN_REQUEST_INTERVAL_SECONDS:-4', launcher)
+        self.assertIn('Kimi rate-limit contract mismatch', launcher)
 
 
 if __name__ == "__main__":

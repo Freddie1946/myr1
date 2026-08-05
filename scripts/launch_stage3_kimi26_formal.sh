@@ -112,7 +112,8 @@ fi
 
 "$PYTHON" - "$DATASET" "$IMAGE_HASH_MANIFEST" "$SMOKE_MARKER" \
   "$MASTER_PORT" "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" "$MAX_UNIQUE_REQUESTS" \
-  "$JUDGE_ROOT" "$FALLBACK_TOTAL_LIMIT" "$FALLBACK_CONSECUTIVE_LIMIT" <<'PY'
+  "$JUDGE_ROOT" "$FALLBACK_TOTAL_LIMIT" "$FALLBACK_CONSECUTIVE_LIMIT" \
+  "$MIN_REQUEST_INTERVAL_SECONDS" <<'PY'
 import hashlib
 import json
 import socket
@@ -128,6 +129,7 @@ max_unique_requests = int(sys.argv[6])
 judge_root = Path(sys.argv[7])
 fallback_total_limit = int(sys.argv[8])
 fallback_consecutive_limit = int(sys.argv[9])
+minimum_request_interval_seconds = float(sys.argv[10])
 
 if max_unique_requests < 12976:
     raise SystemExit(
@@ -227,6 +229,16 @@ if fallback_ledger_path.is_file():
     }
     if fallback_mismatch:
         raise SystemExit(f"Kimi fallback ledger mismatch: {fallback_mismatch}")
+
+rate_limit_path = judge_root / "rate_limit.json"
+if rate_limit_path.is_file():
+    rate_limit = json.loads(rate_limit_path.read_text(encoding="utf-8"))
+    frozen_interval = rate_limit.get("minimum_interval_seconds")
+    if frozen_interval != minimum_request_interval_seconds:
+        raise SystemExit(
+            "Kimi rate-limit contract mismatch: "
+            f"expected {minimum_request_interval_seconds}, found {frozen_interval}"
+        )
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     try:

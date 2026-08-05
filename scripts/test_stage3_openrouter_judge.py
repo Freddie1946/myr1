@@ -413,6 +413,45 @@ class JudgeTests(unittest.TestCase):
                 )
             self.assertFalse((Path(directory) / "judge" / "budget_ledger.json").exists())
 
+    def test_rate_limit_contract_mismatch_does_not_reserve_budget(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image, digest = self._source(directory)
+            root = Path(directory) / "judge"
+            root.mkdir()
+            (root / "rate_limit.json").write_text(
+                json.dumps({
+                    "schema_version": 1,
+                    "minimum_interval_seconds": 4.0,
+                    "last_request_started_at_epoch": 0.0,
+                }),
+                encoding="utf-8",
+            )
+            calls = []
+
+            def forbidden(*args):
+                calls.append(1)
+                raise AssertionError("transport must not be called")
+
+            judge = OpenRouterJudge(
+                root,
+                transport=forbidden,
+                api_key="test-only-not-real",
+                retry_delays=(),
+                minimum_request_interval_seconds=8.0,
+            )
+            with self.assertRaisesRegex(RuntimeError, "rate-limit contract mismatch"):
+                judge.judge_one(
+                    image_path=str(image),
+                    image_sha256=digest,
+                    problem="q",
+                    solution="A",
+                    completion="c",
+                )
+            self.assertFalse(calls)
+            snapshot = judge.ledger.snapshot()
+            self.assertEqual(snapshot["completed_unique_requests"], 0)
+            self.assertFalse(snapshot["reservations"])
+
     def test_kimi_contract_is_distillable_zdr_and_provider_frozen(self):
         with tempfile.TemporaryDirectory() as directory:
             image, digest = self._source(directory)

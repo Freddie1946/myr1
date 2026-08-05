@@ -36,8 +36,8 @@ if [[ "$SAVE_STEPS" != "100" ]]; then
   echo "This recovery contract requires PATHVLM_STAGE3_SAVE_STEPS=100" >&2
   exit 2
 fi
-if [[ ! "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] || (( MAX_RECOVERIES > 5 )); then
-  echo "PATHVLM_STAGE3_MAX_RECOVERIES must be an integer from 0 through 5" >&2
+if [[ ! "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] || (( MAX_RECOVERIES > 6 )); then
+  echo "PATHVLM_STAGE3_MAX_RECOVERIES must be an integer from 0 through 6" >&2
   exit 2
 fi
 if [[ ! "$MAX_UNIQUE_REQUESTS" =~ ^[1-9][0-9]*$ ]] || (( MAX_UNIQUE_REQUESTS < 12976 )); then

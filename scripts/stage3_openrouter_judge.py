@@ -1015,6 +1015,8 @@ class OpenRouterJudge:
             for attempt_number, delay in enumerate(delays, 1):
                 if delay:
                     time.sleep(delay)
+                # A local limiter failure must not create a billable reservation.
+                self.rate_limiter.wait()
                 attempt_id = f"{cache_key}:http:{uuid.uuid4().hex}"
                 self.ledger.reserve(
                     attempt_id,
@@ -1028,7 +1030,6 @@ class OpenRouterJudge:
                 )
                 response = None
                 try:
-                    self.rate_limiter.wait()
                     response = self.transport(
                         request_payload, self.api_key, self.timeout_seconds
                     )
