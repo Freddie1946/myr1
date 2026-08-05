@@ -118,3 +118,31 @@ would recompute from step 1101. Increasing the total fallback cap or changing th
 scientific contract decision requiring new approval; neither was performed by this record.
 
 Code commit at the verified launch: `cb88f6544ddf37af0d801f8fdb6d844dd10c8b91`.
+
+## 2026-08-05 evaluation-first pivot
+
+The user chose not to increase fallback allowances again. Kimi is frozen as an incomplete
+infrastructure result at `checkpoint-1100`; it is not a selected or final Stage3 model. Across the
+retained request ledger, approximately 9,682 requests succeeded, 381 physical attempts received
+HTTP 429, and two received HTTP 520. The 36 rule fallbacks comprised 27 exhausted HTTP-429 cases
+and nine invalid or truncated JSON cases. Failures were highly concentrated late in the run:
+segment04 produced only nine remote successes against 45 individual 429 attempts, while segment06
+produced 30 remote successes against 84 individual 429 attempts.
+
+The 8-second global request interval did not resolve the late 429 clusters. This supports a
+provider capacity or rate-window failure at the frozen OpenRouter Inceptron route, amplified by
+eight synchronized distributed ranks and up to four physical attempts per logical judgment. It
+does not indicate an OOM, checkpoint, local GPU, or exhausted-budget failure.
+
+The next execution boundary is therefore:
+
+1. evaluate the completed GPT-4o selected `checkpoint-1000` on PathMMU test999, PathVQA yes/no and
+   OmniMedVQA without waiting for Kimi;
+2. keep Kimi `checkpoint-1100` unevaluated unless it is separately authorized as an explicitly
+   incomplete diagnostic;
+3. qualify the exact intended Judge model through AIGCBest with a fresh multi-request paid smoke
+   before freezing a new provider, retry, identity, data-handling and budget contract.
+
+At 2026-08-05 20:32 CST, the GPT-4o-only preflight verified source hashes, selection provenance and
+checkpoint integrity, then correctly refused to launch because GPUs 0-7 were occupied by an
+independent AFI-VLA workload. No evaluation output directory or inference process was created.

@@ -18,6 +18,25 @@ KIMI_RUN="$INSTALL/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260
 GPT_SELECTION="$GPT_RUN/validation_0385_epochs/selection.json"
 KIMI_SELECTION="$KIMI_RUN/validation_0385_epochs/selection.json"
 
+EVAL_ARMS="${PATHVLM_STAGE3_EVAL_ARMS:-gpt4o,kimi26}"
+RUN_GPT=0
+RUN_KIMI=0
+IFS=',' read -r -a REQUESTED_ARMS <<<"$EVAL_ARMS"
+for arm in "${REQUESTED_ARMS[@]}"; do
+  case "$arm" in
+    gpt4o)
+      (( RUN_GPT == 0 )) || { echo "Duplicate Stage3 evaluation arm: $arm" >&2; exit 2; }
+      RUN_GPT=1
+      ;;
+    kimi26)
+      (( RUN_KIMI == 0 )) || { echo "Duplicate Stage3 evaluation arm: $arm" >&2; exit 2; }
+      RUN_KIMI=1
+      ;;
+    *) echo "Unsupported Stage3 evaluation arm: $arm" >&2; exit 2 ;;
+  esac
+done
+(( RUN_GPT == 1 || RUN_KIMI == 1 )) || { echo "No Stage3 evaluation arm selected" >&2; exit 2; }
+
 PATHMMU_VALID="$INSTALL/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json"
 PATHMMU_TEST="$INSTALL/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json"
 PATHVQA="$EVAL/datasets/external_vqa_contract_v1_20260729/pathvqa_test_6719.json"
@@ -35,56 +54,94 @@ case "$RUN_ROOT" in
 esac
 
 for path in "$PYTHON" "$PATHMMU_RUNNER" "$EXTERNAL_RUNNER" "$SMOKE_VERIFY" \
-  "$FULL_VERIFY" "$SNAPSHOT_VERIFY" "$GPT_SELECTION" "$KIMI_SELECTION" \
+  "$FULL_VERIFY" "$SNAPSHOT_VERIFY" \
   "$PATHMMU_VALID" "$PATHMMU_TEST" "$PATHVQA" "$OMNI"; do
   [[ -e "$path" ]] || { echo "Required evaluation input is missing: $path" >&2; exit 2; }
 done
+(( RUN_GPT == 0 )) || [[ -e "$GPT_SELECTION" ]] || {
+  echo "Required GPT-4o selection is missing: $GPT_SELECTION" >&2; exit 2;
+}
+(( RUN_KIMI == 0 )) || [[ -e "$KIMI_SELECTION" ]] || {
+  echo "Required Kimi selection is missing: $KIMI_SELECTION" >&2; exit 2;
+}
 [[ "$(sha256sum "$PATHMMU_VALID" | awk '{print $1}')" == "$PATHMMU_VALID_SHA" ]] || exit 2
 [[ "$(sha256sum "$PATHMMU_TEST" | awk '{print $1}')" == "$PATHMMU_TEST_SHA" ]] || exit 2
 [[ "$(sha256sum "$PATHVQA" | awk '{print $1}')" == "$PATHVQA_SHA" ]] || exit 2
 [[ "$(sha256sum "$OMNI" | awk '{print $1}')" == "$OMNI_SHA" ]] || exit 2
 
-readarray -t SELECTION_VALUES < <(
-  "$PYTHON" - "$GPT_SELECTION" "$KIMI_SELECTION" "$GPT_RUN" "$KIMI_RUN" <<'PY'
+resolve_selection() {
+  local selection_name="$1" selection_path="$2" run_path="$3"
+  "$PYTHON" - "$selection_name" "$selection_path" "$run_path" <<'PY'
 import json
 import sys
 from pathlib import Path
 
-for selection_name, path_text, run_text in (
-    ("gpt4o", sys.argv[1], sys.argv[3]),
-    ("kimi26", sys.argv[2], sys.argv[4]),
-):
-    path = Path(path_text)
-    run = Path(run_text).resolve()
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if value.get("status") != "completed" or value.get("selection_split") != "pathmmu_validation_0385":
-        raise SystemExit(f"{selection_name} selection contract is incomplete")
-    if value.get("test_accessed") is not False or int(value.get("selected_step", -1)) not in {500, 1000, 1500}:
-        raise SystemExit(f"{selection_name} selection provenance is invalid")
-    model = Path(value["selected_model_path"]).resolve()
-    expected = run / "epoch_model_snapshots" / f"checkpoint-{value['selected_step']}"
-    if model != expected or not model.is_dir():
-        raise SystemExit(f"{selection_name} selected model path mismatch")
-    print(model)
-    print(int(value["selected_step"]))
+selection_name = sys.argv[1]
+path = Path(sys.argv[2])
+run = Path(sys.argv[3]).resolve()
+value = json.loads(path.read_text(encoding="utf-8"))
+if value.get("status") != "completed" or value.get("selection_split") != "pathmmu_validation_0385":
+    raise SystemExit(f"{selection_name} selection contract is incomplete")
+if value.get("test_accessed") is not False or int(value.get("selected_step", -1)) not in {500, 1000, 1500}:
+    raise SystemExit(f"{selection_name} selection provenance is invalid")
+model = Path(value["selected_model_path"]).resolve()
+expected = run / "epoch_model_snapshots" / f"checkpoint-{value['selected_step']}"
+if model != expected or not model.is_dir():
+    raise SystemExit(f"{selection_name} selected model path mismatch")
+print(model)
+print(int(value["selected_step"]))
 PY
-)
-[[ "${#SELECTION_VALUES[@]}" -eq 4 ]] || exit 2
-GPT_MODEL="${SELECTION_VALUES[0]}"
-GPT_STEP="${SELECTION_VALUES[1]}"
-KIMI_MODEL="${SELECTION_VALUES[2]}"
-KIMI_STEP="${SELECTION_VALUES[3]}"
+}
 
-"$PYTHON" "$SNAPSHOT_VERIFY" "$GPT_MODEL" \
-  --expected-step "$GPT_STEP" --expected-epoch "$((GPT_STEP / 500))" >/dev/null
-"$PYTHON" "$SNAPSHOT_VERIFY" "$KIMI_MODEL" \
-  --expected-step "$KIMI_STEP" --expected-epoch "$((KIMI_STEP / 500))" >/dev/null
+GPT_MODEL="" GPT_STEP="" KIMI_MODEL="" KIMI_STEP=""
+if (( RUN_GPT == 1 )); then
+  mapfile -t SELECTION_VALUES < <(resolve_selection gpt4o "$GPT_SELECTION" "$GPT_RUN")
+  [[ "${#SELECTION_VALUES[@]}" -eq 2 ]] || exit 2
+  GPT_MODEL="${SELECTION_VALUES[0]}"
+  GPT_STEP="${SELECTION_VALUES[1]}"
+  "$PYTHON" "$SNAPSHOT_VERIFY" "$GPT_MODEL" \
+    --expected-step "$GPT_STEP" --expected-epoch "$((GPT_STEP / 500))" >/dev/null
+fi
+if (( RUN_KIMI == 1 )); then
+  mapfile -t SELECTION_VALUES < <(resolve_selection kimi26 "$KIMI_SELECTION" "$KIMI_RUN")
+  [[ "${#SELECTION_VALUES[@]}" -eq 2 ]] || exit 2
+  KIMI_MODEL="${SELECTION_VALUES[0]}"
+  KIMI_STEP="${SELECTION_VALUES[1]}"
+  "$PYTHON" "$SNAPSHOT_VERIFY" "$KIMI_MODEL" \
+    --expected-step "$KIMI_STEP" --expected-epoch "$((KIMI_STEP / 500))" >/dev/null
+fi
 
-mapfile -t GPU_MEMORY < <(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits)
-[[ "${#GPU_MEMORY[@]}" -eq 8 ]] || exit 2
-for index in "${!GPU_MEMORY[@]}"; do
-  used="${GPU_MEMORY[$index]//[[:space:]]/}"
-  (( used <= 10 )) || { echo "GPU $index is not idle: ${used} MiB" >&2; exit 2; }
+parse_gpu_triplet() {
+  local name="$1" value="$2"
+  local -a ids
+  IFS=',' read -r -a ids <<<"$value"
+  [[ "${#ids[@]}" -eq 3 ]] || { echo "$name must contain exactly three GPU IDs" >&2; exit 2; }
+  for id in "${ids[@]}"; do
+    [[ "$id" =~ ^[0-7]$ ]] || { echo "Invalid GPU ID in $name: $id" >&2; exit 2; }
+  done
+  [[ "${ids[0]}" != "${ids[1]}" && "${ids[0]}" != "${ids[2]}" && "${ids[1]}" != "${ids[2]}" ]] || {
+    echo "$name contains duplicate GPU IDs" >&2; exit 2;
+  }
+  printf '%s\n' "${ids[@]}"
+}
+
+GPT_GPUS=() KIMI_GPUS=() REQUIRED_GPUS=()
+if (( RUN_GPT == 1 )); then
+  mapfile -t GPT_GPUS < <(parse_gpu_triplet PATHVLM_STAGE3_GPT4O_EVAL_GPUS "${PATHVLM_STAGE3_GPT4O_EVAL_GPUS:-0,1,2}")
+  [[ "${#GPT_GPUS[@]}" -eq 3 ]] || exit 2
+  REQUIRED_GPUS+=("${GPT_GPUS[@]}")
+fi
+if (( RUN_KIMI == 1 )); then
+  mapfile -t KIMI_GPUS < <(parse_gpu_triplet PATHVLM_STAGE3_KIMI_EVAL_GPUS "${PATHVLM_STAGE3_KIMI_EVAL_GPUS:-3,4,5}")
+  [[ "${#KIMI_GPUS[@]}" -eq 3 ]] || exit 2
+  REQUIRED_GPUS+=("${KIMI_GPUS[@]}")
+fi
+declare -A SEEN_GPUS=()
+for gpu in "${REQUIRED_GPUS[@]}"; do
+  [[ -z "${SEEN_GPUS[$gpu]:-}" ]] || { echo "GPU $gpu is assigned to multiple evaluations" >&2; exit 2; }
+  SEEN_GPUS[$gpu]=1
+  used="$(nvidia-smi --id="$gpu" --query-gpu=memory.used --format=csv,noheader,nounits | tr -d '[:space:]')"
+  (( used <= 10 )) || { echo "GPU $gpu is not idle: ${used} MiB" >&2; exit 2; }
 done
 
 mkdir -p "$RUN_ROOT/logs"
@@ -113,7 +170,7 @@ with path.open("a", encoding="utf-8") as handle:
 PY
 }
 
-"$PYTHON" - "$CONTRACT" "$GPT_MODEL" "$GPT_STEP" "$KIMI_MODEL" "$KIMI_STEP" \
+"$PYTHON" - "$CONTRACT" "$EVAL_ARMS" "$GPT_MODEL" "$GPT_STEP" "$KIMI_MODEL" "$KIMI_STEP" \
   "$GIT_COMMIT" <<'PY'
 import json
 import os
@@ -121,13 +178,16 @@ import sys
 from pathlib import Path
 
 path = Path(sys.argv[1])
+arms = sys.argv[2].split(",")
+models = {}
+if "gpt4o" in arms:
+    models["stage3_gpt4o"] = {"path": sys.argv[3], "selected_step": int(sys.argv[4])}
+if "kimi26" in arms:
+    models["stage3_kimi26"] = {"path": sys.argv[5], "selected_step": int(sys.argv[6])}
 value = {
     "schema_version": 1,
     "status": "frozen",
-    "models": {
-        "stage3_gpt4o": {"path": sys.argv[2], "selected_step": int(sys.argv[3])},
-        "stage3_kimi26": {"path": sys.argv[4], "selected_step": int(sys.argv[5])},
-    },
+    "models": models,
     "tasks": {
         "pathmmu": {"count": 999, "split_role": "test999_development"},
         "pathvqa_yes_no": {"count": 3362, "split_role": "external_test"},
@@ -136,7 +196,7 @@ value = {
     "pathvqa_free_form_status": "postponed_by_user_and_excluded_from_this_run",
     "smoke_count_per_model_task": 16,
     "accuracy_used_as_smoke_gate": False,
-    "repository_commit": sys.argv[6],
+    "repository_commit": sys.argv[7],
 }
 if path.exists():
     prior = json.loads(path.read_text(encoding="utf-8"))
@@ -252,16 +312,23 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 WANDB_MODE=disabled
 export TOKENIZERS_PARALLELISM=false PYTHONPATH="$REPO/scripts"
 unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY all_proxy
 
-SPECS=(
-  "stage3_gpt4o|$GPT_MODEL|pathmmu|$PATHMMU_VALID|0|$PATHMMU_VALID_SHA"
-  "stage3_gpt4o|$GPT_MODEL|pathvqa|$PATHVQA|1|$PATHVQA_SHA"
-  "stage3_gpt4o|$GPT_MODEL|omnimedvqa|$OMNI|2|$OMNI_SHA"
-  "stage3_kimi26|$KIMI_MODEL|pathmmu|$PATHMMU_VALID|3|$PATHMMU_VALID_SHA"
-  "stage3_kimi26|$KIMI_MODEL|pathvqa|$PATHVQA|4|$PATHVQA_SHA"
-  "stage3_kimi26|$KIMI_MODEL|omnimedvqa|$OMNI|5|$OMNI_SHA"
-)
+SPECS=()
+if (( RUN_GPT == 1 )); then
+  SPECS+=(
+    "stage3_gpt4o|$GPT_MODEL|pathmmu|$PATHMMU_VALID|${GPT_GPUS[0]}|$PATHMMU_VALID_SHA"
+    "stage3_gpt4o|$GPT_MODEL|pathvqa|$PATHVQA|${GPT_GPUS[1]}|$PATHVQA_SHA"
+    "stage3_gpt4o|$GPT_MODEL|omnimedvqa|$OMNI|${GPT_GPUS[2]}|$OMNI_SHA"
+  )
+fi
+if (( RUN_KIMI == 1 )); then
+  SPECS+=(
+    "stage3_kimi26|$KIMI_MODEL|pathmmu|$PATHMMU_VALID|${KIMI_GPUS[0]}|$PATHMMU_VALID_SHA"
+    "stage3_kimi26|$KIMI_MODEL|pathvqa|$PATHVQA|${KIMI_GPUS[1]}|$PATHVQA_SHA"
+    "stage3_kimi26|$KIMI_MODEL|omnimedvqa|$OMNI|${KIMI_GPUS[2]}|$OMNI_SHA"
+  )
+fi
 
-record_event "smoke_phase_started" "six closed-question Stage3 model-task checks"
+record_event "smoke_phase_started" "${#SPECS[@]} closed-question Stage3 model-task checks: $EVAL_ARMS"
 pids=()
 for spec in "${SPECS[@]}"; do
   IFS='|' read -r label model task data gpu data_sha <<<"$spec"
@@ -277,15 +344,18 @@ for spec in "${SPECS[@]}"; do
 done
 record_event "smoke_phase_passed" "accuracy was not a gate"
 
-FULL_SPECS=(
-  "stage3_gpt4o|$GPT_MODEL|pathmmu|$PATHMMU_TEST|0|$PATHMMU_TEST_SHA"
-  "stage3_gpt4o|$GPT_MODEL|pathvqa|$PATHVQA|1|$PATHVQA_SHA"
-  "stage3_gpt4o|$GPT_MODEL|omnimedvqa|$OMNI|2|$OMNI_SHA"
-  "stage3_kimi26|$KIMI_MODEL|pathmmu|$PATHMMU_TEST|3|$PATHMMU_TEST_SHA"
-  "stage3_kimi26|$KIMI_MODEL|pathvqa|$PATHVQA|4|$PATHVQA_SHA"
-  "stage3_kimi26|$KIMI_MODEL|omnimedvqa|$OMNI|5|$OMNI_SHA"
-)
-record_event "full_phase_started" "six full closed-question Stage3 model-task evaluations"
+FULL_SPECS=()
+for spec in "${SPECS[@]}"; do
+  IFS='|' read -r label model task _ gpu _ <<<"$spec"
+  if [[ "$task" == "pathmmu" ]]; then
+    FULL_SPECS+=("$label|$model|$task|$PATHMMU_TEST|$gpu|$PATHMMU_TEST_SHA")
+  elif [[ "$task" == "pathvqa" ]]; then
+    FULL_SPECS+=("$label|$model|$task|$PATHVQA|$gpu|$PATHVQA_SHA")
+  else
+    FULL_SPECS+=("$label|$model|$task|$OMNI|$gpu|$OMNI_SHA")
+  fi
+done
+record_event "full_phase_started" "${#FULL_SPECS[@]} full closed-question Stage3 model-task evaluations: $EVAL_ARMS"
 pids=()
 for spec in "${FULL_SPECS[@]}"; do
   IFS='|' read -r label model task data gpu data_sha <<<"$spec"
@@ -299,8 +369,8 @@ for spec in "${FULL_SPECS[@]}"; do
   IFS='|' read -r label model task data gpu data_sha <<<"$spec"
   verify_full "$label" "$model" "$task" "$data_sha"
 done
-record_event "full_phase_verified" "all six count/hash/source gates passed"
-"$PYTHON" - "$RUN_ROOT/completed.json" "$EVENTS" <<'PY'
+record_event "full_phase_verified" "all ${#FULL_SPECS[@]} count/hash/source gates passed: $EVAL_ARMS"
+"$PYTHON" - "$RUN_ROOT/completed.json" "$EVENTS" "$EVAL_ARMS" <<'PY'
 import datetime
 import hashlib
 import json
@@ -311,7 +381,9 @@ from pathlib import Path
 path = Path(sys.argv[1])
 root = path.parent
 artifacts = []
-for label in ("stage3_gpt4o", "stage3_kimi26"):
+labels = {"gpt4o": "stage3_gpt4o", "kimi26": "stage3_kimi26"}
+for arm in sys.argv[3].split(","):
+    label = labels[arm]
     for suffix in ("pathmmu_test999", "pathvqa_yesno3362", "omnimedvqa_full8518"):
         value = root / label / suffix / "full_integrity_verified.json"
         if not value.is_file():

@@ -1,6 +1,6 @@
 # Current evaluation results: closed-question reporting view
 
-Recorded at: `2026-08-04 00:32:26 CST`
+Updated at: `2026-08-05 20:32:25 CST`
 
 ## Reporting scope
 
@@ -23,7 +23,7 @@ This snapshot follows the user's current reporting decision:
 | SFT4000 continuation control, epoch 2 | 595/999 (59.56%) | 868/3362 (25.82%) | 4030/8518 (47.31%) | Complete; OmniMedVQA had 6645 generation-cap hits |
 | Stage2 Outcome-GRPO, epoch 2 | 609/999 (60.96%) | 1234/3362 (36.70%) | 4029/8518 (47.30%) | Complete; OmniMedVQA had 6146 generation-cap hits |
 | Stage3 GPT-4o Judge, selected epoch 2 | Pending | Pending | Pending | Training/validation complete; validation385 was 247/385 (64.16%) |
-| Stage3 Kimi 2.6 Judge | Pending | Pending | Pending | Training active; 168/1500 at this snapshot |
+| Stage3 Kimi 2.6 Judge | Pending | Pending | Pending | Training incomplete: step 1105 reached; latest complete checkpoint 1100; stopped after frozen-route HTTP 429 errors exhausted the 36/36 fallback allowance |
 
 The large generation-cap counts for the three Qwen-derived checkpoints are retained as result-
 quality caveats. They are not corrected after seeing test outputs.
@@ -82,7 +82,10 @@ not be a valid comparison.
   predeclared compatibility gate failed before the corresponding full evaluation.
 - Grok and Doubao are deliberate partial runs. They must remain partial unless the user explicitly
   reauthorizes their cost and contemporary-model status.
-- GPT-4o Stage3 and Kimi Stage3 still require their selected-checkpoint evaluations.
+- GPT-4o Stage3 training and validation selection are complete; its selected checkpoint evaluation
+  is prepared independently and awaits three idle GPUs.
+- Kimi Stage3 is frozen incomplete at checkpoint 1100. It has no final selected checkpoint and is
+  not silently promoted to a completed comparison arm.
 - PathVQA free-form evaluation and semantic Judge work are deliberately postponed and excluded
   from this document's statistics.
 - The five-model perturbation-fidelity visualization experiment is frozen but has not yet run.
@@ -98,4 +101,3 @@ not be a valid comparison.
   `/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/hosted_baseline_full_20260801`
 - Llama/DeepSeek full runs:
   `/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/local_gpu_baselines_20260803`
-
