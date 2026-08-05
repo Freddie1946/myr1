@@ -8,7 +8,7 @@ INSTALL_ROOT="$WORKSPACE_ROOT/pathvlm_r1_v1_a100"
 PYTHON="$INSTALL_ROOT/envs/grpo/bin/python"
 LAUNCHER="$REPO_ROOT/scripts/launch_stage3_kimi26_formal.sh"
 RECOVERY="$REPO_ROOT/scripts/stage3_checkpoint_recovery.py"
-MAX_UNIQUE_REQUESTS=12976
+MAX_UNIQUE_REQUESTS="${PATHVLM_STAGE3_MAX_UNIQUE_REQUESTS:-12976}"
 RESERVE_USD=0.05
 
 : "${PATHVLM_STAGE3_RUN_DIR:?Set a dedicated Stage3 run directory}"
@@ -36,8 +36,12 @@ if [[ "$SAVE_STEPS" != "100" ]]; then
   echo "This recovery contract requires PATHVLM_STAGE3_SAVE_STEPS=100" >&2
   exit 2
 fi
-if [[ ! "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] || (( MAX_RECOVERIES > 3 )); then
-  echo "PATHVLM_STAGE3_MAX_RECOVERIES must be an integer from 0 through 3" >&2
+if [[ ! "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] || (( MAX_RECOVERIES > 4 )); then
+  echo "PATHVLM_STAGE3_MAX_RECOVERIES must be an integer from 0 through 4" >&2
+  exit 2
+fi
+if [[ ! "$MAX_UNIQUE_REQUESTS" =~ ^[1-9][0-9]*$ ]] || (( MAX_UNIQUE_REQUESTS < 12976 )); then
+  echo "PATHVLM_STAGE3_MAX_UNIQUE_REQUESTS must be at least 12976" >&2
   exit 2
 fi
 if [[ ! "$START_LAUNCH_INDEX" =~ ^[0-9]+$ ]] || (( START_LAUNCH_INDEX > MAX_RECOVERIES )); then

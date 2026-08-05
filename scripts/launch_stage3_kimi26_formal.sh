@@ -22,15 +22,36 @@ SEGMENT_ID="${PATHVLM_STAGE3_SEGMENT_ID:-segment00}"
 RESUME_FROM="${PATHVLM_STAGE3_RESUME_FROM_CHECKPOINT:-}"
 REWARD_LOG_DIR="$RUN_DIR/reward_audit/$SEGMENT_ID"
 TRAIN_LOG="$RUN_DIR/train_${SEGMENT_ID}.log"
-# The original 12,361 cap remains recorded in the paid smoke marker. Two failed
-# segments consumed 615 requests outside the retained checkpoint-200 trajectory;
-# the user approved adding exactly those attempts for recovery on 2026-08-04.
-MAX_UNIQUE_REQUESTS=12976
+# The paid smoke marker retains the original contract. Runtime caps may only be
+# raised through an audited on-disk ledger amendment before this launcher runs.
+MAX_UNIQUE_REQUESTS="${PATHVLM_STAGE3_MAX_UNIQUE_REQUESTS:-12976}"
+FALLBACK_TOTAL_LIMIT="${PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT:-24}"
+FALLBACK_CONSECUTIVE_LIMIT="${PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT:-4}"
+ALLOW_SHARED_GPUS="${PATHVLM_STAGE3_ALLOW_SHARED_GPUS:-false}"
+SHARED_GPU_MIN_FREE_MIB="${PATHVLM_STAGE3_SHARED_GPU_MIN_FREE_MIB:-30720}"
 
 : "${PATHVLM_STAGE3_FORMAL_BUDGET_USD:?Set the separately approved Kimi formal-arm budget}"
 
 if [[ ! "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
   echo "PATHVLM_STAGE3_FORMAL_BUDGET_USD must be a positive number" >&2
+  exit 2
+fi
+if [[ ! "$MAX_UNIQUE_REQUESTS" =~ ^[1-9][0-9]*$ ]] || (( MAX_UNIQUE_REQUESTS < 12976 )); then
+  echo "PATHVLM_STAGE3_MAX_UNIQUE_REQUESTS must be at least 12976" >&2
+  exit 2
+fi
+if [[ ! "$FALLBACK_TOTAL_LIMIT" =~ ^[1-9][0-9]*$ ]] || \
+   [[ ! "$FALLBACK_CONSECUTIVE_LIMIT" =~ ^[1-9][0-9]*$ ]] || \
+   (( FALLBACK_CONSECUTIVE_LIMIT > FALLBACK_TOTAL_LIMIT )); then
+  echo "Invalid Stage3 fallback limits" >&2
+  exit 2
+fi
+if [[ "$ALLOW_SHARED_GPUS" != "true" && "$ALLOW_SHARED_GPUS" != "false" ]]; then
+  echo "PATHVLM_STAGE3_ALLOW_SHARED_GPUS must be true or false" >&2
+  exit 2
+fi
+if [[ ! "$SHARED_GPU_MIN_FREE_MIB" =~ ^[1-9][0-9]*$ ]]; then
+  echo "PATHVLM_STAGE3_SHARED_GPU_MIN_FREE_MIB must be a positive integer" >&2
   exit 2
 fi
 if [[ ! "$SAVE_STEPS" =~ ^[1-9][0-9]*$ ]] || (( 500 % SAVE_STEPS != 0 )); then
@@ -84,7 +105,8 @@ else
 fi
 
 "$PYTHON" - "$DATASET" "$IMAGE_HASH_MANIFEST" "$SMOKE_MARKER" \
-  "$MASTER_PORT" "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" "$MAX_UNIQUE_REQUESTS" <<'PY'
+  "$MASTER_PORT" "$PATHVLM_STAGE3_FORMAL_BUDGET_USD" "$MAX_UNIQUE_REQUESTS" \
+  "$JUDGE_ROOT" "$FALLBACK_TOTAL_LIMIT" "$FALLBACK_CONSECUTIVE_LIMIT" <<'PY'
 import hashlib
 import json
 import socket
@@ -97,10 +119,13 @@ smoke_marker_path = Path(sys.argv[3])
 port = int(sys.argv[4])
 budget_limit = float(sys.argv[5])
 max_unique_requests = int(sys.argv[6])
+judge_root = Path(sys.argv[7])
+fallback_total_limit = int(sys.argv[8])
+fallback_consecutive_limit = int(sys.argv[9])
 
-if max_unique_requests != 12976:
+if max_unique_requests < 12976:
     raise SystemExit(
-        f"Kimi recovery request cap mismatch: {max_unique_requests} != 12976"
+        f"Kimi recovery request cap is below the approved prior cap: {max_unique_requests}"
     )
 
 yaml_text = dataset_yaml.read_text(encoding="utf-8")
@@ -149,7 +174,7 @@ expected_marker = {
     "rule_fallback_total_limit": 24,
     "rule_fallback_consecutive_limit": 4,
     "rule_fallback_max_reward": 0.5,
-    "budget_limit_usd": budget_limit,
+    "budget_limit_usd": 26.71782984,
     "max_unique_requests": 12361,
     "maximum_physical_attempts_per_logical_judgment": 4,
     "unresolved_reservations": 0,
@@ -162,6 +187,41 @@ mismatch = {
 if mismatch:
     raise SystemExit(f"Kimi formal smoke marker mismatch: {mismatch}")
 
+budget_ledger_path = judge_root / "budget_ledger.json"
+if budget_ledger_path.is_file():
+    ledger = json.loads(budget_ledger_path.read_text(encoding="utf-8"))
+    runtime_contract = {
+        "limit_usd": budget_limit,
+        "reserve_usd": 0.05,
+        "max_unique_requests": max_unique_requests,
+    }
+    ledger_mismatch = {
+        key: {"expected": expected, "actual": ledger.get(key)}
+        for key, expected in runtime_contract.items()
+        if ledger.get(key) != expected
+    }
+    if ledger_mismatch:
+        raise SystemExit(f"Kimi runtime budget ledger mismatch: {ledger_mismatch}")
+    if ledger.get("reservations"):
+        raise SystemExit("Kimi runtime budget ledger has unresolved reservations")
+    if float(ledger.get("committed_spend_usd", -1)) > budget_limit:
+        raise SystemExit("Kimi runtime committed spend exceeds its budget limit")
+
+fallback_ledger_path = judge_root / "rule_fallback_ledger.json"
+if fallback_ledger_path.is_file():
+    fallback = json.loads(fallback_ledger_path.read_text(encoding="utf-8"))
+    fallback_contract = {
+        "total_limit": fallback_total_limit,
+        "consecutive_limit": fallback_consecutive_limit,
+    }
+    fallback_mismatch = {
+        key: {"expected": expected, "actual": fallback.get(key)}
+        for key, expected in fallback_contract.items()
+        if fallback.get(key) != expected
+    }
+    if fallback_mismatch:
+        raise SystemExit(f"Kimi fallback ledger mismatch: {fallback_mismatch}")
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     try:
         sock.bind(("127.0.0.1", port))
@@ -171,15 +231,22 @@ print("Full Kimi Stage3 static preflight passed")
 PY
 
 mapfile -t GPU_MEMORY < <(
-  nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits
+  nvidia-smi --query-gpu=memory.used,memory.free --format=csv,noheader,nounits
 )
 if [[ "${#GPU_MEMORY[@]}" -ne 8 ]]; then
   echo "Exactly eight GPUs are required; found ${#GPU_MEMORY[@]}" >&2
   exit 2
 fi
 for index in "${!GPU_MEMORY[@]}"; do
-  used="${GPU_MEMORY[$index]//[[:space:]]/}"
-  if (( used > 10 )); then
+  IFS=',' read -r used free <<<"${GPU_MEMORY[$index]}"
+  used="${used//[[:space:]]/}"
+  free="${free//[[:space:]]/}"
+  if [[ "$ALLOW_SHARED_GPUS" == "true" ]]; then
+    if (( free < SHARED_GPU_MIN_FREE_MIB )); then
+      echo "GPU $index has only ${free} MiB free; shared launch requires ${SHARED_GPU_MIN_FREE_MIB} MiB" >&2
+      exit 2
+    fi
+  elif (( used > 10 )); then
     echo "GPU $index is not idle: ${used} MiB used" >&2
     exit 2
   fi
@@ -238,8 +305,8 @@ export PATHVLM_OPENROUTER_LIMIT_USD="$PATHVLM_STAGE3_FORMAL_BUDGET_USD"
 export PATHVLM_OPENROUTER_RESERVE_USD="0.05"
 export PATHVLM_OPENROUTER_MAX_UNIQUE_REQUESTS="$MAX_UNIQUE_REQUESTS"
 export PATHVLM_STAGE3_RULE_FALLBACK_ENABLED="true"
-export PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT="24"
-export PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT="4"
+export PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT="$FALLBACK_TOTAL_LIMIT"
+export PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT="$FALLBACK_CONSECUTIVE_LIMIT"
 export PATHVLM_TRAIN_STATE_AUDIT_NAME="kimi26_full3epoch_train_state_audit.json"
 export PATHVLM_EPOCH_SNAPSHOT_STEPS="500,1000,1500"
 export PATHVLM_EPOCH_SNAPSHOT_DIR="$EPOCH_SNAPSHOT_DIR"

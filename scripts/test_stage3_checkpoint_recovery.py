@@ -11,6 +11,8 @@ from pathlib import Path
 from stage3_checkpoint_recovery import (
     classify_training_failure,
     latest_complete_checkpoint,
+    raise_budget_and_request_caps,
+    raise_fallback_total_cap,
     raise_request_cap,
     settle_unresolved,
     validate_complete_checkpoint,
@@ -150,6 +152,79 @@ class RequestCapAmendmentTests(unittest.TestCase):
                     new_max_unique_requests=15,
                     reason="must fail",
                 )
+
+    def test_budget_and_request_caps_raise_atomically(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "ledger.json"
+            old = BudgetLedger(
+                path, limit_usd=1.0, reserve_usd=0.05, max_unique_requests=10
+            )
+            old.reserve("one", {})
+            old.commit("one", 0.01, {"status": "completed"})
+            result = raise_budget_and_request_caps(
+                path,
+                old_limit_usd=1.0,
+                new_limit_usd=2.0,
+                reserve_usd=0.05,
+                old_max_unique_requests=10,
+                new_max_unique_requests=20,
+                reason="approved continuation",
+            )
+            self.assertEqual(result["status"], "budget_and_request_caps_raised")
+            amended = BudgetLedger(
+                path, limit_usd=2.0, reserve_usd=0.05, max_unique_requests=20
+            ).snapshot()
+            self.assertEqual(amended["completed_unique_requests"], 1)
+            self.assertEqual(
+                [row["field"] for row in amended["contract_amendments"]],
+                ["limit_usd", "max_unique_requests"],
+            )
+
+    def test_budget_contract_amendment_rejects_unresolved_reservations(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "ledger.json"
+            old = BudgetLedger(
+                path, limit_usd=1.0, reserve_usd=0.05, max_unique_requests=10
+            )
+            old.reserve("one", {})
+            with self.assertRaisesRegex(ValueError, "reservations are unresolved"):
+                raise_budget_and_request_caps(
+                    path,
+                    old_limit_usd=1.0,
+                    new_limit_usd=2.0,
+                    reserve_usd=0.05,
+                    old_max_unique_requests=10,
+                    new_max_unique_requests=20,
+                    reason="must fail",
+                )
+
+    def test_fallback_total_cap_raise_preserves_history(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "fallback.json"
+            path.write_text(
+                json.dumps({
+                    "schema_version": 1,
+                    "total_limit": 24,
+                    "consecutive_limit": 4,
+                    "total_used": 18,
+                    "consecutive_used": 0,
+                    "events": [{"event": "fallback"}],
+                    "updated_at": "before",
+                }),
+                encoding="utf-8",
+            )
+            result = raise_fallback_total_cap(
+                path,
+                old_total_limit=24,
+                new_total_limit=36,
+                consecutive_limit=4,
+                reason="approved continuation",
+            )
+            self.assertEqual(result["status"], "fallback_total_cap_raised")
+            amended = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(amended["total_limit"], 36)
+            self.assertEqual(amended["total_used"], 18)
+            self.assertEqual(len(amended["events"]), 1)
 
 
 class FailureClassificationTests(unittest.TestCase):

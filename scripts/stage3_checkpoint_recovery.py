@@ -365,6 +365,156 @@ def raise_request_cap(
     }
 
 
+def raise_budget_and_request_caps(
+    ledger_path: Path,
+    *,
+    old_limit_usd: float,
+    new_limit_usd: float,
+    reserve_usd: float,
+    old_max_unique_requests: int,
+    new_max_unique_requests: int,
+    reason: str,
+) -> dict[str, Any]:
+    """Atomically raise both settled budget-ledger caps with audit amendments."""
+
+    if new_limit_usd <= old_limit_usd:
+        raise ValueError("new budget cap must be greater than the old budget cap")
+    if new_max_unique_requests <= old_max_unique_requests:
+        raise ValueError("new request cap must be greater than the old request cap")
+    if not reason.strip():
+        raise ValueError("contract-cap amendment reason must not be empty")
+    path = ledger_path.resolve()
+    if not path.is_file():
+        raise ValueError(f"budget ledger does not exist: {path}")
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        value = json.loads(path.read_text(encoding="utf-8"))
+        expected = {
+            "limit_usd": float(old_limit_usd),
+            "reserve_usd": float(reserve_usd),
+            "max_unique_requests": int(old_max_unique_requests),
+        }
+        mismatch = {
+            key: {"expected": expected_value, "actual": value.get(key)}
+            for key, expected_value in expected.items()
+            if value.get(key) != expected_value
+        }
+        if mismatch:
+            raise ValueError(f"budget ledger pre-amendment contract mismatch: {mismatch}")
+        if value.get("reservations"):
+            raise ValueError("cannot amend contract caps while reservations are unresolved")
+        completed = int(value.get("completed_unique_requests", -1))
+        committed = float(value.get("committed_spend_usd", -1))
+        if completed < 0 or completed > old_max_unique_requests:
+            raise ValueError("budget ledger completed-request count is invalid")
+        if committed < 0 or committed > old_limit_usd + 1e-12:
+            raise ValueError("budget ledger committed spend is invalid")
+        if new_max_unique_requests < completed:
+            raise ValueError("new request cap is below the completed-request count")
+        if new_limit_usd < committed:
+            raise ValueError("new budget cap is below committed spend")
+        timestamp = now_iso()
+        amendments = [
+            {
+                "timestamp": timestamp,
+                "field": "limit_usd",
+                "old_value": float(old_limit_usd),
+                "new_value": float(new_limit_usd),
+                "reason": reason.strip(),
+            },
+            {
+                "timestamp": timestamp,
+                "field": "max_unique_requests",
+                "old_value": int(old_max_unique_requests),
+                "new_value": int(new_max_unique_requests),
+                "reason": reason.strip(),
+            },
+        ]
+        value.setdefault("contract_amendments", []).extend(amendments)
+        value["limit_usd"] = float(new_limit_usd)
+        value["max_unique_requests"] = int(new_max_unique_requests)
+        value["updated_at"] = timestamp
+        atomic_json(path, value)
+        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+    return {
+        "status": "budget_and_request_caps_raised",
+        "ledger": str(path),
+        "committed_spend_usd": committed,
+        "completed_unique_requests": completed,
+        "old_limit_usd": float(old_limit_usd),
+        "new_limit_usd": float(new_limit_usd),
+        "old_max_unique_requests": int(old_max_unique_requests),
+        "new_max_unique_requests": int(new_max_unique_requests),
+        "amendments": amendments,
+    }
+
+
+def raise_fallback_total_cap(
+    ledger_path: Path,
+    *,
+    old_total_limit: int,
+    new_total_limit: int,
+    consecutive_limit: int,
+    reason: str,
+) -> dict[str, Any]:
+    """Atomically raise the fallback total while preserving its consecutive gate."""
+
+    if new_total_limit <= old_total_limit:
+        raise ValueError("new fallback total cap must be greater than the old cap")
+    if consecutive_limit <= 0 or consecutive_limit > old_total_limit:
+        raise ValueError("invalid fallback consecutive limit")
+    if not reason.strip():
+        raise ValueError("fallback-cap amendment reason must not be empty")
+    path = ledger_path.resolve()
+    if not path.is_file():
+        raise ValueError(f"fallback ledger does not exist: {path}")
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        value = json.loads(path.read_text(encoding="utf-8"))
+        expected = {
+            "total_limit": int(old_total_limit),
+            "consecutive_limit": int(consecutive_limit),
+        }
+        mismatch = {
+            key: {"expected": expected_value, "actual": value.get(key)}
+            for key, expected_value in expected.items()
+            if value.get(key) != expected_value
+        }
+        if mismatch:
+            raise ValueError(f"fallback ledger pre-amendment contract mismatch: {mismatch}")
+        total_used = int(value.get("total_used", -1))
+        consecutive_used = int(value.get("consecutive_used", -1))
+        if total_used < 0 or total_used > old_total_limit:
+            raise ValueError("fallback total-used count is invalid")
+        if consecutive_used < 0 or consecutive_used > consecutive_limit:
+            raise ValueError("fallback consecutive-used count is invalid")
+        timestamp = now_iso()
+        amendment = {
+            "timestamp": timestamp,
+            "field": "total_limit",
+            "old_value": int(old_total_limit),
+            "new_value": int(new_total_limit),
+            "reason": reason.strip(),
+        }
+        value.setdefault("contract_amendments", []).append(amendment)
+        value["total_limit"] = int(new_total_limit)
+        value["updated_at"] = timestamp
+        atomic_json(path, value)
+        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+    return {
+        "status": "fallback_total_cap_raised",
+        "ledger": str(path),
+        "total_used": total_used,
+        "consecutive_used": consecutive_used,
+        "old_total_limit": int(old_total_limit),
+        "new_total_limit": int(new_total_limit),
+        "consecutive_limit": int(consecutive_limit),
+        "amendment": amendment,
+    }
+
+
 def append_event(path: Path, event: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     lock_path = path.with_suffix(path.suffix + ".lock")
@@ -403,6 +553,22 @@ def parse_args() -> argparse.Namespace:
     raise_cap.add_argument("--old-max-unique-requests", type=int, required=True)
     raise_cap.add_argument("--new-max-unique-requests", type=int, required=True)
     raise_cap.add_argument("--reason", required=True)
+
+    raise_contract = subparsers.add_parser("raise-contract-caps")
+    raise_contract.add_argument("--ledger", type=Path, required=True)
+    raise_contract.add_argument("--old-limit-usd", type=float, required=True)
+    raise_contract.add_argument("--new-limit-usd", type=float, required=True)
+    raise_contract.add_argument("--reserve-usd", type=float, default=0.05)
+    raise_contract.add_argument("--old-max-unique-requests", type=int, required=True)
+    raise_contract.add_argument("--new-max-unique-requests", type=int, required=True)
+    raise_contract.add_argument("--reason", required=True)
+
+    raise_fallback = subparsers.add_parser("raise-fallback-total-cap")
+    raise_fallback.add_argument("--ledger", type=Path, required=True)
+    raise_fallback.add_argument("--old-total-limit", type=int, required=True)
+    raise_fallback.add_argument("--new-total-limit", type=int, required=True)
+    raise_fallback.add_argument("--consecutive-limit", type=int, required=True)
+    raise_fallback.add_argument("--reason", required=True)
 
     classify = subparsers.add_parser("classify")
     classify.add_argument("--log", type=Path, required=True)
@@ -445,6 +611,34 @@ def main() -> None:
                     reserve_usd=args.reserve_usd,
                     old_max_unique_requests=args.old_max_unique_requests,
                     new_max_unique_requests=args.new_max_unique_requests,
+                    reason=args.reason,
+                ),
+                sort_keys=True,
+            )
+        )
+    elif args.command == "raise-contract-caps":
+        print(
+            json.dumps(
+                raise_budget_and_request_caps(
+                    args.ledger,
+                    old_limit_usd=args.old_limit_usd,
+                    new_limit_usd=args.new_limit_usd,
+                    reserve_usd=args.reserve_usd,
+                    old_max_unique_requests=args.old_max_unique_requests,
+                    new_max_unique_requests=args.new_max_unique_requests,
+                    reason=args.reason,
+                ),
+                sort_keys=True,
+            )
+        )
+    elif args.command == "raise-fallback-total-cap":
+        print(
+            json.dumps(
+                raise_fallback_total_cap(
+                    args.ledger,
+                    old_total_limit=args.old_total_limit,
+                    new_total_limit=args.new_total_limit,
+                    consecutive_limit=args.consecutive_limit,
                     reason=args.reason,
                 ),
                 sort_keys=True,
