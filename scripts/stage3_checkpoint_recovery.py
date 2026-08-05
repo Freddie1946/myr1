@@ -365,6 +365,70 @@ def raise_request_cap(
     }
 
 
+def raise_budget_cap(
+    ledger_path: Path,
+    *,
+    old_limit_usd: float,
+    new_limit_usd: float,
+    reserve_usd: float,
+    max_unique_requests: int,
+    reason: str,
+) -> dict[str, Any]:
+    """Atomically raise only a settled ledger's USD cap with an audit amendment."""
+
+    if new_limit_usd <= old_limit_usd:
+        raise ValueError("new budget cap must be greater than the old budget cap")
+    if not reason.strip():
+        raise ValueError("budget-cap amendment reason must not be empty")
+    path = ledger_path.resolve()
+    if not path.is_file():
+        raise ValueError(f"budget ledger does not exist: {path}")
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        value = json.loads(path.read_text(encoding="utf-8"))
+        expected = {
+            "limit_usd": float(old_limit_usd),
+            "reserve_usd": float(reserve_usd),
+            "max_unique_requests": int(max_unique_requests),
+        }
+        mismatch = {
+            key: {"expected": expected_value, "actual": value.get(key)}
+            for key, expected_value in expected.items()
+            if value.get(key) != expected_value
+        }
+        if mismatch:
+            raise ValueError(f"budget ledger pre-amendment contract mismatch: {mismatch}")
+        if value.get("reservations"):
+            raise ValueError("cannot amend budget cap while reservations are unresolved")
+        committed = float(value.get("committed_spend_usd", -1))
+        if committed < 0 or committed > old_limit_usd + 1e-12:
+            raise ValueError("budget ledger committed spend is invalid")
+        if new_limit_usd < committed:
+            raise ValueError("new budget cap is below committed spend")
+        amendment = {
+            "timestamp": now_iso(),
+            "field": "limit_usd",
+            "old_value": float(old_limit_usd),
+            "new_value": float(new_limit_usd),
+            "reason": reason.strip(),
+        }
+        value.setdefault("contract_amendments", []).append(amendment)
+        value["limit_usd"] = float(new_limit_usd)
+        value["updated_at"] = now_iso()
+        atomic_json(path, value)
+        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+    return {
+        "status": "budget_cap_raised",
+        "ledger": str(path),
+        "committed_spend_usd": committed,
+        "old_limit_usd": float(old_limit_usd),
+        "new_limit_usd": float(new_limit_usd),
+        "max_unique_requests": int(max_unique_requests),
+        "amendment": amendment,
+    }
+
+
 def raise_budget_and_request_caps(
     ledger_path: Path,
     *,
@@ -665,6 +729,14 @@ def parse_args() -> argparse.Namespace:
     raise_cap.add_argument("--new-max-unique-requests", type=int, required=True)
     raise_cap.add_argument("--reason", required=True)
 
+    raise_budget = subparsers.add_parser("raise-budget-cap")
+    raise_budget.add_argument("--ledger", type=Path, required=True)
+    raise_budget.add_argument("--old-limit-usd", type=float, required=True)
+    raise_budget.add_argument("--new-limit-usd", type=float, required=True)
+    raise_budget.add_argument("--reserve-usd", type=float, default=0.05)
+    raise_budget.add_argument("--max-unique-requests", type=int, required=True)
+    raise_budget.add_argument("--reason", required=True)
+
     raise_contract = subparsers.add_parser("raise-contract-caps")
     raise_contract.add_argument("--ledger", type=Path, required=True)
     raise_contract.add_argument("--old-limit-usd", type=float, required=True)
@@ -741,6 +813,20 @@ def main() -> None:
                     reserve_usd=args.reserve_usd,
                     old_max_unique_requests=args.old_max_unique_requests,
                     new_max_unique_requests=args.new_max_unique_requests,
+                    reason=args.reason,
+                ),
+                sort_keys=True,
+            )
+        )
+    elif args.command == "raise-budget-cap":
+        print(
+            json.dumps(
+                raise_budget_cap(
+                    args.ledger,
+                    old_limit_usd=args.old_limit_usd,
+                    new_limit_usd=args.new_limit_usd,
+                    reserve_usd=args.reserve_usd,
+                    max_unique_requests=args.max_unique_requests,
                     reason=args.reason,
                 ),
                 sort_keys=True,

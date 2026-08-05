@@ -11,6 +11,7 @@ from pathlib import Path
 from stage3_checkpoint_recovery import (
     classify_training_failure,
     latest_complete_checkpoint,
+    raise_budget_cap,
     raise_budget_and_request_caps,
     raise_fallback_consecutive_cap,
     raise_fallback_total_cap,
@@ -181,6 +182,29 @@ class RequestCapAmendmentTests(unittest.TestCase):
                 [row["field"] for row in amended["contract_amendments"]],
                 ["limit_usd", "max_unique_requests"],
             )
+
+    def test_budget_cap_raise_preserves_request_cap(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "ledger.json"
+            old = BudgetLedger(
+                path, limit_usd=1.0, reserve_usd=0.05, max_unique_requests=10
+            )
+            old.reserve("one", {})
+            old.commit("one", 0.01, {"status": "completed"})
+            result = raise_budget_cap(
+                path,
+                old_limit_usd=1.0,
+                new_limit_usd=2.0,
+                reserve_usd=0.05,
+                max_unique_requests=10,
+                reason="approved continuation",
+            )
+            self.assertEqual(result["status"], "budget_cap_raised")
+            amended = BudgetLedger(
+                path, limit_usd=2.0, reserve_usd=0.05, max_unique_requests=10
+            ).snapshot()
+            self.assertEqual(amended["max_unique_requests"], 10)
+            self.assertEqual(amended["contract_amendments"][-1]["field"], "limit_usd")
 
     def test_budget_contract_amendment_rejects_unresolved_reservations(self):
         with tempfile.TemporaryDirectory() as directory:
