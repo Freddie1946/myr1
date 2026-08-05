@@ -89,7 +89,11 @@ def parse_case(path: Path) -> dict[str, str]:
 
 
 def make_payload(
-    case: dict[str, str], image_data_url: str, *, model: str = MODEL
+    case: dict[str, str],
+    image_data_url: str,
+    *,
+    model: str = MODEL,
+    reasoning_effort: str | None = None,
 ) -> dict[str, Any]:
     text = (
         "QUESTION:\n"
@@ -99,7 +103,7 @@ def make_payload(
         + "\n\nCANDIDATE COMPLETION TO AUDIT:\n"
         + case["completion"]
     )
-    return {
+    payload = {
         "model": model,
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -124,6 +128,9 @@ def make_payload(
         "stream": False,
         "max_tokens": MAX_TOKENS,
     }
+    if reasoning_effort is not None:
+        payload["reasoning_effort"] = reasoning_effort
+    return payload
 
 
 def parse_success(
@@ -175,6 +182,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model", default=MODEL)
     parser.add_argument("--expected-model-ratio", type=float)
     parser.add_argument("--expected-completion-ratio", type=float)
+    parser.add_argument(
+        "--reasoning-effort", choices=("minimal", "low", "medium", "high")
+    )
     return parser.parse_args()
 
 
@@ -221,7 +231,12 @@ def main() -> None:
         completion_ratio=completion_ratio,
     )
     before = usage_snapshot(key)
-    payload = make_payload(case, image_data_url, model=args.model)
+    payload = make_payload(
+        case,
+        image_data_url,
+        model=args.model,
+        reasoning_effort=args.reasoning_effort,
+    )
     request = urllib.request.Request(
         BASE_URL + "/v1/chat/completions",
         data=json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8"),
@@ -248,6 +263,7 @@ def main() -> None:
         "temperature": 0,
         "seed": 42,
         "max_tokens": MAX_TOKENS,
+        "reasoning_effort": args.reasoning_effort,
         "public_pricing_snapshot": price_row,
         "input_usd_per_million_tokens": input_usd_per_million,
         "output_usd_per_million_tokens": output_usd_per_million,

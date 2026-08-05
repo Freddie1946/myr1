@@ -24,6 +24,24 @@ class AigcBestStage3SmokeTest(unittest.TestCase):
         self.assertTrue(payload["response_format"]["json_schema"]["strict"])
         self.assertEqual(payload["temperature"], 0)
         self.assertEqual(payload["seed"], 42)
+        self.assertNotIn("reasoning_effort", payload)
+
+    def test_payload_supports_explicit_reasoning_effort(self) -> None:
+        case = {
+            "smoke_kind": "synthetic",
+            "image": "/tmp/control.png",
+            "problem": "problem",
+            "solution": "solution",
+            "completion": "completion",
+        }
+        payload = smoke.make_payload(
+            case,
+            "data:image/png;base64,AA==",
+            model="gemini-3.1-pro",
+            reasoning_effort="low",
+        )
+        self.assertEqual(payload["model"], "gemini-3.1-pro")
+        self.assertEqual(payload["reasoning_effort"], "low")
 
     def test_parse_strict_success(self) -> None:
         events = {
