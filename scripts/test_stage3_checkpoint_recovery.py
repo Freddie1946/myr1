@@ -12,6 +12,7 @@ from stage3_checkpoint_recovery import (
     classify_training_failure,
     latest_complete_checkpoint,
     raise_budget_and_request_caps,
+    raise_fallback_consecutive_cap,
     raise_fallback_total_cap,
     raise_request_cap,
     settle_unresolved,
@@ -224,6 +225,35 @@ class RequestCapAmendmentTests(unittest.TestCase):
             amended = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(amended["total_limit"], 36)
             self.assertEqual(amended["total_used"], 18)
+            self.assertEqual(len(amended["events"]), 1)
+
+    def test_fallback_consecutive_cap_raise_preserves_observed_outage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "fallback.json"
+            path.write_text(
+                json.dumps({
+                    "schema_version": 1,
+                    "total_limit": 36,
+                    "consecutive_limit": 4,
+                    "total_used": 23,
+                    "consecutive_used": 4,
+                    "events": [{"event": "fallback"}],
+                    "updated_at": "before",
+                }),
+                encoding="utf-8",
+            )
+            result = raise_fallback_consecutive_cap(
+                path,
+                total_limit=36,
+                old_consecutive_limit=4,
+                new_consecutive_limit=8,
+                reason="one full distributed request wave",
+            )
+            self.assertEqual(result["status"], "fallback_consecutive_cap_raised")
+            amended = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(amended["consecutive_limit"], 8)
+            self.assertEqual(amended["consecutive_used"], 4)
+            self.assertEqual(amended["total_used"], 23)
             self.assertEqual(len(amended["events"]), 1)
 
 

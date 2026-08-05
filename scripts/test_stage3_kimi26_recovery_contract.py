@@ -33,6 +33,7 @@ class KimiRecoveryContractTests(unittest.TestCase):
             'PATHVLM_OPENROUTER_MODEL_ID="moonshotai/kimi-k2.6"',
             'PATHVLM_OPENROUTER_PROVIDER_ONLY="inceptron"',
             'PATHVLM_OPENROUTER_RETRY_DELAYS_SECONDS="15,45,90"',
+            'PATHVLM_OPENROUTER_MIN_REQUEST_INTERVAL_SECONDS="$MIN_REQUEST_INTERVAL_SECONDS"',
             'PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT="$FALLBACK_TOTAL_LIMIT"',
             'PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT="$FALLBACK_CONSECUTIVE_LIMIT"',
             'PATHVLM_EPOCH_SNAPSHOT_STEPS="500,1000,1500"',
@@ -44,12 +45,13 @@ class KimiRecoveryContractTests(unittest.TestCase):
         ):
             self.assertIn(fragment, launcher)
         self.assertIn('PATHVLM_STAGE3_MAX_RECOVERIES:-3', supervisor)
-        self.assertIn('MAX_RECOVERIES > 4', supervisor)
+        self.assertIn('MAX_RECOVERIES > 5', supervisor)
         self.assertIn('--world-size 8', supervisor)
         self.assertIn('export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD="1"', launcher)
         self.assertIn('unset TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD || true', launcher)
         self.assertIn('PATHVLM_STAGE3_ALLOW_SHARED_GPUS:-false', launcher)
         self.assertIn('PATHVLM_STAGE3_SHARED_GPU_MIN_FREE_MIB:-30720', launcher)
+        self.assertIn('PATHVLM_STAGE3_MIN_REQUEST_INTERVAL_SECONDS:-4', launcher)
 
 
 if __name__ == "__main__":

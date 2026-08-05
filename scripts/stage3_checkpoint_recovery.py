@@ -515,6 +515,71 @@ def raise_fallback_total_cap(
     }
 
 
+def raise_fallback_consecutive_cap(
+    ledger_path: Path,
+    *,
+    total_limit: int,
+    old_consecutive_limit: int,
+    new_consecutive_limit: int,
+    reason: str,
+) -> dict[str, Any]:
+    """Atomically widen the outage window without resetting observed failures."""
+
+    if new_consecutive_limit <= old_consecutive_limit:
+        raise ValueError("new fallback consecutive cap must be greater than the old cap")
+    if old_consecutive_limit <= 0 or new_consecutive_limit > total_limit:
+        raise ValueError("invalid fallback consecutive cap")
+    if not reason.strip():
+        raise ValueError("fallback-cap amendment reason must not be empty")
+    path = ledger_path.resolve()
+    if not path.is_file():
+        raise ValueError(f"fallback ledger does not exist: {path}")
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        value = json.loads(path.read_text(encoding="utf-8"))
+        expected = {
+            "total_limit": int(total_limit),
+            "consecutive_limit": int(old_consecutive_limit),
+        }
+        mismatch = {
+            key: {"expected": expected_value, "actual": value.get(key)}
+            for key, expected_value in expected.items()
+            if value.get(key) != expected_value
+        }
+        if mismatch:
+            raise ValueError(f"fallback ledger pre-amendment contract mismatch: {mismatch}")
+        total_used = int(value.get("total_used", -1))
+        consecutive_used = int(value.get("consecutive_used", -1))
+        if total_used < 0 or total_used > total_limit:
+            raise ValueError("fallback total-used count is invalid")
+        if consecutive_used < 0 or consecutive_used > old_consecutive_limit:
+            raise ValueError("fallback consecutive-used count is invalid")
+        timestamp = now_iso()
+        amendment = {
+            "timestamp": timestamp,
+            "field": "consecutive_limit",
+            "old_value": int(old_consecutive_limit),
+            "new_value": int(new_consecutive_limit),
+            "reason": reason.strip(),
+        }
+        value.setdefault("contract_amendments", []).append(amendment)
+        value["consecutive_limit"] = int(new_consecutive_limit)
+        value["updated_at"] = timestamp
+        atomic_json(path, value)
+        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+    return {
+        "status": "fallback_consecutive_cap_raised",
+        "ledger": str(path),
+        "total_used": total_used,
+        "consecutive_used": consecutive_used,
+        "total_limit": int(total_limit),
+        "old_consecutive_limit": int(old_consecutive_limit),
+        "new_consecutive_limit": int(new_consecutive_limit),
+        "amendment": amendment,
+    }
+
+
 def append_event(path: Path, event: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     lock_path = path.with_suffix(path.suffix + ".lock")
@@ -569,6 +634,19 @@ def parse_args() -> argparse.Namespace:
     raise_fallback.add_argument("--new-total-limit", type=int, required=True)
     raise_fallback.add_argument("--consecutive-limit", type=int, required=True)
     raise_fallback.add_argument("--reason", required=True)
+
+    raise_fallback_consecutive = subparsers.add_parser(
+        "raise-fallback-consecutive-cap"
+    )
+    raise_fallback_consecutive.add_argument("--ledger", type=Path, required=True)
+    raise_fallback_consecutive.add_argument("--total-limit", type=int, required=True)
+    raise_fallback_consecutive.add_argument(
+        "--old-consecutive-limit", type=int, required=True
+    )
+    raise_fallback_consecutive.add_argument(
+        "--new-consecutive-limit", type=int, required=True
+    )
+    raise_fallback_consecutive.add_argument("--reason", required=True)
 
     classify = subparsers.add_parser("classify")
     classify.add_argument("--log", type=Path, required=True)
@@ -639,6 +717,19 @@ def main() -> None:
                     old_total_limit=args.old_total_limit,
                     new_total_limit=args.new_total_limit,
                     consecutive_limit=args.consecutive_limit,
+                    reason=args.reason,
+                ),
+                sort_keys=True,
+            )
+        )
+    elif args.command == "raise-fallback-consecutive-cap":
+        print(
+            json.dumps(
+                raise_fallback_consecutive_cap(
+                    args.ledger,
+                    total_limit=args.total_limit,
+                    old_consecutive_limit=args.old_consecutive_limit,
+                    new_consecutive_limit=args.new_consecutive_limit,
                     reason=args.reason,
                 ),
                 sort_keys=True,
