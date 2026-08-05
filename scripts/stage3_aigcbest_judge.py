@@ -89,7 +89,12 @@ def score_events_at_penalty(value: Any, penalty: float) -> dict[str, float | int
     }
 
 
-def request_cost(usage: Any) -> float:
+def request_cost(
+    usage: Any,
+    *,
+    input_usd_per_million: float = INPUT_USD_PER_MILLION,
+    output_usd_per_million: float = OUTPUT_USD_PER_MILLION,
+) -> float:
     if not isinstance(usage, dict):
         raise ValueError("AIGCBest response lacks usage")
     prompt = usage.get("prompt_tokens")
@@ -99,8 +104,8 @@ def request_cost(usage: Any) -> float:
     if prompt < 0 or completion < 0:
         raise ValueError("AIGCBest usage token counts are negative")
     return (
-        prompt * INPUT_USD_PER_MILLION
-        + completion * OUTPUT_USD_PER_MILLION
+        prompt * input_usd_per_million
+        + completion * output_usd_per_million
     ) / 1_000_000
 
 
@@ -113,12 +118,13 @@ def make_cache_key(
     penalty: float,
     max_judge_tokens: int,
     retry_judge_token_caps: tuple[int, ...] = DEFAULT_RETRY_JUDGE_TOKEN_CAPS,
+    model_id: str = MODEL_ID,
 ) -> str:
     contract = {
         "schema_version": SCHEMA_VERSION,
         "gateway": "aigcbest",
         "api_url": API_URL,
-        "model": MODEL_ID,
+        "model": model_id,
         "penalty": penalty,
         "max_judge_tokens": max_judge_tokens,
         "retry_judge_token_caps": list(retry_judge_token_caps),
@@ -200,6 +206,9 @@ class AigcBestJudge:
         timeout_seconds: float = 180.0,
         retry_delays: tuple[float, ...] = (15.0, 45.0, 90.0),
         minimum_request_interval_seconds: float = 1.0,
+        model_id: str = MODEL_ID,
+        input_usd_per_million: float = INPUT_USD_PER_MILLION,
+        output_usd_per_million: float = OUTPUT_USD_PER_MILLION,
     ):
         if penalty not in ALLOWED_PILOT_PENALTIES:
             raise ValueError(f"pilot penalty must be one of {sorted(ALLOWED_PILOT_PENALTIES)}")
@@ -213,6 +222,10 @@ class AigcBestJudge:
             raise ValueError("retry judge token caps must be unique increasing integers above 320")
         if any(delay < 0 for delay in retry_delays):
             raise ValueError("retry delays cannot be negative")
+        if not model_id or any(not (char.isalnum() or char in "._-/") for char in model_id):
+            raise ValueError("AIGCBest model id is missing or unsafe")
+        if input_usd_per_million <= 0 or output_usd_per_million <= 0:
+            raise ValueError("AIGCBest token prices must be positive")
         namespace = os.getenv("PATHVLM_AIGCBEST_CACHE_NAMESPACE", "").strip()
         if not namespace or any(not (char.isalnum() or char in "_.-") for char in namespace):
             raise ValueError("PATHVLM_AIGCBEST_CACHE_NAMESPACE is required and must be safe")
@@ -225,6 +238,9 @@ class AigcBestJudge:
         self.api_key = api_key if api_key is not None else os.getenv("AIGCBEST_API_KEY", "")
         self.timeout_seconds = timeout_seconds
         self.retry_delays = retry_delays
+        self.model_id = model_id
+        self.input_usd_per_million = input_usd_per_million
+        self.output_usd_per_million = output_usd_per_million
         self.max_judge_tokens = max_judge_tokens
         self.retry_judge_token_caps = retry_judge_token_caps
         self.ledger = BudgetLedger(
@@ -250,7 +266,7 @@ class AigcBestJudge:
             + completion
         )
         return {
-            "model": MODEL_ID,
+            "model": self.model_id,
             "messages": [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {
@@ -292,7 +308,7 @@ class AigcBestJudge:
         self, response: TransportResponse
     ) -> tuple[dict[str, Any], dict[str, float | int], float, str]:
         body = response.body
-        if body.get("error") or body.get("model") != MODEL_ID:
+        if body.get("error") or body.get("model") != self.model_id:
             raise TerminalJudgeResponseError(
                 f"invalid or mismatched AIGCBest response model: {body.get('model')!r}"
             )
@@ -324,7 +340,11 @@ class AigcBestJudge:
                 f"AIGCBest response event schema is invalid: {exc}"
             ) from exc
         scores = score_events_at_penalty(events, self.penalty)
-        cost = request_cost(body.get("usage"))
+        cost = request_cost(
+            body.get("usage"),
+            input_usd_per_million=self.input_usd_per_million,
+            output_usd_per_million=self.output_usd_per_million,
+        )
         response_id = body.get("id")
         if not isinstance(response_id, str) or not response_id:
             raise TerminalJudgeResponseError("AIGCBest response lacks an id")
@@ -350,6 +370,7 @@ class AigcBestJudge:
             penalty=self.penalty,
             max_judge_tokens=self.max_judge_tokens,
             retry_judge_token_caps=self.retry_judge_token_caps,
+            model_id=self.model_id,
         )
         cache_path = self.cache_dir / cache_key[:2] / f"{cache_key}.json"
         lock_path = cache_path.with_suffix(".lock")
@@ -399,7 +420,7 @@ class AigcBestJudge:
                 self.ledger.reserve(attempt_id, {
                     "cache_key": cache_key,
                     "attempt_number": attempt_number,
-                    "model": MODEL_ID,
+                    "model": self.model_id,
                     "request_sha256": request_sha256,
                     "max_tokens": max_tokens,
                 })
@@ -412,7 +433,11 @@ class AigcBestJudge:
                     except (RetryableJudgeResponseError, TerminalJudgeResponseError) as exc:
                         last_error = exc
                         try:
-                            billed = request_cost(response.body.get("usage"))
+                            billed = request_cost(
+                                response.body.get("usage"),
+                                input_usd_per_million=self.input_usd_per_million,
+                                output_usd_per_million=self.output_usd_per_million,
+                            )
                         except Exception:
                             billed = self.ledger.reserve_usd
                         self.ledger.commit(attempt_id, billed, {
@@ -455,7 +480,7 @@ class AigcBestJudge:
                         "attempt_number": attempt_number,
                         "status": "completed",
                         "response_id": response_id,
-                        "model": MODEL_ID,
+                        "model": self.model_id,
                     })
                     attempts.append({
                         "attempt": attempt_number,
@@ -578,6 +603,13 @@ def process_reward(completions, solution, **kwargs):
         retry_delays=retry_delays,
         minimum_request_interval_seconds=float(
             os.getenv("PATHVLM_AIGCBEST_MIN_REQUEST_INTERVAL_SECONDS", "1")
+        ),
+        model_id=os.getenv("PATHVLM_AIGCBEST_MODEL_ID", MODEL_ID),
+        input_usd_per_million=float(
+            os.getenv("PATHVLM_AIGCBEST_INPUT_USD_PER_MILLION", str(INPUT_USD_PER_MILLION))
+        ),
+        output_usd_per_million=float(
+            os.getenv("PATHVLM_AIGCBEST_OUTPUT_USD_PER_MILLION", str(OUTPUT_USD_PER_MILLION))
         ),
     )
     fallback_enabled = env_bool("PATHVLM_STAGE3_RULE_FALLBACK_ENABLED", False)

@@ -50,6 +50,43 @@ class AigcBestStage3SmokeTest(unittest.TestCase):
         self.assertEqual(parsed, events)
         self.assertEqual(scores["process"], 0.8)
 
+    def test_payload_and_parser_support_explicit_candidate_identity(self) -> None:
+        case = {
+            "smoke_kind": "pathmmu_validation",
+            "image": "/tmp/control.png",
+            "problem": "problem",
+            "solution": "solution",
+            "completion": "completion",
+        }
+        payload = smoke.make_payload(
+            case, "data:image/png;base64,AA==", model="claude-sonnet-4-6"
+        )
+        self.assertEqual(payload["model"], "claude-sonnet-4-6")
+        events = {
+            "image_feature_analysis_present": True,
+            "option_elimination_present": True,
+            "medical_knowledge_support_present": False,
+            "histological_definition_error": False,
+            "logical_contradiction": False,
+            "outdated_or_incorrect_pathology_criterion": False,
+            "evidence": {
+                "image_feature_analysis_present": "feature",
+                "option_elimination_present": "option",
+                "medical_knowledge_support_present": "",
+                "histological_definition_error": "",
+                "logical_contradiction": "",
+                "outdated_or_incorrect_pathology_criterion": "",
+            },
+        }
+        body = {
+            "model": "claude-sonnet-4-6",
+            "choices": [
+                {"finish_reason": "stop", "message": {"content": json.dumps(events)}}
+            ],
+        }
+        parsed, _ = smoke.parse_success(body, model="claude-sonnet-4-6")
+        self.assertEqual(parsed, events)
+
     def test_rejects_alias_or_extra_event(self) -> None:
         body = {
             "model": "gpt-4o",

@@ -57,6 +57,73 @@ class ScoringTests(unittest.TestCase):
         values = dict(image_sha256="a", problem="p", solution="s", completion="c", max_judge_tokens=320)
         self.assertNotEqual(make_cache_key(**values, penalty=0.3), make_cache_key(**values, penalty=0.4))
 
+    def test_cache_key_and_cost_include_candidate_contract(self) -> None:
+        values = dict(
+            image_sha256="a",
+            problem="p",
+            solution="s",
+            completion="c",
+            penalty=0.4,
+            max_judge_tokens=320,
+        )
+        self.assertNotEqual(
+            make_cache_key(**values),
+            make_cache_key(**values, model_id="grok-4.3"),
+        )
+        self.assertAlmostEqual(
+            request_cost(
+                {"prompt_tokens": 1000, "completion_tokens": 100},
+                input_usd_per_million=1.25,
+                output_usd_per_million=2.5,
+            ),
+            0.0015,
+        )
+
+    def test_candidate_identity_is_requested_and_verified(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / "image.png"
+            image.write_bytes(b"png")
+            digest = __import__("hashlib").sha256(b"png").hexdigest()
+            body = {
+                "id": "response-grok",
+                "model": "grok-4.3",
+                "choices": [
+                    {"finish_reason": "stop", "message": {"content": json.dumps(events())}}
+                ],
+                "usage": {"prompt_tokens": 1000, "completion_tokens": 100},
+            }
+            payloads = []
+
+            def transport(payload, *args):
+                payloads.append(payload)
+                return TransportResponse(
+                    status=200, headers={}, body=body, latency_seconds=0.1
+                )
+
+            with patch.dict(os.environ, {"PATHVLM_AIGCBEST_CACHE_NAMESPACE": "grok"}):
+                judge = AigcBestJudge(
+                    Path(directory) / "judge",
+                    penalty=0.4,
+                    transport=transport,
+                    api_key="secret",
+                    limit_usd=1,
+                    reserve_usd=0.01,
+                    max_http_attempts=2,
+                    minimum_request_interval_seconds=0,
+                    model_id="grok-4.3",
+                    input_usd_per_million=1.25,
+                    output_usd_per_million=2.5,
+                )
+                judge.judge_one(
+                    image_path=str(image),
+                    image_sha256=digest,
+                    problem="p",
+                    solution="s",
+                    completion="c",
+                )
+            self.assertEqual(payloads[0]["model"], "grok-4.3")
+            self.assertAlmostEqual(judge.ledger.snapshot()["committed_spend_usd"], 0.0015)
+
 
 class JudgeTests(unittest.TestCase):
     def test_one_success_commits_one_http_attempt_and_caches(self) -> None:

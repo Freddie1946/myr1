@@ -33,8 +33,7 @@ BASE_URL = "https://api2.aigcbest.top"
 MODEL = "gpt-4o-2024-08-06"
 MODEL_RATIO = 1.25
 COMPLETION_RATIO = 4
-INPUT_USD_PER_MILLION = 2.5
-OUTPUT_USD_PER_MILLION = 10.0
+BASE_INPUT_USD_PER_MILLION = 2.0
 MAX_TOKENS = 320
 
 
@@ -89,7 +88,9 @@ def parse_case(path: Path) -> dict[str, str]:
     return value
 
 
-def make_payload(case: dict[str, str], image_data_url: str) -> dict[str, Any]:
+def make_payload(
+    case: dict[str, str], image_data_url: str, *, model: str = MODEL
+) -> dict[str, Any]:
     text = (
         "QUESTION:\n"
         + case["problem"]
@@ -99,7 +100,7 @@ def make_payload(case: dict[str, str], image_data_url: str) -> dict[str, Any]:
         + case["completion"]
     )
     return {
-        "model": MODEL,
+        "model": model,
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
             {
@@ -125,8 +126,10 @@ def make_payload(case: dict[str, str], image_data_url: str) -> dict[str, Any]:
     }
 
 
-def parse_success(body: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-    if body.get("model") != MODEL:
+def parse_success(
+    body: dict[str, Any], *, model: str = MODEL
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    if body.get("model") != model:
         raise ValueError(f"served model mismatch: {body.get('model')!r}")
     choices = body.get("choices")
     if not isinstance(choices, list) or len(choices) != 1:
@@ -141,18 +144,27 @@ def parse_success(body: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]
     return events, score_events(events)
 
 
-def verify_catalog_and_pricing(key: str) -> dict[str, Any]:
+def verify_catalog_and_pricing(
+    key: str,
+    *,
+    model: str = MODEL,
+    model_ratio: float = MODEL_RATIO,
+    completion_ratio: float = COMPLETION_RATIO,
+) -> dict[str, Any]:
     catalog = get_json(BASE_URL + "/v1/models", key=key).get("data", [])
-    matches = [row for row in catalog if isinstance(row, dict) and row.get("id") == MODEL]
+    matches = [row for row in catalog if isinstance(row, dict) and row.get("id") == model]
     if len(matches) != 1:
-        raise RuntimeError(f"expected one authenticated catalog row for {MODEL}, got {len(matches)}")
+        raise RuntimeError(f"expected one authenticated catalog row for {model}, got {len(matches)}")
     pricing = get_json(BASE_URL + "/api/pricing").get("data", [])
-    price_rows = [row for row in pricing if isinstance(row, dict) and row.get("model_name") == MODEL]
+    price_rows = [row for row in pricing if isinstance(row, dict) and row.get("model_name") == model]
     if len(price_rows) != 1:
-        raise RuntimeError(f"expected one public pricing row for {MODEL}, got {len(price_rows)}")
+        raise RuntimeError(f"expected one public pricing row for {model}, got {len(price_rows)}")
     price_row = price_rows[0]
-    if price_row.get("model_ratio") != MODEL_RATIO or price_row.get("completion_ratio") != COMPLETION_RATIO:
-        raise RuntimeError(f"public {MODEL} price ratio changed: {price_row}")
+    if (
+        price_row.get("model_ratio") != model_ratio
+        or price_row.get("completion_ratio") != completion_ratio
+    ):
+        raise RuntimeError(f"public {model} price ratio changed: {price_row}")
     return price_row
 
 
@@ -160,6 +172,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--case-json", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--model", default=MODEL)
+    parser.add_argument("--expected-model-ratio", type=float)
+    parser.add_argument("--expected-completion-ratio", type=float)
     return parser.parse_args()
 
 
@@ -170,6 +185,28 @@ def main() -> None:
     key = os.getenv("AIGCBEST_API_KEY")
     if not key:
         raise RuntimeError("AIGCBEST_API_KEY is not set")
+    if not args.model.strip():
+        raise ValueError("model must be non-empty")
+    custom_ratio_count = sum(
+        value is not None
+        for value in (args.expected_model_ratio, args.expected_completion_ratio)
+    )
+    if custom_ratio_count == 1:
+        raise ValueError("both expected pricing ratios must be supplied together")
+    if args.model != MODEL and custom_ratio_count != 2:
+        raise ValueError("non-default model requires both expected pricing ratios")
+    model_ratio = (
+        MODEL_RATIO if args.expected_model_ratio is None else args.expected_model_ratio
+    )
+    completion_ratio = (
+        COMPLETION_RATIO
+        if args.expected_completion_ratio is None
+        else args.expected_completion_ratio
+    )
+    if model_ratio <= 0 or completion_ratio <= 0:
+        raise ValueError("pricing ratios must be positive")
+    input_usd_per_million = BASE_INPUT_USD_PER_MILLION * model_ratio
+    output_usd_per_million = input_usd_per_million * completion_ratio
     case = parse_case(args.case_json)
     image_path = Path(case["image"]).resolve()
     image_bytes = image_path.read_bytes()
@@ -177,9 +214,14 @@ def main() -> None:
     if not mime.startswith("image/"):
         raise ValueError(f"unsupported image MIME: {mime}")
     image_data_url = f"data:{mime};base64,{base64.b64encode(image_bytes).decode('ascii')}"
-    price_row = verify_catalog_and_pricing(key)
+    price_row = verify_catalog_and_pricing(
+        key,
+        model=args.model,
+        model_ratio=model_ratio,
+        completion_ratio=completion_ratio,
+    )
     before = usage_snapshot(key)
-    payload = make_payload(case, image_data_url)
+    payload = make_payload(case, image_data_url, model=args.model)
     request = urllib.request.Request(
         BASE_URL + "/v1/chat/completions",
         data=json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8"),
@@ -194,7 +236,7 @@ def main() -> None:
         "training_call": False,
         "provider": "aigcbest",
         "base_url": BASE_URL,
-        "requested_model": MODEL,
+        "requested_model": args.model,
         "smoke_kind": case["smoke_kind"],
         "case_json": str(args.case_json.resolve()),
         "case_sha256": hashlib.sha256(args.case_json.read_bytes()).hexdigest(),
@@ -207,12 +249,13 @@ def main() -> None:
         "seed": 42,
         "max_tokens": MAX_TOKENS,
         "public_pricing_snapshot": price_row,
-        "input_usd_per_million_tokens": INPUT_USD_PER_MILLION,
-        "output_usd_per_million_tokens": OUTPUT_USD_PER_MILLION,
+        "input_usd_per_million_tokens": input_usd_per_million,
+        "output_usd_per_million_tokens": output_usd_per_million,
         "token_usage_before": before,
         "paid_request_limit_for_invocation": 1,
         "retry_count": 0,
     }
+    response_observation: dict[str, Any] = {}
     try:
         with urllib.request.urlopen(request, timeout=180) as response:
             status = int(response.status)
@@ -223,22 +266,28 @@ def main() -> None:
                 for name, value in response.headers.items()
                 if name.lower() in {"x-request-id", "x-oneapi-request-id", "content-type"}
             }
-        events, scores = parse_success(body)
         usage = body.get("usage") if isinstance(body.get("usage"), dict) else {}
         prompt_tokens = int(usage.get("prompt_tokens", 0))
         completion_tokens = int(usage.get("completion_tokens", 0))
-        cost = (prompt_tokens * INPUT_USD_PER_MILLION + completion_tokens * OUTPUT_USD_PER_MILLION) / 1_000_000
-        record = {
-            **base_record,
-            "status": "passed",
+        cost = (
+            prompt_tokens * input_usd_per_million
+            + completion_tokens * output_usd_per_million
+        ) / 1_000_000
+        response_observation = {
             "http_status": status,
-            "latency_seconds": time.monotonic() - started,
             "safe_response_headers": safe_headers,
             "response": body,
             "served_model": body.get("model"),
             "response_id": body.get("id"),
             "usage": usage,
             "estimated_request_cost_usd": cost,
+        }
+        events, scores = parse_success(body, model=args.model)
+        record = {
+            **base_record,
+            "status": "passed",
+            "latency_seconds": time.monotonic() - started,
+            **response_observation,
             "events": events,
             "scores_at_penalty_0_4": scores,
             "token_usage_after": usage_snapshot(key),
@@ -260,6 +309,7 @@ def main() -> None:
             "latency_seconds": time.monotonic() - started,
             "error_type": type(exc).__name__,
             "error": str(exc),
+            **response_observation,
             "token_usage_after": usage_snapshot(key),
         }
         if isinstance(exc, urllib.error.HTTPError):

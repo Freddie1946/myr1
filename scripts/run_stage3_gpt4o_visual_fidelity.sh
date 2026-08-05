@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+set -euo pipefail
+umask 077
+
+WORKSPACE="/home/dataset-assist-0/czy/wjy"
+REPO="$WORKSPACE/myr1"
+INSTALL="$WORKSPACE/pathvlm_r1_v1_a100"
+EVAL="$WORKSPACE/pathvlm_revision_eval_a100"
+PYTHON="$INSTALL/envs/sft/bin/python"
+MODEL="$INSTALL/runs/stage3_process_grpo/gpt4o_full3epoch_seed42_20260801/epoch_model_snapshots/checkpoint-1000"
+PANEL="$REPO/protocol/visual_fidelity_panel_v1_20260804.json"
+PANEL_SHA="0c7e09a2e870abdb07b63df9cca1a410c73c9922e996bede9771777b636280e8"
+RUNNER="$REPO/scripts/run_visual_fidelity_experiment.py"
+VERIFY="$REPO/scripts/verify_visual_fidelity_run.py"
+SNAPSHOT_VERIFY="$REPO/scripts/verify_checkpoint_snapshot.py"
+GPU="${PATHVLM_STAGE3_GPT4O_VISUAL_GPU:-3}"
+
+: "${PATHVLM_STAGE3_GPT4O_VISUAL_ROOT:?Set a dedicated GPT-4o visual-fidelity root}"
+ROOT="$(readlink -m "$PATHVLM_STAGE3_GPT4O_VISUAL_ROOT")"
+case "$ROOT" in
+  "$EVAL/runs"/*) ;;
+  *) echo "Visual-fidelity root must be a child of $EVAL/runs" >&2; exit 2 ;;
+esac
+[[ "$GPU" =~ ^[0-7]$ ]] || { echo "Invalid visual-fidelity GPU: $GPU" >&2; exit 2; }
+for path in "$PYTHON" "$MODEL" "$PANEL" "$RUNNER" "$VERIFY" "$SNAPSHOT_VERIFY"; do
+  [[ -e "$path" ]] || { echo "Required visual-fidelity input is missing: $path" >&2; exit 2; }
+done
+[[ "$(sha256sum "$PANEL" | awk '{print $1}')" == "$PANEL_SHA" ]] || {
+  echo "Visual-fidelity panel hash mismatch" >&2; exit 2;
+}
+"$PYTHON" "$SNAPSHOT_VERIFY" "$MODEL" --expected-step 1000 --expected-epoch 2 >/dev/null
+used="$(nvidia-smi --id="$GPU" --query-gpu=memory.used --format=csv,noheader,nounits | tr -d '[:space:]')"
+(( used <= 10 )) || { echo "Visual-fidelity GPU $GPU is not idle: ${used} MiB" >&2; exit 2; }
+
+OUTPUT="$ROOT/stage3_gpt4o"
+LOG="$ROOT/stage3_gpt4o.log"
+VERIFICATION="$OUTPUT/verification.json"
+COMPLETED="$ROOT/completed.json"
+if [[ -f "$COMPLETED" ]]; then
+  "$PYTHON" "$VERIFY" --metrics "$OUTPUT/metrics.json" \
+    --expected-label stage3_gpt4o --expected-model "$MODEL" \
+    --expected-panel-sha256 "$PANEL_SHA" --output "$VERIFICATION" >/dev/null
+  echo "GPT-4o visual-fidelity arm already completed and verified: $ROOT"
+  exit 0
+fi
+[[ ! -e "$ROOT" ]] || { echo "Incomplete visual-fidelity root exists: $ROOT" >&2; exit 3; }
+mkdir -p "$ROOT"
+export CUDA_VISIBLE_DEVICES="$GPU"
+export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false
+"$PYTHON" "$RUNNER" --model "$MODEL" --model-label stage3_gpt4o \
+  --panel "$PANEL" --expected-panel-sha256 "$PANEL_SHA" --output-dir "$OUTPUT" \
+  --grid-rows 6 --grid-columns 6 --batch-size 8 --random-permutations 5 \
+  >"$LOG" 2>&1
+"$PYTHON" "$VERIFY" --metrics "$OUTPUT/metrics.json" \
+  --expected-label stage3_gpt4o --expected-model "$MODEL" \
+  --expected-panel-sha256 "$PANEL_SHA" --output "$VERIFICATION" >/dev/null
+"$PYTHON" - "$COMPLETED" "$OUTPUT/metrics.json" "$VERIFICATION" "$REPO" <<'PY'
+import datetime
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+metrics = Path(sys.argv[2])
+verification = Path(sys.argv[3])
+value = {
+    "schema_version": 1,
+    "status": "completed_single_arm",
+    "completed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    "model_label": "stage3_gpt4o",
+    "five_arm_comparison_completed": False,
+    "metrics": str(metrics.resolve()),
+    "metrics_sha256": hashlib.sha256(metrics.read_bytes()).hexdigest(),
+    "verification": str(verification.resolve()),
+    "verification_sha256": hashlib.sha256(verification.read_bytes()).hexdigest(),
+    "repository_commit": subprocess.check_output(
+        ["/home/dataset-assist-0/czy/wjy/.local-git/usr/bin/git", "-C", sys.argv[4], "rev-parse", "HEAD"],
+        text=True,
+    ).strip(),
+}
+temporary = path.with_suffix(".tmp")
+temporary.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+os.replace(temporary, path)
+PY
+echo "GPT-4o visual-fidelity arm completed and verified: $ROOT"

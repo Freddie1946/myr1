@@ -25,7 +25,7 @@ class FormalContractTests(unittest.TestCase):
         for fragment in (
             'PENALTY="0.4"',
             "MAX_HTTP_ATTEMPTS=12360",
-            'ACCOUNTING_CAPACITY_USD="247.20"',
+            'PATHVLM_AIGCBEST_LIMIT_USD:-247.20',
             "--num_generations 4",
             "--per_device_train_batch_size 1",
             "--gradient_accumulation_steps 1",
@@ -45,7 +45,7 @@ class FormalContractTests(unittest.TestCase):
     def test_no_paid_launch_in_preflight_only_mode(self):
         text = LAUNCHER.read_text(encoding="utf-8")
         gate = text.index('PATHVLM_STAGE3_PREFLIGHT_ONLY:-false')
-        training = text.index('Starting formal GPT-4o Stage3')
+        training = text.index('Starting formal Stage3 with Judge')
         self.assertLess(gate, training)
 
     def test_supervisor_is_classification_gated_and_bounded(self):

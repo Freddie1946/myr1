@@ -85,7 +85,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--backend",
         required=True,
-        choices=("gemma3", "mllama", "qwen2_vl", "qwen2_5_vl"),
+        choices=("gemma3", "mllama", "qwen2_vl", "qwen2_5_vl", "qwen3_5"),
     )
     parser.add_argument("--data", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
@@ -301,6 +301,10 @@ def main() -> None:
         from transformers import MllamaForConditionalGeneration
 
         model_class = MllamaForConditionalGeneration
+    elif args.backend == "qwen3_5":
+        from transformers import Qwen3_5ForConditionalGeneration
+
+        model_class = Qwen3_5ForConditionalGeneration
     else:
         model_class = {
             "qwen2_vl": Qwen2VLForConditionalGeneration,
@@ -345,9 +349,15 @@ def main() -> None:
                     ],
                 }
             ]
+            template_kwargs = {}
+            if args.backend == "qwen3_5":
+                template_kwargs["enable_thinking"] = False
             prompts.append(
                 processor.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=True
+                    messages,
+                    tokenize=False,
+                    add_generation_prompt=True,
+                    **template_kwargs,
                 )
             )
         processor_images = [[image] for image in images] if args.backend == "gemma3" else images

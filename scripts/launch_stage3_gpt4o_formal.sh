@@ -14,15 +14,23 @@ DATASET_SHA256="0d443486bebf27a8611a670f65af19f961f76093fe7f9f3b838e7127485f7260
 IMAGE_HASH_MANIFEST="$REPO_ROOT/data/pathmmu_image_disjoint_v2/image_content_sha256.json"
 IMAGE_HASH_MANIFEST_SHA256="e200edf3659e5af860d824a539bb0c5a29ee0c790de8b7a4ec528989c45b51ed"
 SECRET_FILE="$WORKSPACE_ROOT/.secrets/aigcbest.env"
-SMOKE_RESULT="$WORKSPACE_ROOT/pathvlm_revision_eval_a100/reports/aigcbest_gpt4o_stage3_smoke_20260801/pathmmu_validation_result.json"
-SMOKE_RESULT_SHA256="d6d1d148b712044be874e950a462a0d87ce6a30e15ca541addbebd175adfc148"
-MODEL_ID="gpt-4o-2024-08-06"
+SMOKE_RESULT="${PATHVLM_AIGCBEST_SMOKE_RESULT:-$WORKSPACE_ROOT/pathvlm_revision_eval_a100/reports/aigcbest_gpt4o_stage3_smoke_20260801/pathmmu_validation_result.json}"
+SMOKE_RESULT_SHA256="${PATHVLM_AIGCBEST_SMOKE_RESULT_SHA256:-d6d1d148b712044be874e950a462a0d87ce6a30e15ca541addbebd175adfc148}"
+STABILITY_RESULT="${PATHVLM_AIGCBEST_STABILITY_RESULT:-}"
+STABILITY_RESULT_SHA256="${PATHVLM_AIGCBEST_STABILITY_RESULT_SHA256:-}"
+MODEL_ID="${PATHVLM_AIGCBEST_MODEL_ID:-gpt-4o-2024-08-06}"
+MODEL_RATIO="${PATHVLM_AIGCBEST_MODEL_RATIO:-1.25}"
+COMPLETION_RATIO="${PATHVLM_AIGCBEST_COMPLETION_RATIO:-4}"
+INPUT_USD_PER_MILLION="${PATHVLM_AIGCBEST_INPUT_USD_PER_MILLION:-2.5}"
+OUTPUT_USD_PER_MILLION="${PATHVLM_AIGCBEST_OUTPUT_USD_PER_MILLION:-10.0}"
+RUN_CLASS="${PATHVLM_STAGE3_RUN_CLASS:-formal_stage3_gpt4o_seed42}"
+TRAIN_AUDIT_NAME="${PATHVLM_TRAIN_STATE_AUDIT_NAME:-gpt4o_full_train_state_audit.json}"
 PENALTY="0.4"
 MAX_HTTP_ATTEMPTS=12360
-RESERVE_USD="0.02"
+RESERVE_USD="${PATHVLM_AIGCBEST_RESERVE_USD:-0.02}"
 # User requested no USD budget ceiling.  This is a technical ledger capacity
 # derived from the physical-attempt cap, not a spending target or selection gate.
-ACCOUNTING_CAPACITY_USD="247.20"
+ACCOUNTING_CAPACITY_USD="${PATHVLM_AIGCBEST_LIMIT_USD:-247.20}"
 MAX_JUDGE_TOKENS=320
 RETRY_JUDGE_TOKEN_CAPS="512,768"
 
@@ -59,6 +67,11 @@ PREFLIGHT="$RUN_DIR/launch_preflight_${SEGMENT_ID}.json"
   echo "AIGCBest secret must exist with mode 0600" >&2; exit 2;
 }
 [[ -f "$SMOKE_RESULT" ]] || { echo "Frozen GPT-4o smoke result is missing" >&2; exit 2; }
+if [[ "$MODEL_ID" != "gpt-4o-2024-08-06" ]]; then
+  [[ -f "$STABILITY_RESULT" && -n "$STABILITY_RESULT_SHA256" ]] || {
+    echo "Non-default Judge requires a frozen stability gate" >&2; exit 2;
+  }
+fi
 [[ -z "$("$WORKSPACE_ROOT/.local-git/usr/bin/git" -C "$REPO_ROOT" status --porcelain)" ]] || {
   echo "Repository must be clean before formal launch" >&2; exit 2;
 }
@@ -92,11 +105,13 @@ set +a
 
 "$PYTHON" - "$PARENT_MANIFEST" "$PARENT_MANIFEST_SHA256" \
   "$DATASET" "$DATASET_SHA256" "$IMAGE_HASH_MANIFEST" "$IMAGE_HASH_MANIFEST_SHA256" \
-  "$SMOKE_RESULT" "$SMOKE_RESULT_SHA256" "$MASTER_PORT" "$MODEL_ID" <<'PY'
+  "$SMOKE_RESULT" "$SMOKE_RESULT_SHA256" "$STABILITY_RESULT" "$STABILITY_RESULT_SHA256" \
+  "$MASTER_PORT" "$MODEL_ID" "$MODEL_RATIO" "$COMPLETION_RATIO" <<'PY'
 import hashlib, json, os, socket, sys, urllib.request
 from pathlib import Path
 (parent, parent_sha, dataset, dataset_sha, images, images_sha,
- smoke, smoke_sha, port, model) = sys.argv[1:]
+ smoke, smoke_sha, stability, stability_sha, port, model, model_ratio,
+ completion_ratio) = sys.argv[1:]
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 for path, expected in ((parent,parent_sha),(dataset,dataset_sha),(images,images_sha),(smoke,smoke_sha)):
     actual=digest(path)
@@ -124,6 +139,14 @@ expected={"status":"passed","training_call":False,"requested_model":model,
           "max_tokens":320,"retry_count":0}
 bad={k:{"expected":v,"actual":prior.get(k)} for k,v in expected.items() if prior.get(k)!=v}
 if bad: raise SystemExit(f"GPT-4o smoke mismatch: {bad}")
+if model != "gpt-4o-2024-08-06":
+    if digest(stability) != stability_sha: raise SystemExit("candidate stability hash mismatch")
+    stable=json.loads(Path(stability).read_text())
+    expected_stable={"status":"passed","provider":"aigcbest","model":model,
+                     "request_count":8,"success_count":8,"retry_count":0}
+    bad={k:{"expected":v,"actual":stable.get(k)} for k,v in expected_stable.items()
+         if stable.get(k)!=v}
+    if bad: raise SystemExit(f"candidate stability gate mismatch: {bad}")
 headers={"Authorization":"Bearer "+os.environ["AIGCBEST_API_KEY"],"User-Agent":"PathVLM-R1 formal preflight"}
 with urllib.request.urlopen(urllib.request.Request("https://api2.aigcbest.top/v1/models",headers=headers),timeout=30) as r:
     catalog=json.load(r).get("data",[])
@@ -132,8 +155,9 @@ if sum(isinstance(x,dict) and x.get("id")==model for x in catalog)!=1:
 with urllib.request.urlopen("https://api2.aigcbest.top/api/pricing",timeout=30) as r:
     pricing=json.load(r).get("data",[])
 rows=[x for x in pricing if isinstance(x,dict) and x.get("model_name")==model]
-if len(rows)!=1 or rows[0].get("model_ratio")!=1.25 or rows[0].get("completion_ratio")!=4:
-    raise SystemExit(f"GPT-4o price contract changed: {rows}")
+if (len(rows)!=1 or float(rows[0].get("model_ratio"))!=float(model_ratio)
+        or float(rows[0].get("completion_ratio"))!=float(completion_ratio)):
+    raise SystemExit(f"Judge price contract changed: {rows}")
 with socket.socket() as sock:
     try: sock.bind(("127.0.0.1",int(port)))
     except OSError as exc: raise SystemExit(f"master port unavailable: {exc}")
@@ -161,16 +185,20 @@ else
   ln -s "$PARENT" "$PARENT_ALIAS"
 fi
 
-"$PYTHON" - "$PREFLIGHT" "$REPO_ROOT" "$SEGMENT_ID" "$RESUME_FROM" <<'PY'
+"$PYTHON" - "$PREFLIGHT" "$REPO_ROOT" "$SEGMENT_ID" "$RESUME_FROM" "$MODEL_ID" \
+  "$RUN_CLASS" "$ACCOUNTING_CAPACITY_USD" "$RESERVE_USD" "$INPUT_USD_PER_MILLION" \
+  "$OUTPUT_USD_PER_MILLION" "$STABILITY_RESULT" <<'PY'
 import json, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
-path,repo,segment,resume=sys.argv[1:]
+path,repo,segment,resume,model,run_class,capacity,reserve,input_rate,output_rate,stability=sys.argv[1:]
 commit=subprocess.check_output(["/home/dataset-assist-0/czy/wjy/.local-git/usr/bin/git","-C",repo,"rev-parse","HEAD"],text=True).strip()
 value={"schema_version":1,"created_at":datetime.now(timezone.utc).isoformat(),"status":"passed",
-"formal_result":False,"run_class":"formal_stage3_gpt4o_seed42","repository_commit":commit,
-"judge_gateway":"aigcbest","judge_model":"gpt-4o-2024-08-06","penalty":0.4,
-"user_usd_budget_limit":None,"technical_accounting_capacity_usd":247.2,
+"formal_result":False,"run_class":run_class,"repository_commit":commit,
+"judge_gateway":"aigcbest","judge_model":model,"penalty":0.4,
+"user_usd_budget_limit":float(capacity),"technical_accounting_capacity_usd":float(capacity),
+"reserve_usd_per_attempt":float(reserve),"input_usd_per_million":float(input_rate),
+"output_usd_per_million":float(output_rate),"stability_gate":stability or None,
 "maximum_physical_http_attempts":12360,"maximum_logical_judgments":12000,
 "retry_delays_seconds":[15,45,90],"retry_judge_token_caps":[512,768],
 "ambiguous_transport_retry":True,"retryable_response_validation":True,
@@ -201,10 +229,13 @@ export PATHVLM_AIGCBEST_MAX_JUDGE_TOKENS="$MAX_JUDGE_TOKENS"
 export PATHVLM_AIGCBEST_RETRY_JUDGE_TOKEN_CAPS="$RETRY_JUDGE_TOKEN_CAPS"
 export PATHVLM_AIGCBEST_MIN_REQUEST_INTERVAL_SECONDS="1"
 export PATHVLM_AIGCBEST_RETRY_DELAYS_SECONDS="15,45,90"
+export PATHVLM_AIGCBEST_MODEL_ID="$MODEL_ID"
+export PATHVLM_AIGCBEST_INPUT_USD_PER_MILLION="$INPUT_USD_PER_MILLION"
+export PATHVLM_AIGCBEST_OUTPUT_USD_PER_MILLION="$OUTPUT_USD_PER_MILLION"
 export PATHVLM_STAGE3_RULE_FALLBACK_ENABLED="true"
 export PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT="24"
 export PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT="4"
-export PATHVLM_TRAIN_STATE_AUDIT_NAME="gpt4o_full_train_state_audit.json"
+export PATHVLM_TRAIN_STATE_AUDIT_NAME="$TRAIN_AUDIT_NAME"
 export PATHVLM_EPOCH_SNAPSHOT_STEPS="500,1000,1500"
 export PATHVLM_EPOCH_SNAPSHOT_DIR="$EPOCH_SNAPSHOT_DIR"
 if [[ -n "$RESUME_FROM" ]]; then export PATHVLM_RESUME_FROM_CHECKPOINT="$RESUME_FROM"; else unset PATHVLM_RESUME_FROM_CHECKPOINT || true; fi
@@ -224,5 +255,5 @@ cmd=(
   --save_strategy steps --save_steps 100 --save_total_limit 2 --save_only_model false
   --report_to none --seed 42 --data_seed 42 --remove_unused_columns false
 )
-printf 'Starting formal GPT-4o Stage3; segment=%s resume=%s log=%s\n' "$SEGMENT_ID" "${RESUME_FROM:-none}" "$TRAIN_LOG"
+printf 'Starting formal Stage3 with Judge %s; segment=%s resume=%s log=%s\n' "$MODEL_ID" "$SEGMENT_ID" "${RESUME_FROM:-none}" "$TRAIN_LOG"
 "${cmd[@]}" 2>&1 | tee "$TRAIN_LOG"

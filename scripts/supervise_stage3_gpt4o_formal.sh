@@ -6,11 +6,11 @@ WORKSPACE_ROOT="/home/dataset-assist-0/czy/wjy"
 REPO_ROOT="$WORKSPACE_ROOT/myr1"
 INSTALL_ROOT="$WORKSPACE_ROOT/pathvlm_r1_v1_a100"
 PYTHON="$INSTALL_ROOT/envs/grpo/bin/python"
-LAUNCHER="$REPO_ROOT/scripts/launch_stage3_gpt4o_formal.sh"
+LAUNCHER="${PATHVLM_STAGE3_LAUNCHER:-$REPO_ROOT/scripts/launch_stage3_gpt4o_formal.sh}"
 RECOVERY="$REPO_ROOT/scripts/stage3_checkpoint_recovery.py"
 MAX_HTTP_ATTEMPTS=12360
-RESERVE_USD=0.02
-ACCOUNTING_CAPACITY_USD=247.20
+RESERVE_USD="${PATHVLM_AIGCBEST_RESERVE_USD:-0.02}"
+ACCOUNTING_CAPACITY_USD="${PATHVLM_AIGCBEST_LIMIT_USD:-247.20}"
 
 : "${PATHVLM_STAGE3_RUN_DIR:?Set a dedicated GPT-4o formal run directory}"
 RUN_DIR="$(readlink -m "$PATHVLM_STAGE3_RUN_DIR")"
