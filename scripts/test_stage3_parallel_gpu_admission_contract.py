@@ -39,6 +39,14 @@ class ParallelGpuAdmissionContractTests(unittest.TestCase):
         self.assertLess(smoke_passed, owner_check)
         self.assertLess(owner_check, full_started)
 
+    def test_task_subset_is_explicit_and_defaults_to_all_tasks(self) -> None:
+        text = EVALUATION.read_text(encoding="utf-8")
+        self.assertIn(
+            'PATHVLM_STAGE3_EVAL_TASKS:-pathmmu,pathvqa,omnimedvqa', text
+        )
+        self.assertIn('"requested_tasks": requested_tasks', text)
+        self.assertIn('"completed_tasks": sys.argv[4].split(",")', text)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -1,5 +1,16 @@
 # Latest recovery pointer
 
+Latest GPT-4o task-gated parallel evaluation update:
+
+0. `20260805_221524_gpt4o_parallel_smoke_task_gate_and_partial_continuation.md`
+0. `../protocol/gpt4o_parallel_smoke_task_gate_partial_continuation_20260805_221524.json`
+
+The shared-GPU three-task smoke stopped before full inference because GPT-4o Stage3 reached the
+64-token cap on 15/16 OmniMedVQA cases. PathMMU and PathVQA yes/no passed their independently frozen
+behavior gates. The launcher now accepts an explicit task subset while retaining all three as its
+default; a new run may continue only the two eligible tasks and must preserve the failed Omni smoke
+separately. The independent GPT-4o visual-fidelity arm is active on GPU 3 beside Grok Stage3.
+
 Latest Grok-parallel GPU admission preparation and Gemini 3.5 no-thinking route audit:
 
 0. `20260805_220716_grok_parallel_gpt4o_admission_and_gemini35_route_audit.md`

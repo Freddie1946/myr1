@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-05T22:15:24+08:00",
+  "status": "three_task_smoke_failed_partial_continuation_prepared",
+  "formal_result": false,
+  "failed_run_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_selected_gpt4o_full_20260805_parallel_grok43",
+  "full_inference_started_in_failed_run": false,
+  "task_smokes": {
+    "pathmmu": {
+      "status": "passed",
+      "count": 16,
+      "nonempty_rate": 1.0,
+      "parseable_rate": 1.0,
+      "cap_hit_rate": 0.0
+    },
+    "pathvqa": {
+      "status": "passed",
+      "answer_scope": "yes_no_only",
+      "count": 16,
+      "nonempty_rate": 1.0,
+      "parseable_rate": 0.9375,
+      "cap_hit_rate": 0.1875
+    },
+    "omnimedvqa": {
+      "status": "failed_behavior_gate",
+      "count": 16,
+      "nonempty_rate": 1.0,
+      "cap_hit_count": 15,
+      "cap_hit_rate": 0.9375,
+      "maximum_allowed_cap_hit_rate": 0.2
+    }
+  },
+  "partial_continuation": {
+    "explicit_tasks": [
+      "pathmmu",
+      "pathvqa"
+    ],
+    "new_run_required": true,
+    "rerun_smokes": true,
+    "omnimedvqa_excluded_after_failed_compatibility_gate": true,
+    "pathvqa_free_form": false
+  },
+  "visual_fidelity": {
+    "status": "running_not_complete",
+    "gpu": 3,
+    "shared_with_stage3": true,
+    "run_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_fidelity_gpt4o_20260805_parallel_grok43"
+  },
+  "tests": {
+    "shell_syntax": "passed",
+    "shared_admission_and_task_selection": 5,
+    "evaluation_scope_and_integrity": 13
+  },
+  "artifact_sha256": {
+    "failed_run_contract": "99bea22454e2ae05e8dca73791b8393dd16d4d79bf06e36fdba227fadc46c10c",
+    "omnimedvqa_smoke_metrics": "52ef8b21d98068641282e658997aa78593b829da7c1a6bff491a585dbbcba794"
+  },
+  "code_sha256": {
+    "scripts/run_stage3_selected_full_evaluations.sh": "c9bc9328af2ce251736d824832d7cacf944a04a253ee816a0f91750e2c5e77b2",
+    "scripts/test_stage3_parallel_gpu_admission_contract.py": "e5810f8c4e0bec06c40fac2094d36b0df3ac2074d3a28bb68ca10a03d110eb9f"
+  },
+  "repository_parent_commit": "1dd82f7e7c0299d6cb8db832ccbc5a6fb916bf43"
+}

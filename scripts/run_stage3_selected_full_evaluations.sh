@@ -19,6 +19,7 @@ GPT_SELECTION="$GPT_RUN/validation_0385_epochs/selection.json"
 KIMI_SELECTION="$KIMI_RUN/validation_0385_epochs/selection.json"
 
 EVAL_ARMS="${PATHVLM_STAGE3_EVAL_ARMS:-gpt4o,kimi26}"
+EVAL_TASKS="${PATHVLM_STAGE3_EVAL_TASKS:-pathmmu,pathvqa,omnimedvqa}"
 RUN_GPT=0
 RUN_KIMI=0
 IFS=',' read -r -a REQUESTED_ARMS <<<"$EVAL_ARMS"
@@ -36,6 +37,31 @@ for arm in "${REQUESTED_ARMS[@]}"; do
   esac
 done
 (( RUN_GPT == 1 || RUN_KIMI == 1 )) || { echo "No Stage3 evaluation arm selected" >&2; exit 2; }
+
+RUN_PATHMMU=0
+RUN_PATHVQA=0
+RUN_OMNIMEDVQA=0
+IFS=',' read -r -a REQUESTED_TASKS <<<"$EVAL_TASKS"
+for task in "${REQUESTED_TASKS[@]}"; do
+  case "$task" in
+    pathmmu)
+      (( RUN_PATHMMU == 0 )) || { echo "Duplicate Stage3 evaluation task: $task" >&2; exit 2; }
+      RUN_PATHMMU=1
+      ;;
+    pathvqa)
+      (( RUN_PATHVQA == 0 )) || { echo "Duplicate Stage3 evaluation task: $task" >&2; exit 2; }
+      RUN_PATHVQA=1
+      ;;
+    omnimedvqa)
+      (( RUN_OMNIMEDVQA == 0 )) || { echo "Duplicate Stage3 evaluation task: $task" >&2; exit 2; }
+      RUN_OMNIMEDVQA=1
+      ;;
+    *) echo "Unsupported Stage3 evaluation task: $task" >&2; exit 2 ;;
+  esac
+done
+(( RUN_PATHMMU == 1 || RUN_PATHVQA == 1 || RUN_OMNIMEDVQA == 1 )) || {
+  echo "No Stage3 evaluation task selected" >&2; exit 2;
+}
 
 PATHMMU_VALID="$INSTALL/data/pathmmu_image_disjoint_v2/rewritten_records/validation_0385.json"
 PATHMMU_TEST="$INSTALL/data/pathmmu_image_disjoint_v2/rewritten_records/test_0999.json"
@@ -163,12 +189,16 @@ GPT_GPUS=() KIMI_GPUS=() REQUIRED_GPUS=()
 if (( RUN_GPT == 1 )); then
   mapfile -t GPT_GPUS < <(parse_gpu_triplet PATHVLM_STAGE3_GPT4O_EVAL_GPUS "${PATHVLM_STAGE3_GPT4O_EVAL_GPUS:-0,1,2}")
   [[ "${#GPT_GPUS[@]}" -eq 3 ]] || exit 2
-  REQUIRED_GPUS+=("${GPT_GPUS[@]}")
+  (( RUN_PATHMMU == 0 )) || REQUIRED_GPUS+=("${GPT_GPUS[0]}")
+  (( RUN_PATHVQA == 0 )) || REQUIRED_GPUS+=("${GPT_GPUS[1]}")
+  (( RUN_OMNIMEDVQA == 0 )) || REQUIRED_GPUS+=("${GPT_GPUS[2]}")
 fi
 if (( RUN_KIMI == 1 )); then
   mapfile -t KIMI_GPUS < <(parse_gpu_triplet PATHVLM_STAGE3_KIMI_EVAL_GPUS "${PATHVLM_STAGE3_KIMI_EVAL_GPUS:-3,4,5}")
   [[ "${#KIMI_GPUS[@]}" -eq 3 ]] || exit 2
-  REQUIRED_GPUS+=("${KIMI_GPUS[@]}")
+  (( RUN_PATHMMU == 0 )) || REQUIRED_GPUS+=("${KIMI_GPUS[0]}")
+  (( RUN_PATHVQA == 0 )) || REQUIRED_GPUS+=("${KIMI_GPUS[1]}")
+  (( RUN_OMNIMEDVQA == 0 )) || REQUIRED_GPUS+=("${KIMI_GPUS[2]}")
 fi
 declare -A SEEN_GPUS=()
 verify_shared_owner
@@ -215,7 +245,7 @@ with path.open("a", encoding="utf-8") as handle:
 PY
 }
 
-"$PYTHON" - "$CONTRACT" "$EVAL_ARMS" "$GPT_MODEL" "$GPT_STEP" "$KIMI_MODEL" "$KIMI_STEP" \
+"$PYTHON" - "$CONTRACT" "$EVAL_ARMS" "$EVAL_TASKS" "$GPT_MODEL" "$GPT_STEP" "$KIMI_MODEL" "$KIMI_STEP" \
   "$GIT_COMMIT" "$SHARED_GPU_MODE" "$SHARED_OWNER" "$SHARED_MAX_USED_MIB" "$SHARED_MIN_FREE_MIB" <<'PY'
 import json
 import os
@@ -224,29 +254,32 @@ from pathlib import Path
 
 path = Path(sys.argv[1])
 arms = sys.argv[2].split(",")
+requested_tasks = sys.argv[3].split(",")
 models = {}
 if "gpt4o" in arms:
-    models["stage3_gpt4o"] = {"path": sys.argv[3], "selected_step": int(sys.argv[4])}
+    models["stage3_gpt4o"] = {"path": sys.argv[4], "selected_step": int(sys.argv[5])}
 if "kimi26" in arms:
-    models["stage3_kimi26"] = {"path": sys.argv[5], "selected_step": int(sys.argv[6])}
+    models["stage3_kimi26"] = {"path": sys.argv[6], "selected_step": int(sys.argv[7])}
+task_contracts = {
+    "pathmmu": {"count": 999, "split_role": "test999_development"},
+    "pathvqa": {"count": 3362, "split_role": "external_test", "answer_scope": "yes_no_only"},
+    "omnimedvqa": {"count": 8518, "split_role": "external_test"},
+}
 value = {
     "schema_version": 1,
     "status": "frozen",
     "models": models,
-    "tasks": {
-        "pathmmu": {"count": 999, "split_role": "test999_development"},
-        "pathvqa_yes_no": {"count": 3362, "split_role": "external_test"},
-        "omnimedvqa": {"count": 8518, "split_role": "external_test"},
-    },
+    "requested_tasks": requested_tasks,
+    "tasks": {name: task_contracts[name] for name in requested_tasks},
     "pathvqa_free_form_status": "postponed_by_user_and_excluded_from_this_run",
     "smoke_count_per_model_task": 16,
     "accuracy_used_as_smoke_gate": False,
-    "repository_commit": sys.argv[7],
+    "repository_commit": sys.argv[8],
     "gpu_admission": {
-        "mode": "shared_with_stage3" if sys.argv[8] == "true" else "idle_exclusive",
-        "stage3_owner_run": sys.argv[9] or None,
-        "maximum_initial_used_mib": int(sys.argv[10]),
-        "minimum_initial_free_mib": int(sys.argv[11]),
+        "mode": "shared_with_stage3" if sys.argv[9] == "true" else "idle_exclusive",
+        "stage3_owner_run": sys.argv[10] or None,
+        "maximum_initial_used_mib": int(sys.argv[11]),
+        "minimum_initial_free_mib": int(sys.argv[12]),
     },
 }
 if path.exists():
@@ -365,18 +398,14 @@ unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY all_proxy
 
 SPECS=()
 if (( RUN_GPT == 1 )); then
-  SPECS+=(
-    "stage3_gpt4o|$GPT_MODEL|pathmmu|$PATHMMU_VALID|${GPT_GPUS[0]}|$PATHMMU_VALID_SHA"
-    "stage3_gpt4o|$GPT_MODEL|pathvqa|$PATHVQA|${GPT_GPUS[1]}|$PATHVQA_SHA"
-    "stage3_gpt4o|$GPT_MODEL|omnimedvqa|$OMNI|${GPT_GPUS[2]}|$OMNI_SHA"
-  )
+  (( RUN_PATHMMU == 0 )) || SPECS+=("stage3_gpt4o|$GPT_MODEL|pathmmu|$PATHMMU_VALID|${GPT_GPUS[0]}|$PATHMMU_VALID_SHA")
+  (( RUN_PATHVQA == 0 )) || SPECS+=("stage3_gpt4o|$GPT_MODEL|pathvqa|$PATHVQA|${GPT_GPUS[1]}|$PATHVQA_SHA")
+  (( RUN_OMNIMEDVQA == 0 )) || SPECS+=("stage3_gpt4o|$GPT_MODEL|omnimedvqa|$OMNI|${GPT_GPUS[2]}|$OMNI_SHA")
 fi
 if (( RUN_KIMI == 1 )); then
-  SPECS+=(
-    "stage3_kimi26|$KIMI_MODEL|pathmmu|$PATHMMU_VALID|${KIMI_GPUS[0]}|$PATHMMU_VALID_SHA"
-    "stage3_kimi26|$KIMI_MODEL|pathvqa|$PATHVQA|${KIMI_GPUS[1]}|$PATHVQA_SHA"
-    "stage3_kimi26|$KIMI_MODEL|omnimedvqa|$OMNI|${KIMI_GPUS[2]}|$OMNI_SHA"
-  )
+  (( RUN_PATHMMU == 0 )) || SPECS+=("stage3_kimi26|$KIMI_MODEL|pathmmu|$PATHMMU_VALID|${KIMI_GPUS[0]}|$PATHMMU_VALID_SHA")
+  (( RUN_PATHVQA == 0 )) || SPECS+=("stage3_kimi26|$KIMI_MODEL|pathvqa|$PATHVQA|${KIMI_GPUS[1]}|$PATHVQA_SHA")
+  (( RUN_OMNIMEDVQA == 0 )) || SPECS+=("stage3_kimi26|$KIMI_MODEL|omnimedvqa|$OMNI|${KIMI_GPUS[2]}|$OMNI_SHA")
 fi
 
 record_event "smoke_phase_started" "${#SPECS[@]} closed-question Stage3 model-task checks: $EVAL_ARMS"
@@ -422,7 +451,7 @@ for spec in "${FULL_SPECS[@]}"; do
   verify_full "$label" "$model" "$task" "$data_sha"
 done
 record_event "full_phase_verified" "all ${#FULL_SPECS[@]} count/hash/source gates passed: $EVAL_ARMS"
-"$PYTHON" - "$RUN_ROOT/completed.json" "$EVENTS" "$EVAL_ARMS" <<'PY'
+"$PYTHON" - "$RUN_ROOT/completed.json" "$EVENTS" "$EVAL_ARMS" "$EVAL_TASKS" <<'PY'
 import datetime
 import hashlib
 import json
@@ -434,9 +463,15 @@ path = Path(sys.argv[1])
 root = path.parent
 artifacts = []
 labels = {"gpt4o": "stage3_gpt4o", "kimi26": "stage3_kimi26"}
+suffixes = {
+    "pathmmu": "pathmmu_test999",
+    "pathvqa": "pathvqa_yesno3362",
+    "omnimedvqa": "omnimedvqa_full8518",
+}
 for arm in sys.argv[3].split(","):
     label = labels[arm]
-    for suffix in ("pathmmu_test999", "pathvqa_yesno3362", "omnimedvqa_full8518"):
+    for task in sys.argv[4].split(","):
+        suffix = suffixes[task]
         value = root / label / suffix / "full_integrity_verified.json"
         if not value.is_file():
             raise SystemExit(f"missing full-integrity artifact: {value}")
@@ -450,6 +485,7 @@ result = {
     "completed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     "pathvqa_scope": "yes_no_only",
     "pathvqa_free_form_inference": False,
+    "completed_tasks": sys.argv[4].split(","),
     "artifacts": artifacts,
     "events": str(Path(sys.argv[2]).resolve()),
 }
