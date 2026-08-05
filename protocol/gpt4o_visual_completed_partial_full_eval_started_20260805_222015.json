@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-05T22:20:15+08:00",
+  "status": "visual_completed_partial_full_evaluation_running",
+  "formal_result": false,
+  "visual_fidelity": {
+    "status": "completed_single_arm_verified",
+    "run_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_fidelity_gpt4o_20260805_parallel_grok43",
+    "model_label": "stage3_gpt4o",
+    "case_count": 24,
+    "figure_count": 25,
+    "baseline_correct": 12,
+    "baseline_accuracy": 0.5,
+    "mean_deletion_auc_advantage": 0.021497917801995458,
+    "mean_insertion_auc_advantage": 0.01849481135058645,
+    "mean_top_25pct_comprehensiveness": 0.025371304189320654,
+    "attention_claim": false,
+    "five_arm_comparison_completed": false,
+    "artifact_sha256": {
+      "completed": "33b0a663ba1e0439a75d2a070d9466256307ce7d57b84a9d64e96117bd5d21ea",
+      "metrics": "883a296523a0c4db691eba39baedb232a9967269264a85d7c09dec408fe28e35",
+      "verification": "2ccdbf7fa45271a97219a0adc3dee328cd8026b77b8cef5f82ca7ecbe4dcf1a6"
+    }
+  },
+  "selected_model_evaluation": {
+    "status": "full_phase_running",
+    "run_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_selected_gpt4o_pathmmu_pathvqa_20260805_parallel_grok43",
+    "tasks": [
+      "pathmmu_test999",
+      "pathvqa_yesno3362"
+    ],
+    "smokes": "passed_fresh",
+    "progress_rows_at_record": {
+      "pathmmu": 25,
+      "pathvqa": 176
+    },
+    "partial_scores_reported": false,
+    "omnimedvqa": "excluded_after_preserved_behavior_gate_failure",
+    "pathvqa_free_form": false,
+    "run_contract_sha256": "d71c710e175e0e9c3cc3d81e8ebd8d54a0bd3c47a0cc103c30b95279af10d1bd"
+  },
+  "grok_stage3_owner": {
+    "status": "running",
+    "step_at_record": 29,
+    "completed_judge_requests": 241,
+    "committed_spend_usd": 1.11930625,
+    "worker_failure_observed": false,
+    "oom_observed": false
+  },
+  "private_hf_backup": "pending_completed_artifact_increment",
+  "repository_commit_for_visual_record": "d03cf8aefe2a090bf75960935c9b839baa6f50e4"
+}

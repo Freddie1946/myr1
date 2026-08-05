@@ -1,5 +1,16 @@
 # Latest recovery pointer
 
+Latest completed GPT-4o visual-fidelity arm and active partial full evaluation:
+
+0. `20260805_222015_gpt4o_visual_completed_and_partial_full_eval_started.md`
+0. `../protocol/gpt4o_visual_completed_partial_full_eval_started_20260805_222015.json`
+
+The selected GPT-4o Stage3 checkpoint completed and independently verified all 24 frozen
+perturbation-fidelity cases and 25 figures while sharing GPU 3 with the active Grok arm. Its narrow
+fidelity metrics are recorded without an attention/localization claim. A new task-gated evaluation
+run passed fresh PathMMU and PathVQA yes/no smokes and entered full 999/3362 inference on GPUs 0/1.
+OmniMedVQA remains excluded after its separately preserved 93.75% cap-hit smoke failure.
+
 Latest GPT-4o task-gated parallel evaluation update:
 
 0. `20260805_221524_gpt4o_parallel_smoke_task_gate_and_partial_continuation.md`
