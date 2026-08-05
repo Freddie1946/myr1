@@ -1,5 +1,16 @@
 # Latest recovery pointer
 
+Latest approved Kimi balance continuation and verified HTTP 429 recovery:
+
+0. `20260805_195300_kimi_balance_429_recovery_segment06_verified.md`
+0. `../protocol/kimi_balance_429_recovery_segment06_verified_20260805_195300.json`
+
+The runtime budget ceiling covers the settled prior spend plus the user-approved remaining USD 20
+balance. This record diagnoses segment04's synchronized HTTP 429 outage and segment05's local
+rate-limit contract mismatch, preserves both corrections, and records segment06 through completed
+step 1105. The run is stopped at the approved 36-event total fallback limit; its latest complete
+checkpoint remains checkpoint-1100 and the run is not claimed as complete.
+
 Latest verified Kimi segment03 resume:
 
 0. `20260804_232000_kimi_segment03_resume_verified.md`

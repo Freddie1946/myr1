@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-05T19:53:00+08:00",
+  "formal_result": false,
+  "status": "segment06_stopped_at_total_fallback_limit",
+  "approval": {
+    "accepted_existing_rule_fallbacks": 18,
+    "additional_balance_usd": 20.0,
+    "prior_budget_limit_usd": 26.71782984,
+    "new_budget_limit_usd": 46.70863776,
+    "prior_max_unique_requests": 12976,
+    "new_max_unique_requests": 13500,
+    "rule_fallback_total_limit": 36
+  },
+  "checkpoint_validation": {
+    "checkpoint_step": 1100,
+    "model_shards": 4,
+    "optimizer_states": 8,
+    "model_states": 8,
+    "rng_states": 8,
+    "status": "complete"
+  },
+  "segment04": {
+    "resume_checkpoint_step": 1100,
+    "first_completed_step": 1101,
+    "terminal_category": "consecutive_judge_outage",
+    "terminal_error": "rule fallback consecutive limit reached: 4",
+    "latest_complete_checkpoint_step": 1100,
+    "settled_committed_spend_usd": 29.169519960000216,
+    "settled_completed_unique_requests": 10002
+  },
+  "openrouter_credit_observation": {
+    "total_credits_usd": 36.0,
+    "actual_total_usage_usd": 15.432634495,
+    "account_exhausted": false,
+    "observation_is_final": false
+  },
+  "fallback_amendment": {
+    "old_consecutive_limit": 4,
+    "new_consecutive_limit": 8,
+    "total_limit": 36,
+    "preserved_total_used": 23,
+    "preserved_consecutive_used": 4
+  },
+  "segment05": {
+    "resume_checkpoint_step": 1100,
+    "network_requests_made": 0,
+    "optimizer_steps_completed": 0,
+    "terminal_category": "source_or_contract_drift",
+    "terminal_error": "OpenRouter rate-limit contract mismatch: expected 8.0, found 4.0",
+    "conservatively_settled_reservations": 8,
+    "conservative_internal_settlement_usd": 0.4,
+    "settlement_is_observed_openrouter_charge": false
+  },
+  "rate_limit_correction": {
+    "old_minimum_interval_seconds": 4.0,
+    "new_minimum_interval_seconds": 8.0,
+    "static_preflight_added": true,
+    "rate_limit_before_budget_reservation": true
+  },
+  "segment06": {
+    "launch_index": 6,
+    "final_declared_recovery_index": true,
+    "resume_checkpoint_step": 1100,
+    "max_steps": 1500,
+    "save_steps": 100,
+    "supervisor_pid": 771517,
+    "launcher_pid": 771525,
+    "torch_distributed_pid": 771542,
+    "worker_pids": [771620, 771621, 771622, 771623, 771624, 771625, 771626, 771627],
+    "master_port": 29647,
+    "first_verified_step": 1101,
+    "latest_completed_step": 1105,
+    "terminal_attempted_step": 1106,
+    "terminal_category": "total_rule_fallback_limit",
+    "terminal_error": "rule fallback total limit reached: 36",
+    "step_1101": {
+      "remote_judge_results": 5,
+      "bounded_rule_fallbacks": 3,
+      "loss": 0.0011,
+      "gradient_norm": 4.756123065948486,
+      "reward": 2.0875000953674316,
+      "process_reward": 0.46250003576278687,
+      "kl": 0.027099609375,
+      "epoch": 2.2
+    }
+  },
+  "runtime_observation_after_step_1101": {
+    "budget_completed_unique_requests": 10030,
+    "budget_committed_spend_usd": 30.323539110000233,
+    "next_step_in_flight_reservations": 1,
+    "rule_fallback_total_used": 26,
+    "rule_fallback_consecutive_used": 3,
+    "observation_is_final_settlement": false
+  },
+  "terminal_settlement": {
+    "stopped_at": "2026-08-05T20:13:38+08:00",
+    "latest_complete_checkpoint_step": 1100,
+    "budget_committed_spend_usd": 34.41095351000011,
+    "budget_limit_usd": 46.70863776,
+    "completed_unique_requests": 10136,
+    "max_unique_requests": 13500,
+    "unresolved_reservations": 0,
+    "rule_fallback_total_used": 36,
+    "rule_fallback_total_limit": 36,
+    "rule_fallback_consecutive_used": 2,
+    "rule_fallback_consecutive_limit": 8,
+    "training_complete": false
+  },
+  "shared_gpu_observation": {
+    "independent_workload": "/home/dataset-assist-0/czy/zw/AFI-VLA",
+    "independent_processes_modified": false,
+    "minimum_observed_free_memory_mib": 14309,
+    "oom_observed": false,
+    "process_collision_observed": false
+  },
+  "immutable_evidence": {
+    "pre_balance_amendment_budget_sha256": "711fe2d4fe69461629ff6dcdbf041f872cb6c8cd13ce53eff310ef7392e639ae",
+    "pre_total_cap_amendment_fallback_sha256": "4daf729f1826a01e13f9eafa035fe17c20703ab86bdf8ddf72e8a89c16f8463b",
+    "pre_consecutive_amendment_fallback_sha256": "dff74cbe88be958d36a798df6718b257839112369f982ae2503f5bd5410b1d94",
+    "pre_interval_amendment_rate_limit_sha256": "d2d8c59e05b08a41c816557e34bff72de8455f4be7e1e0daa66246a235ca480d"
+  },
+  "logs": {
+    "segment04": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/train_segment04.log",
+    "segment05": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/train_segment05.log",
+    "segment06": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/train_segment06.log",
+    "segment06_supervisor": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/supervisor_resume_segment06_20260805_194600.log",
+    "recovery_audit": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/kimi26_full3epoch_seed42_fresh_20260803/supervisor_recovery_audit.jsonl"
+  },
+  "guardrail": {
+    "training_complete": false,
+    "maximum_recovery_index": 6,
+    "preserve_logs_and_audit_on_failure": true,
+    "diagnose_before_any_later_launch": true,
+    "new_approval_required_to_raise_total_fallback_limit": true,
+    "restart_performed_after_terminal_stop": false
+  },
+  "code_commit": "cb88f6544ddf37af0d801f8fdb6d844dd10c8b91"
+}
