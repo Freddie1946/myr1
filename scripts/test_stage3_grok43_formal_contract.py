@@ -25,7 +25,7 @@ class GrokFormalContractTests(unittest.TestCase):
             'PATHVLM_AIGCBEST_COMPLETION_RATIO="2"',
             'PATHVLM_AIGCBEST_INPUT_USD_PER_MILLION="1.25"',
             'PATHVLM_AIGCBEST_OUTPUT_USD_PER_MILLION="2.5"',
-            'PATHVLM_AIGCBEST_LIMIT_USD="50"',
+            'PATHVLM_AIGCBEST_LIMIT_USD="${PATHVLM_AIGCBEST_LIMIT_USD:-50}"',
             'grok-4.3-stability-gate.json',
             'formal_stage3_grok43_via_aigcbest_seed42',
         ):
