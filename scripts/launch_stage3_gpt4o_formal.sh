@@ -26,7 +26,7 @@ OUTPUT_USD_PER_MILLION="${PATHVLM_AIGCBEST_OUTPUT_USD_PER_MILLION:-10.0}"
 RUN_CLASS="${PATHVLM_STAGE3_RUN_CLASS:-formal_stage3_gpt4o_seed42}"
 TRAIN_AUDIT_NAME="${PATHVLM_TRAIN_STATE_AUDIT_NAME:-gpt4o_full_train_state_audit.json}"
 PENALTY="0.4"
-MAX_HTTP_ATTEMPTS=12360
+MAX_HTTP_ATTEMPTS="${PATHVLM_AIGCBEST_MAX_HTTP_ATTEMPTS:-12360}"
 RESERVE_USD="${PATHVLM_AIGCBEST_RESERVE_USD:-0.02}"
 # User requested no USD budget ceiling.  This is a technical ledger capacity
 # derived from the physical-attempt cap, not a spending target or selection gate.
@@ -55,6 +55,10 @@ TRAIN_LOG="$RUN_DIR/train_${SEGMENT_ID}.log"
 PREFLIGHT="$RUN_DIR/launch_preflight_${SEGMENT_ID}.json"
 
 [[ "$SAVE_STEPS" == "100" ]] || { echo "Formal save interval must be 100" >&2; exit 2; }
+[[ "$MAX_HTTP_ATTEMPTS" =~ ^[0-9]+$ ]] && (( MAX_HTTP_ATTEMPTS >= 12360 && MAX_HTTP_ATTEMPTS <= 20000 )) || {
+  echo "Physical HTTP attempt cap must be an integer from 12360 through 20000" >&2
+  exit 2
+}
 [[ "$SEGMENT_ID" =~ ^[A-Za-z0-9_.-]+$ ]] || { echo "Unsafe segment id" >&2; exit 2; }
 [[ -x "$PYTHON" ]] || { echo "GRPO Python is missing: $PYTHON" >&2; exit 2; }
 [[ -f "$PARENT_MANIFEST" && -f "$PARENT/model.safetensors.index.json" ]] || {
@@ -187,11 +191,11 @@ fi
 
 "$PYTHON" - "$PREFLIGHT" "$REPO_ROOT" "$SEGMENT_ID" "$RESUME_FROM" "$MODEL_ID" \
   "$RUN_CLASS" "$ACCOUNTING_CAPACITY_USD" "$RESERVE_USD" "$INPUT_USD_PER_MILLION" \
-  "$OUTPUT_USD_PER_MILLION" "$STABILITY_RESULT" <<'PY'
+  "$OUTPUT_USD_PER_MILLION" "$STABILITY_RESULT" "$MAX_HTTP_ATTEMPTS" <<'PY'
 import json, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
-path,repo,segment,resume,model,run_class,capacity,reserve,input_rate,output_rate,stability=sys.argv[1:]
+path,repo,segment,resume,model,run_class,capacity,reserve,input_rate,output_rate,stability,max_http_attempts=sys.argv[1:]
 commit=subprocess.check_output(["/home/dataset-assist-0/czy/wjy/.local-git/usr/bin/git","-C",repo,"rev-parse","HEAD"],text=True).strip()
 value={"schema_version":1,"created_at":datetime.now(timezone.utc).isoformat(),"status":"passed",
 "formal_result":False,"run_class":run_class,"repository_commit":commit,
@@ -199,7 +203,7 @@ value={"schema_version":1,"created_at":datetime.now(timezone.utc).isoformat(),"s
 "user_usd_budget_limit":float(capacity),"technical_accounting_capacity_usd":float(capacity),
 "reserve_usd_per_attempt":float(reserve),"input_usd_per_million":float(input_rate),
 "output_usd_per_million":float(output_rate),"stability_gate":stability or None,
-"maximum_physical_http_attempts":12360,"maximum_logical_judgments":12000,
+"maximum_physical_http_attempts":int(max_http_attempts),"maximum_logical_judgments":12000,
 "retry_delays_seconds":[15,45,90],"retry_judge_token_caps":[512,768],
 "ambiguous_transport_retry":True,"retryable_response_validation":True,
 "rule_fallback_total_limit":24,

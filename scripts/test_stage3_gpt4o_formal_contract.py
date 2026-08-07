@@ -24,7 +24,7 @@ class FormalContractTests(unittest.TestCase):
         text = LAUNCHER.read_text(encoding="utf-8")
         for fragment in (
             'PENALTY="0.4"',
-            "MAX_HTTP_ATTEMPTS=12360",
+            'PATHVLM_AIGCBEST_MAX_HTTP_ATTEMPTS:-12360',
             'PATHVLM_AIGCBEST_LIMIT_USD:-247.20',
             "--num_generations 4",
             "--per_device_train_batch_size 1",
@@ -52,6 +52,7 @@ class FormalContractTests(unittest.TestCase):
         text = SUPERVISOR.read_text(encoding="utf-8")
         self.assertIn('PATHVLM_STAGE3_MAX_RECOVERIES:-3', text)
         self.assertIn('MAX_RECOVERIES <= 6', text)
+        self.assertIn('MAX_HTTP_ATTEMPTS <= 20000', text)
         self.assertIn('classification_log="$train_log"', text)
         self.assertIn('classify --log "$classification_log"', text)
         self.assertIn('launch_capture="$RUN_DIR/launch_${segment}.log"', text)

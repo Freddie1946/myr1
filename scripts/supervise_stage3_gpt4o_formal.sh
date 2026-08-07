@@ -8,7 +8,7 @@ INSTALL_ROOT="$WORKSPACE_ROOT/pathvlm_r1_v1_a100"
 PYTHON="$INSTALL_ROOT/envs/grpo/bin/python"
 LAUNCHER="${PATHVLM_STAGE3_LAUNCHER:-$REPO_ROOT/scripts/launch_stage3_gpt4o_formal.sh}"
 RECOVERY="$REPO_ROOT/scripts/stage3_checkpoint_recovery.py"
-MAX_HTTP_ATTEMPTS=12360
+MAX_HTTP_ATTEMPTS="${PATHVLM_AIGCBEST_MAX_HTTP_ATTEMPTS:-12360}"
 RESERVE_USD="${PATHVLM_AIGCBEST_RESERVE_USD:-0.02}"
 ACCOUNTING_CAPACITY_USD="${PATHVLM_AIGCBEST_LIMIT_USD:-247.20}"
 
@@ -30,6 +30,10 @@ BASE_PORT="${PATHVLM_STAGE3_MASTER_PORT:-29740}"
 }
 (( START_INDEX <= MAX_RECOVERIES )) || { echo "Start index exceeds recovery limit" >&2; exit 2; }
 [[ "$BASE_PORT" =~ ^[1-9][0-9]*$ ]] || exit 2
+[[ "$MAX_HTTP_ATTEMPTS" =~ ^[0-9]+$ ]] && (( MAX_HTTP_ATTEMPTS >= 12360 && MAX_HTTP_ATTEMPTS <= 20000 )) || {
+  echo "Physical HTTP attempt cap must be an integer from 12360 through 20000" >&2
+  exit 2
+}
 [[ -x "$PYTHON" && -f "$LAUNCHER" && -f "$RECOVERY" ]] || exit 2
 
 record_event() {
