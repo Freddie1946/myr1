@@ -20,8 +20,14 @@ SUPERVISOR_AUDIT="$RUN_DIR/supervisor_recovery_audit.jsonl"
 MAX_RECOVERIES="${PATHVLM_STAGE3_MAX_RECOVERIES:-3}"
 START_INDEX="${PATHVLM_STAGE3_START_INDEX:-0}"
 BASE_PORT="${PATHVLM_STAGE3_MASTER_PORT:-29740}"
-[[ "$MAX_RECOVERIES" =~ ^[0-3]$ ]] || { echo "Recoveries must be 0 through 3" >&2; exit 2; }
-[[ "$START_INDEX" =~ ^[0-3]$ ]] || { echo "Start index must be 0 through 3" >&2; exit 2; }
+[[ "$MAX_RECOVERIES" =~ ^[0-9]+$ ]] && (( MAX_RECOVERIES <= 6 )) || {
+  echo "Recoveries must be an integer from 0 through 6" >&2
+  exit 2
+}
+[[ "$START_INDEX" =~ ^[0-9]+$ ]] && (( START_INDEX <= 6 )) || {
+  echo "Start index must be an integer from 0 through 6" >&2
+  exit 2
+}
 (( START_INDEX <= MAX_RECOVERIES )) || { echo "Start index exceeds recovery limit" >&2; exit 2; }
 [[ "$BASE_PORT" =~ ^[1-9][0-9]*$ ]] || exit 2
 [[ -x "$PYTHON" && -f "$LAUNCHER" && -f "$RECOVERY" ]] || exit 2
@@ -57,17 +63,23 @@ for (( launch_index=START_INDEX; launch_index<=MAX_RECOVERIES; launch_index++ ))
   export PATHVLM_STAGE3_SAVE_STEPS=100
   if [[ -n "$resume_from" ]]; then export PATHVLM_STAGE3_RESUME_FROM_CHECKPOINT="$resume_from"; else unset PATHVLM_STAGE3_RESUME_FROM_CHECKPOINT || true; fi
   record_event "{\"event\":\"segment_start\",\"segment\":\"$segment\",\"launch_index\":$launch_index,\"resume_from\":\"$resume_from\"}"
+  launch_capture="$RUN_DIR/launch_${segment}.log"
   set +e
-  bash "$LAUNCHER"
-  launch_status=$?
+  bash "$LAUNCHER" 2>&1 | tee "$launch_capture"
+  launch_status=${PIPESTATUS[0]}
   set -e
   if (( launch_status == 0 )); then
     record_event "{\"event\":\"training_completed\",\"segment\":\"$segment\",\"launch_index\":$launch_index}"
     exit 0
   fi
   train_log="$RUN_DIR/train_${segment}.log"
+  classification_log="$train_log"
+  # The launcher performs read-only preflight before creating train_segment*.log.
+  # Preserve and classify that output instead of mislabeling a preflight failure
+  # as an untraceable missing-training-log terminal failure.
+  [[ -s "$classification_log" ]] || classification_log="$launch_capture"
   set +e
-  failure_classification="$($PYTHON "$RECOVERY" classify --log "$train_log")"
+  failure_classification="$($PYTHON "$RECOVERY" classify --log "$classification_log")"
   classification_status=$?
   set -e
   if (( classification_status != 0 )); then

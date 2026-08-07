@@ -51,7 +51,10 @@ class FormalContractTests(unittest.TestCase):
     def test_supervisor_is_classification_gated_and_bounded(self):
         text = SUPERVISOR.read_text(encoding="utf-8")
         self.assertIn('PATHVLM_STAGE3_MAX_RECOVERIES:-3', text)
-        self.assertIn('classify --log "$train_log"', text)
+        self.assertIn('MAX_RECOVERIES <= 6', text)
+        self.assertIn('classification_log="$train_log"', text)
+        self.assertIn('classify --log "$classification_log"', text)
+        self.assertIn('launch_capture="$RUN_DIR/launch_${segment}.log"', text)
         self.assertIn('"event":"failure_classifier_error"', text)
         self.assertIn('PATHVLM_STAGE3_START_INDEX', text)
         self.assertIn('if [[ "$recovery_action" != "recover" ]]', text)
