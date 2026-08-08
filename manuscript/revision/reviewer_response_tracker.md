@@ -173,8 +173,11 @@ The original decision PDF remains authoritative; comments below are concise para
 - 2026-08-09 sparse-allocation update: the user replaced an exhaustive matrix with three
   rule-only mini arms on one frozen 1,000-QA union: 750+250, 500+500 and 250+750 SFT/RL. The
   deterministic image-complete adapters and recoverable sequence are prepared, and a six-task real
-  eight-A100 smoke passed. The formal detached queue remains to be launched. See
-  `docs/20260809_033236_data_ratio_rule_rl_ablation_prepared_and_smoke_completed.md`.
+  eight-A100 smoke passed. The formal nine-task queue was then launched from frozen commit
+  `8f5eb1d` under a detached supervisor; its first 750-example SFT arm entered real training with
+  finite optimizer updates. Queue completion and downstream evaluation remain pending. See
+  `docs/20260809_033236_data_ratio_rule_rl_ablation_prepared_and_smoke_completed.md` and
+  `docs/20260809_034026_data_ratio_rule_rl_ablation_formal_sequence_started.md`.
 
 ### R2-2 — Specify image/case-level splitting and prevent leakage
 

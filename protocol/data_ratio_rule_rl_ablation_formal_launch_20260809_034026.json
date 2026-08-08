@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "record_type": "data_ratio_rule_rl_ablation_formal_launch",
+  "timestamp": "2026-08-09T03:40:26+08:00",
+  "repository_commit": "8f5eb1d380117c39029da216ff4c6610a364607e",
+  "protocol": {
+    "path": "protocol/data_ratio_rule_rl_ablation_v1_20260809.json",
+    "sha256": "941c959179c1d6a6ab75872ae5e75d2aeee34b415b519467f789ddbc20831a82"
+  },
+  "data_manifest": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/data_ratio_rule_rl_ablation_v1/manifest.json",
+    "sha256": "2761b64e10eec83ab67fd3e74973558996a6c1084bb5cc09630f2eeed3d6ae79"
+  },
+  "formal_root": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/data_ratio_rule_rl_ablation_v1/formal_sequence",
+  "preflight": {
+    "passed": true,
+    "sha256": "ac214bb60420124235f5afcebfb0c01ecf45e6158c1f3be977cf6b69ed04892e",
+    "disk_free_bytes": 4110243332096,
+    "gpu_count": 8,
+    "gpu_type": "NVIDIA A100-SXM4-80GB",
+    "test_accessed": false
+  },
+  "detached_supervisor": {
+    "pid": 2715867,
+    "parent_pid": 1,
+    "session_id": 2715867,
+    "state": "running"
+  },
+  "first_task": {
+    "task_id": "sft0750_rl0250_sft",
+    "attempt": 1,
+    "stage": "sft",
+    "sample_count": 750,
+    "epochs": 10,
+    "total_optimization_steps": 940,
+    "real_training_verified": true,
+    "verification_evidence": [
+      "trainer emitted Running training",
+      "multiple finite loss and gradient-norm updates were logged",
+      "all eight GPUs reached 100 percent utilization"
+    ]
+  },
+  "queue_task_count": 9,
+  "formal_queue_completed": false,
+  "completion_boundary": "detached launch and first real training verified; do not monitor to queue completion in this goal"
+}

@@ -1,5 +1,15 @@
 # Latest recovery pointer
 
+Latest sparse data-ratio rule-RL formal launch:
+
+0. `20260809_034026_data_ratio_rule_rl_ablation_formal_sequence_started.md`
+0. `../protocol/data_ratio_rule_rl_ablation_formal_launch_20260809_034026.json`
+
+The nine-task formal sequence is running under detached supervisor PID 2715867 from frozen commit
+`8f5eb1d`. Formal preflight passed, test was not accessed, and the first 750-example SFT task
+entered its 940-step training loop with finite optimizer updates on all eight A100 GPUs. The queue
+is not claimed complete; monitoring, final audit and evaluation belong to later goals.
+
 Latest sparse data-ratio rule-RL preparation and sequential smoke:
 
 0. `20260809_033236_data_ratio_rule_rl_ablation_prepared_and_smoke_completed.md`
@@ -10,8 +20,8 @@ The new sparse cross-design uses one fixed 1,000-QA union for 750+250, 500+500 a
 SFT/rule-RL arms. Deterministic image-complete bins, rule-only training contracts, a Stage2
 continued-rule-RL control and a gated base+4,000-rule-RL stress test are implemented. Four
 CUDA-free tests and all six real eight-A100 sequential smoke tasks passed, including recovery from
-a post-training audit-code failure without repeating completed training. Formal detached launch is
-the next action; later completion monitoring and evaluation are separate goals.
+a post-training audit-code failure without repeating completed training. The formal detached queue
+has now started; later completion monitoring and evaluation are separate goals.
 
 Latest layerwise-attention unseen validation:
 
