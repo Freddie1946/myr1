@@ -170,6 +170,11 @@ The original decision PDF remains authoritative; comments below are concise para
   disclose the ZeRO-3 versus ZeRO-2 backend limitation. See
   `docs/20260720_001137_no_n0500_n1000_rerun_decision.md`.
 - Remaining: run RL scale after Outcome-GRPO gates and rewrite/narrow claims.
+- 2026-08-09 sparse-allocation update: the user replaced an exhaustive matrix with three
+  rule-only mini arms on one frozen 1,000-QA union: 750+250, 500+500 and 250+750 SFT/RL. The
+  deterministic image-complete adapters and recoverable sequence are prepared, and a six-task real
+  eight-A100 smoke passed. The formal detached queue remains to be launched. See
+  `docs/20260809_033236_data_ratio_rule_rl_ablation_prepared_and_smoke_completed.md`.
 
 ### R2-2 — Specify image/case-level splitting and prevent leakage
 
@@ -293,8 +298,11 @@ The original decision PDF remains authoritative; comments below are concise para
   a simpler alternative reward under matched data/settings with statistical analysis.
 - Evidence/actions: formal SFT infrastructure is valid; Outcome-GRPO parser/update plumbing was debugged;
   the corrected formal-hardware one-step Outcome-GRPO gate now passes with 8/8 strict format rewards.
-  Stage 3 definition and formal matched ablation remain incomplete.
-- Status: `blocked-decision` then `pending-experiment`.
+  Stage 3 definition is now frozen and multiple Judge arms exist. A new matched control starts from
+  the exact selected Stage2 checkpoint and applies another 1,500 steps of accuracy+format rule-RL
+  with a fresh optimizer, matching Stage3's extra optimization while removing the LLM judge. Its
+  executable contract passed a real Stage2-parent smoke; the formal arm is prepared but uncompleted.
+- Status: `pending-experiment`.
 
 ### R3-4 — Expand pathology foundation-model/VLM related work
 
@@ -340,6 +348,13 @@ The original decision PDF remains authoritative; comments below are concise para
   margin; and the formal n=1000 continuation completed. Validation selected epoch 2 at 62.60%, versus
   the SFT parent at 60.52%. This is one RL size and one seed, not a systematic RL scaling result.
 - Status: `partial`.
+- 2026-08-09 sparse cross-design update: the formal plan now adds 750+250, 500+500 and 250+750
+  SFT/rule-RL arms on one exact 1,000-QA union, plus a separately labelled base+4,000-rule-RL stress
+  test. Four deterministic 250-QA image-complete bins keep answer counts within 61--64 per option;
+  every arm has zero SFT/RL image overlap. CUDA-free tests and a six-task real eight-A100 sequential
+  smoke passed. Formal training and later validation/statistics remain pending. Evidence:
+  `docs/20260809_033236_data_ratio_rule_rl_ablation_prepared_and_smoke_completed.md` and
+  `protocol/data_ratio_rule_rl_ablation_smoke_completion_20260809_033236.json`.
 
 ### R3-6 — Add confidence intervals, significance tests, and multiple seeds
 

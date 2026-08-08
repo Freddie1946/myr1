@@ -1,5 +1,18 @@
 # Latest recovery pointer
 
+Latest sparse data-ratio rule-RL preparation and sequential smoke:
+
+0. `20260809_033236_data_ratio_rule_rl_ablation_prepared_and_smoke_completed.md`
+0. `../protocol/data_ratio_rule_rl_ablation_v1_20260809.json`
+0. `../protocol/data_ratio_rule_rl_ablation_smoke_completion_20260809_033236.json`
+
+The new sparse cross-design uses one fixed 1,000-QA union for 750+250, 500+500 and 250+750
+SFT/rule-RL arms. Deterministic image-complete bins, rule-only training contracts, a Stage2
+continued-rule-RL control and a gated base+4,000-rule-RL stress test are implemented. Four
+CUDA-free tests and all six real eight-A100 sequential smoke tasks passed, including recovery from
+a post-training audit-code failure without repeating completed training. Formal detached launch is
+the next action; later completion monitoring and evaluation are separate goals.
+
 Latest layerwise-attention unseen validation:
 
 0. `20260806_020000_attention_unseen_validation_completed.md`

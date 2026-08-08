@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "protocol_id": "data_ratio_rule_rl_ablation_v1_20260809",
+  "created_at": "2026-08-09T03:00:00+08:00",
+  "formal_result": false,
+  "purpose": "Sparse SFT-to-rule-based-RL allocation ablation plus a matched continued-rule-RL control for Stage3",
+  "data_version": "pathmmu_image_disjoint_v2",
+  "seed": 42,
+  "base_model": {
+    "id": "Qwen/Qwen2.5-VL-7B-Instruct",
+    "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/models/Qwen2.5-VL-7B-Instruct-cc594898137f460bfe9f0759e9844b3ce807cfb5"
+  },
+  "stage2_parent": {
+    "description": "validation-selected Outcome-GRPO n1000 seed42 epoch2 step1000",
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
+    "manifest_sha256": "83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0"
+  },
+  "source_files": {
+    "sft_0500": {
+      "path": "data/pathmmu_image_disjoint_v2/subsets/sft/sft_0500_with_cot.json",
+      "count": 500,
+      "sha256": "040a68a8377db37dabbaeb9cb20cb73b54102bdfd639af93d76e0f7c5b0844d2"
+    },
+    "rl_0500": {
+      "path": "data/pathmmu_image_disjoint_v2/subsets/rl/rl_0500_with_cot.json",
+      "count": 500,
+      "sha256": "d8ece33fcb21e5eb340deb559d91e0ed6fa6356de8b25d5df12577e52624c494"
+    },
+    "sft_3000": {
+      "path": "data/pathmmu_image_disjoint_v2/splits/sft_train_3000_with_cot.json",
+      "count": 3000,
+      "sha256": "667c2f235dc2c05582dfed0ad59ca4581d15d87fdf1b9d8c21ba711322f9ee78"
+    },
+    "rl_1000": {
+      "path": "data/pathmmu_image_disjoint_v2/splits/rl_train_1000_with_cot.json",
+      "count": 1000,
+      "sha256": "5beb918095c882d70abca1708849afb85758c4ed96165e45bf6ed74f84f83708"
+    }
+  },
+  "common_mini_pool": {
+    "definition": "exact union of the frozen SFT-500 and RL-500 subsets",
+    "count": 1000,
+    "partition": "four deterministic image-complete 250-QA bins; each bin has 125 QA from each original source",
+    "nested_assignment": {
+      "sft0250_rl0750": {"sft_bins": [1], "rl_bins": [2, 3, 4]},
+      "sft0500_rl0500": {"sft_bins": [1, 2], "rl_bins": [3, 4]},
+      "sft0750_rl0250": {"sft_bins": [1, 2, 3], "rl_bins": [4]}
+    }
+  },
+  "prepared_data": {
+    "root": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/data_ratio_rule_rl_ablation_v1",
+    "manifest": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/data_ratio_rule_rl_ablation_v1/manifest.json",
+    "manifest_sha256": "2761b64e10eec83ab67fd3e74973558996a6c1084bb5cc09630f2eeed3d6ae79"
+  },
+  "training_contract": {
+    "sft": {
+      "epochs": 10,
+      "learning_rate": 0.00002,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 1,
+      "save_steps": 100,
+      "save_total_limit": 2,
+      "full_language_model": true,
+      "vision_tower_frozen": true,
+      "multimodal_projector_frozen": true
+    },
+    "rule_rl": {
+      "reward_funcs": ["accuracy", "format"],
+      "judge_llm_used": false,
+      "learning_rate": 0.000001,
+      "beta": 0.04,
+      "num_generations": 4,
+      "max_completion_length": 192,
+      "save_steps": 100,
+      "save_total_limit": 2,
+      "equivalent_epochs": 3,
+      "steps": {
+        "n0250": 375,
+        "n0500": 750,
+        "n0750": 1125,
+        "n1000": 1500,
+        "n4000": 6000
+      }
+    }
+  },
+  "formal_execution_order": [
+    "sft0750_rl0250",
+    "sft0500_rl0500",
+    "sft0250_rl0750",
+    "stage2_continue_rule_rl1000",
+    "base_rule_rl4000_gate50",
+    "base_rule_rl4000"
+  ],
+  "existing_reference_arms": {
+    "sft4000_rl0000": "existing continued-SFT exposure control; do not rerun",
+    "sft3000_rl1000": "existing selected Stage2 Outcome-GRPO; do not rerun"
+  },
+  "interpretation_limits": [
+    "The three 1000-QA mini arms isolate allocation ratio on one fixed union, not total-data scale.",
+    "The 0+4000 arm is a stress test and is not compute-matched to the existing continued-SFT 4000 control.",
+    "The continued-rule-RL arm is the matched extra-optimization control for LLM-judge Stage3.",
+    "No validation or test result is used by the execution sequence; evaluation is a later goal."
+  ],
+  "test_accessed": false
+}

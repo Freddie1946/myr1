@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "protocol_id": "data_ratio_rule_rl_ablation_v1_20260809",
+  "completed_at": "2026-08-09T03:31:56.065242+08:00",
+  "formal_result": false,
+  "scope": "real eight-A100 sequential smoke for two SFT-to-rule-RL ratios, base-to-rule-RL, and Stage2-to-continued-rule-RL",
+  "protocol_sha256": "941c959179c1d6a6ab75872ae5e75d2aeee34b415b519467f789ddbc20831a82",
+  "prepared_data_manifest": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/data_ratio_rule_rl_ablation_v1/manifest.json",
+    "sha256": "2761b64e10eec83ab67fd3e74973558996a6c1084bb5cc09630f2eeed3d6ae79"
+  },
+  "sequence_state": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/data_ratio_rule_rl_ablation_v1/smoke_sequence/state.json",
+    "sha256": "da088c3b4d6af7fb24bb8791dff43ff0298544980aba95462db94be67356fb4a",
+    "status": "completed",
+    "task_count": 6
+  },
+  "code_sha256": {
+    "scripts/prepare_data_ratio_ablation.py": "ab074370f119fd35926a35eb5748bec829179bbac9adb9e235c7fea311d7a96b",
+    "scripts/run_data_ratio_ablation_sequence.py": "21073a0cbd63d2393db366e2ccfbd3e89f84d097ae9d70e5afbe838ecdfc1a2b",
+    "scripts/launch_data_ratio_ablation_sequence.sh": "8a36355607b62f107d70050036bcaeb2f57a60964607185337499c5761f3d458",
+    "scripts/test_data_ratio_ablation_sequence.py": "d913da430711d13b7c089079759bea727207bab40b30c751a59cbbec29bad1f9"
+  },
+  "cuda_free_tests": {"passed": 4, "failed": 0},
+  "tasks": {
+    "smoke_sft0750_rl0250_sft": {
+      "status": "completed",
+      "loss": 1.7511,
+      "grad_norm": 29.789670944213867
+    },
+    "smoke_sft0750_rl0250_rule_rl": {
+      "status": "completed",
+      "accuracy_reward": 0.625,
+      "format_reward": 1.0,
+      "reward_std": 0.25,
+      "grad_norm": 4.4654760360717775,
+      "audit_events": 16
+    },
+    "smoke_sft0250_rl0750_sft": {
+      "status": "completed",
+      "loss": 1.7511,
+      "grad_norm": 29.792539596557617
+    },
+    "smoke_sft0250_rl0750_rule_rl": {
+      "status": "completed",
+      "accuracy_reward": 0.375,
+      "format_reward": 0.875,
+      "reward_std": 0.5,
+      "grad_norm": 4.0653204917907715,
+      "audit_events": 16
+    },
+    "smoke_base_rule_rl4000": {
+      "status": "completed",
+      "accuracy_reward": 0.0,
+      "format_reward": 0.125,
+      "reward_std": 0.25,
+      "grad_norm": 4.370847225189209,
+      "audit_events": 16,
+      "interpretation": "plumbing passes but the weak unsupervised format/accuracy behavior justifies the separate 50-step formal gate"
+    },
+    "smoke_stage2_continue_rule_rl1000": {
+      "status": "completed",
+      "accuracy_reward": 0.5,
+      "format_reward": 1.0,
+      "reward_std": 0.0,
+      "grad_norm": 0.0,
+      "audit_events": 16,
+      "interpretation": "the one-batch zero-variance event is retained; the formal arm audits every step rather than claiming an update from exit status"
+    }
+  },
+  "recovery_test": {
+    "failure": "post-training reward summarizer initially omitted the collections.Counter import",
+    "training_repeated": false,
+    "recovery": "the runner reused the completed model and reward audit, reran only post-validation, then continued the remaining queue",
+    "passed": true
+  },
+  "storage": {
+    "smoke_tree_bytes_human": "186G",
+    "free_after_human": "3.8T"
+  },
+  "gates": {
+    "all_six_tasks_completed": true,
+    "two_distinct_ratio_handoffs_completed": true,
+    "base_parent_branch_completed": true,
+    "stage2_parent_branch_completed": true,
+    "rule_rewards_only": true,
+    "no_process_or_judge_reward": true,
+    "completed_output_recovery_avoided_retraining": true,
+    "test_accessed": false
+  },
+  "test_accessed": false
+}
