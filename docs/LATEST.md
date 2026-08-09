@@ -1,5 +1,15 @@
 # Latest recovery pointer
 
+Latest future data-ratio terminal-model backup automation:
+
+0. `20260809_183225_data_ratio_future_model_backup_armed.md`
+0. `../protocol/data_ratio_future_model_backup_armed_20260809_183225.json`
+
+One low-priority worker uploads the five already completed model-only outputs sequentially. A
+second worker waits without GPU use and will upload RL750, Stage2 continued rule-RL and the final
+0+4000 model only after their exact formal completion audits pass. Full optimizer checkpoints stay
+local and the nonterminal 50-step gate is excluded.
+
 Latest data-ratio remote backup correction and safe optimized-tail handoff:
 
 0. `20260809_182842_data_ratio_remote_backup_and_safe_tail_handoff_started.md`

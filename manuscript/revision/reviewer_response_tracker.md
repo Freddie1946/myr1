@@ -184,6 +184,9 @@ The original decision PDF remains authoritative; comments below are concise para
   only smoke-gated system optimizations with fixed batch/reward/step/data contracts; SDPA remains
   fixed and FlashAttention 2 is excluded. See
   `docs/20260809_182842_data_ratio_remote_backup_and_safe_tail_handoff_started.md`.
+- The five completed outputs and all three future terminal outputs now have sequential private-HF
+  model-only backup workers with exact completion and manifest gates. The 50-step engineering gate
+  is intentionally excluded. See `docs/20260809_183225_data_ratio_future_model_backup_armed.md`.
 
 ### R2-2 — Specify image/case-level splitting and prevent leakage
 

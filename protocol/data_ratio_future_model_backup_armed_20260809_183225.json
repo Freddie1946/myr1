@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "record_type": "data_ratio_future_terminal_model_backup_armed",
+  "timestamp": "2026-08-09T18:32:25+08:00",
+  "repository_commit": "96436a471971bc004a8855ffdbc69c7c72125946",
+  "completed_model_backup": {
+    "pid": 2884852,
+    "status": "running",
+    "model_count": 5,
+    "model_only": true
+  },
+  "future_model_backup": {
+    "pid": 2886597,
+    "status": "waiting_for_completed_model_backup",
+    "poll_seconds": 300,
+    "tasks": {
+      "sft0250_rl0750_rule_rl": 1125,
+      "stage2_continue_rule_rl1000": 1500,
+      "base_rule_rl4000": 6000
+    },
+    "gate_model_excluded": "base_rule_rl4000_gate50",
+    "private_repositories": true,
+    "model_only": true,
+    "optimizer_state_uploaded": false
+  },
+  "test_accessed": false
+}
