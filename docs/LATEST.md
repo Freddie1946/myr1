@@ -1,5 +1,13 @@
 # Latest recovery pointer
 
+Latest bbox-format probe inside the trained think/answer envelope:
+
+0. `20260810_012000_bbox_output_format_probe.md`
+
+Four XML, Qwen-native, plain-coordinate and embedded-JSON encodings were tested. None produced a
+valid spatial bbox on the three-case probe; prompt wording is no longer the priority. A separate
+fixed-answer turn with grammar-constrained decoding is the next justified method.
+
 Latest direct-bbox self-report smoke:
 
 0. `20260810_010500_direct_bbox_self_report_smoke.md`
