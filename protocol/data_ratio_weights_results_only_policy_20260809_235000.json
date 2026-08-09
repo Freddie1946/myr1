@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "record_type": "data_ratio_weights_results_only_policy",
+  "timestamp": "2026-08-09T23:50:00+08:00",
+  "automatic_ratio_weight_uploads": false,
+  "remote_backup_includes": [
+    "frozen_data_and_protocol",
+    "metrics",
+    "logs",
+    "reward_audits",
+    "final_comparison_tables"
+  ],
+  "local_weights_retained": true,
+  "future_model_upload_policy": "explicitly_selected_final_critical_checkpoints_only",
+  "deleted_hf_repositories": [
+    "Freddie1946/PathVLM-R1-Ratio-SFT0750-seed42",
+    "Freddie1946/PathVLM-R1-Ratio-SFT0750-RuleRL0250-seed42",
+    "Freddie1946/PathVLM-R1-Ratio-SFT0500-seed42"
+  ],
+  "estimated_private_bytes_released": 33201041426,
+  "formal_training_changed": false,
+  "local_checkpoints_deleted": false,
+  "test_accessed": false
+}

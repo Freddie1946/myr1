@@ -1,6 +1,16 @@
 # Latest recovery pointer
 
-Latest future data-ratio terminal-model backup automation:
+Latest data-ratio results-only backup policy:
+
+0. `20260809_235000_data_ratio_weights_results_only_policy.md`
+0. `../protocol/data_ratio_weights_results_only_policy_20260809_235000.json`
+
+Automatic model uploads for the small data-ratio ablations are retired. Their weights remain
+local, while metrics, logs, frozen data/protocol records and reward audits continue to be backed
+up. Three ratio repositories were removed from private HF storage, releasing about 33.2 GB. A
+model is uploaded only after it is explicitly selected as a final critical checkpoint.
+
+Superseded future data-ratio terminal-model backup automation:
 
 0. `20260809_183225_data_ratio_future_model_backup_armed.md`
 0. `../protocol/data_ratio_future_model_backup_armed_20260809_183225.json`

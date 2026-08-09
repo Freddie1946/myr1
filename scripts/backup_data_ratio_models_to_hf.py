@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Sequential, resumable private-HF backups for completed data-ratio models."""
+"""Legacy helper for data-ratio model uploads.
+
+Automatic weight backup for small data-ratio ablations was retired on 2026-08-09.
+Metrics, logs and manifests remain backed up, while weights stay local unless a
+specific final checkpoint is explicitly selected for a later manual backup.
+"""
 
 from __future__ import annotations
 
@@ -191,6 +196,25 @@ def main() -> None:
     args = parser.parse_args()
     formal_root = args.formal_root.resolve()
     state_root = args.state_root.resolve()
+    state_path = state_root / "state.json"
+    atomic_json(
+        state_path,
+        {
+            "schema_version": 1,
+            "status": "retired_results_only_policy",
+            "updated_at": now_iso(),
+            "pid": os.getpid(),
+            "formal_root": str(formal_root),
+            "weights_uploaded": False,
+            "reason": (
+                "Small data-ratio ablation weights remain local; only results and logs "
+                "are backed up. A final critical checkpoint must be selected explicitly."
+            ),
+        },
+    )
+    print("automatic small-ablation model backup is retired; no weights uploaded")
+    return
+
     tasks = [
         {
             "task_id": "sft0750_rl0250_sft",
@@ -216,7 +240,6 @@ def main() -> None:
     for task in tasks:
         task["source"] = formal_root / "tasks" / task["task_id"] / "output"
 
-    state_path = state_root / "state.json"
     state = (
         json.loads(state_path.read_text(encoding="utf-8"))
         if state_path.is_file()

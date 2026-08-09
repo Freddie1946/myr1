@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Wait for future formal ratio tasks and back up terminal model-only outputs."""
+"""Legacy watcher for future data-ratio model uploads.
+
+Automatic data-ratio weight uploads were retired on 2026-08-09. The formal
+sequence still runs and its metrics/logs are backed up, but its model outputs
+remain local unless a final checkpoint is explicitly selected later.
+"""
 
 from __future__ import annotations
 
@@ -58,6 +63,24 @@ def main() -> None:
     args = parser.parse_args()
     formal_root = args.formal_root.resolve()
     state_root = args.state_root.resolve()
+    state_path = state_root / "state.json"
+    atomic_json(
+        state_path,
+        {
+            "schema_version": 1,
+            "status": "retired_results_only_policy",
+            "updated_at": now_iso(),
+            "pid": os.getpid(),
+            "formal_root": str(formal_root),
+            "weights_uploaded": False,
+            "reason": (
+                "No automatic data-ratio weight uploads. Select a final critical "
+                "checkpoint explicitly after evaluation."
+            ),
+        },
+    )
+    return
+
     formal_state = formal_root / "state.json"
     tasks = [
         {
@@ -78,7 +101,6 @@ def main() -> None:
     ]
     for task in tasks:
         task["source"] = formal_root / "tasks" / task["task_id"] / "output"
-    state_path = state_root / "state.json"
     state = (
         load_json(state_path)
         if state_path.is_file()
