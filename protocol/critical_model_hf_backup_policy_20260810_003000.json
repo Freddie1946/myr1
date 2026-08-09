@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "record_type": "critical_model_hf_backup_policy",
+  "timestamp": "2026-08-10T00:30:00+08:00",
+  "allowlist": [
+    {
+      "task_id": "grok43_stage3",
+      "expected_step": 1500,
+      "private": true,
+      "gated": false
+    },
+    {
+      "task_id": "stage2_continue_rule_rl1000",
+      "expected_step": 1500,
+      "private": false,
+      "gated": "manual"
+    },
+    {
+      "task_id": "base_rule_rl4000",
+      "expected_step": 6000,
+      "private": false,
+      "gated": "manual"
+    }
+  ],
+  "small_ratio_model_uploads": false,
+  "model_only": true,
+  "optimizer_state_uploaded": false,
+  "gate_verified_before_weight_upload": true,
+  "test_accessed": false
+}

@@ -1,5 +1,14 @@
 # Latest recovery pointer
 
+Latest explicitly selected critical-model HF backup policy:
+
+0. `20260810_003000_critical_model_hf_backup_policy.md`
+0. `../protocol/critical_model_hf_backup_policy_20260810_003000.json`
+
+Exactly three model backups are allowed: private Grok Stage3, manually gated public Stage2
+continued rule-RL, and manually gated public base+4,000 rule-RL. Gate state is verified before
+weight upload. The results-only policy still excludes every small ratio checkpoint.
+
 Latest data-ratio results-only backup policy:
 
 0. `20260809_235000_data_ratio_weights_results_only_policy.md`
