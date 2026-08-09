@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "frozen_current_five_models; append-only when pending checkpoints are evaluated",
+  "models": [
+    {
+      "label": "Qwen2.5-VL-7B-Instruct",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_development_20260728_215918/qwen7/predictions.jsonl"
+    },
+    {
+      "label": "SFT3000",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/sft3000_parent_test999/predictions.jsonl"
+    },
+    {
+      "label": "SFT4000-control",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/sft4000_test999/predictions.jsonl"
+    },
+    {
+      "label": "Stage2-outcome-GRPO",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/stage2_rl_test999/predictions.jsonl"
+    },
+    {
+      "label": "Stage3-GPT4o-selected",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_selected_gpt4o_pathmmu_pathvqa_20260805_parallel_grok43/stage3_gpt4o/pathmmu_test999/predictions.jsonl"
+    }
+  ],
+  "pending_append_only_models": [
+    "Stage2-continued-ruleRL",
+    "Stage3-Grok43"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "approved_and_armed",
+  "approved_global_limit_usd": 40.0,
+  "identity_smoke_ledger_limit_usd": 40.0,
+  "identity_smoke_spent_usd_at_launch": 0.8112495,
+  "formal_additional_caps_usd": {
+    "claude-sonnet-4-6": 11.0,
+    "gemini-3.1-pro": 23.0,
+    "gpt-4o-2024-08-06": 5.0
+  },
+  "formal_additional_caps_total_usd": 39.0,
+  "absolute_combined_ceiling_usd": 39.8112495,
+  "notes": [
+    "The three formal processes use disjoint ledgers and one exact judge each.",
+    "The already-paid successful identity-smoke rows are reused as formal run-0 rows.",
+    "The combined ceiling remains below the user-approved USD 40 global limit.",
+    "No rule fallback is permitted for semantic scores."
+  ]
+}
