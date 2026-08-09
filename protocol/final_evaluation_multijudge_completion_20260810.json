@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T06:05:00+08:00",
+  "status": "completed_and_backed_up",
+  "report": "docs/20260810_final_closed_benchmark_and_multijudge_results.md",
+  "reporting_scope": {
+    "pathmmu": "999 multiple-choice development-test records",
+    "pathvqa": "3362 yes/no records only; leading-answer contract",
+    "omnimedvqa": "8518 multiple-choice records; contract-aligned primary and official raw-completion sensitivity",
+    "pathvqa_free_form_excluded": true
+  },
+  "newly_completed_evaluations": {
+    "llama32_11b_pathvqa_yes_no": "passed",
+    "deepseek_vl2_pathmmu_letter_only_v2": "passed_with_prompt_contract_disclosure",
+    "scalereasoner_r1_three_benchmarks": "passed",
+    "gpt4o_stage3_three_benchmarks": "passed",
+    "grok43_stage3_three_benchmarks": "passed"
+  },
+  "stage3_inference_summary": {
+    "gpt4o_pathmmu_vs_stage2": "-0.50pp; McNemar p=0.7093; no independent gain",
+    "gpt4o_pathvqa_vs_stage2": "+2.62pp; McNemar p=2.735e-11; robust gain",
+    "gpt4o_omni_aligned_vs_stage2": "+1.37pp; McNemar p=0.0100",
+    "gpt4o_omni_official_vs_stage2": "+0.88pp; McNemar p=0.1054; contract-sensitive",
+    "grok43_pathmmu_vs_stage2": "+2.40pp; McNemar p=0.0635; positive but borderline",
+    "grok43_pathvqa_vs_stage2": "+2.65pp; McNemar p=8.769e-11; robust gain",
+    "grok43_omni_aligned_vs_stage2": "+0.95pp; McNemar p=0.0790",
+    "grok43_omni_official_vs_stage2": "-0.65pp; McNemar p=0.2452"
+  },
+  "badcase_audits": {
+    "gpt4o": {
+      "count": 8,
+      "all_direction_labels_confirmed": true,
+      "cost_usd": 0.052983
+    },
+    "grok43": {
+      "count": 8,
+      "all_direction_labels_confirmed": true,
+      "cost_usd": 0.054522
+    },
+    "individual_test_answers_modified_or_rejudged": false
+  },
+  "blind_multijudge": {
+    "status": "completed",
+    "case_count": 100,
+    "repeat_case_count_per_model": 30,
+    "runs_for_repeated_cases": 3,
+    "model_count": 6,
+    "expected_rows_per_judge": 960,
+    "judges": [
+      "gpt-4o-2024-08-06",
+      "claude-sonnet-4-6",
+      "gemini-3.1-pro"
+    ],
+    "candidate_identity_exposed_to_judges": false,
+    "posthoc_best_judge_selection": false,
+    "rule_fallback": false,
+    "actual_cost_usd": 29.141971,
+    "result_counts": {
+      "gpt-4o-2024-08-06": 960,
+      "claude-sonnet-4-6": 960,
+      "gemini-3.1-pro": 960
+    },
+    "retry_failures_recovered": {
+      "claude_invalid_json": 1,
+      "gemini_timeout": 1
+    }
+  },
+  "backup": {
+    "repository": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "private": true,
+    "prefix": "snapshots/20260810_final_eval_goal",
+    "final_revision": "4985de4b09687bd8f55bb55d28f24aea1b28ec50",
+    "remote_hash_verification": {
+      "path": "snapshots/20260810_final_eval_goal/multijudge_reasoning_eval_20260810/final_six_models_stage3gpt.json",
+      "local_sha256": "f02b6bf1e520fd7956499e43ef7c328eb06f4edc63c8a03b61e9f9edccd56f65",
+      "downloaded_sha256": "f02b6bf1e520fd7956499e43ef7c328eb06f4edc63c8a03b61e9f9edccd56f65",
+      "matched": true
+    },
+    "model_weights_included": false
+  },
+  "active_training_not_part_of_this_completion": {
+    "task": "stage2_continue_rule_rl1000",
+    "stopped_or_modified": false
+  }
+}

@@ -1,5 +1,18 @@
 # Latest recovery pointer
 
+Latest completed closed-benchmark, blind multi-judge and Stage3 significance audit:
+
+0. `20260810_final_closed_benchmark_and_multijudge_results.md`
+0. `20260810_stage3_gpt4o_vs_stage2_badcase_visual_audit.md`
+0. `20260810_stage3_grok43_vs_stage2_badcase_visual_audit.md`
+0. `../protocol/final_evaluation_multijudge_completion_20260810.json`
+
+All available model/checkpoint evaluations in the frozen reporting scope are complete, including
+the previously missing Llama 11B, DeepSeek-VL2 and new ScaleReasoner-R1 cells. Three blind visual
+judges each completed 960 reasoning-quality ratings. Stage3 closed-benchmark gains are reported by
+dataset and scoring contract rather than collapsed into one claim. Raw artifacts are verified in
+the private HF results snapshot at revision `4985de4b09687bd8f55bb55d28f24aea1b28ec50`.
+
 Latest extended bbox output-format probe:
 
 0. `20260810_020000_extended_bbox_output_format_probe.md`

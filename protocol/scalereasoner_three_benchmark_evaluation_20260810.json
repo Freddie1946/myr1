@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "recorded_at": "2026-08-10T04:52:30+08:00",
-  "status": "all_three_validation_smokes_passed_and_full_evaluations_launched",
+  "status": "all_three_full_evaluations_completed_and_integrity_verified",
   "model": {
     "name": "ChiPhan1110/ScaleReasoner-R1",
     "revision": "ce7f51daa9731f106874ac2bee0e9a864f7a3636",
@@ -39,5 +39,33 @@
     "accuracy_used_as_gate": false
   },
   "compatibility": "The checkpoint's Transformers-4.56 nested text_config is removed only from the in-memory 4.49 configuration; config.json and weights are unchanged.",
-  "individual_answers_modified_or_rejudged": false
+  "individual_answers_modified_or_rejudged": false,
+  "completion": {
+    "pathmmu": {
+      "count": 999,
+      "correct": 648,
+      "accuracy": 0.6486486486486487,
+      "generation_cap_hits": 0,
+      "full_integrity_verified": true,
+      "predictions_sha256": "a08d1ea28e6e5669f6bf2cc6a6ae8f0dc2234b04204ab44267d9a644ba65521a"
+    },
+    "pathvqa_yes_no": {
+      "count": 3362,
+      "contract_aligned_correct": 1934,
+      "contract_aligned_accuracy": 0.5752528256989887,
+      "generation_cap_hits": 7,
+      "full_integrity_verified": true,
+      "predictions_sha256": "0a02b3762e1228292b465e676c6109b40f08bb0c9531c39c255ffda591e5dfd1"
+    },
+    "omnimedvqa": {
+      "count": 8518,
+      "contract_aligned_correct": 3688,
+      "contract_aligned_accuracy": 0.4329654848555999,
+      "official_correct": 3685,
+      "official_accuracy": 0.43261328950457856,
+      "generation_cap_hits": 1460,
+      "full_integrity_verified": true,
+      "predictions_sha256": "61a9c53b94dfe637f658114c1f31520178e79caaa81205dfecadd9366677ad46"
+    }
+  }
 }

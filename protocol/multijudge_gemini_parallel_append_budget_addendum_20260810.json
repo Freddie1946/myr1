@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T05:55:00+08:00",
+  "status": "approved_budget_preserving_parallelization",
+  "reason": "Run the already-frozen Grok append concurrently instead of waiting for the five-model Gemini lane to finish.",
+  "resume_semantics": {
+    "formal_gemini_existing_rows_before_restart": 610,
+    "existing_rows_are_reused": true,
+    "individual_judgments_modified_or_rejudged": false,
+    "original_limit_usd": 23.0,
+    "reduced_limit_usd": 18.0
+  },
+  "parallel_append": {
+    "manifest": "protocol/multijudge_reasoning_eval_grok_only_append_20260810.json",
+    "judge": "gemini-3.1-pro",
+    "expected_rows": 160,
+    "limit_usd": 3.7,
+    "separate_output_directory": true
+  },
+  "aggregate_hard_caps_usd": {
+    "smoke": 0.8112495,
+    "gpt4o_lane": 5.0,
+    "claude_lane": 11.0,
+    "gemini_five_model_lane": 18.0,
+    "gemini_grok_append_lane": 3.7,
+    "two_visual_badcase_audits": 0.3,
+    "total": 38.8112495,
+    "user_approved_ceiling": 40.0,
+    "unallocated_reserve": 1.1887505
+  },
+  "interrupt_billing_caveat": "One request may have been in flight at the resumable stop boundary; the unallocated reserve covers any provider-side charge absent from the local ledger."
+}

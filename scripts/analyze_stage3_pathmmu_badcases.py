@@ -60,6 +60,8 @@ def main() -> None:
     parser.add_argument("--examples-per-direction", type=int, default=12)
     parser.add_argument("--expected-count", type=int, default=999)
     parser.add_argument("--split-name", default="test999")
+    parser.add_argument("--stage2-label", default="Stage2")
+    parser.add_argument("--stage3-label", default="GPT-4o Stage3")
     args = parser.parse_args()
     stage2, stage3 = load(args.stage2), load(args.stage3)
     if set(stage2) != set(stage3) or len(stage2) != args.expected_count:
@@ -159,6 +161,8 @@ def main() -> None:
         "created_at": datetime.now(timezone.utc).isoformat(),
         "stage2_predictions": str(args.stage2.resolve()),
         "stage3_predictions": str(args.stage3.resolve()),
+        "stage2_label": args.stage2_label,
+        "stage3_label": args.stage3_label,
         "count": args.expected_count,
         "split_name": args.split_name,
         "stage2_correct": sum(correct(row) for row in stage2.values()),
@@ -189,9 +193,9 @@ def main() -> None:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
 
     lines = [
-        f"# Stage2 versus GPT-4o Stage3 PathMMU {args.split_name} paired analysis", "",
-        f"- Stage2: {result['stage2_correct']}/{args.expected_count} ({result['stage2_correct']/args.expected_count:.2%})",
-        f"- Stage3: {result['stage3_correct']}/{args.expected_count} ({result['stage3_correct']/args.expected_count:.2%})",
+        f"# {args.stage2_label} versus {args.stage3_label} PathMMU {args.split_name} paired analysis", "",
+        f"- {args.stage2_label}: {result['stage2_correct']}/{args.expected_count} ({result['stage2_correct']/args.expected_count:.2%})",
+        f"- {args.stage3_label}: {result['stage3_correct']}/{args.expected_count} ({result['stage3_correct']/args.expected_count:.2%})",
         f"- Net change: {result['stage3_minus_stage2_correct']:+d} questions",
         f"- Correct in Stage2 only (regressions): {len(transitions['stage2_only'])}",
         f"- Correct in Stage3 only (improvements): {len(transitions['stage3_only'])}",
@@ -199,7 +203,7 @@ def main() -> None:
         f"- Predicted option changed: {choice_changes}/{args.expected_count}",
         f"- Exact paired McNemar p: {result['discordant_pair_mcnemar_exact_two_sided_p']:.4f}", "",
         "## Accuracy by target option", "",
-        "| Target | n | Stage2 | Stage3 | Difference |", "| --- | ---: | ---: | ---: | ---: |",
+        f"| Target | n | {args.stage2_label} | {args.stage3_label} | Difference |", "| --- | ---: | ---: | ---: | ---: |",
     ]
     for target, value in by_target.items():
         lines.append(
@@ -213,8 +217,8 @@ def main() -> None:
             f"Image: `{row['image']}`", "",
             row["problem"], "",
             f"Reference: {row['reference']}", "",
-            f"Stage2 ({row['stage2_predicted_choice']}): {row['stage2_completion']}", "",
-            f"Stage3 ({row['stage3_predicted_choice']}): {row['stage3_completion']}", "",
+            f"{args.stage2_label} ({row['stage2_predicted_choice']}): {row['stage2_completion']}", "",
+            f"{args.stage3_label} ({row['stage3_predicted_choice']}): {row['stage3_completion']}", "",
         ])
     (output / "paired_analysis.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 

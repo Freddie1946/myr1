@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "status": "frozen_grok_only_parallel_append",
+  "models": [
+    {
+      "label": "Stage3-Grok43-selected",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_grok43_selected_full_20260810/pathmmu_test999/predictions.jsonl"
+    }
+  ]
+}

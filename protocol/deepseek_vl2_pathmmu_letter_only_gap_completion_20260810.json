@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "recorded_at": "2026-08-10T03:58:00+08:00",
-  "status": "validation_smoke_passed_and_test999_launched",
+  "status": "completed_and_integrity_verified",
   "purpose": "complete the previously missing DeepSeek-VL2 PathMMU diagnostic without scoring a parser-induced zero",
   "model": {
     "name": "deepseek-ai/deepseek-vl2",
@@ -47,5 +47,16 @@
     "accuracy_used_as_gate": false,
     "status": "passed",
     "predictions_sha256": "7b4cf0f0eb98ac642710f7241784a5ee1579ddbf9323b86d0e928328800438f3"
+  },
+  "completion": {
+    "status": "passed",
+    "count": 999,
+    "correct": 429,
+    "accuracy": 0.4294294294294294,
+    "choice_extracted": 999,
+    "generation_cap_hits": 0,
+    "empty_completions": 0,
+    "full_integrity_verified": true,
+    "predictions_sha256": "53a1cb2442987628b8a988c65c9681b2b9e1358482bc24086c41bbc499945578"
   }
 }
