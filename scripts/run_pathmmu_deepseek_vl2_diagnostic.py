@@ -23,6 +23,10 @@ QUESTION_TEMPLATE = (
     "Give concise image-grounded reasoning inside <think>...</think>. Then output exactly one "
     "option letter (A, B, C, or D) inside <answer>...</answer>."
 )
+LETTER_ONLY_TEMPLATE = (
+    "<image>\n{question}\n"
+    "Answer with exactly one uppercase option letter: A, B, C, or D. Do not output any other text."
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -68,6 +72,10 @@ def parse_args() -> argparse.Namespace:
         choices=("validation_smoke", "test999_development"),
     )
     parser.add_argument("--max-new-tokens", type=int, default=1024)
+    parser.add_argument(
+        "--prompt-contract", choices=("reasoning_v1", "letter_only_v2"),
+        default="reasoning_v1",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
     return parser.parse_args()
@@ -75,8 +83,14 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    if args.max_new_tokens != 1024:
-        raise ValueError("the approved diagnostic contract requires max_new_tokens=1024")
+    expected_tokens = 1024 if args.prompt_contract == "reasoning_v1" else 32
+    if args.max_new_tokens != expected_tokens:
+        raise ValueError(
+            f"{args.prompt_contract} requires max_new_tokens={expected_tokens}"
+        )
+    prompt_template = (
+        QUESTION_TEMPLATE if args.prompt_contract == "reasoning_v1" else LETTER_ONLY_TEMPLATE
+    )
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 999 if args.split_role == "test999_development" else 385
     if len(records) != expected:
@@ -107,7 +121,8 @@ def main() -> None:
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
         "selected_count": len(records),
-        "prompt_template": QUESTION_TEMPLATE,
+        "prompt_contract": args.prompt_contract,
+        "prompt_template": prompt_template,
         "dtype": "bfloat16",
         "quantization": "none",
         "do_sample": False,
@@ -143,7 +158,7 @@ def main() -> None:
         conversation = [
             {
                 "role": "<|User|>",
-                "content": QUESTION_TEMPLATE.format(question=record["problem"]),
+                "content": prompt_template.format(question=record["problem"]),
                 "images": [record["image"]],
             },
             {"role": "<|Assistant|>", "content": ""},
@@ -163,7 +178,7 @@ def main() -> None:
                 pad_token_id=tokenizer.eos_token_id,
                 bos_token_id=tokenizer.bos_token_id,
                 eos_token_id=tokenizer.eos_token_id,
-                max_new_tokens=1024,
+                max_new_tokens=args.max_new_tokens,
                 do_sample=False,
                 use_cache=True,
             )
@@ -182,7 +197,7 @@ def main() -> None:
             "ended_with_eos": bool(
                 generated_ids and generated_ids[-1] == tokenizer.eos_token_id
             ),
-            "reached_generation_cap": token_count >= 1024,
+            "reached_generation_cap": token_count >= args.max_new_tokens,
             "predicted_choice": choice_letter(completion),
             "target_choice": choice_letter(record["solution"]),
             "accuracy_reward": accuracy_reward(wrapped, [record["solution"]])[0],

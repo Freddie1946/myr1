@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T03:42:07+08:00",
+  "purpose": "complete the previously missing Llama 3.2 Vision 11B PathVQA yes/no result after free-form reporting was removed",
+  "model": "Llama-3.2-11B-Vision-Instruct",
+  "source": "fixed local ModelScope mirror",
+  "answer_scope": "yes_no_only",
+  "selected_count": 3362,
+  "generation_contract": {
+    "do_sample": false,
+    "max_new_tokens": 64,
+    "batch_size": 2,
+    "scoring": "frozen leading yes/no contract; unparseable outputs count as wrong"
+  },
+  "smoke16_observation": {
+    "nonempty": 16,
+    "parseable": 13,
+    "generation_cap_hits": 4,
+    "contract_aligned_correct": 11
+  },
+  "gate_addendum": {
+    "minimum_nonempty_rate": 0.8,
+    "minimum_parseable_rate": 0.8,
+    "maximum_generation_cap_hit_rate": 0.3,
+    "reason": "The reporting target is leading yes/no only. Three of four cap-hit outputs already contain an extractable leading yes/no, while all unparseable outputs remain wrong. The earlier 0.20 gate was designed for mixed free-form output and would exclude this arm solely because 4/16 exceeds 3/16 by one case.",
+    "disclosure_required": true,
+    "no_response_or_score_modified": true
+  },
+  "execution": "launch full yes/no split only if the recorded smoke passes this addendum"
+}

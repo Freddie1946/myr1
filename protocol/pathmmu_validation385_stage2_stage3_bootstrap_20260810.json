@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "status": "paired_validation385_comparison",
+  "models": [
+    {
+      "label": "Stage2-outcome-GRPO",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage2_validation385_20260810/predictions.jsonl"
+    },
+    {
+      "label": "Stage3-GPT4o-selected",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_full3epoch_seed42_20260801/validation_0385_epochs/checkpoint-1000/predictions.jsonl"
+    }
+  ]
+}

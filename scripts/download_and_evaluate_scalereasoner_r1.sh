@@ -26,11 +26,13 @@ export TOKENIZERS_PARALLELISM=false PYTHONPATH=$REPO/scripts
 unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY all_proxy
 
 if [[ ! -f "$SMOKE/metrics.json" ]]; then
-  [[ ! -e "$SMOKE" ]] || { echo "Incomplete ScaleReasoner smoke exists: $SMOKE" >&2; exit 3; }
+  SMOKE_RESUME=()
+  [[ ! -e "$SMOKE" ]] || SMOKE_RESUME=(--resume)
   "$PYTHON" "$REPO/scripts/run_pathmmu_qwen_diagnostic.py" \
     --model "$MODEL" --backend qwen2_5_vl \
     --data "$VALIDATION" --output-dir "$SMOKE" \
-    --split-role validation_smoke --batch-size 1 --limit 16
+    --split-role validation_smoke --batch-size 1 --limit 16 \
+    "${SMOKE_RESUME[@]}"
 fi
 
 "$PYTHON" "$REPO/scripts/verify_local_baseline_smoke.py" \

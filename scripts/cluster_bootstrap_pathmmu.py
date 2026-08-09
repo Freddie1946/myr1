@@ -49,6 +49,8 @@ def main() -> None:
     parser.add_argument("--reference-label", default="Stage3-GPT4o-selected")
     parser.add_argument("--replicates", type=int, default=10000)
     parser.add_argument("--seed", type=int, default=20260810)
+    parser.add_argument("--expected-count", type=int, default=999)
+    parser.add_argument("--split-name", default="test999")
     args = parser.parse_args()
     if args.replicates < 1000:
         raise ValueError("at least 1000 bootstrap replicates are required")
@@ -57,13 +59,23 @@ def main() -> None:
     if args.reference_label not in loaded:
         raise ValueError("reference label is absent")
     common = set.intersection(*(set(rows) for rows in loaded.values()))
-    if len(common) != 999:
-        raise ValueError(f"aligned full test999 required, got {len(common)} common rows")
+    if len(common) != args.expected_count:
+        raise ValueError(
+            f"aligned {args.split_name} count {args.expected_count} required, got {len(common)} common rows"
+        )
     anchor = loaded[next(iter(loaded))]
     for index in common:
-        source = anchor[index]["source_record_sha256"]
+        source = anchor[index].get("source_record_sha256")
         for label, rows in loaded.items():
-            if rows[index]["source_record_sha256"] != source:
+            candidate = rows[index].get("source_record_sha256")
+            if source and candidate:
+                matched = candidate == source
+            else:
+                matched = all(
+                    rows[index].get(field) == anchor[index].get(field)
+                    for field in ("image", "problem", "solution", "target_choice")
+                )
+            if not matched:
                 raise ValueError(f"source mismatch for {label} index {index}")
 
     clusters: dict[str, list[int]] = defaultdict(list)
@@ -129,6 +141,7 @@ def main() -> None:
         "clusters_with_multiple_questions": sum(len(indices) > 1 for indices in clusters.values()),
         "maximum_questions_per_image": max(map(len, clusters.values())),
         "reference_label": args.reference_label,
+        "split_name": args.split_name,
         "models": model_results,
         "paired_comparisons": comparisons,
         "manifest": manifest,
@@ -136,7 +149,7 @@ def main() -> None:
     atomic_json(output / "cluster_bootstrap_results.json", result)
 
     lines = [
-        "# PathMMU image-cluster bootstrap results", "",
+        f"# PathMMU {args.split_name} image-cluster bootstrap results", "",
         f"Questions: {len(common)}; unique image clusters: {len(cluster_names)}; "
         f"bootstrap replicates: {args.replicates}.", "",
         "| Model | Accuracy | Image-cluster bootstrap 95% CI |", "| --- | ---: | ---: |",
