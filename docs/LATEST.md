@@ -1,5 +1,13 @@
 # Latest recovery pointer
 
+Latest direct-bbox self-report smoke:
+
+0. `20260810_010500_direct_bbox_self_report_smoke.md`
+
+Two Stage3 checkpoints can occasionally emit meaningful image-space boxes, but strict formatting,
+answer preservation, abstention and spatial agreement are not yet reliable. Direct bbox output is
+therefore an exploratory interface, not reviewer-facing localization evidence.
+
 Latest explicitly selected critical-model HF backup policy:
 
 0. `20260810_003000_critical_model_hf_backup_policy.md`
