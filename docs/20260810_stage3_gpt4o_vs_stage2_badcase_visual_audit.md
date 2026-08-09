@@ -55,5 +55,19 @@ The same-split Stage2 validation run is now complete:
 Thus the validation point estimate really did improve, but its uncertainty includes zero. Moreover,
 checkpoint-1000 was selected on this same validation split, so the validation gain is selection-biased
 and should not be presented as independent confirmatory evidence. The independent `test999` result did
-not reproduce it. Stage3 checkpoints 500 and 1500 are now being evaluated on `test999` to determine
-whether that conclusion is specific to the selected checkpoint or consistent across epochs.
+not reproduce it.
+
+All three Stage3 epoch checkpoints have now been evaluated on the same `test999`:
+
+| Model | Validation385 | Test999 | Test change vs Stage2 | Paired flips (improve/regress) | McNemar p |
+|---|---:|---:|---:|---:|---:|
+| Stage2 | 236/385 (61.30%) | 609/999 (60.96%) | — | — | — |
+| Stage3 checkpoint-500 | 234/385 (60.78%) | 609/999 (60.96%) | 0 | 50/50 | 1.0000 |
+| Stage3 checkpoint-1000 (selected) | 247/385 (64.16%) | 604/999 (60.46%) | -5 | 55/60 | 0.7093 |
+| Stage3 checkpoint-1500 | 245/385 (63.64%) | 602/999 (60.26%) | -7 | 56/63 | 0.5825 |
+
+This checkpoint trajectory strengthens the dataset-selection explanation: later checkpoints look
+better on the validation split used for selection, while their independent test point estimates
+decline. Checkpoint-500 exactly matches Stage2 aggregate test accuracy but still changes 100 individual
+answers in opposite directions. No GPT-4o Stage3 checkpoint demonstrates a test999 accuracy gain over
+Stage2 under the current split and deterministic decoding contract.

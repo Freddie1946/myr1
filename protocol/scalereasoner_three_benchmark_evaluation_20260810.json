@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T04:52:30+08:00",
+  "status": "all_three_validation_smokes_passed_and_full_evaluations_launched",
+  "model": {
+    "name": "ChiPhan1110/ScaleReasoner-R1",
+    "revision": "ce7f51daa9731f106874ac2bee0e9a864f7a3636",
+    "model_config_sha256": "3fdff5aa6d27f70227d3b36b16f86288d7280b9a51ed830e3e381fcaa41de17d",
+    "dtype": "bfloat16",
+    "quantization": "none"
+  },
+  "benchmarks": {
+    "pathmmu": {
+      "full_count": 999,
+      "smoke_count": 16,
+      "smoke_nonempty": 16,
+      "smoke_parseable": 16,
+      "smoke_cap_hits": 0
+    },
+    "pathvqa_yes_no": {
+      "full_count": 3362,
+      "smoke_count": 16,
+      "smoke_nonempty": 16,
+      "smoke_parseable": 15,
+      "smoke_cap_hits": 0
+    },
+    "omnimedvqa": {
+      "full_count": 8518,
+      "smoke_count": 16,
+      "smoke_nonempty": 16,
+      "smoke_parseable": 16,
+      "smoke_cap_hits": 0
+    }
+  },
+  "smoke_policy": {
+    "minimum_nonempty_rate": 0.8,
+    "minimum_parseable_rate": 0.8,
+    "maximum_generation_cap_hit_rate": 0.2,
+    "accuracy_used_as_gate": false
+  },
+  "compatibility": "The checkpoint's Transformers-4.56 nested text_config is removed only from the in-memory 4.49 configuration; config.json and weights are unchanged.",
+  "individual_answers_modified_or_rejudged": false
+}

@@ -12,6 +12,7 @@ from typing import Any
 import torch
 from PIL import Image
 from transformers import (
+    AutoConfig,
     AutoProcessor,
     Qwen2VLForConditionalGeneration,
     Qwen2_5_VLForConditionalGeneration,
@@ -316,6 +317,13 @@ def main() -> None:
         "attn_implementation": "sdpa",
         "low_cpu_mem_usage": True,
     }
+    if args.backend == "qwen2_5_vl":
+        compatible_config = AutoConfig.from_pretrained(
+            args.model, local_files_only=True
+        )
+        if isinstance(getattr(compatible_config, "text_config", None), dict):
+            delattr(compatible_config, "text_config")
+        load_kwargs["config"] = compatible_config
     if args.backend == "mllama":
         # The 90B baseline cannot fit on one accelerator.  Accelerate's deterministic automatic
         # placement uses the visible GPUs without quantization or CPU/disk offload on 8xA100-80G.

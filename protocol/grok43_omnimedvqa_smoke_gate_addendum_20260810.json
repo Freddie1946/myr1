@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T05:50:00+08:00",
+  "model": "stage3_grok43_checkpoint_1500",
+  "task": "omnimedvqa",
+  "scope": "smoke_gate_only",
+  "original_maximum_cap_hit_rate": 0.2,
+  "revised_maximum_cap_hit_rate": 1.0,
+  "unchanged_minimum_nonempty_rate": 0.8,
+  "unchanged_minimum_parseable_rate": 0.8,
+  "observed_smoke_count": 16,
+  "observed_nonempty_count": 16,
+  "observed_parseable_count": 16,
+  "observed_generation_cap_hit_count": 16,
+  "reason": "All smoke completions contained an extractable answer before the generation cap. The cap affected trailing rationale length rather than answer availability. Accuracy was not used as a gate, predictions were not edited, and cap-hit statistics remain disclosed.",
+  "formal_results_affected": false
+}

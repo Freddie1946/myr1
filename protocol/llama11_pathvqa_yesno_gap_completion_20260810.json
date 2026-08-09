@@ -26,5 +26,17 @@
     "disclosure_required": true,
     "no_response_or_score_modified": true
   },
-  "execution": "launch full yes/no split only if the recorded smoke passes this addendum"
+  "execution": "launch full yes/no split only if the recorded smoke passes this addendum",
+  "completion": {
+    "status": "passed",
+    "count": 3362,
+    "contract_aligned_correct": 1882,
+    "contract_aligned_accuracy": 0.5597858417608567,
+    "legacy_whole_completion_correct": 1412,
+    "legacy_whole_completion_accuracy": 0.4199881023200476,
+    "generation_cap_hits": 163,
+    "empty_completions": 0,
+    "full_integrity_verified": true,
+    "predictions_sha256": "d98a276a75ba3e80c864cb12bb0cd2b8a855c59bc4292d7c0b153e56e5924060"
+  }
 }

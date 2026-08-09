@@ -80,7 +80,10 @@ def select(
     candidates = []
     for step in (500, 1000, 1500):
         model = run_dir / "epoch_model_snapshots" / f"checkpoint-{step}"
-        metrics = validation_root / f"checkpoint-{step}" / "metrics.json"
+        candidate_dir = validation_root / f"checkpoint-{step}"
+        if not candidate_dir.exists():
+            candidate_dir = validation_root / f"checkpoint_{step}"
+        metrics = candidate_dir / "metrics.json"
         candidates.append(validate_candidate(
             metrics, expected_step=step, expected_model=model,
             expected_split_role=expected_split_role,

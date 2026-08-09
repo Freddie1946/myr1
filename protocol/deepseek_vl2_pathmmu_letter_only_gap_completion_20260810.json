@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T03:58:00+08:00",
+  "status": "validation_smoke_passed_and_test999_launched",
+  "purpose": "complete the previously missing DeepSeek-VL2 PathMMU diagnostic without scoring a parser-induced zero",
+  "model": {
+    "name": "deepseek-ai/deepseek-vl2",
+    "revision": "f363772d1c47f4239dd844015b4bd53beb87951b",
+    "dtype": "bfloat16",
+    "quantization": "none"
+  },
+  "reasoning_v1_failure": "The first validation case produced a descriptive sentence but no extractable option letter.",
+  "letter_only_v2_contract": {
+    "prompt_suffix": "Answer with exactly one uppercase option letter: A, B, C, or D. Do not output any other text.",
+    "do_sample": false,
+    "max_new_tokens": 32,
+    "validation_smoke_count": 16,
+    "minimum_nonempty_rate": 0.8,
+    "minimum_parseable_rate": 0.8,
+    "maximum_generation_cap_hit_rate": 0.2,
+    "accuracy_used_as_gate": false,
+    "full_test999_only_after_smoke_pass": true
+  },
+  "resource_safety": {
+    "planned_visible_gpus": [3, 4],
+    "executed_visible_gpus": [2, 4],
+    "device_map": "auto",
+    "per_visible_gpu_model_memory_cap": "48GiB",
+    "reason": "The 51.2 GiB unquantized snapshot is sharded across two GPUs so it does not compete for all remaining memory on one GPU while the ongoing training remains resident."
+  },
+  "reporting": {
+    "prompt_contract_difference_must_be_disclosed": true,
+    "unparseable_outputs_count_as_wrong": true,
+    "individual_answers_modified_or_rejudged": false
+  },
+  "compatibility_fix": {
+    "cause": "Transformers generated empty bookkeeping input_ids on the first shard while DeepSeek-VL2 returned logits on the final language shard.",
+    "fix": "Pass an explicit zero-length input_ids tensor on the final decoder device together with inputs_embeds; Accelerate hooks continue to dispatch intermediate layers.",
+    "weights_prompts_samples_and_scores_changed": false
+  },
+  "validation_smoke_result": {
+    "count": 16,
+    "nonempty_count": 16,
+    "parseable_count": 16,
+    "generation_cap_hit_count": 0,
+    "correct": 5,
+    "accuracy_used_as_gate": false,
+    "status": "passed",
+    "predictions_sha256": "7b4cf0f0eb98ac642710f7241784a5ee1579ddbf9323b86d0e928328800438f3"
+  }
+}

@@ -27,3 +27,11 @@ def test_multi_gpu_memory_cap_is_explicit():
     source = MODULE_PATH.read_text(encoding="utf-8")
     assert '"device_map": "auto"' in source
     assert '"48GiB"' in source
+
+
+def test_generation_tensors_follow_output_head_device():
+    source = MODULE_PATH.read_text(encoding="utf-8")
+    assert "model.language.model.layers[-1]" in source
+    assert "inputs_embeds.to(generation_device)" in source
+    assert "prepared.attention_mask.to(generation_device)" in source
+    assert "input_ids=empty_input_ids" in source

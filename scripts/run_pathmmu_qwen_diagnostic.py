@@ -18,6 +18,7 @@ from typing import Any
 import torch
 from PIL import Image
 from transformers import (
+    AutoConfig,
     AutoProcessor,
     Qwen2VLForConditionalGeneration,
     Qwen2_5_VLForConditionalGeneration,
@@ -227,6 +228,19 @@ def main() -> None:
         "attn_implementation": "sdpa",
         "low_cpu_mem_usage": True,
     }
+    if args.backend == "qwen2_5_vl":
+        # Some checkpoints saved by Transformers >=4.56 persist a nested
+        # ``text_config``.  Transformers 4.49 treats that unknown field as a
+        # raw dict, while this generation class expects either a
+        # PretrainedConfig or the legacy flat top-level configuration.  The
+        # top-level fields in these checkpoints are complete, so discard only
+        # the incompatible duplicate in memory; never rewrite config.json.
+        compatible_config = AutoConfig.from_pretrained(
+            args.model, local_files_only=True
+        )
+        if isinstance(getattr(compatible_config, "text_config", None), dict):
+            delattr(compatible_config, "text_config")
+        load_kwargs["config"] = compatible_config
     if args.backend == "mllama":
         load_kwargs["device_map"] = "auto"
         load_kwargs["max_memory"] = {

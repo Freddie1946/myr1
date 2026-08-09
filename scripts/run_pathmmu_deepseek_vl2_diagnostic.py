@@ -169,7 +169,8 @@ def main() -> None:
             .eval()
         )
 
-    for index in range(len(rows), len(records)):
+    resume_start_index = len(rows)
+    for index in range(resume_start_index, len(records)):
         record = records[index]
         conversation = [
             {
@@ -188,9 +189,39 @@ def main() -> None:
         ).to(model.device)
         with torch.inference_mode():
             inputs_embeds = model.prepare_inputs_embeds(**prepared)
+            # With Accelerate's multi-GPU dispatch, DeepSeek-VL2 may place the
+            # vision/input path on the first device and return language logits
+            # on the device of the final decoder block. Transformers creates
+            # its generation bookkeeping tensors on ``inputs_embeds.device``;
+            # leaving those tensors split fails inside greedy_search. Anchor
+            # generation inputs to the final-block device. Dispatch hooks
+            # still move activations through the intermediate language layers.
+            final_decoder_block = model.language.model.layers[-1]
+            generation_device = next(final_decoder_block.parameters()).device
+            if index == resume_start_index:
+                print(
+                    json.dumps(
+                        {
+                            "device_diagnostic": {
+                                "prepared": str(prepared.attention_mask.device),
+                                "inputs_embeds_before_move": str(inputs_embeds.device),
+                                "final_decoder_block": str(generation_device),
+                                "lm_head": str(model.language.lm_head.weight.device),
+                                "hf_device_map": getattr(model, "hf_device_map", None),
+                            }
+                        }
+                    ),
+                    flush=True,
+                )
+            inputs_embeds = inputs_embeds.to(generation_device)
+            attention_mask = prepared.attention_mask.to(generation_device)
+            empty_input_ids = torch.empty(
+                (inputs_embeds.shape[0], 0), dtype=torch.long, device=generation_device
+            )
             output_ids = model.language.generate(
+                input_ids=empty_input_ids,
                 inputs_embeds=inputs_embeds,
-                attention_mask=prepared.attention_mask,
+                attention_mask=attention_mask,
                 pad_token_id=tokenizer.eos_token_id,
                 bos_token_id=tokenizer.bos_token_id,
                 eos_token_id=tokenizer.eos_token_id,

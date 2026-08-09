@@ -10,6 +10,13 @@ from run_external_vqa_qwen import select_answer_scope, summarize
 
 
 class ExternalVqaQwenScopeTests(unittest.TestCase):
+    def test_newer_qwen25_nested_text_config_is_normalized_in_memory(self) -> None:
+        source = Path(__file__).with_name("run_external_vqa_qwen.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("AutoConfig.from_pretrained", source)
+        self.assertIn('delattr(compatible_config, "text_config")', source)
+
     def test_pathvqa_yes_no_only_selects_exact_frozen_count(self) -> None:
         rows = [
             *({"answer_type": "yes_no", "index": index} for index in range(3362)),
