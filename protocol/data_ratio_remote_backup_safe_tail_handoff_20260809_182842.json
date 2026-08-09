@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "record_type": "data_ratio_remote_backup_and_safe_tail_handoff_started",
+  "timestamp": "2026-08-09T18:28:42+08:00",
+  "repository_commit": "a25b36f70532f8e42ad897f2f72c0790996ab640",
+  "github": {
+    "remote": "Freddie1946/myr1",
+    "branch": "codex/a100-stage3-eval",
+    "remote_commit_verified": "a25b36f70532f8e42ad897f2f72c0790996ab640"
+  },
+  "results_backup": {
+    "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+    "repo_type": "dataset",
+    "private": true,
+    "revision": "e22b50bf497dd25b64689b5d30ae8bcd800a4cfa",
+    "prefix": "snapshots/20260809_data_ratio_ablation_live",
+    "verified_prefix_file_count": 86,
+    "contains_model_weights": false
+  },
+  "model_backup": {
+    "status": "running",
+    "pid": 2884852,
+    "state": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/reports/data_ratio_model_hf_backup_20260809/state.json",
+    "completed_source_models": 5,
+    "model_only": true,
+    "optimizer_state_uploaded": false,
+    "private_repositories": true
+  },
+  "handoff": {
+    "status": "waiting_for_current_task_completion",
+    "pid": 2884951,
+    "old_supervisor_pid": 2715867,
+    "old_supervisor_paused": true,
+    "active_training_child_pid": 2872541,
+    "active_task": "sft0250_rl0750_rule_rl",
+    "active_task_command_unchanged": true,
+    "progress_at_record": 171,
+    "target_step": 1125
+  },
+  "optimization": {
+    "flash_attention_2_used": false,
+    "attn_implementation": "sdpa",
+    "scientific_batch_contract_changed": false,
+    "reward_contract_changed": false,
+    "formal_step_counts_changed": false,
+    "smoke_steps_per_candidate": 20,
+    "minimum_relative_throughput_gain": 0.03,
+    "automatic_baseline_fallback": true,
+    "checkpoint_cadence": {
+      "stage2_continue_rule_rl1000": 250,
+      "base_rule_rl4000_gate50": 50,
+      "base_rule_rl4000": 500,
+      "save_total_limit": 2
+    }
+  },
+  "tests": {
+    "safe_optimization_unit_tests": "4/4 passed",
+    "original_sequence_unit_tests": "4/4 passed",
+    "python_compile": "passed",
+    "shell_syntax": "passed",
+    "baseline_fallback_contract": "passed"
+  },
+  "test_accessed": false
+}

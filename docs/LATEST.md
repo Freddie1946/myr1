@@ -1,5 +1,16 @@
 # Latest recovery pointer
 
+Latest data-ratio remote backup correction and safe optimized-tail handoff:
+
+0. `20260809_182842_data_ratio_remote_backup_and_safe_tail_handoff_started.md`
+0. `../protocol/data_ratio_remote_backup_safe_tail_handoff_20260809_182842.json`
+
+GitHub and the private HF results snapshot are now synchronized for the frozen protocol, data,
+completed logs and rule-reward events. Five completed model-only backups are uploading
+sequentially. The active 250+750 rule-RL child continues unchanged while a detached boundary
+handoff waits to run SDPA-only throughput smokes; FlashAttention 2 is excluded. Batch, rewards,
+formal steps and data exposure do not change, and an automatic baseline fallback is mandatory.
+
 Latest sparse data-ratio rule-RL formal launch:
 
 0. `20260809_034026_data_ratio_rule_rl_ablation_formal_sequence_started.md`

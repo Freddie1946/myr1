@@ -178,6 +178,12 @@ The original decision PDF remains authoritative; comments below are concise para
   finite optimizer updates. Queue completion and downstream evaluation remain pending. See
   `docs/20260809_033236_data_ratio_rule_rl_ablation_prepared_and_smoke_completed.md` and
   `docs/20260809_034026_data_ratio_rule_rl_ablation_formal_sequence_started.md`.
+- 2026-08-09 backup/performance update: frozen data, completed logs and reward events are backed up
+  to private HF, model-only uploads for five completed outputs are running, and GitHub is current
+  through `a25b36f`. A detached boundary handoff preserves the active task unchanged and permits
+  only smoke-gated system optimizations with fixed batch/reward/step/data contracts; SDPA remains
+  fixed and FlashAttention 2 is excluded. See
+  `docs/20260809_182842_data_ratio_remote_backup_and_safe_tail_handoff_started.md`.
 
 ### R2-2 — Specify image/case-level splitting and prevent leakage
 
