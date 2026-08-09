@@ -67,7 +67,21 @@ class SelectStage3ValidationCheckpointTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "validation contract mismatch"):
             select(self.run, self.validation)
 
+    def test_generic_validation_smoke_metrics_are_supported_explicitly(self) -> None:
+        for step in (500, 1000, 1500):
+            self.write_metrics(step, 200 + step // 500, 385)
+            path = self.validation / f"checkpoint-{step}" / "metrics.json"
+            metrics = json.loads(path.read_text())
+            metrics["split_role"] = "validation_smoke"
+            metrics.pop("predictions_file")
+            metrics.pop("format_accuracy")
+            path.write_text(json.dumps(metrics))
+        selected = select(
+            self.run, self.validation, expected_split_role="validation_smoke"
+        )
+        self.assertEqual(selected["selected_step"], 1500)
+        self.assertEqual(selected["inference_split_role"], "validation_smoke")
+
 
 if __name__ == "__main__":
     unittest.main()
-

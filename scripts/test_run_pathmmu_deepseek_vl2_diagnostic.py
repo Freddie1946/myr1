@@ -21,3 +21,9 @@ def test_letter_only_contract_is_unambiguous():
     )
     assert "exactly one uppercase option letter" in prompt
     assert prompt.startswith("<image>\n")
+
+
+def test_multi_gpu_memory_cap_is_explicit():
+    source = MODULE_PATH.read_text(encoding="utf-8")
+    assert '"device_map": "auto"' in source
+    assert '"48GiB"' in source

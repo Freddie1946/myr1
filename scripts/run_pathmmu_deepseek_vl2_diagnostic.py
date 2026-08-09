@@ -78,6 +78,10 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--device-map-auto", action="store_true",
+        help="shard the unquantized model across all visible GPUs with a 48 GiB per-GPU cap",
+    )
     return parser.parse_args()
 
 
@@ -120,6 +124,7 @@ def main() -> None:
         "model_config_sha256": sha256_file(args.model / "config.json"),
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
+        "source_count": expected,
         "selected_count": len(records),
         "prompt_contract": args.prompt_contract,
         "prompt_template": prompt_template,
@@ -127,6 +132,8 @@ def main() -> None:
         "quantization": "none",
         "do_sample": False,
         "max_new_tokens": args.max_new_tokens,
+        "device_map": "auto" if args.device_map_auto else "single_gpu",
+        "per_visible_gpu_max_memory": "48GiB" if args.device_map_auto else None,
     }
     if config_path.exists():
         old = json.loads(config_path.read_text(encoding="utf-8"))
@@ -140,18 +147,27 @@ def main() -> None:
         args.model, local_files_only=True
     )
     tokenizer = processor.tokenizer
-    model = (
-        AutoModelForCausalLM.from_pretrained(
-            args.model,
-            trust_remote_code=True,
-            local_files_only=True,
-            torch_dtype=torch.bfloat16,
-            low_cpu_mem_usage=True,
+    load_kwargs = {
+        "trust_remote_code": True,
+        "local_files_only": True,
+        "torch_dtype": torch.bfloat16,
+        "low_cpu_mem_usage": True,
+    }
+    if args.device_map_auto:
+        load_kwargs.update({
+            "device_map": "auto",
+            "max_memory": {
+                index: "48GiB" for index in range(torch.cuda.device_count())
+            },
+        })
+        model = AutoModelForCausalLM.from_pretrained(args.model, **load_kwargs).eval()
+    else:
+        model = (
+            AutoModelForCausalLM.from_pretrained(args.model, **load_kwargs)
+            .to(torch.bfloat16)
+            .cuda()
+            .eval()
         )
-        .to(torch.bfloat16)
-        .cuda()
-        .eval()
-    )
 
     for index in range(len(rows), len(records)):
         record = records[index]
