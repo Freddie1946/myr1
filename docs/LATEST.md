@@ -1,5 +1,14 @@
 # Latest recovery pointer
 
+Latest extended bbox output-format probe:
+
+0. `20260810_020000_extended_bbox_output_format_probe.md`
+
+Eight prompt/tag encodings were searched and the two viable second-turn encodings were confirmed
+on eight frozen cases. Freezing the normal answer and asking for localization separately can
+produce non-random boxes without changing the answer, but strict protocol compliance and spatial
+coverage remain too unstable for reviewer-facing evidence.
+
 Latest bbox-format probe inside the trained think/answer envelope:
 
 0. `20260810_012000_bbox_output_format_probe.md`
