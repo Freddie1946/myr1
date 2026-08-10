@@ -529,6 +529,17 @@ Read in this order:
 234. `20260803_013500_local_gpu_to_kimi_fail_closed_sequence.md`
 235. `20260803_145524_local_gpu_baselines_completed_kimi_stage3_launched.md`
 236. `../protocol/local_gpu_baselines_completed_kimi_stage3_launched_20260803_145524.json`
+237. `20260810_165436_external_vqa_output_failure_correction_and_omni_rerun_launch.md`
+238. `../protocol/external_vqa_output_contract_correction_v3_20260810.json`
+239. `../protocol/external_vqa_output_contract_correction_v3_launch_20260810.json`
+
+The August 10 OOD bad-case audit confirmed a real PathVQA yes/no parser defect and severe
+OmniMedVQA generation truncation.  The target-blind PathVQA V3 correction recovers some formatted
+answers but leaves every trained checkpoint materially below the base model, so formatting is only
+part of the negative-transfer result.  The old OmniMedVQA scores are retained; a post-hoc
+192-token strict-final-answer corrective rerun passed two non-accuracy adapter smokes and is active
+for selected GPT-4o checkpoint-1000 followed by Grok checkpoint-1500.  These corrected test results
+are sensitivity evidence and are forbidden for model, prompt, parser or training selection.
 
 The user authorized GPT-4o Stage3 first with compatible non-GPU hosted baselines in parallel,
 GPU-local baselines next, and Kimi Stage3 last.  The user requested no USD budget ceiling and

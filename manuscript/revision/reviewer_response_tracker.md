@@ -1,6 +1,6 @@
 # PathVLM-R1 reviewer-response and evidence tracker
 
-Last updated: `2026-07-25T01:05:33+08:00`
+Last updated: `2026-08-10T16:54:36+08:00`
 
 This is the living point-by-point revision record for JBHI manuscript `JBHI-06328-2025`. Update it
 after every material experiment, correction, analysis, figure/table change, or rebuttal decision.
@@ -67,8 +67,15 @@ The original decision PDF remains authoritative; comments below are concise para
 - Planned response: remove “remarkable/broad cross-modal transferability”; report modality-wise
   effects, confidence intervals, domain-distance/task differences, and explicit negative transfer.
 - Evidence/actions: the contradiction and exact Table IV deltas have been audited and recorded.
-- Status: `pending-writing` (additional inference/statistics may still be added).
-- Remaining: revise Abstract/Introduction/Discussion/Conclusion and decide whether to rerun OOD sets.
+  A 2026-08-10 output-level audit found both evaluator pollution and persistent negative transfer.
+  Target-blind PathVQA yes/no correction raises trained checkpoints by 1.0--6.3 points but leaves
+  them 13.0--29.8 points below the base model.  The prior selected-model OmniMedVQA outputs reached
+  the 64-token cap at very high rates, so a frozen 192-token strict-final-answer corrective
+  sensitivity rerun passed both non-accuracy smokes and is active.  Evidence:
+  `docs/20260810_165436_external_vqa_output_failure_correction_and_omni_rerun_launch.md`.
+- Status: `partial` (PathVQA diagnosis complete; OmniMedVQA corrective rerun and writing pending).
+- Remaining: complete the corrective OmniMedVQA sequence, add uncertainty/modality breakdowns,
+  and revise Abstract/Introduction/Discussion/Conclusion to state negative transfer explicitly.
 
 ### R1-4 — Justify the 0.4 process-reward penalty
 
@@ -293,8 +300,11 @@ The original decision PDF remains authoritative; comments below are concise para
   instead of averaging it away.
 - Evidence/actions: preparation is frozen for full Chest CT, ISIC2020, Retinal OCT-C8 and Diabetic
   Retinopathy source subsets. All four are downloaded, path-complete and exact-content-disjoint from
-  formal PathMMU v2. No rerun or statistical result is complete.
-- Status: `pending-writing`/`pending-experiment`.
+  formal PathMMU v2.  The 2026-08-10 bad-case audit now separates an output-contract component from
+  persistent PathVQA negative transfer, and a 192-token strict-final-answer OmniMedVQA corrective
+  sensitivity rerun is active after two passed non-accuracy smokes.  Evidence:
+  `docs/20260810_165436_external_vqa_output_failure_correction_and_omni_rerun_launch.md`.
+- Status: `partial`/`pending-writing`; no broad cross-modal improvement claim is supportable.
 
 ### R3-2 — One attention heatmap is insufficient and may be unfaithful
 
@@ -723,6 +733,18 @@ commands, failures, paths and gates remain in timestamped `docs/` files and exte
     `protocol/post_kimi_closed_eval_visual_and_backup_20260804_005148.json`. Supports
     R1-7/R2-3/R2-4/R3-7 reproducibility; Kimi completion, final Stage3 evaluations and visual
     results remain pending and no efficacy or localization claim is made.
+53. Audited the unexpectedly low selected-model PathVQA/OmniMedVQA results at the raw-output level.
+    A frozen target-blind PathVQA yes/no parser correction recovered explicitly tagged answers but
+    left a material gap to the base model, establishing that output formatting is only one part of
+    the observed negative transfer. The prior OmniMedVQA runs were heavily polluted by 64-token
+    truncation and fuzzy matching of incomplete reasoning. A post-hoc 192-token strict-final-answer
+    corrective sensitivity contract passed both non-accuracy smokes and the selected GPT-4o then
+    Grok sequence is active on one shared GPU without OOM. The original scores and a failed first
+    rescoring implementation remain preserved; corrected test results are forbidden for selection
+    or tuning. Evidence: `docs/20260810_165436_external_vqa_output_failure_correction_and_omni_rerun_launch.md`,
+    `protocol/external_vqa_output_contract_correction_v3_20260810.json`, and
+    `protocol/external_vqa_output_contract_correction_v3_launch_20260810.json`. Supports R1-3/R3-1
+    diagnostic validity; full corrected OmniMedVQA scores and manuscript edits remain pending.
 
 ## Mandatory update rule
 

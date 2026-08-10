@@ -94,6 +94,12 @@ def parse_args() -> argparse.Namespace:
         "--split-role", required=True, choices=("adapter_smoke", "external_test")
     )
     parser.add_argument("--max-new-tokens", type=int, default=64)
+    parser.add_argument(
+        "--generation-contract",
+        choices=("legacy_v1_64", "omnimed_corrective_v3_192"),
+        default="legacy_v1_64",
+        help="Pinned generation/scoring contract; corrective v3 is OmniMedVQA-only.",
+    )
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
@@ -110,7 +116,7 @@ def summarize(
 ) -> dict[str, Any]:
     lengths = [int(row["generated_token_count"]) for row in rows]
     common = {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "completed",
         "task": args.task,
         "split_role": args.split_role,
@@ -121,6 +127,7 @@ def summarize(
         "maximum_generated_tokens": max(lengths),
         "generation_cap_hit_count": sum(row["reached_generation_cap"] for row in rows),
         "max_new_tokens": args.max_new_tokens,
+        "generation_contract": args.generation_contract,
         "do_sample": False,
         "dtype": "bfloat16",
         "quantization": "none",
@@ -192,6 +199,10 @@ def summarize(
         official_correct = sum(row["official_most_similar_correct"] for row in rows)
         aligned_correct = sum(row["contract_aligned_correct"] for row in rows)
         strict_correct = sum(row["strict_text_correct"] for row in rows)
+        strict_final_available = sum(
+            row["strict_final_answer_available"] for row in rows
+        )
+        strict_final_correct = sum(row["strict_final_correct"] for row in rows)
         by_source = {}
         for source in sorted({row["dataset"] for row in rows}):
             selected = [row for row in rows if row["dataset"] == source]
@@ -215,10 +226,31 @@ def summarize(
                 "contract_aligned_accuracy": sum(
                     row["contract_aligned_correct"] for row in selected
                 ) / len(selected),
+                "strict_final_answer_available": sum(
+                    row["strict_final_answer_available"] for row in selected
+                ),
+                "strict_final_answer_coverage": sum(
+                    row["strict_final_answer_available"] for row in selected
+                ) / len(selected),
+                "strict_final_correct": sum(
+                    row["strict_final_correct"] for row in selected
+                ),
+                "strict_final_accuracy": sum(
+                    row["strict_final_correct"] for row in selected
+                ) / len(selected),
             }
         common.update(
             {
-                "primary_metric": "contract_aligned_sequence_matcher_option_accuracy",
+                "primary_metric": (
+                    "strict_final_option_accuracy"
+                    if args.generation_contract == "omnimed_corrective_v3_192"
+                    else "contract_aligned_sequence_matcher_option_accuracy"
+                ),
+                "strict_final_correct": strict_final_correct,
+                "strict_final_accuracy": strict_final_correct / len(rows),
+                "strict_final_answer_available": strict_final_available,
+                "strict_final_answer_coverage": strict_final_available / len(rows),
+                "strict_final_unresolved_count": len(rows) - strict_final_available,
                 "contract_aligned_correct": aligned_correct,
                 "contract_aligned_accuracy": aligned_correct / len(rows),
                 "official_raw_completion_metric": "official_sequence_matcher_option_accuracy",
@@ -234,8 +266,14 @@ def summarize(
 
 def main() -> None:
     args = parse_args()
-    if args.max_new_tokens != 64:
-        raise ValueError("the frozen external VQA contract requires max_new_tokens=64")
+    if args.generation_contract == "legacy_v1_64":
+        if args.max_new_tokens != 64:
+            raise ValueError("legacy external VQA contract requires max_new_tokens=64")
+    elif args.generation_contract == "omnimed_corrective_v3_192":
+        if args.task != "omnimedvqa":
+            raise ValueError("corrective v3 generation contract is OmniMedVQA-only")
+        if args.max_new_tokens != 192:
+            raise ValueError("corrective v3 generation contract requires max_new_tokens=192")
     if args.batch_size < 1:
         raise ValueError("batch size must be positive")
     records = json.loads(args.data.read_text(encoding="utf-8"))
@@ -262,7 +300,7 @@ def main() -> None:
         raise FileExistsError(metrics_path)
     prompt_template = PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT
     config = {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "running",
         "task": args.task,
         "split_role": args.split_role,
@@ -277,6 +315,7 @@ def main() -> None:
         "quantization": "none",
         "do_sample": False,
         "max_new_tokens": args.max_new_tokens,
+        "generation_contract": args.generation_contract,
         "batch_size": args.batch_size,
         "answer_scope": args.pathvqa_answer_scope if args.task == "pathvqa" else "all",
         "resume": args.resume,
@@ -428,6 +467,8 @@ def main() -> None:
         if completed % 100 < args.batch_size or completed == len(records):
             if args.task == "pathvqa":
                 correct = sum(row["contract_aligned_exact_match"] for row in rows)
+            elif args.generation_contract == "omnimed_corrective_v3_192":
+                correct = sum(row["strict_final_correct"] for row in rows)
             else:
                 correct = sum(row["contract_aligned_correct"] for row in rows)
             print(

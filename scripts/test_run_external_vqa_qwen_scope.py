@@ -51,6 +51,7 @@ class ExternalVqaQwenScopeTests(unittest.TestCase):
                 model=model,
                 data=data,
                 max_new_tokens=64,
+                generation_contract="legacy_v1_64",
                 pathvqa_answer_scope="yes_no_only",
             )
             row = {

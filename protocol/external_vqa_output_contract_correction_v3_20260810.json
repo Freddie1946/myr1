@@ -1,0 +1,109 @@
+{
+  "schema_version": 3,
+  "frozen_at_local": "2026-08-10T16:44:44+08:00",
+  "purpose": "Post-hoc, target-blind correction of output parsing and generation truncation discovered during OOD bad-case audit.",
+  "scientific_status": {
+    "formal_result": false,
+    "role": "evaluation_correction_and_sensitivity_analysis",
+    "old_results_preserved": true,
+    "selection_or_training_tuning_use_forbidden": true,
+    "reason_not_primary_preregistered_result": "The failure mode was discovered after inspecting test outputs. The correction is therefore reported beside, not substituted silently for, the original frozen evaluation.",
+    "invalid_preflight_artifact": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/pathvqa_yesno_parser_v3_20260810",
+    "invalid_preflight_reason": "The first audit implementation treated an absent legacy-score field in early prediction rows as false. It is retained as a failed implementation artifact and excluded from all reporting."
+  },
+  "pathvqa_yes_no_v3": {
+    "inference_rerun": false,
+    "expected_count_per_model": 3362,
+    "rule": "Within the final answer tag only, accept an optional leading A-D label followed immediately by an unambiguous leading Yes or No token. Never search the explanation body for either target token.",
+    "metrics": [
+      "legacy_contract_aligned_accuracy",
+      "v3_contract_aligned_accuracy",
+      "v3_parseable_rate",
+      "generation_cap_hit_rate"
+    ],
+    "sources": {
+      "base_qwen2_5_vl_7b": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/qwen7/pathvqa/predictions.jsonl",
+        "sha256": "95a293066c9463f915113d6327a25689d3e45aa248b05496efc708076202e067"
+      },
+      "sft3000": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/sft3000/pathvqa/predictions.jsonl",
+        "sha256": "97463b551a38fcb885767c9d9627eafe3db17ba2c39eeeb9051c43971d3dab30"
+      },
+      "sft4000_control": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/sft4000/pathvqa/predictions.jsonl",
+        "sha256": "e7ecc53ff0868645c0bdc35d71b32a9539e3124b8d4bc803eb2af40ccc2116b2"
+      },
+      "stage2_outcome_rl": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/stage2_rl/pathvqa/predictions.jsonl",
+        "sha256": "bc6b6ab52a26ba3f872d35fa8272dbfe86d6f81a0159c0caf1a19c56b7af578e"
+      },
+      "stage3_gpt4o_checkpoint1000": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_selected_gpt4o_pathmmu_pathvqa_20260805_parallel_grok43/stage3_gpt4o/pathvqa_yesno3362/predictions.jsonl",
+        "sha256": "2103b4ea757e59ed7c1efd2ebe1bb15b79f0907b86ef8646b0d9801dfb6fb171"
+      },
+      "stage3_grok43_checkpoint1500": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_grok43_selected_full_20260810/pathvqa_full3362/predictions.jsonl",
+        "sha256": "ade36a1bbd0f45438017f669fe41a2716b824ba974ec454c054b9637ea4d3747"
+      }
+    }
+  },
+  "omnimedvqa_corrective_v3": {
+    "data": {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json",
+      "sha256": "04ba0790410cd5de4c95689d349574b102034a153afa00d952e351d3c13991a7",
+      "count": 8518
+    },
+    "prompt_change": false,
+    "decoding": {
+      "do_sample": false,
+      "max_new_tokens": 192,
+      "batch_size": 1,
+      "dtype": "bfloat16",
+      "quantization": "none"
+    },
+    "primary_corrective_metric": "strict_final_option_accuracy",
+    "strict_rule": "Accept only an explicit leading A-D option label or a first non-empty final-answer line that exactly equals one candidate option after conservative normalization; never use SequenceMatcher fallback for the strict metric.",
+    "unresolved_policy": "A response without an explicit strict final answer, including one that reaches 192 tokens, is counted incorrect and unresolved.",
+    "legacy_metrics_retained": [
+      "contract_aligned_sequence_matcher_option_accuracy",
+      "official_raw_completion_sequence_matcher_option_accuracy"
+    ],
+    "model_order": [
+      "stage3_gpt4o_checkpoint1000",
+      "stage3_grok43_checkpoint1500"
+    ],
+    "models": {
+      "stage3_gpt4o_checkpoint1000": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_full3epoch_seed42_20260801/epoch_model_snapshots/checkpoint-1000",
+        "config_sha256": "677754b792532590407a989718dd68eed61b46d0846db56ad67a57a67838d189"
+      },
+      "stage3_grok43_checkpoint1500": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/grok43_full3epoch_seed42_20260805_attempt02/epoch_model_snapshots/checkpoint-1500",
+        "config_sha256": "dc3e7c414bb7eddb19ce06a71b3819dd355f57bad1fb7a19f86fa09cebb8f9e0"
+      }
+    },
+    "adapter_smoke": {
+      "count": 16,
+      "uses_accuracy_as_gate": false,
+      "minimum_nonempty_rate": 0.95,
+      "minimum_strict_final_answer_coverage": 0.75,
+      "maximum_generation_cap_hit_rate": 0.25,
+      "no_rule_or_threshold_change_after_smoke": true
+    },
+    "gpu_safety": {
+      "visible_gpu_count_per_evaluator": 1,
+      "minimum_free_memory_mib_before_launch": 34000,
+      "parallel_evaluator_count": 1,
+      "current_training_must_not_be_stopped": true,
+      "oom_or_training_failure_stops_evaluation_queue": true
+    }
+  },
+  "code_sha256": {
+    "scripts/external_vqa_contract.py": "82ef26502503919eb41cd6946bbe6f2f27313548b3b1c24df300ce26764882c9",
+    "scripts/run_external_vqa_qwen.py": "10a293c11a241c4a7500d714952e94395db68de77c77e96b952f10639e905082",
+    "scripts/rescore_pathvqa_yesno_v3.py": "d430900c1c674a981dc8ed1985cfe968aa95dc9f101dbad05ff83ef14ef35cdc",
+    "scripts/verify_omnimed_corrective_v3_smoke.py": "96a9177c197cbcdbbfe99867b17344da82c8bf0ecf83e04aa20a96964ad88ee9",
+    "scripts/run_omnimedvqa_corrective_v3_sequence.sh": "283583ae8ff141cda8cfbcf7074622abb3d97a308fa84b0ae0c04d04e2fb8378"
+  }
+}

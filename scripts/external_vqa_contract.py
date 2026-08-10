@@ -144,7 +144,20 @@ def extract_pathvqa_answer(completion: str, answer_type: str) -> tuple[str, str]
         r"<answer\b[^>]*>\s*(.*?)(?:</answer\s*>|$)", str(completion), re.I | re.S
     )
     if tagged:
-        return tagged[-1].strip().rstrip("</ "), "answer_tag"
+        answer = tagged[-1].strip().rstrip("</ ")
+        if answer_type == "yes_no":
+            # Some PathMMU-tuned checkpoints preserve their learned multiple-choice
+            # wrapper on PathVQA and emit e.g. ``<answer>B) No</answer>``.  Decode
+            # only an unambiguous leading yes/no token; never search an explanation
+            # for a target word.
+            tagged_yes_no = re.match(
+                r"^\s*(?:\(?[A-D]\)?\s*[).,:;\-]?\s*)?(yes|no)\b",
+                answer,
+                re.I,
+            )
+            if tagged_yes_no:
+                return tagged_yes_no.group(1).lower(), "answer_tag_leading_yes_no"
+        return answer, "answer_tag"
     if answer_type == "yes_no":
         marked = re.findall(
             r"(?:final\s+answer|answer)\s*(?:is|:)\s*\b(yes|no)\b",
@@ -240,6 +253,37 @@ def extract_omnimed_answer(completion: str) -> tuple[str, str]:
     return str(completion).strip(), "raw_completion"
 
 
+def strict_omnimed_final_choice(
+    completion: str, letters: list[str], texts: list[str]
+) -> tuple[str | None, str]:
+    """Parse an explicit final option without fuzzy similarity or target access.
+
+    A choice is available only when the extracted answer begins with an option
+    letter or its first non-empty line exactly equals one candidate answer after
+    conservative normalization.  This deliberately leaves truncated reasoning
+    without a final answer unresolved rather than guessing from lexical overlap.
+    """
+
+    answer, answer_source = extract_omnimed_answer(completion)
+    explicit_letter = re.match(
+        r"^\s*\(?\s*([A-D])(?=[\s).,:;\-]|$)", answer, re.I
+    )
+    if explicit_letter and explicit_letter.group(1).upper() in letters:
+        return (
+            explicit_letter.group(1).upper(),
+            f"{answer_source}:explicit_leading_choice_letter",
+        )
+    first_line = next((line.strip() for line in answer.splitlines() if line.strip()), "")
+    exact_matches = [
+        letter
+        for letter, text in zip(letters, texts)
+        if normalize_short_answer(first_line) == normalize_short_answer(text)
+    ]
+    if len(exact_matches) == 1:
+        return exact_matches[0], f"{answer_source}:exact_first_line_option_text"
+    return None, f"{answer_source}:unresolved"
+
+
 def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
     letters, texts = omnimed_options(record)
     target = omnimed_target_choice(record)
@@ -252,6 +296,9 @@ def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
         if normalize_short_answer(text) == normalized_completion
     ]
     strict_predicted = strict_matches[0] if len(strict_matches) == 1 else None
+    strict_final_predicted, strict_final_source = strict_omnimed_final_choice(
+        completion, letters, texts
+    )
     aligned_answer, aligned_source = extract_omnimed_answer(completion)
     explicit_letter = re.match(
         r"^\s*\(?\s*([A-D])(?=[\s).,:;\-]|$)", aligned_answer, re.I
@@ -287,6 +334,10 @@ def omnimed_score(completion: str, record: dict[str, Any]) -> dict[str, Any]:
         "official_most_similar_correct": predicted == target,
         "strict_text_predicted_choice": strict_predicted,
         "strict_text_correct": strict_predicted == target,
+        "strict_final_predicted_choice": strict_final_predicted,
+        "strict_final_prediction_source": strict_final_source,
+        "strict_final_answer_available": strict_final_predicted is not None,
+        "strict_final_correct": strict_final_predicted == target,
         "contract_aligned_answer": aligned_answer,
         "contract_aligned_answer_source": aligned_source,
         "contract_aligned_predicted_choice": aligned_predicted,

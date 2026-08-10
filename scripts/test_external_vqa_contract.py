@@ -34,6 +34,23 @@ class ExternalVQAContractTests(unittest.TestCase):
         self.assertTrue(sentence["contract_aligned_exact_match"])
         self.assertEqual(sentence["official_token_overlap_score"], 0.25)
 
+    def test_pathvqa_tagged_multiple_choice_yes_no_is_decoded(self):
+        score = pathvqa_score("<think>x</think><answer>B) No</answer>", "no")
+        self.assertTrue(score["contract_aligned_exact_match"])
+        self.assertEqual(score["contract_aligned_answer"], "no")
+        self.assertEqual(
+            score["contract_aligned_answer_source"], "answer_tag_leading_yes_no"
+        )
+
+    def test_pathvqa_tagged_yes_no_with_explanation_is_target_blind(self):
+        score = pathvqa_score("<answer>Yes, because the feature is present.</answer>", "yes")
+        self.assertTrue(score["contract_aligned_exact_match"])
+
+    def test_pathvqa_free_form_tag_is_not_reinterpreted(self):
+        score = pathvqa_score("<answer>B) filamentous and pink</answer>", "filamentous")
+        self.assertEqual(score["contract_aligned_answer"], "B) filamentous and pink")
+        self.assertFalse(score["contract_aligned_exact_match"])
+
     def test_pathvqa_official_free_form_scores_full_sentence(self):
         score = pathvqa_score(
             "Each histone subunit is positively charged.", "positively charged"
@@ -61,6 +78,8 @@ class ExternalVQAContractTests(unittest.TestCase):
         self.assertEqual(score["contract_aligned_answer_source"], "answer_tag")
         self.assertEqual(score["contract_aligned_predicted_choice"], "B")
         self.assertTrue(score["contract_aligned_correct"])
+        self.assertEqual(score["strict_final_predicted_choice"], "B")
+        self.assertTrue(score["strict_final_correct"])
 
     def test_omni_exact_leading_option_text_precedes_explanation(self):
         completion = (
@@ -72,6 +91,15 @@ class ExternalVQAContractTests(unittest.TestCase):
         self.assertEqual(
             score["contract_aligned_prediction_source"], "exact_leading_option_text"
         )
+        self.assertEqual(score["strict_final_predicted_choice"], "C")
+
+    def test_omni_truncated_reasoning_is_unresolved_under_strict_final_contract(self):
+        completion = "The image resembles CT, while MRI is less likely because"
+        score = omnimed_score(completion, OMNI)
+        self.assertIsNone(score["strict_final_predicted_choice"])
+        self.assertFalse(score["strict_final_answer_available"])
+        self.assertFalse(score["strict_final_correct"])
+        self.assertIsNotNone(score["contract_aligned_predicted_choice"])
 
     def test_incomplete_answer_tag_is_extractable(self):
         answer, source = extract_omnimed_answer("<think>x</think><answer>C) CT</")

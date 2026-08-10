@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "recorded_at_local": "2026-08-10T16:54:36+08:00",
+  "protocol": {
+    "path": "protocol/external_vqa_output_contract_correction_v3_20260810.json",
+    "sha256": "92e13b52a8da84040eb984f41b7842f9edf761a5d01fd5bb65d098c4dd91792c"
+  },
+  "pathvqa_yes_no_rescore": {
+    "status": "completed",
+    "result_role": "post_hoc_target_blind_parser_correction_sensitivity",
+    "valid_output": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/pathvqa_yesno_parser_v3_20260810_attempt02/index_v3.json",
+    "valid_output_sha256": "1cc380c7ca3577907ed3d35d2fd19b25c6f08e387368adc27ce4c647caf66730",
+    "invalid_attempt_retained": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/pathvqa_yesno_parser_v3_20260810",
+    "selection_or_tuning_use_forbidden": true
+  },
+  "omnimedvqa_smokes": {
+    "status": "passed",
+    "accuracy_used_as_gate": false,
+    "stage3_gpt4o_checkpoint1000": {
+      "metrics_sha256": "a7de9305beb74d231c9bc55476ba4028b6f3415e8fe2555604302d0ba7f59333",
+      "verification_sha256": "ce04be094e290f5f759e130c541cc5624000e72df89d23282c5a6c3229ca0d7a",
+      "nonempty_rate": 1.0,
+      "strict_final_answer_coverage": 1.0,
+      "generation_cap_hit_rate": 0.0,
+      "mean_generated_tokens": 84.5625,
+      "maximum_generated_tokens": 122
+    },
+    "stage3_grok43_checkpoint1500": {
+      "metrics_sha256": "44fa9a52fb9e3dbb008331296642547e25ee658e736ac13301f53b8f9e37217b",
+      "verification_sha256": "cedfe735754b3c951cd8060e509f5715a92864cdd88ea670b19e8f40e0ad9089",
+      "nonempty_rate": 1.0,
+      "strict_final_answer_coverage": 1.0,
+      "generation_cap_hit_rate": 0.0,
+      "mean_generated_tokens": 85.5625,
+      "maximum_generated_tokens": 105
+    }
+  },
+  "omnimedvqa_full_sequence": {
+    "status_at_record_time": "running",
+    "started_at_utc": "2026-08-10T08:53:11.151805+00:00",
+    "supervisor_pid_at_launch": 3211280,
+    "worker_pid_at_record_time": 3211302,
+    "gpu": 7,
+    "batch_size": 1,
+    "order": [
+      "stage3_gpt4o_checkpoint1000",
+      "stage3_grok43_checkpoint1500"
+    ],
+    "run_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_corrective_v3_192_20260810",
+    "first_model_completed_rows_at_record_time": 16,
+    "estimated_total_wall_hours": [
+      23,
+      25
+    ],
+    "completion_requires_separate_manifest": true
+  },
+  "concurrent_training": {
+    "run": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/data_ratio_rule_rl_ablation_v1/formal_sequence/tasks/base_rule_rl4000",
+    "status_at_launch": "running",
+    "step_near_launch": 790,
+    "training_stopped_for_evaluation": false,
+    "observed_gpu7_total_used_mib_with_evaluator": 57917,
+    "observed_gpu7_free_mib_with_evaluator": 23237,
+    "oom_observed": false
+  }
+}
