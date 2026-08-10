@@ -68,14 +68,17 @@ The original decision PDF remains authoritative; comments below are concise para
   effects, confidence intervals, domain-distance/task differences, and explicit negative transfer.
 - Evidence/actions: the contradiction and exact Table IV deltas have been audited and recorded.
   A 2026-08-10 output-level audit found both evaluator pollution and persistent negative transfer.
-  Target-blind PathVQA yes/no correction raises trained checkpoints by 1.0--6.3 points but leaves
-  them 13.0--29.8 points below the base model.  The prior selected-model OmniMedVQA outputs reached
-  the 64-token cap at very high rates, so a frozen 192-token strict-final-answer corrective
-  sensitivity rerun passed both non-accuracy smokes and is active.  Evidence:
-  `docs/20260810_165436_external_vqa_output_failure_correction_and_omni_rerun_launch.md`.
-- Status: `partial` (PathVQA diagnosis complete; OmniMedVQA corrective rerun and writing pending).
-- Remaining: complete the corrective OmniMedVQA sequence, add uncertainty/modality breakdowns,
-  and revise Abstract/Introduction/Discussion/Conclusion to state negative transfer explicitly.
+  The 2026-08-11 high-coverage audit now separates these effects. GPT-4o Stage3 PathVQA reliable
+  parse coverage is 98.84% after a reference-blind intent extractor and independent contradiction
+  verifier, while a format-neutral forced Yes/No comparison still finds a 7.35-point deficit versus
+  Base (95% paired bootstrap CI -9.13 to -5.59). On OmniMedVQA, strict coverage is 99.98% but
+  accuracy is 46.30% versus Base 60.06% (difference -13.76 points, 95% CI -15.02 to -12.51;
+  McNemar p=5.01e-100). All four sources decline, including modality recognition (-23.18 points).
+  Evidence: `docs/20260810_165436_external_vqa_output_failure_correction_and_omni_rerun_launch.md`
+  and `docs/20260811_pathvqa_high_coverage_ood_diagnosis_and_visual_adaptation_gate.md`.
+- Status: `experiment-complete` / `pending-writing`.
+- Remaining: revise Abstract/Introduction/Discussion/Conclusion to state negative transfer and its
+  task/domain-contract explanation explicitly; do not attribute the residual deficit to parsing.
 
 ### R1-4 — Justify the 0.4 process-reward penalty
 
@@ -310,8 +313,17 @@ The original decision PDF remains authoritative; comments below are concise para
 
 - Planned response: use multiple success/failure cases and a quantitative faithfulness protocol such
   as expert ROI ratings, occlusion/deletion-insertion, or overlap metrics where annotations exist.
-- Evidence/actions: no qualifying quantitative grounding experiment has been completed.
-- Status: `pending-experiment`.
+- Evidence/actions: a frozen 96-case panel now has appearance-matched paired-image counterfactuals,
+  geometry-matched activation patching with equal-norm direction controls, and option-conditioned
+  black-box RISE deletion/retention tests. RISE is positive in both directions for both Stage3 arms
+  (all Holm p=4e-5); layer-20/24 activation recovery is direction-specific. Conversely, raw attention
+  and gradient-times-attention fail the strict layerwise confirmation, and prompt-only bounding boxes
+  remain unstable. The defensible claim is image-specific, option-relevant spatial evidence—not that
+  a heatmap or self-reported box faithfully localizes the true pathology rationale. Evidence:
+  `docs/20260808_visual_understanding_counterfactual_96case_results.md`,
+  `docs/20260809_option_conditioned_rise_96case_results.md`, and
+  `docs/20260811_pathvqa_high_coverage_ood_diagnosis_and_visual_adaptation_gate.md`.
+- Status: `quantitative-experiment-complete` / `expert-region-validation-deferred-by-user`.
 
 ### R3-3 — Clarify novelty and ablate the process reward
 

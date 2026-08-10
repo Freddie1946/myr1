@@ -91,12 +91,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--data", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument(
-        "--split-role", required=True, choices=("adapter_smoke", "external_test")
+        "--split-role",
+        required=True,
+        choices=("adapter_smoke", "external_test", "post_hoc_corrective_subset"),
     )
     parser.add_argument("--max-new-tokens", type=int, default=64)
     parser.add_argument(
         "--generation-contract",
-        choices=("legacy_v1_64", "omnimed_corrective_v3_192"),
+        choices=(
+            "legacy_v1_64",
+            "omnimed_corrective_v3_192",
+            "pathvqa_corrective_v4_192",
+        ),
         default="legacy_v1_64",
         help="Pinned generation/scoring contract; corrective v3 is OmniMedVQA-only.",
     )
@@ -167,7 +173,7 @@ def summarize(
                 row["contract_aligned_exact_match"] for row in yes_no
             ) / len(yes_no),
         }
-        if args.pathvqa_answer_scope == "all":
+        if args.pathvqa_answer_scope == "all" and free:
             pathvqa_metrics.update({
                 "free_form_count": len(free),
                 "free_form_correct": sum(row["exact_match"] for row in free),
@@ -274,11 +280,23 @@ def main() -> None:
             raise ValueError("corrective v3 generation contract is OmniMedVQA-only")
         if args.max_new_tokens != 192:
             raise ValueError("corrective v3 generation contract requires max_new_tokens=192")
+    elif args.generation_contract == "pathvqa_corrective_v4_192":
+        if args.task != "pathvqa":
+            raise ValueError("corrective v4 generation contract is PathVQA-only")
+        if args.split_role != "post_hoc_corrective_subset":
+            raise ValueError("corrective v4 requires the post-hoc corrective subset role")
+        if args.max_new_tokens != 192:
+            raise ValueError("corrective v4 generation contract requires max_new_tokens=192")
     if args.batch_size < 1:
         raise ValueError("batch size must be positive")
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 6719 if args.task == "pathvqa" else 8518
-    if len(records) != expected:
+    if args.generation_contract == "pathvqa_corrective_v4_192":
+        if not records or any(row.get("answer_type") != "yes_no" for row in records):
+            raise ValueError("corrective v4 subset must contain only PathVQA yes/no records")
+        if args.pathvqa_answer_scope != "all":
+            raise ValueError("corrective v4 subset must use answer scope all")
+    elif len(records) != expected:
         raise ValueError(f"expected {expected} records, got {len(records)}")
     records = select_answer_scope(args.task, args.pathvqa_answer_scope, records)
     if args.limit is not None:

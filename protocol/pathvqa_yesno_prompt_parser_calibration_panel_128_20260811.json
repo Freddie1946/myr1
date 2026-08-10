@@ -1,0 +1,1295 @@
+{
+  "count": 128,
+  "formal_test": false,
+  "per_answer": 64,
+  "records": [
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/ea13d840d6d3890db749f413f6ae284ad7075bf05280da5be3469051ff3421f3.jpg",
+      "image_sha256": "ea13d840d6d3890db749f413f6ae284ad7075bf05280da5be3469051ff3421f3",
+      "index": 1009,
+      "panel_index": 0,
+      "question": "does supernumerary digits show oral dysplasia, tgf-gamma?",
+      "source_index": 2143
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/7fedf0e3bc0820819986c5dfd91d6d41ca3368e776ade4e5d43d6791d7759019.jpg",
+      "image_sha256": "7fedf0e3bc0820819986c5dfd91d6d41ca3368e776ade4e5d43d6791d7759019",
+      "index": 1242,
+      "panel_index": 1,
+      "question": "is traumatic rupture present?",
+      "source_index": 2634
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/4f81d1333de662bdbc22b85ab1f11346f00d3bd7cb14971af8746c3452098abf.jpg",
+      "image_sha256": "4f81d1333de662bdbc22b85ab1f11346f00d3bd7cb14971af8746c3452098abf",
+      "index": 2373,
+      "panel_index": 2,
+      "question": "is testicle present?",
+      "source_index": 4823
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/8c043342065162641a387cf0fb3dada457af6925a0d4ae5f5eac079c4b320291.jpg",
+      "image_sha256": "8c043342065162641a387cf0fb3dada457af6925a0d4ae5f5eac079c4b320291",
+      "index": 1820,
+      "panel_index": 3,
+      "question": "is burkitts lymphoma present?",
+      "source_index": 3760
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e7936417cdd173aa54a3fba73584bde9af6adaef8058a9cebc6cb978f25150f9.jpg",
+      "image_sha256": "e7936417cdd173aa54a3fba73584bde9af6adaef8058a9cebc6cb978f25150f9",
+      "index": 681,
+      "panel_index": 4,
+      "question": "are extremities present?",
+      "source_index": 1455
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/0ded9fcc3233daefe74b934902391297077be2a112857dca7be361d8dc966f58.jpg",
+      "image_sha256": "0ded9fcc3233daefe74b934902391297077be2a112857dca7be361d8dc966f58",
+      "index": 2078,
+      "panel_index": 5,
+      "question": "is metastatic neuroblastoma present?",
+      "source_index": 4294
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c01e7ee2e03c8c581f529547963a29e8dce8d3d373f2b47a50fba671a67c3383.jpg",
+      "image_sha256": "c01e7ee2e03c8c581f529547963a29e8dce8d3d373f2b47a50fba671a67c3383",
+      "index": 814,
+      "panel_index": 6,
+      "question": "do immature myeloid cells indicate foci of hepatocytes undergoing necrosis in this pas-d-stained biopsy from a patient with acute hepatitis b?",
+      "source_index": 1746
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/23ee54d15f62c94bb1a558cb7eb197e394b35335cb89baf4d017daafa63c14ca.jpg",
+      "image_sha256": "23ee54d15f62c94bb1a558cb7eb197e394b35335cb89baf4d017daafa63c14ca",
+      "index": 1335,
+      "panel_index": 7,
+      "question": "is hematologic present?",
+      "source_index": 2834
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e810dc2e66f41cc3013095cc1ce761aebd179ad0f3edad9bbbf8d20cf641234c.jpg",
+      "image_sha256": "e810dc2e66f41cc3013095cc1ce761aebd179ad0f3edad9bbbf8d20cf641234c",
+      "index": 2501,
+      "panel_index": 8,
+      "question": "is cut surface both testicles on normal and one quite small typical probably due to mumps present?",
+      "source_index": 5048
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/086145b5de83d72ab226779a4d7175aa09a479e31a8742507c5b1f1a7fc4f5ac.jpg",
+      "image_sha256": "086145b5de83d72ab226779a4d7175aa09a479e31a8742507c5b1f1a7fc4f5ac",
+      "index": 229,
+      "panel_index": 9,
+      "question": "is cardiovascular present?",
+      "source_index": 499
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c3be198b38c589567ca5903d24bdcc3439031554bf0e63398361420b05f4a070.jpg",
+      "image_sha256": "c3be198b38c589567ca5903d24bdcc3439031554bf0e63398361420b05f4a070",
+      "index": 1478,
+      "panel_index": 10,
+      "question": "is hepatobiliary present?",
+      "source_index": 3129
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/d24a99e2ed30033274f3fd8fe87a821557e3229b9fac281bc256da3b1a507c99.jpg",
+      "image_sha256": "d24a99e2ed30033274f3fd8fe87a821557e3229b9fac281bc256da3b1a507c99",
+      "index": 1471,
+      "panel_index": 11,
+      "question": "is sacrococcygeal teratoma present?",
+      "source_index": 3115
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e4821fc2ce68110abbdf4a4b5c7e78065b765945594aa14495055e28fc817109.jpg",
+      "image_sha256": "e4821fc2ce68110abbdf4a4b5c7e78065b765945594aa14495055e28fc817109",
+      "index": 759,
+      "panel_index": 12,
+      "question": "does adenocarcinoma show cross sections showing apparently four arteries and two veins?",
+      "source_index": 1616
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/515a1bf8df65b87fd741469ac2fb53e58b0e9af659b2cccf6c8a72c5630f99f0.jpg",
+      "image_sha256": "515a1bf8df65b87fd741469ac2fb53e58b0e9af659b2cccf6c8a72c5630f99f0",
+      "index": 1288,
+      "panel_index": 13,
+      "question": "does the blue area demonstrate a well-demarcated nodule at the right of the field, with a portion of urethra seen to the left?",
+      "source_index": 2735
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/17e733e1b6ce7aa1563ea2082463ed7598559dbcc0defc6184a0275b951eae6e.jpg",
+      "image_sha256": "17e733e1b6ce7aa1563ea2082463ed7598559dbcc0defc6184a0275b951eae6e",
+      "index": 2429,
+      "panel_index": 14,
+      "question": "is oral present?",
+      "source_index": 4923
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/d6cf1bf3893eeb8a08d1cc2f86077f463c87b3b8e9fc0774987dabe9f2e25336.jpg",
+      "image_sha256": "d6cf1bf3893eeb8a08d1cc2f86077f463c87b3b8e9fc0774987dabe9f2e25336",
+      "index": 2219,
+      "panel_index": 15,
+      "question": "does this image show papilloma?",
+      "source_index": 4532
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/f228f2d1877acf16d7bc1540d6fb99c53b7026b2d8dea9cb43267e27c0ed2419.jpg",
+      "image_sha256": "f228f2d1877acf16d7bc1540d6fb99c53b7026b2d8dea9cb43267e27c0ed2419",
+      "index": 1236,
+      "panel_index": 16,
+      "question": "is foot present?",
+      "source_index": 2619
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/368d0765503f32eba89223e023960bd5b75c927ad493515a4106759ecb726244.jpg",
+      "image_sha256": "368d0765503f32eba89223e023960bd5b75c927ad493515a4106759ecb726244",
+      "index": 278,
+      "panel_index": 17,
+      "question": "does beckwith-wiedemann syndrome show heart transplant, 2 years post surgery?",
+      "source_index": 609
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/932ad1a31b14309264b5cf3f632e2889d231897abadb183abf6936c2da5c68e7.jpg",
+      "image_sha256": "932ad1a31b14309264b5cf3f632e2889d231897abadb183abf6936c2da5c68e7",
+      "index": 1712,
+      "panel_index": 18,
+      "question": "is liver present?",
+      "source_index": 3567
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/8044cf6a6029ce4b1cb4ac5290f26311fdf56b7696322db383ef0f2028df49c2.jpg",
+      "image_sha256": "8044cf6a6029ce4b1cb4ac5290f26311fdf56b7696322db383ef0f2028df49c2",
+      "index": 550,
+      "panel_index": 19,
+      "question": "is endocrine present?",
+      "source_index": 1181
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c66392c8663954f8660ddabf0000a3f0b3e224fc4bb6b685590650c587ef937d.jpg",
+      "image_sha256": "c66392c8663954f8660ddabf0000a3f0b3e224fc4bb6b685590650c587ef937d",
+      "index": 1186,
+      "panel_index": 20,
+      "question": "is lymphangiomatosis generalized present?",
+      "source_index": 2521
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/efc21e6215f8874a37202f60a9ed0b20a2291fa8e1d19e35d0db97b0308170d1.jpg",
+      "image_sha256": "efc21e6215f8874a37202f60a9ed0b20a2291fa8e1d19e35d0db97b0308170d1",
+      "index": 1503,
+      "panel_index": 21,
+      "question": "is parathyroid present?",
+      "source_index": 3175
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/9d4e11f742b93ede7119cf8545081700ca10ed46b31f602adba1a810117cbded.jpg",
+      "image_sha256": "9d4e11f742b93ede7119cf8545081700ca10ed46b31f602adba1a810117cbded",
+      "index": 776,
+      "panel_index": 22,
+      "question": "does this image show close-up view of endometrial surface 18 hours after a cesarean section?",
+      "source_index": 1663
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/a320c8a95bbdc1f53a3ea18fd2e50157acffadbfbee047ca67e9cfa0d7d9dd0c.jpg",
+      "image_sha256": "a320c8a95bbdc1f53a3ea18fd2e50157acffadbfbee047ca67e9cfa0d7d9dd0c",
+      "index": 2689,
+      "panel_index": 23,
+      "question": "does % show skin, neurofibromatosis?",
+      "source_index": 5418
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/56d9f4eab5cb613434f36f2a0f54be77f756aeeb6a9959e2e49625e801fa9e4f.jpg",
+      "image_sha256": "56d9f4eab5cb613434f36f2a0f54be77f756aeeb6a9959e2e49625e801fa9e4f",
+      "index": 156,
+      "panel_index": 24,
+      "question": "is cardiovascular present?",
+      "source_index": 345
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e87aa3bec07107978d06c6eef4699904e3572363ee4b29debc971ce25b47e0a8.jpg",
+      "image_sha256": "e87aa3bec07107978d06c6eef4699904e3572363ee4b29debc971ce25b47e0a8",
+      "index": 1320,
+      "panel_index": 25,
+      "question": "is spleen present?",
+      "source_index": 2797
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/43d71da4ebb5fb0ee3911890a3740fe73e8d2c38db84a565298f06158554c99c.jpg",
+      "image_sha256": "43d71da4ebb5fb0ee3911890a3740fe73e8d2c38db84a565298f06158554c99c",
+      "index": 3057,
+      "panel_index": 26,
+      "question": "does large cystic spaces lined by the flattened endothelial cells and containing lymph show replacement of almost whole breast with a large circumscribed, greywhite, firm, nodular mass having slit-like, compressed cystic areas and areas of haemorrhage?",
+      "source_index": 6132
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/895c7e366499b4001e42faa514b3f72564d5350804f39f8012cc1248946108cd.jpg",
+      "image_sha256": "895c7e366499b4001e42faa514b3f72564d5350804f39f8012cc1248946108cd",
+      "index": 2284,
+      "panel_index": 27,
+      "question": "are the necrotic cells atrophic and replaced by fibrous tissue?",
+      "source_index": 4668
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/b22b439f0834960c5a944fd71768f8085377319e658b402fd5e6161caf394c29.jpg",
+      "image_sha256": "b22b439f0834960c5a944fd71768f8085377319e658b402fd5e6161caf394c29",
+      "index": 363,
+      "panel_index": 28,
+      "question": "is retroperitoneum present?",
+      "source_index": 778
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3aff12fcd89ea7f1c117e325031eaa5690ff20de45714860fa7b1ac4be6bcfd9.jpg",
+      "image_sha256": "3aff12fcd89ea7f1c117e325031eaa5690ff20de45714860fa7b1ac4be6bcfd9",
+      "index": 553,
+      "panel_index": 29,
+      "question": "does cytomegalovirus show well circumscribed papillary lesion see for high mag?",
+      "source_index": 1187
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/caaf15d4f0be127d831dfc20aafdffbb3fd51dc86b5fe2d4d403a2c00078665e.jpg",
+      "image_sha256": "caaf15d4f0be127d831dfc20aafdffbb3fd51dc86b5fe2d4d403a2c00078665e",
+      "index": 2898,
+      "panel_index": 30,
+      "question": "is urinary present?",
+      "source_index": 5838
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/01805e4702ff58b98c1c8dfe550933cf3e5c7d6d6458a4baec8081a9905d864c.jpg",
+      "image_sha256": "01805e4702ff58b98c1c8dfe550933cf3e5c7d6d6458a4baec8081a9905d864c",
+      "index": 522,
+      "panel_index": 31,
+      "question": "does this image show pituitary, chromaphobe adenoma?",
+      "source_index": 1124
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/608f065ef9c416e2e42db33ea8b97b58d9b52fcb688efae2201e8ceecd66268c.jpg",
+      "image_sha256": "608f065ef9c416e2e42db33ea8b97b58d9b52fcb688efae2201e8ceecd66268c",
+      "index": 710,
+      "panel_index": 32,
+      "question": "are hyalin mass in pituitary which is amyloid there are several slides from this case in this file 23 yowf amyloid limited to brain present?",
+      "source_index": 1510
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/6bd8706ea26f1460487d9bfc56083ca54559ab4ed22f6776ac45e376fd43487e.jpg",
+      "image_sha256": "6bd8706ea26f1460487d9bfc56083ca54559ab4ed22f6776ac45e376fd43487e",
+      "index": 1031,
+      "panel_index": 33,
+      "question": "does hemorrhage newborn show quite good photo of ectopic pancreas?",
+      "source_index": 2187
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c235b3acb0a64a1e968fb33c7d71e2a3a6804a0beb9c5de02d1c81e740ab3931.jpg",
+      "image_sha256": "c235b3acb0a64a1e968fb33c7d71e2a3a6804a0beb9c5de02d1c81e740ab3931",
+      "index": 1812,
+      "panel_index": 34,
+      "question": "does this image show spleen, congestion, congestive heart failure?",
+      "source_index": 3743
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/1b9df4b6f62800751a286a6324fdc408bd576a953664d8da079e151371ffb214.jpg",
+      "image_sha256": "1b9df4b6f62800751a286a6324fdc408bd576a953664d8da079e151371ffb214",
+      "index": 1212,
+      "panel_index": 35,
+      "question": "is traumatic rupture present?",
+      "source_index": 2572
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/32925471b8f26ed8f36d184f4f9ea538e2badf6099a3f2139ab18ebc075a39da.jpg",
+      "image_sha256": "32925471b8f26ed8f36d184f4f9ea538e2badf6099a3f2139ab18ebc075a39da",
+      "index": 1345,
+      "panel_index": 36,
+      "question": "is side showing patency right side present?",
+      "source_index": 2854
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/1689cf6cec12def550863c629be54019ff9aa8ebd131077e6424e34f99c0688e.jpg",
+      "image_sha256": "1689cf6cec12def550863c629be54019ff9aa8ebd131077e6424e34f99c0688e",
+      "index": 2937,
+      "panel_index": 37,
+      "question": "is iron large excess of mature and small differentiated lymphocytes?",
+      "source_index": 5913
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/6fcdb169a40bd0685b86bcde6f7affb85e006ad011defe6026663f54fa0d0d71.jpg",
+      "image_sha256": "6fcdb169a40bd0685b86bcde6f7affb85e006ad011defe6026663f54fa0d0d71",
+      "index": 1725,
+      "panel_index": 38,
+      "question": "is liver present?",
+      "source_index": 3592
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3247e4ae15b8e29f3cdd6cfb1c3f834fe5aeefa1a79d68c3cc01fa0aa8094210.jpg",
+      "image_sha256": "3247e4ae15b8e29f3cdd6cfb1c3f834fe5aeefa1a79d68c3cc01fa0aa8094210",
+      "index": 2132,
+      "panel_index": 39,
+      "question": "are only a few areas of pale squamous mucosa confined to superficial layers of the epidermis?",
+      "source_index": 4379
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/cfccf5d66e5184792428db6b383f94694de409b1db0cd856a8f5bc8fc1df6bbc.jpg",
+      "image_sha256": "cfccf5d66e5184792428db6b383f94694de409b1db0cd856a8f5bc8fc1df6bbc",
+      "index": 1095,
+      "panel_index": 40,
+      "question": "is downs syndrome present?",
+      "source_index": 2328
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/72215c3d3e1db70d504cce7c9f33235e3989df9c122194363e9564ba7e6b28ac.jpg",
+      "image_sha256": "72215c3d3e1db70d504cce7c9f33235e3989df9c122194363e9564ba7e6b28ac",
+      "index": 1521,
+      "panel_index": 41,
+      "question": "is alpha smooth muscle actin immunohistochemical present?",
+      "source_index": 3206
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/4f1992887d1371a14db611d22dd012f448775fa9ebb2a3cd4d229c57e57d32ed.jpg",
+      "image_sha256": "4f1992887d1371a14db611d22dd012f448775fa9ebb2a3cd4d229c57e57d32ed",
+      "index": 2660,
+      "panel_index": 42,
+      "question": "do hemorrhage associated with placental abruption stain?",
+      "source_index": 5366
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/a99fc9c8fcf482a4eccad03811d57ac58f6d9b36b3117d1197a1b781626bf5b7.jpg",
+      "image_sha256": "a99fc9c8fcf482a4eccad03811d57ac58f6d9b36b3117d1197a1b781626bf5b7",
+      "index": 3118,
+      "panel_index": 43,
+      "question": "do the serial numbers indicate the frequency of involvement?",
+      "source_index": 6245
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/9360bf20dc28c7ee5cc9497c0ad5d1b90c15f707b90e14cc8e33d8648b742048.jpg",
+      "image_sha256": "9360bf20dc28c7ee5cc9497c0ad5d1b90c15f707b90e14cc8e33d8648b742048",
+      "index": 1457,
+      "panel_index": 44,
+      "question": "is uterus present?",
+      "source_index": 3088
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/9f2e6c3c68f47cda68b797083938c2313f345bd50117a41930c31f80e0d58752.jpg",
+      "image_sha256": "9f2e6c3c68f47cda68b797083938c2313f345bd50117a41930c31f80e0d58752",
+      "index": 1406,
+      "panel_index": 45,
+      "question": "is malignant histiocytosis present?",
+      "source_index": 2972
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/8b6a28ac948a532e526451b036e5b35b99b8014643fada6104d620a5935c356a.jpg",
+      "image_sha256": "8b6a28ac948a532e526451b036e5b35b99b8014643fada6104d620a5935c356a",
+      "index": 2405,
+      "panel_index": 46,
+      "question": "does this image show leukoplakia?",
+      "source_index": 4881
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3ad839845ed54c58732a03e60067e7e14dd88d4f39897ca2582a6d7407bd3fbc.jpg",
+      "image_sha256": "3ad839845ed54c58732a03e60067e7e14dd88d4f39897ca2582a6d7407bd3fbc",
+      "index": 2780,
+      "panel_index": 47,
+      "question": "does this image show kidney, hemochromatosis, chronic scarring?",
+      "source_index": 5610
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/b3a8a94f5f523c98cee5eee1e7205acf5ce7349a740321a82606cdf144e5a304.jpg",
+      "image_sha256": "b3a8a94f5f523c98cee5eee1e7205acf5ce7349a740321a82606cdf144e5a304",
+      "index": 2941,
+      "panel_index": 48,
+      "question": "does peripheral blood show presence of a leukaemic cells with hairy cytoplasmic projections?",
+      "source_index": 5921
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3461144babaf75dbc3758cb74e24515e858a6384576559b430a700c7c07833c0.jpg",
+      "image_sha256": "3461144babaf75dbc3758cb74e24515e858a6384576559b430a700c7c07833c0",
+      "index": 740,
+      "panel_index": 49,
+      "question": "is uterus present?",
+      "source_index": 1571
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/ca2faabdd4494972a7eb2a10d3d6c94f54367b50aa4927b560ba5861737cb84e.jpg",
+      "image_sha256": "ca2faabdd4494972a7eb2a10d3d6c94f54367b50aa4927b560ba5861737cb84e",
+      "index": 2258,
+      "panel_index": 50,
+      "question": "does the periphery show a few mixed inflammatory cells?",
+      "source_index": 4624
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/28191c03fdf67ea2f91b6f87fbd6434aed5e09beede7bbf22ab046e751d92bbe.jpg",
+      "image_sha256": "28191c03fdf67ea2f91b6f87fbd6434aed5e09beede7bbf22ab046e751d92bbe",
+      "index": 946,
+      "panel_index": 51,
+      "question": "is embryo-fetus present?",
+      "source_index": 2016
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/b9ed971736224d01a006753fcdac51b9eabc7ce2ac6f4c03dbf95e8eeaec974d.jpg",
+      "image_sha256": "b9ed971736224d01a006753fcdac51b9eabc7ce2ac6f4c03dbf95e8eeaec974d",
+      "index": 1952,
+      "panel_index": 52,
+      "question": "does this image show opened infant body with abdominal viscera in right chest quite good?",
+      "source_index": 4049
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c85003d7790d6f22fcdfb9e00b70ba22fa8eca4a377a9d7bd5a4ae099a190b5f.jpg",
+      "image_sha256": "c85003d7790d6f22fcdfb9e00b70ba22fa8eca4a377a9d7bd5a4ae099a190b5f",
+      "index": 2181,
+      "panel_index": 53,
+      "question": "is this fixed tissue present?",
+      "source_index": 4466
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/1865ce38646ab2b42bd25ccca8b4130b20d7bc209b69658a4ea3af10b3a3eb08.jpg",
+      "image_sha256": "1865ce38646ab2b42bd25ccca8b4130b20d7bc209b69658a4ea3af10b3a3eb08",
+      "index": 2576,
+      "panel_index": 54,
+      "question": "is lateral view present?",
+      "source_index": 5199
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/641c1906536a16dfe185995a82fcf3a1f805c33d031536196cf9f74163e465dd.jpg",
+      "image_sha256": "641c1906536a16dfe185995a82fcf3a1f805c33d031536196cf9f74163e465dd",
+      "index": 2364,
+      "panel_index": 55,
+      "question": "is opened uterus and cervix with large cervical myoma protruding into vagina slide present?",
+      "source_index": 4808
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/494f9223a885ad5863261b5a81685b357e7f3ced2ac82eddfacc137cf2b32625.jpg",
+      "image_sha256": "494f9223a885ad5863261b5a81685b357e7f3ced2ac82eddfacc137cf2b32625",
+      "index": 1507,
+      "panel_index": 56,
+      "question": "is hepatobiliary present?",
+      "source_index": 3182
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/2c903786c0997ed4a9ba5773060a112d7d303f804ba221b9bb68753d440bd462.jpg",
+      "image_sha256": "2c903786c0997ed4a9ba5773060a112d7d303f804ba221b9bb68753d440bd462",
+      "index": 2759,
+      "panel_index": 57,
+      "question": "is the wall of the artery composed of hematopoietic marrow and marrow fat cells attached to a thrombus?",
+      "source_index": 5556
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e74f241ed22e8e600865926a18faa438b6cfec3e359d25fb8266c84eca3a8573.jpg",
+      "image_sha256": "e74f241ed22e8e600865926a18faa438b6cfec3e359d25fb8266c84eca3a8573",
+      "index": 2762,
+      "panel_index": 58,
+      "question": "is molluscum contagiosum present?",
+      "source_index": 5562
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/8bfc00e48d683228d7fb5db6d59ebd3226545e48c2ae5e0d73f0128ee44acdb1.jpg",
+      "image_sha256": "8bfc00e48d683228d7fb5db6d59ebd3226545e48c2ae5e0d73f0128ee44acdb1",
+      "index": 506,
+      "panel_index": 59,
+      "question": "is metastatic carcinoma present?",
+      "source_index": 1078
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/665a5480bd03127a59f92fded4d339aad37ccbc0322bf3e89fb02c8686a48b41.jpg",
+      "image_sha256": "665a5480bd03127a59f92fded4d339aad37ccbc0322bf3e89fb02c8686a48b41",
+      "index": 1781,
+      "panel_index": 60,
+      "question": "is hepatobiliary present?",
+      "source_index": 3678
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/88def974e1064db339590b28a4c77c4e78324498f3de46c305888fa8f84268c4.jpg",
+      "image_sha256": "88def974e1064db339590b28a4c77c4e78324498f3de46c305888fa8f84268c4",
+      "index": 3079,
+      "panel_index": 61,
+      "question": "are normal non-activated platelet, having open canalicular system and the cytoplasmic organelles bizarre atypical squamous cells but the border between the epidermis and dermis is intact ie?",
+      "source_index": 6174
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3123116fe5cda70907e268515f60475ec5d40fb551af3d562f41d24e55ba1caa.jpg",
+      "image_sha256": "3123116fe5cda70907e268515f60475ec5d40fb551af3d562f41d24e55ba1caa",
+      "index": 66,
+      "panel_index": 62,
+      "question": "is opened abdominal cavity with massive tumor in omentum none apparent in liver nor over peritoneal surfaces gut present?",
+      "source_index": 153
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/8f2180813509ee599b03615ca6b30593d3f73cbd805079b2f5e250333b641188.jpg",
+      "image_sha256": "8f2180813509ee599b03615ca6b30593d3f73cbd805079b2f5e250333b641188",
+      "index": 1070,
+      "panel_index": 63,
+      "question": "is odontoid process subluxation with narrowing of foramen magnum present?",
+      "source_index": 2268
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/ff79288171972f03368615f5710d6c44a1cd82014233ecbbf8c22b7ff250b440.jpg",
+      "image_sha256": "ff79288171972f03368615f5710d6c44a1cd82014233ecbbf8c22b7ff250b440",
+      "index": 2225,
+      "panel_index": 64,
+      "question": "does the cytoplasm show granulation tissue and gliosis?",
+      "source_index": 4546
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/4c1198961aaac9bf34845d4287455d15ed12063134eb311308731cc45570b27f.jpg",
+      "image_sha256": "4c1198961aaac9bf34845d4287455d15ed12063134eb311308731cc45570b27f",
+      "index": 1840,
+      "panel_index": 65,
+      "question": "does this image show edge of node with infiltration of capsule obliteration of subcapsular sinus mixture of small dark lymphocytes and larger cells with vesicular nuclei not specified?",
+      "source_index": 3795
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/435d0cc12cfac042d19fbe3001645c99b29368ba7e01428c982a56b4eb125d49.jpg",
+      "image_sha256": "435d0cc12cfac042d19fbe3001645c99b29368ba7e01428c982a56b4eb125d49",
+      "index": 2350,
+      "panel_index": 66,
+      "question": "is oral present?",
+      "source_index": 4784
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/1e616fa667010f2bedfb5b385f193b48a4042197055565692d69b5d63c368965.jpg",
+      "image_sha256": "1e616fa667010f2bedfb5b385f193b48a4042197055565692d69b5d63c368965",
+      "index": 171,
+      "panel_index": 67,
+      "question": "does cardiovascular show good for banding pattern mitochondria?",
+      "source_index": 374
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/24cbdd77781daf212dee27776af4fac4fbb9f4ff7c3e9d05a77ad4ae011cee13.jpg",
+      "image_sha256": "24cbdd77781daf212dee27776af4fac4fbb9f4ff7c3e9d05a77ad4ae011cee13",
+      "index": 2192,
+      "panel_index": 68,
+      "question": "is nervous present?",
+      "source_index": 4487
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/14ffaa3654bca239223efed11efb9123ef03af1d072e3fe32014230f296df1ae.jpg",
+      "image_sha256": "14ffaa3654bca239223efed11efb9123ef03af1d072e3fe32014230f296df1ae",
+      "index": 2586,
+      "panel_index": 69,
+      "question": "does leukoplakia vocal cord show lung?",
+      "source_index": 5218
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/7c693e8dc25f58f0a41dea041ca7f6342914ed17999f79831498789a39789118.jpg",
+      "image_sha256": "7c693e8dc25f58f0a41dea041ca7f6342914ed17999f79831498789a39789118",
+      "index": 2248,
+      "panel_index": 70,
+      "question": "is herpes labialis present?",
+      "source_index": 4600
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/44a832434dd6b6606dad4db9711425c023e1ac26735fc9366b63e204f2248fef.jpg",
+      "image_sha256": "44a832434dd6b6606dad4db9711425c023e1ac26735fc9366b63e204f2248fef",
+      "index": 1797,
+      "panel_index": 71,
+      "question": "is endocervical polyp present?",
+      "source_index": 3720
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/30ab0231031bdd0246007d40c3c4b2941e51a0833383608311b644ff628d5df8.jpg",
+      "image_sha256": "30ab0231031bdd0246007d40c3c4b2941e51a0833383608311b644ff628d5df8",
+      "index": 1285,
+      "panel_index": 72,
+      "question": "is granulosa cell tumor present?",
+      "source_index": 2725
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/f116323448cdde6cd26ab3cf8077652b923c161bbaa730594748d3d222778c11.jpg",
+      "image_sha256": "f116323448cdde6cd26ab3cf8077652b923c161bbaa730594748d3d222778c11",
+      "index": 1643,
+      "panel_index": 73,
+      "question": "does hypersegmented neutrophil show primary biliary cirrhosis?",
+      "source_index": 3439
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c7747fd90b358a7881ce8c367c18843eb92502fed373e10edadbbcbb3a25876b.jpg",
+      "image_sha256": "c7747fd90b358a7881ce8c367c18843eb92502fed373e10edadbbcbb3a25876b",
+      "index": 2595,
+      "panel_index": 74,
+      "question": "is meningitis acute present?",
+      "source_index": 5233
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/899e32350f1bc74f6a9b8351a8539103dc0c96c543de03084d409fa57e156390.jpg",
+      "image_sha256": "899e32350f1bc74f6a9b8351a8539103dc0c96c543de03084d409fa57e156390",
+      "index": 2391,
+      "panel_index": 75,
+      "question": "is the pink acellular amyloid material seen in the red pulp causing atrophy of while pulp?",
+      "source_index": 4857
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/977a6911a91ded61bf4be3d860c78104c41b05aa8ceaca9a3e8bd74164283bdf.jpg",
+      "image_sha256": "977a6911a91ded61bf4be3d860c78104c41b05aa8ceaca9a3e8bd74164283bdf",
+      "index": 2643,
+      "panel_index": 76,
+      "question": "is respiratory present?",
+      "source_index": 5329
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/075ef3839a7cc1160e0f723d06a065710f138f8f06456d66ab18598afb7394bf.jpg",
+      "image_sha256": "075ef3839a7cc1160e0f723d06a065710f138f8f06456d66ab18598afb7394bf",
+      "index": 1604,
+      "panel_index": 77,
+      "question": "does exposure show primary biliary cirrhosis?",
+      "source_index": 3366
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/32ef609c84f219b71e9c4c917b3d7a890319c1517b5973fdedb6f1370c20a27e.jpg",
+      "image_sha256": "32ef609c84f219b71e9c4c917b3d7a890319c1517b5973fdedb6f1370c20a27e",
+      "index": 1869,
+      "panel_index": 78,
+      "question": "is prostate present?",
+      "source_index": 3860
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e4489b5d0687ef7e8677af6a8661fcc145cc86d07296e7efbecfde5597da25d7.jpg",
+      "image_sha256": "e4489b5d0687ef7e8677af6a8661fcc145cc86d07296e7efbecfde5597da25d7",
+      "index": 2165,
+      "panel_index": 79,
+      "question": "is nervous present?",
+      "source_index": 4440
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e40f9f8b9b54e8e7b5b30b55eeb8a61dae86c7833e3ff94b4e3c2eb0a1fcc2a2.jpg",
+      "image_sha256": "e40f9f8b9b54e8e7b5b30b55eeb8a61dae86c7833e3ff94b4e3c2eb0a1fcc2a2",
+      "index": 218,
+      "panel_index": 80,
+      "question": "does this image show heart, myocardial infarction, surgery to repair interventricular septum rupture?",
+      "source_index": 478
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/d8d424eed7e79b465ca5a2a319a15337077e2710732edabd8e0653ade46b5a6b.jpg",
+      "image_sha256": "d8d424eed7e79b465ca5a2a319a15337077e2710732edabd8e0653ade46b5a6b",
+      "index": 1727,
+      "panel_index": 81,
+      "question": "does this image show low molecular weight keratin?",
+      "source_index": 3595
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/b664278d46763c9fbddc9fbac72ac56aa7328d208eab8d9b47205a987b8256a3.jpg",
+      "image_sha256": "b664278d46763c9fbddc9fbac72ac56aa7328d208eab8d9b47205a987b8256a3",
+      "index": 239,
+      "panel_index": 82,
+      "question": "is vasculature present?",
+      "source_index": 519
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c7f168d4338ba4955169cc6af06147bcdc9a98d856abb61b592176d0938df67f.jpg",
+      "image_sha256": "c7f168d4338ba4955169cc6af06147bcdc9a98d856abb61b592176d0938df67f",
+      "index": 2871,
+      "panel_index": 83,
+      "question": "does pus in test tube show glomerulonephritis, sle ii?",
+      "source_index": 5784
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/eb1dfd1934e923af869b2f527b9ce56af3b88d50984593805e3046ad561bcab2.jpg",
+      "image_sha256": "eb1dfd1934e923af869b2f527b9ce56af3b88d50984593805e3046ad561bcab2",
+      "index": 2925,
+      "panel_index": 84,
+      "question": "is iron stored as ferritin and haemosiderin?",
+      "source_index": 5888
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/e9f9a55a40382d60f28ae9eb4505fcbd085dfbb40a75f79e7a3b0e083e49f79e.jpg",
+      "image_sha256": "e9f9a55a40382d60f28ae9eb4505fcbd085dfbb40a75f79e7a3b0e083e49f79e",
+      "index": 74,
+      "panel_index": 85,
+      "question": "is the plaque stained for elastin (black)?",
+      "source_index": 169
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/d5b3155fafccfab531c2c8f77a7a0ef310cfd48b5e6c508d918f262970eafeb8.jpg",
+      "image_sha256": "d5b3155fafccfab531c2c8f77a7a0ef310cfd48b5e6c508d918f262970eafeb8",
+      "index": 2694,
+      "panel_index": 86,
+      "question": "does small intestine show skin, neurofibromatosis?",
+      "source_index": 5427
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/910e83b511bef8b42ab3592f07798fe643bd9b5691296aa794d486aba081e4aa.jpg",
+      "image_sha256": "910e83b511bef8b42ab3592f07798fe643bd9b5691296aa794d486aba081e4aa",
+      "index": 395,
+      "panel_index": 87,
+      "question": "is cardiovascular present?",
+      "source_index": 841
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/75cd44dc285c60bf7be21b057ccab5246f5682f72d045b9436e8b376c1657cc6.jpg",
+      "image_sha256": "75cd44dc285c60bf7be21b057ccab5246f5682f72d045b9436e8b376c1657cc6",
+      "index": 355,
+      "panel_index": 88,
+      "question": "is vasculature present?",
+      "source_index": 764
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/727d36bcf974dc4e92399c732dc5c0cd9962686439cc8f236d329961658c6af8.jpg",
+      "image_sha256": "727d36bcf974dc4e92399c732dc5c0cd9962686439cc8f236d329961658c6af8",
+      "index": 1966,
+      "panel_index": 89,
+      "question": "is gms present?",
+      "source_index": 4081
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/4e2339a8ec2e91b38804a579570ae5c037b2c4be9c630a8937236b66293b5cf5.jpg",
+      "image_sha256": "4e2339a8ec2e91b38804a579570ae5c037b2c4be9c630a8937236b66293b5cf5",
+      "index": 1765,
+      "panel_index": 90,
+      "question": "is cytomegaly present?",
+      "source_index": 3652
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/fab327b58070e2c93c9c76a0c12a5a4a246747ab95ea12fcb0f2e5d395b512fd.jpg",
+      "image_sha256": "fab327b58070e2c93c9c76a0c12a5a4a246747ab95ea12fcb0f2e5d395b512fd",
+      "index": 252,
+      "panel_index": 91,
+      "question": "does this image show ruptured saccular aneurysm right middle cerebral artery?",
+      "source_index": 551
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/53014eba382bdefaa65e80fc4c29618ca8d88dfa8b56b156f5c369d0d71472e0.jpg",
+      "image_sha256": "53014eba382bdefaa65e80fc4c29618ca8d88dfa8b56b156f5c369d0d71472e0",
+      "index": 320,
+      "panel_index": 92,
+      "question": "is cardiovascular present?",
+      "source_index": 695
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/f8bb0df4a0a6b091941b8546e8f6d256954b27f6fb7350583dff28bf55aec6ca.jpg",
+      "image_sha256": "f8bb0df4a0a6b091941b8546e8f6d256954b27f6fb7350583dff28bf55aec6ca",
+      "index": 834,
+      "panel_index": 93,
+      "question": "does leiomyoma show uterus, leiomyoma?",
+      "source_index": 1787
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/07066b7d56a17c74c2805d8de9371ccaa5315cfef6e6484db3a60208840a6f43.jpg",
+      "image_sha256": "07066b7d56a17c74c2805d8de9371ccaa5315cfef6e6484db3a60208840a6f43",
+      "index": 2431,
+      "panel_index": 94,
+      "question": "does this image show chronic hyperplastic pulpitis?",
+      "source_index": 4928
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/6478b92580e095f7316b89ede029dec8c4120ba6b989ef7753a1249ab2eddd62.jpg",
+      "image_sha256": "6478b92580e095f7316b89ede029dec8c4120ba6b989ef7753a1249ab2eddd62",
+      "index": 1758,
+      "panel_index": 95,
+      "question": "is stein leventhal present?",
+      "source_index": 3642
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c3acfa7cd5ed4c703a51db771c13206261e7d07080e27b9d8ba4e646f1cb602f.jpg",
+      "image_sha256": "c3acfa7cd5ed4c703a51db771c13206261e7d07080e27b9d8ba4e646f1cb602f",
+      "index": 2062,
+      "panel_index": 96,
+      "question": "does this image show wernicke 's encephalopathy?",
+      "source_index": 4270
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/9bb33da7a909a26873ac1c1a9365cb9e148e5a64ea20642546810ef3187099b3.jpg",
+      "image_sha256": "9bb33da7a909a26873ac1c1a9365cb9e148e5a64ea20642546810ef3187099b3",
+      "index": 1659,
+      "panel_index": 97,
+      "question": "is marfans syndrome present?",
+      "source_index": 3467
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c75736bf687340103bc91bf4ecde0121a220f7b1cfb12e4d183ddc50012ec9f5.jpg",
+      "image_sha256": "c75736bf687340103bc91bf4ecde0121a220f7b1cfb12e4d183ddc50012ec9f5",
+      "index": 1329,
+      "panel_index": 98,
+      "question": "is endometritis postpartum present?",
+      "source_index": 2821
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/729152be33e72d59af0ceba43eff5c7b8900f6c5b5bc9ddefaecdc58cdc1e9dc.jpg",
+      "image_sha256": "729152be33e72d59af0ceba43eff5c7b8900f6c5b5bc9ddefaecdc58cdc1e9dc",
+      "index": 1593,
+      "panel_index": 99,
+      "question": "is blood present?",
+      "source_index": 3346
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/505f3649eade7aac59f2f4f520479fa41b220b5d9cbd857826878a3f95f721d4.jpg",
+      "image_sha256": "505f3649eade7aac59f2f4f520479fa41b220b5d9cbd857826878a3f95f721d4",
+      "index": 3084,
+      "panel_index": 100,
+      "question": "is the thyroid gland enlarged diffusely?",
+      "source_index": 6184
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/f5c4f81a905c810ec037b12618417c32418db33ef7919f481c542deb3c4cf4f5.jpg",
+      "image_sha256": "f5c4f81a905c810ec037b12618417c32418db33ef7919f481c542deb3c4cf4f5",
+      "index": 2382,
+      "panel_index": 101,
+      "question": "is lymphoid atrophy in newborn present?",
+      "source_index": 4839
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/31684ffd376f548e2f59327238bac1d0ae7634b50952baa2a90097a9a11af7fe.jpg",
+      "image_sha256": "31684ffd376f548e2f59327238bac1d0ae7634b50952baa2a90097a9a11af7fe",
+      "index": 1776,
+      "panel_index": 102,
+      "question": "is lesion in dome of uterus present?",
+      "source_index": 3670
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/6c3e0a26cfe12576e1a7773e222c1a3d680f6eb6831a6346adba6f9cd3454598.jpg",
+      "image_sha256": "6c3e0a26cfe12576e1a7773e222c1a3d680f6eb6831a6346adba6f9cd3454598",
+      "index": 1368,
+      "panel_index": 103,
+      "question": "is hematologic present?",
+      "source_index": 2900
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/f6a7f67405e8751124c1e382c60519b3d059b65c33d285a5fd1dbdd8d2b6fea9.jpg",
+      "image_sha256": "f6a7f67405e8751124c1e382c60519b3d059b65c33d285a5fd1dbdd8d2b6fea9",
+      "index": 1087,
+      "panel_index": 104,
+      "question": "does acute rheumatic mitral valvulitis stained for keratins 8 and 18 show a ballooned cell (dotted line) in which keratins have been ubiquitinylated and have collapsed into an immunoreactive mallory-denk body, leaving the cytoplasm empty?",
+      "source_index": 2302
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/46777bf66cd268f4251355f14ca090f04c652bc1f24c188ef2015f3c1253ee86.jpg",
+      "image_sha256": "46777bf66cd268f4251355f14ca090f04c652bc1f24c188ef2015f3c1253ee86",
+      "index": 1111,
+      "panel_index": 105,
+      "question": "is bone, calvarium present?",
+      "source_index": 2367
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/1c71d0f22215415b4187d28b2ff0ecdaaacc9858c242eee7a130300e3eb88460.jpg",
+      "image_sha256": "1c71d0f22215415b4187d28b2ff0ecdaaacc9858c242eee7a130300e3eb88460",
+      "index": 2443,
+      "panel_index": 106,
+      "question": "is oral present?",
+      "source_index": 4947
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3bb22933ad51db5b990d492418e422c81f9767c99483592120082ae11fe08038.jpg",
+      "image_sha256": "3bb22933ad51db5b990d492418e422c81f9767c99483592120082ae11fe08038",
+      "index": 1652,
+      "panel_index": 107,
+      "question": "is inflamed exocervix present?",
+      "source_index": 3455
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/4d1bbb6aec4148e62cf567db09f9b9765a6ea066eaa3313fba55d3a69933fc6a.jpg",
+      "image_sha256": "4d1bbb6aec4148e62cf567db09f9b9765a6ea066eaa3313fba55d3a69933fc6a",
+      "index": 1948,
+      "panel_index": 108,
+      "question": "is gross appearance of leukoplakia attached to the dura?",
+      "source_index": 4024
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/d20b49dd14aed367d1054297cb1c4afeea12ed1d28ecf238e4b9364e8fb5094f.jpg",
+      "image_sha256": "d20b49dd14aed367d1054297cb1c4afeea12ed1d28ecf238e4b9364e8fb5094f",
+      "index": 2421,
+      "panel_index": 109,
+      "question": "is feet present?",
+      "source_index": 4909
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/6d73007ba0b170a946a1e16207254298db07a4a099c1fd7a25c62dc387a5bb56.jpg",
+      "image_sha256": "6d73007ba0b170a946a1e16207254298db07a4a099c1fd7a25c62dc387a5bb56",
+      "index": 2952,
+      "panel_index": 110,
+      "question": "is diagrammatic representation of pathogenesis of atherosclerosis as explained by 'reaction-to-injury 'hypothesis?",
+      "source_index": 5944
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/be335ce9e50cc130da2c2b132f753e8013ecda5adb691f59efd5d2327dcbd0e3.jpg",
+      "image_sha256": "be335ce9e50cc130da2c2b132f753e8013ecda5adb691f59efd5d2327dcbd0e3",
+      "index": 880,
+      "panel_index": 111,
+      "question": "is uterus present?",
+      "source_index": 1883
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/23c75da5b1d2153a84ec46d3d44bafb8e07605cf2a17e3bfe9a2aa95490abc28.jpg",
+      "image_sha256": "23c75da5b1d2153a84ec46d3d44bafb8e07605cf2a17e3bfe9a2aa95490abc28",
+      "index": 1815,
+      "panel_index": 112,
+      "question": "is lymph node present?",
+      "source_index": 3749
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/7160f47d9af50b5c666de90ccab42fc5a63fc4453387b87f59b545b7d33558a5.jpg",
+      "image_sha256": "7160f47d9af50b5c666de90ccab42fc5a63fc4453387b87f59b545b7d33558a5",
+      "index": 232,
+      "panel_index": 113,
+      "question": "does this image show heart?",
+      "source_index": 505
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/19ef9b5db449563ee6bc602320a1d3955f3700f8c6b5cba22b7d0f1f507af315.jpg",
+      "image_sha256": "19ef9b5db449563ee6bc602320a1d3955f3700f8c6b5cba22b7d0f1f507af315",
+      "index": 200,
+      "panel_index": 114,
+      "question": "is peritoneum present?",
+      "source_index": 443
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/d538e1fdd4ec037d0ca9ce6e9c991afdda73e313e87d9cc35d6b0cced439bfdd.jpg",
+      "image_sha256": "d538e1fdd4ec037d0ca9ce6e9c991afdda73e313e87d9cc35d6b0cced439bfdd",
+      "index": 2516,
+      "panel_index": 115,
+      "question": "does nuclear change show pancreatic fat necrosis?",
+      "source_index": 5077
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/1c45edf27f14113505ec10239fc53a54e220967c4ba90cb4e541a92c0e3baaba.jpg",
+      "image_sha256": "1c45edf27f14113505ec10239fc53a54e220967c4ba90cb4e541a92c0e3baaba",
+      "index": 12,
+      "panel_index": 116,
+      "question": "is abdomen present?",
+      "source_index": 33
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/6385fd00e6df645ef761135f4e3528c367e8ac95e14575b3ac377f37206f03fd.jpg",
+      "image_sha256": "6385fd00e6df645ef761135f4e3528c367e8ac95e14575b3ac377f37206f03fd",
+      "index": 2572,
+      "panel_index": 117,
+      "question": "is the excellent uterus present?",
+      "source_index": 5192
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/95e2f52f2562bf97baad8db03aa9ff2fa0b526d73f67558b4329c79d6be2d050.jpg",
+      "image_sha256": "95e2f52f2562bf97baad8db03aa9ff2fa0b526d73f67558b4329c79d6be2d050",
+      "index": 2820,
+      "panel_index": 118,
+      "question": "does linear fracture in occiput show close-up of cut surface?",
+      "source_index": 5685
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/ddbd6748d147cb089b3c8e1960a8a9e6d91ee7fdb924799f3b9a3d76e12452e0.jpg",
+      "image_sha256": "ddbd6748d147cb089b3c8e1960a8a9e6d91ee7fdb924799f3b9a3d76e12452e0",
+      "index": 1304,
+      "panel_index": 119,
+      "question": "is infarcts present?",
+      "source_index": 2767
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3cd499abffe72a1590f2ce44974af2c453ef8424091f7f21f683f83a3a8a8408.jpg",
+      "image_sha256": "3cd499abffe72a1590f2ce44974af2c453ef8424091f7f21f683f83a3a8a8408",
+      "index": 1738,
+      "panel_index": 120,
+      "question": "is liver present?",
+      "source_index": 3611
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/575bd8bd99099cdffb0cb14670fcfe6d30055309cea8a6bf6acc0898aec4c253.jpg",
+      "image_sha256": "575bd8bd99099cdffb0cb14670fcfe6d30055309cea8a6bf6acc0898aec4c253",
+      "index": 1697,
+      "panel_index": 121,
+      "question": "is choanal atresia present?",
+      "source_index": 3540
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c0a2b4a2b3ef28e30ae96a40764da72781e827e0a47fd1423128dae532e431a9.jpg",
+      "image_sha256": "c0a2b4a2b3ef28e30ae96a40764da72781e827e0a47fd1423128dae532e431a9",
+      "index": 1524,
+      "panel_index": 122,
+      "question": "is hepatobiliary present?",
+      "source_index": 3214
+    },
+    {
+      "answer": "no",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/b399c92292b236f4b57dad51d104e749345179d0c96a5cb4b3f158832e12c7e7.jpg",
+      "image_sha256": "b399c92292b236f4b57dad51d104e749345179d0c96a5cb4b3f158832e12c7e7",
+      "index": 1152,
+      "panel_index": 123,
+      "question": "is glomerulosa present?",
+      "source_index": 2444
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/3d83b81623f91a0afeecce5b450692e8345a7ca2cbda3654aa96462892400d55.jpg",
+      "image_sha256": "3d83b81623f91a0afeecce5b450692e8345a7ca2cbda3654aa96462892400d55",
+      "index": 104,
+      "panel_index": 124,
+      "question": "does this image show anterior view of whole body?",
+      "source_index": 229
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/9be2741ec77839ce9f448d9131a214235d7a5ccdc8053ba4bc6ee00e3ba0ab19.jpg",
+      "image_sha256": "9be2741ec77839ce9f448d9131a214235d7a5ccdc8053ba4bc6ee00e3ba0ab19",
+      "index": 1374,
+      "panel_index": 125,
+      "question": "is hematologic present?",
+      "source_index": 2915
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/988eddb52c3654cdbf69697f8fbd2d94cf610cdb8f3b6d1a589df625b1aa753a.jpg",
+      "image_sha256": "988eddb52c3654cdbf69697f8fbd2d94cf610cdb8f3b6d1a589df625b1aa753a",
+      "index": 530,
+      "panel_index": 126,
+      "question": "does this image show adrenal gland, normal histology?",
+      "source_index": 1142
+    },
+    {
+      "answer": "yes",
+      "answer_type": "yes_no",
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/images_by_sha256/c87a1541f1c3ffc72114c59eacd435a94032f04db25fed7df9ec1ec407f3e6ff.jpg",
+      "image_sha256": "c87a1541f1c3ffc72114c59eacd435a94032f04db25fed7df9ec1ec407f3e6ff",
+      "index": 2808,
+      "panel_index": 127,
+      "question": "does this image show kidney, polycystic disease?",
+      "source_index": 5665
+    }
+  ],
+  "schema_version": 1,
+  "seed": 42,
+  "selection_uses_model_outputs": false,
+  "source_records": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/pathvqa_validation_yesno_3125.json",
+  "source_records_sha256": "e3a7b4646a2001e85e59eeadc9ddfd3e7ed262da2cbc9fe7cda73e3d7b44fe35",
+  "split_role": "pathvqa_validation_prompt_parser_calibration",
+  "status": "frozen_before_calibration_inference",
+  "unique_image_contents": 128
+}

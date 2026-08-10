@@ -1,0 +1,8 @@
+{"index":0,"question":"Is the described feature present?","completion":"The described feature is clearly present in the image.","parsed_answer":null,"expected_intent_not_sent":"yes"}
+{"index":1,"question":"Is the described feature present?","completion":"The described feature is absent in this image.","parsed_answer":null,"expected_intent_not_sent":"no"}
+{"index":2,"question":"Is the finding visible?","completion":"This observation confirms the presence of the finding.","parsed_answer":null,"expected_intent_not_sent":"yes"}
+{"index":3,"question":"Is the finding visible?","completion":"The field contains no such finding.","parsed_answer":null,"expected_intent_not_sent":"no"}
+{"index":4,"question":"Is the finding present?","completion":"The finding may be present, although absence cannot be excluded.","parsed_answer":null,"expected_intent_not_sent":"unresolved"}
+{"index":5,"question":"Is the finding present?","completion":"The image shows several structures and therefore","parsed_answer":null,"expected_intent_not_sent":"unresolved"}
+{"index":6,"question":"Does the sample contain the feature?","completion":"The feature is demonstrated throughout the sample.","parsed_answer":null,"expected_intent_not_sent":"yes"}
+{"index":7,"question":"Does the sample contain the feature?","completion":"The description discusses the sample but makes no statement about that feature.","parsed_answer":null,"expected_intent_not_sent":"unresolved"}

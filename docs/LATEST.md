@@ -671,3 +671,20 @@ GPT-4o Stage3 completed all 1,500 steps and the frozen validation385 pipeline se
 `3ade3cffd46b64abc864ed9f271b47632810ec9c`. Llama 11B and DeepSeek-VL2 aggregate smokes have run:
 eligible full tasks are active, while Llama 11B PathVQA is withheld after a predeclared cap-hit
 gate failure. Llama 90B remains queued for all-eight-GPU execution, followed by Kimi Stage3.
+
+On 2026-08-11, the PathVQA/OOD audit separated answer recovery from medical correctness. A frozen
+validation calibration selected the least invasive 192-token short prompt; stronger XML and A/B
+instructions did not improve compliance. A reference-blind GPT-4.1-mini intent extractor followed
+by an independent GPT-4.1 contradiction verifier raises GPT-4o Stage3 reliable PathVQA coverage from
+about 91% to 98.84% and Grok Stage3 to 99.08%, while unresolved or contradictory outputs remain wrong. More importantly, a
+100%-coverage forced Yes/No logit comparison over all 3,362 binary questions still finds Base
+66.39%, SFT3000 58.45%, Stage2 58.69%, GPT-4o Stage3 59.04%, and Grok Stage3 58.86%. Thus most of
+the 7--8 point deficit is real format-neutral negative transfer already introduced at SFT, not a
+Stage3 parsing artifact. OmniMedVQA confirms the conclusion at 99.98% Stage3 strict coverage:
+46.30% versus Base 60.06%, paired difference -13.76 points (95% CI -15.02 to -12.51; McNemar
+`p=5.01e-100`). The current runs update the complete 7.616B causal LM while freezing the 676.6M
+vision tower and 44.6M merger, so the loss cannot be caused by visual-weight drift. Visual unfreezing
+is not authorized; if a mitigation ablation is approved, the gate order is LM LoRA, then LM LoRA
+plus merger, then bounded vision LoRA/last visual blocks. The full diagnosis and the paused
+interpretability evidence boundary are recorded in
+`docs/20260811_pathvqa_high_coverage_ood_diagnosis_and_visual_adaptation_gate.md`.

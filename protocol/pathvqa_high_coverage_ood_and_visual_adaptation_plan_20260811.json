@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "frozen_at_local": "2026-08-11T00:56:38+08:00",
+  "objective": "Maximize reliable answer recovery before attributing OOD degradation, then gate any visual-side retraining on format-neutral evidence.",
+  "scientific_boundaries": {
+    "test_outputs_may_select_prompt_parser_or_threshold": false,
+    "parse_coverage_is_not_accuracy": true,
+    "llm_judge_may_see_reference_answer": false,
+    "llm_judge_may_change_medical_correctness": false,
+    "unresolved_is_counted_wrong": true,
+    "new_test_runs_are_post_hoc_sensitivity": true
+  },
+  "pathvqa_validation_calibration": {
+    "dataset_repo": "flaviagiammarino/path-vqa",
+    "revision": "1685832883334b5bb5beaf4e4b333fdeecaa4ad9",
+    "local_manifest": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_validation_calibration_v1_20260811/manifest.json",
+    "local_manifest_sha256": "891e39d7cef19afbe2b08ab4b96a52c7f94046eebbe61a9a15e2269f7cb84377",
+    "full_validation_count": 6259,
+    "yes_no_count": 3125,
+    "panel": "protocol/pathvqa_yesno_prompt_parser_calibration_panel_128_20260811.json",
+    "panel_sha256": "6d83fddae4df184cdafef00da0e258566397aea90effa6b01b16c1798867277f",
+    "panel_count": 128,
+    "panel_yes_no_balance": {
+      "yes": 64,
+      "no": 64
+    },
+    "unique_images": 128,
+    "selection_seed": 42,
+    "selection_uses_model_outputs": false
+  },
+  "prompt_calibration": {
+    "models": {
+      "stage3_gpt4o_checkpoint1000": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_full3epoch_seed42_20260801/epoch_model_snapshots/checkpoint-1000",
+        "config_sha256": "677754b792532590407a989718dd68eed61b46d0846db56ad67a57a67838d189"
+      },
+      "stage3_grok43_checkpoint1500": {
+        "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo/grok43_full3epoch_seed42_20260805_attempt02/epoch_model_snapshots/checkpoint-1500",
+        "config_sha256": "dc3e7c414bb7eddb19ce06a71b3819dd355f57bad1fb7a19f86fa09cebb8f9e0"
+      }
+    },
+    "contracts": [
+      "short_v1_192",
+      "xml_v1_192",
+      "choice_v1_32"
+    ],
+    "decoding": {
+      "do_sample": false,
+      "dtype": "bfloat16",
+      "quantization": "none",
+      "max_pixels": 65536,
+      "min_pixels": 3136
+    },
+    "selection_order": [
+      "maximize the minimum parseable rate across the two Stage3 models",
+      "maximize mean parseable rate",
+      "minimize generation-cap rate",
+      "if rates differ by at most 0.5 percentage points, prefer the less invasive contract in order short_v1_192, xml_v1_192, choice_v1_32"
+    ],
+    "accuracy_may_select_prompt": false,
+    "target_parseable_rate": 0.99
+  },
+  "answer_recovery_ladder": {
+    "stage_1": "Frozen deterministic strict parser.",
+    "stage_2": "For deterministic-unresolved rows only, target-blind LLM answer-intent extraction.",
+    "stage_3": "Any remaining ambiguous/no-answer row stays unresolved and wrong.",
+    "llm_candidate": {
+      "gateway": "aigcbest",
+      "requested_model": "gpt-4.1-mini-2025-04-14",
+      "independent_of_training_judges": true,
+      "input_fields": [
+        "question",
+        "model_completion"
+      ],
+      "forbidden_input_fields": [
+        "reference_answer",
+        "image",
+        "model_identity"
+      ],
+      "output_fields": [
+        "answer: yes|no|unresolved",
+        "evidence_span",
+        "reason_code"
+      ],
+      "acceptance": "Evidence span must be an exact completion substring; schema or identity failure is retried within fixed bounds and otherwise unresolved.",
+      "maximum_paid_logical_requests_initial": 512,
+      "proposed_usd_cap": 0.5,
+      "synthetic_smoke": "protocol/pathvqa_answer_intent_synthetic_smoke_8_20260811.jsonl",
+      "synthetic_smoke_sha256": "e3f796abfd761c79ad3fcddf3b9397ff3236288614daf79e0ce712d9e1404d73",
+      "synthetic_smoke_count": 8,
+      "synthetic_expected_intent_is_not_sent": true,
+      "invalid_synthetic_smoke_attempt01": {
+        "output": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathvqa_answer_intent_judge_smoke_20260811/gpt41mini_synthetic8.jsonl",
+        "output_sha256": "33a789ffa3a2bc5518d094b6df86b62b4b13dbc65c5e92cff014b4a196bdb859",
+        "accuracy": 0.875,
+        "failure": "The judge conflated a completion's failure to mention the feature with explicit evidence that the feature was absent.",
+        "real_pathvqa_outputs_used_for_correction": false,
+        "status": "invalid_retained"
+      },
+      "valid_synthetic_smoke_attempt02": {
+        "output": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathvqa_answer_intent_judge_smoke_20260811/gpt41mini_synthetic8_attempt02.jsonl",
+        "output_sha256": "e13ea383fc6504711acc6b1dedc45a59746973c5a744a334aa6085c349569501",
+        "served_model": "gpt-4.1-mini-2025-04-14",
+        "accuracy": 1.0,
+        "physical_requests": 8,
+        "prompt_tokens": 2513,
+        "completion_tokens": 197,
+        "schema_valid_rate": 1.0,
+        "reference_answer_sent": false,
+        "image_sent": false,
+        "status": "passed"
+      },
+      "paid_execution_status": "synthetic smoke passed; real validation-unresolved outputs remain pending selection of the prompt contract"
+    }
+  },
+  "ood_diagnosis_after_high_coverage": {
+    "required_models": [
+      "base_qwen2_5_vl_7b",
+      "sft3000",
+      "sft4000_control",
+      "stage2_outcome_rl",
+      "stage3_gpt4o_checkpoint1000",
+      "stage3_grok43_checkpoint1500"
+    ],
+    "required_reports": [
+      "total accuracy with unresolved wrong",
+      "parse coverage and conditional accuracy",
+      "yes/no confusion and label-prior calibration",
+      "original-image versus matched wrong-image versus blank-image forced-choice margins",
+      "question-type and image-style error strata",
+      "base-correct to trained-wrong paired transitions",
+      "bootstrap confidence intervals and paired McNemar tests"
+    ],
+    "candidate_mechanisms_to_test_not_assume": [
+      "PathMMU multiple-choice output-schema overfitting",
+      "language-model catastrophic forgetting after repeated narrow-data updates",
+      "pathology subdomain and acquisition-style shift despite the shared broad pathology label",
+      "frozen visual tower/projector preventing representation adaptation",
+      "question-format and label-prior shift from four-way MCQ to binary VQA"
+    ]
+  },
+  "visual_training_gate": {
+    "current_architecture_description": "The current formal runs update the full causal language model while freezing both the vision tower and multimodal projector; this is not merely a text-encoder-only run.",
+    "training_not_started": true,
+    "activation_condition": "Start only if high-coverage scoring still shows a significant paired OOD deficit and image-intervention diagnostics localize part of it to visual-token use rather than answer formatting alone.",
+    "proposed_two_by_two": [
+      {
+        "arm": "A",
+        "language": "full parameter",
+        "projector": "frozen",
+        "vision": "frozen",
+        "role": "current reference"
+      },
+      {
+        "arm": "B",
+        "language": "LoRA",
+        "projector": "frozen",
+        "vision": "frozen",
+        "role": "tests reduced language forgetting"
+      },
+      {
+        "arm": "C",
+        "language": "LoRA",
+        "projector": "trainable",
+        "vision": "frozen",
+        "role": "tests multimodal alignment adaptation"
+      },
+      {
+        "arm": "D",
+        "language": "LoRA",
+        "projector": "trainable",
+        "vision": "vision LoRA or last blocks only",
+        "role": "tests visual representation adaptation with bounded forgetting/OOM risk"
+      }
+    ],
+    "full_vision_unfreeze_initially_forbidden": true,
+    "reason": "A full visual-tower unfreeze is high-risk for 4,000 narrow samples and confounds OOD recovery with catastrophic visual forgetting."
+  },
+  "interpretability_status": {
+    "completed_supportive": [
+      "96-case appearance-matched paired-image counterfactual across six models",
+      "96-case geometry-matched activation patching with positive layers 20 and 24",
+      "96-case option-conditioned RISE deletion and retention confirmation for both Stage3 models"
+    ],
+    "negative_or_insufficient": [
+      "raw attention and gradient-times-attention failed strict confirmation",
+      "prompt-only bbox output is syntactically and spatially unstable",
+      "external boxes are pseudo-labels without pathology-expert verification"
+    ],
+    "defensible_claim": "The models use image-specific, option-relevant spatial evidence on a frozen 96-case panel.",
+    "unsupported_claim": "Attention heatmaps or self-reported boxes reliably localize the true pathology rationale.",
+    "status": "paused_by_user_pending_future_expert_or_independent_region_validation"
+  },
+  "post_hoc_execution_record": {
+    "status": "completed",
+    "prompt_calibration": {
+      "selected_contract": "short_v1_192",
+      "gpt4o_stage3_parse_rate": 0.90625,
+      "grok_stage3_parse_rate": 0.9375,
+      "xml_gpt4o_stage3_parse_rate": 0.859375,
+      "xml_grok_stage3_parse_rate": 0.90625,
+      "choice32_gpt4o_stage3_parse_rate": 0.03125,
+      "choice32_grok_stage3_parse_rate": 0.015625,
+      "adaptive_choice192_gpt4o_stage3_parse_rate": 0.8828125,
+      "adaptive_choice192_used_for_test_selection": false
+    },
+    "pathvqa_high_coverage": {
+      "base": {
+        "coverage": 0.9973230220107079,
+        "accuracy_unresolved_wrong": 0.665377751338489
+      },
+      "stage3_gpt4o_checkpoint1000": {
+        "coverage": 0.9883997620464009,
+        "accuracy_unresolved_wrong": 0.5722784057108864,
+        "unresolved": 39,
+        "verified_llm_recoveries": 211,
+        "metrics_sha256": "e41ae8162516a05fa880ad381244c6bda3996c3dd297e182db6215fdd32d4264"
+      },
+      "stage3_grok43_checkpoint1500": {
+        "coverage": 0.9907792980368828,
+        "accuracy_unresolved_wrong": 0.5761451516954194,
+        "unresolved": 31,
+        "verified_llm_recoveries": 216,
+        "metrics_sha256": "e679c1e056ee6376463914b7f9e4428b2ddeac5c52dd8fcf6646f3e6cd4b635d"
+      }
+    },
+    "pathvqa_forced_binary_full3362": {
+      "report": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/pathvqa_forced_binary_test_summary_v2_20260811.json",
+      "report_sha256": "1a221d895f50ce7c70ab00ffbf0cbdb035c354b83447aa4157a8f2e8ceaa955c",
+      "base_accuracy": 0.6638905413444378,
+      "sft3000_accuracy": 0.5844735276621059,
+      "sft4000_accuracy": 0.5933967876264129,
+      "stage2_accuracy": 0.5868530636525877,
+      "stage3_gpt4o_accuracy": 0.5904223676383106,
+      "stage3_grok_accuracy": 0.5886377156454491,
+      "stage3_gpt4o_minus_base_95_ci": [-0.0913146936347412, -0.05591909577632359],
+      "stage3_grok_minus_base_95_ci": [-0.09280190362879237, -0.058001189767995176]
+    },
+    "omnimed_high_coverage": {
+      "report": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/reports/omnimed_high_coverage_base_vs_stage3_gpt4o_v2_20260811.json",
+      "report_sha256": "4400798a0dbf389c10b81c0d4eb139ba9a6f14576e9edbcde15d0a37262fea32",
+      "base_coverage": 0.9981216247945527,
+      "stage3_coverage": 0.999765203099319,
+      "base_accuracy": 0.6006104719417704,
+      "stage3_accuracy": 0.4630194881427565,
+      "stage3_minus_base": -0.1375909837990139,
+      "stage3_minus_base_95_ci": [-0.1501526179854426, -0.12514674806292558],
+      "mcnemar_exact_two_sided_p": 5.00952153969817e-100
+    },
+    "adaptation_gate_decision": "Do not start visual unfreezing. If an approved training ablation is needed, test LM-LoRA first, then LM-LoRA plus trainable merger, then bounded vision LoRA/last visual blocks only.",
+    "post_hoc_code_sha256": {
+      "scripts/run_pathvqa_yesno_prompt_calibration.py": "7483049b08d3305aa29ff89d871dcae08a94116ddce328705d728e3bf91f6430",
+      "scripts/pathvqa_answer_intent_judge.py": "04c9bc600798dd3815c53c224027c56daf8317296a79d543b4e51f799c9b86c6",
+      "scripts/pathvqa_answer_intent_verifier.py": "3e4347c1512b7fc2b50c625011d97ef5c7c17abcd65cf2015306051fc8883f33",
+      "scripts/prepare_pathvqa_capped_unresolved_rerun.py": "6a9a995eba7ba88337bc2e4105708197a68b23df19c1a29301eea145fbd17148",
+      "scripts/merge_pathvqa_corrective_rerun.py": "3162265edeec96784a5602bda2f54b7163707719210987083250c4ae7f218995",
+      "scripts/filter_pathvqa_yesno_predictions.py": "1978644c8a9599d93311748c5017fbfc679ef0877818404f977f5447c62ee8e3",
+      "scripts/score_pathvqa_high_coverage.py": "2eba88c50f6fb844bf7eed7e1ff247685ec73a8ad304e5fce089ab0dbb3cfdcf",
+      "scripts/run_pathvqa_forced_binary_logits.py": "b71eb446085d57e716792a8cc10cd91c98f875b454f847e0d8c66e998bf00ebc",
+      "scripts/summarize_pathvqa_forced_binary.py": "cefc3ca26d1deec2401eb56b410f34bfecb3babfcd8fe4bc0f77398092bcd061",
+      "scripts/audit_pathology_ood_contract_shift.py": "e1ab68cb2f97444dd7e00fd0aa7a3c31b329d35908253e13d9acad10b3994d4e",
+      "scripts/compare_omnimed_high_coverage.py": "c7403ca382102c157bf49a72d70bc95384eef3832841bb13ae8f17e394dce2ae",
+      "scripts/run_external_vqa_qwen.py": "f556f338df2bda8a5357082bd2fca38345f701ae434e286793acf2d4fb9fd36d"
+    }
+  },
+  "code_sha256": {
+    "scripts/prepare_pathvqa_validation_calibration.py": "bc04c34ec9c71d11374d877cc66e64715f2e9c01d9c8a3a8b6ded644164ce723",
+    "scripts/freeze_pathvqa_yesno_calibration_panel.py": "18d4ec72f5b5c63b5d2b8ca2db4bad5d6cf642862da8eb6afdcc093e5debe8e7",
+    "scripts/run_pathvqa_yesno_prompt_calibration.py": "de77c30bc0c844a32ab0bfb9f72703035a55c4981841e944c2d3d034394b1652",
+    "scripts/pathvqa_answer_intent_judge.py": "68be5ee722a7d84a3a59a27472b315dac04e9fe70269cc2d00554acca19f0a83",
+    "scripts/test_prepare_pathvqa_validation_calibration.py": "de17fccbb7e8f7199baf27fa94035fc6f2fd06b06dbfb77c13f23999af6ac8ae",
+    "scripts/test_freeze_pathvqa_yesno_calibration_panel.py": "7ba4dd468b0fe3310f3f8847a001ca525e5bdae141f449c903942174ab7fd670",
+    "scripts/test_run_pathvqa_yesno_prompt_calibration.py": "fc9944720876ddb1a97eb8d1946393db3f80e0820134df224b73b6a987081e2a",
+    "scripts/test_pathvqa_answer_intent_judge.py": "97d4e682122e4416936e647757c73ece3f7bfd876dbf027e91b9dea33dfd0e48"
+  }
+}

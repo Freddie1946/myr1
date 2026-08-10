@@ -69,6 +69,32 @@ class ExternalVqaQwenScopeTests(unittest.TestCase):
             self.assertTrue(result["free_form_inference_excluded"])
             self.assertNotIn("paper_free_form_macro_token_f1", result)
 
+    def test_corrective_all_scope_with_only_yes_no_has_no_division_by_zero(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            model = root / "model"
+            model.mkdir()
+            (model / "config.json").write_text("{}\n", encoding="utf-8")
+            data = root / "data.json"
+            data.write_text("[]\n", encoding="utf-8")
+            predictions = root / "predictions.jsonl"
+            predictions.write_text("{}\n", encoding="utf-8")
+            args = argparse.Namespace(
+                task="pathvqa", split_role="post_hoc_corrective_subset",
+                backend="qwen2_5_vl", model=model, data=data,
+                max_new_tokens=192, generation_contract="pathvqa_corrective_v4_192",
+                pathvqa_answer_scope="all",
+            )
+            row = {
+                "completion": "yes", "generated_token_count": 1,
+                "reached_generation_cap": False, "answer_type": "yes_no",
+                "exact_match": True, "official_token_overlap_score": 1.0,
+                "official_token_f1_score": 1.0, "contract_aligned_exact_match": True,
+            }
+            result = summarize([row], args, predictions)
+            self.assertEqual(result["free_form_count"], 0)
+            self.assertTrue(result["free_form_inference_excluded"])
+
 
 if __name__ == "__main__":
     unittest.main()
