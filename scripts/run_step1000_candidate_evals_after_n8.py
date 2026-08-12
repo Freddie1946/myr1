@@ -56,12 +56,12 @@ def candidates():
     }
 
 
-def launch(name, gpu, cmd, out, jobs):
+def launch(name, gpu, cmd, out, expected_artifact, jobs):
     out.mkdir(parents=True, exist_ok=True)
     log = (EVALROOT / "logs" / f"{name}.log").open("w")
     env = os.environ.copy(); env.update({"CUDA_VISIBLE_DEVICES": str(gpu), "PYTHONPATH": str(REPO / "scripts"), "TOKENIZERS_PARALLELISM": "false", "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"})
     p = subprocess.Popen(cmd, cwd=REPO, env=env, stdout=log, stderr=subprocess.STDOUT)
-    jobs.append((name, p, log, out))
+    jobs.append((name, p, log, expected_artifact))
 
 
 def main():
@@ -77,21 +77,21 @@ def main():
     # PathVQA A/B-format diagnostic, one GPU per candidate.
     for i,(name,model) in enumerate(models.items()):
         out=EVALROOT / "pathvqa" / name
-        launch("pathvqa_"+name,i,[str(PYTHON),str(REPO/"scripts/run_pathvqa_yesno_prompt_calibration.py"),"--model",str(model),"--panel",str(PATHVQA_PANEL),"--panel-role","architecture_validation_512","--output-root",str(out),"--batch-size","16","--prompt-contracts","domain_think_answer_v2_2048,pathmmu_ab_v1_2048"],out,jobs)
+        launch("pathvqa_"+name,i,[str(PYTHON),str(REPO/"scripts/run_pathvqa_yesno_prompt_calibration.py"),"--model",str(model),"--panel",str(PATHVQA_PANEL),"--panel-role","architecture_validation_512","--output-root",str(out),"--batch-size","16","--prompt-contracts","domain_think_answer_v2_2048,pathmmu_ab_v1_2048"],out,out/"index.json",jobs)
     # MMMU retention, one GPU per candidate.
     for i,(name,model) in enumerate(models.items(), start=3):
         out=EVALROOT / "mmmu" / name
-        launch("mmmu_"+name,i,[str(PYTHON),str(REPO/"scripts/run_mmmu_retention_diagnostic.py"),"--model",str(model),"--panel",str(MMMU_PANEL),"--output-dir",str(out),"--batch-size","2","--max-new-tokens","4096"],out,jobs)
+        launch("mmmu_"+name,i,[str(PYTHON),str(REPO/"scripts/run_mmmu_retention_diagnostic.py"),"--model",str(model),"--panel",str(MMMU_PANEL),"--output-dir",str(out),"--batch-size","2","--max-new-tokens","4096"],out,out/"metrics.json",jobs)
     # Two OmniMed jobs first; the third is launched after one slot releases.
     omni_names=list(models)
     for i,name in enumerate(omni_names[:2], start=6):
         out=EVALROOT / "omnimedvqa" / name
-        launch("omni_"+name,i,[str(PYTHON),str(REPO/"scripts/run_external_vqa_qwen.py"),"--task","omnimedvqa","--model",str(models[name]),"--backend","qwen2_5_vl","--data",str(OMNI_DATA),"--output-dir",str(out),"--max-new-tokens","1024","--generation-contract","omnimed_domain_think_answer_v4_1024","--batch-size","16","--split-role","external_test"],out,jobs)
+        launch("omni_"+name,i,[str(PYTHON),str(REPO/"scripts/run_external_vqa_qwen.py"),"--task","omnimedvqa","--model",str(models[name]),"--backend","qwen2_5_vl","--data",str(OMNI_DATA),"--output-dir",str(out),"--max-new-tokens","1024","--generation-contract","omnimed_domain_think_answer_v4_1024","--batch-size","16","--split-role","external_test"],out,out/"metrics.json",jobs)
     # Collect first wave.
     failed=[]
     for item in jobs:
-        name,p,log,out=item; code=p.wait(); log.close()
-        if code!=0 or not (out/"metrics.json").is_file(): failed.append(name)
+        name,p,log,expected_artifact=item; code=p.wait(); log.close()
+        if code!=0 or not expected_artifact.is_file(): failed.append(name)
     if failed: raise RuntimeError(f"evaluation failures: {failed}")
     # Third OmniMed candidate on GPU6 after the first wave is complete.
     name=omni_names[2]; out=EVALROOT/"omnimedvqa"/name
