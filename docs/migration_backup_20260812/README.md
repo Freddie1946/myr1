@@ -16,6 +16,12 @@ Long-term model backups are limited to the SFT parent and final n=4/n=8 checkpoi
 
 See [`backup_inventory.json`](./backup_inventory.json) for exact absolute paths, sizes, and hashes where practical.
 
+The compact evaluation/protocol archive is stored privately at
+`Freddie1946/PathVLM-R1-Evaluation-Archive-20260812` (archive SHA-256:
+`5f2262f74d414b4d6cabf92683a39a039190cf8910188e0f77a009b6e53d7d55`). It
+contains metrics, summaries, manifests, launch contracts, and selected docs,
+but no raw images or credentials.
+
 ## Resume checklist
 
 1. Clone the repository branch recorded in `backup_inventory.json`.

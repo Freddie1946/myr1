@@ -17,5 +17,10 @@
     "exclude": ["raw images", "API keys", "credential files", "unbounded duplicate rollout logs"]
   },
   "conversation_backup": "A synthesized Markdown handoff is provided; the platform's raw Codex transcript is not directly exportable from the workspace.",
+  "evaluation_archive": {
+    "repo_id": "Freddie1946/PathVLM-R1-Evaluation-Archive-20260812",
+    "private": true,
+    "archive_sha256": "5f2262f74d414b4d6cabf92683a39a039190cf8910188e0f77a009b6e53d7d55"
+  },
   "deletion_status": "none; awaiting owner confirmation after storage inventory"
 }
