@@ -280,7 +280,7 @@ cmd=(
   --gradient_accumulation_steps 1 --learning_rate 1.0e-6 --logging_steps 1
   --bf16 true --torch_dtype bfloat16 --gradient_checkpointing true
   --attn_implementation sdpa --beta 0.04 --num_iterations 1 --max_steps 1500
-  --save_strategy steps --save_steps 100 --save_total_limit 2 --save_only_model false
+  --save_strategy steps --save_steps 100 --save_total_limit 1 --save_only_model false
   --report_to none --seed 42 --data_seed 42 --remove_unused_columns false
 )
 printf 'Starting formal Stage3 with Judge %s; segment=%s resume=%s log=%s\n' "$MODEL_ID" "$SEGMENT_ID" "${RESUME_FROM:-none}" "$TRAIN_LOG"
