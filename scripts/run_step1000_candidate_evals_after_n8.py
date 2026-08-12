@@ -18,6 +18,7 @@ PYTHON = Path("/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/envs/grpo/bin/p
 RUNROOT = Path("/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812")
 EVALROOT = Path("/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval")
 STATE = RUNROOT / "sequence_state.json"
+N8_PATHMMU_SUMMARY = Path("/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000_pathmmu_eval/complete_summary.json")
 PATHVQA_PANEL = Path("/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/pathvqa_architecture_validation_v1_20260811/pathvqa_validation_balanced_image_unique_512.json")
 MMMU_PANEL = Path("/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/mmmu_nonmedical_dev_retention_v1_20260811/panel.json")
 OMNI_DATA = Path("/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json")
@@ -41,6 +42,12 @@ def wait_for_training():
         time.sleep(300)
 
 
+def wait_for_n8_pathmmu_eval():
+    """Serialize with the separate n=8 PathMMU waiter to avoid GPU contention."""
+    while not N8_PATHMMU_SUMMARY.is_file():
+        time.sleep(300)
+
+
 def candidates():
     return {
         "sft_parent": RUNROOT.parent / "formal_selected_rule_rl1000_20260811/parents/sft_step080_merged",
@@ -61,6 +68,7 @@ def main():
     EVALROOT.mkdir(parents=True, exist_ok=True); (EVALROOT / "logs").mkdir(exist_ok=True)
     write(EVALROOT / "sequence_state.json", {"schema_version":1,"status":"waiting_for_n8","started_at":now()})
     wait_for_training()
+    wait_for_n8_pathmmu_eval()
     models = candidates()
     for p in [PATHVQA_PANEL, MMMU_PANEL, OMNI_DATA, *models.values()]:
         if not p.is_file() and not p.is_dir(): raise FileNotFoundError(p)
