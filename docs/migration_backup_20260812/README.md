@@ -10,6 +10,30 @@ This is a secret-free, synthesized handoff for moving the PathVLM-R1 work to ano
 - Stage3 uses Aigcbest GPT-4o with balance checks and resumable checkpoints every 100 steps; no fixed dollar cap was requested.
 - Explainability uses an 80-case externally annotated candidate panel, clean-correct primary cases, controlled evidence/neighbor/random deletion, representation tracing, activation patching, and 7×7 option-conditioned RISE as auxiliary evidence.
 
+## Durable decisions and results captured from this session
+
+- The current n=4 full-language rule-RL step-1000 model is the verified diagnostic arm: PathMMU validation `230/385 = 59.7403%`, PathMMU test999 `611/999 = 61.1612%` (test999 is diagnostic, not a model-selection set).
+- n=8 is a same-parent, same-training-contract comparison with `num_generations=8`; it is still running and is not yet a final checkpoint.
+- The next Stage3 starting-point decision may use PathMMU test999 as an engineering diagnostic, but selection must also include validation and OOD retention; PathVQA/OmniMedVQA test remains sealed for independent confirmation.
+- Reward screening provisionally selected accuracy-only (`R1`) for mechanism tests because it showed a consistent, non-significant advantage without format degradation; this is not recorded as a definitive proof that format reward is always harmful.
+- Full-RL capacity testing keeps vision encoder and projector frozen. The key question is whether conservative SFT followed by a more plastic full-LLM RL update improves PathMMU without the SFT-era OOD loss.
+- Prior visual evidence results: 96-case option-conditioned RISE had baseline accuracy `57.29%`; high-vs-random deletion target-margin advantage `+0.240669` (bootstrap 95% CI `[0.193536, 0.291190]`), but it was gold-conditioned and included model-wrong cases, so it is auxiliary rather than a faithfulness proof.
+
+## Important resume paths
+
+```text
+N8 queue state:
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/sequence_state.json
+N8 log:
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000/train.log
+N4 model-only snapshot:
+/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/model_snapshots/checkpoint-1000
+Candidate evidence panel:
+/home/dataset-assist-0/czy/wjy/myr1/protocol/predefined_evidence_candidate_panel_v1_80case_20260812.json
+Annotation JSONL (Aigcbest):
+/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/predefined_evidence_annotation_aigcbest_20260812/case_annotations.jsonl
+```
+
 ## Backup policy
 
 Long-term model backups are limited to the SFT parent and final n=4/n=8 checkpoints (private HF repositories), plus already selected Stage3 models. Smoke, failed, and small ablation checkpoints are excluded. Evaluation summaries, manifests, and this handoff are small enough for GitHub/HF archival. No credential, token, or API-key file is copied.
