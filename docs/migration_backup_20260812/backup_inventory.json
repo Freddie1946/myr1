@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-12T11:06:43.490852+00:00",
+  "purpose": "machine migration handoff; no secrets",
+  "workspace": "/home/dataset-assist-0/czy/wjy",
+  "git_repo": "/home/dataset-assist-0/czy/wjy/myr1",
+  "git_branch": "codex/a100-stage3-eval",
+  "git_head": "e4f48957e527a864dd7c7dae7773eef994820742",
+  "n8_training": {
+    "queue_state": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/sequence_state.json",
+    "train_log": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000/train.log",
+    "expected": "num_generations=8, max_steps=1000, LR=1e-6, full language RL, vision/projector frozen",
+    "resume_policy": "retain output/checkpoint-400 and later snapshots; do not treat partial n8 as final"
+  },
+  "critical_model_backup_allowlist": [
+    {
+      "label": "SFT parent",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/parents/sft_step080_merged",
+      "policy": "private HF model repo"
+    },
+    {
+      "label": "n4 full-RL step1000",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/model_snapshots/checkpoint-1000",
+      "policy": "private HF model repo"
+    },
+    {
+      "label": "n8 full-RL step1000",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000/model_snapshots/checkpoint-1000",
+      "policy": "private HF model repo after completion"
+    },
+    {
+      "label": "selected Stage3 checkpoints",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/stage3_process_grpo",
+      "policy": "existing HF backups; do not duplicate until selected"
+    }
+  ],
+  "excluded_from_long_term_model_backup": [
+    "smoke/throughput checkpoints",
+    "failed attempts",
+    "small data-ratio ablations",
+    "optimizer/ZeRO shards unless resumability is explicitly required",
+    "API keys and credential files"
+  ],
+  "records": [
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/protocol/predefined_evidence_candidate_panel_v1_80case_20260812.json",
+      "relative_to_workspace": "myr1/protocol/predefined_evidence_candidate_panel_v1_80case_20260812.json",
+      "exists": true,
+      "bytes": 113940,
+      "sha256_if_le_64MiB": "16c4257b0301cdf4331410b5c078f829bd33da152315b31451d84d402c08b220"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/docs/20260812_n4_step500_to1000_explainability_plan.md",
+      "relative_to_workspace": "myr1/docs/20260812_n4_step500_to1000_explainability_plan.md",
+      "exists": true,
+      "bytes": 1613,
+      "sha256_if_le_64MiB": "206c046bea7133d0705acb7858be5731136e063a7cc0f95d0a1bec71c0da39e9"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/sequence_state.json",
+      "relative_to_workspace": "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/sequence_state.json",
+      "exists": true,
+      "bytes": 672,
+      "sha256_if_le_64MiB": "415cd47566d6ca0489de91ad922b95fb28e7de0ff209db161c359d0a74c95410"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/launch_contract.json",
+      "relative_to_workspace": "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/launch_contract.json",
+      "exists": true,
+      "bytes": 740,
+      "sha256_if_le_64MiB": "a8e86581d61a2eea68d9384986d47dca763e6d234b5f9f020de115a14c4ea9d8"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/completion_verification.json",
+      "relative_to_workspace": "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/completion_verification.json",
+      "exists": true,
+      "bytes": 256,
+      "sha256_if_le_64MiB": "4b1a105b026a37f47b0f9c420f9baeb71c8b65ccec688713b383b9fc4f404114"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/reward_alignment_verification.json",
+      "relative_to_workspace": "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/reward_alignment_verification.json",
+      "exists": true,
+      "bytes": 604,
+      "sha256_if_le_64MiB": "bbd50094ac229b5e5b3fa0b3fb2e9f94d709a9c15d941a426e18c40abedad224"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/output/train_results.json",
+      "relative_to_workspace": "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/output/train_results.json",
+      "exists": true,
+      "bytes": 175,
+      "sha256_if_le_64MiB": "74c44a0e67311cb1279ad4c7a5f5d4b74a5858b9169c5f5586c89b7a337ec62c"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000_pathmmu_eval/complete_summary.json",
+      "exists": false
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/option_conditioned_rise_96case_gpt4o_stage3_epoch2_step1000_20260809/metrics.json",
+      "relative_to_workspace": "pathvlm_revision_eval_a100/runs/option_conditioned_rise_96case_gpt4o_stage3_epoch2_step1000_20260809/metrics.json",
+      "exists": true,
+      "bytes": 5753,
+      "sha256_if_le_64MiB": "06c7f2d3bf22514fedc6760e12f4ca642acb7753933d15dc3272716bd17038d8"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_understanding_counterfactual_96case_gpt4o_stage3_epoch2_step1000_20260808/metrics.json",
+      "relative_to_workspace": "pathvlm_revision_eval_a100/runs/visual_understanding_counterfactual_96case_gpt4o_stage3_epoch2_step1000_20260808/metrics.json",
+      "exists": true,
+      "bytes": 5859,
+      "sha256_if_le_64MiB": "58982f98d8e63eb59834f9efc188590b8aeb9d242e968e9a8f1ad25fd5197179"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/pathmmu/l/metrics.json",
+      "relative_to_workspace": "pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/pathmmu/l/metrics.json",
+      "exists": true,
+      "bytes": 1528,
+      "sha256_if_le_64MiB": "e0e12ca38ab58e8b8e5de9311cc955a425aa6935827e6e666e3f15cd97b11149"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/pathvqa/l/original/metrics.json",
+      "relative_to_workspace": "pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/pathvqa/l/original/metrics.json",
+      "exists": true,
+      "bytes": 1669,
+      "sha256_if_le_64MiB": "b0b58e04cc321192deaac70c2d37c2d0b68985789fd535f20f706bdcec96866e"
+    },
+    {
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/mmmu_nonmedical_dev116/l_max4096_rescored_v2/metrics.json",
+      "relative_to_workspace": "pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/mmmu_nonmedical_dev116/l_max4096_rescored_v2/metrics.json",
+      "exists": true,
+      "bytes": 849,
+      "sha256_if_le_64MiB": "6fb775f5a29adc7ad0d0bab50fe31b408c8eff78230409171595c7683e9d8c28"
+    }
+  ],
+  "conversation_history": "Codex cannot export the platform's raw transcript; this handoff is a synthesized record of decisions, commands, paths, and resume policy."
+}

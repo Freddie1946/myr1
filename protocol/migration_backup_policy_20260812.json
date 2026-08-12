@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-12",
+  "scope": "critical models, evaluation summaries, protocols, and session handoff",
+  "model_backup": {
+    "include": [
+      "merged SFT parent selected for RL",
+      "n4 full-language rule-RL step1000",
+      "n8 full-language rule-RL step1000 after completion",
+      "selected Stage3 checkpoints"
+    ],
+    "exclude": ["smoke checkpoints", "failed attempts", "small data-ratio ablation checkpoints", "optimizer shards unless resumability is required"],
+    "visibility": "private HF repositories unless explicitly changed by owner"
+  },
+  "evaluation_backup": {
+    "include": ["metrics.json", "complete_summary.json", "paired_results.json", "frozen manifests", "launch contracts", "train results", "selected badcase summaries"],
+    "exclude": ["raw images", "API keys", "credential files", "unbounded duplicate rollout logs"]
+  },
+  "conversation_backup": "A synthesized Markdown handoff is provided; the platform's raw Codex transcript is not directly exportable from the workspace.",
+  "deletion_status": "none; awaiting owner confirmation after storage inventory"
+}
