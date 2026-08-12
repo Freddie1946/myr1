@@ -12,6 +12,7 @@ from typing import Any
 import torch
 from PIL import Image, ImageStat
 from transformers import AutoConfig, AutoProcessor, Qwen2_5_VLForConditionalGeneration
+from peft import PeftModel
 
 from external_vqa_contract import PATHVQA_PROMPT, normalize_short_answer, record_sha256, sha256_file
 
@@ -71,9 +72,12 @@ def write_json(path: Path, value: object) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", required=True, type=Path)
+    parser.add_argument("--adapter", type=Path)
     parser.add_argument("--data", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--batch-size", type=int, default=1)
+    parser.add_argument("--shard-index", type=int, default=0)
+    parser.add_argument("--shard-count", type=int, default=1)
     parser.add_argument("--split-role", required=True, choices=("validation_diagnostic", "post_hoc_test_sensitivity"))
     parser.add_argument("--image-mode", choices=("original", "global_mean_blank", "cyclic_mismatch"), default="original")
     args = parser.parse_args()
@@ -81,7 +85,18 @@ def main() -> None:
         raise FileExistsError(args.output_dir)
     if args.batch_size <= 0:
         raise ValueError("batch size must be positive")
-    records = load_records(args.data)
+    if args.shard_count <= 0 or not 0 <= args.shard_index < args.shard_count:
+        raise ValueError("invalid shard index/count")
+    all_records = load_records(args.data)
+    indexed_records = [
+        (index, record)
+        for index, record in enumerate(all_records)
+        if index % args.shard_count == args.shard_index
+    ]
+    if not indexed_records:
+        raise ValueError("selected shard contains no records")
+    global_indices = [index for index, _ in indexed_records]
+    records = [record for _, record in indexed_records]
     mismatch = cyclic_image_map(records) if args.image_mode == "cyclic_mismatch" else {}
     args.output_dir.mkdir(parents=True)
     predictions_path = args.output_dir / "predictions.jsonl"
@@ -103,6 +118,12 @@ def main() -> None:
         args.model, config=compatible_config, local_files_only=True,
         torch_dtype=torch.bfloat16, attn_implementation="sdpa", low_cpu_mem_usage=True,
     ).to("cuda")
+    if args.adapter is not None:
+        if not (args.adapter / "adapter_config.json").is_file():
+            raise FileNotFoundError(args.adapter / "adapter_config.json")
+        model = PeftModel.from_pretrained(
+            model, args.adapter, local_files_only=True, is_trainable=False
+        )
     model.eval()
     rows = []
     for batch_start in range(0, len(records), args.batch_size):
@@ -129,7 +150,7 @@ def main() -> None:
                 str(record["answer"]),
             )
             row = {
-                "index": batch_start + offset,
+                "index": global_indices[batch_start + offset],
                 "source_index": record.get("source_index", record.get("index")),
                 "source_record_sha256": record_sha256(record),
                 "image": record["image"],
@@ -154,8 +175,19 @@ def main() -> None:
         "selection_or_tuning_use_forbidden": args.split_role == "post_hoc_test_sensitivity",
         "model": str(args.model.resolve()),
         "model_config_sha256": sha256_file(args.model / "config.json"),
+        "adapter": str(args.adapter.resolve()) if args.adapter is not None else None,
+        "adapter_config_sha256": (
+            sha256_file(args.adapter / "adapter_config.json") if args.adapter is not None else None
+        ),
+        "adapter_model_sha256": (
+            sha256_file(args.adapter / "adapter_model.safetensors") if args.adapter is not None else None
+        ),
         "data": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
+        "source_count": len(all_records),
+        "selected_count": len(records),
+        "shard_index": args.shard_index,
+        "shard_count": args.shard_count,
         "prompt_template": PATHVQA_PROMPT,
         "verbalizers": VERBALIZERS,
         "decision_rule": "compare next-token logits for the single-token strings Yes and No",

@@ -5,12 +5,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import statistics
 from pathlib import Path
 from typing import Any
 
 import torch
 from PIL import Image
+from peft import PeftModel
 from transformers import (
     AutoConfig,
     AutoProcessor,
@@ -21,10 +23,36 @@ from transformers import (
 from external_vqa_contract import (
     PATHVQA_PROMPT,
     OMNIMEDVQA_PROMPT,
+    omnimed_options,
     prompt_for_record,
     record_sha256,
     score_record,
     sha256_file,
+    normalize_short_answer,
+)
+
+
+PATHVQA_DOMAIN_PROMPT = (
+    "{question}\n"
+    "Answer this binary pathology image question using the same structured format as the "
+    "target-domain task. Give concise image-grounded pathological reasoning inside "
+    "<think>...</think>. Then output exactly one final binary answer: "
+    "<answer>Yes</answer> or <answer>No</answer>. Do not put an option letter or any other text "
+    "inside the answer tag."
+)
+PATHVQA_PATHMMU_AB_PROMPT = (
+    "{question}\n"
+    "Options:\n"
+    "A) Yes\n"
+    "B) No\n"
+    "First output the thinking process in <think> </think> tags and then output the final "
+    "answer in <answer> </answer> tags. The answer tag must contain exactly one selected "
+    "option in the form A) Yes or B) No."
+)
+OMNIMEDVQA_DOMAIN_PROMPT = (
+    "{question}\nOptions:\n{options}\n"
+    "Give concise image-grounded medical reasoning inside <think>...</think>. Then output exactly "
+    "one option letter inside <answer>...</answer>."
 )
 
 
@@ -43,8 +71,46 @@ def eos_ids(value: int | list[int] | tuple[int, ...] | None) -> set[int]:
     return {int(item) for item in value}
 
 
+def pathvqa_ab_contract_score(completion: str, answer: str) -> dict[str, Any]:
+    tagged = re.findall(
+        r"<answer\b[^>]*>\s*(.*?)(?:</answer\s*>|$)", str(completion), re.I | re.S
+    )
+    candidate = tagged[-1].strip() if tagged else ""
+    match = re.match(r"^\s*\(?([AB])\)?(?:\s*[).,:;\-]\s*|\s+)(Yes|No)\s*$", candidate, re.I)
+    choice = match.group(1).upper() if match else None
+    consistent = bool(
+        match
+        and ((choice == "A" and match.group(2).lower() == "yes")
+             or (choice == "B" and match.group(2).lower() == "no"))
+    )
+    semantic = {"A": "yes", "B": "no"}.get(choice) if consistent else None
+    target = normalize_short_answer(answer)
+    strict = bool(
+        consistent
+        and re.search(r"<think\b[^>]*>.*?</think\s*>", str(completion), re.I | re.S)
+    )
+    return {
+        "pathvqa_ab_choice": choice,
+        "pathvqa_ab_semantic_answer": semantic,
+        "pathvqa_ab_parseable": semantic is not None,
+        "strict_pathmmu_choice_format": strict,
+        "contract_aligned_answer": semantic or "",
+        "contract_aligned_answer_source": "answer_tag_fixed_ab_mapping" if semantic else "unresolved",
+        "contract_aligned_exact_match": semantic == target,
+    }
+
+
+def score_for_contract(
+    task: str, completion: str, record: dict[str, Any], generation_contract: str
+) -> dict[str, Any]:
+    score = score_record(task, completion, record)
+    if task == "pathvqa" and generation_contract == "pathvqa_pathmmu_ab_v6_2048":
+        score.update(pathvqa_ab_contract_score(completion, record["answer"]))
+    return score
+
+
 def load_existing(
-    path: Path, records: list[dict[str, Any]], task: str
+    path: Path, records: list[dict[str, Any]], task: str, generation_contract: str
 ) -> list[dict[str, Any]]:
     if not path.exists():
         return []
@@ -58,7 +124,9 @@ def load_existing(
             raise ValueError(f"source record changed at row {index}")
         # Permit a run started under scorer v1 to resume under the additive v2
         # contract without regenerating or silently keeping stale in-memory scores.
-        row.update(score_record(task, row["completion"], records[index]))
+        row.update(score_for_contract(
+            task, row["completion"], records[index], generation_contract
+        ))
     return rows
 
 
@@ -83,6 +151,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", required=True, choices=("pathvqa", "omnimedvqa"))
     parser.add_argument("--model", required=True, type=Path)
+    parser.add_argument("--adapter", type=Path)
     parser.add_argument(
         "--backend",
         required=True,
@@ -102,6 +171,9 @@ def parse_args() -> argparse.Namespace:
             "legacy_v1_64",
             "omnimed_corrective_v3_192",
             "pathvqa_corrective_v4_192",
+            "pathvqa_domain_think_answer_v5_2048",
+            "pathvqa_pathmmu_ab_v6_2048",
+            "omnimed_domain_think_answer_v4_1024",
         ),
         default="legacy_v1_64",
         help="Pinned generation/scoring contract; corrective v3 is OmniMedVQA-only.",
@@ -140,6 +212,17 @@ def summarize(
         "backend": args.backend,
         "model_path": str(args.model.resolve()),
         "model_config_sha256": sha256_file(args.model / "config.json"),
+        "adapter_path": (
+            str(args.adapter.resolve()) if getattr(args, "adapter", None) else None
+        ),
+        "adapter_config_sha256": (
+            sha256_file(args.adapter / "adapter_config.json")
+            if getattr(args, "adapter", None) else None
+        ),
+        "adapter_model_sha256": (
+            sha256_file(args.adapter / "adapter_model.safetensors")
+            if getattr(args, "adapter", None) else None
+        ),
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
         "predictions_sha256": sha256_file(predictions_path),
@@ -199,6 +282,20 @@ def summarize(
                 "primary_metric": "pathvqa_yes_no_contract_aligned_accuracy",
                 "free_form_count": 0,
                 "free_form_inference_excluded": True,
+            })
+        if args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
+            pathvqa_metrics.update({
+                "primary_metric": "pathvqa_yes_no_fixed_ab_contract_aligned_accuracy",
+                "fixed_option_mapping": {"A": "Yes", "B": "No"},
+                "option_order_reversal_used": False,
+                "ab_parseable_count": sum(row["pathvqa_ab_parseable"] for row in rows),
+                "ab_parseable_rate": sum(row["pathvqa_ab_parseable"] for row in rows) / len(rows),
+                "strict_pathmmu_choice_format_count": sum(
+                    row["strict_pathmmu_choice_format"] for row in rows
+                ),
+                "strict_pathmmu_choice_format_rate": sum(
+                    row["strict_pathmmu_choice_format"] for row in rows
+                ) / len(rows),
             })
         common.update(pathvqa_metrics)
     else:
@@ -287,6 +384,21 @@ def main() -> None:
             raise ValueError("corrective v4 requires the post-hoc corrective subset role")
         if args.max_new_tokens != 192:
             raise ValueError("corrective v4 generation contract requires max_new_tokens=192")
+    elif args.generation_contract == "pathvqa_domain_think_answer_v5_2048":
+        if args.task != "pathvqa" or args.pathvqa_answer_scope != "yes_no_only":
+            raise ValueError("PathVQA domain v5 requires task=pathvqa and yes_no_only scope")
+        if args.max_new_tokens != 2048:
+            raise ValueError("PathVQA domain v5 requires max_new_tokens=2048")
+    elif args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
+        if args.task != "pathvqa" or args.pathvqa_answer_scope != "yes_no_only":
+            raise ValueError("PathVQA PathMMU A/B v6 requires task=pathvqa and yes_no_only scope")
+        if args.max_new_tokens != 2048:
+            raise ValueError("PathVQA PathMMU A/B v6 requires max_new_tokens=2048")
+    elif args.generation_contract == "omnimed_domain_think_answer_v4_1024":
+        if args.task != "omnimedvqa":
+            raise ValueError("OmniMedVQA domain v4 is OmniMedVQA-only")
+        if args.max_new_tokens != 1024:
+            raise ValueError("OmniMedVQA domain v4 requires max_new_tokens=1024")
     if args.batch_size < 1:
         raise ValueError("batch size must be positive")
     records = json.loads(args.data.read_text(encoding="utf-8"))
@@ -316,7 +428,14 @@ def main() -> None:
     config_path = args.output_dir / "run_config.json"
     if metrics_path.exists():
         raise FileExistsError(metrics_path)
-    prompt_template = PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT
+    if args.generation_contract == "pathvqa_domain_think_answer_v5_2048":
+        prompt_template = PATHVQA_DOMAIN_PROMPT
+    elif args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
+        prompt_template = PATHVQA_PATHMMU_AB_PROMPT
+    elif args.generation_contract == "omnimed_domain_think_answer_v4_1024":
+        prompt_template = OMNIMEDVQA_DOMAIN_PROMPT
+    else:
+        prompt_template = PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT
     config = {
         "schema_version": 2,
         "status": "running",
@@ -325,6 +444,13 @@ def main() -> None:
         "selected_count": len(records),
         "model_path": str(args.model.resolve()),
         "model_config_sha256": sha256_file(args.model / "config.json"),
+        "adapter_path": str(args.adapter.resolve()) if args.adapter else None,
+        "adapter_config_sha256": (
+            sha256_file(args.adapter / "adapter_config.json") if args.adapter else None
+        ),
+        "adapter_model_sha256": (
+            sha256_file(args.adapter / "adapter_model.safetensors") if args.adapter else None
+        ),
         "backend": args.backend,
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
@@ -344,7 +470,7 @@ def main() -> None:
             raise ValueError("resume configuration differs")
     else:
         write_json(config_path, config)
-    rows = load_existing(predictions_path, records, args.task)
+    rows = load_existing(predictions_path, records, args.task, args.generation_contract)
 
     processor = AutoProcessor.from_pretrained(args.model, local_files_only=True)
     processor.tokenizer.padding_side = "left"
@@ -391,6 +517,12 @@ def main() -> None:
         model = model_class.from_pretrained(args.model, **load_kwargs)
     else:
         model = model_class.from_pretrained(args.model, **load_kwargs).to("cuda")
+    if args.adapter is not None:
+        if args.backend != "qwen2_5_vl":
+            raise ValueError("adapter loading is currently supported only for qwen2_5_vl")
+        model = PeftModel.from_pretrained(
+            model, args.adapter, local_files_only=True, is_trainable=False
+        )
     model.eval()
     model.generation_config.do_sample = False
     model.generation_config.temperature = None
@@ -405,12 +537,26 @@ def main() -> None:
         for record in batch_records:
             with Image.open(record["image"]) as source:
                 images.append(source.convert("RGB"))
+            if args.generation_contract == "pathvqa_domain_think_answer_v5_2048":
+                record_prompt = PATHVQA_DOMAIN_PROMPT.format(question=record["question"])
+            elif args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
+                record_prompt = PATHVQA_PATHMMU_AB_PROMPT.format(question=record["question"])
+            elif args.generation_contract == "omnimed_domain_think_answer_v4_1024":
+                letters, texts = omnimed_options(record)
+                options = "\n".join(
+                    f"{letter}) {text}" for letter, text in zip(letters, texts)
+                )
+                record_prompt = OMNIMEDVQA_DOMAIN_PROMPT.format(
+                    question=record["question"], options=options
+                )
+            else:
+                record_prompt = prompt_for_record(args.task, record)
             messages = [
                 {
                     "role": "user",
                     "content": [
                         {"type": "image"},
-                        {"type": "text", "text": prompt_for_record(args.task, record)},
+                        {"type": "text", "text": record_prompt},
                     ],
                 }
             ]
@@ -449,7 +595,9 @@ def main() -> None:
             token_ids = token_ids[:token_count]
             completion = processor.decode(token_ids, skip_special_tokens=True).strip()
             index = batch_start + offset
-            score = score_record(args.task, completion, record)
+            score = score_for_contract(
+                args.task, completion, record, args.generation_contract
+            )
             row = {
                 "index": index,
                 "source_record_sha256": record_sha256(record),

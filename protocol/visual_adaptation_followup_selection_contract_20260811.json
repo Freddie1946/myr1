@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_followup_outputs",
+  "purpose": "select L or A and later select a safe SFT checkpoint for rule-based RL",
+  "architecture_arms": {
+    "L": "vision frozen; projector frozen; language LoRA r16",
+    "A": "vision frozen; projector fully trainable; language LoRA r16"
+  },
+  "followup_training": {
+    "sample_count": 1500,
+    "answer_stratification": {"A": 375, "B": 375, "C": 375, "D": 375},
+    "unique_images": 1500,
+    "dataset_sha256": "b2fea8e2a4240debd4ead94874aa8ee623357a96d769aca3dcc3dcdbff4975f7",
+    "epochs": 3,
+    "seeds": [42],
+    "world_size": 8,
+    "micro_batch_per_gpu": 12,
+    "global_batch": 96,
+    "checkpoint_interval_epochs_approx": 0.5,
+    "test_splits_accessed_for_selection": false
+  },
+  "checkpoint_funnel": {
+    "phase_1_all_checkpoints": ["PathMMU validation385", "training-accuracy probe500"],
+    "training_probe_records_sha256": "ee75101d85df57a04637a164a6405b37ce68475ca4ce0895761051bbe3d914f8",
+    "pathmmu_candidate_rule": "within 1.0 percentage point of that arm-and-seed's best checkpoint",
+    "train_validation_gap_max_percentage_points": 20.0,
+    "phase_2_candidates": ["PathVQA validation512 normal/shuffle/blank", "MMMU nonmedical dev116"],
+    "pathvqa_min_accuracy_percent": 64.02,
+    "pathvqa_threshold_basis": "Base 66.02 minus 2.00 percentage points",
+    "delta_vision_min_percentage_points": 13.0,
+    "mmmu_min_accuracy_percent": 49.9,
+    "mmmu_threshold_basis": "rescored Base 56.90 minus 7.00 percentage points; panel is only 116 cases"
+  },
+  "architecture_decision": {
+    "choose_A_only_if_all": [
+      "PathMMU advantage A minus L is at least 2.0 percentage points on seed 42",
+      "A is not more than 1.0 percentage point worse than L on PathVQA retention",
+      "A is not more than 1.0 percentage point worse than L on MMMU retention",
+      "A is not more than 1.0 percentage point worse than L on delta_vision"
+    ],
+    "otherwise": "choose L as the lower-drift RL starting architecture"
+  },
+  "formal_sft_to_rl_checkpoint_selection": {
+    "applies_after": "selected architecture is retrained on the fixed SFT3000 split",
+    "rl_prompt_panel_count": 300,
+    "rl_prompt_panel_records_sha256": "d519a9f19eae753d631beb117e31de6411135ed93ec95e96c0b137d95bb52096",
+    "rollouts_per_prompt": 8,
+    "sampling_must_match_formal_grpo": true,
+    "metrics": [
+      "mean accuracy reward",
+      "mean within-group reward standard deviation",
+      "mixed-reward group fraction",
+      "all-zero group fraction",
+      "all-one group fraction"
+    ],
+    "selection_priority": "pass SFT generalization filters, then maximize mixed groups and reward variance while avoiding extreme mean pass rate"
+  },
+  "formal_rl_policy": {
+    "vision": "freeze the selected SFT vision state",
+    "projector": "freeze the selected SFT projector state",
+    "language": "train LoRA with rule-based accuracy and format rewards",
+    "data": "fixed image-disjoint RL1000 split"
+  }
+}

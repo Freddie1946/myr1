@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-11T15:33:11+08:00",
+  "status": "correction_smoke_passed_formal_rerun_not_started",
+  "formal_result": false,
+  "invalidated_run": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/formal_z2_gc0_mbs10_len384",
+    "invalid_checkpoints": [100, 150],
+    "invalid_downstream_evaluation_root": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_rule_rl1000_20260811_v2",
+    "retain_for_failure_audit_only": true,
+    "may_be_used_as_parent": false,
+    "accuracy_event_count": 12000,
+    "exact_source_row_pair_count": 3600,
+    "target_letter_match_count": 5706,
+    "true_reward_match_count": 8197,
+    "incorrect_positive_reward_count": 966,
+    "missed_positive_reward_count": 2837,
+    "total_incorrect_reward_count": 3803,
+    "prompt_problem_mismatch_count_all_reward_types": 16800,
+    "generation_group_solution_mismatch_count": 1200,
+    "generation_group_count": 3000
+  },
+  "root_cause": {
+    "sampler_rows_already_repeated_by_num_generations": true,
+    "custom_reward_kwargs_repeated_a_second_time": true,
+    "historical_per_device_batch_one_masked_defect": true,
+    "per_device_batch_ten_exposed_defect": true
+  },
+  "correction": {
+    "one_to_one_reward_kwargs": true,
+    "fail_closed_input_output_length_gates": true,
+    "fail_closed_formal_solution_metadata_gates": true,
+    "fail_closed_prompt_problem_gate": true,
+    "post_training_launcher_gate_enabled": true,
+    "non_vllm_and_vllm_paths_patched": true,
+    "files": {
+      "vendor/open-r1-multimodal/src/open_r1/trainer/reward_alignment.py": "f6cb2e0f84d2410e326d298a2debd1859e1428e2790469348fd038cb1065717b",
+      "vendor/open-r1-multimodal/src/open_r1/trainer/grpo_trainer.py": "8d110761a01eb0003aac8b1731e5aa21f241ffc74b521408707a2ebffb6c469f",
+      "vendor/open-r1-multimodal/src/open_r1/trainer/vllm_grpo_trainer.py": "90750e44389ad1cd6af4b11e369900ea55195b32c73f9cc38b070b63e989d11a",
+      "scripts/grpo_pathmmu.py": "0a25add40803aae17b8a7424a2bf68112153696a91949074baa6cc823a4510f1",
+      "scripts/grpo_pathmmu_audit.py": "c1f974c28381d266a402c3348fa84b35dabcb2f67f3764467c97e8c5b17fac08",
+      "scripts/launch_formal_selected_rule_rl1000.sh": "81f1789b0965cd5f52ee81204d6f02828d66c23f8a2871e47a5c695644f49735",
+      "scripts/verify_grpo_reward_alignment.py": "126905840d6e49879b7f50d898435f0cf5f32949cd2a5eee003c602ad281628b",
+      "scripts/test_grpo_reward_alignment.py": "e69e9f45514259eda08fff2dc13349099ee2733095ff9fdd8277a91ebb106d6f",
+      "scripts/test_grpo_pathmmu_audit.py": "12fde51a3bdec57714ceb22a776efe794fb56b81bf36181203e8ca236bbdd23e"
+    }
+  },
+  "corrected_smoke": {
+    "run_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/reward_alignment_fix_smoke_20260811_1532_mbs10",
+    "world_size": 8,
+    "per_device_batch": 10,
+    "num_generations": 4,
+    "max_completion_length": 384,
+    "optimizer_steps": 2,
+    "accuracy_event_count": 160,
+    "format_event_count": 160,
+    "verified_generation_group_count": 40,
+    "alignment_error_count": 0,
+    "offline_reward_mismatch_count": 0,
+    "step_grad_norms": [0.1199568435549736, 0.13955187797546387],
+    "step_accuracy_rewards": [0.4375, 0.4625000059604645],
+    "train_runtime_seconds": 70.502,
+    "trainability_gate_passed": true,
+    "verification_sha256": "cd80d64b2eef274338ff05b6d907ce58b2f3d315f4ec869a3943df817afe42d0",
+    "reward_event_aggregate_sha256": "88af3e9504617476ac042dbf109e2ee249b71a5979b24668bc479a48c7679695",
+    "train_log_sha256": "1d9409a4132d455f43e2fd4a93ed7695a2bdc86349bc46e9adb541e5708aab49"
+  },
+  "dataset": {
+    "path": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.json",
+    "count": 1000,
+    "sha256": "5a818b3b4f3c9e5e1a17579111ff3e21008cf8124c4a05cb74eb2dcd326bbd73"
+  },
+  "next_gate": "training_and_validation_only_large_batch_optimizer_calibration_before_corrected_formal_rerun",
+  "test_used_for_correction_or_hyperparameter_selection": false
+}

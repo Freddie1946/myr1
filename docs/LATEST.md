@@ -1,5 +1,118 @@
 # Latest recovery pointer
 
+Latest PathVQA fixed-A/B evaluation contract:
+
+0. `20260812_pathvqa_fixed_ab_evaluation_contract.md`
+
+Future PathVQA binary results use PathMMU-style fixed options (`A = Yes`, `B = No`) with structured
+think/answer free generation as the primary metric. Original Yes/No free generation remains an
+interface audit and forced logits remain a visual-dependence diagnostic; historical results retain
+their original contract labels.
+
+Latest queued n=4 step500→step1000 explainability comparison:
+
+0. `20260812_n4_step500_to1000_explainability_plan.md`
+
+The queued runner will reproduce the frozen 96-case paired-image counterfactual and option-conditioned
+RISE diagnostics for the continued n=4 step500 and step1000 checkpoints after the clean n=4/n=8
+training queue releases the GPUs.
+
+Latest corrected formal rule-RL launch and first-step verification:
+
+0. `20260811_corrected_rule_rl_formal_launched.md`
+0. `../protocol/corrected_rule_rl_formal_launch_20260811_155938.json`
+
+The corrected 150-step run is active from the selected L-SFT3000 step-80 parent at learning rate
+`1e-6`. Its trainability audit and first two finite optimizer steps passed, and all eight corrected
+reward-event streams are active. Completion remains conditional on the exact post-run alignment
+verifier; test was not used for calibration or launch selection.
+
+Latest formal L-SFT3000 OOD bad-case analysis:
+
+0. `20260811_formal_l_sft3000_ood_badcase_analysis.md`
+0. `20260811_ood_evaluation_method_audit_and_semantic_recheck_plan.md`
+
+The paired PathVQA and MMMU audit separates binary task-policy drift, confidence compression,
+fine-grained visual-semantic failures, dataset ambiguity, and explicit long-generation failures.
+Concrete image/question cases and exact category counts are recorded; the historical capped
+OmniMedVQA run is kept separate from the current formal L checkpoint. The method audit marks which
+OOD results remain valid, which are diagnostic-only, and which historical capped runs require a
+paper-critical rerun; a 64-case cross-format semantic panel is frozen before new generation.
+
+Latest corrected rule-RL calibration selection and formal launch:
+
+0. `20260811_corrected_rule_rl_lr_calibration_and_formal_launch.md`
+0. `../protocol/corrected_rule_rl_lr_selection_formal_launch_20260811.json`
+
+Both corrected ten-step PDB10 calibration arms passed exact online/offline reward alignment. The
+validation-only comparison selected `1e-6`: PathMMU val was 218/385 versus 215/385 at `3e-6`, and
+PathVQA val was 329/512 versus 328/512. A new corrected 150-step formal run is authorized from the
+same L-SFT3000 step-80 parent; test was not used for calibration or launch selection.
+
+Latest corrected rule-RL large-batch learning-rate calibration:
+
+0. `../protocol/corrected_rule_rl_lr_calibration_launch_20260811.json`
+
+Two validation-only engineering arms are frozen from the same L-SFT3000 step-80 parent after the
+reward-alignment correction: PDB10 with learning rates `1e-6` and `3e-6`, each stopping after the
+first 10 steps of the same planned 150-step schedule. Test is excluded from selection. The
+calibration must pass the new post-run reward-alignment gate before validation or formal reuse.
+
+Latest rule-RL reward-alignment failure correction and eight-GPU PDB10 smoke:
+
+0. `20260811_153311_rule_rl_reward_alignment_failure_fix_and_smoke.md`
+0. `../protocol/rule_rl_reward_alignment_fix_smoke_20260811_153311.json`
+
+The former step-100/150 rule-RL checkpoints are scientifically invalid: the high-throughput local
+batch exposed a second, erroneous repetition of custom-reward kwargs, producing 3,803 incorrect
+binary rewards among 12,000 rollouts. The trainer, formal wrapper and fail-closed verifier are now
+corrected. A fresh two-step 8 x A100, PDB10 smoke verified 160 accuracy events, 160 format events
+and 40 generation groups with zero alignment/offline-reward errors. No corrected formal rerun has
+started; optimizer-update calibration is the next validation-only gate.
+
+Latest formal selected rule-RL1000 launch and first-step verification:
+
+0. `20260811_formal_selected_rule_rl1000_launched.md`
+0. `../protocol/formal_selected_rule_rl1000_launch_20260811.json`
+
+Formal rule-only GRPO is running from the preselected L-SFT3000 step-80 parent. A truncation-aware
+throughput scan selected eight-GPU PDB10 with a 384-token cap: it retains about 10.5 GiB sampled
+memory headroom while materially reducing format failures versus the rejected 192-token setting.
+The frozen contract, language-only LoRA trainability audit and first finite optimizer step are
+recorded; formal completion is not yet claimed.
+
+Latest formal A-SFT3000 projector mechanism isolation and both requested tests:
+
+0. `20260811_formal_a_sft3000_mechanism_isolation_and_tests.md`
+
+The exact-match A control trains the projector while preserving the selected L arm's data,
+seed and all other formal settings. Its full PathMMU validation curve, PathVQA retention curve,
+visual-dependence controls, MMMU sanity panel, PathMMU test999 and PathVQA test yes/no3362 show
+that projector adaptation does not mitigate the narrow-domain drift. The selected architecture
+and rule-RL parent therefore remain L and L step 80 respectively.
+
+Latest formal L-SFT3000 complete evaluation and rule-RL parent selection:
+
+0. `20260811_formal_l_sft3000_complete_evaluation_and_rl_parent.md`
+0. `../protocol/formal_selected_sft3000_rl_parent_step080_20260811.json`
+
+The complete PathMMU validation curve, PathVQA normal/shuffle/blank retention, MMMU sanity panel,
+300 x 8 RL-readiness rollout audit, PathMMU test999 and full PathVQA test Yes/No subset are
+tabulated with paired confidence intervals and parser/cap audits. The validation/OOD/readiness
+funnel selects L-SFT checkpoint step 80 as the rule-RL parent. Test results are reporting-only and
+were not used for this selection.
+
+Latest completed visual-adaptation architecture selection:
+
+0. `20260811_visual_adaptation_complete_results_and_selection.md`
+0. `../protocol/visual_adaptation_followup_selection_contract_20260811.json`
+
+The complete 500-sample all-arm screen and 1,500-sample single-seed L-versus-A confirmation are
+tabulated together with PathMMU checkpoint curves, PathVQA normal/shuffle/blank diagnostics, MMMU
+retention, parser/cap audits, and paired uncertainty estimates. The frozen gate selects L (vision
+and projector frozen, language LoRA r16), with L step 16 as the best screening checkpoint. No test
+split was accessed for this architecture decision.
+
 Latest completed closed-benchmark, blind multi-judge and Stage3 significance audit:
 
 0. `20260810_final_closed_benchmark_and_multijudge_results.md`

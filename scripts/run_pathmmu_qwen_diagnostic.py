@@ -17,6 +17,7 @@ from typing import Any
 
 import torch
 from PIL import Image
+from peft import PeftModel
 from transformers import (
     AutoConfig,
     AutoProcessor,
@@ -109,6 +110,17 @@ def summarize(rows: list[dict[str, Any]], args: argparse.Namespace) -> dict[str,
         "backend": args.backend,
         "model_path": str(args.model.resolve()),
         "model_config_sha256": sha256_file(args.model / "config.json"),
+        "adapter_path": str(args.adapter.resolve()) if args.adapter is not None else None,
+        "adapter_config_sha256": (
+            sha256_file(args.adapter / "adapter_config.json")
+            if args.adapter is not None
+            else None
+        ),
+        "adapter_model_sha256": (
+            sha256_file(args.adapter / "adapter_model.safetensors")
+            if args.adapter is not None
+            else None
+        ),
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
         "predictions_sha256": sha256_file(args.output_dir / "predictions.jsonl"),
@@ -118,6 +130,7 @@ def summarize(rows: list[dict[str, Any]], args: argparse.Namespace) -> dict[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", required=True, type=Path)
+    parser.add_argument("--adapter", type=Path)
     parser.add_argument(
         "--backend",
         required=True,
@@ -128,7 +141,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--split-role",
         required=True,
-        choices=("validation_smoke", "test999_development"),
+        choices=(
+            "validation_smoke",
+            "test999_development",
+            "train_memorization_probe",
+            "rl_train_probe",
+        ),
     )
     parser.add_argument("--max-new-tokens", type=int, default=1024)
     parser.add_argument("--batch-size", type=int, default=1)
@@ -146,7 +164,12 @@ def main() -> None:
     records = json.loads(args.data.read_text(encoding="utf-8"))
     if not isinstance(records, list):
         raise ValueError("input data must be a JSON list")
-    expected_full_count = 999 if args.split_role == "test999_development" else 385
+    expected_full_count = {
+        "validation_smoke": 385,
+        "test999_development": 999,
+        "train_memorization_probe": 500,
+        "rl_train_probe": 256,
+    }[args.split_role]
     if len(records) != expected_full_count:
         raise ValueError(
             f"{args.split_role} requires source count {expected_full_count}, got {len(records)}"
@@ -177,6 +200,17 @@ def main() -> None:
         "selected_count": len(records),
         "model_path": str(args.model.resolve()),
         "model_config_sha256": sha256_file(args.model / "config.json"),
+        "adapter_path": str(args.adapter.resolve()) if args.adapter is not None else None,
+        "adapter_config_sha256": (
+            sha256_file(args.adapter / "adapter_config.json")
+            if args.adapter is not None
+            else None
+        ),
+        "adapter_model_sha256": (
+            sha256_file(args.adapter / "adapter_model.safetensors")
+            if args.adapter is not None
+            else None
+        ),
         "backend": args.backend,
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
@@ -190,11 +224,26 @@ def main() -> None:
     }
     if run_config_path.exists():
         existing_config = json.loads(run_config_path.read_text(encoding="utf-8"))
-        comparable = dict(existing_config)
-        comparable["resume"] = args.resume
-        if comparable != run_config:
+        ignored_resume_fields = {"resume", "batch_size", "batch_size_history"}
+        existing_scientific_config = {
+            key: value for key, value in existing_config.items()
+            if key not in ignored_resume_fields
+        }
+        requested_scientific_config = {
+            key: value for key, value in run_config.items()
+            if key not in ignored_resume_fields
+        }
+        if existing_scientific_config != requested_scientific_config:
             raise ValueError("resume configuration differs from the existing run")
+        batch_size_history = list(
+            existing_config.get("batch_size_history", [existing_config["batch_size"]])
+        )
+        if batch_size_history[-1] != args.batch_size:
+            batch_size_history.append(args.batch_size)
+        run_config["batch_size_history"] = batch_size_history
+        write_json(run_config_path, run_config)
     else:
+        run_config["batch_size_history"] = [args.batch_size]
         write_json(run_config_path, run_config)
 
     rows = load_existing(predictions_path, records)
@@ -249,6 +298,16 @@ def main() -> None:
         model = model_class.from_pretrained(args.model, **load_kwargs)
     else:
         model = model_class.from_pretrained(args.model, **load_kwargs).to("cuda")
+    if args.adapter is not None:
+        if args.backend != "qwen2_5_vl":
+            raise ValueError("--adapter is supported only for the qwen2_5_vl backend")
+        if not (args.adapter / "adapter_config.json").is_file():
+            raise FileNotFoundError(args.adapter / "adapter_config.json")
+        if not (args.adapter / "adapter_model.safetensors").is_file():
+            raise FileNotFoundError(args.adapter / "adapter_model.safetensors")
+        model = PeftModel.from_pretrained(
+            model, args.adapter, local_files_only=True, is_trainable=False
+        )
     model.eval()
     # Some medical checkpoints persist sampling-only defaults. They are irrelevant under greedy
     # decoding, but clear them explicitly so the frozen execution log is unambiguous.

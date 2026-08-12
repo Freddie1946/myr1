@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "manual_adjudication_recorded",
+  "recorded_at": "2026-08-11T20:10:00+08:00",
+  "source_reward_selection": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/rule_rl_mechanism_funnel_20260811/formal_v1/phase1/reward_selection.json",
+  "source_reward_selection_sha256": "f118e5388d106e7744b31ffeef78e4fef1b3057fa87a26a99d1b8ce23de29764",
+  "automatic_gate_result_preserved": "r2_required",
+  "automatic_gate_mismatch": "The implementation used an absolute sampled-format threshold of 0.98, whereas the previously agreed trigger was a relative format degradation of R1 versus R0.",
+  "observed_format": {
+    "r0_step50_greedy_format_rate": 1.0,
+    "r1_step50_greedy_format_rate": 1.0,
+    "r0_step50_sampled_format_rate": 0.9,
+    "r1_step50_sampled_format_rate": 0.906
+  },
+  "observed_correctness": {
+    "r1_minus_r0_train_probe_correct": 4,
+    "r1_minus_r0_pathmmu_val_correct": 5,
+    "aggregate_r1_minus_r0_correct": 9,
+    "train_probe_mcnemar_exact_p": 0.454498291015625,
+    "pathmmu_val_mcnemar_exact_p": 0.3017578125
+  },
+  "adjudication": {
+    "r2_run_now": false,
+    "provisional_reward": "accuracy_only",
+    "claim": "R1 showed a consistent but non-significant advantage over R0 without format degradation; therefore R1 was provisionally selected for downstream mechanism screening.",
+    "not_claimed": "R1 has won or format reward has been proven to be the bottleneck."
+  },
+  "downstream_format_gate": {
+    "matched_r1_step25_sampled_format_rate": 0.9025,
+    "maximum_relative_sampled_format_drop": 0.05,
+    "minimum_greedy_format_rate": 0.98,
+    "action": "Flag R2 for consideration; do not launch it automatically."
+  },
+  "test_accessed": false
+}

@@ -60,6 +60,8 @@ from trl.trainer.grpo_config import GRPOConfig
 from trl.trainer.utils import generate_model_card, get_comet_experiment_url, pad
 from trl import GRPOTrainer
 
+from .reward_alignment import build_aligned_reward_kwargs, require_reward_output_count
+
 import copy
 
 if is_peft_available():
@@ -676,18 +678,18 @@ class Qwen2VLGRPOVLLMTrainer(Trainer):
                         :, 0
                     ]  # Shape (B*G,)
             else:
-                # Repeat all input columns (but "prompt" and "completion") to match the number of generations
-                reward_kwargs = {
-                    key: []
-                    for key in inputs[0].keys()
-                    if key not in ["prompt", "completion"]
-                }
-                for key in reward_kwargs:
-                    for example in inputs:
-                        # Repeat each value in the column for `num_generations` times
-                        reward_kwargs[key].extend([example[key]] * self.num_generations)
+                # The sampler has already repeated every row once per generation.
+                # Preserve the local one-to-one order instead of repeating kwargs again.
+                reward_kwargs = build_aligned_reward_kwargs(
+                    inputs, expected_count=len(completions)
+                )
                 output_reward_func = reward_func(
                     prompts=prompts, completions=completions, **reward_kwargs
+                )
+                require_reward_output_count(
+                    output_reward_func,
+                    expected_count=len(completions),
+                    reward_name=getattr(reward_func, "__name__", type(reward_func).__name__),
                 )
                 rewards_per_func[:, i] = torch.tensor(
                     output_reward_func, dtype=torch.float32, device=device

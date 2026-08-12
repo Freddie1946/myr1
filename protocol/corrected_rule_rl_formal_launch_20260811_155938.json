@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "running_first_steps_verified",
+  "started_at": "2026-08-11T15:59:38+08:00",
+  "launcher_pid": 4044306,
+  "run_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_corrected_20260811/formal_z2_mbs10_lr1e6_len384",
+  "parent_model": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/parents/sft_step080_merged",
+  "configuration": {
+    "world_size": 8,
+    "per_device_train_batch_size": 10,
+    "num_generations": 4,
+    "max_completion_length": 384,
+    "max_steps": 150,
+    "equivalent_epochs": 3.0,
+    "learning_rate": 1e-6,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "vision_encoder": "frozen",
+    "multimodal_projector": "frozen",
+    "trainable_parameters": "language LoRA only"
+  },
+  "first_steps": [
+    {
+      "step": 1,
+      "grad_norm": 0.1290750950574875,
+      "accuracy_reward": 0.4375,
+      "format_reward": 0.9375,
+      "reward_std": 0.33234524726867676,
+      "completion_length": 108.6500015258789,
+      "kl": 0.0
+    },
+    {
+      "step": 2,
+      "grad_norm": 0.15326546132564545,
+      "accuracy_reward": 0.4375,
+      "format_reward": 0.9125000238418579,
+      "reward_std": 0.4732050895690918,
+      "completion_length": 96.9124984741211,
+      "kl": 0.0003223419189453125
+    }
+  ],
+  "gates": {
+    "trainability_audit_passed": true,
+    "vision_frozen": true,
+    "projector_frozen": true,
+    "finite_first_steps": true,
+    "reward_alignment_fail_closed_active": true,
+    "test_used_for_selection": false
+  },
+  "estimated_training_minutes_from_first_step": 109,
+  "completion_claimed": false
+}

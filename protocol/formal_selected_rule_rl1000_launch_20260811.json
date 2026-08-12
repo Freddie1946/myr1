@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "formal_started_and_first_optimizer_step_verified",
+  "launched_at_local": "2026-08-11T09:03:47+08:00",
+  "first_step_verified_at_local": "2026-08-11T09:05:39+08:00",
+  "scientific_role": "formal_rule_reward_rl_after_selected_l_sft3000",
+  "parent": {
+    "architecture": "L",
+    "sft_checkpoint_step": 80,
+    "merged_model": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/parents/sft_step080_merged",
+    "merge_manifest_sha256": "59fec29759be0573172ad6414812ddf5f5291ae0780435a749ae3c1869a62134",
+    "selection_manifest": "/home/dataset-assist-0/czy/wjy/myr1/protocol/formal_selected_sft3000_rl_parent_step080_20260811.json"
+  },
+  "data": {
+    "dataset_yaml": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.yaml",
+    "dataset_yaml_sha256": "0d443486bebf27a8611a670f65af19f961f76093fe7f9f3b838e7127485f7260",
+    "fixed_prompts": 1000,
+    "equivalent_prompt_exposures": 3.0
+  },
+  "training": {
+    "world_size": 8,
+    "per_device_train_batch_size": 10,
+    "global_completion_batch_size": 80,
+    "unique_prompts_per_optimizer_step": 20,
+    "num_generations": 4,
+    "max_completion_length": 384,
+    "max_steps": 150,
+    "save_steps": 100,
+    "learning_rate": 1e-6,
+    "beta": 0.04,
+    "dtype": "bfloat16",
+    "attention": "sdpa",
+    "deepspeed": "zero2_gpu_only",
+    "gradient_checkpointing": false,
+    "seed": 42,
+    "data_seed": 42,
+    "reward_functions": [
+      "accuracy",
+      "format"
+    ],
+    "judge_llm_used": false,
+    "vision_encoder": "frozen",
+    "multimodal_projector": "frozen",
+    "language_model": "LoRA r16 alpha32 dropout0.05"
+  },
+  "throughput_selection": {
+    "selected_smoke": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/throughput_smoke/z2_gc0_mbs10_len384_attempt01",
+    "train_samples_per_second": 3.226,
+    "smoke_steps": 4,
+    "reward_events": 640,
+    "format_missing_rollouts": 3,
+    "rollouts": 320,
+    "sampled_peak_gpu_memory_mib": 71440,
+    "minimum_sampled_memory_headroom_mib": 10480,
+    "audit_passed": true,
+    "selection_reason": "PDB10/384 materially reduces the 192-token truncation failure rate while retaining about 10.5 GiB sampled memory headroom; PDB10/512 had only about 1.2 GiB headroom and PDB5/512 was 2.08x slower."
+  },
+  "first_step": {
+    "step": 1,
+    "loss": 0.0,
+    "grad_norm": 0.12336400896310806,
+    "learning_rate": 9.933333333333333e-7,
+    "completion_length": 108.6500015258789,
+    "accuracy_reward": 0.23749999701976776,
+    "format_reward": 0.9375,
+    "reward": 1.1750000715255737,
+    "reward_std": 0.3080337643623352,
+    "kl": 0.0,
+    "finite": true
+  },
+  "trainability_audit_at_launch": {
+    "passed": true,
+    "all_trainable": 42860544,
+    "language_trainable": 42860544,
+    "vision_trainable": 0,
+    "projector_trainable": 0
+  },
+  "runtime": {
+    "run_dir": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/formal_z2_gc0_mbs10_len384",
+    "launch_contract": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/formal_z2_gc0_mbs10_len384/launch_contract.json",
+    "train_log": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/runs/formal_selected_rule_rl1000_20260811/formal_z2_gc0_mbs10_len384/train.log",
+    "torchrun_pid_at_verification": 3699237,
+    "estimated_total_wall_time_minutes": [
+      65,
+      80
+    ],
+    "completion_not_claimed": true
+  },
+  "launcher": {
+    "path": "/home/dataset-assist-0/czy/wjy/myr1/scripts/launch_formal_selected_rule_rl1000.sh",
+    "sha256_at_launch": "e48eaf200a3215c2240496bf7f982c706b9bfbf20b020dd7c9d0ee95dde457e8"
+  },
+  "test_used_for_rl_parent_selection": false,
+  "formal_completion_and_post_rl_evaluation_deferred": true
+}

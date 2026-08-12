@@ -50,6 +50,15 @@ with tempfile.TemporaryDirectory() as temporary:
     solutions = ["<answer>B) target</answer>"] * 4
     aligned = aligned_solutions(solutions, len(completions))
     assert aligned == ["<answer>B) target</answer>"]
+    try:
+        aligned_solutions(solutions, len(completions), require_exact=True)
+    except RuntimeError as exc:
+        assert "solution length mismatch" in str(exc)
+    else:
+        raise AssertionError("formal audit must reject expanded solution batches")
+    assert aligned_solutions(
+        ["<answer>B) target</answer>"], len(completions), require_exact=True
+    ) == ["<answer>B) target</answer>"]
     metadata = [{"record_index": 17, "image_sha256": "abc", "problem": "Question?"}]
     os.environ["PATHVLM_TRAINING_SEGMENT"] = "segment_a"
     append_audit_events("accuracy", completions, aligned, [1.0], metadata)
@@ -109,4 +118,26 @@ assert report["passed"] is True
 assert report["parameters"]["language"] == {"total": 7, "trainable": 7}
 assert report["parameters"]["visual"] == {"total": 8, "trainable": 0}
 assert report["parameters"]["multimodal_projector"] == {"total": 3, "trainable": 0}
+
+
+class FakeLoraModel:
+    def __init__(self):
+        self.base = torch.nn.Parameter(torch.zeros(7), requires_grad=False)
+        self.lora = torch.nn.Parameter(torch.zeros(2), requires_grad=True)
+        self.visual = torch.nn.Parameter(torch.zeros(5), requires_grad=False)
+        self.projector = torch.nn.Parameter(torch.zeros(3), requires_grad=False)
+
+    def named_parameters(self):
+        return iter([
+            ("base_model.model.model.layers.0.weight", self.base),
+            ("base_model.model.model.layers.0.lora_A.default.weight", self.lora),
+            ("base_model.model.visual.blocks.0.weight", self.visual),
+            ("base_model.model.visual.merger.linear.weight", self.projector),
+        ])
+
+
+lora_report = trainability_report(FakeLoraModel(), language_mode="lora")
+assert lora_report["passed"] is True
+assert lora_report["parameters"]["language"]["trainable"] == 2
+assert lora_report["gates"]["language_policy_satisfied"] is True
 print("GRPO PathMMU audit tests: PASS")

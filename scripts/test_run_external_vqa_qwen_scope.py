@@ -6,10 +6,43 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from run_external_vqa_qwen import select_answer_scope, summarize
+from run_external_vqa_qwen import (
+    pathvqa_ab_contract_score,
+    score_for_contract,
+    select_answer_scope,
+    summarize,
+)
 
 
 class ExternalVqaQwenScopeTests(unittest.TestCase):
+    def test_fixed_ab_contract_maps_choice_to_semantics(self) -> None:
+        yes = pathvqa_ab_contract_score(
+            "<think>evidence</think><answer>A) Yes</answer>", "yes"
+        )
+        no = pathvqa_ab_contract_score(
+            "<think>evidence</think><answer>B) No</answer>", "no"
+        )
+        self.assertTrue(yes["contract_aligned_exact_match"])
+        self.assertTrue(no["contract_aligned_exact_match"])
+        self.assertTrue(yes["strict_pathmmu_choice_format"])
+        self.assertTrue(no["strict_pathmmu_choice_format"])
+
+    def test_fixed_ab_contract_rejects_semantically_inconsistent_option(self) -> None:
+        result = pathvqa_ab_contract_score(
+            "<think>evidence</think><answer>A) No</answer>", "no"
+        )
+        self.assertFalse(result["pathvqa_ab_parseable"])
+        self.assertFalse(result["strict_pathmmu_choice_format"])
+
+    def test_score_for_contract_overrides_long_completion_scoring(self) -> None:
+        record = {"answer": "yes"}
+        result = score_for_contract(
+            "pathvqa", "<think>detail</think><answer>A) Yes</answer>", record,
+            "pathvqa_pathmmu_ab_v6_2048",
+        )
+        self.assertTrue(result["contract_aligned_exact_match"])
+        self.assertEqual(result["contract_aligned_answer"], "yes")
+
     def test_newer_qwen25_nested_text_config_is_normalized_in_memory(self) -> None:
         source = Path(__file__).with_name("run_external_vqa_qwen.py").read_text(
             encoding="utf-8"

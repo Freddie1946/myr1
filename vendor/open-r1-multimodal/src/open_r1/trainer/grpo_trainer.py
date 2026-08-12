@@ -25,6 +25,7 @@ from packaging import version
 from transformers import (
     AriaForConditionalGeneration,
     AriaProcessor,
+    AutoConfig,
     AutoModelForCausalLM,
     AutoModelForSequenceClassification,
     AutoProcessor,
@@ -45,6 +46,8 @@ from trl.data_utils import apply_chat_template, is_conversational, maybe_apply_c
 from trl.models import create_reference_model, prepare_deepspeed, unwrap_model_for_generation
 from trl.trainer.grpo_config import GRPOConfig
 from trl.trainer.utils import generate_model_card, get_comet_experiment_url
+
+from .reward_alignment import build_aligned_reward_kwargs, require_reward_output_count
 
 from accelerate.utils import is_peft_model, set_seed
 import PIL.Image
@@ -230,6 +233,11 @@ class Qwen2VLGRPOTrainer(Trainer):
             model_init_kwargs["torch_dtype"] = torch_dtype
         if isinstance(model, str):
             model_id = model
+            # Model directories produced by merging adapters do not
+            # necessarily retain the Hub repository name in their path.
+            # Dispatch from the authoritative config instead of brittle
+            # substring checks on `model_id`.
+            model_type = AutoConfig.from_pretrained(model_id).model_type
             torch_dtype = model_init_kwargs.get("torch_dtype")
             if isinstance(torch_dtype, torch.dtype) or torch_dtype == "auto" or torch_dtype is None:
                 pass  # torch_dtype is already a torch.dtype or "auto" or None
@@ -245,17 +253,18 @@ class Qwen2VLGRPOTrainer(Trainer):
             model_init_kwargs["use_cache"] = (
                 False if args.gradient_checkpointing else model_init_kwargs.get("use_cache")
             )
-            if "Qwen2-VL" in model_id:
+            if model_type == "qwen2_vl":
                 model = Qwen2VLForConditionalGeneration.from_pretrained(model, **model_init_kwargs)
-            elif "Qwen2.5-VL" in model_id:
+            elif model_type == "qwen2_5_vl":
                 model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model, **model_init_kwargs)
-            elif "Aria" in model_id:
+            elif model_type == "aria":
                 model_init_kwargs.pop("use_cache")
                 model = AriaForConditionalGeneration.from_pretrained(model, **model_init_kwargs)
             else:
                 model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
         else:
             model_id = model.config._name_or_path
+            model_type = model.config.model_type
             if args.model_init_kwargs is not None:
                 raise ValueError(
                     "You passed `model_init_kwargs` to the `GRPOConfig`, but your model is already instantiated. "
@@ -293,11 +302,11 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         # Reference model
         if is_deepspeed_zero3_enabled():
-            if "Qwen2-VL" in model_id:
+            if model_type == "qwen2_vl":
                 self.ref_model = Qwen2VLForConditionalGeneration.from_pretrained(model_id, **model_init_kwargs)
-            elif "Qwen2.5-VL" in model_id:
+            elif model_type == "qwen2_5_vl":
                 self.ref_model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model_id, **model_init_kwargs)
-            elif "Aria" in model_id:
+            elif model_type == "aria":
                 self.ref_model = AriaForConditionalGeneration.from_pretrained(model_id, **model_init_kwargs)
             else:
                 self.ref_model = AutoModelForCausalLM.from_pretrained(model_id, **model_init_kwargs)
@@ -311,12 +320,12 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         # Processing class
         if processing_class is None:
-            if "Qwen2-VL" in model_id or "Qwen2.5-VL" in model_id or "Aria" in model_id:
+            if model_type in {"qwen2_vl", "qwen2_5_vl", "aria"}:
                 processing_class = AutoProcessor.from_pretrained(model_id)
                 pad_token_id = processing_class.tokenizer.pad_token_id
                 processing_class.pad_token_id = pad_token_id
                 processing_class.eos_token_id = processing_class.tokenizer.eos_token_id
-                if "Qwen" in model_id or "Qwen2.5-VL" in model_id:
+                if model_type in {"qwen2_vl", "qwen2_5_vl"}:
                     processing_class.image_processor.max_pixels = max_pixels
                     processing_class.image_processor.min_pixels = min_pixels
             else:
@@ -613,13 +622,17 @@ class Qwen2VLGRPOTrainer(Trainer):
                 with torch.inference_mode():
                     rewards_per_func[:, i] = reward_func(**reward_inputs).logits[:, 0]  # Shape (B*G,)
             else:
-                # Repeat all input columns (but "prompt" and "completion") to match the number of generations
-                reward_kwargs = {key: [] for key in inputs[0].keys() if key not in ["prompt", "completion"]}
-                for key in reward_kwargs:
-                    for example in inputs:
-                        # Repeat each value in the column for `num_generations` times
-                        reward_kwargs[key].extend([example[key]] * self.num_generations)
+                # The sampler has already repeated every row once per generation.
+                # Preserve the local one-to-one order instead of repeating kwargs again.
+                reward_kwargs = build_aligned_reward_kwargs(
+                    inputs, expected_count=len(completions)
+                )
                 output_reward_func = reward_func(prompts=prompts, completions=completions, **reward_kwargs)
+                require_reward_output_count(
+                    output_reward_func,
+                    expected_count=len(completions),
+                    reward_name=getattr(reward_func, "__name__", type(reward_func).__name__),
+                )
                 rewards_per_func[:, i] = torch.tensor(output_reward_func, dtype=torch.float32, device=device)
 
         # Gather rewards across processes
@@ -824,4 +837,3 @@ class Qwen2VLGRPOTrainer(Trainer):
             mini_repeat_count=self.num_generations,
             seed=self.args.seed,
         )
-

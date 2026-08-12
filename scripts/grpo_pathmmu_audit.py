@@ -44,10 +44,26 @@ def completion_text(completion: Any) -> str:
     return str(completion)
 
 
-def aligned_solutions(solution: Any, completion_count: int) -> list[Any]:
+def aligned_solutions(
+    solution: Any, completion_count: int, *, require_exact: bool = False
+) -> list[Any]:
     if solution is None:
+        if require_exact:
+            raise RuntimeError("formal reward solutions are missing")
         return [""] * completion_count
-    return list(solution)[:completion_count]
+    values = list(solution)
+    if require_exact and len(values) != completion_count:
+        raise RuntimeError(
+            "formal reward solution length mismatch: "
+            f"{len(values)} != {completion_count}"
+        )
+    aligned = values[:completion_count]
+    if len(aligned) != completion_count:
+        raise RuntimeError(
+            "reward solution length mismatch: "
+            f"{len(aligned)} != {completion_count}"
+        )
+    return aligned
 
 
 def append_audit_events(
@@ -190,13 +206,16 @@ def _parameter_count(parameter) -> int:
     return int(getattr(parameter, "ds_numel", parameter.numel()))
 
 
-def trainability_report(model) -> dict[str, Any]:
+def trainability_report(model, language_mode: str = "full") -> dict[str, Any]:
+    if language_mode not in {"full", "lora"}:
+        raise ValueError(f"invalid language mode: {language_mode}")
     buckets = {
         "all": {"total": 0, "trainable": 0},
         "language": {"total": 0, "trainable": 0},
         "visual": {"total": 0, "trainable": 0},
         "multimodal_projector": {"total": 0, "trainable": 0},
     }
+    trainable_language_names: list[str] = []
     for name, parameter in model.named_parameters():
         count = _parameter_count(parameter)
         trainable = count if parameter.requires_grad else 0
@@ -205,15 +224,27 @@ def trainability_report(model) -> dict[str, Any]:
         bucket = "visual" if "visual" in name else "language"
         buckets[bucket]["total"] += count
         buckets[bucket]["trainable"] += trainable
+        if bucket == "language" and parameter.requires_grad:
+            trainable_language_names.append(name)
         if "visual.merger" in name or ".merger." in name:
             buckets["multimodal_projector"]["total"] += count
             buckets["multimodal_projector"]["trainable"] += trainable
-    report: dict[str, Any] = {"parameters": buckets}
+    report: dict[str, Any] = {
+        "parameters": buckets,
+        "language_mode": language_mode,
+        "trainable_language_parameter_names": trainable_language_names,
+    }
+    language_gate = (
+        buckets["language"]["trainable"] == buckets["language"]["total"]
+        if language_mode == "full"
+        else (
+            buckets["language"]["trainable"] > 0
+            and all("lora_" in name for name in trainable_language_names)
+        )
+    )
     report["gates"] = {
         "language_nonempty": buckets["language"]["total"] > 0,
-        "language_fully_trainable": (
-            buckets["language"]["trainable"] == buckets["language"]["total"]
-        ),
+        "language_policy_satisfied": language_gate,
         "visual_nonempty": buckets["visual"]["total"] > 0,
         "visual_fully_frozen": buckets["visual"]["trainable"] == 0,
         "projector_nonempty": buckets["multimodal_projector"]["total"] > 0,
