@@ -24,9 +24,12 @@ class FormalContractTests(unittest.TestCase):
         text = LAUNCHER.read_text(encoding="utf-8")
         for fragment in (
             'PENALTY="0.4"',
+            'PATHVLM_STAGE3_PARENT:?Set the evaluated, selected Stage3 parent snapshot',
+            'PATHVLM_STAGE3_PARENT_MANIFEST_SHA256:?Set the selected parent snapshot_manifest SHA-256',
             'PATHVLM_AIGCBEST_MAX_HTTP_ATTEMPTS:-12360',
             'PATHVLM_AIGCBEST_LIMIT_USD:-247.20',
             "--num_generations 4",
+            "--max_completion_length 384",
             "--per_device_train_batch_size 1",
             "--gradient_accumulation_steps 1",
             "--learning_rate 1.0e-6",
@@ -39,6 +42,8 @@ class FormalContractTests(unittest.TestCase):
             'PATHVLM_EPOCH_SNAPSHOT_STEPS="500,1000,1500"',
             'PATHVLM_STAGE3_RULE_FALLBACK_TOTAL_LIMIT="24"',
             'PATHVLM_STAGE3_RULE_FALLBACK_CONSECUTIVE_LIMIT="4"',
+            '"account_balance_api_available_to_api_key":False',
+            '"preflight_network_retry_delays_seconds":[0,5,15,30]',
         ):
             self.assertIn(fragment, text)
 

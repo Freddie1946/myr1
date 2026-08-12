@@ -6,9 +6,11 @@ WORKSPACE_ROOT="/home/dataset-assist-0/czy/wjy"
 REPO_ROOT="$WORKSPACE_ROOT/myr1"
 INSTALL_ROOT="$WORKSPACE_ROOT/pathvlm_r1_v1_a100"
 PYTHON="$INSTALL_ROOT/envs/grpo/bin/python"
-PARENT="$INSTALL_ROOT/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000"
+: "${PATHVLM_STAGE3_PARENT:?Set the evaluated, selected Stage3 parent snapshot}"
+: "${PATHVLM_STAGE3_PARENT_MANIFEST_SHA256:?Set the selected parent snapshot_manifest SHA-256}"
+PARENT="$(readlink -m "$PATHVLM_STAGE3_PARENT")"
 PARENT_MANIFEST="$PARENT/snapshot_manifest.json"
-PARENT_MANIFEST_SHA256="83df2570a33bd760bebb6ef8afca175b71c33bb585e107cdb2f3889edebc04e0"
+PARENT_MANIFEST_SHA256="$PATHVLM_STAGE3_PARENT_MANIFEST_SHA256"
 DATASET="$INSTALL_ROOT/data/pathmmu_image_disjoint_v2/grpo/pathvlm_rl_n1000.yaml"
 DATASET_SHA256="0d443486bebf27a8611a670f65af19f961f76093fe7f9f3b838e7127485f7260"
 IMAGE_HASH_MANIFEST="$REPO_ROOT/data/pathmmu_image_disjoint_v2/image_content_sha256.json"
@@ -42,7 +44,7 @@ case "$RUN_DIR" in
   *) echo "Run directory must be a child of $expected_parent" >&2; exit 2 ;;
 esac
 
-PARENT_ALIAS="$RUN_DIR/parent_Qwen2.5-VL-Stage2-epoch02-step1000"
+PARENT_ALIAS="$RUN_DIR/selected_parent"
 OUTPUT_DIR="$RUN_DIR/output"
 JUDGE_ROOT="$RUN_DIR/judge"
 EPOCH_SNAPSHOT_DIR="$RUN_DIR/epoch_model_snapshots"
@@ -111,7 +113,7 @@ set +a
   "$DATASET" "$DATASET_SHA256" "$IMAGE_HASH_MANIFEST" "$IMAGE_HASH_MANIFEST_SHA256" \
   "$SMOKE_RESULT" "$SMOKE_RESULT_SHA256" "$STABILITY_RESULT" "$STABILITY_RESULT_SHA256" \
   "$MASTER_PORT" "$MODEL_ID" "$MODEL_RATIO" "$COMPLETION_RATIO" <<'PY'
-import hashlib, json, os, socket, sys, urllib.request
+import hashlib, json, os, socket, sys, time, urllib.request
 from pathlib import Path
 (parent, parent_sha, dataset, dataset_sha, images, images_sha,
  smoke, smoke_sha, stability, stability_sha, port, model, model_ratio,
@@ -122,7 +124,9 @@ for path, expected in ((parent,parent_sha),(dataset,dataset_sha),(images,images_
     if actual != expected: raise SystemExit(f"preflight hash mismatch: {path}: {actual}")
 manifest=json.loads(Path(parent).read_text())
 if manifest.get("global_step") != 1000 or manifest.get("epoch") != 2.0:
-    raise SystemExit("Stage2 parent identity mismatch")
+    raise SystemExit("selected parent identity mismatch")
+if manifest.get("model_only") is not True:
+    raise SystemExit("selected parent must be a verified model-only snapshot")
 for row in manifest.get("files", []):
     path=Path(parent).parent / row["name"]
     if not path.is_file() or path.stat().st_size != row["size_bytes"] or digest(path) != row["sha256"]:
@@ -152,12 +156,27 @@ if model != "gpt-4o-2024-08-06":
          if stable.get(k)!=v}
     if bad: raise SystemExit(f"candidate stability gate mismatch: {bad}")
 headers={"Authorization":"Bearer "+os.environ["AIGCBEST_API_KEY"],"User-Agent":"PathVLM-R1 formal preflight"}
-with urllib.request.urlopen(urllib.request.Request("https://api2.aigcbest.top/v1/models",headers=headers),timeout=30) as r:
-    catalog=json.load(r).get("data",[])
+def read_json_with_retry(request_or_url, label):
+    errors=[]
+    for attempt, delay in enumerate((0,5,15,30),1):
+        if delay: time.sleep(delay)
+        try:
+            with urllib.request.urlopen(request_or_url,timeout=30) as response:
+                return json.load(response), attempt
+        except Exception as exc:
+            errors.append({"attempt":attempt,"type":type(exc).__name__,"message":str(exc)[:240]})
+    raise SystemExit(f"{label} failed after bounded retries: {errors}")
+catalog_response, catalog_attempts=read_json_with_retry(
+    urllib.request.Request("https://api2.aigcbest.top/v1/models",headers=headers),
+    "model availability gate",
+)
+catalog=catalog_response.get("data",[])
 if sum(isinstance(x,dict) and x.get("id")==model for x in catalog)!=1:
     raise SystemExit("exact GPT-4o model absent")
-with urllib.request.urlopen("https://api2.aigcbest.top/api/pricing",timeout=30) as r:
-    pricing=json.load(r).get("data",[])
+pricing_response, pricing_attempts=read_json_with_retry(
+    "https://api2.aigcbest.top/api/pricing", "pricing contract gate"
+)
+pricing=pricing_response.get("data",[])
 rows=[x for x in pricing if isinstance(x,dict) and x.get("model_name")==model]
 if (len(rows)!=1 or float(rows[0].get("model_ratio"))!=float(model_ratio)
         or float(rows[0].get("completion_ratio"))!=float(completion_ratio)):
@@ -191,21 +210,26 @@ fi
 
 "$PYTHON" - "$PREFLIGHT" "$REPO_ROOT" "$SEGMENT_ID" "$RESUME_FROM" "$MODEL_ID" \
   "$RUN_CLASS" "$ACCOUNTING_CAPACITY_USD" "$RESERVE_USD" "$INPUT_USD_PER_MILLION" \
-  "$OUTPUT_USD_PER_MILLION" "$STABILITY_RESULT" "$MAX_HTTP_ATTEMPTS" <<'PY'
+  "$OUTPUT_USD_PER_MILLION" "$STABILITY_RESULT" "$MAX_HTTP_ATTEMPTS" \
+  "$PARENT" "$PARENT_MANIFEST_SHA256" <<'PY'
 import json, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
-path,repo,segment,resume,model,run_class,capacity,reserve,input_rate,output_rate,stability,max_http_attempts=sys.argv[1:]
+path,repo,segment,resume,model,run_class,capacity,reserve,input_rate,output_rate,stability,max_http_attempts,parent,parent_manifest_sha256=sys.argv[1:]
 commit=subprocess.check_output(["/home/dataset-assist-0/czy/wjy/.local-git/usr/bin/git","-C",repo,"rev-parse","HEAD"],text=True).strip()
 value={"schema_version":1,"created_at":datetime.now(timezone.utc).isoformat(),"status":"passed",
 "formal_result":False,"run_class":run_class,"repository_commit":commit,
 "judge_gateway":"aigcbest","judge_model":model,"penalty":0.4,
+"selected_parent":parent,"selected_parent_manifest_sha256":parent_manifest_sha256,
 "user_usd_budget_limit":float(capacity),"technical_accounting_capacity_usd":float(capacity),
 "reserve_usd_per_attempt":float(reserve),"input_usd_per_million":float(input_rate),
 "output_usd_per_million":float(output_rate),"stability_gate":stability or None,
 "maximum_physical_http_attempts":int(max_http_attempts),"maximum_logical_judgments":12000,
 "retry_delays_seconds":[15,45,90],"retry_judge_token_caps":[512,768],
 "ambiguous_transport_retry":True,"retryable_response_validation":True,
+"preflight_network_retry_delays_seconds":[0,5,15,30],
+"account_balance_api_available_to_api_key":False,
+"account_balance_gate":"not available: API key authenticates /v1/models but account endpoints require a separate web session; use availability, pricing, per-request ledger, and resumable checkpoints",
 "rule_fallback_total_limit":24,
 "rule_fallback_consecutive_limit":4,"max_steps":1500,"save_steps":100,
 "segment":segment,"resume_from":resume or None,
@@ -252,7 +276,7 @@ cmd=(
   --output_dir "$OUTPUT_DIR" --model_name_or_path "$PARENT_ALIAS"
   --dataset_name "$DATASET" --image_root / --reward_funcs accuracy format process
   --freeze_vision_modules true --max_pixels 65536 --min_pixels 3136
-  --num_generations 4 --max_completion_length 192 --per_device_train_batch_size 1
+  --num_generations 4 --max_completion_length 384 --per_device_train_batch_size 1
   --gradient_accumulation_steps 1 --learning_rate 1.0e-6 --logging_steps 1
   --bf16 true --torch_dtype bfloat16 --gradient_checkpointing true
   --attn_implementation sdpa --beta 0.04 --num_iterations 1 --max_steps 1500
