@@ -19,14 +19,15 @@ inventory of repository file sizes, not a claim about remaining quota.
 | `PathVLM-R1-Stage2-Continued-RuleRL1000-seed42` | public + manual gate | 16,600,487,751 B | 15.46 GiB |
 | `PathVLM-R1-Base-RuleRL4000-seed42` | public + manual gate | 1,519 B | negligible (upload incomplete) |
 
-Measured total: approximately **120.8 GiB**. The planned model-only backups for
-the completed n=4 and future n=8 step-1000 checkpoints are approximately
-15.46 GiB each, before any duplicate files or metadata. Thus the projected
-total is approximately **151.7 GiB plus small evaluation archives**.
+Measured model-repository total: approximately **136.26 GiB**. The separate
+private evaluation datasets currently occupy approximately **0.64 GiB** (the
+new migration archive itself is about 0.0013 GiB). The planned model-only
+backups for the completed n=4 and future n=8 step-1000 checkpoints are
+approximately 15.46 GiB each, before metadata. Thus the projected total is
+approximately **167.18 GiB**.
 
 No repository has been deleted. The likely space-saving candidates are the old
 public 3B snapshots (`qwen2.5vl-3b-sft`, `qwen2.5vl-3b-20000sft`,
 `cot-3000-3b-750`, `cot-3000-3b-4500`) and any duplicate private checkpoint
 whose paper role is no longer needed. Deletion requires the owner's explicit
 selection; this inventory is the confirmation point.
-
