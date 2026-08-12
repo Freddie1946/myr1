@@ -13,7 +13,9 @@ OUT=Path('/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/referen
 def gpu_pids():
  return subprocess.run(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader,nounits'],capture_output=True,text=True,check=True).stdout.strip()
 def main():
- while not EVAL_STATE.is_file() or gpu_pids(): time.sleep(300)
+ allow_concurrent=os.getenv('PATHVLM_EXPLAINABILITY_ALLOW_CONCURRENT_EVAL','false').lower()=='true'
+ if not allow_concurrent:
+  while not EVAL_STATE.is_file() or gpu_pids(): time.sleep(300)
  if OUT.exists(): raise FileExistsError(OUT)
  OUT.mkdir(parents=True); env=os.environ.copy(); env.update({'CUDA_VISIBLE_DEVICES':'0','PYTHONPATH':str(REPO/'scripts'),'TOKENIZERS_PARALLELISM':'false','PYTORCH_CUDA_ALLOC_CONF':'expandable_segments:True'})
  jobs=[
