@@ -6,10 +6,6 @@ inventory of repository file sizes, not a claim about remaining quota.
 
 | Repository | Visibility | Measured files | Size |
 |---|---:|---:|---:|
-| `qwen2.5vl-3b-sft` | public | 7,525,389,803 B | 7.01 GiB |
-| `qwen2.5vl-3b-20000sft` | public | 7,525,406,754 B | 7.01 GiB |
-| `cot-3000-3b-750` | public | 7,525,398,378 B | 7.01 GiB |
-| `cot-3000-3b-4500` | public | 7,525,461,726 B | 7.01 GiB |
 | `cot-3000-7b` | public | 16,600,384,229 B | 15.46 GiB |
 | `PathVLM-R1-SFT-n3000-seed42-epoch3` | private | 16,600,556,023 B | 15.46 GiB |
 | `PathVLM-R1-Outcome-GRPO-n1000-seed42-epoch2` | private | 16,600,756,321 B | 15.46 GiB |
@@ -19,15 +15,13 @@ inventory of repository file sizes, not a claim about remaining quota.
 | `PathVLM-R1-Stage2-Continued-RuleRL1000-seed42` | public + manual gate | 16,600,487,751 B | 15.46 GiB |
 | `PathVLM-R1-Base-RuleRL4000-seed42` | public + manual gate | 1,519 B | negligible (upload incomplete) |
 
-Measured model-repository total: approximately **136.26 GiB**. The separate
-private evaluation datasets currently occupy approximately **0.64 GiB** (the
-new migration archive itself is about 0.0013 GiB). The planned model-only
-backups for the completed n=4 and future n=8 step-1000 checkpoints are
-approximately 15.46 GiB each, before metadata. Thus the projected total is
-approximately **167.18 GiB**.
+The four old public 3B repositories listed above were deleted with explicit
+owner approval. The remaining measured model-repository total is approximately
+**108.22 GiB**. The separate private evaluation datasets occupy approximately
+**0.65 GiB**. The planned model-only backups for n=4 and n=8 are approximately
+15.46 GiB each, giving a projected post-backup total of approximately
+**139.79 GiB**.
 
-No repository has been deleted. The likely space-saving candidates are the old
-public 3B snapshots (`qwen2.5vl-3b-sft`, `qwen2.5vl-3b-20000sft`,
-`cot-3000-3b-750`, `cot-3000-3b-4500`) and any duplicate private checkpoint
-whose paper role is no longer needed. Deletion requires the owner's explicit
-selection; this inventory is the confirmation point.
+The remaining likely space-saving candidate is the older public
+`cot-3000-7b` snapshot (approximately 15.46 GiB); it has not been deleted.
+No other repository has been deleted.
