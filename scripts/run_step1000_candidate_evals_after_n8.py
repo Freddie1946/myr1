@@ -57,7 +57,9 @@ def candidates():
 
 
 def launch(name, gpu, cmd, out, expected_artifact, jobs):
-    out.mkdir(parents=True, exist_ok=True)
+    # Evaluation runners deliberately refuse an already-existing output path.
+    # Create only the parent here; the child process owns creation of ``out``.
+    out.parent.mkdir(parents=True, exist_ok=True)
     log = (EVALROOT / "logs" / f"{name}.log").open("w")
     env = os.environ.copy(); env.update({"CUDA_VISIBLE_DEVICES": str(gpu), "PYTHONPATH": str(REPO / "scripts"), "TOKENIZERS_PARALLELISM": "false", "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"})
     p = subprocess.Popen(cmd, cwd=REPO, env=env, stdout=log, stderr=subprocess.STDOUT)
