@@ -52,3 +52,16 @@
 - GitHub：代码、报告、运行合同、manifest和小型汇总。
 - Hugging Face dataset：逐题预测、metrics、run_config、关键日志和hash manifest；不上传原始图片、密钥、优化器shard或超大的重复RISE中间张量。
 - 当前HF已有两个评测仓库；`PathVLM-R1-Revision-Evaluation-Results`约659MiB，`PathVLM-R1-Evaluation-Archive-20260812`约1.3MiB。HF认证正常。
+
+2026-08-14当前快照已上传到私有dataset仓库：
+
+- Repository：`Freddie1946/PathVLM-R1-Evaluation-Archive-20260814`
+- Revision：`57f836833cf3417692ffa4cb40002349fc8dd89b`
+- Archive：`evaluation_results_20260814.tar.gz`
+- Archive size：118,407,533 bytes
+- Archive SHA256：`ff82191de645f277e0db012b9aa97dc9e9259dfac88d915772a452d7169c70d8`
+- Manifest SHA256：`8429efdbd97a7d0d9412370a66b2385eac39e694a462fc84faf03e2d1e8a6980`
+- 归档文件数：1,337
+- 未压缩结果数据：1,009,698,691 bytes
+
+这是启动新补充评测之后、其完成之前的时间点快照；新运行完成后必须再做增量/最终快照。
