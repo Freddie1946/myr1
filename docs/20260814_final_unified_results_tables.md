@@ -31,9 +31,20 @@
 
 | Model | Runs | Mean | SD | t 95% CI |
 |---|---:|---:|---:|---:|
-| l_r16_sft80 | NA | NA | NA | NA |
+| l_r16_sft80 | 5 | 52.65 | 1.09 | [51.30, 54.01] |
 | full_rule_rl_n8_step1000 | 5 | 61.16 | 1.05 | [59.85, 62.47] |
 | stage3_gpt4o_step1500 | 5 | 63.10 | 0.81 | [62.10, 64.11] |
+
+## RL 机制筛查（validation / train probe）
+
+| Arm | Exposure point | Train probe | PathMMU Val | Interpretation |
+|---|---:|---:|---:|---|
+| R0 accuracy+format | step50 | 51.95 | 55.06 | matched reward arm |
+| R1 accuracy-only | step50 | 53.52 | 56.36 | consistent but non-significant trend; no format degradation |
+| R1 G20 LR=3e-6 | step25 / 0.5 epoch | 52.34 | 56.36 | modest LR helps Val relative to conservative baseline |
+| R1 G2 LR=1e-6 | step250 / 0.5 epoch | 52.34 | 55.32 | more optimizer updates did not improve Val |
+
+SFT-r32 的 PathMMU Val 最佳点为 step64 的 56.36%，但其 PathVQA/MMMU retention 比 early checkpoint 更差；因此更大 rank 主要增加 specialization capacity，没有成为主 parent。机制筛查使用 validation，不访问 Test999 选择 recipe。
 
 ## 外部基线（历史统一 short-answer / Yes-No 合同）
 
