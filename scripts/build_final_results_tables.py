@@ -247,6 +247,17 @@ def main() -> None:
         lines.append(f"| {row['model']} | {count if count is not None else 'NA'} | {pct(mean)} | {pct(sd)} | {ci_text} |")
     lines.extend([
         "",
+        "## RL 机制筛查（validation / train probe）",
+        "",
+        "| Arm | Exposure point | Train probe | PathMMU Val | Interpretation |",
+        "|---|---:|---:|---:|---|",
+        "| R0 accuracy+format | step50 | 51.95 | 55.06 | matched reward arm |",
+        "| R1 accuracy-only | step50 | 53.52 | 56.36 | consistent but non-significant trend; no format degradation |",
+        "| R1 G20 LR=3e-6 | step25 / 0.5 epoch | 52.34 | 56.36 | modest LR helps Val relative to conservative baseline |",
+        "| R1 G2 LR=1e-6 | step250 / 0.5 epoch | 52.34 | 55.32 | more optimizer updates did not improve Val |",
+        "",
+        "SFT-r32 的 PathMMU Val 最佳点为 step64 的 56.36%，但其 PathVQA/MMMU retention 比 early checkpoint 更差；因此更大 rank 主要增加 specialization capacity，没有成为主 parent。机制筛查使用 validation，不访问 Test999 选择 recipe。",
+        "",
         "## 外部基线（历史统一 short-answer / Yes-No 合同）",
         "",
         "> 以下结果已经全量跑完，保留原合同用于可复现对比；不能解释为已使用当前 A/B prompt 重跑。",
