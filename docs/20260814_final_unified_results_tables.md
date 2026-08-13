@@ -8,7 +8,7 @@
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Base Qwen2.5-VL-7B | 50.91 | 48.65 | 60.56 | 97.35 | 0.00 | 59.00 | 57.38 | 56.03 |
 | Historical full-SFT3000 | 59.74 | 58.26 | 56.25 | 99.91 | 0.00 | 50.97 | 48.45 | 43.10 |
-| Historical Stage2 outcome-RL | 61.04 | 60.96 | 55.59 | 99.91 | 0.00 | NA | NA | 47.41 |
+| Historical Stage2 outcome-RL | 61.04 | 60.96 | 55.59 | 99.91 | 0.00 | 52.78 | 49.20 | 47.41 |
 | Current L-r16 SFT3000 step80 | 54.55 | 56.66 | 61.99 | 99.88 | 0.00 | 61.66 | 57.42 | 49.14 |
 | Full rule-RL n4 step1000 | 59.74 | 61.16 | 62.61 | 99.79 | 0.00 | 69.70 | 57.20 | 53.45 |
 | Full rule-RL n8 step1000 | 64.16 | 63.46 | 62.61 | 99.79 | 0.00 | 69.50 | 56.80 | 54.31 |
@@ -21,9 +21,9 @@
 
 | Model | PathMMU Val | PathMMU Test999 | PathVQA Test A/B | Parse | Cap hit | Omni aligned | Omni official | MMMU |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| 250 SFT + 750 rule-RL | 50.39 | 47.25 | 57.76 | 99.94 | 0.00 | NA | NA | 54.31 |
-| 500 SFT + 500 rule-RL | 51.95 | 51.75 | 57.20 | 99.97 | 0.00 | NA | NA | 45.69 |
-| 750 SFT + 250 rule-RL | 50.91 | 49.75 | 55.62 | 99.94 | NA | NA | NA | 43.97 |
+| 250 SFT + 750 rule-RL | 50.39 | 47.25 | 57.76 | 99.94 | 0.00 | 58.03 | 54.98 | 54.31 |
+| 500 SFT + 500 rule-RL | 51.95 | 51.75 | 57.20 | 99.97 | 0.00 | 57.75 | 54.32 | 45.69 |
+| 750 SFT + 250 rule-RL | 50.91 | 49.75 | 55.62 | 99.94 | NA | 60.00 | 52.64 | 43.97 |
 
 ## Test999 五次随机推理重复
 
@@ -70,6 +70,13 @@ SFT-r32 的 PathMMU Val 最佳点为 step64 的 56.36%，但其 PathVQA/MMMU ret
 ## 已完成的异构 Judge 稳健性
 
 GPT-4o、Claude Sonnet 4.6、Gemini 3.1 Pro 已对冻结的 100-case、6-model panel 完成 2,880 个盲评判断。两条 Stage3 臂相对 Stage2 的宏平均点估计在三个 Judge 下均为正，但六个 95% CI 均跨 0；因此只能写成方向一致的小幅提升，不能宣称统计显著。人工专家评分仍由用户后补。
+
+## 可解释性计算结果（专家 ROI 校验待补）
+
+- 预定义候选 58 例；clean-correct 31 例；clean-correct 且 decision-score/interface agreement 的严格行为主集 29 例；dual-stream 主集 30 例。
+- 行为删除：全 58 例 reference-minus-random 额外 margin drop 均值 0.206；严格 29 例均值 0.332。该结果说明 reference region 的删除影响总体大于面积匹配随机区，但外部模型框尚不能称病理专家真值。
+- Activation patching：在正 deletion-gap 的 19 例中，layer-0 clean visual-token patch 的平均恢复比例约 0.971；相对 opposite-direction control 的平均 margin recovery 为 0.783。query-position patch 的恢复主要在后层出现（layer20/24/27 平均 raw recovery 约 0.345/0.486/0.645）。
+- 结论边界：这形成“预定义视觉区域删除 → 决策受损 → clean activation 可恢复”的内部因果证据；病理学定位有效性仍需用户后续专家盲校。
 
 ## 合同边界
 

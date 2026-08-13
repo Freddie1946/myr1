@@ -27,7 +27,7 @@
 
 1. 克隆 `codex/a100-stage3-eval` 并核对最终 Git commit。
 2. 恢复工作区环境和私有 HF 认证，不复制任何 token/key 文件。
-3. 从最终 HF dataset archive 下载结果归档并验证 SHA-256。
+3. 从 HF 下载归档清单/校验记录并核对 SHA-256。完整最终 tar 因私有 HF 配额满而保留在本机；此前的 pre-completion 完整快照仍在 HF。若迁移前仍未扩容，需用受控文件传输复制本地最终 tar，并验证 `36f10566c7087f4603ba3abee95ec84a47b400ae4aabd1b27a1778c3a8f435cd`。
 4. 运行 `scripts/audit_final_nonhuman_data_completion.py --require-final-backup`；只有状态为 `complete` 才表示除人工专家项外全部闭环。
 5. 若继续专家验证，必须盲于模型 attention/RISE 结果，单独记录 ROI 诊断相关性与生成质量评分。
 
@@ -36,3 +36,10 @@
 - 未删除训练权重或其他模型；任何后续存储清理仍需用户逐项确认。
 - 未上传凭据、原始图片、优化器 shard 或超大可解释性中间张量。
 - 未把人工专家评分伪装成外部模型评分，也未把外部模型 ROI 称为 pathology ground truth。
+
+## HF 最终备份状态
+
+- 私有 dataset：`Freddie1946/PathVLM-R1-Evaluation-Archive-20260814`
+- 最终 manifest 与 verification 已上传并通过 fresh-download SHA 校验，revision `b8a0b0fd95269113b7d4c6e717523781bc10ffc0`。
+- 131 MiB 完整最终 tar 上传被 HF 明确以“private repository storage limit reached”拒绝；这不是 token 或网络错误。
+- 未经授权没有把数据改为公开。完整 tar 本地路径和 SHA 见 `protocol/final_hf_results_backup_20260814.json`。

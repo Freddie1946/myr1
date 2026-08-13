@@ -90,7 +90,21 @@ def main() -> None:
         EVAL / "stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/reference_evidence_dual_stream_v2/metrics.json",
     )
     if args.require_final_backup:
-        add("final HF backup verification", REPO / "protocol/final_hf_results_backup_20260814.json")
+        backup_path = REPO / "protocol/final_hf_results_backup_20260814.json"
+        add("final HF backup verification", backup_path)
+        if backup_path.is_file():
+            backup = json.loads(backup_path.read_text(encoding="utf-8"))
+            archive = Path(backup["full_archive"]["local_path"])
+            expected = backup["full_archive"]["sha256"]
+            actual = sha256(archive) if archive.is_file() else None
+            checks.append({
+                "label": "final full local archive hash",
+                "path": str(archive),
+                "required": True,
+                "ok": actual == expected,
+                "detail": "hash_verified" if actual == expected else f"actual={actual}, expected={expected}",
+                "sha256": actual,
+            })
 
     missing = [item for item in checks if not item["ok"]]
     result = {

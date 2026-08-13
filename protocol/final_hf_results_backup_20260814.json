@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "status": "metadata_verified_full_archive_local_due_private_quota",
+  "repository": "Freddie1946/PathVLM-R1-Evaluation-Archive-20260814",
+  "repository_type": "dataset",
+  "visibility": "private",
+  "remote_revision": "b8a0b0fd95269113b7d4c6e717523781bc10ffc0",
+  "remote_files": {
+    "final/ARCHIVE_MANIFEST.json": {
+      "local_and_remote_sha256": "76fda99338e6eabc6147c09838b2585fab885ca1b73a21d9ccf309d80e361946",
+      "fresh_remote_download_verified": true
+    },
+    "final/ARCHIVE_VERIFICATION.json": {
+      "local_and_remote_sha256": "e1a74e4089ac772163ef608b6179d2e6e2696347ad97d05995554849e15fafc6",
+      "fresh_remote_download_verified": true
+    }
+  },
+  "full_archive": {
+    "local_path": "/home/dataset-assist-0/czy/wjy/backup_archives/evaluation_results_final_20260814/evaluation_results_20260813T182602Z.tar.gz",
+    "bytes": 136572488,
+    "sha256": "36f10566c7087f4603ba3abee95ec84a47b400ae4aabd1b27a1778c3a8f435cd",
+    "file_count": 1440,
+    "total_uncompressed_bytes": 1172889129,
+    "contains_model_weights": false,
+    "contains_credentials": false,
+    "remote_upload": "rejected_by_hf_private_storage_quota"
+  },
+  "hf_error": "403 Forbidden: Private repository storage limit reached",
+  "important_boundary": "Authentication and network access are healthy. The complete 131 MiB archive remains locally hash-verified; its manifest and verification record are on private HF. Public upload was not authorized and was not attempted.",
+  "earlier_full_remote_snapshot": {
+    "revision": "57f836833cf3417692ffa4cb40002349fc8dd89b",
+    "archive": "evaluation_results_20260814.tar.gz",
+    "sha256": "ff82191de645f277e0db012b9aa97dc9e9259dfac88d915772a452d7169c70d8",
+    "boundary": "pre-completion timepoint snapshot"
+  }
+}

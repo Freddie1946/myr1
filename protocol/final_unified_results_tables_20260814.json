@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-13T18:09:07.812378+00:00",
+  "generated_at": "2026-08-13T18:28:36.290793+00:00",
   "core_current_contract": [
     {
       "model": "Base Qwen2.5-VL-7B",
@@ -45,8 +45,8 @@
       "pathvqa_fixed_ab": 0.5559190957763236,
       "pathvqa_parse_rate": 0.9991076740035693,
       "pathvqa_cap_rate": 0.0,
-      "omnimed_contract_aligned": null,
-      "omnimed_official": null,
+      "omnimed_contract_aligned": 0.527823432730688,
+      "omnimed_official": 0.492016905376849,
       "mmmu_nonmedical": 0.47413793103448276,
       "paths": {
         "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/pathmmu_val385/metrics.json",
@@ -191,8 +191,8 @@
       "pathvqa_fixed_ab": 0.5776323616894705,
       "pathvqa_parse_rate": 0.9994051160023796,
       "pathvqa_cap_rate": 0.0,
-      "omnimed_contract_aligned": null,
-      "omnimed_official": null,
+      "omnimed_contract_aligned": 0.5803005400328716,
+      "omnimed_official": 0.5497769429443531,
       "mmmu_nonmedical": 0.5431034482758621,
       "paths": {
         "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/pathmmu_val385/metrics.json",
@@ -211,8 +211,8 @@
       "pathvqa_fixed_ab": 0.5719809637120762,
       "pathvqa_parse_rate": 0.9997025580011898,
       "pathvqa_cap_rate": 0.0,
-      "omnimed_contract_aligned": null,
-      "omnimed_official": null,
+      "omnimed_contract_aligned": 0.5774829772247007,
+      "omnimed_official": 0.5432026297252877,
       "mmmu_nonmedical": 0.45689655172413796,
       "paths": {
         "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/pathmmu_val385/metrics.json",
@@ -231,8 +231,8 @@
       "pathvqa_fixed_ab": 0.5562165377751338,
       "pathvqa_parse_rate": 0.9994051160023796,
       "pathvqa_cap_rate": null,
-      "omnimed_contract_aligned": null,
-      "omnimed_official": null,
+      "omnimed_contract_aligned": 0.6000234796900681,
+      "omnimed_official": 0.5264146513266025,
       "mmmu_nonmedical": 0.4396551724137931,
       "paths": {
         "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/pathmmu_val385/metrics.json",

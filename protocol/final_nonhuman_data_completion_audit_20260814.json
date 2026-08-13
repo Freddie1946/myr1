@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "created_at": "2026-08-13T17:47:37.654348+00:00",
+  "created_at": "2026-08-13T18:28:36.019154+00:00",
   "scope": "all required non-human report data; human expert scoring explicitly excluded",
-  "status": "incomplete",
+  "status": "complete",
   "human_expert_scoring": "excluded_pending_user",
-  "required_check_count": 25,
-  "failed_check_count": 8,
+  "required_check_count": 27,
+  "failed_check_count": 0,
   "checks": [
     {
       "label": "sft0250_rl0750:PathMMU-val",
@@ -43,9 +43,9 @@
       "label": "sft0250_rl0750:OmniMedVQA",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/omnimedvqa_8518/metrics.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "completed",
+      "sha256": "1396c8002c95e253d0d7200b837cabd4ea4d6c131e3b2eb1fb968bc119767ec3"
     },
     {
       "label": "sft0500_rl0500:PathMMU-val",
@@ -83,9 +83,9 @@
       "label": "sft0500_rl0500:OmniMedVQA",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/omnimedvqa_8518/metrics.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "completed",
+      "sha256": "bdcc5cdcf565038d2af2e7afeb08606a79780498b211ff0e62c96b2201ed9f52"
     },
     {
       "label": "sft0750_rl0250:PathMMU-val",
@@ -123,49 +123,49 @@
       "label": "sft0750_rl0250:OmniMedVQA",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/omnimedvqa_8518/metrics.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "completed",
+      "sha256": "32b066707ae4af202bba5ea08cca073588d82993b7df8ecd2865edb35c8e463d"
     },
     {
       "label": "repeat:l_r16_sft80",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/l_r16_sft80/summary.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "present",
+      "sha256": "f065aeedb9b19f372da86c11c427e09980c399bd9a8c1ba5e7c086c3c6f1fbd2"
     },
     {
       "label": "repeat:full_rule_rl_n8_step1000",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/full_rule_rl_n8_step1000/summary.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "present",
+      "sha256": "918ad095d35fa4f1bff305761f6d340d6a9c795a1d5e11972abc6ea450e2ddd5"
     },
     {
       "label": "repeat:stage3_gpt4o_step1500",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/stage3_gpt4o_step1500/summary.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "present",
+      "sha256": "82bceba1f210f457ac38bf9feb5932e2cd22266162ca75d1b04f48532d5908af"
     },
     {
       "label": "LoRA-SFT4000:OmniMedVQA",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/omnimedvqa_8518/metrics.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "completed",
+      "sha256": "003f0bdefcfb8c041e411f4962ccc98ac41b5814568bf991cc0d6d35d0ad215b"
     },
     {
       "label": "historical-Stage2:OmniMedVQA",
       "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/omnimedvqa_8518/metrics.json",
       "required": true,
-      "ok": false,
-      "detail": "missing",
-      "sha256": null
+      "ok": true,
+      "detail": "completed",
+      "sha256": "cbe789dbcc46e4054f156098964f80296721870d08b44184e029e4707021c165"
     },
     {
       "label": "unified Markdown",
@@ -173,7 +173,7 @@
       "required": true,
       "ok": true,
       "detail": "present",
-      "sha256": "2eef2df3c910288d3cc3f878b2433920764040662c0dcff1d989a2038105d298"
+      "sha256": "3534d49d6af66b55a08335187b816a379ad548ddce976b47072b7a693e54cde6"
     },
     {
       "label": "unified JSON",
@@ -181,7 +181,7 @@
       "required": true,
       "ok": true,
       "detail": "present",
-      "sha256": "bae7fd5c76a8be0c90aa68b407345f486a55e1ff1bc506f5baa305301c8a487e"
+      "sha256": "54c67ff919a7bb2d4d04755aef0698a6e895074b2be51692f96c61c4d55c7251"
     },
     {
       "label": "minimal core paired statistics",
@@ -206,6 +206,22 @@
       "ok": true,
       "detail": "present",
       "sha256": "6f09dba1ae10e81df954575f3ef448ee4a2131313918a049019aeebb2a8c7048"
+    },
+    {
+      "label": "final HF backup verification",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/protocol/final_hf_results_backup_20260814.json",
+      "required": true,
+      "ok": true,
+      "detail": "present",
+      "sha256": "8578b2ea1745c938143a3b7f1765b46da39ffc13888c3ab50cf11fb346942532"
+    },
+    {
+      "label": "final full local archive hash",
+      "path": "/home/dataset-assist-0/czy/wjy/backup_archives/evaluation_results_final_20260814/evaluation_results_20260813T182602Z.tar.gz",
+      "required": true,
+      "ok": true,
+      "detail": "hash_verified",
+      "sha256": "36f10566c7087f4603ba3abee95ec84a47b400ae4aabd1b27a1778c3a8f435cd"
     }
   ]
 }
