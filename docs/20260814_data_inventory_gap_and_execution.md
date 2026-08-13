@@ -26,7 +26,7 @@
 
 ### PathVQA基线覆盖
 
-已经跑过PathVQA的外部/病理基线包括：Huatuo、InternVL、Lingshu、MedGemma、MedVLM-R1、Qwen3、Qwen2.5-VL-7B、DeepSeek-VL2、Llama-3.2-90B-Vision、ScaleReasoner-R1、Claude Haiku 4.5、Qwen-VL-Plus。Llama-3.2-11B只有smoke，未完成全量。
+已经跑过PathVQA的外部/病理基线包括：Huatuo、InternVL、Lingshu、MedGemma、MedVLM-R1、Qwen3、Qwen2.5-VL-7B、DeepSeek-VL2、Llama-3.2-11B/90B-Vision、ScaleReasoner-R1、Claude Haiku 4.5、Qwen-VL-Plus。Llama-3.2-11B的旧合同全量结果已经归档（1882/3362=55.98%）；其当前目录中还存在smoke/分片记录，因此汇总时必须引用已完成的全量结果，不能把分片状态误报为整体缺失。
 
 其中只有当前核心主线使用了最新固定 `A=Yes/B=No` 生成合同。其他基线多数使用旧的short-answer/自由Yes-No合同；逐题预测仍可保留和重评分，但不能把它们伪装成已按新prompt重跑。已知旧合同yes/no结果示例：ScaleReasoner-R1 57.53%、DeepSeek-VL2 paper-aligned yes/no 59.52%、Llama-3.2-90B 62.49%、Claude Haiku 4.5为1355/3359=40.34%、Qwen-VL-Plus为2272/3356=67.70%。后两者存在少量API失败，分母不是3362。
 
