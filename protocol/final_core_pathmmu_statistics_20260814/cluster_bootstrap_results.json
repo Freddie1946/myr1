@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-13T17:45:48.838961+00:00",
+  "method": "nonparametric image-cluster bootstrap with paired cluster draws",
+  "seed": 20260814,
+  "replicates": 10000,
+  "question_count": 999,
+  "unique_image_cluster_count": 707,
+  "clusters_with_multiple_questions": 251,
+  "maximum_questions_per_image": 3,
+  "reference_label": "GPT4o-Stage3-step1500",
+  "split_name": "test999",
+  "models": {
+    "L-r16-SFT3000-step80": {
+      "correct": 566,
+      "questions": 999,
+      "accuracy": 0.5665665665665666,
+      "cluster_bootstrap_95_ci": [
+        0.5352804833030441,
+        0.5975975975975976
+      ]
+    },
+    "full-rule-RL-n8-step1000": {
+      "correct": 634,
+      "questions": 999,
+      "accuracy": 0.6346346346346347,
+      "cluster_bootstrap_95_ci": [
+        0.6048632218844985,
+        0.6646766169154229
+      ]
+    },
+    "GPT4o-Stage3-step1500": {
+      "correct": 638,
+      "questions": 999,
+      "accuracy": 0.6386386386386387,
+      "cluster_bootstrap_95_ci": [
+        0.6089542409532882,
+        0.6676647455839072
+      ]
+    }
+  },
+  "paired_comparisons": {
+    "L-r16-SFT3000-step80": {
+      "contrast": "GPT4o-Stage3-step1500 - L-r16-SFT3000-step80",
+      "accuracy_difference": 0.07207207207207211,
+      "cluster_bootstrap_95_ci": [
+        0.04240631163708086,
+        0.10233089010773629
+      ],
+      "two_sided_bootstrap_p_value": 0.0
+    },
+    "full-rule-RL-n8-step1000": {
+      "contrast": "GPT4o-Stage3-step1500 - full-rule-RL-n8-step1000",
+      "accuracy_difference": 0.004004004004004025,
+      "cluster_bootstrap_95_ci": [
+        -0.018182738314317267,
+        0.026052104208416752
+      ],
+      "two_sided_bootstrap_p_value": 0.758
+    }
+  },
+  "manifest": {
+    "schema_version": 1,
+    "purpose": "minimal core paired uncertainty only; no exhaustive flip expansion",
+    "models": [
+      {
+        "label": "L-r16-SFT3000-step80",
+        "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu_test999/step080/predictions.jsonl"
+      },
+      {
+        "label": "full-rule-RL-n8-step1000",
+        "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000_pathmmu_eval/test999/predictions.jsonl"
+      },
+      {
+        "label": "GPT4o-Stage3-step1500",
+        "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathmmu_test999/predictions.jsonl"
+      }
+    ]
+  }
+}

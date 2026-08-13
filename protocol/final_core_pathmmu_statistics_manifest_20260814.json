@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "purpose": "minimal core paired uncertainty only; no exhaustive flip expansion",
+  "models": [
+    {
+      "label": "L-r16-SFT3000-step80",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu_test999/step080/predictions.jsonl"
+    },
+    {
+      "label": "full-rule-RL-n8-step1000",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000_pathmmu_eval/test999/predictions.jsonl"
+    },
+    {
+      "label": "GPT4o-Stage3-step1500",
+      "predictions": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathmmu_test999/predictions.jsonl"
+    }
+  ]
+}
