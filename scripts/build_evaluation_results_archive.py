@@ -48,6 +48,16 @@ def main() -> None:
             candidate = metrics.parent / name
             if candidate.is_file():
                 selected.add(candidate)
+    # Some completed analyses (notably fixed-seed inference repeats) place their
+    # aggregate summary one directory above per-run metrics. Include these
+    # standalone summaries explicitly; unfinished prediction streams still have
+    # no summary and therefore remain excluded.
+    for name in ("summary.json", "complete_summary.json", "full_integrity_verified.json"):
+        for candidate in runs.rglob(name):
+            relative = candidate.relative_to(runs)
+            if any("smoke" in part.lower() for part in relative.parts):
+                continue
+            selected.add(candidate)
     for pattern in ("docs/2026081*.md", "protocol/*2026081*.json"):
         selected.update(path for path in repo.glob(pattern) if path.is_file())
 
