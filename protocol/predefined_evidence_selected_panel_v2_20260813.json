@@ -1,0 +1,2209 @@
+{
+  "annotation_boundary": "external VLM reference regions require blinded pathology-expert verification",
+  "annotations": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/predefined_evidence_annotation_aigcbest_v2_20260813/case_annotations.jsonl",
+  "annotations_sha256": "d8034b20574b759a9b451f1d664b1a31061934ce513ef7631dd04eac1bef43c9",
+  "candidate_count": 160,
+  "cases": [
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            460,
+            580,
+            520,
+            640
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Presence of cytoplasmic staining",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The presence of cytoplasmic staining is a focal feature that distinguishes the cell indicated by the arrow from others. This feature is concentrated and not redundant, making it a strong candidate for causal evidence. Blurring or replacing this area would likely reduce confidence in identifying the distinguishing feature.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Larger cellular size",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/663eaec43122d99be6d317e7ee41a0b9d347c851bc6d75ee80406ba10da35c31.png",
+      "image_sha256": "37daee9d916754b9f196912aef19f9846c4389136a1d4ff694cc2f0d0309bbc2",
+      "index": 3,
+      "panel_index": 0,
+      "problem": "What feature distinguishes the cells indicated by the arrow from the other cells in the image?\nOptions:\nA) Larger cellular size\nB) Lack of a visible nucleus\nC) Presence of multiple nuclei\nD) Presence of cytoplasmic staining",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "350cd05b699621161d33ac317e3b946a83fdcf3a65aeb86d53ab5a19628b3d5b",
+      "solution": "<think>The cell indicated by the arrow shows a faint staining within its cytoplasm, which is not as apparent in the surrounding cells. This staining can be indicative of specific stages of cell differentiation or presence of certain cellular components. The other options are not accurate as the cell does not have multiple nuclei, is not significantly larger than others, and possesses a visible nucleus.</think><answer>D) Presence of cytoplasmic staining</answer>",
+      "source_record_sha256": "21fda3a6570ccda9c3ddbcb75eb1dbe2c5c1f8dad03639f2140a125e06f7ea37",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            320,
+            450,
+            360,
+            490
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Bilobed nucleus and granular cytoplasm",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The cell indicated by the black arrow has distinct morphological features, specifically a bilobed nucleus and granular cytoplasm, which are key to identifying it as an eosinophil. This evidence is concentrated and localized, making it suitable for a causal evidence-deletion panel.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Cell with a small, round to slightly irregular nucleus and scant cytoplasm",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/8a704909eaf88fe3e98d0255dd192c978a9d42e87b957839ba8382bf01a5467b.png",
+      "image_sha256": "03f88338d0fd4ea2d8be308d6c0afb5e696b36a68cf14d3cf7e13ce26576bc28",
+      "index": 6,
+      "panel_index": 1,
+      "problem": "Identify the cell indicated by the black arrow based on its morphological features as seen in the image.\nOptions:\nA) Cell with a bilobed nucleus and granular cytoplasm\nB) Cell with a small, round to slightly irregular nucleus and scant cytoplasm\nC) Cell with a multilobed nucleus and non-granular cytoplasm\nD) Cell with a large, eccentric nucleus and abundant cytoplasm",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "83cbcc0def8337205651776128f01e709f382753f0435ac13088899c6d1a737a",
+      "solution": "<think>The cell marked by the black arrow in the image displays a bilobed nucleus and granular cytoplasm, which are typical features of an eosinophil. Eosinophils are part of the immune response and are often involved in allergic reactions and defense against parasites.</think><answer>A) Cell with a bilobed nucleus and granular cytoplasm</answer>",
+      "source_record_sha256": "bf5a41f299429925f5338f10fb826ef55d05dcc722e0dc9d7f03dd61398e3205",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            200,
+            400,
+            400
+          ],
+          [
+            450,
+            200,
+            650,
+            400
+          ],
+          [
+            700,
+            200,
+            900,
+            400
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Organized array of cells with irregular luminal spaces characteristic of breast ductal structures.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "multifocal",
+        "rationale": "The image shows distinct brown-stained structures with organized cells and irregular luminal spaces, which are characteristic of breast ductal structures. These features are concentrated in specific areas, making them suitable for a causal evidence-deletion panel.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Salivary gland ducts",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/5d734c2c575e4945e00b803c64109d3d38d3a43c900b765a9bc53fb939c13a36.png",
+      "image_sha256": "e5da548f8b01865b1957ad26a29a735c0f1fd54ca8b48c97cd1160662954002c",
+      "index": 12,
+      "panel_index": 4,
+      "problem": "Based on the histological features observed, which type of glandular structure does the staining pattern most closely resemble?\nOptions:\nA) Sebaceous gland ducts\nB) Salivary gland ducts\nC) Breast ductal structures\nD) Mucous gland acini",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "488952d22fddedfd51a04a0aa1fbfae6751c6c42d14a3d005546bbff1b520158",
+      "solution": "<think>The brown-stained structures in the histological section demonstrate an organized array of cells surrounding various-sized luminal spaces, which is characteristic of glandular or ductal tissue typically seen in the breast. The uniformity in cell size and the irregular shapes of the luminal spaces with some being slit-like and branching are consistent with breast ductal architecture.</think><answer>C) Breast ductal structures</answer>",
+      "source_record_sha256": "fa2aa10f0d11f54263b39b2cb57123a652a79e81b745194b1b11ec4ab005cab6",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            200,
+            600,
+            700
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Dense clusters of cells indicating a solid growth pattern.",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The dense clustering of cells in the specified region is indicative of a neoplastic solid growth pattern, which is distinct from the other growth patterns described in the options. This feature is concentrated and not redundant, making it crucial for distinguishing the correct answer.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "B) A papillary growth pattern with finger-like projections",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/cb013cf8c4da5479e88e0af14e95e74b89afc41e96cd4616ea1aebe849aacb64.png",
+      "image_sha256": "ae62782953c53d044659185587c8328a022624d97ec10465a448c611440b60ad",
+      "index": 19,
+      "panel_index": 8,
+      "problem": "Based on the histopathological features, what is the most likely pattern of growth observed in this ovarian tumor?\nOptions:\nA) A cystic growth pattern with fluid-filled spaces\nB) A papillary growth pattern with finger-like projections\nC) A diffuse infiltrative growth pattern with individual cells spread throughout the stroma\nD) A neoplastic solid growth pattern with dense cell clusters",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "1c6866917708c0eb32be27ab6bf09c2cde1dff7553c6d7405a7b273c698be05a",
+      "solution": "<think>The clustering of cells in this image suggests a neoplastic solid growth pattern, characterized by solid variants of adenocarcinomas, without the features of cystic, diffuse infiltrative, or papillary growth patterns that are defined in the other options.</think><answer>D) A neoplastic solid growth pattern with dense cell clusters</answer>",
+      "source_record_sha256": "7705ea6e58c7eac3223dd9a44db3ea9511ddb201d938e31290bb85f9281c4fdd",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            500,
+            500,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Intact cells within the cytoplasm of another cell",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The orange arrow points to a specific area where intact cells are visible within the cytoplasm of another cell, indicating emperipolesis. This feature is distinct and localized, making it strong evidence for the reference answer.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Phagocytosis",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/30fa8216e1e6a5030ee2f1b5e4541d84cb4462a10449f0e99b638a1db216899e.png",
+      "image_sha256": "0b8438b9f5f1d93bd122445c497968df764292ddd4d03f68b84b70645028abee",
+      "index": 23,
+      "panel_index": 9,
+      "problem": "What cellular phenomenon is notably marked by the orange arrow in this microscopic image?\nOptions:\nA) Apoptosis\nB) Emperipolesis\nC) Phagocytosis\nD) Karyorrhexis",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "1336a1a56c00502cfe344f3f32551f8f152b8ae98a35e86b79b8d00392f0b133",
+      "solution": "<think>Emperipolesis is the presence of intact cells within the cytoplasm of another cell, which is observable in this image as marked by the orange arrow. The cells within cells phenomenon does not depict the nuclear fragmentation associated with karyorrhexis, nor the cell death process of apoptosis, nor the digestive process of phagocytosis, where the engulfed cell would not remain intact.</think><answer>B) Emperipolesis</answer>",
+      "source_record_sha256": "e485c1934fd1a558b84cf862fc6cc834571adbea8fea91444f75b28420cbb1a2",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            650,
+            400,
+            750,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Larger luminal diameter indicating dilation",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The tubule adjacent to the right orange arrow shows a larger luminal diameter compared to nearby tubules, which is indicative of dilation. This feature is focal and concentrated, making it a strong candidate for causal evidence.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Tubule with normal luminal diameter",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/1e642aee1ee49864c59279db6ee3e36a29a4c6737236347819531c410894c0be.png",
+      "image_sha256": "b446f01990249a40f724e88f144230bfd42606ca1ce137074cb9273b650285fd",
+      "index": 27,
+      "panel_index": 10,
+      "problem": "Considering the renal tubule adjacent to the right orange arrow, how would you characterize it?\nOptions:\nA) Tubule with normal luminal diameter\nB) Tubule showing evidence of dilation\nC) Atrophic tubule with thickened basement membrane\nD) Tubule with significant cellular atypia",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "2cb5adaf722ffbc1a1665b1f74a8999cb7afd8a2b695d1511b0170ec8e551d6b",
+      "solution": "<think>The tubule adjacent to the right orange arrow is larger in diameter than the nearby tubules, indicative of dilation or tubular ectasia. There is no evidence of thickened basement membranes, and the resolution of the image does not allow for assessment of cellular atypia.</think><answer>B) Tubule showing evidence of dilation</answer>",
+      "source_record_sha256": "46b29448eb72948f82a3ea4004a1d34c5487ec24917edba5bb458a430dcb91bf",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            0,
+            0,
+            1000,
+            300
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Absence of brown staining in white matter",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The white matter area shows a clear lack of brown staining, which is distinct from other areas. This focal evidence is crucial for identifying the absence of mGluR1 protein expression.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Granule cell layer",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/d3a5d840f6c7e99bc7ee76fa80bb64a8f5e47f0dfdbfdfe122f8f21a56a2307d.png",
+      "image_sha256": "29a51fea123608abf0ef0c2a33a1e574c74715018b90f97f0c16b68db435a0c3",
+      "index": 30,
+      "panel_index": 11,
+      "problem": "Based on the absence of brown staining, which cerebellar structure appears to show a lack of expression for the mGluR1 protein?\nOptions:\nA) Dendritic trees of Purkinje cells\nB) Granule cell layer\nC) Cell bodies of Purkinje cells\nD) White matter",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "1f56b32f46541f3599320601d6037f84880337560ef6b6f824afae3b0374e4c2",
+      "solution": "<think>The white matter area in the cerebellar tissue displays virtually no brown staining, which indicates an absence or negligibly low expression of the mGluR1 protein. This contrasts sharply with the molecular layer, which shows extensive brown staining, and also differs from the granule layer where less brown staining can be observed.</think><answer>D) White matter</answer>",
+      "source_record_sha256": "394e9b9b63e76b6d3652732bc40d9ad92f4a4e98bcaa3ad380ae812df5d3116e",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            200,
+            300,
+            400
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Eosinophilic cytoplasm and multi-lobed nuclei",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The arrow points to a specific cluster of cells with distinct eosinophilic cytoplasm and multi-lobed nuclei, characteristic of heterophils. This localized evidence is crucial for distinguishing heterophils from other cell types.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Eosinophils",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/2649ec3104d6776b8c4ad9d9607e86b04afd5303ec8e57a18549af2c0360ae1e.png",
+      "image_sha256": "6b986fe82bee50fdc556b8ce201d663a5f34d1b9e994b595aacf434b13b90752",
+      "index": 32,
+      "panel_index": 13,
+      "problem": "Identify the clusters of cells indicated by the arrow in the ovarian cortex, which are consistent with a particular cell type?\nOptions:\nA) Heterophils\nB) Eosinophils\nC) Basophils\nD) Lymphocytes",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "00ecc4435cf9003ed3de909fe66ba7818b64e1cbc23b9677b2e979c87fef1055",
+      "solution": "<think>The clusters of cells indicated by the arrow in the ovarian cortex are consistent with heterophils. These cells exhibit more eosinophilic cytoplasm and multi-lobed nuclei, which distinguishes them from other leukocytes such as lymphocytes, basophils, or eosinophils.</think><answer>A) Heterophils</answer>",
+      "source_record_sha256": "f462517f416617a250b35aaf9f16328b4258564a06a144499a7d0af89b316fe0",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            650,
+            400,
+            750,
+            500
+          ],
+          [
+            750,
+            450,
+            850,
+            550
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Muscle fibers with tailed arrows indicating atrophy",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The tailed arrows specifically point to the atrophied muscle fibers, which are the key feature distinguishing the correct answer. Blurring or replacing these areas would likely lead to a loss of confidence or a change in the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "The fibers that exhibit a rounded morphology",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/5c4bb8ce76e2ef55f1214c096e60782f28c05d119f0b255c4501ac837b73a79f.png",
+      "image_sha256": "16017258ee34c9b21575b01dc9a53a9363b9d264d6beeb6c3ccb7afa2e276b58",
+      "index": 36,
+      "panel_index": 15,
+      "problem": "Which characteristic feature denotes the atrophy of muscle fibers in this image?\nOptions:\nA) The fibers that exhibit a rounded morphology\nB) The muscle fibers pointed out by tailed arrows\nC) The space between fibers marked with a star symbol\nD) The overall uniformity in the size and shape of the muscle fibers",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "175dc707229f8d8c911dd5e0c1b2b50fc5b53df3ab3ede8ed715392c3836a976",
+      "solution": "<think>The image highlights atrophied muscle fibers with tailed arrows, which indicate a decrease in the size of those muscle fibers. The other options either describe healthy muscle morphology or the connective tissue between fibers, not the atrophy of the muscle fibers themselves.</think><answer>B) The muscle fibers pointed out by tailed arrows</answer>",
+      "source_record_sha256": "1adf84c228c2fef8af7ae4bec7f4d808112762c0268ed74e4d4179032106df6c",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            500,
+            400,
+            600,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Clustered acini surrounded by connective tissue",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The yellow arrow points to glandular structures with clustered acini, which are characteristic of bronchial glands. This specific arrangement is distinct from the other options, making the evidence concentrated and suitable for causal panel construction.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "C) Acinar units of a salivary gland",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/44c41a3cb2cbd51e0f1603c4c9872c8f1fe779a33fccd3ba4207a5d9d7a20307.png",
+      "image_sha256": "889a5bdbca5726be005a402ff5601595459ad6aa1760dcd36ab4699c66d4afab",
+      "index": 40,
+      "panel_index": 17,
+      "problem": "What do the structures highlighted by the yellow arrow represent?\nOptions:\nA) Bronchial glands with clustered acini\nB) Cluster of hepatocytes forming a liver lobule\nC) Acinar units of a salivary gland\nD) Alveolar sacs in the lung",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "439b3b8c1996991e8b88db79b1bd1c32bc07277e91a7cf7bbfca8f5de951d8f4",
+      "solution": "<think>The yellow arrow points to glandular structures that show a group of cells arranged in clusters known as acini, indicative of bronchial glands. They are surrounded by connective tissue, and some of these cells appear to be engaged in secretory activity, which may not be as evident in the other structures listed.</think><answer>A) Bronchial glands with clustered acini</answer>",
+      "source_record_sha256": "69fcd5cbdb0c3afce0bd5dba7caf6e36aa7da2b5329d0c81d2ff5db89049a630",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            650,
+            600,
+            750,
+            700
+          ],
+          [
+            500,
+            700,
+            600,
+            800
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Vacuolated cytoplasm in cells indicated by arrowheads.",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The arrowheads point to cells with vacuolated cytoplasm, which is a distinct feature that differentiates option D from the others. Blurring or replacing these areas would likely reduce confidence in identifying the correct answer.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Hypercellular with crescent formation",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/58cd0071cef26fdb1f16ab1ef062735d6a58ac1e8b0bafe6d37f0a7e3798e4f3.png",
+      "image_sha256": "807990c1b601078e80d8d91935b4db348cccdcac33236f920bb114b54bf95c65",
+      "index": 55,
+      "panel_index": 23,
+      "problem": "What is the most likely appearance of the cells indicated by the arrowheads within the renal glomerulus?\nOptions:\nA) Necrotic cells with significant karyorrhexis\nB) Hypercellular with crescent formation\nC) Hypocellular with evidence of scar tissue\nD) Cells with vacuolated cytoplasm",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "0c0ff36acfb9f7ee66ccc0486096c91195b5698f81a40f3eb4443671623ab265",
+      "solution": "<think>The arrowheads indicate cells with clear, rounded spaces within them, which are characteristic of vacuolated cytoplasm. There is no evidence of hypercellularity or crescent formation (choice A), which typically denotes more severe glomerular injury. Also, the cells do not appear hypocellular or scarred (choice A) nor necrotic with karyorrhexis (choice A), which would show more dramatic changes in cellular morphology and nuclear disintegration.</think><answer>D) Cells with vacuolated cytoplasm</answer>",
+      "source_record_sha256": "af344cb35095343c51674d6b5a68619c6b179f868c11b2d78b3dfdd3522c8c9e",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            300,
+            200,
+            350,
+            250
+          ],
+          [
+            400,
+            200,
+            450,
+            250
+          ],
+          [
+            500,
+            200,
+            550,
+            250
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Dark brown staining at the foci indicated by red arrows",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The dark brown staining at the foci indicated by the red arrows is characteristic of immunohistochemical staining. This is distinct from other types of staining, such as Hematoxylin and eosin, which do not produce this specific color and pattern. The evidence is concentrated and localized, making it suitable for a causal evidence-deletion panel.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Hematoxylin and eosin",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/b9b96ae9b6da5e775e222d2cc667e300726546536e6a2c9222260ae8d61b3241.png",
+      "image_sha256": "00eb045f83b953b25af8cd79838c0cdee9c98ab232a5a85015e1c6144624bbff",
+      "index": 71,
+      "panel_index": 27,
+      "problem": "What type of staining can be observed at the foci indicated by the red arrows in the glandular structures?\nOptions:\nA) Alcian blue\nB) Hematoxylin and eosin\nC) Immunohistochemical\nD) Periodic acid-Schiff",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "0306d52d14c61e2a70d913c51b1b7c26713f3238028116d138e15a7e756825c1",
+      "solution": "<think>The dark brown staining at the foci indicated by red arrows is characteristic of an immunohistochemical stain, which is used to highlight the presence of specific antigens within the cells. This type of staining is different from routine stains like Hematoxylin and eosin (used for general tissue structure visualization), Periodic acid-Schiff (used to highlight polysaccharides such as glycogen), or Clcian blue (used for acidic mucopolysaccharides).</think><answer>C) Immunohistochemical</answer>",
+      "source_record_sha256": "a7bf8553a11699f41765f0091c40c26a2bc0359bbed542b38180efb3d9d8c14e",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            250,
+            250,
+            750,
+            750
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Crowded appearance and lack of visible capillary lumens indicating increased cellularity.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The crowded appearance and lack of visible capillary lumens within the glomerulus are key indicators of increased cellularity. This evidence is concentrated and specific to the reference answer, making it likely that local blurring or replacement would reduce confidence or flip the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Advanced glomerulosclerosis",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/e3fc1fb1adca90547e4751e4a41b48b31c0a154a3460807ef031cb8c675d303f.png",
+      "image_sha256": "7d6df7ab02fa2df3abb8b3acb5ba56624cd0821313577e5eff3d18c5841eced3",
+      "index": 74,
+      "panel_index": 29,
+      "problem": "Based on the image, what is the primary morphological abnormality observed within the glomerulus?\nOptions:\nA) Presence of numerous crescents\nB) Advanced glomerulosclerosis\nC) Significant increase in cellularity\nD) Extensive fibrosis and scarring",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "9033a3d79d53e69af6302eaa4fa2fc126fc2b8aac15b17f9743ad1755758dd5c",
+      "solution": "<think>The image shows a 'crowded' appearance within the glomerulus and lack of visible capillary lumens, indicative of increased cellularity. No crescents which would indicate cells outside the capillary lumen, significant fibrosis, scarring, or advanced glomerulosclerosis are evident.</think><answer>C) Significant increase in cellularity</answer>",
+      "source_record_sha256": "a8a836dfd268d254e40b43106b6870bc7a8f96559b56f65433d5c173cea2d273",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            400,
+            600,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Clusters of cells with darker staining nuclei within the lumen",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The central tubular structure contains clusters of cells with darker staining nuclei, indicative of inflammatory infiltrate. This feature is distinct and concentrated, making it a strong candidate for causal evidence. Blurring or replacing this area would likely reduce confidence in identifying the inflammatory infiltrate.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Ciliated epithelial cells",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/b3f93eeb55837123773cc34bb00dbb2f4ce626cc8787ffc42051967068f59631.png",
+      "image_sha256": "01371bd3110e5a2c0cbef94860e9cdae8f5d9f567e33fd7c54f6afa4abd47ff9",
+      "index": 78,
+      "panel_index": 30,
+      "problem": "What feature can be observed within the central tubular structure?\nOptions:\nA) Keratin debris\nB) Mucous secretion\nC) Ciliated epithelial cells\nD) Inflammatory infiltrate",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "52e6d84dae915de7f5653b34525ecc2c60c93fc5eaf5cd0fc521282e49bacdac",
+      "solution": "<think>The central structure, likely a bronchiole, contains clusters of cells with darker staining nuclei within its lumen, indicative of an inflammatory infiltrate. Ciliated epithelial cells would be visible as a regular, intact layer lining the bronchiole; mucous secretion would appear as a homogeneous substance within the lumen; and keratin debris is not typically found in bronchioles.</think><answer>D) Inflammatory infiltrate</answer>",
+      "source_record_sha256": "4fdff69f3f2e7936683655f69b0255e162b64a93499468f1dfe3404a17c9be22",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            200,
+            400,
+            600
+          ],
+          [
+            500,
+            300,
+            800,
+            700
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Presence of adipocytes and variation in muscle fiber size",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows clear evidence of muscle atrophy with fatty infiltration, indicated by the presence of adipocytes and variation in muscle fiber size. These features are concentrated and distinct, making them strong evidence for the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Inflammation-induced muscle damage",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/6ef1d6bc4120ae2399abfe2429caa8fe77cbdca20ea00fa3cc37a2a5ce338bf5.png",
+      "image_sha256": "7426eb53b2d1a0dff20debd48bf0f22edff7a3603024566283c5d977d201180c",
+      "index": 81,
+      "panel_index": 31,
+      "problem": "Based on the tissue architecture in this image, what is the predominant pathological process occurring?\nOptions:\nA) Muscle atrophy with fatty infiltration\nB) Inflammation-induced muscle damage\nC) Normal muscle regeneration\nD) Hypertrophic muscle disorder",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "6c488795990d47e9db0e7e5598621582e101fbf773bee9d27bb4246d3fd79c5c",
+      "solution": "<think>In the image, we see a combination of atrophied muscle fibers, indicated by the variation in muscle fiber size, and a significant presence of adipocytes within the field, which suggests displacement of normal muscle structure. This is consistent with a pathological process of muscle atrophy combined with fatty infiltration rather than normal regeneration, an inflammation-induced muscle injury, or a hypertrophic muscle disorder.</think><answer>A) Muscle atrophy with fatty infiltration</answer>",
+      "source_record_sha256": "edfa3a2913e25eb300d180f41589a3a745c8d4fa475a2dccbbc79baf2b1ea423",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            470,
+            470,
+            530,
+            530
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Pink-stained endothelial cells lining the structure",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The pink-stained endothelial cells lining the structure are characteristic of a blood vessel, distinguishing it from other options. This feature is concentrated and its removal would likely flip the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Thymic corpuscle",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/1bb4956a0014787e87189fe66c08decf36f530b6ffaa0a73efdaefe36379c312.png",
+      "image_sha256": "d3137027be779cce3798b92080660878e24418ca1d1e49bf6c88082ef2f80aef",
+      "index": 95,
+      "panel_index": 33,
+      "problem": "Identify the structure at the center of the image outlined by a layer of pink endothelial cells.\nOptions:\nA) Blood vessel\nB) Lymphoid nodule\nC) Hassall's corpuscle\nD) Thymic corpuscle",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "43d290cbc8186d352bd14fb579f68f5afe0895b882529407ecc0ec12a1361814",
+      "solution": "<think>The structure at the center of the image, which is outlined by a layer of pink-stained endothelial cells, is a blood vessel. Endothelial cells line the inner surface of blood vessels and are stained slightly pink with hematoxylin and eosin staining. Thymic corpuscles and Hassall's corpuscles are characteristic features of the thymic medulla and appear as concentrically arranged epithelial cells, which are not observed in this image. Lymphoid nodules are also not characterized by a surrounding single layer of cells but rather are dense accumulations of lymphocytes, usually found in lymph nodes or other lymphoid tissues.</think><answer>A) Blood vessel</answer>",
+      "source_record_sha256": "39ff7ec9ae44fe7880f95466d0c29ce27891d80f445a60c867cc27991bb834ea",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            200,
+            400,
+            400
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Regions more densely populated by cells indicating vascular congestion.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows areas densely populated by cells, which is consistent with vascular congestion. This feature is distinct and localized, making it a strong candidate for causal evidence.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Regions with homogeneously distributed eosinophilic cytoplasm",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/77cdbdd23f8fedca3ee9f756c5a03e57c3f85ef02919627b6056556ad8e34df1.png",
+      "image_sha256": "adf1035ec2ca2e49e7184eae6d33efc600f26d13245f27c27fda41d3f631948c",
+      "index": 98,
+      "panel_index": 35,
+      "problem": "Which observation would be consistent with a pattern suggestive of vascular congestion within this tissue sample?\nOptions:\nA) Regions with homogeneously distributed eosinophilic cytoplasm\nB) Regions showing multinucleated giant cells\nC) Regions more densely populated by cells\nD) Regions that have fewer cells and more abundant extracellular matrix",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "9c8b787c275ea379d917f873046320c1ceb31827c93bc97783acf65d759aabfa",
+      "solution": "<think>Vascular congestion refers to an excess of blood in the vessels of a tissue, which can manifest as areas more densely populated by cells due to the presence of engorged blood vessels and associated cellular components. In contrast, homogeneously distributed eosinophilic cytoplasm (A) could indicate the presence of muscle or epithelial tissue. Areas with fewer cells (B) could suggest atrophy or fibrosis, while multinucleated giant cells (B) are indicative of specific inflammatory or neoplastic processes and would not typically denote vascular congestion.</think><answer>C) Regions more densely populated by cells</answer>",
+      "source_record_sha256": "343308bddfa90be39f619c3228498e942a432883bf837834804a3957ddcc4344",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            200,
+            300,
+            300
+          ],
+          [
+            400,
+            300,
+            500,
+            400
+          ],
+          [
+            600,
+            200,
+            700,
+            300
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Brown chromogen localized to cytoplasm and membrane",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The arrows point to cells with brown chromogen staining localized to the cytoplasm and membrane, distinguishing option B from others. Local blur/replacement of these areas would likely flip the answer.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Nuclear staining",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/048ba985b69c7fe774466e7c1339422aa0307e1716185879de8fda3072bc106d.png",
+      "image_sha256": "ebb9e7d24929367285ace8a9e7bc878b40d4b59f412efde0d6f98c225276a28e",
+      "index": 117,
+      "panel_index": 44,
+      "problem": "What is the predominant staining pattern observed in the cells indicated by the arrows?\nOptions:\nA) Nuclear staining\nB) Cytoplasmic and membrane staining\nC) Extracellular matrix staining\nD) Staining absent",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "8f5f35f4361d6288a576708d0e6afec240d384b710dbb14ecb604d0f75582675",
+      "solution": "<think>The cells indicated by the arrows show a brown chromogen staining pattern that is predominantly localized to the cytoplasm and cell membrane, not the nuclei or extracellular matrix.</think><answer>B) Cytoplasmic and membrane staining</answer>",
+      "source_record_sha256": "0c99575f7f9ecfb0ccc25235f63dccfde2ac45dc1dff81ef4e6f2705577142c2",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            500,
+            0,
+            1000,
+            1000
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Spindle-shaped cells with densely eosinophilic cytoplasm arranged in fascicles",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The right side of the image shows spindle-shaped cells with eosinophilic cytoplasm arranged in fascicles, which is indicative of rhabdomyosarcoma. This feature is distinct and concentrated, making it a strong candidate for causal evidence.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Large, round nuclei within a clear extracellular matrix",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/7e6ce71575ac35341dce160f389b2334aefee9b91ea15f03b7128ef6d215562e.png",
+      "image_sha256": "edfa23b7353738bb739b5776df4b15699258d0107a6d1d89dfea8bfa3fe61ca2",
+      "index": 123,
+      "panel_index": 47,
+      "problem": "What feature of cells on the right side of the image is indicative of rhabdomyosarcoma?\nOptions:\nA) Large, round nuclei within a clear extracellular matrix\nB) Spindle-shaped cells with densely eosinophilic cytoplasm arranged in fascicles\nC) Abundant cytoplasm with small, indistinct nuclei\nD) Cells with a high nucleus-to-cytoplasm ratio",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "5f9ab1ced65b5ab84669bdb2dd0efb8d8202c929f756ac8d7cfa988d5aa0e462",
+      "solution": "<think>Rhabdomyosarcoma is typically composed of elongated, spindle-shaped cells with eosinophilic cytoplasm arranged in a sarcomatous pattern, which includes fascicles or interwoven bundles. This description matches the cells on the right side of the image. Option A is not indicative as rhabdomyosarcoma cells are typically spindle-shaped, not round. Option C can be associated with many types of malignancy but is not specific to rhabdomyosarcoma. Option C describes cells with abundant cytoplasm and small, indistinct nuclei, which does not align with the morphology of rhabdomyosarcoma.</think><answer>B) Spindle-shaped cells with densely eosinophilic cytoplasm arranged in fascicles</answer>",
+      "source_record_sha256": "b4cdc71ff90e15ae17198fc0d7aa82009d7906fedd3b1094b96f30d73100ca3f",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            50,
+            50,
+            150,
+            150
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Black arrow indicating hyperplasia in the uroepithelium.",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The black arrow in Panel B clearly points to the uroepithelium, which is distinct from other structures. Its removal would likely flip the answer as it directly indicates the location of hyperplasia.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "A) In the renal tubular epithelium",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/2c60cd9e57f7d9fe6f428ee089690a308e210482e37449896c2db8340ec60ad3.png",
+      "image_sha256": "80a0ddc9e926c82a49b848a79db945c3364fc3288eb5d6d4343ea03b3132370d",
+      "index": 128,
+      "panel_index": 49,
+      "problem": "In Panel B, where is the black arrow indicating the presence of hyperplasia?\nOptions:\nA) In the renal tubular epithelium\nB) In the uroepithelium\nC) Within the glomerular capillary tuft\nD) In the renal corpuscle",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "23e8ad7dd472cdd6b69d03af17b0f3a58cfe0751687ae5ab5e858b7581fd5f74",
+      "solution": "<think>The black arrow in Panel B points to an area in the uroepithelium, which is adjacent to the space presumed to be the renal pelvis. The area demonstrates hyperplasia that is characterized by an increased number of cells, which contributes to the thickened appearance of this epithelial layer.</think><answer>B) In the uroepithelium</answer>",
+      "source_record_sha256": "816e72d05de95845747ed7bd924d36579fe776dce117dbdca5cab9d0683cc618",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            200,
+            300,
+            300
+          ],
+          [
+            500,
+            200,
+            600,
+            300
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Lighter staining of tubules compared to surrounding spindle cells.",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The lighter staining of the tubules compared to the surrounding spindle cells is clearly visible and concentrated in specific areas. Blurring or replacing these areas would likely flip the answer from B to another option, as the staining pattern is the key evidence for the reference answer.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "C) Tubules show higher density of the targeted marker",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/40198a0ddcaad5cd74d0a3372e501d5824a9b97c76737156501f7337763f4571.png",
+      "image_sha256": "5f426f62fd9b1ee5e44e333ffb8cda5a62092d78ecefcae6789737552b38129d",
+      "index": 143,
+      "panel_index": 54,
+      "problem": "Analyzing the staining patterns, what can be inferred about the tubules compared to the surrounding spindle cells?\nOptions:\nA) Tubules contain anaplastic cells\nB) Tubules contain cells that are more lightly stained\nC) Tubules show higher density of the targeted marker\nD) Tubules exhibit more cellular pleomorphism",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "51c027df8736b9b93a495b4c2dbe75abca5f453bf6c91a2d955e13eaba780e39",
+      "solution": "<think>The tubules in the image display a lighter staining compared to the surrounding whorled-pattern cells, indicating a different cellular composition or a lower density of the targeted marker within these structures. This is seen in contrast to the surrounding tissue, where there is a dense and consistent pattern of staining. Tubules do not show evidence of cellular pleomorphism or anaplasia, and there is no indication they have a higher marker density.</think><answer>B) Tubules contain cells that are more lightly stained</answer>",
+      "source_record_sha256": "e451e670145733479f59f66afc2dec649342725727fef6ede623e47a2738cec1",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            700,
+            100,
+            900,
+            300
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Dark brown staining indicating chromogranin reactivity",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The dark brown staining in area B is indicative of chromogranin reactivity, which is specific for neuroendocrine cells. This staining pattern is distinct and concentrated, making it a strong indicator for the reference answer. Deleting this area would likely flip the answer as it is the key evidence for identifying neuroendocrine cells.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "S100 protein, indicating nerve sheath origin",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/59d78d4352151832899b8059d461962dde309023bdf3baf28c76ab7786634ae8.png",
+      "image_sha256": "1db40139df1fc983c97842bcf6307661b1a29c5304a29a969cb30f6364348b6e",
+      "index": 145,
+      "panel_index": 56,
+      "problem": "Considering the staining characteristics seen in area B, which immunohistochemical marker would likely confirm the suspected cell type?\nOptions:\nA) S100 protein, indicating nerve sheath origin\nB) CD34, suggestive of vascular endothelial lineage\nC) Chromogranin, consistent with neuroendocrine cells\nD) Desmin, indicative of muscle cell differentiation",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "64e31a74f26427ee64e7f254e2d744dff2f7484840787f4951be0c74c831ad03",
+      "solution": "<think>The dark brown staining in area B is indicative of strong reactivity with a chromogranin immunohistochemical stain, which identifies neuroendocrine cells. Chromogranin is a protein commonly found in the secretory vesicles of neuroendocrine cells, which fits the morphology seen in carcinoid tumors. In contrast, S100 is associated with nerve sheath cells, CD34 marks endothelial cells, and Desmin is characteristic of muscular differentiation, none of which are represented by the staining and cell morphology in area B.</think><answer>C) Chromogranin, consistent with neuroendocrine cells</answer>",
+      "source_record_sha256": "851299f40dd8124bbe27dc5f98f8168bfb2dfe2bb03471420ae75c05ce80afd3",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            20,
+            20,
+            80,
+            80
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Denser arrangement of cells and fibers at the periphery of the glandular tissue.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The star marks a specific area with a denser arrangement of cells and fibers, characteristic of the muscularis mucosae. This feature is distinct and localized, making it strong evidence for the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Fibrovascular stroma",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/d3a4a827b94cc401ee1215e6a197a81f68105590c80bbb66bdcbfa210e3c21c7.png",
+      "image_sha256": "daba5b1d0a05833ea5ed5b570f0ce966c4e9daf537d629b8af0b050c1a1142c8",
+      "index": 152,
+      "panel_index": 61,
+      "problem": "What feature marked by the star indicates the peripheral boundary of the glandular structure?\nOptions:\nA) Fibrovascular stroma\nB) Muscularis mucosae\nC) Glandular lumina\nD) Gastric pits",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "3b2e58fd8d4bfee142793d8c02d95c070c69a4097ef4c7cf47937a04810e7e7d",
+      "solution": "<think>The star in the image marks the denser arrangement of cells and fibers at the periphery of the glandular tissue, which is characteristic of the muscularis mucosae. This is distinguishable from the glandular pits, lumina, and fibrovascular stroma by its denser, more fibrous appearance and its location at the boundary of the structure.</think><answer>B) Muscularis mucosae</answer>",
+      "source_record_sha256": "0056395399fbbd93fbb8a44e01a1b73c6b84891b3ec341daaaa07794e77fbe98",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            100,
+            200,
+            200
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Lighter, less cellular area",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The arrow points to a lighter, less cellular area, which is distinct from the surrounding tissue and indicative of focal necrosis. This feature is concentrated and localized, making it a strong candidate for causal evidence.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Region with monomorphic cell population",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/3a1742f85e9328e80d0169c2d3df7dbfdc2848a28e6bc230890ff1138bb99a1f.png",
+      "image_sha256": "ef7687fb73dc8c900551a9cd5a9aaf848c0668131cf55df3d6760311041dbc03",
+      "index": 155,
+      "panel_index": 63,
+      "problem": "What feature indicates the presence of a possible focal lesion within the tissue?\nOptions:\nA) Lighter, less cellular area as indicated by the arrow\nB) Region with monomorphic cell population\nC) Homogeneous pink staining without structural details\nD) Area with high cellularity and mitotic figures",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "1763398430dd554f57f4741f56070d02b3072cd35a144994293b9a5509647b35",
+      "solution": "<think>The area indicated by the arrow appears lighter and less cellular, which is indicative of focal necrosis within the tumor mass. The other options describe either normal features of cellular proliferation or do not fit the characteristics of a focal lesion within the context of this image.</think><answer>A) Lighter, less cellular area as indicated by the arrow</answer>",
+      "source_record_sha256": "3c3d639f612044b7b3bb848f50469ccdc54859d1b33ea596324869644c94e518",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            750,
+            650,
+            850,
+            750
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Clear, vacuolated cytoplasm and centralized nuclei typical of sebaceous glands.",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The arrow points to a structure with clear, vacuolated cytoplasm and centralized nuclei, characteristic of a sebaceous gland. This is distinct from the surrounding neoplastic cells, making it a strong discriminating feature.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "A region of necrosis",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/1a2b0e99eddff3f6793cf459e1034d383c346999c6c0eab8693f1564cd856c63.png",
+      "image_sha256": "ecb5179d84f53ef10844179191a3a6ecb3f4bba4f639d8a25d5c39123b2790eb",
+      "index": 158,
+      "panel_index": 64,
+      "problem": "What feature is indicated by the arrow in the image?\nOptions:\nA) A region of necrosis\nB) A sebaceous gland entrapped by neoplastic cells\nC) A collection of adipocytes\nD) A normal lymph node follicle",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "7ddb260817d1b3ce639c35c04008c19531230eaecdaadf10b15ac21c9dbcf495",
+      "solution": "<think>The arrow points to a structure with a characteristic clear, vacuolated cytoplasm and centralized nuclei, which are typical features of a sebaceous gland. This structure contrasts with the densely cellular background, which has a pleomorphic appearance and is indicative of a neoplastic process, suggesting that this gland is entrapped by neoplastic cells.</think><answer>B) A sebaceous gland entrapped by neoplastic cells</answer>",
+      "source_record_sha256": "f95e135730f662e2301539cca994f365beb995e1bc057a278d1df25fa9a09252",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            250,
+            150,
+            400,
+            300
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Whorled clusters of eosinophilic keratin material",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The star symbol is directly highlighting the keratin pearls, which are distinct and localized. Blurring or replacing this area would likely lead to a loss of confidence in identifying the feature as keratin pearls.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Inflammatory infiltrate",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/0adfe571f0cf6499de8b8579b2f379a6839c543411cff13bbd6064885f0685f2.png",
+      "image_sha256": "561c6d575b1a32acdc1ba9e16d9a875722d927d781fb2d7c74b34f57c83fcf27",
+      "index": 159,
+      "panel_index": 65,
+      "problem": "What feature is highlighted by the star symbol in the image?\nOptions:\nA) Inflammatory infiltrate\nB) Keratin pearls\nC) Dermal papillae\nD) Nevus cell aggregates",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "08cfac0d163880ad7ae33a91329766c7aaf9b084e18998da7d81ccef2ee1718a",
+      "solution": "<think>The star symbol is highlighting whorled clusters of eosinophilic keratin material consistent with keratin pearls, a characteristic feature of squamous cell carcinoma.</think><answer>B) Keratin pearls</answer>",
+      "source_record_sha256": "a83b599bf2f097168cfc8e1c4ddc756a7069a07ba0c81b6926360ee4ccbf441f",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            200,
+            300,
+            400
+          ],
+          [
+            400,
+            500,
+            600,
+            700
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Striations and peripheral nuclei",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The image shows muscle fibers with striations and peripheral nuclei, which are characteristic of skeletal muscle tissue. These features are concentrated in specific areas, making them suitable for causal evidence deletion.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "D) Smooth muscle tissue",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/7f9e46125b74b90f49bd24320e7d3538092aed3b86bffd7f3a3ed65e647c5d2e.png",
+      "image_sha256": "b6e99cc200ad66ac66c43cdc6caf0f9fa2e97fa82890916d2c171e3b3bf17997",
+      "index": 164,
+      "panel_index": 67,
+      "problem": "What type of muscle tissue is predominantly featured in this histological section based on the visible histological characteristics?\nOptions:\nA) Skeletal muscle tissue\nB) Myoepithelial tissue\nC) Cardiac muscle tissue\nD) Smooth muscle tissue",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "6087b2fa631f4f64347fcbdd49cdb3c6d3b5102b48bebfa6ed3004b27ca219f1",
+      "solution": "<think>The tissue section shows muscle fibers with characteristic striations and the nuclei are peripherally located, which is consistent with skeletal muscle tissue. Smooth muscle does not show striations and the nuclei are centrally located. Cardiac muscle displays intercalated disks, which are not visible here. Myoepithelial tissue is typically associated with glandular tissue and does not have striations.</think><answer>A) Skeletal muscle tissue</answer>",
+      "source_record_sha256": "b18673dc899180bc0389d81e9af16590cec469ff40bf73a03975f5945e61415a",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            300,
+            600,
+            700
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Linear, darkly stained features indicating a cutaneous parasite",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The linear, darkly stained features in the center of the pilosebaceous unit are distinct and indicative of the reference answer. Blurring or replacing this area would likely lead to a loss of confidence or a change in the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Well-formed granuloma with multinucleated giant cells",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/4b9e94dd7119db5b7990a4cae0969a4f831c2c7c098688c5c2b6fe0e47c7c4fd.png",
+      "image_sha256": "f6646a1f159b56bde6c12a4e987fde598e63c0a449bbfbec392d80ac9dbc95c4",
+      "index": 165,
+      "panel_index": 68,
+      "problem": "What is the predominant histological feature observed in the center of the pilosebaceous unit?\nOptions:\nA) Well-formed granuloma with multinucleated giant cells\nB) Calcification with basophilic stippling\nC) Necrotic debris with associated neutrophil infiltration\nD) Cross-sectional view of a structure with linear, darkly stained features",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "0b5503d62a9e3c4d772b3cc0989426ce838584b0f72e33f368c34050010f67f7",
+      "solution": "<think>The image shows a structure with linear, darkly stained features, indicative of the integument of a cutaneous parasite, likely a mite, within the pilosebaceous unit. This histological feature is not consistent with granuloma formation or necrotic debris, as there is no evidence of multinucleated giant cells or a prominent infiltration of neutrophils which are typically seen in such conditions. Furthermore, the presentation does not show the blue-purple color typical of calcification with basophilic stippling.</think><answer>D) Cross-sectional view of a structure with linear, darkly stained features</answer>",
+      "source_record_sha256": "a1e13de806f8f9771bb66c9dd286fa689d680b4638a9488b1e0d55664eb11643",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            300,
+            250,
+            350
+          ],
+          [
+            400,
+            450,
+            450,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "High nucleus to cytoplasm ratio and densely stained chromatin",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image contains cells with a high nucleus to cytoplasm ratio and densely stained chromatin, which are indicative of early erythroid progenitors. These features are distinct and localized, making them strong evidence for the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Cells with pinkish cytoplasm and no apparent nucleus",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/fc0381fa8ace4295d11c6b98f48c399990b8849e077e973567e6d83fa7ced4f7.png",
+      "image_sha256": "eccf7702822646ff23f8da68fc02124d4819eef482e0f2c8ca36cff47acbb150",
+      "index": 171,
+      "panel_index": 71,
+      "problem": "In this bone marrow aspirate smear, which feature best identifies the early erythroid progenitors?\nOptions:\nA) Cells with pinkish cytoplasm and no apparent nucleus\nB) Pale pink discs with a lighter center\nC) Cells with high nucleus to cytoplasm ratio and densely stained chromatin\nD) Cells with multilobed nuclei and granular cytoplasm",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "567961651ef4f7c51cdcaee6ae6948004ea268bfe9a3eda6439b09d9854a9b3b",
+      "solution": "<think>Early erythroid progenitors, such as pronormoblasts or basophilic normoblasts, are characterized by a high nucleus to cytoplasm ratio and densely stained chromatin, which are seen as larger cells with dark blue or purple nuclei in the image.</think><answer>C) Cells with high nucleus to cytoplasm ratio and densely stained chromatin</answer>",
+      "source_record_sha256": "cb67e4d3c3cd4c7b9dc26f5e8f2ea2c5a4b7939ffda7e81e00b1f4aeb1516736",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            400,
+            600,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Basally oriented, darker nuclei in epithelial cells lining glandular structures.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows glandular structures with epithelial cells having basally oriented, darker nuclei. This feature is concentrated and distinct, making it a strong indicator for the reference answer. Blurring this area would likely reduce confidence in identifying the correct orientation of the nuclei.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) The nuclei are located apically and exhibit polymorphism",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/f683e0dbbce6625b1be0a9c64be71e1a330c6b2ad3bbebc2896255e3f9442cfa.png",
+      "image_sha256": "3da576be79239c5c5c62e7bc8db241528863196f20891c69b0480923966e7697",
+      "index": 178,
+      "panel_index": 74,
+      "problem": "Upon examination of the glandular structures' epithelial cells, what feature can be observed regarding the orientation of the nuclei?\nOptions:\nA) The nuclei are basally oriented and appear darker\nB) The nuclei are located apically and exhibit polymorphism\nC) The nuclei are randomly distributed and hyperchromatic\nD) The nuclei are mostly peripheral and flattened",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "0c01dcc149933c6eb6f14e31cab36e8fc11bd905f5a3de725e1d600791459874",
+      "solution": "<think>The epithelial cells lining the glandular structures have basally oriented nuclei that appear darker, which is suggestive of basophilic staining with the hematoxylin component of the HE stain. The basal position of the nuclei indicates a polarity to the cells, common in columnar or cuboidal epithelia.</think><answer>A) The nuclei are basally oriented and appear darker</answer>",
+      "source_record_sha256": "2b1f679b4db25afb59972f4c1ebb1c9c025987d526b301a29b913aca62be0746",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            0,
+            0,
+            1000,
+            200
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Multiple layers of flat cells at the surface indicating stratified squamous epithelium.",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The surface epithelium shows multiple layers of flat cells, characteristic of stratified squamous epithelium. This is distinct from the single-layered appearance of simple epithelia and the ciliated columnar arrangement of pseudostratified epithelium.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Pseudostratified ciliated columnar epithelium",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/dabc2791c36919b0e4df2a01e3febeab63e0eca9121c4fe63da66d71ba84fde1.png",
+      "image_sha256": "be40477a65130d45b94ceeab59e8c36b6277bca426ab118fd64ce4447ad04b0d",
+      "index": 193,
+      "panel_index": 80,
+      "problem": "Based on the observation of the surface epithelium in the image, which type of epithelium is present?\nOptions:\nA) Pseudostratified ciliated columnar epithelium\nB) Simple columnar epithelium\nC) Simple squamous epithelium\nD) Stratified squamous epithelium",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "2d3da1a583c60b681fc791469c9cf4ae1cf3b02581493402427b9d89dadfa8e9",
+      "solution": "<think>The surface epithelium in the image shows multiple layers of cells where the surface cells are flat, as would be expected in areas subject to abrasion – consistent with stratified squamous epithelium. Simple epithelia like options A and B consist of a single cell layer and would not have the multi-layered appearance shown in the image. Option A is characterized by irregularly arranged columnar cells with cilia, which is not evident in the image.</think><answer>D) Stratified squamous epithelium</answer>",
+      "source_record_sha256": "7e28d30a5f338f442e904c190a81eff061ac4b2b3a589d22760818c7f2f950a6",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            750,
+            500,
+            800,
+            550
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Needle-shaped, eosinophilic structure pointed at both ends",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The arrow points to a specific structure that is needle-shaped and eosinophilic, which are key features of Charcot–Leyden crystals. This is distinct from the other options, which have different shapes and staining characteristics.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "D) Russell body",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/88b910f9c3e02793b90040be471c7bd5a717e985b0a0c7a0c8de8d9ed2bf031f.png",
+      "image_sha256": "4d5ddd778b48b5f805daac17efb96cdb0b35dcaf69e530bdbaeb327db964bd51",
+      "index": 201,
+      "panel_index": 84,
+      "problem": "What cellular structure is indicated by the arrow in the microscopic image?\nOptions:\nA) Charcot–Leyden crystal\nB) Neutrophil granule\nC) Lymphocyte nuclei\nD) Russell body",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "2731f719e30da0157fe89ad80c454946a5c0351813b38d7d436f44533100d848",
+      "solution": "<think>The structure indicated by the arrow in the image is needle-shaped, eosinophilic (pink-staining), and pointed at both ends, which are defining characteristics of Bharcot–Leyden crystals. These crystals are not similar to the small and round lymphocyte nuclei, the multi-lobed structure of neutrophil granules, or the more rounded, eosinophilic intracytoplasmic inclusions known as Russell bodies.</think><answer>A) Charcot–Leyden crystal</answer>",
+      "source_record_sha256": "f56e668d1c454a14c60f34ecda9b20ae5daf107956a77bde9695b357b722bc3c",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            200,
+            400,
+            400
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Increased cellularity indicating inflammation",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows areas with increased cellularity, which is indicative of inflammation. This is a strong discriminating feature against options like clear spaces or absence of cells.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Clear spaces consistent with edema",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/5ce632853a9f0d8392a5078ddfcbe488636a37155736b3b275635ebdd99bae17.png",
+      "image_sha256": "127a82a3539a2cb3f0138265d463852d60d21da51877d09aab2049ac8f2547f0",
+      "index": 207,
+      "panel_index": 86,
+      "problem": "What is the likely appearance of the interstitium among the tubules in this H&E stained section of kidney tissue?\nOptions:\nA) Increased cellularity with possible inflammatory infiltrate\nB) Clear spaces consistent with edema\nC) Absence of cells, displaying large open spaces\nD) Sparse cellularity with mainly fibrous tissue",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "54bfa3c73b51a87fa6e272243ee888049f40b1f83a664119da0c1e7198ec3103",
+      "solution": "<think>The interstitium in this image shows increased cellularity, suggesting inflammation. Options C and C would show much less cellularity and are not observed in this image. Option B, clear spaces, would indicate edema, which is not reflected by the cell types and densities observed here.</think><answer>A) Increased cellularity with possible inflammatory infiltrate</answer>",
+      "source_record_sha256": "1371a1315bc2548a082a3d4ccd41391101d92ad33f57cbbcac87fd10972589dd",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            600,
+            300,
+            700,
+            400
+          ],
+          [
+            200,
+            400,
+            300,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Presence of red blood cells within lumens indicating blood vessels.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The red-stained areas with clear luminal structures and red blood cells are indicative of blood vessels. These features are distinct and concentrated, making them strong evidence for the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Areas of necrosis within the tumor",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/f93888297b69541d7872193bd5084035ec74b113a29f969d2d1475e9b8fc9cc2.png",
+      "image_sha256": "38104baa5247b3d0fd7d99b1943e9b6f963a40af9a0398b404c50de94e1c5673",
+      "index": 212,
+      "panel_index": 87,
+      "problem": "In the provided tissue section stained with hematoxylin and eosin (H&E), what characteristic do the observed red-stained areas most likely represent?\nOptions:\nA) Areas of necrosis within the tumor\nB) Blood vessels characterized by red blood cells\nC) Eosinophilic cytoplasmic staining\nD) Concentrations of inflammatory cells",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "28471e4b5c1da264dc9ffe2cf752c2de0d543d49e4eb6ca523335c4aeaadb863",
+      "solution": "<think>The red-stained areas within the tissue section most likely represent blood vessels, as suggested by the presence of red blood cells within a lumen. Necrosis, eosinophilic cytoplasmic staining, and concentrations of inflammatory cells would have different morphological characteristics not consistent with the observed red-stained areas.</think><answer>B) Blood vessels characterized by red blood cells</answer>",
+      "source_record_sha256": "e009c2658e48f18cc98f0048b87ec862394f69962beb7d8dd7f21446351cb8d2",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            300,
+            400,
+            600,
+            700
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Presence of proteinaceous casts in tubules",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows proteinaceous casts within the lumens of dilated tubules, which is a specific finding that supports the reference answer. This evidence is concentrated and localized, making it likely that its removal would reduce confidence in the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Hyperplasia of tubular epithelial cells",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/000734274a955227ff47638d4e129525a40cffdb04eb84bdc299635339026316.png",
+      "image_sha256": "b9383e4e2d74475db7213e73f7acbb603a4421d97238e6b032bb124b6ee25a08",
+      "index": 230,
+      "panel_index": 94,
+      "problem": "What additional finding can be observed in the renal tissue surrounding the glomerulus?\nOptions:\nA) Hyperplasia of tubular epithelial cells\nB) Formation of granulomas\nC) Presence of proteinaceous casts\nD) Accumulation of neutrophils",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "57b5668a876f0c56a5f4c9e764d4c2c4e718a02963544e5c0b0138320adc7d76",
+      "solution": "<think>The image shows dilation of tubules with proteinaceous casts within their lumens, indicative of chronic kidney damage. The presence of neutrophils, hyperplasia of tubular epithelial cells, or the formation of granulomas are not clear or specific findings in this image.</think><answer>C) Presence of proteinaceous casts</answer>",
+      "source_record_sha256": "908e11ab8b29e2ee51c3bb6989f10779e8ccf4f179aee3524fe6d5d4b923c3c9",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            400,
+            600,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Condensed chromatin and blue to purple cytoplasm",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows cells with condensed chromatin and blue to purple cytoplasm, which are key features of orthochromatic normoblasts. This evidence is concentrated in specific cells, and altering these features would likely change the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Polychromatophilic normoblast",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/784039c6278ddc81ad1b14a7bb74299dc06adcf11d6f32e96f8a2ac256e3ee26.png",
+      "image_sha256": "e69b1d8857ffd2602f1cf0b647d229fb112121df64f0e2de33b3dbbc5192cf9b",
+      "index": 235,
+      "panel_index": 96,
+      "problem": "What is the likely stage of development of the immature erythroid cells based on the chromatin pattern and cytoplasmic color?\nOptions:\nA) Polychromatophilic normoblast\nB) Orthochromatic normoblast\nC) Myelocyte\nD) Promyelocyte",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "9157afd3d205cc2456fdc5392503d67b8f59fe5de54351c8481135103d814e0c",
+      "solution": "<think>The cells in question show condensed chromatin and a blue to purple cytoplasm characteristic of orthochromatic normoblasts, which are a later stage of erythroid precursor before the cell becomes a reticulocyte. The other listed cells are either from the myeloid lineage (promyelocyte and myelocyte) or at an earlier stage of erythroid development (polychromatophilic normoblast) and do not match the observed cellular morphology.</think><answer>B) Orthochromatic normoblast</answer>",
+      "source_record_sha256": "646435b0bba3a8a85143f362d807e09b6aaec3591bbee4c3d4a3fc58c9b4aea6",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            300,
+            300,
+            700,
+            700
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Spindle-shaped cells with elongated nuclei",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The spindle-shaped cells with elongated nuclei are characteristic of Schwann cells, indicating peripheral nerve tissue. This feature is distinct and concentrated in the image, making it a strong discriminating factor.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Smooth muscle tissue",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/73fe17df5cb4f0c3eebdc3e8bea97547397d14d716c321c561ef01b4e2eaf476.jpg",
+      "image_sha256": "1e1a940e85bf5f4624dc0145402a9e4d67c7301dc99f81ab963dcfddc2e21863",
+      "index": 238,
+      "panel_index": 98,
+      "problem": "By examining the cellular morphology, what is the most likely origin of the well-defined, fusiform cell structures in the image?\nOptions:\nA) Adipose tissue\nB) Smooth muscle tissue\nC) Peripheral nerve tissue\nD) Epithelial tissue",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "0c802e752a888263f65df1b0d4d62c28d69283fe5fc7b16497bc5c17856be0c9",
+      "solution": "<think>The spindle-shaped cell structures with elongated nuclei are characteristic of Schwann cells, which are specific to peripheral nerve tissue. These cells do not resemble the polygonal shape of epithelial cells, the arrangement of smooth muscle cells or the large vacuoles typical of adipose cells.</think><answer>C) Peripheral nerve tissue</answer>",
+      "source_record_sha256": "638bd2bb45bff730a26c2eb819b811ec52c6a2e9969ec9608ec333b19e7195ce",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            300,
+            800,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Thin wall and elongated nuclei characteristic of veins.",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The image shows a blood vessel with a thin wall and elongated nuclei, which are indicative of a vein. This evidence is concentrated and localized, making it suitable for a causal evidence-deletion panel.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Artery",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/ffb47930fa5a9bc4c3489b12cbe6391e0605fcf049a6ac84492ac7488093dbd3.jpg",
+      "image_sha256": "3d255d9aab222138c346c545bc6a78e935f5b2a5d0ac10c9f41d624f3c81794e",
+      "index": 239,
+      "panel_index": 99,
+      "problem": "What type of blood vessel is prominently featured in the microscopic image?\nOptions:\nA) Artery\nB) Capillary\nC) Vein\nD) Lymphatic vessel",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "50c2bcfacd3874c044861ac811dfab51e27601382f94491bbdf15498e60a8966",
+      "solution": "<think>The vessel in the image features a lumen with a relatively thin wall and non-turbulent flow space, as well as cells with elongated, spindle-shaped nuclei that are characteristic of the smooth muscle cells found in a vein. Arteries have thicker walls and are more tightly packed, whereas capillaries are typically smaller and do not have a noticeable muscular wall. Lymphatic vessels have valves that veins do not, which are not observed here.</think><answer>C) Vein</answer>",
+      "source_record_sha256": "c04594cd8af3317c85f491897105c7d78b1bf65ff8cd866cc9f7ff3ba013370b",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            600,
+            200,
+            800,
+            400
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Polygonal fibers with peripheral nuclei",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows polygonal skeletal muscle fibers with peripheral nuclei, which are distinct features of skeletal muscle. This evidence is concentrated and localized, making it suitable for a causal panel.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Cardiac muscle showing intercalated discs",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/7b126e8005ebd3f0f871ecfd823266192a4c79f58d43a968b7fbf44f1a1c5b86.jpg",
+      "image_sha256": "5a684dc23b1097d3224c12351cf8946333d88b8f1759b59dcf1cc49ceda23182",
+      "index": 247,
+      "panel_index": 102,
+      "problem": "Based on the histological features observed in the image, what is the predominant tissue type visible?\nOptions:\nA) Cardiac muscle showing intercalated discs\nB) Skeletal muscle with variable-sized fibers and peripheral nuclei\nC) Smooth muscle with spindle-shaped cells without striations\nD) Neoplastic tissue with dysplastic cellular changes",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "68ad180ed25a687fea51bb67978ce990c3e816bf1f997a6e0a0a870597b2afb2",
+      "solution": "<think>The histological section clearly illustrates polygonal skeletal muscle fibers in cross-section. These fibers each have peripheral nuclei and show variability in fiber size, some indicative of hypertrophy. Cardiac muscle and smooth muscle have different morphological characteristics that are not present in the image, while no features suggestive of neoplastic tissue are observed.</think><answer>B) Skeletal muscle with variable-sized fibers and peripheral nuclei</answer>",
+      "source_record_sha256": "750540575764c91525985d41ba5cea2fffe7164d7c29c3bf145fecf4a4570a16",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            200,
+            400,
+            600
+          ],
+          [
+            500,
+            200,
+            800,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Elongation of rete ridges",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The elongated rete ridges are clearly visible and are the key feature distinguishing the correct answer from distractors. Blurring or replacing these areas would likely flip the answer.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Presence of parakeratosis",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/e3d92aecdae8702f17e530a8e9768a25ff32a3bb9d7aa030feac92d68f900d9f.jpg",
+      "image_sha256": "f15938f10560b9db2f8185021dbe500dcd5e72e506ee44cc682634beb40f135f",
+      "index": 249,
+      "panel_index": 103,
+      "problem": "What evidence of a reactive process can be observed in the epidermis of this histological section?\nOptions:\nA) Occurrence of melanocyte proliferation\nB) Presence of parakeratosis\nC) Formation of granulomas\nD) Elongation of rete ridges",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "a88883b815d9a7a83a974c7020b822ee872a3a80720f7aae6bb95dac23a35503",
+      "solution": "<think>This image shows hyperplasia of the epidermis with elongated rete ridges, which suggests a reactive process. Parakeratosis, melanocyte proliferation, and granulomas are not evidences provided by the description or the morphology seen in this image.</think><answer>D) Elongation of rete ridges</answer>",
+      "source_record_sha256": "27bafd6363d6dd744d8355d1a28ea5298f2b8b537c765ff821b149c6bdae646f",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            200,
+            300,
+            400
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Lighter-stained clusters with distinct organization",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The lighter-stained clusters are distinct and characteristic of islets of Langerhans, which are different from the surrounding acinar cells. This focal evidence is crucial for distinguishing the reference answer from distractors.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Acinar cells packed densely with zymogen granules",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/1082b8b35ea0db68d324f474a4a42d27ed0765820133beef6325334c2891fab0.jpg",
+      "image_sha256": "deb6d05b7ba4808ae76f4a228887c9600829c00da6ec02d8d2240e7c99241516",
+      "index": 263,
+      "panel_index": 108,
+      "problem": "In evaluating the lighter-stained clusters of cells that stand out in the background, what is the most likely composition of these clusters based on their distinct staining and structural characteristics?\nOptions:\nA) Acinar cells packed densely with zymogen granules\nB) Endocrine cells forming the islets of Langerhans\nC) Fibroblasts forming a connective tissue matrix\nD) Adipocytes with large lipid vacuoles",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "4027e71900daf1077899e2df1979fcc2d17a6928b6112381bd039131f1b9dd4e",
+      "solution": "<think>The distinct pale-stained clusters of cells that stand out from the surrounding tissue in the background are characteristic of the islets of Langerhans, which are endocrine structures found in the pancreas. These clusters of cells are lighter staining compared to surrounding exocrine (acinar) tissue and exhibit a different organization. Acinar cells, adipocytes, and fibroblasts all have different staining and structural characteristics that do not fit with what is depicted in the image.</think><answer>B) Endocrine cells forming the islets of Langerhans</answer>",
+      "source_record_sha256": "9631cc3f8ced762d0906f08b07438a7014483a776e15404197bd18875f19ccc0",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            0,
+            300,
+            1000,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Multiple layers of flat cells indicating stratified squamous epithelium.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows multiple layers of flat cells, which is characteristic of stratified squamous epithelium. This is distinct from the other options, which have different cellular arrangements.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "C) Transitional epithelium",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/5a9be52105ca17796e689c8a3c292f6b063294265721a200fe66967d0d0bf319.jpg",
+      "image_sha256": "020f837b9cc7d034ebefaaa8dddae672707ea3471ff7d9c12ce4e7d9059b9e47",
+      "index": 266,
+      "panel_index": 110,
+      "problem": "Based on cellular organization and morphology, what type of epithelium is demonstrated in this microscopic image?\nOptions:\nA) Simple squamous epithelium\nB) Pseudostratified columnar epithelium\nC) Transitional epithelium\nD) Stratified squamous epithelium",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "4061f1b82e79b98d275c6380e820adc5661490084dd85a71e46e66f88032632a",
+      "solution": "<think>The image shows multiple layers of cells characteristic of stratified epithelium. The cell shape and arrangement are most consistent with stratified squamous epithelium. Simple squamous epithelium would have a single layer, pseudostratified epithelium has cells of varying heights that all touch the basement membrane, and transitional epithelium, typically found in the bladder, looks more dome-shaped when relaxed.</think><answer>D) Stratified squamous epithelium</answer>",
+      "source_record_sha256": "bb9cbbb0132809cec074d086d67d257318069ccc5ebb28eaae204affda916bf1",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            400,
+            800,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Glands infiltrating into surrounding structures",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows glandular structures infiltrating into surrounding tissues, which is indicative of direct invasion. This is a focal feature that strongly supports the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Lymphatic spread",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/f04ad746170b0885989570db0f7d6e39c8ec3b35e9dbf386f374fdb69db75343.jpg",
+      "image_sha256": "a5859226fa2dc5d61f497d5e94fee444236fff26024221df8d149eb4d195ec3c",
+      "index": 282,
+      "panel_index": 115,
+      "problem": "Based on the glandular structures observed, what might be the pattern of spread?\nOptions:\nA) Lymphatic spread\nB) Bloodborne spread\nC) Direct invasion into adjacent tissue\nD) No evidence of spread",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "2ff9d781d4239180603e49a40dbbccac3c87aaee32909de1ddc16a9367a962ed",
+      "solution": "<think>The glands are seen infiltrating into surrounding structures, which is consistent with direct invasion into adjacent tissue such as the myometrium. This is a characteristic feature of many adenocarcinomas.</think><answer>C) Direct invasion into adjacent tissue</answer>",
+      "source_record_sha256": "f2738290a134f26780caf7e6e7e9d83dbe7aeafa29909fbe5fc056b34369ce37",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            500,
+            600,
+            700
+          ],
+          [
+            600,
+            600,
+            800,
+            800
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Parallel layers of bony matrix and presence of osteocytes within lacunae",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The parallel layers of bony matrix and presence of osteocytes within lacunae are distinct features of mature lamellar bone. These features are concentrated in specific areas, making them strong evidence for the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Woven bone",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/ae87bc61a123a8b568f9d619b8ba051f2c34e86aac321568b6491f0b5f6bbf4f.jpg",
+      "image_sha256": "e50aede43c6ce55a540bc8bcddb66dbae4fb2b46592eb0a2ccf9c5d04a8e386b",
+      "index": 299,
+      "panel_index": 122,
+      "problem": "What type of bone tissue is depicted at the center and bottom left, characterized by its microscopic features?\nOptions:\nA) Woven bone\nB) Spongy bone\nC) Mature lamellar bone\nD) Immature bone",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "2003a4c798f85db3d274ea4a1180f0693855889d4a130208fccb645a4fa23f02",
+      "solution": "<think>The tissue at the center and bottom left shows the characteristic parallel layers of bony matrix and presence of osteocytes within lacunae, which are indicative of mature lamellar bone.</think><answer>C) Mature lamellar bone</answer>",
+      "source_record_sha256": "46597a3f5e2740d66f9700b9beb3e1114fe738bcde52fb6ead956ce3bea790b9",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            50,
+            200,
+            300,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Crypts running parallel to the mucosal surface",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows crypts that are oriented parallel to the mucosal surface, which is a key feature for identifying the reference answer. This feature is concentrated in a specific area, and its removal would likely flip the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "D) Regular distribution of crypts without distortion",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/a0858fbb7d931ae73fcf96af0edc462e143b651cb77b24159b9bb599c8eb73cb.jpg",
+      "image_sha256": "ee83ec95558ae42944febf1cdcdbaf94e28e3fc720d35604bc4cf1034c7800a0",
+      "index": 304,
+      "panel_index": 124,
+      "problem": "What abnormal feature can be observed in the glandular structures seen in the microscopic image of the gastrointestinal tract tissue?\nOptions:\nA) Crypts running parallel to the mucosal surface\nB) Absence of inflammatory cells within the lamina propria\nC) Uniform crypt size and shape\nD) Regular distribution of crypts without distortion",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "31162a2988a1fb6d5586986b16fa8b4ce9d3fa38ba75a8a98f61fb33001855d9",
+      "solution": "<think>The glandular structures in the image show crypts running in a direction that deviates from the typical perpendicular alignment with respect to the mucosal surface. This is indicative of crypt architectural distortion, which is a significant histopathological finding and suggests pathology.</think><answer>A) Crypts running parallel to the mucosal surface</answer>",
+      "source_record_sha256": "4683d994349a193182a2508c810be2955d10e17284ad9bc0d54046dc3534e2a2",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            400,
+            600,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Delicate, branching vascular structures",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows a focal area where the vascular structures are delicately branching, which is key to distinguishing the correct answer from the distractors. Blurring this area would likely reduce confidence in identifying the pattern.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Randomly dispersed without a discernible pattern",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/c49c63875d6bc6ec7efd320135e3e2868f1db7a60d3fd37d2e3bb8aa6ca6afa7.jpg",
+      "image_sha256": "e6d6f68f0924aede9e362fdf3a45b5f3340963f3259b730c91eea7a6ca7ed456",
+      "index": 307,
+      "panel_index": 125,
+      "problem": "Based on the arrangement of vascular structures, how would you classify the organization of the vessels within this tissue?\nOptions:\nA) Organized in a 'chicken wire' pattern\nB) Randomly dispersed without a discernible pattern\nC) Delicately branching in a non-uniform pattern\nD) Forming thick-walled, muscular structures",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "8fd3fa666856be4f30e83d53c0d52b2307b28c3a42385a9e36916011eb0a38d2",
+      "solution": "<think>The vascular structures do not display a 'chicken wire' pattern, nor do they form thick-walled muscular structures. Instead, they present with a delicate, branching pattern that lacks uniformity.</think><answer>C) Delicately branching in a non-uniform pattern</answer>",
+      "source_record_sha256": "9ca10980cfc44560991986287fcd878eb0fcff82f0c83baaf484763eaff70e5f",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            300,
+            400,
+            500
+          ],
+          [
+            600,
+            300,
+            800,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Abnormally large diameter of blood vessels",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows two large blood vessels with significantly enlarged diameters, which is consistent with aneurysmal dilation. This feature is distinct and localized, making it strong evidence for the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "C) Telangiectasia",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/9ce80cd82861a0ed2ed9053a474762abb44499dbac74404e2905bb15a77f68f7.jpg",
+      "image_sha256": "a48fd336cb7ac49e78d6e6b25d731bc56f85107d9e949ca3e51b3958e14d41a9",
+      "index": 311,
+      "panel_index": 128,
+      "problem": "Considering the size of the blood vessels shown in the image, which term best describes their abnormal size relative to typical dermal blood vessels?\nOptions:\nA) Aneurysmal dilation\nB) Arteriovenous malformation\nC) Telangiectasia\nD) Varicosities",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "65ac231afa9857be927407aca5414f77b30f6defc9bfde81ba107943cfb005a8",
+      "solution": "<think>The blood vessels are abnormally enlarged and appear to be significantly greater in diameter than what would be expected for typical dermal vessels, consistent with aneurysmal dilation. Arteriovenous malformation is a shunt between arteries and veins without a capillary bed, which is not evident here. Telangiectasia refers to small, widened blood vessels near the surface of the skin, and varicosities typically refer to veins, whereas these vessels are too large to be consistent with either telangiectasias or varicosities.</think><answer>A) Aneurysmal dilation</answer>",
+      "source_record_sha256": "94852915c9a705f5b58bae2c47558831d7c9e8bcceed888556b92a7c2d7ef3ea",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            300,
+            300,
+            700,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Loss of structural detail and cell death indicators like karyolysis, karyorrhexis, and pyknosis.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows a specific area with loss of structural detail, indicative of necrosis. This focal evidence is crucial for distinguishing necrosis from other options.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Dysplasia",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/f2571ce389b025933e7e949c9402dc10136685022466bd034cc5e241b997ed6d.jpg",
+      "image_sha256": "2df8b2b436d52c99216a648e2bee18878dee5b0f77c23a5f5b3c406168929534",
+      "index": 313,
+      "panel_index": 130,
+      "problem": "Based on the tissue morphology, what type of tissue change can be observed in the image?\nOptions:\nA) Hyperplasia\nB) Metaplasia\nC) Necrosis\nD) Dysplasia",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "7db57723ce60cdfbe92925530668c7dab10cd674a6945776ee89455c360175aa",
+      "solution": "<think>There are patches of tissue with a loss of structural detail, indicative of cell death. Necrosis is characterized by such changes, including karyolysis, karyorrhexis, and pyknosis.</think><answer>C) Necrosis</answer>",
+      "source_record_sha256": "9224ffacc9ddbdd164fefe0b3adbdd49403f5a6e9bdfd682ce227309bde09e09",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            400,
+            450,
+            450
+          ],
+          [
+            600,
+            500,
+            650,
+            550
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Round to oval profiles with a single layer of endothelial cells lining the structures.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The red-staining structures with round to oval profiles and a single layer of endothelial cells are indicative of small blood vessels. These features are distinct and concentrated, making them strong evidence for identifying blood vessels over other options.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "D) Erythrocytes",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/d3125aa721571d2dd07db9c1d846ab9245d60b9a2e3093550fefec63046c0e7c.jpg",
+      "image_sha256": "ebf5d3b8725a815840ec9b94fcbac7a3de441680ad4c4a2a1fa44e46a6835e8c",
+      "index": 327,
+      "panel_index": 137,
+      "problem": "The red-staining structures that are scattered throughout the image, what are these structures most likely representative of?\nOptions:\nA) Blood vessels\nB) Nerve fibers\nC) Smooth muscle fibers\nD) Erythrocytes",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "69f0e8ac1223af5608af9beb8ba18148f7f6c6b03b616927d1fce31d74f906f6",
+      "solution": "<think>The red-staining structures are likely small blood vessels, recognized by their round to oval profiles. The presence of a single layer of endothelial cells lining these structures is typical for small blood vessels such as capillaries.</think><answer>A) Blood vessels</answer>",
+      "source_record_sha256": "059dd7e27e369b20c6743758666a676c4b0e7402c4c391921bc62cb5d5cb786a",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            0,
+            0,
+            1000,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Single layer of tall, closely packed cells",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The image shows a single layer of tall, closely packed cells, characteristic of simple columnar epithelium. This is distinct from the other options, which involve multiple layers or different cell shapes.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "C) Pseudostratified ciliated",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/66d1d191338600245e91e4802bed6c7d882535d29c3162191a41120c6339416b.jpg",
+      "image_sha256": "29b9824f2e99d9e26d48253d61dad9218b8028ebcf585b79ab0d4a7356c236a7",
+      "index": 339,
+      "panel_index": 141,
+      "problem": "What type of epithelial cell arrangement is observed in the tissue specimen?\nOptions:\nA) Stratified squamous\nB) Simple columnar\nC) Pseudostratified ciliated\nD) Transitional",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "64ec74b08a43718ba5c6c4d5c4144f3d85d6134165f741a9951115f54b010487",
+      "solution": "<think>The tissue shows a single layer of tall and closely packed cells, which is characteristic of a simple columnar epithelium. There is no evidence of multiple layers or the irregular cell shapes that would suggest the other options.</think><answer>B) Simple columnar</answer>",
+      "source_record_sha256": "293a59431ed5c8c9d4ad286aa29a576bba5be6ec678801d9cc14e581c2c2262d",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            400,
+            300,
+            600,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Central structure with surrounding epithelial cells and variable nuclei morphology.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The central structure surrounded by cells with irregular nuclei is key to identifying the sweat duct. Blurring this area would likely reduce confidence in identifying the structure.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Sebaceous gland",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/17b3554f32db934e16bf3bfcb448965849d8eaf927a43f36ba352259b6293945.jpg",
+      "image_sha256": "1487858f216d42adbd12f3a9c95ae7de78f8ea8a0030d257cdf91b4d0d3e604b",
+      "index": 343,
+      "panel_index": 143,
+      "problem": "Considering the cells with irregularly shaped and rounded nuclei, what could be inferred about the central structure surrounded by these cells?\nOptions:\nA) Sebaceous gland\nB) Sweat duct\nC) Melanocytic nevus\nD) Hair follicle",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "428f1a19e444d92bc1be6a88b72fdd45361725741a6a1f6e29160e821aeaf84b",
+      "solution": "<think>The central structure in the image is outlined by a layer of epithelial cells and is surrounded by densely grouped cells with variable nuclei morphology, suggesting it could be a cross-section of a duct. Among the options, the structure is most consistent with a sweat duct, which is part of the cutaneous glands and is often found within the context of a skin biopsy featuring various cell types, including melanocytes. The options of a sebaceous gland, melanocytic nevus, and hair follicle are less likely due to their morphological and structural characteristics that differ from what is depicted.</think><answer>B) Sweat duct</answer>",
+      "source_record_sha256": "18221947971e26c2c831a4dd29eaad2d3a5a7606c524bb270403d5d7d45e476e",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            200,
+            300,
+            800,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Cystically dilated spaces",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The cystically dilated spaces are clearly visible and distinct in the submucosal layer, which is the key feature for identifying the reference answer. Blurring or replacing this area would likely lead to a loss of confidence or a change in the answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "Dense inflammatory infiltrate",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/7f82de9336b4040ff9a29a2027322c306900dc437cd431f521097e15575fd253.jpg",
+      "image_sha256": "8392d6a21a9d702249844dfda3cc3dc13daa8232e02a137d81972b0ffc0ada0b",
+      "index": 344,
+      "panel_index": 144,
+      "problem": "What is the most prominent abnormal histological feature observed in the submucosal layer?\nOptions:\nA) Fibrotic tissue\nB) Dense inflammatory infiltrate\nC) Foreign body multinucleated giant cells\nD) Cystically dilated spaces likely representing air",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "1e4c4f8d81ab7c3eb9f7a9064c37dd764a0b7d5cb281405b54777edbd78cbc7a",
+      "solution": "<think>The image shows cystically dilated spaces within the submucosa that vary in size and are empty, consistent with pneumatosis intestinalis, and no other listed features are visible.</think><answer>D) Cystically dilated spaces likely representing air</answer>",
+      "source_record_sha256": "e169b33ee9830375b2475a77dd9c17c7c6f0be079a4643132b88e31615c8b649",
+      "target_choice": "D"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            200,
+            400,
+            500
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Clear spaces indicating medullary sinuses",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The clear spaces in the tissue are indicative of medullary sinuses, which are characteristic of lymph node architecture. These spaces are distinct and localized, making them strong evidence for the reference answer.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "B) Areas of necrosis",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/c0b94117943f554787d18b53df0ece46d69466c0163856c6dd1478c9fa73f4b9.jpg",
+      "image_sha256": "46df5b0d7fbd513663fce79122e5ba418f82039c4cb05550b00a225b190abf3e",
+      "index": 364,
+      "panel_index": 150,
+      "problem": "What does the presence of clear spaces in the tissue section most likely indicate?\nOptions:\nA) Medullary sinuses\nB) Areas of necrosis\nC) Apoptotic bodies\nD) Keratin pearl formations",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "321600725b5e75ec7ea834bc8bed676b2da566d9c2d63b3e3bdad194c000307c",
+      "solution": "<think>The clear spaces in the lymph node section suggest the presence of sinuses, which are characteristic of the lymph node architecture, particularly the medullary sinuses, rather than apoptotic bodies, necrosis, or keratin pearl formations which are not typical features of normal lymphoid tissue.</think><answer>A) Medullary sinuses</answer>",
+      "source_record_sha256": "4cbc13f048be94a757bd234c295266607b239c537429978c65abcaa1fa6bc610",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            0,
+            0,
+            1000,
+            200
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Darker staining in the superficial dermis",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The darker staining is concentrated in the superficial dermis, which is distinct from the rest of the dermis. This focal evidence is crucial for distinguishing the correct answer from the distractors.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "A) Mid dermis",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/8f5380827b27120800f2d4cffb65c39cf842e83dc120731e88f6306cd6a50049.jpg",
+      "image_sha256": "c3403e0a56632a327c73517dd24e3878e63ab5891b843e3043c920ae84744c47",
+      "index": 367,
+      "panel_index": 152,
+      "problem": "Analyzing the cellular arrangement of the skin tissue, which dermal area exhibits the presence of cells that show darker staining indicative of a positive immunostain response?\nOptions:\nA) Mid dermis\nB) Superficial dermis\nC) Deep dermis\nD) The staining is uniform throughout the dermis",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "166f1d9c98e34604de844f0b95c173e259bc227c1b5d5d1de2b3e8993b8bda78",
+      "solution": "<think>Within the dermis, there are individual cells and small clusters of cells that display darker staining, indicating a positive reaction to the immunostain, predominantly located in the superficial dermis as shown by the scattered darker stained cells.</think><answer>B) Superficial dermis</answer>",
+      "source_record_sha256": "b74902ceeab358108d3c166c81bda86ca76df4f76f66a4fe962d5803abe0de7d",
+      "target_choice": "B"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            500,
+            400,
+            800,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Darker red regions indicating necrosis and/or hemorrhage.",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The darker red regions are indicative of necrosis and/or hemorrhage, which are distinct from other patterns. Blurring these areas would likely flip the answer from necrosis to another pattern.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "D) A repetitive, highly structured arrangement",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/9a271c60eca02a41080a60f42dc321f465380778cd60c2eb66e7a1f01ba8c295.jpg",
+      "image_sha256": "9bcca3067aec21827d37e21d864a3810ff99b63d2a4833bd4439dc30d7538c3b",
+      "index": 369,
+      "panel_index": 153,
+      "problem": "Based on the cellular organization within the nodular area, what is the predominant histological pattern observable?\nOptions:\nA) Distinct areas of necrosis and/or hemorrhage\nB) Disorganized cellular architecture\nC) Uniform cellular distribution\nD) A repetitive, highly structured arrangement",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "72596253e59f067b1ae9297bd0e7cf04240004ef81914b4079aa21eabeb20192",
+      "solution": "<think>The nodular area shows darker red regions indicative of necrosis and/or hemorrhage, disrupting the overall pattern of the tissue, which contrasts with a repetitive or highly organized arrangement.</think><answer>A) Distinct areas of necrosis and/or hemorrhage</answer>",
+      "source_record_sha256": "90a8b0bc2f3a4cd3960670ab37688b814d836857f8db9b0b6d7e785182ea471b",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            100,
+            300,
+            400,
+            600
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.95,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Multiple cell layers with flattened cells near the lumen",
+        "evidence_concentration": 0.9,
+        "evidence_type": "focal",
+        "rationale": "The image shows a clear stratified squamous epithelium with multiple layers and flattened cells near the lumen, which is distinct from other epithelial types. This specific area is crucial for identifying the correct epithelial type.",
+        "redundancy": 0.1,
+        "requires_global_context": false,
+        "strongest_distractor": "Transitional epithelium",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/748f213bc9c2663b4584d90f49aacfac2fff1fb59ee75b1ba47de1a09aff3557.jpg",
+      "image_sha256": "eebea35d243a6397903a64d850d9dc1918c8cbd3bbe0f9cb79c132f8e58ba596",
+      "index": 374,
+      "panel_index": 155,
+      "problem": "Which of the following best describes the epithelial lining of the cystic structure?\nOptions:\nA) Transitional epithelium\nB) Simple squamous epithelium\nC) Stratified squamous epithelium\nD) Pseudostratified columnar epithelium",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "25e6bf93775934646234d49b43d8f06fd3a5c5e26b606eeb82413460d7853368",
+      "solution": "<think>The cystic structure is lined by a type of epithelium with multiple cell layers, where cells close to the lumen are flattened, indicative of a stratified squamous epithelial lining.</think><answer>C) Stratified squamous epithelium</answer>",
+      "source_record_sha256": "6b3da3531d970c7522c1e4b079a44501ad77f9768eefcb3ae9eb9f2720d8e100",
+      "target_choice": "C"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            640,
+            360,
+            680,
+            400
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Thick muscular wall and narrow lumen of the arteriole",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The thick muscular wall and narrow lumen are distinct features of an arteriole, differentiating it from other vessel types. This evidence is concentrated and localized, making it suitable for a causal panel.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "C) A venule with thin walls, indicating a low-pressure vessel",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/dcaa4971c6fd368efef55edba1665c66cb6c102b0d8e1b67f013266c9f2b2d8d.jpg",
+      "image_sha256": "03114caeff0fccb5b6ef65332ea1a8932ce1b0af46d54b3c678e1c9fde8e3f02",
+      "index": 380,
+      "panel_index": 158,
+      "problem": "Identify the type of blood vessel present at the center of this image and its significance.\nOptions:\nA) An arteriole with a thick muscular wall, indicative of its role in regulating blood flow\nB) A capillary with a single cell-thick endothelial lining, allowing for gas exchange\nC) A venule with thin walls, indicating a low-pressure vessel\nD) A lymphatic vessel with abundant lymphocytes around it, showing immune activity",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "6a6f521474ec9cbe98b6aac99c3c9259471842ffd8e567adc6e17e8351b11a43",
+      "solution": "<think>The centrally located vessel in the image has a thick, muscular wall and a narrow lumen, which are characteristic of an arteriole. Arterioles play a crucial role in regulating blood flow to tissues.</think><answer>A) An arteriole with a thick muscular wall, indicative of its role in regulating blood flow</answer>",
+      "source_record_sha256": "42ac8682cbd2ae52c8ea53b59a0292df8f441a92233810d6bbc7f4ec663418f4",
+      "target_choice": "A"
+    },
+    {
+      "annotation_attempt": 1,
+      "annotation_model": "gpt-4o-2024-08-06",
+      "external_annotation": {
+        "boxes": [
+          [
+            700,
+            100,
+            900,
+            300
+          ]
+        ],
+        "causal_panel_suitability": "strong",
+        "confidence": 0.9,
+        "deletion_prediction": "answer_flip_likely",
+        "diagnostically_relevant": true,
+        "discriminating_feature": "Thickened stratum corneum indicating hyperplasia",
+        "evidence_concentration": 0.8,
+        "evidence_type": "focal",
+        "rationale": "The thickened appearance of the stratum corneum is a focal feature that supports the diagnosis of hyperplasia. Blurring this area would likely reduce confidence in identifying the increased number of cell layers.",
+        "redundancy": 0.2,
+        "requires_global_context": false,
+        "strongest_distractor": "D) The stratum corneum demonstrates atrophy with a reduced number of cell layers",
+        "visual_answerability": "high"
+      },
+      "image": "/home/dataset-assist-0/czy/wjy/pathvlm_r1_v1_a100/raw_data/pathmmu/images/243daa7b4fae5c8cca7cb8a2722a7cc108004cf2f55215566ca7f0042e838cf6.jpg",
+      "image_sha256": "70826032c7d7270661738576c49175bd05e22800730da5458c208ac2624503b8",
+      "index": 384,
+      "panel_index": 159,
+      "problem": "Observing the stratum corneum of the stratified squamous epithelium, what can be inferred about its cellular characteristics?\nOptions:\nA) The stratum corneum shows parakeratosis with retention of nuclei in the outermost layers\nB) The stratum corneum exhibits dyskeratosis with abnormal keratinization in lower layers\nC) The stratum corneum appears hyperplastic with an increased number of cell layers\nD) The stratum corneum demonstrates atrophy with a reduced number of cell layers",
+      "reference_evidence_status": "pending_external_annotation",
+      "selection_rank_sha256": "7d33178b61d5d3b192066ec9d98f7d3ff09a532e0b4c18648ff4b5e300bf2d2f",
+      "solution": "<think>The stratum corneum is visibly thickened, indicating hyperplasia, which is an increased number of cells leading to thickening of this layer. There is no evidence of atrophy, parakeratosis, or dyskeratosis just from observing the thickness.</think><answer>C) The stratum corneum appears hyperplastic with an increased number of cell layers</answer>",
+      "source_record_sha256": "966662053f239a14f8870e3013ff3b2848b5f1b153084a2041b2ea4f3cb0c71b",
+      "target_choice": "C"
+    }
+  ],
+  "clean_correct_filter": "applied only downstream; exclusions and null intervention effects remain auditable",
+  "excluded_suitability_counts": {
+    "weak": 102
+  },
+  "schema_version": 2,
+  "selected_count": 58,
+  "selection_rule": "diagnostically relevant; focal/multifocal nonempty boxes; visual answerability high/medium; suitability strong/moderate; no required global context; confidence >=0.85; concentration >=0.60; redundancy <=0.50; predicted confidence drop/flip",
+  "selection_uses_target_outputs": false,
+  "source_panel": "/home/dataset-assist-0/czy/wjy/myr1/protocol/predefined_evidence_candidate_panel_v2_160case_20260813.json",
+  "source_panel_sha256": "36772faaa7d4b8eb4d82ce1a543645a6c8da26305355bba521c6c821732469a8",
+  "status": "frozen_before_target_model_outputs"
+}
