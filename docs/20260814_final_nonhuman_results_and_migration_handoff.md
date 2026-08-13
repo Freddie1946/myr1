@@ -40,6 +40,6 @@
 ## HF 最终备份状态
 
 - 私有 dataset：`Freddie1946/PathVLM-R1-Evaluation-Archive-20260814`
-- 最终 manifest 与 verification 已上传并通过 fresh-download SHA 校验，revision `b8a0b0fd95269113b7d4c6e717523781bc10ffc0`。
+- 最终 manifest/verification 以及 27 个 essential 结果文件（总表、审计、核心统计、新消融 metrics、重复推理 summaries）已上传；4 项 fresh-download SHA spot-check 全部一致，revision `1d613f216204e465c574664c5fc80f3ecfaf7d13`。
 - 131 MiB 完整最终 tar 上传被 HF 明确以“private repository storage limit reached”拒绝；这不是 token 或网络错误。
 - 未经授权没有把数据改为公开。完整 tar 本地路径和 SHA 见 `protocol/final_hf_results_backup_20260814.json`。

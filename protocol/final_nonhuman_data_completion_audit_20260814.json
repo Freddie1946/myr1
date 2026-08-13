@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-08-13T18:28:36.019154+00:00",
+  "created_at": "2026-08-13T18:30:51.325985+00:00",
   "scope": "all required non-human report data; human expert scoring explicitly excluded",
   "status": "complete",
   "human_expert_scoring": "excluded_pending_user",
@@ -181,7 +181,7 @@
       "required": true,
       "ok": true,
       "detail": "present",
-      "sha256": "54c67ff919a7bb2d4d04755aef0698a6e895074b2be51692f96c61c4d55c7251"
+      "sha256": "a134aad064ea3045194137843109c0bb210d19cec3446f621c1c5db3e5e2437b"
     },
     {
       "label": "minimal core paired statistics",
@@ -213,7 +213,7 @@
       "required": true,
       "ok": true,
       "detail": "present",
-      "sha256": "8578b2ea1745c938143a3b7f1765b46da39ffc13888c3ab50cf11fb346942532"
+      "sha256": "ab02f30200ac5a56cd2e7337a3af710012be34032b9d55bc9e16d26d00b71322"
     },
     {
       "label": "final full local archive hash",

@@ -4,7 +4,14 @@
   "repository": "Freddie1946/PathVLM-R1-Evaluation-Archive-20260814",
   "repository_type": "dataset",
   "visibility": "private",
-  "remote_revision": "b8a0b0fd95269113b7d4c6e717523781bc10ffc0",
+  "remote_revision": "1d613f216204e465c574664c5fc80f3ecfaf7d13",
+  "essential_results_backup": {
+    "file_count": 27,
+    "root": "final/essential/",
+    "contents": "final Markdown/JSON tables, completion audit, core statistics, all new ablation metrics, repeated-inference summaries, LoRA4000 and historical Stage2 terminal OmniMedVQA metrics",
+    "fresh_remote_download_spot_checks": 4,
+    "all_spot_check_sha256_matches": true
+  },
   "remote_files": {
     "final/ARCHIVE_MANIFEST.json": {
       "local_and_remote_sha256": "76fda99338e6eabc6147c09838b2585fab885ca1b73a21d9ccf309d80e361946",
@@ -26,7 +33,7 @@
     "remote_upload": "rejected_by_hf_private_storage_quota"
   },
   "hf_error": "403 Forbidden: Private repository storage limit reached",
-  "important_boundary": "Authentication and network access are healthy. The complete 131 MiB archive remains locally hash-verified; its manifest and verification record are on private HF. Public upload was not authorized and was not attempted.",
+  "important_boundary": "Authentication and network access are healthy. All final essential aggregate results are verified on private HF. The complete 131 MiB archive with all raw predictions remains locally hash-verified because the new LFS object was rejected by private quota; public upload was not authorized and was not attempted.",
   "earlier_full_remote_snapshot": {
     "revision": "57f836833cf3417692ffa4cb40002349fc8dd89b",
     "archive": "evaluation_results_20260814.tar.gz",
