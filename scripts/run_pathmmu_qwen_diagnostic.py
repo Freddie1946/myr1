@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import random
 import statistics
 from pathlib import Path
 from typing import Any
@@ -104,7 +105,11 @@ def summarize(rows: list[dict[str, Any]], args: argparse.Namespace) -> dict[str,
         "eos_terminated_count": sum(bool(row["ended_with_eos"]) for row in rows),
         "generation_cap_hit_count": sum(bool(row["reached_generation_cap"]) for row in rows),
         "max_new_tokens": args.max_new_tokens,
-        "do_sample": False,
+        "do_sample": args.do_sample,
+        "seed": args.seed,
+        "temperature": args.temperature if args.do_sample else None,
+        "top_p": args.top_p if args.do_sample else None,
+        "top_k": args.top_k if args.do_sample else None,
         "dtype": "bfloat16",
         "quantization": "none",
         "backend": args.backend,
@@ -152,6 +157,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--do-sample", action="store_true")
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--temperature", type=float, default=0.7)
+    parser.add_argument("--top-p", type=float, default=0.9)
+    parser.add_argument("--top-k", type=int, default=0)
     return parser.parse_args()
 
 
@@ -161,6 +171,12 @@ def main() -> None:
         raise ValueError("the approved diagnostic contract requires max_new_tokens=1024")
     if args.batch_size < 1:
         raise ValueError("--batch-size must be positive")
+    if args.do_sample and args.temperature <= 0:
+        raise ValueError("sampling temperature must be positive")
+    if not 0 < args.top_p <= 1:
+        raise ValueError("top_p must be in (0, 1]")
+    if args.top_k < 0:
+        raise ValueError("top_k must be non-negative; use 0 to disable")
     records = json.loads(args.data.read_text(encoding="utf-8"))
     if not isinstance(records, list):
         raise ValueError("input data must be a JSON list")
@@ -217,7 +233,11 @@ def main() -> None:
         "prompt_template": QUESTION_TEMPLATE,
         "dtype": "bfloat16",
         "quantization": "none",
-        "do_sample": False,
+        "do_sample": args.do_sample,
+        "seed": args.seed,
+        "temperature": args.temperature if args.do_sample else None,
+        "top_p": args.top_p if args.do_sample else None,
+        "top_k": args.top_k if args.do_sample else None,
         "max_new_tokens": args.max_new_tokens,
         "batch_size": args.batch_size,
         "resume": args.resume,
@@ -309,12 +329,15 @@ def main() -> None:
             model, args.adapter, local_files_only=True, is_trainable=False
         )
     model.eval()
+    random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed_all(args.seed)
     # Some medical checkpoints persist sampling-only defaults. They are irrelevant under greedy
     # decoding, but clear them explicitly so the frozen execution log is unambiguous.
-    model.generation_config.do_sample = False
-    model.generation_config.temperature = None
-    model.generation_config.top_p = None
-    model.generation_config.top_k = None
+    model.generation_config.do_sample = args.do_sample
+    model.generation_config.temperature = args.temperature if args.do_sample else None
+    model.generation_config.top_p = args.top_p if args.do_sample else None
+    model.generation_config.top_k = args.top_k if args.do_sample else None
     stop_ids = eos_ids(model.generation_config.eos_token_id)
 
     for batch_start in range(len(rows), len(records), args.batch_size):
@@ -348,12 +371,16 @@ def main() -> None:
         input_device = next(model.parameters()).device
         inputs = {key: value.to(input_device) for key, value in inputs.items()}
         with torch.inference_mode():
-            generated = model.generate(
-                **inputs,
-                max_new_tokens=args.max_new_tokens,
-                do_sample=False,
-                use_cache=True,
-            )
+            generation_kwargs = {
+                "max_new_tokens": args.max_new_tokens,
+                "do_sample": args.do_sample,
+                "use_cache": True,
+            }
+            if args.do_sample:
+                generation_kwargs.update(
+                    temperature=args.temperature, top_p=args.top_p, top_k=args.top_k
+                )
+            generated = model.generate(**inputs, **generation_kwargs)
         batch_completion_ids = generated[:, inputs["input_ids"].shape[1] :]
         for offset, record in enumerate(batch_records):
             token_ids = [int(value) for value in batch_completion_ids[offset].tolist()]

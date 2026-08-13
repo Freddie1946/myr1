@@ -28,4 +28,32 @@
 - loss/gradient有限；
 - 与并行单卡评测共置时无 OOM。
 
-初步 PathMMU Val385：204/385 = 52.9870%，格式385/385，choice extracted 384/385，无截断。其余核心评测正在并行运行，不能在完成前下最终结论。
+## 已完成的核心评测
+
+| 指标 | 结果 |
+|---|---:|
+| PathMMU Val385 | 204/385 = 52.9870% |
+| PathMMU Test999 | 565/999 = 56.5566% |
+| PathVQA Val512，自由 Yes/No | 309/512 = 60.3516% |
+| PathVQA Val512，固定 A=Yes/B=No | 330/512 = 64.4531% |
+| MMMU non-medical 116 | 65/116 = 56.0345% |
+| PathVQA Normal（forced-logit视觉诊断） | 326/512 = 63.6719% |
+| PathVQA cyclic image shuffle | 256/512 = 50.0000% |
+| PathVQA global-mean blank | 254/512 = 49.6094% |
+
+视觉依赖差值：
+
+- Normal - Shuffle = +13.6719 pp
+- Normal - Blank = +14.0625 pp
+
+生成式 PathMMU Val/Test 均无 generation-cap hit；PathVQA 两种生成合同均100%可解析、无截断。固定 A/B 接口比自由 Yes/No 高4.10 pp，说明统一输出接口仍然重要。
+
+## PathMMU Test999 配对结论
+
+| 对比 | 左→右提升 | 退化 | 准确率差 | 95% image-cluster bootstrap CI | McNemar p |
+|---|---:|---:|---:|---:|---:|
+| LoRA-SFT4000 → L-r16-SFT3000 parent | 56 | 55 | +0.10 pp | [-1.95, +2.15] pp | 1.0000 |
+| LoRA-SFT4000 → full rule-RL n4 step1000 | 115 | 69 | +4.60 pp | [+2.06, +7.20] pp | 0.000860 |
+| LoRA-SFT4000 → full rule-RL n8 step1000 | 136 | 67 | +6.91 pp | [+4.15, +9.65] pp | 1.46e-6 |
+
+因此，在相同额外1000条数据、相同2000 prompt exposure的对照下，继续 LoRA-SFT 与其 SFT3000 parent 在 Test999 上几乎完全持平，而 full rule-RL n4/n8 获得显著净提升。该结果支持“提升来自RL目标，而非仅继续看相同数据”的解释。PathVQA Test3362 与 OmniMedVQA8518 仍在运行，最终泛化结论待两者完成后更新。
