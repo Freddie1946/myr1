@@ -92,6 +92,13 @@ def dual_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
                 "raw_margin_recovery": paired_summary(raw),
                 "positive_gap_recovery_fraction": paired_summary(fractions),
             }
+            if values and "correct_minus_permuted_margin_recovery" in values[0]:
+                streams[stream]["correct_minus_permuted_margin_recovery"] = paired_summary([
+                    float(x["correct_minus_permuted_margin_recovery"]) for x in values
+                ])
+                streams[stream]["correct_minus_opposite_margin_recovery"] = paired_summary([
+                    float(x["correct_minus_opposite_margin_recovery"]) for x in values
+                ])
         output[layer] = streams
     return {"case_count": len(records), "by_layer": output}
 

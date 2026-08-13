@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import gc
+import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -84,6 +85,22 @@ def patch_positions(
         handle.remove()
 
 
+def direction_controls(
+    clean: torch.Tensor,
+    corrupted: torch.Tensor,
+    seed_text: str,
+) -> tuple[torch.Tensor, torch.Tensor, float]:
+    """Return same-norm permuted and opposite-direction replacement states."""
+    delta = clean - corrupted
+    seed = int.from_bytes(hashlib.sha256(seed_text.encode()).digest()[:8], "big")
+    generator = torch.Generator(device="cpu").manual_seed(seed)
+    order = torch.randperm(delta.numel(), generator=generator).to(delta.device)
+    permuted = delta.reshape(-1).index_select(0, order).reshape_as(delta)
+    return corrupted + permuted, corrupted - delta, float(
+        torch.linalg.vector_norm(delta.float()).cpu()
+    )
+
+
 def evaluate_case(model, case: dict[str, Any], layers: list[int]) -> dict[str, Any]:
     path = Path(case["image"])
     if sha256_file(path) != case["image_sha256"]:
@@ -109,31 +126,45 @@ def evaluate_case(model, case: dict[str, Any], layers: list[int]) -> dict[str, A
     gap = clean_margin - corrupted_margin
     patched: dict[str, Any] = {}
     for layer in layers:
-        visual_score = patch_positions(
-            model, deleted_inputs, layer, visual, clean_states[layer]["visual"]
-        )
-        query_score = patch_positions(
-            model, deleted_inputs, layer, query, clean_states[layer]["query"]
-        )
-        visual_recovery = float(margins(visual_score)[target] - corrupted_margin)
-        query_recovery = float(margins(query_score)[target] - corrupted_margin)
+        stream_rows = {}
+        for stream, positions in (("visual_token_patch", visual), ("query_position_patch", query)):
+            state_name = "visual" if stream == "visual_token_patch" else "query"
+            clean_state = clean_states[layer][state_name]
+            corrupted_state = corrupted_states[layer][state_name]
+            permuted_state, opposite_state, delta_l2 = direction_controls(
+                clean_state, corrupted_state,
+                f"reference-evidence-dual-v2:{case['source_record_sha256']}:{layer}:{stream}",
+            )
+            correct_score = patch_positions(
+                model, deleted_inputs, layer, positions, clean_state
+            )
+            permuted_score = patch_positions(
+                model, deleted_inputs, layer, positions, permuted_state
+            )
+            opposite_score = patch_positions(
+                model, deleted_inputs, layer, positions, opposite_state
+            )
+            correct_recovery = float(margins(correct_score)[target] - corrupted_margin)
+            permuted_recovery = float(margins(permuted_score)[target] - corrupted_margin)
+            opposite_recovery = float(margins(opposite_score)[target] - corrupted_margin)
+            stream_rows[stream] = {
+                "condition": condition(correct_score, target),
+                "raw_margin_recovery": correct_recovery,
+                "recovery_fraction": correct_recovery / gap if gap > 1e-4 else None,
+                "delta_l2": delta_l2,
+                "same_norm_permuted_direction_control": {
+                    "condition": condition(permuted_score, target),
+                    "raw_margin_recovery": permuted_recovery,
+                },
+                "opposite_direction_control": {
+                    "condition": condition(opposite_score, target),
+                    "raw_margin_recovery": opposite_recovery,
+                },
+                "correct_minus_permuted_margin_recovery": correct_recovery - permuted_recovery,
+                "correct_minus_opposite_margin_recovery": correct_recovery - opposite_recovery,
+            }
         patched[str(layer)] = {
-            "visual_token_patch": {
-                "condition": condition(visual_score, target),
-                "raw_margin_recovery": visual_recovery,
-                "recovery_fraction": visual_recovery / gap if gap > 1e-4 else None,
-                "delta_l2": float(torch.linalg.vector_norm(
-                    (clean_states[layer]["visual"] - corrupted_states[layer]["visual"]).float()
-                ).cpu()),
-            },
-            "query_position_patch": {
-                "condition": condition(query_score, target),
-                "raw_margin_recovery": query_recovery,
-                "recovery_fraction": query_recovery / gap if gap > 1e-4 else None,
-                "delta_l2": float(torch.linalg.vector_norm(
-                    (clean_states[layer]["query"] - corrupted_states[layer]["query"]).float()
-                ).cpu()),
-            },
+            **stream_rows,
         }
     result = {
         "panel_index": case["panel_index"],
@@ -167,6 +198,18 @@ def summarize(records: list[dict[str, Any]], layers: list[int], stream: str) -> 
             "median_recovery_fraction_positive_gap_only": float(np.median(fractions)) if fractions else None,
             "mean_state_delta_l2": float(np.mean([x["delta_l2"] for x in values])) if values else None,
         }
+        if values and "correct_minus_permuted_margin_recovery" in values[0]:
+            result[str(layer)].update({
+                "mean_correct_minus_permuted_margin_recovery": float(np.mean([
+                    x["correct_minus_permuted_margin_recovery"] for x in values
+                ])),
+                "median_correct_minus_permuted_margin_recovery": float(np.median([
+                    x["correct_minus_permuted_margin_recovery"] for x in values
+                ])),
+                "mean_correct_minus_opposite_margin_recovery": float(np.mean([
+                    x["correct_minus_opposite_margin_recovery"] for x in values
+                ])),
+            })
     return result
 
 
