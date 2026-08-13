@@ -82,11 +82,12 @@ def dual_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     for layer in layers:
         streams = {}
         for stream in ("visual_token_patch", "query_position_patch"):
-            raw = [float(row["patched_by_layer"][layer][stream]["raw_margin_recovery"]) for row in records]
+            values = [row["patched_by_layer"][layer][stream] for row in records]
+            raw = [float(value["raw_margin_recovery"]) for value in values]
             fractions = [
-                float(row["patched_by_layer"][layer][stream]["recovery_fraction"])
-                for row in records
-                if row["patched_by_layer"][layer][stream]["recovery_fraction"] is not None
+                float(value["recovery_fraction"])
+                for value in values
+                if value["recovery_fraction"] is not None
             ]
             streams[stream] = {
                 "raw_margin_recovery": paired_summary(raw),
