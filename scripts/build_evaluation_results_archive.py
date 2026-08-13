@@ -92,7 +92,7 @@ def main() -> None:
     }
     manifest_path = output / "ARCHIVE_MANIFEST.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    archive_path = output / "evaluation_results_20260814.tar.gz"
+    archive_path = output / f"evaluation_results_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}.tar.gz"
     with tarfile.open(archive_path, "w:gz", compresslevel=6) as archive:
         for item in entries:
             archive.add(item["source"], arcname=item["archive_path"], recursive=False)
