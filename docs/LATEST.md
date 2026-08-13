@@ -1,5 +1,16 @@
 # Latest recovery pointer
 
+Latest final non-human result closure, uniform tables and migration handoff:
+
+0. `20260814_final_unified_results_tables.md`
+0. `20260814_final_nonhuman_results_and_migration_handoff.md`
+0. `../protocol/final_nonhuman_data_completion_audit_20260814.json`
+
+These artifacts separate the current fixed-A/B PathVQA contract from legacy baseline contracts,
+collect the sparse data-ratio screen and five-seed inference repeats, retain only minimal core
+paired uncertainty, and provide a fail-closed audit for the final HF/Git result backup. Human
+pathologist scoring is the only deliberately excluded result cell.
+
 Latest PathVQA fixed-A/B evaluation contract:
 
 0. `20260812_pathvqa_fixed_ab_evaluation_contract.md`
