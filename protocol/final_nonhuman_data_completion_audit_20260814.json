@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-13T17:47:37.654348+00:00",
+  "scope": "all required non-human report data; human expert scoring explicitly excluded",
+  "status": "incomplete",
+  "human_expert_scoring": "excluded_pending_user",
+  "required_check_count": 25,
+  "failed_check_count": 8,
+  "checks": [
+    {
+      "label": "sft0250_rl0750:PathMMU-val",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/pathmmu_val385/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "f62da45e391d08634fa96abb29a3599a1721b8d7e969607562c1e5e580e79f02"
+    },
+    {
+      "label": "sft0250_rl0750:PathMMU-test",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/pathmmu_test999/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "eaee9cc821d9f9284fbc4a32fd386349ff535aa348f3e4a6a2af30067a1804e2"
+    },
+    {
+      "label": "sft0250_rl0750:PathVQA-A/B",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/pathvqa_test3362_ab/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "b09a371c04abd15b45fadc9b4479de0e2cf63d3e9a80e466edaa2a39883970f2"
+    },
+    {
+      "label": "sft0250_rl0750:MMMU",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/mmmu_nonmedical116/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "feea8c02a65f35d9e860299650c9b965127316b825c4a8d8e80a823f7812cb9f"
+    },
+    {
+      "label": "sft0250_rl0750:OmniMedVQA",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/omnimedvqa_8518/metrics.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "sft0500_rl0500:PathMMU-val",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/pathmmu_val385/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "3c919688839003324c8795ca1d5301608cc74aa4c8b765cc4b81ac1588f8e3da"
+    },
+    {
+      "label": "sft0500_rl0500:PathMMU-test",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/pathmmu_test999/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "8d4b09a8eff7d960e46276e7853905a9781bdc70167711c7ac6afdc85425d960"
+    },
+    {
+      "label": "sft0500_rl0500:PathVQA-A/B",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/pathvqa_test3362_ab/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "44f882abfbcf4318c23ba5e02b0d37bab8f6dbec5e6483c678d829f3e5020369"
+    },
+    {
+      "label": "sft0500_rl0500:MMMU",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/mmmu_nonmedical116/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "870f0ed1982bc8e5fce6f1189c77135169dd5dbf10884b3a72ed50f2ccb15346"
+    },
+    {
+      "label": "sft0500_rl0500:OmniMedVQA",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/omnimedvqa_8518/metrics.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "sft0750_rl0250:PathMMU-val",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/pathmmu_val385/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "2906ca3ea86021fdee700a804b3d8f7c97dd9c730ed8852a7afc124145796a72"
+    },
+    {
+      "label": "sft0750_rl0250:PathMMU-test",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/pathmmu_test999/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "00be3712211dc2d11a3274b5e17b7e90d4f75386ad44e6df06cd7597d312d4a7"
+    },
+    {
+      "label": "sft0750_rl0250:PathVQA-A/B",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/pathvqa_test3362_ab/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "e949827476693ed385a557a2807b710cb2cb569a646416969ce14adb845974b8"
+    },
+    {
+      "label": "sft0750_rl0250:MMMU",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/mmmu_nonmedical116/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "completed",
+      "sha256": "24dce9d7e0f00e0d9068866ad50bd8f2e8819944f8da989c7120020446122ca5"
+    },
+    {
+      "label": "sft0750_rl0250:OmniMedVQA",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/omnimedvqa_8518/metrics.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "repeat:l_r16_sft80",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/l_r16_sft80/summary.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "repeat:full_rule_rl_n8_step1000",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/full_rule_rl_n8_step1000/summary.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "repeat:stage3_gpt4o_step1500",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/stage3_gpt4o_step1500/summary.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "LoRA-SFT4000:OmniMedVQA",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/omnimedvqa_8518/metrics.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "historical-Stage2:OmniMedVQA",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/omnimedvqa_8518/metrics.json",
+      "required": true,
+      "ok": false,
+      "detail": "missing",
+      "sha256": null
+    },
+    {
+      "label": "unified Markdown",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/docs/20260814_final_unified_results_tables.md",
+      "required": true,
+      "ok": true,
+      "detail": "present",
+      "sha256": "2eef2df3c910288d3cc3f878b2433920764040662c0dcff1d989a2038105d298"
+    },
+    {
+      "label": "unified JSON",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/protocol/final_unified_results_tables_20260814.json",
+      "required": true,
+      "ok": true,
+      "detail": "present",
+      "sha256": "bae7fd5c76a8be0c90aa68b407345f486a55e1ff1bc506f5baa305301c8a487e"
+    },
+    {
+      "label": "minimal core paired statistics",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/protocol/final_core_pathmmu_statistics_20260814/cluster_bootstrap_results.json",
+      "required": true,
+      "ok": true,
+      "detail": "present",
+      "sha256": "75ae774cb4d5c467d8bd8478225a61666e4ff6897b9b35ea861c597efbf6f356"
+    },
+    {
+      "label": "legacy external baselines and multijudge",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/docs/20260810_final_closed_benchmark_and_multijudge_results.md",
+      "required": true,
+      "ok": true,
+      "detail": "present",
+      "sha256": "1439a6d63927a613514abc18a06c3fe9312068c1bb21b48c6424c05edcf44432"
+    },
+    {
+      "label": "explainability dual-stream",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/reference_evidence_dual_stream_v2/metrics.json",
+      "required": true,
+      "ok": true,
+      "detail": "present",
+      "sha256": "6f09dba1ae10e81df954575f3ef448ee4a2131313918a049019aeebb2a8c7048"
+    }
+  ]
+}

@@ -241,7 +241,7 @@ def main() -> None:
         s = row["summary"] or {}
         count = s.get("run_count", s.get("completed_runs"))
         mean = s.get("mean_accuracy")
-        sd = s.get("sample_sd", s.get("sd_accuracy"))
+        sd = s.get("sample_standard_deviation", s.get("sample_sd", s.get("sd_accuracy")))
         ci = s.get("student_t_95_ci", s.get("ci95"))
         ci_text = "NA" if not ci else f"[{100*ci[0]:.2f}, {100*ci[1]:.2f}]"
         lines.append(f"| {row['model']} | {count if count is not None else 'NA'} | {pct(mean)} | {pct(sd)} | {ci_text} |")
