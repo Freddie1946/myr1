@@ -36,6 +36,7 @@
 | PathMMU Test999 | 565/999 = 56.5566% |
 | PathVQA Val512，自由 Yes/No | 309/512 = 60.3516% |
 | PathVQA Val512，固定 A=Yes/B=No | 330/512 = 64.4531% |
+| PathVQA Test3362，固定 A=Yes/B=No | 2122/3362 = 63.1172% |
 | MMMU non-medical 116 | 65/116 = 56.0345% |
 | PathVQA Normal（forced-logit视觉诊断） | 326/512 = 63.6719% |
 | PathVQA cyclic image shuffle | 256/512 = 50.0000% |
@@ -56,4 +57,4 @@
 | LoRA-SFT4000 → full rule-RL n4 step1000 | 115 | 69 | +4.60 pp | [+2.06, +7.20] pp | 0.000860 |
 | LoRA-SFT4000 → full rule-RL n8 step1000 | 136 | 67 | +6.91 pp | [+4.15, +9.65] pp | 1.46e-6 |
 
-因此，在相同额外1000条数据、相同2000 prompt exposure的对照下，继续 LoRA-SFT 与其 SFT3000 parent 在 Test999 上几乎完全持平，而 full rule-RL n4/n8 获得显著净提升。该结果支持“提升来自RL目标，而非仅继续看相同数据”的解释。PathVQA Test3362 与 OmniMedVQA8518 仍在运行，最终泛化结论待两者完成后更新。
+因此，在相同额外1000条数据、相同2000 prompt exposure的对照下，继续 LoRA-SFT 与其 SFT3000 parent 在 Test999 上几乎完全持平，而 full rule-RL n4/n8 获得显著净提升。该结果支持“提升来自RL目标，而非仅继续看相同数据”的解释。PathVQA Test3362为63.12%，100%可解析、100%严格格式且无截断；OmniMedVQA8518仍在运行，最终泛化结论待其完成后更新。

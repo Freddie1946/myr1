@@ -34,7 +34,7 @@
 | 750 SFT + 250 rule-RL | `REEVAL` | 同上。 |
 | 3000 L-LoRA SFT + 1000 full rule-RL（n=4） | `READY` | 当前主路线完整端点。 |
 | 3000 L-LoRA SFT + 1000 full rule-RL（n=8） | `READY` | 当前主路线完整端点和 Stage3 parent。 |
-| 3000 L-LoRA SFT + 额外1000 LoRA-SFT | `RUNNING` | 训练、PathMMU Val/Test、PathVQA Val、MMMU和视觉依赖已完成；PathVQA Test3362与OmniMedVQA8518运行中。 |
+| 3000 L-LoRA SFT + 额外1000 LoRA-SFT | `RUNNING` | 训练、PathMMU Val/Test、PathVQA Val/Test、MMMU和视觉依赖已完成；OmniMedVQA8518运行中。 |
 | 历史 full-SFT3000 + 额外1000 full-SFT | `REEVAL` | 权重存在，旧评测合同不宜直接混入当前表。 |
 | 0 SFT + 4000 rule-RL | `PARTIAL` | checkpoint-2500 覆盖全部4000条至少一次，但原6000-step/3-epoch计划在2601停止；不能写成完整4000-RL。 |
 
@@ -67,9 +67,9 @@
 5. Normal、Shuffle、Blank 与 `Delta_vision`；
 6. Base-correct→model-wrong、Base-wrong→model-correct 的 paired flips 和代表性 bad/good cases。
 
-状态：主 lineage `READY`；历史 full-SFT/Stage2 OmniMedVQA `RUNNING`；新增 LoRA-4000 的短程诊断已齐，全量 PathVQA/OmniMedVQA `RUNNING`。
+状态：主 lineage `READY`；历史 full-SFT/Stage2 OmniMedVQA `RUNNING`；新增 LoRA-4000除OmniMedVQA外已齐。
 
-LoRA-4000 当前结果：PathMMU Val 52.99%、Test 56.56%；PathVQA Val 自由 Yes/No 60.35%、固定 A/B 64.45%；MMMU 56.03%；Normal/Shuffle/Blank为63.67%/50.00%/49.61%。相对 LoRA-SFT3000 parent 的PathMMU Test仅-0.10 pp，而full rule-RL n4/n8相对它分别+4.60/+6.91 pp，配对检验均显著。
+LoRA-4000 当前结果：PathMMU Val 52.99%、Test 56.56%；PathVQA Val自由Yes/No 60.35%、固定A/B 64.45%，PathVQA Test固定A/B 63.12%；MMMU 56.03%；Normal/Shuffle/Blank为63.67%/50.00%/49.61%。相对 LoRA-SFT3000 parent 的PathMMU Test仅-0.10 pp，而full rule-RL n4/n8相对它分别+4.60/+6.91 pp，配对检验均显著。
 
 ## 表 5：不确定性与统计显著性
 

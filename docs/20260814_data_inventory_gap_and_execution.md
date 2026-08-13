@@ -8,7 +8,7 @@
 - 当前 L-r16-SFT3000 selected parent：PathMMU Val/Test、PathVQA固定A/B、OmniMedVQA、MMMU、视觉依赖均已有。
 - full rule-RL n4/n8 step1000：域内、PathVQA固定A/B、OmniMedVQA、MMMU均已有；n8是Stage3 parent。
 - GPT-4o Stage3 step500/1000/1500：PathMMU、PathVQA固定A/B、OmniMedVQA、MMMU已齐。
-- LoRA-SFT4000控制：训练完成；PathMMU Val/Test、PathVQA Val两种接口、MMMU、Normal/Shuffle/Blank已齐；PathVQA Test3362与OmniMedVQA运行中。
+- LoRA-SFT4000控制：训练完成；PathMMU Val/Test、PathVQA Val两种接口、PathVQA Test固定A/B、MMMU、Normal/Shuffle/Blank已齐；OmniMedVQA运行中。PathVQA Test为2122/3362=63.12%，100%可解析且无截断。
 
 ### 数据规模/配比消融
 
