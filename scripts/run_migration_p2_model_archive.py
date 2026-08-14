@@ -45,6 +45,17 @@ REMOTE_COVERED = (
 )
 
 
+def archive_scope(root: Path) -> bool:
+    """Apply user-approved P2 exclusions before hashing or uploading."""
+    relative = root.relative_to(RUNS).as_posix().lower()
+    parts = relative.split("/")
+    if "kimi" in relative or "grok" in relative:
+        return False
+    if any("smoke" in part or "gate" in part for part in parts):
+        return False
+    return True
+
+
 def now() -> str:
     return datetime.now(timezone.utc).astimezone().isoformat()
 
@@ -130,7 +141,7 @@ def discover_inventory(state_root: Path) -> dict[str, Any]:
     roots = sorted(
         root
         for root, directories, files in os.walk(RUNS)
-        if loadable(Path(root))
+        if loadable(Path(root)) and archive_scope(Path(root))
     )
     covered = {(RUNS / item).resolve() for item in REMOTE_COVERED}
     covered_fingerprints = {
@@ -190,6 +201,7 @@ def discover_inventory(state_root: Path) -> dict[str, Any]:
         "created_at": now(),
         "repo_id": REPO_ID,
         "policy": "model_only_content_deduplicated_no_optimizer_scheduler_rng",
+        "excluded_by_user_policy": "Kimi, Grok, smoke and gate snapshots",
         "discovered_loadable_roots": len(roots),
         "remote_covered_roots": sum(value == "REMOTE_COVERED" for value in aliases.values()),
         "unique_snapshot_count": len(snapshots),
