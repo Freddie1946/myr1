@@ -161,7 +161,14 @@ def discover_inventory(state_root: Path) -> dict[str, Any]:
         for root, directories, files in os.walk(RUNS)
         if loadable(Path(root)) and archive_scope(Path(root))
     )
-    covered = {(RUNS / item).resolve() for item in REMOTE_COVERED}
+    # Do not re-hash large P1/private snapshots that are outside the exact P2
+    # allow-list.  With the current two-item archive none of REMOTE_COVERED is
+    # eligible, so this avoids hundreds of GB of redundant local reads.
+    covered = {
+        root
+        for item in REMOTE_COVERED
+        if archive_scope(root := (RUNS / item).resolve())
+    }
     covered_fingerprints = {
         fingerprint
         for root in covered
