@@ -30,6 +30,17 @@ EXCLUDED_NAMES = {"README.md", "scheduler.pt", "zero_to_fp32.py"}
 EXCLUDED_SUFFIXES = ("optim_states.pt", "model_states.pt")
 EXCLUDED_PREFIXES = ("rng_state",)
 
+# After the P1 and historical-remote audit, every critical SFT, Stage2,
+# selected Stage3, and clean n4/n8 full-rule model already has a verified
+# remote copy.  P2 therefore contains exactly the two remaining rule-RL
+# ablation endpoints below.  Keep this as an exact allow-list: exploratory
+# LoRA, visual-adaptation, mechanism, and intermediate data-ratio weights are
+# intentionally represented by their result artifacts only.
+P2_KEY_SNAPSHOTS = {
+    "data_ratio_rule_rl_ablation_v1/formal_sequence/tasks/base_rule_rl4000/output/checkpoint-2500",
+    "data_ratio_rule_rl_ablation_v1/formal_sequence/tasks/stage2_continue_rule_rl1000/output/checkpoint-1500",
+}
+
 # These model versions already have a complete remote P1/private archive.
 REMOTE_COVERED = (
     "stage3_process_grpo/gpt4o_n8_parent_full_20260813/epoch_model_snapshots/checkpoint-500",
@@ -48,34 +59,7 @@ REMOTE_COVERED = (
 def archive_scope(root: Path) -> bool:
     """Apply user-approved P2 exclusions before hashing or uploading."""
     relative = root.relative_to(RUNS).as_posix().lower()
-    parts = relative.split("/")
-    if "kimi" in relative or "grok" in relative:
-        return False
-    if any("smoke" in part or "gate" in part for part in parts):
-        return False
-    # Data-ratio models are reproducible screening artifacts.  Their metrics and
-    # manifests are retained in the evaluation archive, but their weights are
-    # deferred from P2 at the user's request.
-    if relative.startswith("data_ratio_rule_rl_ablation_v1/"):
-        return False
-    # Full-language rule-RL runs are very large.  Preserve only the canonical
-    # last model snapshot for each run; earlier checkpoints and duplicate
-    # Trainer output copies remain local and can be added in a later tier.
-    if relative.startswith("full_language_rule_rl_"):
-        canonical_last = (
-            "full_language_rule_rl_capacity_20260811/model_snapshots/checkpoint-500",
-            "full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/model_snapshots/checkpoint-1000",
-            "full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000/model_snapshots/checkpoint-1000",
-            "full_language_rule_rl_n4_epoch2_resume_20260812/model_snapshots/checkpoint-1000",
-            "full_language_rule_rl_n8_capacity_20260812/model_snapshots/checkpoint-500",
-        )
-        return relative in canonical_last
-    # The historical SFT4000 -> rule-RL control only needs its final/key
-    # checkpoint.  It is already listed in REMOTE_COVERED, so this rule also
-    # prevents redundant hashing of its output copy.
-    if relative.startswith("stage2_control_sft4000/"):
-        return relative.endswith("/epoch_snapshots/checkpoint-250")
-    return True
+    return relative in P2_KEY_SNAPSHOTS
 
 
 def upload_priority(item: dict[str, Any]) -> tuple[int, str]:
@@ -236,9 +220,10 @@ def discover_inventory(state_root: Path) -> dict[str, Any]:
         "repo_id": REPO_ID,
         "policy": "model_only_content_deduplicated_no_optimizer_scheduler_rng",
         "excluded_by_user_policy": (
-            "Kimi, Grok, smoke/gate snapshots, data-ratio model weights; "
-            "full-language rule-RL and historical SFT4000 retain only canonical "
-            "last/key checkpoints"
+            "Exact allow-list: only base rule-RL4000 checkpoint-2500 and "
+            "Stage2-continue-rule-RL1000 checkpoint-1500. All exploratory LoRA, "
+            "visual-adaptation, mechanism, intermediate data-ratio, Kimi, Grok, "
+            "smoke, and gate weights are excluded."
         ),
         "discovered_loadable_roots": len(roots),
         "remote_covered_roots": sum(value == "REMOTE_COVERED" for value in aliases.values()),
