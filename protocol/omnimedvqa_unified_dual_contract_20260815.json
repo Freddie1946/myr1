@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "approved_and_frozen",
+  "status": "corrected_primary_approved_and_queued_historical_reproduction_deferred",
   "approved_date": "2026-08-15",
   "dataset": {
     "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json",
@@ -42,7 +42,8 @@
       "dtype": "bfloat16",
       "quantization": "none",
       "primary_metric": "raw-completion official SequenceMatcher accuracy",
-      "role": "manuscript Table IV reproduction and output-contract sensitivity only"
+      "role": "manuscript Table IV reproduction and output-contract sensitivity only",
+      "execution_status": "deferred_by_user_on_2026-08-15; not part of the active automatic queue"
     }
   },
   "core_first_roster": [
@@ -54,6 +55,14 @@
     "historical_sft4000_control",
     "historical_stage2_outcome_grpo",
     "stage2_continued_rule_rl1000"
+  ],
+  "compatible_baseline_second_wave": [
+    "qwen2_5_vl_3b",
+    "lingshu_7b",
+    "medvlm_r1",
+    "medgemma_4b_it",
+    "scalereasoner_r1",
+    "llama3_2_vision_11b"
   ],
   "selection_boundary": "All three GPT-4o checkpoints were included before the unified OmniMedVQA rerun; OmniMedVQA is not used to retroactively redefine their training history.",
   "statistics": "Report deterministic full-split results with image/case-cluster bootstrap confidence intervals; repeated greedy runs are identical and are not presented as independent random-seed evidence.",

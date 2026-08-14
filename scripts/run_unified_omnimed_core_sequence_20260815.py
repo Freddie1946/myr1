@@ -42,10 +42,35 @@ MODELS = (
     ("historical_stage2_outcome_grpo", 6, WORK / "pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000"),
     ("stage2_continued_rule_rl1000", 7, WORK / "pathvlm_r1_v1_a100/runs/data_ratio_rule_rl_ablation_v1/formal_sequence/tasks/stage2_continue_rule_rl1000/output/checkpoint-1500"),
 )
-TRACKS = (
-    ("corrected_primary", "omnimed_domain_think_answer_v4_1024", 1024),
-    ("historical_reproduction", "legacy_v1_64", 64),
+BASELINES = (
+    ("qwen2_5_vl_3b", 0, WORK / "pathvlm_revision_eval_a100/models/Qwen--Qwen2.5-VL-3B-Instruct--66285546d2b821cf421d4f5eb2576359d3770cd3"),
+    ("lingshu_7b", 1, WORK / "pathvlm_revision_eval_a100/models/lingshu-medical-mllm--Lingshu-7B--b98aecd41dfd9d7545a6b8e2f4743ae8471bd7a9"),
+    ("medvlm_r1", 2, WORK / "pathvlm_revision_eval_a100/models/JZPeterPan--MedVLM-R1--d256f2cfdf98c6872c1dc9f20b7dd52f49374fe9"),
+    ("medgemma_4b_it", 3, WORK / "pathvlm_revision_eval_a100/models/google--medgemma-4b-it--290cda5eeccbee130f987c4ad74a59ae6f196408"),
+    ("scalereasoner_r1", 4, WORK / "pathvlm_revision_eval_a100/models/ChiPhan1110--ScaleReasoner-R1--ce7f51daa9731f106874ac2bee0e9a864f7a3636"),
+    ("llama3_2_vision_11b", 5, WORK / "pathvlm_r1_v1_a100/models/Llama-3.2-11B-Vision-Instruct-modelscope-master"),
 )
+TRACKS = (("corrected_primary", "omnimed_domain_think_answer_v4_1024", 1024),)
+BACKENDS = {
+    "medvlm_r1": "qwen2_vl",
+    "medgemma_4b_it": "gemma3",
+    "llama3_2_vision_11b": "mllama",
+}
+BATCH_SIZES = {
+    "lingshu_7b": 8,
+    "medvlm_r1": 8,
+    "medgemma_4b_it": 4,
+    "scalereasoner_r1": 8,
+    "llama3_2_vision_11b": 2,
+}
+EXISTING_CORRECTED_RESULTS = {
+    "stage3_gpt4o_step500": WORK / "pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/omnimedvqa_8518",
+    "stage3_gpt4o_step1000": WORK / "pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/omnimedvqa_8518",
+    "stage3_gpt4o_step1500": WORK / "pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/omnimedvqa_8518",
+    "base_qwen2_5_vl_7b": WORK / "pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/base/omnimedvqa_8518",
+    "historical_sft3000": WORK / "pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/omnimedvqa_8518",
+    "historical_stage2_outcome_grpo": WORK / "pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/omnimedvqa_8518",
+}
 
 
 def now() -> str:
@@ -95,6 +120,12 @@ def backup_output(output: Path, track: str, model_id: str, upload_lock: threadin
         return api.dataset_info(BACKUP_REPO, token=True).sha
 
 
+def result_output(track: str, model_id: str) -> Path:
+    if track == "corrected_primary" and model_id in EXISTING_CORRECTED_RESULTS:
+        return EXISTING_CORRECTED_RESULTS[model_id]
+    return OUTPUT_ROOT / track / model_id
+
+
 def run_one(
     model_id: str, gpu: int, model: Path, track: str, contract: str, max_tokens: int,
     state: dict[str, Any], state_path: Path, state_lock: threading.Lock,
@@ -102,7 +133,7 @@ def run_one(
 ) -> None:
     if not model.is_dir():
         raise FileNotFoundError(model)
-    output = OUTPUT_ROOT / track / model_id
+    output = result_output(track, model_id)
     metrics = output / "metrics.json"
     task_key = f"{track}:{model_id}"
     while gpu_memory_mib(gpu) > 2048:
@@ -112,12 +143,21 @@ def run_one(
     log_path = OUTPUT_ROOT / "logs" / f"{track}__{model_id}.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     for attempt in range(1, 4):
+        if metrics.is_file():
+            existing_metrics = json.loads(metrics.read_text(encoding="utf-8"))
+            if existing_metrics.get("count") != 8518:
+                raise RuntimeError(f"{model_id} has non-full OmniMedVQA metrics: {metrics}")
+            if existing_metrics.get("generation_contract") != contract:
+                raise RuntimeError(
+                    f"{model_id} contract mismatch: {existing_metrics.get('generation_contract')} != {contract}"
+                )
         if not metrics.is_file():
             command = [
                 str(PYTHON), str(REPO / "scripts/run_external_vqa_qwen.py"),
-                "--task", "omnimedvqa", "--model", str(model), "--backend", "qwen2_5_vl",
+                "--task", "omnimedvqa", "--model", str(model),
+                "--backend", BACKENDS.get(model_id, "qwen2_5_vl"),
                 "--data", str(DATA), "--output-dir", str(output), "--split-role", "external_test",
-                "--batch-size", "16", "--max-new-tokens", str(max_tokens),
+                "--batch-size", str(BATCH_SIZES.get(model_id, 16)), "--max-new-tokens", str(max_tokens),
                 "--generation-contract", contract,
             ]
             if (output / "predictions.jsonl").is_file():
@@ -160,7 +200,7 @@ def main() -> None:
         "started_at": now(), "pid": os.getpid(), "tasks": {},
     }
     for track, _, _ in TRACKS:
-        for model_id, gpu, model in MODELS:
+        for model_id, gpu, model in MODELS + BASELINES:
             state["tasks"][f"{track}:{model_id}"] = {
                 "status": "queued", "gpu": gpu, "model": str(model),
             }
@@ -168,36 +208,37 @@ def main() -> None:
     wait_for_prerequisite(args.poll_seconds)
 
     for track, contract, max_tokens in TRACKS:
-        state.update({"status": "running", "current_track": track, "updated_at": now()})
-        atomic_json(state_path, state, state_lock)
-        failures: list[str] = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=len(MODELS)) as executor:
-            futures = {
-                executor.submit(
-                    run_one, model_id, gpu, model, track, contract, max_tokens,
-                    state, state_path, state_lock, upload_lock,
-                    args.poll_seconds, args.retry_seconds,
-                ): model_id
-                for model_id, gpu, model in MODELS
-            }
-            for future in concurrent.futures.as_completed(futures):
-                model_id = futures[future]
-                try:
-                    future.result()
-                except Exception as error:
-                    failures.append(model_id)
-                    state["tasks"][f"{track}:{model_id}"].update({"status": "failed", "error": repr(error), "updated_at": now()})
-                    atomic_json(state_path, state, state_lock)
-        if failures:
-            state.update({"status": "failed", "failed_track": track, "failures": failures, "updated_at": now()})
+        for wave_name, roster in (("core", MODELS), ("compatible_baselines", BASELINES)):
+            state.update({"status": "running", "current_track": track, "current_wave": wave_name, "updated_at": now()})
             atomic_json(state_path, state, state_lock)
-            raise SystemExit(f"OmniMedVQA failures in {track}: {failures}")
+            failures: list[str] = []
+            with concurrent.futures.ThreadPoolExecutor(max_workers=len(roster)) as executor:
+                futures = {
+                    executor.submit(
+                        run_one, model_id, gpu, model, track, contract, max_tokens,
+                        state, state_path, state_lock, upload_lock,
+                        args.poll_seconds, args.retry_seconds,
+                    ): model_id
+                    for model_id, gpu, model in roster
+                }
+                for future in concurrent.futures.as_completed(futures):
+                    model_id = futures[future]
+                    try:
+                        future.result()
+                    except Exception as error:
+                        failures.append(model_id)
+                        state["tasks"][f"{track}:{model_id}"].update({"status": "failed", "error": repr(error), "updated_at": now()})
+                        atomic_json(state_path, state, state_lock)
+            if failures:
+                state.update({"status": "failed", "failed_track": track, "failed_wave": wave_name, "failures": failures, "updated_at": now()})
+                atomic_json(state_path, state, state_lock)
+                raise SystemExit(f"OmniMedVQA failures in {track}/{wave_name}: {failures}")
 
     summary: dict[str, Any] = {"schema_version": 1, "status": "completed", "completed_at": now(), "tracks": {}}
     for track, _, _ in TRACKS:
         summary["tracks"][track] = {}
-        for model_id, _, _ in MODELS:
-            metrics = json.loads((OUTPUT_ROOT / track / model_id / "metrics.json").read_text(encoding="utf-8"))
+        for model_id, _, _ in MODELS + BASELINES:
+            metrics = json.loads((result_output(track, model_id) / "metrics.json").read_text(encoding="utf-8"))
             summary["tracks"][track][model_id] = metrics
     summary_path = OUTPUT_ROOT / "complete_summary.json"
     atomic_json(summary_path, summary, state_lock)
