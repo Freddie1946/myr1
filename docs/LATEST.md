@@ -1,5 +1,16 @@
 # Latest recovery pointer
 
+Latest interpretability and human-rating case-selection closure:
+
+0. `INTERPRETABILITY_AND_HUMAN_RATING_CASE_SELECTION_20260814.md`
+0. `../protocol/effective_interpretability_panel_20case_20260814.json`
+
+The strict interpretability gate is met with 20 clean-correct, decision-interface-consistent cases
+whose dual-external-model consensus ROI deletion lowers the target margin more than matched random
+deletion. A separate blinded 60-case packet is frozen for human agreement with the Stage3 process
+reward. External regions remain pseudo-reference annotations pending pathology-expert review, and
+the aggregate reference-minus-random confidence interval still includes zero.
+
 Latest final non-human result closure, uniform tables and migration handoff:
 
 0. `20260814_final_unified_results_tables.md`
