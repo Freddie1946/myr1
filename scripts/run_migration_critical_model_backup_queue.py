@@ -38,6 +38,11 @@ TASKS = (
         "source": WORK / "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/model_snapshots/checkpoint-1000",
     },
     {
+        "id": "gpt4o_stage3_n8_parent_500_1000_1500",
+        "repo": "Freddie1946/PathVLM-R1-Stage3-GPT4o-n8-parent-seed42-GatedArchive",
+        "source": WORK / "pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_n8_parent_full_20260813/epoch_model_snapshots",
+    },
+    {
         "id": "selected_lora_sft3000_step80",
         "repo": "Freddie1946/PathVLM-R1-LoRA-SFT3000-step80-seed42-GatedArchive",
         "source": WORK / "pathvlm_r1_v1_a100/runs/formal_selected_sft3000_20260811/output/checkpoint-80",
@@ -46,11 +51,6 @@ TASKS = (
         "id": "lora_sft4000_control",
         "repo": "Freddie1946/PathVLM-R1-LoRA-SFT4000-Control-seed42-GatedArchive",
         "source": WORK / "pathvlm_r1_v1_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/output",
-    },
-    {
-        "id": "gpt4o_stage3_n8_parent_500_1000_1500",
-        "repo": "Freddie1946/PathVLM-R1-Stage3-GPT4o-n8-parent-seed42-GatedArchive",
-        "source": WORK / "pathvlm_r1_v1_a100/runs/stage3_process_grpo/gpt4o_n8_parent_full_20260813/epoch_model_snapshots",
     },
     {
         "id": "grok43_stage3_500_1000_1500",
