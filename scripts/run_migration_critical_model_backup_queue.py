@@ -36,17 +36,23 @@ TASKS = (
         "id": "selected_lora_sft3000_step80",
         "repo": "Freddie1946/PathVLM-R1-LoRA-SFT3000-step80-seed42-GatedArchive",
         "source": WORK / "pathvlm_r1_v1_a100/runs/formal_selected_sft3000_20260811/output/checkpoint-80",
+        # PEFT generated a model card whose ``base_model`` is a local absolute
+        # path.  The Hub rejects that metadata, while it is not needed to load
+        # the adapter archive.
+        "exclude_names": ("README.md",),
     },
     {
         "id": "lora_sft4000_control",
         "repo": "Freddie1946/PathVLM-R1-LoRA-SFT4000-Control-seed42-GatedArchive",
         "source": WORK / "pathvlm_r1_v1_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/output",
+        "exclude_names": ("README.md",),
     },
 )
 
 EXCLUDED_NAMES = {"scheduler.pt", "zero_to_fp32.py"}
 EXCLUDED_PREFIXES = ("rng_state",)
 EXCLUDED_SUFFIXES = ("optim_states.pt", "model_states.pt")
+SMALL_FOLDER_UPLOAD_THRESHOLD_BYTES = 2 * 1024**3
 
 
 def now() -> str:
@@ -67,6 +73,8 @@ def excluded(relative: Path, task: dict[str, Any]) -> bool:
         return True
     name = relative.name
     return (
+        name in task.get("exclude_names", ())
+        or
         name in EXCLUDED_NAMES
         or name.startswith(EXCLUDED_PREFIXES)
         or name.endswith(EXCLUDED_SUFFIXES)
@@ -180,6 +188,54 @@ def upload_with_retry(task: dict[str, Any], state: dict[str, Any], state_path: P
         attempt += 1
         state["tasks"][task["id"]].update({"status": "uploading", "attempt": attempt, "updated_at": now()})
         atomic_json(state_path, state)
+        # ``upload-large-folder`` is optimized for very large trees, but its
+        # internal retry/cache worker can stay alive indefinitely when a small
+        # adapter upload is interrupted by a proxy.  For the remaining compact
+        # LoRA archives, use one normal Hub folder commit instead.  The outer
+        # queue still provides bounded-delay retries and remote verification.
+        if manifest["total_bytes"] <= SMALL_FOLDER_UPLOAD_THRESHOLD_BYTES:
+            try:
+                ignore_patterns = [
+                    ".cache/**", "global_step*/**", "*optim_states.pt",
+                    "*model_states.pt", "scheduler.pt", "rng_state*.pth",
+                ]
+                ignore_patterns.extend(
+                    f"{directory}/**"
+                    for directory in task.get("exclude_top_level_dirs", ())
+                )
+                ignore_patterns.extend(task.get("exclude_names", ()))
+                api.upload_folder(
+                    folder_path=str(task["source"]),
+                    repo_id=task["repo"],
+                    repo_type="model",
+                    commit_message=f"Upload model-only snapshot for {task['id']}",
+                    ignore_patterns=ignore_patterns,
+                )
+            except Exception as error:
+                state["tasks"][task["id"]].update(
+                    {
+                        "status": "retry_wait",
+                        "direct_upload_error": repr(error),
+                        "updated_at": now(),
+                    }
+                )
+                atomic_json(state_path, state)
+                time.sleep(retry_seconds)
+                continue
+            api.upload_file(
+                path_or_fileobj=str(manifest_path), path_in_repo="snapshot_manifest.json",
+                repo_id=task["repo"], repo_type="model",
+                commit_message=f"Add verified model-only manifest for {task['id']}",
+            )
+            complete, revision = remote_complete(api, task, manifest)
+            if complete:
+                break
+            state["tasks"][task["id"]].update(
+                {"status": "retry_wait", "updated_at": now()}
+            )
+            atomic_json(state_path, state)
+            time.sleep(retry_seconds)
+            continue
         command = [
             "/usr/local/bin/hf", "upload-large-folder", task["repo"], str(task["source"]),
             "--repo-type", "model", "--num-workers", "1", "--no-bars",
@@ -189,6 +245,8 @@ def upload_with_retry(task: dict[str, Any], state: dict[str, Any], state_path: P
         ]
         for directory in task.get("exclude_top_level_dirs", ()):
             command.extend(["--exclude", f"{directory}/**"])
+        for name in task.get("exclude_names", ()):
+            command.extend(["--exclude", name])
         completed = subprocess.run(command, check=False)
         if completed.returncode == 0:
             # ``upload-large-folder`` keeps local, repository-agnostic upload
@@ -212,6 +270,7 @@ def upload_with_retry(task: dict[str, Any], state: dict[str, Any], state_path: P
                         f"{directory}/**"
                         for directory in task.get("exclude_top_level_dirs", ())
                     )
+                    ignore_patterns.extend(task.get("exclude_names", ()))
                     api.upload_folder(
                         folder_path=str(task["source"]),
                         repo_id=task["repo"],
