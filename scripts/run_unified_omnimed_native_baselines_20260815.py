@@ -35,7 +35,7 @@ MAX_TOKENS = 1024
 NATIVE_TASKS = (
     {
         "id": "huatuogpt_vision_7b",
-        "gpu": "0",
+        "gpu": "6",
         "python": WORK / "pathvlm_revision_eval_a100/envs/huatuo_llava/bin/python",
         "runner": REPO / "scripts/run_external_vqa_huatuo.py",
         "model": WORK / "pathvlm_revision_eval_a100/models/FreedomIntelligence--HuatuoGPT-Vision-7B--34dfcdbb7728ff38da865839f342b88c4cf6ef39",
@@ -43,7 +43,7 @@ NATIVE_TASKS = (
     },
     {
         "id": "internvl3_8b",
-        "gpu": "1",
+        "gpu": "7",
         "python": WORK / "pathvlm_revision_eval_a100/envs/internvl3/bin/python",
         "runner": REPO / "scripts/run_external_vqa_internvl.py",
         "model": WORK / "pathvlm_revision_eval_a100/models/OpenGVLab--InternVL3-8B--853e3a797a661694b1b8ece0cb72dc2b23e3dac9",
@@ -224,7 +224,8 @@ def main() -> None:
         },
     }
     write_state(state_path, state, state_lock)
-    wait_for_native_handoff(args.poll_seconds)
+    # Admit each native task independently. Huatuo and InternVL use otherwise
+    # idle GPUs 6/7 immediately; DeepSeek waits on its assigned GPU if needed.
     state.update({"status": "running_native_single_gpu", "updated_at": now()})
     write_state(state_path, state, state_lock)
     failures: list[str] = []
