@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import difflib
 import hashlib
 import json
+import re
 import statistics
 from pathlib import Path
 from typing import Any
@@ -27,14 +29,54 @@ from llava.mm_utils import (
 )
 from llava.model.builder import load_pretrained_model
 from llava.utils import disable_torch_init
+from external_vqa_contract import normalize_short_answer
 from pathmmu_rewards import accuracy_reward, choice_letter, format_reward
 
 
-QUESTION_TEMPLATE = (
+REASONING_QUESTION_TEMPLATE = (
     "{question}\n"
     "Give concise image-grounded reasoning inside <think>...</think>. Then output exactly one "
     "option letter (A, B, C, or D) inside <answer>...</answer>."
 )
+LETTER_ONLY_QUESTION_TEMPLATE = (
+    "{question}\n"
+    "Return exactly one uppercase option letter: A, B, C, or D. Do not output any other text."
+)
+OPTION_TEXT_QUESTION_TEMPLATE = (
+    "{question}\n"
+    "Answer using only the complete text of the single best option. Do not explain."
+)
+
+
+def option_texts(problem: str) -> dict[str, str]:
+    matches = re.findall(
+        r"(?m)^\s*([A-D])\)\s*(.+?)(?=\n\s*[A-D]\)\s*|\Z)", str(problem).strip()
+    )
+    result = {letter: text.strip() for letter, text in matches}
+    if len(result) < 2:
+        raise ValueError("could not parse PathMMU option texts")
+    return result
+
+
+def option_text_choice(completion: str, problem: str) -> tuple[str | None, str, dict[str, float]]:
+    options = option_texts(problem)
+    explicit = choice_letter(completion)
+    if explicit in options:
+        return explicit, "explicit_choice_letter", {}
+    candidate = normalize_short_answer(completion)
+    exact = [
+        letter for letter, text in options.items()
+        if normalize_short_answer(text) == candidate
+    ]
+    if len(exact) == 1:
+        return exact[0], "exact_option_text", {}
+    similarities = {
+        letter: difflib.SequenceMatcher(None, text, str(completion)).ratio()
+        for letter, text in options.items()
+    }
+    if not similarities or max(similarities.values()) <= 0:
+        return None, "unresolved", similarities
+    return max(similarities, key=similarities.get), "option_text_sequence_matcher", similarities
 
 
 def sha256_file(path: Path) -> str:
@@ -80,6 +122,11 @@ def parse_args() -> argparse.Namespace:
         choices=("validation_smoke", "test999_development"),
     )
     parser.add_argument("--max-new-tokens", type=int, default=1024)
+    parser.add_argument(
+        "--prompt-contract",
+        choices=("reasoning_v1", "letter_only_v2", "option_text_v3"),
+        default="reasoning_v1",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
     return parser.parse_args()
@@ -87,8 +134,15 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    if args.max_new_tokens != 1024:
-        raise ValueError("the approved diagnostic contract requires max_new_tokens=1024")
+    expected_cap = {
+        "reasoning_v1": 1024,
+        "letter_only_v2": 16,
+        "option_text_v3": 128,
+    }[args.prompt_contract]
+    if args.max_new_tokens != expected_cap:
+        raise ValueError(
+            f"{args.prompt_contract} requires max_new_tokens={expected_cap}"
+        )
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 999 if args.split_role == "test999_development" else 385
     if len(records) != expected:
@@ -107,6 +161,11 @@ def main() -> None:
     if metrics_path.exists():
         raise FileExistsError(metrics_path)
 
+    question_template = {
+        "reasoning_v1": REASONING_QUESTION_TEMPLATE,
+        "letter_only_v2": LETTER_ONLY_QUESTION_TEMPLATE,
+        "option_text_v3": OPTION_TEXT_QUESTION_TEMPLATE,
+    }[args.prompt_contract]
     config = {
         "schema_version": 1,
         "status": "running",
@@ -119,7 +178,8 @@ def main() -> None:
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
         "selected_count": len(records),
-        "prompt_template": "<image>\n" + QUESTION_TEMPLATE,
+        "prompt_contract": args.prompt_contract,
+        "prompt_template": "<image>\n" + question_template,
         "conversation_mode": "mistral_instruct",
         "dtype": "bfloat16",
         "quantization": "none",
@@ -147,7 +207,7 @@ def main() -> None:
 
     for index in range(len(rows), len(records)):
         record = records[index]
-        question = QUESTION_TEMPLATE.format(question=record["problem"])
+        question = question_template.format(question=record["problem"])
         if model.config.mm_use_im_start_end:
             question = (
                 DEFAULT_IM_START_TOKEN
@@ -178,7 +238,7 @@ def main() -> None:
                 pad_token_id=tokenizer.eos_token_id,
                 do_sample=False,
                 num_beams=1,
-                max_new_tokens=1024,
+                max_new_tokens=args.max_new_tokens,
                 use_cache=True,
             )
         sequence = output_ids[0]
@@ -190,6 +250,17 @@ def main() -> None:
         completion = tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
         token_count = len(generated_ids)
         wrapped = [[{"role": "assistant", "content": completion}]]
+        target_choice = choice_letter(record["solution"])
+        if args.prompt_contract == "option_text_v3":
+            predicted_choice, prediction_source, option_similarities = option_text_choice(
+                completion, record["problem"]
+            )
+            correct = predicted_choice == target_choice
+        else:
+            predicted_choice = choice_letter(completion)
+            prediction_source = "choice_letter_parser"
+            option_similarities = None
+            correct = bool(accuracy_reward(wrapped, [record["solution"]])[0])
         row = {
             "index": index,
             "source_record_sha256": record_sha256(record),
@@ -201,10 +272,12 @@ def main() -> None:
             "ended_with_eos": bool(
                 generated_ids and generated_ids[-1] == tokenizer.eos_token_id
             ),
-            "reached_generation_cap": token_count >= 1024,
-            "predicted_choice": choice_letter(completion),
-            "target_choice": choice_letter(record["solution"]),
-            "accuracy_reward": accuracy_reward(wrapped, [record["solution"]])[0],
+            "reached_generation_cap": token_count >= args.max_new_tokens,
+            "predicted_choice": predicted_choice,
+            "prediction_source": prediction_source,
+            "option_similarities": option_similarities,
+            "target_choice": target_choice,
+            "accuracy_reward": float(correct),
             "format_reward": format_reward(wrapped)[0],
             "test999_development_diagnostic": args.split_role
             == "test999_development",
@@ -236,6 +309,15 @@ def main() -> None:
         "count": len(rows),
         "correct": correct,
         "accuracy": correct / len(rows),
+        "primary_metric": (
+            "contract_aligned_option_text_sequence_matcher_accuracy"
+            if args.prompt_contract == "option_text_v3"
+            else "explicit_choice_accuracy"
+        ),
+        "prediction_source_counts": {
+            source: sum(row.get("prediction_source") == source for row in rows)
+            for source in sorted({row.get("prediction_source") for row in rows})
+        },
         "format_correct": int(sum(row["format_reward"] for row in rows)),
         "choice_extracted": sum(row["predicted_choice"] is not None for row in rows),
         "empty_completion_count": sum(not row["completion"] for row in rows),

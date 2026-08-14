@@ -1,5 +1,24 @@
 # Latest recovery pointer
 
+Latest machine-migration backup plan:
+
+0. `20260815_machine_migration_backup_plan.md`
+
+The backup is layered into Git protocol/code, a private secret-free Codex online snapshot,
+public+manual-gated immutable evaluation/model archives, and license-aware rebuild manifests for
+third-party foundations and caches. Active JSONL outputs are added only as a later verified
+increment; no local deletion is authorized by this plan.
+
+Latest PathVQA dual-contract reporting decision:
+
+0. `20260814_pathvqa_yesno_primary_ab_diagnostic_contract.md`
+0. `../protocol/pathvqa_yesno_primary_ab_diagnostic_contract_20260814.json`
+
+Original free-generation Yes/No is the primary PathVQA binary result and preserves comparability
+with historical external baselines. Fixed `A = Yes, B = No` structured generation is retained as a
+same-case supplementary interface diagnostic. It may quantify recovery from task/output-interface
+drift, but it does not overwrite, pool with, or select checkpoints in place of the Yes/No result.
+
 Latest interpretability and human-rating case-selection closure:
 
 0. `INTERPRETABILITY_AND_HUMAN_RATING_CASE_SELECTION_20260814.md`
@@ -22,14 +41,13 @@ collect the sparse data-ratio screen and five-seed inference repeats, retain onl
 paired uncertainty, and provide a fail-closed audit for the final HF/Git result backup. Human
 pathologist scoring is the only deliberately excluded result cell.
 
-Latest PathVQA fixed-A/B evaluation contract:
+Historical PathVQA fixed-A/B evaluation contract (reporting priority superseded above):
 
 0. `20260812_pathvqa_fixed_ab_evaluation_contract.md`
 
-Future PathVQA binary results use PathMMU-style fixed options (`A = Yes`, `B = No`) with structured
-think/answer free generation as the primary metric. Original Yes/No free generation remains an
-interface audit and forced logits remain a visual-dependence diagnostic; historical results retain
-their original contract labels.
+The A/B prompt, parser and completed raw predictions remain valid as a supplementary interface
+diagnostic. Forced logits remain mechanism-only visual-dependence diagnostics; historical results
+retain their original contract labels.
 
 Latest queued n=4 step500→step1000 explainability comparison:
 

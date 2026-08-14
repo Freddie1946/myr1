@@ -1,7 +1,189 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-13T18:28:36.290793+00:00",
+  "generated_at": "2026-08-14T15:53:47.783784+00:00",
   "core_current_contract": [
+    {
+      "model": "Base Qwen2.5-VL-7B",
+      "pathmmu_val": 0.509090909090909,
+      "pathmmu_test": 0.4864864864864865,
+      "pathvqa_fixed_ab": 0.6055919095776323,
+      "pathvqa_parse_rate": 0.9735276621058894,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.5900446114111294,
+      "omnimed_official": 0.5738436252641466,
+      "mmmu_nonmedical": 0.5603448275862069,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/base/pathmmu_val385/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu_test999/base/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/base/pathvqa_test3362_ab/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/base/omnimedvqa_8518/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/mmmu_nonmedical_dev116/base_max4096/metrics.json"
+      }
+    },
+    {
+      "model": "Historical full-SFT3000",
+      "pathmmu_val": 0.5974025974025974,
+      "pathmmu_test": 0.5825825825825826,
+      "pathvqa_fixed_ab": 0.5624628197501487,
+      "pathvqa_parse_rate": 0.9991076740035693,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.5097440713782578,
+      "omnimed_official": 0.48450340455505986,
+      "mmmu_nonmedical": 0.43103448275862066,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/pathmmu_val385/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/sft3000_parent_test999/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/pathvqa_test3362_ab/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/omnimedvqa_8518/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/mmmu_nonmedical116/metrics.json"
+      }
+    },
+    {
+      "model": "Historical Stage2 outcome-RL",
+      "pathmmu_val": 0.6103896103896104,
+      "pathmmu_test": 0.6096096096096096,
+      "pathvqa_fixed_ab": 0.5559190957763236,
+      "pathvqa_parse_rate": 0.9991076740035693,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.527823432730688,
+      "omnimed_official": 0.492016905376849,
+      "mmmu_nonmedical": 0.47413793103448276,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/pathmmu_val385/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/stage2_rl_test999/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/pathvqa_test3362_ab/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/omnimedvqa_8518/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/mmmu_nonmedical116/metrics.json"
+      }
+    },
+    {
+      "model": "Current L-r16 SFT3000 step80",
+      "pathmmu_val": 0.5454545454545454,
+      "pathmmu_test": 0.5665665665665666,
+      "pathvqa_fixed_ab": 0.6198691255205235,
+      "pathvqa_parse_rate": 0.998810232004759,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.6165766611880723,
+      "omnimed_official": 0.5741958206151678,
+      "mmmu_nonmedical": 0.49137931034482757,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu/step080/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu_test999/step080/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/current_lineage_pathvqa_test3362_ab_20260813/l_r16_sft80/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/omnimedvqa/sft_parent/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/mmmu/sft_parent/metrics.json"
+      }
+    },
+    {
+      "model": "Full rule-RL n4 step1000",
+      "pathmmu_val": 0.5974025974025974,
+      "pathmmu_test": 0.6116116116116116,
+      "pathvqa_fixed_ab": 0.6261154074955384,
+      "pathvqa_parse_rate": 0.9979179060083284,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.6969945996712843,
+      "omnimed_official": 0.5719652500586992,
+      "mmmu_nonmedical": 0.5344827586206896,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000_pathmmu_eval/val/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000_pathmmu_eval/test999/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/current_lineage_pathvqa_test3362_ab_20260813/full_rule_rl_n4_step1000/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/omnimedvqa/full_rl_n4_step1000/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/mmmu/full_rl_n4_step1000/metrics.json"
+      }
+    },
+    {
+      "model": "Full rule-RL n8 step1000",
+      "pathmmu_val": 0.6415584415584416,
+      "pathmmu_test": 0.6346346346346347,
+      "pathvqa_fixed_ab": 0.6261154074955384,
+      "pathvqa_parse_rate": 0.9979179060083284,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.6949988260154966,
+      "omnimed_official": 0.5679737027471238,
+      "mmmu_nonmedical": 0.5431034482758621,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000_pathmmu_eval/val/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000_pathmmu_eval/test999/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/current_lineage_pathvqa_test3362_ab_20260813/full_rule_rl_n8_step1000/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/omnimedvqa/full_rl_n8_step1000/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/mmmu/full_rl_n8_step1000/metrics.json"
+      }
+    },
+    {
+      "model": "GPT-4o Stage3 step500",
+      "pathmmu_val": 0.6571428571428571,
+      "pathmmu_test": 0.6436436436436437,
+      "pathvqa_fixed_ab": 0.6044021415823915,
+      "pathvqa_parse_rate": 0.9982153480071386,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.7433669875557642,
+      "omnimed_official": 0.5415590514205213,
+      "mmmu_nonmedical": 0.5862068965517241,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/pathmmu_val385/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint500_test999_20260813_v2/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/pathvqa_test3362_ab/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/omnimedvqa_8518/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/mmmu_nonmedical116/metrics.json"
+      }
+    },
+    {
+      "model": "GPT-4o Stage3 step1000",
+      "pathmmu_val": 0.6675324675324675,
+      "pathmmu_test": 0.6396396396396397,
+      "pathvqa_fixed_ab": 0.6228435455086259,
+      "pathvqa_parse_rate": 0.9940511600237953,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.737614463489082,
+      "omnimed_official": 0.5586992251702277,
+      "mmmu_nonmedical": 0.603448275862069,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/pathmmu_val385/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1000_test999_20260813_v2/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/pathvqa_test3362_ab/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/omnimedvqa_8518/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/mmmu_nonmedical116/metrics.json"
+      }
+    },
+    {
+      "model": "GPT-4o Stage3 step1500",
+      "pathmmu_val": 0.6519480519480519,
+      "pathmmu_test": 0.6386386386386387,
+      "pathvqa_fixed_ab": 0.6136228435455087,
+      "pathvqa_parse_rate": 0.9848304580606781,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.7500586992251702,
+      "omnimed_official": 0.5718478516083587,
+      "mmmu_nonmedical": 0.5431034482758621,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathmmu_val385/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathmmu_test999/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathvqa_test3362_ab/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/omnimedvqa_8518/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/mmmu_nonmedical116/metrics.json"
+      }
+    },
+    {
+      "model": "LoRA-SFT4000 control",
+      "pathmmu_val": 0.5298701298701298,
+      "pathmmu_test": 0.5655655655655656,
+      "pathvqa_fixed_ab": 0.6311719214753123,
+      "pathvqa_parse_rate": 1.0,
+      "pathvqa_cap_rate": 0.0,
+      "omnimed_contract_aligned": 0.5996712843390467,
+      "omnimed_official": 0.5759567973702747,
+      "mmmu_nonmedical": 0.5603448275862069,
+      "paths": {
+        "pathmmu_val": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/pathmmu_val385/metrics.json",
+        "pathmmu_test": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/pathmmu_test999/metrics.json",
+        "pathvqa": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/pathvqa_test3362_ab/metrics.json",
+        "omni": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/omnimedvqa_8518/metrics.json",
+        "mmmu": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/mmmu_nonmedical116/metrics.json"
+      }
+    }
+  ],
+  "core_supplementary_fixed_ab_diagnostic": [
     {
       "model": "Base Qwen2.5-VL-7B",
       "pathmmu_val": 0.509090909090909,
@@ -950,5 +1132,10 @@
     }
   ],
   "human_expert_scoring": "excluded_pending_user",
-  "contract_note": "Current PathVQA table uses fixed A=Yes/B=No generation. Legacy external baselines remain separately stratified."
+  "pathvqa_reporting_policy": {
+    "primary": "original free-generation Yes/No",
+    "supplementary": "fixed A=Yes/B=No structured generation",
+    "paired_interpretation": "A/B is an interface-sensitivity diagnostic and does not overwrite the primary Yes/No result"
+  },
+  "contract_note": "The core PathVQA column is a supplementary fixed-A/B diagnostic. Primary cross-model reporting uses the separately stratified original/free Yes-No contract."
 }

@@ -4,7 +4,10 @@
 
 本次闭环包含：数据规模/配比消融、最终模型重复推理置信区间、统一域内/域外报表、外部基线与异构 Judge 结果、可解释性计算结果、HF/Git 双备份。唯一明确排除的缺口是后续由用户组织的病理专家 ROI 与生成质量人工评分。
 
-原始 Codex 平台对话不是工作区文件，无法由脚本直接导出。本仓库通过计划、协议、审计、结果表和本交接文档保存可迁移的决策记忆；平台原始对话需使用客户端自身的导出能力另行保存。
+当前个人 Codex 使用的本地 sessions/history/SQLite 状态可以通过
+`scripts/create_codex_online_snapshot.py` 做一致性在线快照，而不必退出当前会话。该快照
+不等同于客户端官方导出，但可用于同一 Codex 环境的迁移恢复；认证文件必须排除并在新机
+重新登录。本仓库中的计划、协议、审计和结果表仍是长期可读的决策记忆。
 
 ## 主结果入口
 
@@ -17,8 +20,9 @@
 
 ## 评测合同边界
 
-- 当前核心 PathVQA 主表使用固定 `A=Yes/B=No`、结构化 think/answer、较高 token 上限的生成合同。
-- 外部基线多数使用历史 short-answer/自由 Yes-No 合同，已经全量完成但必须另表报告，不能伪装为同 prompt 结果。
+- PathVQA 主报告保留原始 Yes/No 答案接口；历史 short-answer 和当前结构化
+  reasoning+Yes/No 子合同必须显式标注。
+- 固定 `A=Yes/B=No` 是同题配对的补充接口敏感性诊断，不覆盖或池化到 Yes/No 主分数。
 - PathMMU Test999 已长期用于开发诊断，不能描述为独立未触碰最终测试。
 - 五次随机推理 t 区间衡量解码 seed 波动；case/image-cluster bootstrap 衡量测试样本不确定性，两者不能互相替代。
 - 不扩展全模型 paired flip/badcase；只保留最终核心模型的最小 paired image-cluster bootstrap/McNemar 证据。

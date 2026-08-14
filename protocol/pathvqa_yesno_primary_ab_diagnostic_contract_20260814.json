@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-08-14T23:50:12+08:00",
+  "decision": "yesno_primary_ab_supplementary_interface_diagnostic",
+  "supersedes_reporting_priority_in": "docs/20260812_pathvqa_fixed_ab_evaluation_contract.md",
+  "primary_contract": {
+    "name": "native_yes_no_answer_interface",
+    "role": "primary_cross_model_pathvqa_binary_metric",
+    "prompt_subcontracts": [
+      "legacy_v1_64",
+      "domain_think_answer_v2_2048"
+    ],
+    "comparability_rule": "Exact prompt-matched claims require the same subcontract; otherwise retain the subcontract label.",
+    "required_outputs": [
+      "semantic_accuracy",
+      "parse_rate",
+      "generation_cap_hit_rate",
+      "unresolved_count"
+    ]
+  },
+  "supplementary_contract": {
+    "name": "pathvqa_pathmmu_ab_v6_2048",
+    "role": "paired_interface_sensitivity_diagnostic",
+    "fixed_mapping": {
+      "A": "Yes",
+      "B": "No"
+    },
+    "option_reversal": false,
+    "required_outputs": [
+      "strict_ab_accuracy",
+      "semantic_ab_accuracy",
+      "strict_parse_rate",
+      "generation_cap_hit_rate"
+    ]
+  },
+  "paired_analysis": {
+    "same_cases_required": true,
+    "required_transition_counts": [
+      "yesno_correct_ab_correct",
+      "yesno_wrong_ab_correct",
+      "yesno_correct_ab_wrong",
+      "yesno_wrong_ab_wrong"
+    ],
+    "net_interface_recovery": "yesno_wrong_ab_correct - yesno_correct_ab_wrong",
+    "uncertainty": [
+      "mcnemar_discordant_counts",
+      "case_bootstrap_confidence_interval"
+    ]
+  },
+  "existing_paired_validation512": {
+    "source_summary": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathvqa_choice_parent_n4_n8_20260812/complete_comparison.json",
+    "source_summary_sha256": "3d8d8e8558047d57379c7432b808282470226c177e0714d0d7c3670c1279129a",
+    "bootstrap_seed": 42,
+    "bootstrap_resamples": 20000,
+    "results": {
+      "l_r16_sft80_parent": {
+        "yesno_accuracy": 0.591796875,
+        "ab_accuracy": 0.646484375,
+        "yesno_wrong_ab_correct": 82,
+        "yesno_correct_ab_wrong": 54,
+        "difference": 0.0546875,
+        "case_bootstrap_95_ci": [0.009765625, 0.099609375],
+        "mcnemar_exact_two_sided_p": 0.02026001125424599
+      },
+      "full_rl_n4_step500": {
+        "yesno_accuracy": 0.58984375,
+        "ab_accuracy": 0.625,
+        "yesno_wrong_ab_correct": 69,
+        "yesno_correct_ab_wrong": 51,
+        "difference": 0.03515625,
+        "case_bootstrap_95_ci": [-0.0078125, 0.076171875],
+        "mcnemar_exact_two_sided_p": 0.12032782773865801
+      },
+      "full_rl_n8_step500": {
+        "yesno_accuracy": 0.572265625,
+        "ab_accuracy": 0.6328125,
+        "yesno_wrong_ab_correct": 86,
+        "yesno_correct_ab_wrong": 55,
+        "difference": 0.060546875,
+        "case_bootstrap_95_ci": [0.015625, 0.10546875],
+        "mcnemar_exact_two_sided_p": 0.011256941042959104
+      }
+    }
+  },
+  "selection_prohibitions": [
+    "do_not_replace_yesno_primary_score_with_ab_score",
+    "do_not_pool_yesno_and_ab_scores",
+    "do_not_use_ab_test_results_to_select_training_checkpoint"
+  ]
+}

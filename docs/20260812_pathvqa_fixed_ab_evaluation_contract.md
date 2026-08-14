@@ -1,5 +1,11 @@
 # PathVQA fixed-A/B evaluation contract (2026-08-12)
 
+> **Superseded reporting priority (2026-08-14):** the A/B generation contract remains valid as a
+> supplementary paired interface diagnostic, but original free-generation Yes/No is again the
+> primary PathVQA binary contract. See
+> `docs/20260814_pathvqa_yesno_primary_ab_diagnostic_contract.md`. Existing raw predictions and
+> metrics remain valid under their recorded contract labels.
+
 ## Decision
 
 Future PathVQA binary evaluations use a PathMMU-aligned free-generation interface as the primary

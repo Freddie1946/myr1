@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Build auditable Markdown/JSON tables from explicit final-result paths.
 
-The registry deliberately separates the current fixed-A/B generation contract from
-legacy baseline contracts. Missing/running cells are rendered as NA instead of being
-silently borrowed from an incompatible evaluation.
+The registry deliberately separates supplementary fixed-A/B generation diagnostics
+from the primary legacy/free Yes-No baseline contract. Missing/running cells are
+rendered as NA instead of being silently borrowed from an incompatible evaluation.
 """
 
 from __future__ import annotations
@@ -209,10 +209,16 @@ def main() -> None:
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "core_current_contract": core,
+        "core_supplementary_fixed_ab_diagnostic": core,
         "ratio_ablation": ratios,
         "repeated_inference": repeats,
         "human_expert_scoring": "excluded_pending_user",
-        "contract_note": "Current PathVQA table uses fixed A=Yes/B=No generation. Legacy external baselines remain separately stratified.",
+        "pathvqa_reporting_policy": {
+            "primary": "original free-generation Yes/No",
+            "supplementary": "fixed A=Yes/B=No structured generation",
+            "paired_interpretation": "A/B is an interface-sensitivity diagnostic and does not overwrite the primary Yes/No result",
+        },
+        "contract_note": "The core PathVQA column is a supplementary fixed-A/B diagnostic. Primary cross-model reporting uses the separately stratified original/free Yes-No contract.",
     }
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_json.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -222,7 +228,9 @@ def main() -> None:
         "",
         "> 百分数均由明确的 `metrics.json` 路径生成。`NA` 表示该合同下尚未完成，绝不从不兼容的旧评测借值。PathMMU Test999 是开发诊断测试，不能表述为未触碰最终测试。",
         "",
-        "## 当前核心主线（固定 A=Yes/B=No PathVQA 合同）",
+        "## 当前核心主线（补充固定 A=Yes/B=No PathVQA 接口诊断）",
+        "",
+        "> 本节 A/B 分数不再作为 PathVQA 主结果；它用于同病例配对分析任务/输出接口漂移。PathVQA 主结果保留原始自由生成 Yes/No 合同。",
         "",
         *render_table(core),
         "",
@@ -258,9 +266,9 @@ def main() -> None:
         "",
         "SFT-r32 的 PathMMU Val 最佳点为 step64 的 56.36%，但其 PathVQA/MMMU retention 比 early checkpoint 更差；因此更大 rank 主要增加 specialization capacity，没有成为主 parent。机制筛查使用 validation，不访问 Test999 选择 recipe。",
         "",
-        "## 外部基线（历史统一 short-answer / Yes-No 合同）",
+        "## 外部基线（PathVQA 主报告：历史统一 short-answer / Yes-No 合同）",
         "",
-        "> 以下结果已经全量跑完，保留原合同用于可复现对比；不能解释为已使用当前 A/B prompt 重跑。",
+        "> 以下 PathVQA Yes/No 结果是跨模型主报告口径。A/B 结果只作为补充接口诊断，不能与本表混合或覆盖本表分数。",
         "",
         "| Model | PathMMU Test999 | PathVQA yes/no3362 | OmniMedVQA aligned |",
         "|---|---:|---:|---:|",
@@ -292,7 +300,8 @@ def main() -> None:
         "",
         "## 合同边界",
         "",
-        "- 外部 PathVQA 基线已经有全量结果，但大多使用旧 short-answer/自由 Yes-No 合同；详见 `docs/20260810_final_closed_benchmark_and_multijudge_results.md`，不与上表伪装成同 prompt 比较。",
+        "- 原始 short-answer/自由 Yes-No 是 PathVQA 主合同；固定 A/B 是同题配对的补充接口诊断。二者分别报告，不池化、不互相覆盖。",
+        "- A/B 可用于量化 Yes/No wrong→A/B correct 的接口恢复，也必须同时报告 Yes/No correct→A/B wrong 的反向损害；两种合同均错误的病例继续进入视觉语义 bad-case 分析。",
         "- 人工病理专家 ROI/生成质量评分由用户后续完成，本表显式排除该唯一人工缺口。",
         "- 不扩展全模型配对反转分析；仅保留最终核心对照所需的最小 paired bootstrap/McNemar。",
         "",
