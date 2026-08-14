@@ -41,21 +41,30 @@
 - 当前仍在追加的 LLaVA-Med PathMMU/PathVQA/OmniMedVQA 不进入第一版归档；完成并
   验证后作为 immutable 增量前缀上传。
 
-### D. 关键模型
+### D. 模型快照：model-only 两级优先队列
 
-- public + manual-gated，每个模型独立仓库，上传前验证 gate 状态。
-- 优先级：最终 Stage3、n=4/n=8 rule-RL、选定 SFT/RL parent、需要完整训练状态以续训的
-  最新 checkpoint。
-- 默认 model-only；只有明确需要续训的最新 checkpoint 保存 optimizer/scheduler/RNG。
-- 小型消融、冒烟、失败尝试和重复中间 checkpoint 暂不上传。
+- public + manual-gated，每个关键模型独立仓库或使用不可变版本前缀，上传前验证 gate 状态。
+- **不备份任何 optimizer/DeepSpeed ZeRO 分片、scheduler 或 RNG 训练状态。** 后续训练从可加载
+  model-only 快照重新建立 optimizer；因此不能逐比特恢复旧 Adam 动量，但不影响推理、评测、
+  继续 SFT/RL 或接入新的 process reward。
+- 第一优先级为关键可加载模型快照：最终/候选 Stage3、n=4/n=8 rule-RL、选定 SFT/RL
+  parent、正式数据消融关键端点，以及论文主表实际使用的模型。
+- 第二优先级为其余全部可加载模型快照，包括中间 checkpoint、小型消融、冒烟和失败尝试中
+  实际保存下来的模型版本。
+- “全部模型快照”按实验节点和权重内容定义，而不是按重复路径定义。同一个模型若同时存在于
+  `output/checkpoint-*`、`model_snapshots/checkpoint-*` 和 output 根目录，只上传一份权重，
+  manifest 保留所有原始路径到内容哈希的映射。这样是无损去重，不删除任何模型版本。
+- 每套快照必须包含加载所需的 config、processor/tokenizer、权重索引及 adapter 配置；上传后
+  进行 fresh-download、SHA-256 和最小 load smoke 验证。
 
 ### E. 数据集、基础模型、环境与缓存
 
 - 数据集本体或可验证的固定 revision/下载脚本进入 gated dataset 归档。
 - 对第三方基础模型逐一检查许可证；允许再分发的可上传 gated，不允许的仅保存 repo、
   revision、文件 SHA-256 和下载命令。
-- 环境不直接复制易失效的整个虚拟环境；保存 lock/requirements、CUDA/PyTorch/驱动审计、
-  安装脚本和 smoke tests。
+- 环境采用双层备份：一层保存完整虚拟环境归档用于同类机器快速恢复，另一层保存
+  lock/requirements、CUDA/PyTorch/驱动审计、安装脚本和 smoke tests，用于路径或系统版本
+  变化时可靠重建。完整环境中排除密钥和认证材料。
 - HF/ModelScope cache 默认保存索引与重建方法；只有无法稳定重下载且允许分发的 blob 才归档。
 
 ## 一致性与增量策略
@@ -74,4 +83,3 @@
 4. 下载 gated 数据/模型并核对 snapshot manifest。
 5. 恢复数据路径映射，运行小型 smoke。
 6. 读取 `docs/LATEST.md`、统一结果表和最新迁移状态，再决定续训或继续评测。
-
