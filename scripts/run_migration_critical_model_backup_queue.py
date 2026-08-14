@@ -208,6 +208,40 @@ def upload_with_retry(task: dict[str, Any], state: dict[str, Any], state_path: P
         ]
         completed = subprocess.run(command, check=False)
         if completed.returncode == 0:
+            # ``upload-large-folder`` keeps local, repository-agnostic upload
+            # metadata under ``LOCAL_PATH/.cache``.  A model directory copied
+            # from a previously uploaded snapshot can therefore return zero
+            # while committing no files to the new repository.  Verify the
+            # remote tree and, if it is still incomplete, force a normal Hub
+            # folder commit that does not trust that large-folder cache.
+            complete, revision = remote_complete(api, task, manifest)
+            if not complete:
+                state["tasks"][task["id"]].update(
+                    {"status": "cache_bypass_commit", "updated_at": now()}
+                )
+                atomic_json(state_path, state)
+                try:
+                    api.upload_folder(
+                        folder_path=str(task["source"]),
+                        repo_id=task["repo"],
+                        repo_type="model",
+                        commit_message=f"Upload model-only snapshot for {task['id']}",
+                        ignore_patterns=[
+                            ".cache/**", "global_step*/**", "*optim_states.pt",
+                            "*model_states.pt", "scheduler.pt", "rng_state*.pth",
+                        ],
+                    )
+                except Exception as error:
+                    state["tasks"][task["id"]].update(
+                        {
+                            "status": "retry_wait",
+                            "cache_bypass_error": repr(error),
+                            "updated_at": now(),
+                        }
+                    )
+                    atomic_json(state_path, state)
+                    time.sleep(retry_seconds)
+                    continue
             api.upload_file(
                 path_or_fileobj=str(manifest_path), path_in_repo="snapshot_manifest.json",
                 repo_id=task["repo"], repo_type="model",
