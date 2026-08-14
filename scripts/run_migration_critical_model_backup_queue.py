@@ -21,22 +21,12 @@ from huggingface_hub import HfApi
 
 
 WORK = Path("/home/dataset-assist-0/czy/wjy")
+# Historical full-SFT3000 has already completed the one required
+# private-to-public/manual-gated migration.  Full-rule-RL n8 is also complete.
+# Do not enqueue models that still have a complete private copy (n4, historical
+# outcome-GRPO, historical full-SFT4000); this queue now contains only remotely
+# missing critical snapshots.
 TASKS = (
-    {
-        "id": "historical_full_sft3000",
-        "repo": "Freddie1946/PathVLM-R1-SFT-n3000-seed42-epoch3-GatedArchive",
-        "source": WORK / "pathvlm_r1_v1_a100/transferred_checkpoints/sft_n3000_seed42_epoch03_step1125",
-    },
-    {
-        "id": "full_rule_rl_n8_step1000",
-        "repo": "Freddie1946/PathVLM-R1-FullRuleRL-n8-step1000-seed42-GatedArchive",
-        "source": WORK / "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000/model_snapshots/checkpoint-1000",
-    },
-    {
-        "id": "full_rule_rl_n4_step1000",
-        "repo": "Freddie1946/PathVLM-R1-FullRuleRL-n4-step1000-seed42-GatedArchive",
-        "source": WORK / "pathvlm_r1_v1_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/model_snapshots/checkpoint-1000",
-    },
     {
         "id": "gpt4o_stage3_n8_parent_500_1000_1500",
         "repo": "Freddie1946/PathVLM-R1-Stage3-GPT4o-n8-parent-seed42-GatedArchive",
@@ -51,21 +41,6 @@ TASKS = (
         "id": "lora_sft4000_control",
         "repo": "Freddie1946/PathVLM-R1-LoRA-SFT4000-Control-seed42-GatedArchive",
         "source": WORK / "pathvlm_r1_v1_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/output",
-    },
-    {
-        "id": "grok43_stage3_500_1000_1500",
-        "repo": "Freddie1946/PathVLM-R1-Stage3-Grok43-seed42-GatedArchive",
-        "source": WORK / "pathvlm_r1_v1_a100/runs/stage3_process_grpo/grok43_full3epoch_seed42_20260805_attempt02/epoch_model_snapshots",
-    },
-    {
-        "id": "historical_outcome_grpo",
-        "repo": "Freddie1946/PathVLM-R1-Outcome-GRPO-n1000-seed42-epoch2-GatedArchive",
-        "source": WORK / "pathvlm_r1_v1_a100/transferred_checkpoints/outcome_grpo_n1000_seed42_epoch02_step1000",
-    },
-    {
-        "id": "historical_full_sft4000_control",
-        "repo": "Freddie1946/PathVLM-R1-Full-SFT4000-Control-seed42-GatedArchive",
-        "source": WORK / "pathvlm_r1_v1_a100/runs/stage2_control_sft4000/n1000_seed0042/sft4000_control_rl1000_seed0042_epoch02_20260729_212746/epoch_snapshots/checkpoint-250",
     },
 )
 
@@ -85,7 +60,9 @@ def atomic_json(path: Path, value: dict[str, Any]) -> None:
     os.replace(temp, path)
 
 
-def excluded(relative: Path) -> bool:
+def excluded(relative: Path, task: dict[str, Any]) -> bool:
+    if relative.parts and relative.parts[0] in task.get("exclude_top_level_dirs", ()):
+        return True
     if ".cache" in relative.parts or any(part.startswith("global_step") for part in relative.parts):
         return True
     name = relative.name
@@ -96,10 +73,14 @@ def excluded(relative: Path) -> bool:
     )
 
 
-def selected_files(root: Path) -> list[Path]:
+def selected_files(task: dict[str, Any]) -> list[Path]:
+    root = task["source"]
     if not root.is_dir():
         raise RuntimeError(f"missing source directory: {root}")
-    files = sorted(path for path in root.rglob("*") if path.is_file() and not excluded(path.relative_to(root)))
+    files = sorted(
+        path for path in root.rglob("*")
+        if path.is_file() and not excluded(path.relative_to(root), task)
+    )
     names = {path.name for path in files}
     if not ({"model.safetensors", "model.safetensors.index.json", "adapter_model.safetensors"} & names):
         raise RuntimeError(f"no loadable model or adapter weights under {root}")
@@ -188,7 +169,7 @@ def remote_complete(api: HfApi, task: dict[str, Any], manifest: dict[str, Any]) 
 
 def upload_with_retry(task: dict[str, Any], state: dict[str, Any], state_path: Path, state_root: Path, retry_seconds: int) -> dict[str, Any]:
     api = HfApi()
-    files = selected_files(task["source"])
+    files = selected_files(task)
     manifest_path = state_root / "manifests" / f"{task['id']}.json"
     manifest = build_manifest(task, files)
     atomic_json(manifest_path, manifest)
@@ -206,6 +187,8 @@ def upload_with_retry(task: dict[str, Any], state: dict[str, Any], state_path: P
             "--exclude", "*optim_states.pt", "--exclude", "*model_states.pt",
             "--exclude", "scheduler.pt", "--exclude", "rng_state*.pth",
         ]
+        for directory in task.get("exclude_top_level_dirs", ()):
+            command.extend(["--exclude", f"{directory}/**"])
         completed = subprocess.run(command, check=False)
         if completed.returncode == 0:
             # ``upload-large-folder`` keeps local, repository-agnostic upload
@@ -221,15 +204,20 @@ def upload_with_retry(task: dict[str, Any], state: dict[str, Any], state_path: P
                 )
                 atomic_json(state_path, state)
                 try:
+                    ignore_patterns = [
+                        ".cache/**", "global_step*/**", "*optim_states.pt",
+                        "*model_states.pt", "scheduler.pt", "rng_state*.pth",
+                    ]
+                    ignore_patterns.extend(
+                        f"{directory}/**"
+                        for directory in task.get("exclude_top_level_dirs", ())
+                    )
                     api.upload_folder(
                         folder_path=str(task["source"]),
                         repo_id=task["repo"],
                         repo_type="model",
                         commit_message=f"Upload model-only snapshot for {task['id']}",
-                        ignore_patterns=[
-                            ".cache/**", "global_step*/**", "*optim_states.pt",
-                            "*model_states.pt", "scheduler.pt", "rng_state*.pth",
-                        ],
+                        ignore_patterns=ignore_patterns,
                     )
                 except Exception as error:
                     state["tasks"][task["id"]].update(
