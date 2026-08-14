@@ -12,7 +12,6 @@ from typing import Any
 
 import torch
 from PIL import Image
-from peft import PeftModel
 from transformers import (
     AutoConfig,
     AutoProcessor,
@@ -520,6 +519,9 @@ def main() -> None:
     if args.adapter is not None:
         if args.backend != "qwen2_5_vl":
             raise ValueError("adapter loading is currently supported only for qwen2_5_vl")
+        # Adapter-free baseline environments need not install PEFT.
+        from peft import PeftModel
+
         model = PeftModel.from_pretrained(
             model, args.adapter, local_files_only=True, is_trainable=False
         )

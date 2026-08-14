@@ -21,7 +21,8 @@ class DeepSeekVL2ExternalRunnerStaticTests(unittest.TestCase):
     def test_frozen_external_contract_is_used(self) -> None:
         self.assertIn("prompt_for_record", self.source)
         self.assertIn("score_record", self.source)
-        self.assertIn("max_new_tokens != 64", self.source)
+        self.assertIn("expected_tokens", self.source)
+        self.assertIn("omnimed_domain_think_answer_v4_1024", self.source)
         self.assertIn('choices=("adapter_smoke", "external_test")', self.source)
 
     def test_resume_and_source_identity_are_delegated_to_shared_utils(self) -> None:
@@ -37,4 +38,3 @@ class DeepSeekVL2ExternalRunnerStaticTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

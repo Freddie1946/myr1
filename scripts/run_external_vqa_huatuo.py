@@ -12,7 +12,9 @@ from cli import HuatuoChatbot
 
 from external_vqa_contract import (
     PATHVQA_PROMPT,
+    OMNIMEDVQA_DOMAIN_PROMPT,
     OMNIMEDVQA_PROMPT,
+    omnimed_domain_prompt,
     prompt_for_record,
     score_record,
     sha256_file,
@@ -59,6 +61,11 @@ def parse_args() -> argparse.Namespace:
         "--split-role", required=True, choices=("adapter_smoke", "external_test")
     )
     parser.add_argument("--max-new-tokens", type=int, default=64)
+    parser.add_argument(
+        "--generation-contract",
+        choices=("legacy_v1_64", "omnimed_domain_think_answer_v4_1024"),
+        default="legacy_v1_64",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
     return parser.parse_args()
@@ -66,8 +73,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    if args.max_new_tokens != 64:
-        raise ValueError("frozen contract requires max_new_tokens=64")
+    expected_tokens = (
+        1024 if args.generation_contract == "omnimed_domain_think_answer_v4_1024" else 64
+    )
+    if args.max_new_tokens != expected_tokens:
+        raise ValueError(f"{args.generation_contract} requires max_new_tokens={expected_tokens}")
+    if args.generation_contract != "legacy_v1_64" and args.task != "omnimedvqa":
+        raise ValueError("the corrected domain contract is OmniMedVQA-only")
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 6719 if args.task == "pathvqa" else 8518
     if len(records) != expected:
@@ -95,11 +107,16 @@ def main() -> None:
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
         "selected_count": len(records),
-        "prompt_template": PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT,
+        "prompt_template": (
+            OMNIMEDVQA_DOMAIN_PROMPT
+            if args.generation_contract == "omnimed_domain_think_answer_v4_1024"
+            else PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT
+        ),
         "dtype": "bfloat16",
         "quantization": "none",
         "do_sample": False,
-        "max_new_tokens": 64,
+        "max_new_tokens": args.max_new_tokens,
+        "generation_contract": args.generation_contract,
         "min_new_tokens": 1,
         "repetition_penalty": 1.0,
     }
@@ -114,7 +131,7 @@ def main() -> None:
     bot.debug = False
     bot.gen_kwargs = {
         "do_sample": False,
-        "max_new_tokens": 64,
+        "max_new_tokens": args.max_new_tokens,
         "min_new_tokens": 1,
         "repetition_penalty": 1.0,
         "eos_token_id": bot.tokenizer.eos_token_id,
@@ -123,7 +140,13 @@ def main() -> None:
     for index in range(len(rows), len(records)):
         record = records[index]
         completion, token_count, ended = generate_one(
-            bot, prompt_for_record(args.task, record), record["image"]
+            bot,
+            (
+                omnimed_domain_prompt(record)
+                if args.generation_contract == "omnimed_domain_think_answer_v4_1024"
+                else prompt_for_record(args.task, record)
+            ),
+            record["image"],
         )
         row = result_row(
             index=index,
@@ -133,7 +156,7 @@ def main() -> None:
             token_count=token_count,
             ended_with_eos=ended,
             score=score_record(args.task, completion, record),
-            max_new_tokens=64,
+            max_new_tokens=args.max_new_tokens,
         )
         append_row(predictions_path, row)
         rows.append(row)

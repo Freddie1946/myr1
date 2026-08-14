@@ -24,6 +24,11 @@ OMNIMEDVQA_PROMPT = (
     "{question}Here are {option_count} candidate answers:{options} Only return what you think is "
     "the correct answer from the candidate answers, do not return any other irrelevant text!"
 )
+OMNIMEDVQA_DOMAIN_PROMPT = (
+    "{question}\nOptions:\n{options}\n"
+    "Give concise image-grounded medical reasoning inside <think>...</think>. Then output exactly "
+    "one option letter inside <answer>...</answer>."
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -220,6 +225,18 @@ def omnimed_prompt(record: dict[str, Any]) -> str:
         question=record["question"],
         option_count=len(texts),
         options=str(texts),
+    )
+
+
+def omnimed_domain_prompt(record: dict[str, Any]) -> str:
+    """Build the corrected labeled-option OmniMedVQA generation prompt."""
+
+    letters, texts = omnimed_options(record)
+    options = "\n".join(
+        f"{letter}) {text}" for letter, text in zip(letters, texts)
+    )
+    return OMNIMEDVQA_DOMAIN_PROMPT.format(
+        question=record["question"], options=options
     )
 
 

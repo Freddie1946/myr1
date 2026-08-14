@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Resumable eight-GPU OmniMedVQA dual-contract core sequence.
+"""Resumable eight-GPU OmniMedVQA corrected-contract sequence.
 
-The sequence waits for the active PathMMU repeat-inference queue, runs the
-corrected primary contract first, then the historical 64-token reproduction
-contract. Each completed model/track is immediately backed up to the manual-
-gated migration dataset. Uploads are serialized to avoid competing with the
-large model backup queue.
+The sequence runs only the corrected primary contract and admits work per GPU,
+so it can coexist with an active PathMMU repeat-inference queue. Table baselines
+run before the remaining core-lineage gaps so paper-table cells are filled
+first. Each completed output is immediately backed up to the manual-gated
+migration dataset. Uploads are serialized to avoid competing with the large
+model backup queue.
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ from huggingface_hub import HfApi
 WORK = Path("/home/dataset-assist-0/czy/wjy")
 REPO = WORK / "myr1"
 PYTHON = WORK / "pathvlm_r1_v1_a100/envs/grpo/bin/python"
+MEDGEMMA_PYTHON = WORK / "pathvlm_revision_eval_a100/envs/medgemma/bin/python"
 DATA = WORK / "pathvlm_revision_eval_a100/datasets/external_vqa_contract_v1_20260729/omnimedvqa_four_sources_8518.json"
 OUTPUT_ROOT = WORK / "pathvlm_revision_eval_a100/runs/omnimedvqa_unified_dual_contract_20260815"
 PREREQUISITE_STATE = WORK / "pathvlm_r1_v1_a100/reports/gpu_eval_continuation_20260815/state.json"
@@ -62,6 +64,11 @@ BATCH_SIZES = {
     "medgemma_4b_it": 4,
     "scalereasoner_r1": 8,
     "llama3_2_vision_11b": 2,
+}
+PYTHONS = {
+    # Gemma3Processor is available in the pinned MedGemma environment, while
+    # the GRPO environment only contains the Gemma3 model class.
+    "medgemma_4b_it": MEDGEMMA_PYTHON,
 }
 EXISTING_CORRECTED_RESULTS = {
     "stage3_gpt4o_step500": WORK / "pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/omnimedvqa_8518",
@@ -153,19 +160,29 @@ def run_one(
                 )
         if not metrics.is_file():
             command = [
-                str(PYTHON), str(REPO / "scripts/run_external_vqa_qwen.py"),
+                str(PYTHONS.get(model_id, PYTHON)), str(REPO / "scripts/run_external_vqa_qwen.py"),
                 "--task", "omnimedvqa", "--model", str(model),
                 "--backend", BACKENDS.get(model_id, "qwen2_5_vl"),
                 "--data", str(DATA), "--output-dir", str(output), "--split-role", "external_test",
                 "--batch-size", str(BATCH_SIZES.get(model_id, 16)), "--max-new-tokens", str(max_tokens),
                 "--generation-contract", contract,
             ]
-            if (output / "predictions.jsonl").is_file():
+            # A previous attempt can initialize run_config.json before writing
+            # its first prediction; that is still a valid resumable state.
+            if output.is_dir():
                 command.append("--resume")
             state["tasks"][task_key].update({"status": "running", "attempt": attempt, "updated_at": now()})
             atomic_json(state_path, state, state_lock)
+            child_env = os.environ.copy()
+            # The runner uses logical cuda:0 internally. Restrict each child to
+            # its assigned physical GPU so parallel baseline jobs cannot all
+            # collide on host GPU 0.
+            child_env["CUDA_VISIBLE_DEVICES"] = str(gpu)
             with log_path.open("a", encoding="utf-8") as log:
-                code = subprocess.run(command, cwd=REPO, stdout=log, stderr=subprocess.STDOUT).returncode
+                code = subprocess.run(
+                    command, cwd=REPO, env=child_env,
+                    stdout=log, stderr=subprocess.STDOUT,
+                ).returncode
             if code != 0 or not metrics.is_file():
                 state["tasks"][task_key].update({"status": "retry_wait", "returncode": code, "updated_at": now()})
                 atomic_json(state_path, state, state_lock)
@@ -196,7 +213,7 @@ def main() -> None:
     state_path = state_root / "state.json"
     state_lock, upload_lock = threading.Lock(), threading.Lock()
     state: dict[str, Any] = {
-        "schema_version": 1, "status": "waiting_for_gpu_evaluation_prerequisite",
+        "schema_version": 1, "status": "waiting_for_per_gpu_availability",
         "started_at": now(), "pid": os.getpid(), "tasks": {},
     }
     for track, _, _ in TRACKS:
@@ -205,10 +222,10 @@ def main() -> None:
                 "status": "queued", "gpu": gpu, "model": str(model),
             }
     atomic_json(state_path, state, state_lock)
-    wait_for_prerequisite(args.poll_seconds)
-
     for track, contract, max_tokens in TRACKS:
-        for wave_name, roster in (("core", MODELS), ("compatible_baselines", BASELINES)):
+        # The 64-token historical-reproduction track was explicitly deferred.
+        # Fill manuscript-table baseline cells before the remaining core gaps.
+        for wave_name, roster in (("compatible_baselines", BASELINES), ("core", MODELS)):
             state.update({"status": "running", "current_track": track, "current_wave": wave_name, "updated_at": now()})
             atomic_json(state_path, state, state_lock)
             failures: list[str] = []

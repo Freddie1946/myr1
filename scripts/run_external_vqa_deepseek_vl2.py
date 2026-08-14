@@ -13,8 +13,10 @@ from transformers import AutoModelForCausalLM
 from deepseek_vl2.models import DeepseekVLV2Processor
 from deepseek_vl2.utils.io import load_pil_images
 from external_vqa_contract import (
+    OMNIMEDVQA_DOMAIN_PROMPT,
     OMNIMEDVQA_PROMPT,
     PATHVQA_PROMPT,
+    omnimed_domain_prompt,
     prompt_for_record,
     score_record,
     sha256_file,
@@ -38,6 +40,11 @@ def parse_args() -> argparse.Namespace:
         "--split-role", required=True, choices=("adapter_smoke", "external_test")
     )
     parser.add_argument("--max-new-tokens", type=int, default=64)
+    parser.add_argument(
+        "--generation-contract",
+        choices=("legacy_v1_64", "omnimed_domain_think_answer_v4_1024"),
+        default="legacy_v1_64",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
     return parser.parse_args()
@@ -87,8 +94,13 @@ def generate_one(
 
 def main() -> None:
     args = parse_args()
-    if args.max_new_tokens != 64:
-        raise ValueError("the frozen external VQA contract requires max_new_tokens=64")
+    expected_tokens = (
+        1024 if args.generation_contract == "omnimed_domain_think_answer_v4_1024" else 64
+    )
+    if args.max_new_tokens != expected_tokens:
+        raise ValueError(f"{args.generation_contract} requires max_new_tokens={expected_tokens}")
+    if args.generation_contract != "legacy_v1_64" and args.task != "omnimedvqa":
+        raise ValueError("the corrected domain contract is OmniMedVQA-only")
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 6719 if args.task == "pathvqa" else 8518
     if not isinstance(records, list) or len(records) != expected:
@@ -118,11 +130,16 @@ def main() -> None:
         "data_path": str(args.data.resolve()),
         "data_sha256": sha256_file(args.data),
         "selected_count": len(records),
-        "prompt_template": PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT,
+        "prompt_template": (
+            OMNIMEDVQA_DOMAIN_PROMPT
+            if args.generation_contract == "omnimed_domain_think_answer_v4_1024"
+            else PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT
+        ),
         "dtype": "bfloat16",
         "quantization": "none",
         "do_sample": False,
-        "max_new_tokens": 64,
+        "max_new_tokens": args.max_new_tokens,
+        "generation_contract": args.generation_contract,
     }
     if config_path.exists():
         if {**json.loads(config_path.read_text()), "status": "running"} != config:
@@ -150,9 +167,13 @@ def main() -> None:
         completion, token_count, ended = generate_one(
             model,
             processor,
-            prompt=prompt_for_record(args.task, record),
+            prompt=(
+                omnimed_domain_prompt(record)
+                if args.generation_contract == "omnimed_domain_think_answer_v4_1024"
+                else prompt_for_record(args.task, record)
+            ),
             image=record["image"],
-            max_new_tokens=64,
+            max_new_tokens=args.max_new_tokens,
         )
         row = result_row(
             index=index,
@@ -162,7 +183,7 @@ def main() -> None:
             token_count=token_count,
             ended_with_eos=ended,
             score=score_record(args.task, completion, record),
-            max_new_tokens=64,
+            max_new_tokens=args.max_new_tokens,
         )
         append_row(predictions_path, row)
         rows.append(row)
@@ -193,4 +214,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
