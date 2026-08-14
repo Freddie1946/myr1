@@ -105,6 +105,56 @@ class ExternalVQAContractTests(unittest.TestCase):
         answer, source = extract_omnimed_answer("<think>x</think><answer>C) CT</")
         self.assertEqual((answer, source), ("C) CT", "answer_tag"))
 
+    def test_markdown_answer_marker_is_target_blind_and_parseable(self):
+        completion = "Reasoning about all options.\n\n*Answer*: B) Optical Coherence Tomography"
+        score = omnimed_score(completion, OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "B")
+        self.assertEqual(score["contract_aligned_answer_source"], "answer_marker")
+
+    def test_markdown_colon_inside_bold_marker_is_parseable(self):
+        score = omnimed_score("Reasoning.\n\n**Answer:** C) CT", OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "C")
+
+    def test_trailing_explicit_choice_line_is_parseable(self):
+        completion = "<think>CT is supported by the image.</think>\nC"
+        score = omnimed_score(completion, OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "C")
+        self.assertEqual(
+            score["contract_aligned_answer_source"],
+            "trailing_explicit_choice_line",
+        )
+
+    def test_reasoning_answer_phrase_does_not_mask_trailing_choice(self):
+        completion = "<think>The answer is the option matching the image.</think>\nB"
+        score = omnimed_score(completion, OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "B")
+
+    def test_bare_final_answer_marker_is_parseable(self):
+        score = omnimed_score("<think>brief</think>\nanswer C", OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "C")
+
+    def test_malformed_closing_answer_tag_at_end_is_parseable(self):
+        score = omnimed_score("<think>brief</answer>A", OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "A")
+
+    def test_explicit_diagnosis_block_is_parseable(self):
+        completion = "Reasoning. The most likely diagnosis is:\n\nD) example\nFurther rationale."
+        score = omnimed_score(completion, OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "D")
+
+    def test_explicit_option_correct_statement_is_parseable(self):
+        score = omnimed_score("Option C: CT is the correct answer.", OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "C")
+
+    def test_explicit_correct_answer_sentence_is_parseable(self):
+        score = omnimed_score("The correct answer is D) MRI.", OMNI)
+        self.assertEqual(score["strict_final_predicted_choice"], "D")
+
+    def test_reasoning_mention_without_explicit_final_line_stays_unresolved(self):
+        completion = "The evidence makes Option C more plausible than Option B."
+        score = omnimed_score(completion, OMNI)
+        self.assertIsNone(score["strict_final_predicted_choice"])
+
     def test_omni_prompt_uses_official_semantics(self):
         prompt = omnimed_prompt(OMNI)
         self.assertIn("Here are 4 candidate answers:", prompt)

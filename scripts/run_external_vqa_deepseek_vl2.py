@@ -14,9 +14,11 @@ from deepseek_vl2.models import DeepseekVLV2Processor
 from deepseek_vl2.utils.io import load_pil_images
 from external_vqa_contract import (
     OMNIMEDVQA_DOMAIN_PROMPT,
+    OMNIMEDVQA_NATIVE_CHOICE_PROMPT,
     OMNIMEDVQA_PROMPT,
     PATHVQA_PROMPT,
     omnimed_domain_prompt,
+    omnimed_native_choice_prompt,
     prompt_for_record,
     score_record,
     sha256_file,
@@ -47,6 +49,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--omnimed-prompt-style",
+        choices=("domain_think_answer", "native_choice_only"),
+        default="domain_think_answer",
+    )
     return parser.parse_args()
 
 
@@ -101,10 +108,16 @@ def main() -> None:
         raise ValueError(f"{args.generation_contract} requires max_new_tokens={expected_tokens}")
     if args.generation_contract != "legacy_v1_64" and args.task != "omnimedvqa":
         raise ValueError("the corrected domain contract is OmniMedVQA-only")
+    if args.task != "omnimedvqa" and args.omnimed_prompt_style != "domain_think_answer":
+        raise ValueError("OmniMedVQA prompt style cannot be used for PathVQA")
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 6719 if args.task == "pathvqa" else 8518
-    if not isinstance(records, list) or len(records) != expected:
+    if not isinstance(records, list):
+        raise ValueError("external VQA data must be a JSON list")
+    if args.split_role == "external_test" and len(records) != expected:
         raise ValueError(f"expected {expected} {args.task} records, got {len(records)}")
+    if args.split_role == "adapter_smoke" and not 1 <= len(records) <= expected:
+        raise ValueError(f"invalid adapter-smoke record count: {len(records)}")
     if args.limit is not None:
         if args.split_role != "adapter_smoke" or not 1 <= args.limit <= len(records):
             raise ValueError("only adapter_smoke permits a positive --limit")
@@ -131,7 +144,11 @@ def main() -> None:
         "data_sha256": sha256_file(args.data),
         "selected_count": len(records),
         "prompt_template": (
-            OMNIMEDVQA_DOMAIN_PROMPT
+            (
+                OMNIMEDVQA_NATIVE_CHOICE_PROMPT
+                if args.omnimed_prompt_style == "native_choice_only"
+                else OMNIMEDVQA_DOMAIN_PROMPT
+            )
             if args.generation_contract == "omnimed_domain_think_answer_v4_1024"
             else PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT
         ),
@@ -140,6 +157,7 @@ def main() -> None:
         "do_sample": False,
         "max_new_tokens": args.max_new_tokens,
         "generation_contract": args.generation_contract,
+        "omnimed_prompt_style": args.omnimed_prompt_style,
     }
     if config_path.exists():
         if {**json.loads(config_path.read_text()), "status": "running"} != config:
@@ -168,7 +186,11 @@ def main() -> None:
             model,
             processor,
             prompt=(
-                omnimed_domain_prompt(record)
+                (
+                    omnimed_native_choice_prompt(record)
+                    if args.omnimed_prompt_style == "native_choice_only"
+                    else omnimed_domain_prompt(record)
+                )
                 if args.generation_contract == "omnimed_domain_think_answer_v4_1024"
                 else prompt_for_record(args.task, record)
             ),

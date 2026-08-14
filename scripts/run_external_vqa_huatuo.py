@@ -82,8 +82,10 @@ def main() -> None:
         raise ValueError("the corrected domain contract is OmniMedVQA-only")
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 6719 if args.task == "pathvqa" else 8518
-    if len(records) != expected:
+    if args.split_role == "external_test" and len(records) != expected:
         raise ValueError(f"expected {expected}, got {len(records)}")
+    if args.split_role == "adapter_smoke" and not 1 <= len(records) <= expected:
+        raise ValueError(f"invalid adapter-smoke record count: {len(records)}")
     if args.limit is not None:
         if args.split_role != "adapter_smoke" or not 1 <= args.limit <= len(records):
             raise ValueError("invalid smoke limit")

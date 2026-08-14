@@ -19,7 +19,9 @@ import torch
 from PIL import Image
 
 from external_vqa_contract import (
+    OMNIMEDVQA_DOMAIN_PROMPT,
     normalize_short_answer,
+    omnimed_domain_prompt,
     prompt_for_record,
     record_sha256,
     score_record,
@@ -42,6 +44,11 @@ PATHVQA_AB_PROMPT = (
     "Options:\nA) Yes\nB) No\n"
     "First give concise image-grounded reasoning inside <think>...</think>. Then output "
     "exactly <answer>A) Yes</answer> or <answer>B) No</answer>."
+)
+LLAVA_OMNIMED_CHOICE_PROMPT = (
+    "{question}\nOptions:\n{options}\n"
+    "Return only the single letter of the best answer: A, B, C, or D. "
+    "Do not provide reasoning or any other text."
 )
 
 
@@ -89,10 +96,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--split-role", required=True, choices=("adapter_smoke", "external_test"))
     parser.add_argument(
         "--generation-contract",
-        choices=("legacy_v1_64", "pathvqa_pathmmu_ab_v6_2048"),
+        choices=(
+            "legacy_v1_64",
+            "pathvqa_pathmmu_ab_v6_2048",
+            "omnimed_domain_think_answer_v4_1024",
+        ),
         default="legacy_v1_64",
     )
     parser.add_argument("--max-new-tokens", type=int, default=64)
+    parser.add_argument(
+        "--omnimed-prompt-style",
+        choices=("domain_think_answer", "native_choice_only"),
+        default="domain_think_answer",
+    )
     parser.add_argument("--pathvqa-answer-scope", choices=("all", "yes_no_only"), default="all")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
@@ -102,10 +118,14 @@ def parse_args() -> argparse.Namespace:
 def selected_records(args: argparse.Namespace) -> list[dict[str, Any]]:
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 6719 if args.task == "pathvqa" else 8518
-    if len(records) != expected:
+    if args.split_role == "external_test" and len(records) != expected:
         raise ValueError(f"expected {expected} records, got {len(records)}")
+    if args.split_role == "adapter_smoke" and not 1 <= len(records) <= expected:
+        raise ValueError(f"invalid adapter-smoke record count: {len(records)}")
     if args.task != "pathvqa" and args.pathvqa_answer_scope != "all":
         raise ValueError("PathVQA answer scope cannot be used for OmniMedVQA")
+    if args.task != "omnimedvqa" and args.omnimed_prompt_style != "domain_think_answer":
+        raise ValueError("OmniMedVQA prompt style cannot be used for PathVQA")
     if args.task == "pathvqa" and args.pathvqa_answer_scope == "yes_no_only":
         records = [row for row in records if row.get("answer_type") == "yes_no"]
         if len(records) != 3362:
@@ -159,6 +179,7 @@ def summarize(
         "generation_contract": args.generation_contract,
         "count": len(rows),
         "max_new_tokens": args.max_new_tokens,
+        "min_new_tokens": 1,
         "empty_completion_count": sum(not row["completion"].strip() for row in rows),
         "mean_generated_tokens": statistics.fmean(lengths),
         "median_generated_tokens": statistics.median(lengths),
@@ -229,11 +250,16 @@ def main() -> None:
     if args.generation_contract == "legacy_v1_64":
         if args.max_new_tokens != 64:
             raise ValueError("legacy_v1_64 requires max_new_tokens=64")
-    else:
+    elif args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
         if args.task != "pathvqa" or args.pathvqa_answer_scope != "yes_no_only":
             raise ValueError("A/B contract requires PathVQA yes_no_only")
         if args.max_new_tokens != 2048:
             raise ValueError("A/B contract requires max_new_tokens=2048")
+    else:
+        if args.task != "omnimedvqa" or args.pathvqa_answer_scope != "all":
+            raise ValueError("OmniMedVQA domain contract requires OmniMedVQA/all")
+        if args.max_new_tokens != 1024:
+            raise ValueError("OmniMedVQA domain contract requires max_new_tokens=1024")
     records = selected_records(args)
     if args.output_dir.exists() and not args.resume:
         raise FileExistsError(args.output_dir)
@@ -243,7 +269,16 @@ def main() -> None:
     config_path = args.output_dir / "run_config.json"
     if metrics_path.exists():
         raise FileExistsError(metrics_path)
-    prompt_template = PATHVQA_AB_PROMPT if args.generation_contract != "legacy_v1_64" else "frozen legacy external VQA prompt"
+    if args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
+        prompt_template = PATHVQA_AB_PROMPT
+    elif args.generation_contract == "omnimed_domain_think_answer_v4_1024":
+        prompt_template = (
+            LLAVA_OMNIMED_CHOICE_PROMPT
+            if args.omnimed_prompt_style == "native_choice_only"
+            else OMNIMEDVQA_DOMAIN_PROMPT
+        )
+    else:
+        prompt_template = "frozen legacy external VQA prompt"
     config = {
         "schema_version": 1,
         "status": "running",
@@ -263,6 +298,7 @@ def main() -> None:
         "quantization": "none",
         "do_sample": False,
         "max_new_tokens": args.max_new_tokens,
+        "omnimed_prompt_style": args.omnimed_prompt_style,
         "resume": args.resume,
     }
     if config_path.exists():
@@ -286,11 +322,22 @@ def main() -> None:
 
     for index in range(len(rows), len(records)):
         record = records[index]
-        record_prompt = (
-            PATHVQA_AB_PROMPT.format(question=record["question"])
-            if args.generation_contract == "pathvqa_pathmmu_ab_v6_2048"
-            else prompt_for_record(args.task, record)
-        )
+        if args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
+            record_prompt = PATHVQA_AB_PROMPT.format(question=record["question"])
+        elif args.generation_contract == "omnimed_domain_think_answer_v4_1024":
+            if args.omnimed_prompt_style == "native_choice_only":
+                options = "\n".join(
+                    f"{letter}) {record[f'option_{letter}']}"
+                    for letter in "ABCD"
+                    if record.get(f"option_{letter}") is not None
+                )
+                record_prompt = LLAVA_OMNIMED_CHOICE_PROMPT.format(
+                    question=record["question"], options=options
+                )
+            else:
+                record_prompt = omnimed_domain_prompt(record)
+        else:
+            record_prompt = prompt_for_record(args.task, record)
         if model.config.mm_use_im_start_end:
             question = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN + "\n" + record_prompt
         else:
@@ -315,6 +362,7 @@ def main() -> None:
                 pad_token_id=tokenizer.eos_token_id,
                 do_sample=False,
                 num_beams=1,
+                min_new_tokens=1,
                 max_new_tokens=args.max_new_tokens,
                 use_cache=True,
             )

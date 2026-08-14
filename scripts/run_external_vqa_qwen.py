@@ -15,6 +15,8 @@ from PIL import Image
 from transformers import (
     AutoConfig,
     AutoProcessor,
+    LogitsProcessor,
+    LogitsProcessorList,
     Qwen2VLForConditionalGeneration,
     Qwen2_5_VLForConditionalGeneration,
 )
@@ -22,7 +24,9 @@ from transformers import (
 from external_vqa_contract import (
     PATHVQA_PROMPT,
     OMNIMEDVQA_PROMPT,
+    OMNIMEDVQA_NATIVE_CHOICE_PROMPT,
     omnimed_options,
+    omnimed_native_choice_prompt,
     prompt_for_record,
     record_sha256,
     score_record,
@@ -53,6 +57,32 @@ OMNIMEDVQA_DOMAIN_PROMPT = (
     "Give concise image-grounded medical reasoning inside <think>...</think>. Then output exactly "
     "one option letter inside <answer>...</answer>."
 )
+
+
+class GeneratedOnlyRepetitionPenalty(LogitsProcessor):
+    """Apply repetition penalty only to generated IDs, never visual prompt IDs."""
+
+    def __init__(self, penalty: float, prompt_length: int) -> None:
+        if penalty < 1.0:
+            raise ValueError("generated-only repetition penalty must be at least 1")
+        self.penalty = penalty
+        self.prompt_length = prompt_length
+
+    def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor) -> torch.FloatTensor:
+        generated = input_ids[:, self.prompt_length :]
+        if generated.numel() == 0 or self.penalty == 1.0:
+            return scores
+        vocabulary = scores.shape[-1]
+        for batch_index in range(generated.shape[0]):
+            token_ids = generated[batch_index]
+            token_ids = token_ids[(token_ids >= 0) & (token_ids < vocabulary)].unique()
+            if token_ids.numel() == 0:
+                continue
+            selected = scores[batch_index, token_ids]
+            scores[batch_index, token_ids] = torch.where(
+                selected < 0, selected * self.penalty, selected / self.penalty
+            )
+        return scores
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -178,6 +208,14 @@ def parse_args() -> argparse.Namespace:
         help="Pinned generation/scoring contract; corrective v3 is OmniMedVQA-only.",
     )
     parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--repetition-penalty", type=float, default=1.0)
+    parser.add_argument("--generated-token-repetition-penalty", type=float, default=1.0)
+    parser.add_argument("--no-repeat-ngram-size", type=int, default=0)
+    parser.add_argument(
+        "--omnimed-prompt-style",
+        choices=("domain_think_answer", "native_choice_only"),
+        default="domain_think_answer",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument(
@@ -400,6 +438,14 @@ def main() -> None:
             raise ValueError("OmniMedVQA domain v4 requires max_new_tokens=1024")
     if args.batch_size < 1:
         raise ValueError("batch size must be positive")
+    if args.repetition_penalty < 1.0:
+        raise ValueError("repetition penalty must be at least 1.0")
+    if args.generated_token_repetition_penalty < 1.0:
+        raise ValueError("generated-token repetition penalty must be at least 1.0")
+    if args.no_repeat_ngram_size < 0:
+        raise ValueError("no-repeat ngram size must be non-negative")
+    if args.task != "omnimedvqa" and args.omnimed_prompt_style != "domain_think_answer":
+        raise ValueError("OmniMedVQA prompt style cannot be used for PathVQA")
     records = json.loads(args.data.read_text(encoding="utf-8"))
     expected = 6719 if args.task == "pathvqa" else 8518
     if args.generation_contract == "pathvqa_corrective_v4_192":
@@ -407,8 +453,12 @@ def main() -> None:
             raise ValueError("corrective v4 subset must contain only PathVQA yes/no records")
         if args.pathvqa_answer_scope != "all":
             raise ValueError("corrective v4 subset must use answer scope all")
-    elif len(records) != expected:
+    elif args.split_role == "external_test" and len(records) != expected:
         raise ValueError(f"expected {expected} records, got {len(records)}")
+    elif args.split_role == "adapter_smoke" and not 1 <= len(records) <= expected:
+        raise ValueError(f"invalid adapter-smoke record count: {len(records)}")
+    elif args.split_role == "post_hoc_corrective_subset" and not records:
+        raise ValueError("post-hoc corrective subset must not be empty")
     records = select_answer_scope(args.task, args.pathvqa_answer_scope, records)
     if args.limit is not None:
         if args.split_role != "adapter_smoke":
@@ -432,7 +482,11 @@ def main() -> None:
     elif args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
         prompt_template = PATHVQA_PATHMMU_AB_PROMPT
     elif args.generation_contract == "omnimed_domain_think_answer_v4_1024":
-        prompt_template = OMNIMEDVQA_DOMAIN_PROMPT
+        prompt_template = (
+            OMNIMEDVQA_NATIVE_CHOICE_PROMPT
+            if args.omnimed_prompt_style == "native_choice_only"
+            else OMNIMEDVQA_DOMAIN_PROMPT
+        )
     else:
         prompt_template = PATHVQA_PROMPT if args.task == "pathvqa" else OMNIMEDVQA_PROMPT
     config = {
@@ -460,6 +514,10 @@ def main() -> None:
         "max_new_tokens": args.max_new_tokens,
         "generation_contract": args.generation_contract,
         "batch_size": args.batch_size,
+        "repetition_penalty": args.repetition_penalty,
+        "generated_token_repetition_penalty": args.generated_token_repetition_penalty,
+        "no_repeat_ngram_size": args.no_repeat_ngram_size,
+        "omnimed_prompt_style": args.omnimed_prompt_style,
         "answer_scope": args.pathvqa_answer_scope if args.task == "pathvqa" else "all",
         "resume": args.resume,
     }
@@ -544,13 +602,16 @@ def main() -> None:
             elif args.generation_contract == "pathvqa_pathmmu_ab_v6_2048":
                 record_prompt = PATHVQA_PATHMMU_AB_PROMPT.format(question=record["question"])
             elif args.generation_contract == "omnimed_domain_think_answer_v4_1024":
-                letters, texts = omnimed_options(record)
-                options = "\n".join(
-                    f"{letter}) {text}" for letter, text in zip(letters, texts)
-                )
-                record_prompt = OMNIMEDVQA_DOMAIN_PROMPT.format(
-                    question=record["question"], options=options
-                )
+                if args.omnimed_prompt_style == "native_choice_only":
+                    record_prompt = omnimed_native_choice_prompt(record)
+                else:
+                    letters, texts = omnimed_options(record)
+                    options = "\n".join(
+                        f"{letter}) {text}" for letter, text in zip(letters, texts)
+                    )
+                    record_prompt = OMNIMEDVQA_DOMAIN_PROMPT.format(
+                        question=record["question"], options=options
+                    )
             else:
                 record_prompt = prompt_for_record(args.task, record)
             messages = [
@@ -580,10 +641,21 @@ def main() -> None:
         input_device = next(model.parameters()).device
         inputs = {key: value.to(input_device) for key, value in inputs.items()}
         with torch.inference_mode():
+            custom_processors = LogitsProcessorList()
+            if args.generated_token_repetition_penalty > 1.0:
+                custom_processors.append(
+                    GeneratedOnlyRepetitionPenalty(
+                        args.generated_token_repetition_penalty,
+                        inputs["input_ids"].shape[1],
+                    )
+                )
             generated = model.generate(
                 **inputs,
                 max_new_tokens=args.max_new_tokens,
                 do_sample=False,
+                repetition_penalty=args.repetition_penalty,
+                no_repeat_ngram_size=args.no_repeat_ngram_size,
+                logits_processor=custom_processors,
                 use_cache=True,
             )
         completion_ids = generated[:, inputs["input_ids"].shape[1] :]

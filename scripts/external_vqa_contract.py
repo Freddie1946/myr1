@@ -29,6 +29,11 @@ OMNIMEDVQA_DOMAIN_PROMPT = (
     "Give concise image-grounded medical reasoning inside <think>...</think>. Then output exactly "
     "one option letter inside <answer>...</answer>."
 )
+OMNIMEDVQA_NATIVE_CHOICE_PROMPT = (
+    "{question}\nOptions:\n{options}\n"
+    "Return only the single letter of the best answer: A, B, C, or D. "
+    "Do not provide reasoning or any other text."
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -240,6 +245,18 @@ def omnimed_domain_prompt(record: dict[str, Any]) -> str:
     )
 
 
+def omnimed_native_choice_prompt(record: dict[str, Any]) -> str:
+    """Build the labeled, no-example native choice adapter prompt."""
+
+    letters, texts = omnimed_options(record)
+    options = "\n".join(
+        f"{letter}) {text}" for letter, text in zip(letters, texts)
+    )
+    return OMNIMEDVQA_NATIVE_CHOICE_PROMPT.format(
+        question=record["question"], options=options
+    )
+
+
 def official_most_similar_option(completion: str, texts: list[str]) -> tuple[int | None, list[float]]:
     """Mirror the official OmniMedVQA QA evaluator's SequenceMatcher rule."""
 
@@ -260,13 +277,74 @@ def extract_omnimed_answer(completion: str) -> tuple[str, str]:
     )
     if tagged:
         return tagged[-1].strip().rstrip("</ "), "answer_tag"
-    marked = re.findall(
-        r"(?:final\s+answer|answer)\s*(?:is|:)\s*(.+?)(?:\n|$)",
+    markdown_marked = re.findall(
+        r"^\s*\*{1,2}\s*(?:final\s+answer|answer)\s*:\s*\*{1,2}"
+        r"\s*(.+?)(?:\n|$)",
         str(completion),
-        re.I,
+        re.I | re.M,
+    )
+    if markdown_marked:
+        return markdown_marked[-1].strip(), "markdown_answer_marker"
+    marked = re.findall(
+        # Accept common Markdown wrappers such as ``*Answer*: D) CT`` while
+        # keeping extraction target-blind and anchored to a dedicated line.
+        # Do not interpret prose such as ``the answer is ...`` inside a
+        # reasoning paragraph as a final-answer marker.
+        r"^\s*(?:\*{0,2}\s*)?(?:final\s+answer|answer)(?:\s*\*{0,2})"
+        r"\s*(?:is|:)\s*(.+?)(?:\n|$)",
+        str(completion),
+        re.I | re.M,
     )
     if marked:
         return marked[-1].strip(), "answer_marker"
+    malformed_closing = re.search(
+        r"</answer\s*>\s*([A-D])(?:\s*[).,:;\-].*)?\s*$",
+        str(completion),
+        re.I | re.S,
+    )
+    if malformed_closing:
+        return malformed_closing.group(1).upper(), "malformed_closing_answer_tag"
+    explicit_diagnosis = re.findall(
+        r"(?:most\s+likely\s+(?:diagnosis|answer)|correct\s+answer|final\s+answer|answer)"
+        r"[ \t]*(?:is[ \t]*:|is|:)[ \t]*(?:\r?\n[ \t]*)+"
+        r"\(?([A-D])(?=[\s).,:;\-]|$)",
+        str(completion),
+        re.I,
+    )
+    if explicit_diagnosis:
+        return explicit_diagnosis[-1].upper(), "explicit_diagnosis_block"
+    option_correct = re.findall(
+        r"^\s*Option\s+([A-D])\s*[:).,;\-].*\b(?:is\s+)?(?:the\s+)?correct\s+answer\b",
+        str(completion),
+        re.I | re.M,
+    )
+    if option_correct:
+        return option_correct[-1].upper(), "explicit_option_correct_statement"
+    explicit_choice_statement = re.findall(
+        r"^\s*(?:The\s+)?(?:correct\s+answer|correct\s+option|selected\s+option\s+letter|"
+        r"best\s+answer(?:\s+for\s+this\s+abnormality)?)\s*(?:is|:)\s*"
+        r"\(?([A-D])(?=[\s).,:;\-]|$)",
+        str(completion),
+        re.I | re.M,
+    )
+    if explicit_choice_statement:
+        return explicit_choice_statement[-1].upper(), "explicit_choice_statement"
+    # Some instruction-tuned VLMs follow the semantic contract but omit the
+    # XML wrapper, placing a single explicit choice on the final non-empty
+    # line.  Extract only that final line; never search free-form reasoning for
+    # an option letter.
+    lines = [line.strip() for line in str(completion).splitlines() if line.strip()]
+    if lines:
+        bare_marker = re.match(
+            r"^(?:final\s+answer|answer)\s*(?:is|:)?\s*([A-D])"
+            r"(?=[\s).,:;\-]|$)",
+            lines[-1],
+            re.I,
+        )
+        if bare_marker:
+            return bare_marker.group(1).upper(), "trailing_answer_marker_choice"
+    if lines and re.match(r"^\(?\s*[A-D](?=[\s).,:;\-]|$)", lines[-1], re.I):
+        return lines[-1], "trailing_explicit_choice_line"
     return str(completion).strip(), "raw_completion"
 
 
