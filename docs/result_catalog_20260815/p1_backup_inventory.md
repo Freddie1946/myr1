@@ -6,7 +6,7 @@ P1 使用 `public + manual gated` 仓库存放只含可加载权重的关键快�
 |---|---|---:|---|---|
 | Historical full-SFT3000 | epoch3/step1125 | 16.60 | `PathVLM-R1-SFT-n3000-seed42-epoch3-GatedArchive` | 已完成；原 private 权重已不在当前远端列表中，因此当前无实体重复 |
 | Full rule-RL n8 | step1000 | 16.60 | `PathVLM-R1-FullRuleRL-n8-step1000-seed42-GatedArchive` | 已完成；同名 private 仓仅约 2 KB、没有权重，无实体重复 |
-| Full rule-RL n4 | step1000 | 16.60 | `PathVLM-R1-FullRuleRL-n4-step1000-seed42-GatedArchive` | 与现有 private n4 四个权重分片 SHA256 全部相同；已按用户要求终止重复上传并移出活动队列 |
+| Full rule-RL n4 | step1000 | 16.60 | `PathVLM-R1-FullRuleRL-n4-step1000-seed42-GatedArchive` | 首次 gated 上传中断后仅残留 5,001 字节 manifest 仓库，已删除；private n4 已含完整且经 SHA256 核验的权重，因此不再重传 gated 副本 |
 | GPT-4o Stage3（n8 parent） | step500/1000/1500 | 49.80 | `PathVLM-R1-Stage3-GPT4o-n8-parent-seed42-GatedArchive` | 现有 private GPT-4o 是另一条旧 run；与这三个 checkpoint 均 0/4 分片匹配，不是重复 |
 | Selected LoRA-SFT3000 | step80 | 0.177 | `PathVLM-R1-LoRA-SFT3000-step80-seed42-GatedArchive` | 当前 HF 无对应 adapter 备份 |
 | LoRA-SFT4000 control | final + step11/22 adapters | 0.532 | `PathVLM-R1-LoRA-SFT4000-Control-seed42-GatedArchive` | 当前 HF 无对应 adapter 备份 |
@@ -20,7 +20,7 @@ P1 使用 `public + manual gated` 仓库存放只含可加载权重的关键快�
 2. selected LoRA-SFT3000 step80：0.177 GB；
 3. LoRA-SFT4000 control：0.532 GB。
 
-活动队列合计约 50.51 GB；Historical full-SFT3000 与 full-rule-RL n8 已在本轮开始时完成，不会再次上传。
+当前活动队列合计约 50.51 GB，不再接续 n4。Historical full-SFT3000 与 full-rule-RL n8 已在本轮开始时完成，不会再次上传。
 
 ## 处置边界
 

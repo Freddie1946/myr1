@@ -250,9 +250,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--state-root", type=Path, required=True)
     parser.add_argument("--wait-pid", action="append", type=int, default=[])
+    parser.add_argument(
+        "--task-id", action="append", default=[],
+        help="Run only the named task(s); may be repeated.",
+    )
     parser.add_argument("--poll-seconds", type=int, default=60)
     parser.add_argument("--retry-seconds", type=int, default=60)
     args = parser.parse_args()
+    tasks = tuple(task for task in TASKS if not args.task_id or task["id"] in args.task_id)
+    missing = sorted(set(args.task_id) - {task["id"] for task in tasks})
+    if missing:
+        parser.error(f"unknown --task-id value(s): {', '.join(missing)}")
     state_root = args.state_root.resolve()
     state_path = state_root / "state.json"
     state = {
@@ -263,14 +271,14 @@ def main() -> None:
         "policy": "critical_model_only_public_manual_gated_no_optimizer_no_delete",
         "tasks": {},
     }
-    for task in TASKS:
+    for task in tasks:
         state["tasks"][task["id"]] = {
             "status": "queued", "repo_id": task["repo"], "source": str(task["source"])
         }
     atomic_json(state_path, state)
     wait_for_pids(args.wait_pid, args.poll_seconds, state, state_path)
     state.pop("waiting_for_existing_upload_pids", None)
-    for task in TASKS:
+    for task in tasks:
         state["status"] = "running"
         state["current_task"] = task["id"]
         state["tasks"][task["id"]].update({"status": "hashing_or_verifying", "started_at": now()})
