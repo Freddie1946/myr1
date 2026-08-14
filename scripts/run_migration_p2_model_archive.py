@@ -53,7 +53,41 @@ def archive_scope(root: Path) -> bool:
         return False
     if any("smoke" in part or "gate" in part for part in parts):
         return False
+    # Data-ratio models are reproducible screening artifacts.  Their metrics and
+    # manifests are retained in the evaluation archive, but their weights are
+    # deferred from P2 at the user's request.
+    if relative.startswith("data_ratio_rule_rl_ablation_v1/"):
+        return False
+    # Full-language rule-RL runs are very large.  Preserve only the canonical
+    # last model snapshot for each run; earlier checkpoints and duplicate
+    # Trainer output copies remain local and can be added in a later tier.
+    if relative.startswith("full_language_rule_rl_"):
+        canonical_last = (
+            "full_language_rule_rl_capacity_20260811/model_snapshots/checkpoint-500",
+            "full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000/model_snapshots/checkpoint-1000",
+            "full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000/model_snapshots/checkpoint-1000",
+            "full_language_rule_rl_n4_epoch2_resume_20260812/model_snapshots/checkpoint-1000",
+            "full_language_rule_rl_n8_capacity_20260812/model_snapshots/checkpoint-500",
+        )
+        return relative in canonical_last
+    # The historical SFT4000 -> rule-RL control only needs its final/key
+    # checkpoint.  It is already listed in REMOTE_COVERED, so this rule also
+    # prevents redundant hashing of its output copy.
+    if relative.startswith("stage2_control_sft4000/"):
+        return relative.endswith("/epoch_snapshots/checkpoint-250")
     return True
+
+
+def upload_priority(item: dict[str, Any]) -> tuple[int, str]:
+    """Put Stage3 assets first, then key controls, then diagnostic snapshots."""
+    relative = item["relative_source"].lower()
+    if relative.startswith("stage3_process_grpo/"):
+        return (0, relative)
+    if relative.startswith("full_language_rule_rl_"):
+        return (1, relative)
+    if "sft4000" in relative:
+        return (2, relative)
+    return (3, relative)
 
 
 def now() -> str:
@@ -195,13 +229,17 @@ def discover_inventory(state_root: Path) -> dict[str, Any]:
                 "unique_snapshots": len(by_fingerprint),
             },
         )
-    snapshots = list(by_fingerprint.values())
+    snapshots = sorted(by_fingerprint.values(), key=upload_priority)
     return {
         "schema_version": 1,
         "created_at": now(),
         "repo_id": REPO_ID,
         "policy": "model_only_content_deduplicated_no_optimizer_scheduler_rng",
-        "excluded_by_user_policy": "Kimi, Grok, smoke and gate snapshots",
+        "excluded_by_user_policy": (
+            "Kimi, Grok, smoke/gate snapshots, data-ratio model weights; "
+            "full-language rule-RL and historical SFT4000 retain only canonical "
+            "last/key checkpoints"
+        ),
         "discovered_loadable_roots": len(roots),
         "remote_covered_roots": sum(value == "REMOTE_COVERED" for value in aliases.values()),
         "unique_snapshot_count": len(snapshots),
