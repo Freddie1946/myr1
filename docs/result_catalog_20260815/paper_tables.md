@@ -66,16 +66,17 @@
 | GPT-4o Stage3 step1000 | 47.42 | 74.18 | 76.59 | 79.08 | 73.76 | 55.87 | `pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/omnimedvqa_8518/metrics.json` |
 | GPT-4o Stage3 step1500 | 46.04 | 77.78 | 77.71 | 79.86 | 75.01 | 57.18 | `pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/omnimedvqa_8518/metrics.json` |
 | LoRA-SFT4000 control | 43.17 | 51.33 | 67.38 | 59.24 | 59.97 | 57.60 | `pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/omnimedvqa_8518/metrics.json` |
-| Qwen2.5-VL-3B | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_dual_contract_20260815/corrected_primary/qwen2_5_vl_3b/metrics.json` |
-| Lingshu-7B | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_dual_contract_20260815/corrected_primary/lingshu_7b/metrics.json` |
-| MedVLM-R1 | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_dual_contract_20260815/corrected_primary/medvlm_r1/metrics.json` |
-| MedGemma-4B-IT | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_dual_contract_20260815/corrected_primary/medgemma_4b_it/metrics.json` |
-| ScaleReasoner-R1 | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_dual_contract_20260815/corrected_primary/scalereasoner_r1/metrics.json` |
-| Llama-3.2-Vision-11B | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_dual_contract_20260815/corrected_primary/llama3_2_vision_11b/metrics.json` |
-| HuatuoGPT-Vision-7B | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_native_baselines_20260815/full8518/huatuogpt_vision_7b/metrics.json` |
-| InternVL3-8B | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_native_baselines_20260815/full8518/internvl3_8b/metrics.json` |
-| DeepSeek-VL2 | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_native_baselines_20260815/full8518/deepseek_vl2/metrics.json` |
-| Llama-3.2-Vision-90B | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | RUNNING | `pathvlm_revision_eval_a100/runs/omnimedvqa_unified_native_baselines_20260815/full8518/llama3_2_vision_90b/metrics.json` |
+| Qwen2.5-VL-3B | 45.46 | 59.56 | 67.03 | 54.12 | 60.33 | 52.42 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/qwen2_5_vl_3b/full8518/metrics.json` |
+| Lingshu-7B | 47.42 | 89.05 | 80.03 | 76.69 | 77.57 | 51.53 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/lingshu_7b/full8518/metrics.json` |
+| MedVLM-R1 | 43.40 | 50.44 | 72.31 | 70.60 | 64.89 | 43.26 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/medvlm_r1/full8518/metrics.json` |
+| MedGemma-4B-IT | 43.28 | 81.08 | 76.42 | 83.08 | 75.50 | 50.52 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/medgemma_4b_it/full8518/metrics.json` |
+| ScaleReasoner-R1 | 50.40 | 56.08 | 66.36 | 72.65 | 64.33 | 39.86 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/scalereasoner_r1/full8518/metrics.json` |
+| Llama-3.2-Vision-11B | 32.03 | 72.66 | 71.74 | 43.25 | 60.99 | 31.85 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llama3_2_vision_11b/full8518/metrics.json` |
+| HuatuoGPT-Vision-7B | 43.40 | 38.67 | 75.72 | 68.41 | 63.78 | 57.27 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/huatuogpt_vision_7b/full8518/metrics.json` |
+| InternVL3-8B | 47.30 | 49.62 | 81.42 | 66.80 | 68.51 | 61.22 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/internvl3_8b/full8518/metrics.json` |
+| DeepSeek-VL2 | 32.72 | 60.82 | 52.07 | 55.49 | 52.54 | 9.46 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/deepseek_vl2/full8518/metrics.json` |
+| Llama-3.2-Vision-90B | 40.99 | 82.78 | 78.91 | 55.73 | 70.17 | 39.00 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llama3_2_vision_90b/full8518/metrics.json` |
+| LLaVA-Med-v1.5 | 28.47 | 57.22 | 43.68 | 38.66 | 43.43 | 41.11 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llava_med_7b/full8518/metrics.json` |
 
 ## 修订 Table V：当前分阶段训练主线
 

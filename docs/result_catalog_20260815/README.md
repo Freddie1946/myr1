@@ -17,7 +17,7 @@
 - `legacy_partial`：模型和数据可定位，但旧结果缺少明确 prompt/generation contract；
 - `ambiguous_nonstandard`：非标准诊断/汇总，不能仅凭名字写入论文主表。
 
-当前共索引 891 个结果目录：{'complete': 340, 'legacy_partial': 112, 'ambiguous_nonstandard': 286, 'strong_partial': 153}。
+当前共索引 930 个结果目录：{'complete': 373, 'legacy_partial': 112, 'ambiguous_nonstandard': 286, 'strong_partial': 159}。
 
 ## 关键协议边界
 

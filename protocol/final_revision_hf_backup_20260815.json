@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T06:27:04.785607+00:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+  "repo_type": "dataset",
+  "private": false,
+  "gated": "manual",
+  "revision": "9527a11a19cf9024f02eba7d40bfe1eee4cd37c6",
+  "prefix": "increments/20260815_final_revision_closure_v1",
+  "file_count": 40,
+  "total_bytes": 417056604,
+  "download_verified_sha256": {
+    "increments/20260815_final_revision_closure_v1/documents/reviewer_response_manuscript_revision_and_complete_tables.md": "7c6f7383d22c66c91adfbf43b3748cef4a03bfc60dddff2a58eb335d5c09563d",
+    "increments/20260815_final_revision_closure_v1/audit/final_revision_assets_audit_20260815.json": "ecfaf66671d240c1f3a66c2eb00f843b270c98e53c41e4956206d0d2ba605c6a",
+    "increments/20260815_final_revision_closure_v1/human_review/archive_manifest.json": "27bd5ea3ad8a59810fabee6d9b417336c13411d97640828817e9bb7d22e7525e"
+  },
+  "failures": [],
+  "files": {
+    "increments/20260815_final_revision_closure_v1/documents/reviewer_response_manuscript_revision_and_complete_tables.md": {
+      "bytes": 31969,
+      "sha256": "7c6f7383d22c66c91adfbf43b3748cef4a03bfc60dddff2a58eb335d5c09563d"
+    },
+    "increments/20260815_final_revision_closure_v1/documents/human_review_packet_instructions.md": {
+      "bytes": 1922,
+      "sha256": "c84f15adadeb4598193a9e1c0acfcbede07ded36f92658519b621ee18e185d7f"
+    },
+    "increments/20260815_final_revision_closure_v1/audit/final_revision_assets_audit_20260815.json": {
+      "bytes": 35619,
+      "sha256": "ecfaf66671d240c1f3a66c2eb00f843b270c98e53c41e4956206d0d2ba605c6a"
+    },
+    "increments/20260815_final_revision_closure_v1/human_review/archive_manifest.json": {
+      "bytes": 437297,
+      "sha256": "27bd5ea3ad8a59810fabee6d9b417336c13411d97640828817e9bb7d22e7525e"
+    },
+    "increments/20260815_final_revision_closure_v1/human_review/pathvlm_human_review_owner_complete_20260815.tar.gz": {
+      "bytes": 269823875,
+      "sha256": "ca6b4b9af68df8f086d338e60e8b0105cfc907381f6a37c78cc820d8f3a470a5"
+    },
+    "increments/20260815_final_revision_closure_v1/human_review/pathvlm_human_review_reviewer_blinded_20260815.tar.gz": {
+      "bytes": 106495120,
+      "sha256": "4780812511df888081d0e79d6fa1583eb20ac2743a0a05c00a424eece2bb5a1f"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/launcher.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/COMPLETED": {
+      "bytes": 38,
+      "sha256": "a4a51790a3e1d66d00c0a46a5cc480704a32cc97ca31a7c4d936cd8eaca25e4c"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/logs/stage3_step500_yesno.log": {
+      "bytes": 8557,
+      "sha256": "4c44e4049db176c06bd6174d6a45a3890aa3a8f5c411d48f0666665015cd242d"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/logs/stage3_step1000_yesno.log": {
+      "bytes": 8659,
+      "sha256": "49d62c24079be221422e2b7ce38edc3a19b86ef22f928b04d5cbc093eaa74730"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/logs/stage3_step1500_yesno.log": {
+      "bytes": 8542,
+      "sha256": "5d521d4d01114be62aa805195f2c8abae277e2100c595fa6c529e8ee62565372"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/logs/stage2_continue_omni.log": {
+      "bytes": 13938,
+      "sha256": "c19cb2799459085618c13f586768da63778f1e95ff733bf57e73b0cf1f2c223e"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1000_pathvqa_yesno_v5/smoke16/run_config.json": {
+      "bytes": 1489,
+      "sha256": "81270aa38823788eec9e6eeb1ba74fd2281d6619af9f77546c8d84c9b76a8b87"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1000_pathvqa_yesno_v5/smoke16/predictions.jsonl": {
+      "bytes": 29954,
+      "sha256": "4d75007fc4cb36c5168f5316c1c5524e508f1f1443034bc37c92c27f19e3b689"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1000_pathvqa_yesno_v5/smoke16/metrics.json": {
+      "bytes": 1705,
+      "sha256": "3fcbdd73cd39a143f40bba9b216a5e272b3c9991c65665de430b4d1d3d4b56b8"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1000_pathvqa_yesno_v5/full3362/run_config.json": {
+      "bytes": 1491,
+      "sha256": "6b341362ae5cd93e30b77e4abbd71d76c692ccd07b96042ab274938d47efc565"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1000_pathvqa_yesno_v5/full3362/predictions.jsonl": {
+      "bytes": 6019429,
+      "sha256": "a7edbe71645fc3e28eb4af7ea1f4bf840d7069c3bbd3aa699f1cdb1c8a43e633"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1000_pathvqa_yesno_v5/full3362/metrics.json": {
+      "bytes": 1781,
+      "sha256": "a5f76e52fb648e294964755cc0d96531cea0ecbb8d9cfbf339accd0f4cfc39c8"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1500_pathvqa_yesno_v5/smoke16/run_config.json": {
+      "bytes": 1489,
+      "sha256": "0cd9388cf7daedf83d161f983f95ee3f9e8d5329a55d9eb5522c478bad37ad7b"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1500_pathvqa_yesno_v5/smoke16/predictions.jsonl": {
+      "bytes": 30174,
+      "sha256": "599c7bb81e8128e13f947966b013b69770db13423e8fb04e123f651138b8c146"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1500_pathvqa_yesno_v5/smoke16/metrics.json": {
+      "bytes": 1734,
+      "sha256": "d4276c99da42bcf9f145af11d3926d796d7d34ade01f8fc71d479c026c2bcee4"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1500_pathvqa_yesno_v5/full3362/run_config.json": {
+      "bytes": 1491,
+      "sha256": "dcffebc774f74b014421b12ec216619a6506a41f928acb482468370f551c72df"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1500_pathvqa_yesno_v5/full3362/predictions.jsonl": {
+      "bytes": 6079900,
+      "sha256": "2716b086f29e9515df846057fe259623975f1105193795f127294123d071c721"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1500_pathvqa_yesno_v5/full3362/metrics.json": {
+      "bytes": 1782,
+      "sha256": "c41453ebb6a5f545a8953b098db3f6c8081bf4bfd65383e56068349859cd8841"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/smoke16/run_config.json": {
+      "bytes": 1331,
+      "sha256": "b95f0673250f880dc2e77cecd6bad141f91f10a27dfb4cbf73c35c5fbc5aac37"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/smoke16/predictions.jsonl": {
+      "bytes": 36682,
+      "sha256": "fd14f991591ca986476d6cab6fa1f31461178cffccc6f1d50fc68d07100b4c14"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/smoke16/metrics.json": {
+      "bytes": 2134,
+      "sha256": "2f233ec4664ba034eff2bb12c255465a9c841cab239be8ab0f5d96d2be0b3184"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/full8518/run_config.json": {
+      "bytes": 1333,
+      "sha256": "e697d56d7c108c5192a76fa650b49e61827031207576f591a58e3892b54865e6"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/full8518/predictions.jsonl": {
+      "bytes": 19940791,
+      "sha256": "f8606541ee3d17cd9edc5c5ad394e28f694d2a693bb026d2fef10ce6e4824566"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/full8518/metrics.json": {
+      "bytes": 3667,
+      "sha256": "63fa6e97c106540b53174916fd76db4e3c7cb55e190ab6d58954153dd9b0b4e5"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint500_pathvqa_yesno_v5/smoke16/run_config.json": {
+      "bytes": 1488,
+      "sha256": "42fbfe1c72c7a82b2ff691c6331943ed77e02b456ea82612114233a139d54bfa"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint500_pathvqa_yesno_v5/smoke16/predictions.jsonl": {
+      "bytes": 29478,
+      "sha256": "53d59e4377481b601cc8ead7e9af8c2a76b63e806cf3bafeeb8fe6fcb9d0eaee"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint500_pathvqa_yesno_v5/smoke16/metrics.json": {
+      "bytes": 1704,
+      "sha256": "f2ec17a1191b7a05606e79e5f917fc700167478e3deb3421fab0bb7acb20dc32"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint500_pathvqa_yesno_v5/full3362/run_config.json": {
+      "bytes": 1490,
+      "sha256": "525aa28a2c82f436fa99eae04f0defed69914288241d8ae9e71c39b35c43bef0"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint500_pathvqa_yesno_v5/full3362/predictions.jsonl": {
+      "bytes": 5889542,
+      "sha256": "d3ef54c939dfaf14d761fd63bfb65961b454fece690f9abbeb988ce35206fb83"
+    },
+    "increments/20260815_final_revision_closure_v1/evaluation/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint500_pathvqa_yesno_v5/full3362/metrics.json": {
+      "bytes": 1780,
+      "sha256": "7944963b5fab3bc6682cb9cccba7ae41f34af1d1c49b0214ffcf13fe569815f0"
+    },
+    "increments/20260815_final_revision_closure_v1/result_catalog/result_lineage.json": {
+      "bytes": 2089962,
+      "sha256": "61f66cbd8d14ff28b438ae8a64828a37278179de7641ef72bd94dfcec255f0a5"
+    },
+    "increments/20260815_final_revision_closure_v1/result_catalog/README.md": {
+      "bytes": 1607,
+      "sha256": "cc15f1ca5a06bf85598f343dc6cb3984f0f34d987aec43b0b262d17808671b19"
+    },
+    "increments/20260815_final_revision_closure_v1/result_catalog/paper_tables.md": {
+      "bytes": 12598,
+      "sha256": "cd8147dc296e491ed48d787a2da664dfdf232e8c1137b840ff4141772e3da915"
+    },
+    "increments/20260815_final_revision_closure_v1/result_catalog/p1_backup_inventory.md": {
+      "bytes": 3062,
+      "sha256": "af54eb07daa9ff810302b49673a20822db84fd51a33b700a73330bfc832f90a7"
+    }
+  }
+}

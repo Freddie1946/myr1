@@ -182,16 +182,17 @@ BASELINE_PATHMMU = (
 
 
 CORRECTED_OMNI_OUTPUTS = (
-    ("Qwen2.5-VL-3B", EVAL / "omnimedvqa_unified_dual_contract_20260815/corrected_primary/qwen2_5_vl_3b/metrics.json"),
-    ("Lingshu-7B", EVAL / "omnimedvqa_unified_dual_contract_20260815/corrected_primary/lingshu_7b/metrics.json"),
-    ("MedVLM-R1", EVAL / "omnimedvqa_unified_dual_contract_20260815/corrected_primary/medvlm_r1/metrics.json"),
-    ("MedGemma-4B-IT", EVAL / "omnimedvqa_unified_dual_contract_20260815/corrected_primary/medgemma_4b_it/metrics.json"),
-    ("ScaleReasoner-R1", EVAL / "omnimedvqa_unified_dual_contract_20260815/corrected_primary/scalereasoner_r1/metrics.json"),
-    ("Llama-3.2-Vision-11B", EVAL / "omnimedvqa_unified_dual_contract_20260815/corrected_primary/llama3_2_vision_11b/metrics.json"),
-    ("HuatuoGPT-Vision-7B", EVAL / "omnimedvqa_unified_native_baselines_20260815/full8518/huatuogpt_vision_7b/metrics.json"),
-    ("InternVL3-8B", EVAL / "omnimedvqa_unified_native_baselines_20260815/full8518/internvl3_8b/metrics.json"),
-    ("DeepSeek-VL2", EVAL / "omnimedvqa_unified_native_baselines_20260815/full8518/deepseek_vl2/metrics.json"),
-    ("Llama-3.2-Vision-90B", EVAL / "omnimedvqa_unified_native_baselines_20260815/full8518/llama3_2_vision_90b/metrics.json"),
+    ("Qwen2.5-VL-3B", EVAL / "omnimedvqa_per_model_gated_v2_20260815/qwen2_5_vl_3b/full8518/metrics.json"),
+    ("Lingshu-7B", EVAL / "omnimedvqa_per_model_gated_v2_20260815/lingshu_7b/full8518/metrics.json"),
+    ("MedVLM-R1", EVAL / "omnimedvqa_per_model_gated_v2_20260815/medvlm_r1/full8518/metrics.json"),
+    ("MedGemma-4B-IT", EVAL / "omnimedvqa_per_model_gated_v2_20260815/medgemma_4b_it/full8518/metrics.json"),
+    ("ScaleReasoner-R1", EVAL / "omnimedvqa_per_model_gated_v2_20260815/scalereasoner_r1/full8518/metrics.json"),
+    ("Llama-3.2-Vision-11B", EVAL / "omnimedvqa_per_model_gated_v2_20260815/llama3_2_vision_11b/full8518/metrics.json"),
+    ("HuatuoGPT-Vision-7B", EVAL / "omnimedvqa_per_model_gated_v2_20260815/huatuogpt_vision_7b/full8518/metrics.json"),
+    ("InternVL3-8B", EVAL / "omnimedvqa_per_model_gated_v2_20260815/internvl3_8b/full8518/metrics.json"),
+    ("DeepSeek-VL2", EVAL / "omnimedvqa_per_model_gated_v2_20260815/deepseek_vl2/full8518/metrics.json"),
+    ("Llama-3.2-Vision-90B", EVAL / "omnimedvqa_per_model_gated_v2_20260815/llama3_2_vision_90b/full8518/metrics.json"),
+    ("LLaVA-Med-v1.5", EVAL / "omnimedvqa_per_model_gated_v2_20260815/llava_med_7b/full8518/metrics.json"),
 )
 
 

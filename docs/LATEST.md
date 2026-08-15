@@ -1,5 +1,24 @@
 # Latest recovery pointer
 
+Latest complete revision audit, manuscript-ready response text, tables, and human-review handoff:
+
+0. `20260815_reviewer_response_manuscript_revision_and_complete_tables.md`
+0. `20260815_human_review_packet_instructions.md`
+0. `../protocol/final_revision_assets_audit_20260815.json`
+
+The 2026-08-15 fail-closed audit passes 85/85 required checks and records the state as
+`complete_except_human_ratings`. It includes the newly completed Stage3 checkpoint-500/1000/1500
+free-generation PathVQA Yes/No runs and the unified Stage2-continued-rule-RL1000 OmniMedVQA run.
+The combined manuscript work file contains reviewer-response prose, ready-to-paste English
+revisions, in-domain/OOD failure cases, the 0.3/0.4/0.5 penalty sensitivity rationale, exact Judge
+contract/cost details, and the revised main/supplementary tables. Human materials are separated
+into a blinded reviewer distribution and an owner-only package containing mappings and keys.
+The final revision increment is remotely verified in the manual-gated migration dataset under
+`increments/20260815_final_revision_closure_v1`; the current private Codex snapshot tag is
+`20260815T062722Z`. Verification records are
+`../protocol/final_revision_hf_backup_20260815.json` and
+`../protocol/codex_private_snapshot_backup_20260815T062722Z.json`.
+
 Latest machine-migration backup plan:
 
 0. `NEW_MACHINE_CODEX_RESTORE_20260815.md` (authoritative new-machine restore entry)

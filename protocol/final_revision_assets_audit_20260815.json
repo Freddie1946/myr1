@@ -1,0 +1,729 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T06:31:23.201126+00:00",
+  "scope": "paper-facing non-human results plus frozen human-review inputs",
+  "status": "complete_except_human_ratings",
+  "human_ratings_status": "pending_by_design",
+  "check_count": 85,
+  "failed_check_count": 0,
+  "category_summary": {
+    "core_results": {
+      "total": 40,
+      "failed": 0
+    },
+    "newly_completed_results": {
+      "total": 4,
+      "failed": 0
+    },
+    "baselines": {
+      "total": 11,
+      "failed": 0
+    },
+    "data_ratio": {
+      "total": 15,
+      "failed": 0
+    },
+    "repeated_inference": {
+      "total": 9,
+      "failed": 0
+    },
+    "reasoning_quality": {
+      "total": 1,
+      "failed": 0
+    },
+    "interpretability": {
+      "total": 1,
+      "failed": 0
+    },
+    "documentation": {
+      "total": 2,
+      "failed": 0
+    },
+    "human_inputs": {
+      "total": 2,
+      "failed": 0
+    }
+  },
+  "checks": [
+    {
+      "label": "core:Base Qwen2.5-VL-7B:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/base/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "0e11ba1d268ccb611fe571c75d4fbc87d141e7b92c7c412f012f9bb635af2c67"
+    },
+    {
+      "label": "core:Base Qwen2.5-VL-7B:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu_test999/base/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "b2e09fd804c36c0ec1f286ca500ae5ec694f021c45ee028a1465f912a4225eaa"
+    },
+    {
+      "label": "core:Base Qwen2.5-VL-7B:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/base/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "e5349dc8116e42b2c417b94d0e135719a91bccec48e597f3ee7de651a01a70ad"
+    },
+    {
+      "label": "core:Base Qwen2.5-VL-7B:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/visual_adaptation_architecture_validation_20260811/mmmu_nonmedical_dev116/base_max4096/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "2c0dbc5a79ff25ce8d809d2d3b96e7241e92f4309b9eda998762dc45f05e9ce5"
+    },
+    {
+      "label": "core:Historical full-SFT3000:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "059243cb3ec0028cccc771710892debba55a285f965ec70851282a8a8aac1500"
+    },
+    {
+      "label": "core:Historical full-SFT3000:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/sft3000_parent_test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "cde056dd91600dcb9d404dc0233d14bce509824f719c3030ea04a76167c9ebb6"
+    },
+    {
+      "label": "core:Historical full-SFT3000:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "652f1bd687401525f74b0a5c5a05367e6bf98bd3504c9040cfbe736d44e0469f"
+    },
+    {
+      "label": "core:Historical full-SFT3000:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/sft3000/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "c23706833c702c53e78dc67dd4bdf7f59d0def1a6f61e976734ee13d3e5908b0"
+    },
+    {
+      "label": "core:Historical Stage2 outcome-RL:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "239561834c02131f8162b214fee2c544603bd16ef1c4395abaac02efa577b67d"
+    },
+    {
+      "label": "core:Historical Stage2 outcome-RL:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/stage2_rl_test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "cc07e4cd66e7dce4fad9daab40f0f2fee99e1663f0b43876c663adcf8b44523e"
+    },
+    {
+      "label": "core:Historical Stage2 outcome-RL:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "cbe789dbcc46e4054f156098964f80296721870d08b44184e029e4707021c165"
+    },
+    {
+      "label": "core:Historical Stage2 outcome-RL:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/core_historical_corrected_eval_20260813/stage2/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "98acccc6e7ebde7cb3f6f5597b8adab9bc2e0fd6b2782b1a09936d9750a4c52e"
+    },
+    {
+      "label": "core:Current L-r16 SFT3000 step80:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu/step080/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "0d8a767ccb44133d2e08e016f2b1064939900ee6bba76ba2f39dd6824b6b8e39"
+    },
+    {
+      "label": "core:Current L-r16 SFT3000 step80:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/formal_selected_sft3000_20260811/pathmmu_test999/step080/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "2297832fb4e71ce2129cf8fa234764a47e21f12c96c5da0027ee6d12f80415ef"
+    },
+    {
+      "label": "core:Current L-r16 SFT3000 step80:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/omnimedvqa/sft_parent/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "678819435afe5de2b90ba370f26d57864e816bfcb927983a4bc3ed420283485e"
+    },
+    {
+      "label": "core:Current L-r16 SFT3000 step80:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/mmmu/sft_parent/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "cfd41d1c1a23a912b682552301a5adae90eefae284ce2520b64590ea3ac599c1"
+    },
+    {
+      "label": "core:Full rule-RL n4 step1000:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000_pathmmu_eval/val/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "73d754c5b5bd2655e46bbeb35b1b9fd47a9390a5428586f845bb67e7d7acf3c0"
+    },
+    {
+      "label": "core:Full rule-RL n4 step1000:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n4_fresh_step1000_pathmmu_eval/test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "7f5ee6a4bcc0ad474eb636e0d064e7b4b6f8a1ad871cde158d0ca1330810103e"
+    },
+    {
+      "label": "core:Full rule-RL n4 step1000:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/omnimedvqa/full_rl_n4_step1000/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "4b60b805717f86cd0de072e61901f186e2a38417fbb82ba59204b4986b638012"
+    },
+    {
+      "label": "core:Full rule-RL n4 step1000:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/mmmu/full_rl_n4_step1000/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "ca6d11c27bba929d9957d69dcfa6cde579da10c8a1213c7e391c249f33805a22"
+    },
+    {
+      "label": "core:Full rule-RL n8 step1000:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000_pathmmu_eval/val/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "58de7f5187d7c1a3229792c0ff13a06d6f07693c78d6ef729e9842b830c338e5"
+    },
+    {
+      "label": "core:Full rule-RL n8 step1000:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/n8_fresh_step1000_pathmmu_eval/test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "9976bb5101c7b366cd58d7b10545a48cec2b8756f04a8113f5126a70dcdee0f8"
+    },
+    {
+      "label": "core:Full rule-RL n8 step1000:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/omnimedvqa/full_rl_n8_step1000/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "e66fedee05829c7dc47bc572c669355bd593e1e5c333f5a73d111c7b2b613586"
+    },
+    {
+      "label": "core:Full rule-RL n8 step1000:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/full_language_rule_rl_clean_n4_n8_step1000_20260812/candidate_ood_eval/mmmu/full_rl_n8_step1000/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "165be29181d9cf2e2fc499eeebd11b728c7905403a2d373d769ce717d8c12925"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step500:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "869f20a3220102ef34bff4d0dac336f44ceef3a8ab7d4e899c337c1b9b02ee0e"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step500:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint500_test999_20260813_v2/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "ce39d3ee0e8184f6ee4b9c4c704a066816b5277e906404c53d5c2dac3398f5d0"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step500:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "4f26fc7ac3ff44f2efcdc55e795c87d41bc459202a12489ffdb0a6ff01941b5a"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step500:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint500/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "7d7e38f6d4fc40d2224455be78f2e24b6a91c4c5b399ece5e065c56935242dce"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1000:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "8d8db4cc0c4124c9eb67de63f3c61c3dc2aec10b6e22e5fb4765877a2973a540"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1000:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1000_test999_20260813_v2/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "98da1c8a142f6aca25d3b3a996f74a20e4c2cdf8fb49b560cf365e073814d571"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1000:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "08080a141baad18b76fa60feb341c672348c1104d2be778fb44bc5396c68aca7"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1000:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint_ood_comparison_20260813/checkpoint1000/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "3c46966e891b5b0ec3ddec3ef80d635684953a3b055f3c4703f91043adac1681"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1500:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "a3ed43a4720fd32f06ca3b7e2bb3929d7548228cd85cfefe7fc1122091cf5971"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1500:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathmmu_test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "f05066bc6b2479140d88927d94e793fda5e654f5488e720bb29123ab80a7075f"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1500:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "9722904931c52b39c24063ec726bf86a85cf5fd97f90fdd79894f2154a99f9d4"
+    },
+    {
+      "label": "core:GPT-4o Stage3 step1500:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "3c3afed6518bdd6169e1a0fbfa1993ad99ea682967d332265e99e7ec100dff7a"
+    },
+    {
+      "label": "core:LoRA-SFT4000 control:pathmmu_val",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "441bf88a65834909ca474aa21ad4e1be109812f6da8515620b394343f5e5cbcf"
+    },
+    {
+      "label": "core:LoRA-SFT4000 control:pathmmu_test",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/pathmmu_test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "df5212c94914ec9e9fa3e0346499abcb6dd4c13a8852340fc875d3f55814c53f"
+    },
+    {
+      "label": "core:LoRA-SFT4000 control:omni",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "003f0bdefcfb8c041e411f4962ccc98ac41b5814568bf991cc0d6d35d0ad215b"
+    },
+    {
+      "label": "core:LoRA-SFT4000 control:mmmu",
+      "category": "core_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/lora_sft4000_control_20260814/formal_8gpu_gbs96/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "20a778d5f181c767c0fbca990869297e727351fc740ad0f48df8f4b93881a191"
+    },
+    {
+      "label": "Stage3-500:PathVQA-free-YesNo",
+      "category": "newly_completed_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint500_pathvqa_yesno_v5/full3362/metrics.json",
+      "ok": true,
+      "detail": "count=3362; status=completed",
+      "sha256": "7944963b5fab3bc6682cb9cccba7ae41f34af1d1c49b0214ffcf13fe569815f0"
+    },
+    {
+      "label": "Stage3-1000:PathVQA-free-YesNo",
+      "category": "newly_completed_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1000_pathvqa_yesno_v5/full3362/metrics.json",
+      "ok": true,
+      "detail": "count=3362; status=completed",
+      "sha256": "a5f76e52fb648e294964755cc0d96531cea0ecbb8d9cfbf339accd0f4cfc39c8"
+    },
+    {
+      "label": "Stage3-1500:PathVQA-free-YesNo",
+      "category": "newly_completed_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint1500_pathvqa_yesno_v5/full3362/metrics.json",
+      "ok": true,
+      "detail": "count=3362; status=completed",
+      "sha256": "c41453ebb6a5f545a8953b098db3f6c8081bf4bfd65383e56068349859cd8841"
+    },
+    {
+      "label": "Stage2-continued-ruleRL1000:OmniMedVQA",
+      "category": "newly_completed_results",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "63fa6e97c106540b53174916fd76db4e3c7cb55e190ab6d58954153dd9b0b4e5"
+    },
+    {
+      "label": "baseline:qwen2_5_vl_3b:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/qwen2_5_vl_3b/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "12e39e614f6be7a288c1940d43330508fe7ca8660fbb34e7fc3a65ed78e8919d"
+    },
+    {
+      "label": "baseline:lingshu_7b:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/lingshu_7b/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "4b24d7d08ac1940dc73f717efe49e8ef0037c019521b6b753e855013a944c0f2"
+    },
+    {
+      "label": "baseline:medvlm_r1:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/medvlm_r1/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "a23322119decbbe7598528be2e957f4fa7f82e5dc88760d3ab22f93500d10bcf"
+    },
+    {
+      "label": "baseline:medgemma_4b_it:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/medgemma_4b_it/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "bbb80f84f6d1d455e8cd384721eb555be93c6c7b8b49c3a8113d8cf21cdbfc4f"
+    },
+    {
+      "label": "baseline:scalereasoner_r1:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/scalereasoner_r1/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "f371778fafbaa8c7a6e11d39e94973272e4e76527c7aa2030bc17edd42a274a8"
+    },
+    {
+      "label": "baseline:llama3_2_vision_11b:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llama3_2_vision_11b/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "fb5b72343f6a09de4a8d6b19a3190e26d624b47585ce9d992a9ab0aff5a3d29d"
+    },
+    {
+      "label": "baseline:huatuogpt_vision_7b:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/huatuogpt_vision_7b/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "38d1aba88f5c29eff0691d2463928ec300cbe6ef1c9ae8a4770d6cc71c49e8c9"
+    },
+    {
+      "label": "baseline:internvl3_8b:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/internvl3_8b/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "49dc8688b47412da81bd26b327833e72fcd1d34db4ba310cb58fa8ef7b9ae5c6"
+    },
+    {
+      "label": "baseline:deepseek_vl2:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/deepseek_vl2/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "3d7ebc2e1e1dd4cd99dc9bed4735329aa8c17be57530b265db051ac0527690ab"
+    },
+    {
+      "label": "baseline:llama3_2_vision_90b:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llama3_2_vision_90b/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "70694005fa00295b498e0c7efbe5ebe800a0f45a4d69482cd04cb5f9d0f2f18c"
+    },
+    {
+      "label": "baseline:llava_med_7b:OmniMedVQA",
+      "category": "baselines",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llava_med_7b/full8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "ac6302c393c078ca21a423a46ab2ff18f94ce3c5eebd5fb3352beacdcf21f10b"
+    },
+    {
+      "label": "ratio:sft0250_rl0750:pathmmu_val385",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "f62da45e391d08634fa96abb29a3599a1721b8d7e969607562c1e5e580e79f02"
+    },
+    {
+      "label": "ratio:sft0250_rl0750:pathmmu_test999",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/pathmmu_test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "eaee9cc821d9f9284fbc4a32fd386349ff535aa348f3e4a6a2af30067a1804e2"
+    },
+    {
+      "label": "ratio:sft0250_rl0750:pathvqa_test3362_ab",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/pathvqa_test3362_ab/metrics.json",
+      "ok": true,
+      "detail": "count=3362; status=completed",
+      "sha256": "b09a371c04abd15b45fadc9b4479de0e2cf63d3e9a80e466edaa2a39883970f2"
+    },
+    {
+      "label": "ratio:sft0250_rl0750:omnimedvqa_8518",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "1396c8002c95e253d0d7200b837cabd4ea4d6c131e3b2eb1fb968bc119767ec3"
+    },
+    {
+      "label": "ratio:sft0250_rl0750:mmmu_nonmedical116",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0250_rl0750/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "feea8c02a65f35d9e860299650c9b965127316b825c4a8d8e80a823f7812cb9f"
+    },
+    {
+      "label": "ratio:sft0500_rl0500:pathmmu_val385",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "3c919688839003324c8795ca1d5301608cc74aa4c8b765cc4b81ac1588f8e3da"
+    },
+    {
+      "label": "ratio:sft0500_rl0500:pathmmu_test999",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/pathmmu_test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "8d4b09a8eff7d960e46276e7853905a9781bdc70167711c7ac6afdc85425d960"
+    },
+    {
+      "label": "ratio:sft0500_rl0500:pathvqa_test3362_ab",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/pathvqa_test3362_ab/metrics.json",
+      "ok": true,
+      "detail": "count=3362; status=completed",
+      "sha256": "44f882abfbcf4318c23ba5e02b0d37bab8f6dbec5e6483c678d829f3e5020369"
+    },
+    {
+      "label": "ratio:sft0500_rl0500:omnimedvqa_8518",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "bdcc5cdcf565038d2af2e7afeb08606a79780498b211ff0e62c96b2201ed9f52"
+    },
+    {
+      "label": "ratio:sft0500_rl0500:mmmu_nonmedical116",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0500_rl0500/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "870f0ed1982bc8e5fce6f1189c77135169dd5dbf10884b3a72ed50f2ccb15346"
+    },
+    {
+      "label": "ratio:sft0750_rl0250:pathmmu_val385",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/pathmmu_val385/metrics.json",
+      "ok": true,
+      "detail": "count=385; status=completed",
+      "sha256": "2906ca3ea86021fdee700a804b3d8f7c97dd9c730ed8852a7afc124145796a72"
+    },
+    {
+      "label": "ratio:sft0750_rl0250:pathmmu_test999",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/pathmmu_test999/metrics.json",
+      "ok": true,
+      "detail": "count=999; status=completed",
+      "sha256": "00be3712211dc2d11a3274b5e17b7e90d4f75386ad44e6df06cd7597d312d4a7"
+    },
+    {
+      "label": "ratio:sft0750_rl0250:pathvqa_test3362_ab",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/pathvqa_test3362_ab/metrics.json",
+      "ok": true,
+      "detail": "count=3362; status=completed",
+      "sha256": "e949827476693ed385a557a2807b710cb2cb569a646416969ce14adb845974b8"
+    },
+    {
+      "label": "ratio:sft0750_rl0250:omnimedvqa_8518",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/omnimedvqa_8518/metrics.json",
+      "ok": true,
+      "detail": "count=8518; status=completed",
+      "sha256": "32b066707ae4af202bba5ea08cca073588d82993b7df8ecd2865edb35c8e463d"
+    },
+    {
+      "label": "ratio:sft0750_rl0250:mmmu_nonmedical116",
+      "category": "data_ratio",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/data_ratio_uniform_eval_20260814/sft0750_rl0250/mmmu_nonmedical116/metrics.json",
+      "ok": true,
+      "detail": "count=116; status=completed",
+      "sha256": "24dce9d7e0f00e0d9068866ad50bd8f2e8819944f8da989c7120020446122ca5"
+    },
+    {
+      "label": "repeat:l_r16_sft80",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/l_r16_sft80/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "f065aeedb9b19f372da86c11c427e09980c399bd9a8c1ba5e7c086c3c6f1fbd2"
+    },
+    {
+      "label": "repeat:stage3_gpt4o_step1500",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/stage3_gpt4o_step1500/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "82bceba1f210f457ac38bf9feb5932e2cd22266162ca75d1b04f48532d5908af"
+    },
+    {
+      "label": "repeat:full_rule_rl_n8_step1000",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260814/full_rule_rl_n8_step1000/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "918ad095d35fa4f1bff305761f6d340d6a9c795a1d5e11972abc6ea450e2ddd5"
+    },
+    {
+      "label": "repeat:base_qwen2_5_vl_7b",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260815/base_qwen2_5_vl_7b/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "4c751a5a7044c0a7891b7f31c5a029526145a34d66002a0485c618099e53dfc7"
+    },
+    {
+      "label": "repeat:stage3_gpt4o_step1000",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260815/stage3_gpt4o_step1000/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "58a9aed7a89a3a5d77ee54913b8a5c56db78c256c515c0b3f0ede0e3281e9982"
+    },
+    {
+      "label": "repeat:stage2_continued_rule_rl1000",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260815/stage2_continued_rule_rl1000/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "724fa65c931140d31718637b87ff62fd7763ac65ac833657d5eab14fbfeb5303"
+    },
+    {
+      "label": "repeat:rule_rl4000_checkpoint2500_provisional",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260815/rule_rl4000_checkpoint2500_provisional/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "d3600f625ece9d3cc2b604b9a40d718b61ac8a4d4eb945bd28fff7076d298fe9"
+    },
+    {
+      "label": "repeat:stage2_outcome_grpo",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260815/stage2_outcome_grpo/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "68cf1abfaf0b040fe5f38f535129a406a1bd52e8ece314bb7e3983f786356384"
+    },
+    {
+      "label": "repeat:stage3_gpt4o_step500",
+      "category": "repeated_inference",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/repeated_inference_pathmmu_test999_20260815/stage3_gpt4o_step500/summary.json",
+      "ok": true,
+      "detail": "run_count=5",
+      "sha256": "5da57a4d2477f0e3e2b1281d90241da25ceafb3debe7601e61c11c38f120151e"
+    },
+    {
+      "label": "multi-Judge completion",
+      "category": "reasoning_quality",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/protocol/final_evaluation_multijudge_completion_20260810.json",
+      "ok": true,
+      "detail": "present",
+      "sha256": "f3432f121ce6620a676f5cdaa93307e1b8c0146cfe45d01a7b5267d3e096e67c"
+    },
+    {
+      "label": "interpretability dual-stream",
+      "category": "interpretability",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/reference_evidence_dual_stream_v2/metrics.json",
+      "ok": true,
+      "detail": "status=completed; primary_cases=30",
+      "sha256": "6f09dba1ae10e81df954575f3ef448ee4a2131313918a049019aeebb2a8c7048"
+    },
+    {
+      "label": "result lineage",
+      "category": "documentation",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/docs/result_catalog_20260815/result_lineage.json",
+      "ok": true,
+      "detail": "present",
+      "sha256": "61f66cbd8d14ff28b438ae8a64828a37278179de7641ef72bd94dfcec255f0a5"
+    },
+    {
+      "label": "paper tables",
+      "category": "documentation",
+      "path": "/home/dataset-assist-0/czy/wjy/myr1/docs/result_catalog_20260815/paper_tables.md",
+      "ok": true,
+      "detail": "present",
+      "sha256": "cd8147dc296e491ed48d787a2da664dfdf232e8c1137b840ff4141772e3da915"
+    },
+    {
+      "label": "human:reward60+ROI20 browse packet",
+      "category": "human_inputs",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/expert_review_browse_packets_20260815/manifest.json",
+      "ok": true,
+      "detail": "reward=60; roi=20; hash_mismatches=0",
+      "sha256": "26ba81ac9ab0cfa94e0331212ac1f8b165c8f1ba872c84212e93061a747936c5"
+    },
+    {
+      "label": "human:Stage2-vs-Stage3 blind100",
+      "category": "human_inputs",
+      "path": "/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/runs/stage2_stage3_human_review_packet_20260815/manifest.json",
+      "ok": true,
+      "detail": "cases=100",
+      "sha256": "564b173f2ec2f7405397b41291e693a8938c36ddcbc6b5e34141af620b25782a"
+    }
+  ]
+}
