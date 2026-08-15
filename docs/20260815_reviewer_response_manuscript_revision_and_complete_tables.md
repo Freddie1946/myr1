@@ -245,12 +245,12 @@ OmniMedVQA 的四个来源是 CT、皮肤镜、视网膜 OCT 和糖网，并不�
 | LLaVA-Med-v1.5 | 35.54 | 56.57 | 43.43 | 41.11 |
 | Qwen-VL-Plus | 54.75 | 67.58 | NA | NA |
 | Claude Haiku 4.5 | 46.69 | 40.30 | NA | NA |
-| PLIP (image-option matching) | 33.43 | NA | 23.78 matching | NA |
-| CONCH (image-option matching) | 33.83 | NA | 38.71 matching | NA |
+| PLIP (image-text matching) | 33.43 | 48.30 statement matching | 23.78 option matching | NA |
+| CONCH (image-text matching) | 33.83 | 53.87 statement matching | 38.71 option matching | NA |
 | UNI (vision encoder) | NA | NA | NA | NA |
 | PathChat (no verified runnable release) | NA | NA | NA | NA |
 
-这里的 `NA` 不是漏测或按零分处理。PLIP/CONCH 只能将图像与当前题目的原始候选文本作余弦匹配，不能生成推理，因此其数值必须标为 `matching`，不能与生成式 VQA 做同合同排序。UNI 是视觉表征编码器，没有文本问答接口；PathChat 尚未核验到可复现的官方端到端权重与推理发布。后二者按审稿意见在 Related Work/Discussion 中作任务范围、训练数据、监督方式、能力和临床场景的定位比较，而不伪造 accuracy。
+这里的 `NA` 不是漏测或按零分处理。PLIP/CONCH 不能生成推理：PathMMU/Omni 将图像与候选项文本作余弦匹配；PathVQA 在 3,362 道 Yes/No test 上比较 `Answer: Yes. Question: {question}` 与 `Answer: No. Question: {question}` 两条陈述。答案词置前以避免 CLIP 上下文截断，但该值仍是探索性 retrieval-style statement matching，不能与生成式 VQA 按同一合同排序。PLIP 的 accuracy/balanced accuracy 为 48.30%/48.94%，CONCH 为 53.87%/52.53%。UNI 是视觉表征编码器，没有文本问答接口；PathChat 尚未核验到可复现的官方端到端权重与推理发布。后二者按审稿意见在 Related Work/Discussion 中作任务范围、训练数据、监督方式、能力和临床场景的定位比较，而不伪造 accuracy。
 
 ### Table III. Blind multi-Judge response quality
 
@@ -372,12 +372,17 @@ LoRA-SFT4000 对比 LoRA-SFT3000 的 Test999 基本没有提高，而后续 full
 
 评审只看原图、问题、选项和候选区域，不看 attention、RISE、模型预测、删除效果或 activation patching。逐区域评价“是否包含诊断相关证据”和“是否覆盖主要证据”，并记录遗漏区域。专家确认后才能把 pseudo-reference 改称 `pathologist-validated diagnostically relevant region`；即便如此，也不能自动称为 causal ground truth，因图中可能有冗余证据。
 
+### 7.4 外部参考辅助不替代独立人工评分
+
+三项专家任务采用两阶段流程。第一阶段完全不显示外部模型意见并冻结人工评分；第二阶段才显示独立外部参考，并记录是否改判及参考帮助度。奖励复核使用 Claude Sonnet 4.6（不读取训练期 GPT-4o reward），ROI 使用 Gemini 3.1 Pro 与 Claude Opus 5，生成质量使用 Claude Sonnet 4.6 与 Gemini 3.1 Pro。主要人工结果、专家一致性和 GPT-4o 奖励一致性均以第一阶段为准；第二阶段只用于辅助、仲裁和敏感性报告，不能称为独立专家真值。
+
 ## 8. 结果与材料入口
 
 - 最新审计：`protocol/final_revision_assets_audit_20260815.json`
 - 结果追溯：`docs/result_catalog_20260815/result_lineage.json`
 - 机器生成表：`docs/result_catalog_20260815/paper_tables.md`
 - 病理基础模型：CONCH PathMMU `pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_matching_20260728_223308/conch/{run_config.json,metrics.json,predictions.jsonl}`；CONCH Omni `pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/conch/omnimedvqa/{run_config.json,metrics.json,predictions.jsonl}`；PLIP 位于同级 `plip` 目录；UNI/PathChat 的不可比性说明见本文件 Table II-B。
+- PLIP/CONCH PathVQA 问题-答案陈述匹配：`pathvlm_revision_eval_a100/runs/pathvqa_statement_matching_20260815/{plip_full_yesno3362,conch_full_yesno3362}/{run_config.json,metrics.json,predictions.jsonl}`
 - Stage3 自由 Yes/No：`pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint*/.../metrics.json`
 - Stage2 继续 RL Omni：`pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/full8518/metrics.json`
 
@@ -400,6 +405,7 @@ LoRA-SFT4000 对比 LoRA-SFT3000 的 Test999 基本没有提高，而后续 full
 - 奖励 60 例与 ROI20 浏览源：`pathvlm_revision_eval_a100/human_review/expert_review_browse_packets_20260815`
 - Stage2/Stage3 盲化 100 例、改善/退化案例：`pathvlm_revision_eval_a100/runs/stage2_stage3_human_review_packet_20260815`
 - 逐步使用手册：`myr1/docs/20260815_human_review_packet_instructions.md`
+- 两阶段本机入口：`pathvlm_revision_eval_a100/human_review/two_pass_expert_review_20260815/index.html`；第二阶段参考必须在第一阶段评分保存后查看。
 
 现有盲化 100 例与已完成的三模型 Judge 使用同一个 `Stage3-GPT4o-selected`，保证人机逐题对齐；当前 n=8 step1500 目前只有按结果分层的改善/退化案例包，不能用来估计总体人工偏好。若正文最终以 n=8 step1500 作为唯一 Stage3 主模型并要求相应总体人工偏好，需要另建一份使用同一输出无关 panel 的 n=8 盲化 A/B 包。
 

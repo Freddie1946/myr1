@@ -39,10 +39,12 @@
 
 | Model | PathMMU | PathVQA | OmniMedVQA | Why the cell is or is not available |
 |---|---:|---:|---:|---|
-| CONCH | 33.83 matching | NA | 38.71 matching | 可运行的图像—文本编码器；仅以每题候选答案作 image-option matching，不是生成式 VQA |
+| CONCH | 33.83 matching | 53.87 statement matching | 38.71 matching | 可运行的图像—文本编码器；PathVQA 比较问题+Yes/No答案陈述，不是生成式 VQA |
 | UNI | NA | NA | NA | 视觉表征编码器，没有文本/问题/答案接口；应作任务定位讨论或另设线性探针，不应伪装成零样本 VQA |
 | PathChat | NA | NA | NA | 未核验到可复现的官方端到端权重与推理发布；按审稿意见作训练数据、监督和临床定位讨论 |
-| PLIP | 33.43 matching | NA | 23.78 matching | 与 CONCH 相同的受限 image-option matching 对照 |
+| PLIP | 33.43 matching | 48.30 statement matching | 23.78 matching | 与 CONCH 相同的受限图文匹配对照 |
+
+PathVQA 的冻结文本为 `Answer: Yes. Question: {question}` 与 `Answer: No. Question: {question}`，覆盖完整 3,362 道 Yes/No test。PLIP/CONCH balanced accuracy 分别为 48.94%/52.53%；结果入口为 `pathvlm_revision_eval_a100/runs/pathvqa_statement_matching_20260815/{plip_full_yesno3362,conch_full_yesno3362}/`。该 retrieval-style 数值不能与生成式自由 Yes/No 无条件比较。
 
 ## 修订 Table III：主线模型完整 Test999 平均生成长度
 

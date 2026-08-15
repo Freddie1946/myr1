@@ -4,7 +4,19 @@ Latest complete revision audit, manuscript-ready response text, tables, and huma
 
 0. `20260815_reviewer_response_manuscript_revision_and_complete_tables.md`
 0. `20260815_human_review_packet_instructions.md`
+0. `20260815_pathvqa_plip_conch_statement_matching.md`
 0. `../protocol/final_revision_assets_audit_20260815.json`
+
+The 2026-08-15 review supplement adds a strict two-pass expert workflow: independent blinded
+ratings are saved before optional external-model references are revealed, and every post-reference
+change is logged separately. Reward review uses a non-GPT Claude Sonnet 4.6 reference; ROI review
+uses the existing independent Gemini 3.1 Pro and Claude Opus 5 annotations; blind response-quality
+review uses the existing Claude/Gemini per-response judgments. The portal is served by
+`../scripts/serve_two_pass_expert_review.sh`. PLIP and CONCH now also have an explicitly exploratory
+PathVQA question+Yes/No-answer statement-matching result (48.30% and 53.87%, respectively), with
+raw predictions and the reference supplement verified on HF under
+`increments/20260815_external_review_and_pathvqa_matching_v1`; see
+`../protocol/external_review_and_pathvqa_matching_hf_backup_20260815.json`.
 
 The consolidated tables now explicitly include PLIP/CONCH under their restricted image-option
 matching contract and list UNI/PathChat as non-comparable rather than silently omitting them. The

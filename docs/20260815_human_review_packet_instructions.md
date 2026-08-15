@@ -90,3 +90,23 @@ owner 完整包另含当前 n=8 step1500 相对 Stage2 的 183 个错转对和 1
 5. 保留每位专家的原始 CSV、清洗后的只读副本、合并脚本输出和最终统计表，形成可审计链。
 
 人工任务尚未完成前，论文中只能写“材料已冻结并等待专家复核”，不能把外部模型的区域或 Judge 分数称为病理专家结论。
+
+## 外部模型参考意见：严格两阶段使用
+
+三项任务都提供独立外部模型意见，但它们只能用于第二阶段辅助、仲裁和敏感性分析：
+
+1. 专家先在完全盲化的页面独立完成评分并保存第一阶段 CSV；
+2. 之后才打开 `second_pass_external_references` 中同一 `case_id` 的参考页；
+3. 专家可维持或修改判断，但必须填写 `post_reference_change_log.csv`；
+4. 论文主要人工统计只使用第一阶段评分，第二阶段改判率和参考帮助度另行报告。
+
+奖励复核参考来自 Claude Sonnet 4.6，且不读取训练期 GPT-4o 奖励；ROI 参考分别展示 Gemini 3.1 Pro 和 Claude Opus 5 的独立区域意见；生成质量参考分别展示 Claude Sonnet 4.6 和 Gemini 3.1 Pro 对匿名回答 A/B 的分项意见。它们都不是病理专家真值。
+
+当前机器可直接运行：
+
+```bash
+cd /home/dataset-assist-0/czy/wjy/myr1
+bash scripts/serve_two_pass_expert_review.sh 8765
+```
+
+然后访问 `http://127.0.0.1:8765/`；若使用远程 IDE，应先转发/预览 8765 端口。服务目录不包含 API key 或 owner 解盲键。

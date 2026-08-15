@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T08:11:56.639546+00:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+  "private": false,
+  "gated": "manual",
+  "revision": "ca96668741d629eb63309281ebb6eeb03b160d5c",
+  "prefix": "increments/20260815_external_review_and_pathvqa_matching_v1",
+  "file_count": 14,
+  "total_bytes": 5308951,
+  "failures": [],
+  "files": {
+    "increments/20260815_external_review_and_pathvqa_matching_v1/documents/pathvqa_plip_conch_statement_matching.md": {
+      "bytes": 1663,
+      "sha256": "83b30e1e24d8045eb4ae0101c8e92147e4642a791aaca060c861574c1112a6a8"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/documents/human_review_packet_instructions.md": {
+      "bytes": 7352,
+      "sha256": "c2a3bd09090575ec6ea05fb1a98f8e795f344dadc46b9ebba1162155b3e92c3a"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/documents/reviewer_response_manuscript_revision_and_complete_tables.md": {
+      "bytes": 39715,
+      "sha256": "c698b6d9ce1a37216930becee89b73a7b90a354d95f3c9e1e7a262fb1da5894d"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/documents/paper_tables.md": {
+      "bytes": 14817,
+      "sha256": "42eeff4d551b970485619b202e3bce7b62a0b4a71ad8a7bf5397cf99c8f9455b"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/documents/LATEST.md": {
+      "bytes": 57794,
+      "sha256": "c92e2705e56b4726b8326735f0dc997b5d1906271a53f1b5ae315bfe0619966e"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/human_review/pathvlm_external_reference_second_pass_20260815.tar.gz": {
+      "bytes": 71904,
+      "sha256": "9e5693d0bb54ef04951e1a38cc410ffd93149cc259bfba77bc12d1b6338c5cc0"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/human_review/reward_external_reference/references.jsonl": {
+      "bytes": 135236,
+      "sha256": "364240b5071ddd95ce83f78b3b6ad8b0f0a879f3ddc51b85e28cb07a037db9fa"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/human_review/reward_external_reference/manifest.json": {
+      "bytes": 638,
+      "sha256": "6aaabd2e01418e066fcb1fea090a0ca555947e3a912d12dc175ff74231ef1f4f"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/pathvqa_statement_matching/plip/run_config.json": {
+      "bytes": 996,
+      "sha256": "b4800cefa70d055e0a0ff4a5135a663f9327944c80ef5bf32ba6ea7fd8799384"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/pathvqa_statement_matching/plip/metrics.json": {
+      "bytes": 1420,
+      "sha256": "bb140a795473593594aa59611502588f2f6811a3d21fea7430ee59cc4b76ad33"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/pathvqa_statement_matching/plip/predictions.jsonl": {
+      "bytes": 2485451,
+      "sha256": "7480bef78413bb79c4d3331d3a6e45e6a226d388756a7ea7ae7db8fb66e6a080"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/pathvqa_statement_matching/conch/run_config.json": {
+      "bytes": 1003,
+      "sha256": "8b97b77b2463fdd6072bb9fdc4996fde79c14bd132f924ae61e21fc3e58e64b7"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/pathvqa_statement_matching/conch/metrics.json": {
+      "bytes": 1426,
+      "sha256": "0a9bdcd41eec568ee93f4e3a8f319d660fa82b7137d69776d85638ea6b5d3be0"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/pathvqa_statement_matching/conch/predictions.jsonl": {
+      "bytes": 2489536,
+      "sha256": "01e06ad752737f2d10bf6ebbd6c940d1d6e404c8383a0ae6c962580d56677030"
+    }
+  }
+}
