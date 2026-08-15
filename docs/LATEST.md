@@ -5,6 +5,7 @@ Final non-human closure and post-collection human-analysis contract:
 0. `20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md`
 0. `20260815_human_review_packet_instructions.md`
 0. `QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md`
+0. `../protocol/final_migration_guide_hf_backup_20260815.json`
 
 The paper-facing fail-closed audit remains 85/85 with zero failures and status
 `complete_except_human_ratings`. No training, inference, or evaluation process remains active; the

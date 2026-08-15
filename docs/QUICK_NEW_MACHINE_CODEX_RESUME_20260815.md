@@ -225,3 +225,12 @@ python3 scripts/import_expert_reward_exports.py /path/to/returned/*.zip \
 
 完整模型仓库、固定 revision、大小、第三方数据来源和许可证边界见权威恢复指南。新 Codex应先列出
 本次任务真正需要的资产及磁盘预算，经确认后再逐项下载。
+
+本指南本身及最终迁移闭环文件另有一个小型 manual-gated 镜像：
+
+```text
+repo: Freddie1946/PathVLM-R1-Migration-Archive-20260815
+revision: 27c792f4da3524f18d870c90f749aa8aece011eb
+prefix: increments/20260815_final_migration_guide_v1
+verification: protocol/final_migration_guide_hf_backup_20260815.json
+```
