@@ -4,15 +4,16 @@
 
 请完整阅读并按顺序执行：
 1. docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md
-2. docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md
+2. docs/20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md
+3. docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md
    - 人工材料分发/回收时再读 docs/20260815_HUMAN_REVIEW_DISTRIBUTION_AND_ANALYSIS_PATHS.md
-3. docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
-4. protocol/migration_restore_inventory_20260815.json
+4. docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
+5. protocol/migration_restore_inventory_20260815.json
    同时核对 protocol/final_migration_guide_hf_backup_20260815.json
-5. docs/LATEST.md
-6. docs/result_catalog_20260815/README.md
-7. docs/result_catalog_20260815/paper_tables.md
-8. docs/20260814_final_nonhuman_results_and_migration_handoff.md
+6. docs/LATEST.md
+7. docs/result_catalog_20260815/README.md
+8. docs/result_catalog_20260815/paper_tables.md
+9. docs/20260814_final_nonhuman_results_and_migration_handoff.md
 
 随后只做只读迁移验收：
 - 核对 Git 分支和远端 HEAD；

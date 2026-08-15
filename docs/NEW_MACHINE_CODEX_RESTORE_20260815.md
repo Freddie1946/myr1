@@ -16,7 +16,8 @@
 恢复旧 Adam 动量。第三方数据与基础模型按下文固定 repo/revision 重建。
 
 机器可读清单见 `protocol/migration_restore_inventory_20260815.json`，交给新机器 Codex 的启动提示见
-`protocol/new_machine_codex_restore_prompt_20260815.txt`。
+`protocol/new_machine_codex_restore_prompt_20260815.txt`。各种数据、文档、模型和记录的本地/远端位置总索引见
+`docs/20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md`。
 
 ## 1. 新机器最小准备
 

@@ -144,6 +144,7 @@ codex "$(cat protocol/new_machine_codex_restore_prompt_20260815.txt)"
 首次恢复会话不需要下载约 183 GB 的全部关键模型。先阅读：
 
 ```text
+docs/20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md
 docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
 docs/LATEST.md
 protocol/migration_restore_inventory_20260815.json
