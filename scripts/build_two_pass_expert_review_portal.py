@@ -506,7 +506,15 @@ exec python3 "${ROOT_DIR}/serve_expert_review_app.py" \\
   --host 127.0.0.1 --port "${PORT}"
 ''', encoding="utf-8")
     launcher.chmod(0o755)
+    quick_guide = Path(__file__).resolve().parents[1] / "docs/20260815_EXPERT_REVIEWER_QUICK_START.md"
+    if not quick_guide.is_file():
+        raise FileNotFoundError(quick_guide)
+    (root / "EXPERT_REVIEWER_QUICK_START.md").write_text(
+        quick_guide.read_text(encoding="utf-8"), encoding="utf-8"
+    )
     (root / "PACKAGE_README.md").write_text('''# PathVLM-R1 分布式专家复核包
+
+专家收到本包后，请先阅读 `EXPERT_REVIEWER_QUICK_START.md`。
 
 每位专家在自己的电脑上解压一份本包，运行 `bash serve_review.sh 8765`，再访问
 `http://127.0.0.1:8765/`。负责人应预先分配匿名 Reviewer ID；不要填写姓名或邮箱。

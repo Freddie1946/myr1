@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T19:18:21+08:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+  "repo_type": "dataset",
+  "private": false,
+  "gated": "manual",
+  "revision": "06ccabf7292d6014eef60c9adf2498611a3d87c1",
+  "prefix": "increments/20260815_expert_reviewer_quick_start_v1",
+  "files": {
+    "documents/EXPERT_REVIEWER_QUICK_START.md": {
+      "bytes": 3335,
+      "sha256": "d84770c0023b9d00dfa1c3f0fe773f2275fcdb87a2aeca097a8afb3dee638656"
+    },
+    "human_review/pathvlm_human_review_bilingual_assisted_with_guide_20260815.tar.gz": {
+      "bytes": 106708904,
+      "sha256": "7a6d75f42c0a7cc0173034d9569182633887dfb076034e77c991730686413f0b"
+    }
+  },
+  "remote_size_check_failures": [],
+  "archive_integrity": "gzip -t passed; embedded EXPERT_REVIEWER_QUICK_START.md verified"
+}

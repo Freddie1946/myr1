@@ -5,7 +5,7 @@
 默认分发中英双语、带外部参考、本地保存与 ZIP 导出的便携包：
 
 ```text
-/home/dataset-assist-0/czy/wjy/backup_archives/human_review_distribution_20260815_v3/pathvlm_human_review_bilingual_assisted_20260815.tar.gz
+/home/dataset-assist-0/czy/wjy/backup_archives/human_review_distribution_20260815_v4/pathvlm_human_review_bilingual_assisted_with_guide_20260815.tar.gz
 ```
 
 不要把负责人包发给专家。带外部参考的结果必须标为 `reference-assisted expert review`；若论文需要独立盲评主结果，应改发不显示参考的 v2 reviewer-blinded 包。
@@ -14,8 +14,8 @@ HF 备份位置：
 
 ```text
 repo: Freddie1946/PathVLM-R1-Migration-Archive-20260815
-revision: ef660a6a82a931df3f0c07b7aa05c4c4041bd607
-path: increments/20260815_bilingual_expert_review_v1/human_review/pathvlm_human_review_bilingual_assisted_20260815.tar.gz
+revision: 06ccabf7292d6014eef60c9adf2498611a3d87c1
+path: increments/20260815_expert_reviewer_quick_start_v1/human_review/pathvlm_human_review_bilingual_assisted_with_guide_20260815.tar.gz
 ```
 
 下载命令：
@@ -23,10 +23,12 @@ path: increments/20260815_bilingual_expert_review_v1/human_review/pathvlm_human_
 ```bash
 hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
   --repo-type dataset \
-  --revision ef660a6a82a931df3f0c07b7aa05c4c4041bd607 \
-  --include 'increments/20260815_bilingual_expert_review_v1/human_review/pathvlm_human_review_bilingual_assisted_20260815.tar.gz' \
+  --revision 06ccabf7292d6014eef60c9adf2498611a3d87c1 \
+  --include 'increments/20260815_expert_reviewer_quick_start_v1/human_review/pathvlm_human_review_bilingual_assisted_with_guide_20260815.tar.gz' \
   --local-dir /path/to/reviewer_distribution
 ```
+
+包内 `EXPERT_REVIEWER_QUICK_START.md` 是直接发给专家的简明操作和提交指南。
 
 ## 2. 哪个包由负责人保管
 
