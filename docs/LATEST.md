@@ -6,6 +6,16 @@ Latest complete revision audit, manuscript-ready response text, tables, and huma
 0. `20260815_human_review_packet_instructions.md`
 0. `../protocol/final_revision_assets_audit_20260815.json`
 
+The consolidated tables now explicitly include PLIP/CONCH under their restricted image-option
+matching contract and list UNI/PathChat as non-comparable rather than silently omitting them. The
+combined manuscript file Section 8 contains direct entry points for Stage2/Stage3 raw generations,
+the frozen quality panel, all three per-case Judge outputs, aggregate statistics, and the blinded
+human packet. The human-review instructions now provide the owner/reviewer split and exact CSV
+workflow for all three expert tasks. The self-contained v2 owner/reviewer archives and corrected
+material index are remotely verified by
+`../protocol/results_material_index_v2_hf_backup_20260815.json` under
+`increments/20260815_results_material_index_v2`.
+
 The 2026-08-15 fail-closed audit passes 85/85 required checks and records the state as
 `complete_except_human_ratings`. It includes the newly completed Stage3 checkpoint-500/1000/1500
 free-generation PathVQA Yes/No runs and the unified Stage2-continued-rule-RL1000 OmniMedVQA run.

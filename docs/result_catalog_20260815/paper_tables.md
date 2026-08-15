@@ -30,8 +30,19 @@
 | LLaVA-Med-v1.5 | 35.54 | 999 | `pathvlm_revision_eval_a100/runs/llava_med_formal_20260814/pathmmu_option_text_test999/metrics.json` |
 | Qwen-VL-Plus | 54.75 | 999 | `pathvlm_revision_eval_a100/runs/hosted_baseline_full_20260801/qwen-vl-plus/pathmmu/metrics.json` |
 | Claude Haiku 4.5 | 46.69 | 999 | `pathvlm_revision_eval_a100/runs/hosted_baseline_full_20260801/claude-haiku-4-5-20251001/pathmmu/metrics.json` |
+| PLIP (image-option matching) | 33.43 | 999 | `pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_matching_20260728_223308/plip/metrics.json` |
+| CONCH (image-option matching) | 33.83 | 999 | `pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_matching_20260728_223308/conch/metrics.json` |
 
-说明：这些是完整 Test999 准确率表；原稿 Table II 的 500-case GPT-4o 对话质量维度必须保留为独立的生成质量表，不能与本表 accuracy 混成同一统计口径。
+说明：这些是完整 Test999 准确率表；PLIP/CONCH 使用图像与原始选项文本的余弦匹配，不是生成式问答。原稿 Table II 的 500-case GPT-4o 对话质量维度必须保留为独立的生成质量表，不能与本表 accuracy 混成同一统计口径。
+
+### 审稿人指定病理基础模型的可比性边界
+
+| Model | PathMMU | PathVQA | OmniMedVQA | Why the cell is or is not available |
+|---|---:|---:|---:|---|
+| CONCH | 33.83 matching | NA | 38.71 matching | 可运行的图像—文本编码器；仅以每题候选答案作 image-option matching，不是生成式 VQA |
+| UNI | NA | NA | NA | 视觉表征编码器，没有文本/问题/答案接口；应作任务定位讨论或另设线性探针，不应伪装成零样本 VQA |
+| PathChat | NA | NA | NA | 未核验到可复现的官方端到端权重与推理发布；按审稿意见作训练数据、监督和临床定位讨论 |
+| PLIP | 33.43 matching | NA | 23.78 matching | 与 CONCH 相同的受限 image-option matching 对照 |
 
 ## 修订 Table III：主线模型完整 Test999 平均生成长度
 
@@ -77,6 +88,11 @@
 | DeepSeek-VL2 | 32.72 | 60.82 | 52.07 | 55.49 | 52.54 | 9.46 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/deepseek_vl2/full8518/metrics.json` |
 | Llama-3.2-Vision-90B | 40.99 | 82.78 | 78.91 | 55.73 | 70.17 | 39.00 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llama3_2_vision_90b/full8518/metrics.json` |
 | LLaVA-Med-v1.5 | 28.47 | 57.22 | 43.68 | 38.66 | 43.43 | 41.11 | `pathvlm_revision_eval_a100/runs/omnimedvqa_per_model_gated_v2_20260815/llava_med_7b/full8518/metrics.json` |
+| PLIP (image-option matching) | 26.29 | 38.61 | 15.31 | 27.89 | 23.78 | NA | `pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/plip/omnimedvqa/metrics.json` |
+| CONCH (image-option matching) | 35.82 | 92.85 | 10.68 | 53.10 | 38.71 | NA | `pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/conch/omnimedvqa/metrics.json` |
+
+PLIP/CONCH 两行的五个 accuracy 单元格是 `image_to_raw_option_text_cosine_similarity`，与上方生成式 `omnimed_domain_think_answer_v4_1024` 合同不同；`Official sensitivity` 不适用。UNI 与 PathChat 没有兼容的逐题 VQA 输出，因此不进入该分源数值表。
+
 
 ## 修订 Table V：当前分阶段训练主线
 

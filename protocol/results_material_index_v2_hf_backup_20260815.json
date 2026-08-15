@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T07:37:49.694087+00:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+  "repo_type": "dataset",
+  "private": false,
+  "gated": "manual",
+  "revision": "b182e8de003412c0d68ea9d31fa53a81d99bc8ba",
+  "prefix": "increments/20260815_results_material_index_v2",
+  "file_count": 7,
+  "total_bytes": 378909579,
+  "failures": [],
+  "files": {
+    "increments/20260815_results_material_index_v2/documents/reviewer_response_manuscript_revision_and_complete_tables.md": {
+      "bytes": 38104,
+      "sha256": "6620d917b05ed95360814a618576ca1d65214fd9bfc099ba4af4ca45663fe5e4"
+    },
+    "increments/20260815_results_material_index_v2/documents/human_review_packet_instructions.md": {
+      "bytes": 6217,
+      "sha256": "136953543184914c42cc0f74b0f637fda35789237caf262ba5dac594a64a02d9"
+    },
+    "increments/20260815_results_material_index_v2/result_catalog/paper_tables.md": {
+      "bytes": 14388,
+      "sha256": "7a373877fd9c68f8f41d5db911b1b28e143cc61958032a7909e625245840926e"
+    },
+    "increments/20260815_results_material_index_v2/result_catalog/result_lineage.json": {
+      "bytes": 2089962,
+      "sha256": "55753a74948fe568b796da53307db1d5cd400b07f09a060f036b45b3860140dc"
+    },
+    "increments/20260815_results_material_index_v2/human_review/archive_manifest.json": {
+      "bytes": 437303,
+      "sha256": "2f5d1a39a962a2e950deb282c7f4e8b9e4773a7bcdf11c9209e22f41c86e0f03"
+    },
+    "increments/20260815_results_material_index_v2/human_review/pathvlm_human_review_owner_complete_20260815.tar.gz": {
+      "bytes": 269826242,
+      "sha256": "38eb77b0f7e1c7d0e459f3d39f6edce1f73b40c34195736cb841229fcd7f2f25"
+    },
+    "increments/20260815_results_material_index_v2/human_review/pathvlm_human_review_reviewer_blinded_20260815.tar.gz": {
+      "bytes": 106497363,
+      "sha256": "9f8fefea20d8c2ca763849988fffc62a7f317c688aaa94002d99442b2242e70e"
+    }
+  }
+}

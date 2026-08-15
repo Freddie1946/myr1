@@ -106,6 +106,10 @@ characters. Do not add fields, scores, commentary, or a corrected answer.
 
 > The experiments support a narrower conclusion than the original manuscript. Staged post-training can improve a pathology-oriented multiple-choice model with limited task-specific data, and the final model demonstrably uses image-specific evidence in a subset of controlled cases. However, external transfer is heterogeneous, output-interface calibration materially affects PathVQA, and neither automatic reasoning-quality scores nor pseudo-reference regions substitute for expert clinical validation. The present model should therefore be viewed as a research prototype for pathology-oriented visual question answering rather than a validated clinical foundation model or a generally reliable diagnostic system.
 
+### 3.8 Related Work：UNI、CONCH 与 PathChat 的定位边界
+
+> UNI and CONCH are representative pathology foundation encoders developed for transferable visual representation and image-text alignment, respectively, whereas PathChat targets pathology-specific interactive visual-language assistance. Our method addresses a different question: staged post-training of an instruction-following VLM for image-conditioned multiple-choice reasoning with outcome and process rewards. For the available frozen encoders, we report PLIP/CONCH image-to-candidate-text matching as a restricted auxiliary comparison; these scores do not measure generated reasoning. UNI has no native question-answering interface and therefore is not assigned a zero-shot VQA accuracy. We did not identify a verified, reproducible official end-to-end PathChat release for direct execution in the frozen environment, so PathChat is discussed by task scope, supervision, capabilities, clinical intent, and limitations rather than represented by an unverifiable numerical cell. These systems are consequently complementary reference points, not strictly interchangeable baselines under one evaluation contract.
+
 ## 4. 失败案例分析
 
 ### 4.1 域内 PathMMU：真实改善与真实回退并存
@@ -241,6 +245,12 @@ OmniMedVQA 的四个来源是 CT、皮肤镜、视网膜 OCT 和糖网，并不�
 | LLaVA-Med-v1.5 | 35.54 | 56.57 | 43.43 | 41.11 |
 | Qwen-VL-Plus | 54.75 | 67.58 | NA | NA |
 | Claude Haiku 4.5 | 46.69 | 40.30 | NA | NA |
+| PLIP (image-option matching) | 33.43 | NA | 23.78 matching | NA |
+| CONCH (image-option matching) | 33.83 | NA | 38.71 matching | NA |
+| UNI (vision encoder) | NA | NA | NA | NA |
+| PathChat (no verified runnable release) | NA | NA | NA | NA |
+
+这里的 `NA` 不是漏测或按零分处理。PLIP/CONCH 只能将图像与当前题目的原始候选文本作余弦匹配，不能生成推理，因此其数值必须标为 `matching`，不能与生成式 VQA 做同合同排序。UNI 是视觉表征编码器，没有文本问答接口；PathChat 尚未核验到可复现的官方端到端权重与推理发布。后二者按审稿意见在 Related Work/Discussion 中作任务范围、训练数据、监督方式、能力和临床场景的定位比较，而不伪造 accuracy。
 
 ### Table III. Blind multi-Judge response quality
 
@@ -291,6 +301,10 @@ OmniMedVQA 的四个来源是 CT、皮肤镜、视网膜 OCT 和糖网，并不�
 | DeepSeek-VL2 | 32.72 | 60.82 | 52.07 | 55.49 | 52.54 | 9.46 |
 | Llama-3.2-Vision-90B | 40.99 | 82.78 | 78.91 | 55.73 | 70.17 | 39.00 |
 | LLaVA-Med-v1.5 | 28.47 | 57.22 | 43.68 | 38.66 | 43.43 | 41.11 |
+| PLIP (matching only) | 26.29 | 38.61 | 15.31 | 27.89 | 23.78 | NA |
+| CONCH (matching only) | 35.82 | 92.85 | 10.68 | 53.10 | 38.71 | NA |
+
+PLIP/CONCH 两行使用 `image_to_raw_option_text_cosine_similarity`，不是上方生成式 `omnimed_domain_think_answer_v4_1024`。它们用于补充病理图文编码器对照，不能据此声称生成推理能力；UNI 和 PathChat 没有兼容的逐题 VQA 输出。
 
 ### Table V-A. Fixed 1,000-example SFT/RL allocation screen
 
@@ -363,10 +377,31 @@ LoRA-SFT4000 对比 LoRA-SFT3000 的 Test999 基本没有提高，而后续 full
 - 最新审计：`protocol/final_revision_assets_audit_20260815.json`
 - 结果追溯：`docs/result_catalog_20260815/result_lineage.json`
 - 机器生成表：`docs/result_catalog_20260815/paper_tables.md`
+- 病理基础模型：CONCH PathMMU `pathvlm_revision_eval_a100/runs/pathmmu_diagnostic/test999_matching_20260728_223308/conch/{run_config.json,metrics.json,predictions.jsonl}`；CONCH Omni `pathvlm_revision_eval_a100/runs/external_vqa_full_20260729_224503/conch/omnimedvqa/{run_config.json,metrics.json,predictions.jsonl}`；PLIP 位于同级 `plip` 目录；UNI/PathChat 的不可比性说明见本文件 Table II-B。
 - Stage3 自由 Yes/No：`pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage3_gpt4o_checkpoint*/.../metrics.json`
 - Stage2 继续 RL Omni：`pathvlm_revision_eval_a100/runs/missing_paper_evaluations_20260815/stage2_continued_rule_rl1000_omnimedvqa_v4/full8518/metrics.json`
-- 奖励 60 例与 ROI20 浏览包：`pathvlm_revision_eval_a100/human_review/expert_review_browse_packets_20260815`
-- Stage2/Stage3 人工对比：`pathvlm_revision_eval_a100/runs/stage2_stage3_human_review_packet_20260815`
+
+### 8.1 Stage2/Stage3 生成质量：原始回答与机器 Judge
+
+- Stage2 原始 Test999 生成：`pathvlm_revision_eval_a100/runs/pathmmu_sft4000_stage2_20260729_221640/stage2_rl_test999/predictions.jsonl`
+- 现有多 Judge 使用的 GPT-4o Stage3 原始生成：`pathvlm_revision_eval_a100/runs/stage3_selected_gpt4o_pathmmu_pathvqa_20260805_parallel_grok43/stage3_gpt4o/pathmmu_test999/predictions.jsonl`
+- 当前 n=8 GPT-4o Stage3 step1500 原始生成：`pathvlm_revision_eval_a100/runs/stage3_gpt4o_n8_checkpoint1500_final_eval_20260813/pathmmu_test999/predictions.jsonl`
+- 输出无关冻结 100 例 panel：`pathvlm_revision_eval_a100/runs/multijudge_reasoning_eval_20260810/frozen_panel.json`
+- 三 Judge 最终汇总、逐指标均值、配对 bootstrap CI：`pathvlm_revision_eval_a100/runs/multijudge_reasoning_eval_20260810/final_six_models_stage3gpt.json`
+- GPT-4o 逐条 Judge 输出：`pathvlm_revision_eval_a100/runs/multijudge_reasoning_eval_20260810/formal_gpt4o/judgments.jsonl`
+- Claude Sonnet 4.6 逐条 Judge 输出：`pathvlm_revision_eval_a100/runs/multijudge_reasoning_eval_20260810/formal_claude/judgments.jsonl`
+- Gemini 3.1 Pro 逐条 Judge 输出：`pathvlm_revision_eval_a100/runs/multijudge_reasoning_eval_20260810/formal_gemini/judgments.jsonl`
+- 每位 Judge 的完整性摘要：对应 `formal_gpt4o/full_summary.json`、`formal_claude/full_summary.json`、`formal_gemini/full_summary.json`
+
+### 8.2 人工复核材料
+
+- 可直接交专家的盲化包（v2，内含详细说明）：`backup_archives/human_review_distribution_20260815_v2/pathvlm_human_review_reviewer_blinded_20260815.tar.gz`
+- 课题负责人留存的完整包（v2，含映射/答案键，禁止发给评审）：`backup_archives/human_review_distribution_20260815_v2/pathvlm_human_review_owner_complete_20260815.tar.gz`
+- 奖励 60 例与 ROI20 浏览源：`pathvlm_revision_eval_a100/human_review/expert_review_browse_packets_20260815`
+- Stage2/Stage3 盲化 100 例、改善/退化案例：`pathvlm_revision_eval_a100/runs/stage2_stage3_human_review_packet_20260815`
+- 逐步使用手册：`myr1/docs/20260815_human_review_packet_instructions.md`
+
+现有盲化 100 例与已完成的三模型 Judge 使用同一个 `Stage3-GPT4o-selected`，保证人机逐题对齐；当前 n=8 step1500 目前只有按结果分层的改善/退化案例包，不能用来估计总体人工偏好。若正文最终以 n=8 step1500 作为唯一 Stage3 主模型并要求相应总体人工偏好，需要另建一份使用同一输出无关 panel 的 n=8 盲化 A/B 包。
 
 ## 9. 远端备份状态
 
@@ -386,3 +421,7 @@ content；本次首轮远端校验 revision 为
 `Freddie1946/PathVLM-R1-Codex-Private-Snapshots`，tag 为 `20260815T062722Z`，远端 revision
 为 `d53f7a7bc30ccc2a67cc08dbd60d34b02d02b350`。快照归档大小为 174,462,207 bytes，明确排除
 `auth.json`、缓存和凭据；迁移后需要重新认证。
+
+本次补齐的 UNI/CONCH/PathChat/PLIP 表格、Stage2/Stage3 生成质量入口和自包含人工复核 v2
+包位于同一 gated dataset 的 `increments/20260815_results_material_index_v2`；上传校验记录为
+`protocol/results_material_index_v2_hf_backup_20260815.json`。
