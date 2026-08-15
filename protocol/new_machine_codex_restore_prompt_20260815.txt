@@ -5,21 +5,24 @@
 请完整阅读并按顺序执行：
 1. docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md
 2. docs/20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md
-3. docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md
+3. docs/20260815_FINAL_EXPERIMENT_RECORDS_BACKUP_AUDIT.md
+4. docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md
    - 人工材料分发/回收时再读 docs/20260815_HUMAN_REVIEW_DISTRIBUTION_AND_ANALYSIS_PATHS.md
-4. docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
-5. protocol/migration_restore_inventory_20260815.json
+5. docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
+6. protocol/migration_restore_inventory_20260815.json
    同时核对 protocol/final_migration_guide_hf_backup_20260815.json
-6. docs/LATEST.md
-7. docs/result_catalog_20260815/README.md
-8. docs/result_catalog_20260815/paper_tables.md
-9. docs/20260814_final_nonhuman_results_and_migration_handoff.md
+   以及 protocol/final_experiment_records_hf_backup_20260815.json
+7. docs/LATEST.md
+8. docs/result_catalog_20260815/README.md
+9. docs/result_catalog_20260815/paper_tables.md
+10. docs/20260814_final_nonhuman_results_and_migration_handoff.md
 
 随后只做只读迁移验收：
 - 核对 Git 分支和远端 HEAD；
 - 核对 HF 登录账号为 Freddie1946；
 - 核对 private Codex snapshot、manual-gated 结果归档和关键模型 repo 的固定 revision；
 - 核对数据集来源 revision、split SHA、结果 ARCHIVE_MANIFEST/VERIFICATION；
+- 优先用 scripts/restore_final_experiment_records_increment_20260815.sh 下载并校验最终自包含记录快照；
 - 核对 GPU、CUDA、磁盘和可重建环境入口；
 - 输出“已恢复、需下载、因许可证需上游重建、明确未备份”四类清单；
 - 对需要的大模型先列出大小与下载计划，不要一次全部下载。

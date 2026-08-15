@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T20:54:55.853354+08:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+  "repo_type": "dataset",
+  "private": false,
+  "gated": "manual",
+  "revision": "5d2485312266ec0670a14494b1fe999d10fe94e1",
+  "prefix": "increments/20260815_final_experiment_records_v1",
+  "file_count": 5,
+  "total_bytes": 3767621986,
+  "files": {
+    "increments/20260815_final_experiment_records_v1/pathvlm_final_experiment_records_20260815T123626Z.tar.gz": {
+      "bytes": 3737087357,
+      "sha256": "0c00a19b827ec8d3ec0c539ca6741507355397569d4e851e5eb60c66ae6cb625"
+    },
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_MANIFEST.json": {
+      "bytes": 30530989,
+      "sha256": "9a48b97fb426729959e8a3e4df7af64d3c6ac462ff006d865cdd22eef7483e86"
+    },
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_AUDIT.json": {
+      "bytes": 2573,
+      "sha256": "1f7d7f6135a2673a9983e2c61f5126ce2d997f35e7eac39f63cefa135f183600"
+    },
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_VERIFICATION.json": {
+      "bytes": 495,
+      "sha256": "51b0fef1c20b9b7f0bb9be733b5d407b4a3455fee30366f58270ee364fa5bd45"
+    },
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_INDEPENDENT_VERIFICATION.json": {
+      "bytes": 572,
+      "sha256": "11d28b0d1eb57a101c9782a9dba488ee076faf1c9c7ad0fb80294c7955c28b56"
+    }
+  },
+  "download_verified_sha256": {
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_MANIFEST.json": "9a48b97fb426729959e8a3e4df7af64d3c6ac462ff006d865cdd22eef7483e86",
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_AUDIT.json": "1f7d7f6135a2673a9983e2c61f5126ce2d997f35e7eac39f63cefa135f183600",
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_VERIFICATION.json": "51b0fef1c20b9b7f0bb9be733b5d407b4a3455fee30366f58270ee364fa5bd45",
+    "increments/20260815_final_experiment_records_v1/FINAL_EXPERIMENT_RECORDS_INDEPENDENT_VERIFICATION.json": "11d28b0d1eb57a101c9782a9dba488ee076faf1c9c7ad0fb80294c7955c28b56"
+  },
+  "failures": []
+}

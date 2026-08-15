@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-08-15T18:36:39+08:00",
+  "as_of": "2026-08-15T20:50:00+08:00",
   "status": "critical_scientific_assets_remotely_backed_up_not_bytewise_workspace_clone",
   "git": {
     "repo": "https://github.com/Freddie1946/myr1.git",
@@ -39,6 +39,19 @@
       "visibility": "public_manual_gated",
       "revision": "ef660a6a82a931df3f0c07b7aa05c4c4041bd607",
       "prefix": "increments/20260815_bilingual_expert_review_v1"
+    },
+    {
+      "repo_type": "dataset",
+      "repo_id": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+      "visibility": "public_manual_gated",
+      "revision": "5d2485312266ec0670a14494b1fe999d10fe94e1",
+      "prefix": "increments/20260815_final_experiment_records_v1",
+      "archive": "pathvlm_final_experiment_records_20260815T123626Z.tar.gz",
+      "archive_bytes": 3737087357,
+      "archive_sha256": "0c00a19b827ec8d3ec0c539ca6741507355397569d4e851e5eb60c66ae6cb625",
+      "payload_file_count": 49245,
+      "payload_bytes": 10226535291,
+      "restore_script": "scripts/restore_final_experiment_records_increment_20260815.sh"
     }
   ],
   "models": [

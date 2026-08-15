@@ -2,6 +2,7 @@
 
 Final non-human closure and post-collection human-analysis contract:
 
+0. `20260815_FINAL_EXPERIMENT_RECORDS_BACKUP_AUDIT.md`
 0. `20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md`
 0. `20260815_EXPERT_REVIEWER_QUICK_START.md`
 0. `20260815_HUMAN_REVIEW_DISTRIBUTION_AND_ANALYSIS_PATHS.md`
@@ -9,6 +10,15 @@ Final non-human closure and post-collection human-analysis contract:
 0. `20260815_human_review_packet_instructions.md`
 0. `QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md`
 0. `../protocol/final_migration_guide_hf_backup_20260815.json`
+
+The final self-contained experiment-records snapshot is remotely verified at manual-gated HF
+revision `5d2485312266ec0670a14494b1fe999d10fe94e1` under
+`increments/20260815_final_experiment_records_v1`. It contains 49,245 non-smoke files and
+10,226,535,291 uncompressed bytes: formal evaluation outputs, mainline/ablation rollout/reward/Judge/
+cost/config/log records, frozen data contracts, and the latest human-review/interpretability
+materials. Independent member-by-member SHA verification found zero missing or unexpected files.
+Use `../scripts/restore_final_experiment_records_increment_20260815.sh`; the machine-readable remote
+audit is `../protocol/final_experiment_records_hf_backup_20260815.json`.
 
 The paper-facing fail-closed audit remains 85/85 with zero failures and status
 `complete_except_human_ratings`. No training, inference, or evaluation process remains active; the

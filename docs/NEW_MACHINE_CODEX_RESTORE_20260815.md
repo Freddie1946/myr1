@@ -138,30 +138,29 @@ codex "$(cat protocol/new_machine_codex_restore_prompt_20260815.txt)"
 
 ```text
 Freddie1946/PathVLM-R1-Migration-Archive-20260815
-revision: 82323d5cff454a97c4e137733c4521911c8d5e47
+final records revision: 5d2485312266ec0670a14494b1fe999d10fe94e1
 ```
 
-最完整的当前闭合结果前缀为：
+优先使用最终自包含记录快照，它将正式评测、训练过程记录、数据合同和最新人工/可解释性材料统一到
+一个经过逐成员 SHA 校验的前缀：
 
 ```text
-evaluation_snapshots/omnimed_final_20260815T022447Z
+increments/20260815_final_experiment_records_v1
 ```
 
-它包含原始 `predictions.jsonl`、metrics、run config、日志、协议和结果表。下载并先核对
-`ARCHIVE_VERIFICATION.json`/`ARCHIVE_MANIFEST.json`：
+直接用 Git 内脚本下载、校验并解压到隔离目录：
 
 ```bash
-mkdir -p "$WJY_WORK_ROOT/restored_results"
-hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
-  --repo-type dataset \
-  --revision 82323d5cff454a97c4e137733c4521911c8d5e47 \
-  --include 'evaluation_snapshots/omnimed_final_20260815T022447Z/*' \
-  --local-dir "$WJY_WORK_ROOT/restored_results/migration_archive"
+cd "$WJY_WORK_ROOT/myr1"
+bash scripts/restore_final_experiment_records_increment_20260815.sh \
+  "$WJY_WORK_ROOT/restored_results/final_experiment_records_20260815" --extract
 ```
 
-另有一个 2026-08-15 GPU 评测增量：
+历史 Omni 和 GPU 增量仍保留用于时点审计：
 
 ```text
+revision 82323d5cff454a97c4e137733c4521911c8d5e47:
+evaluation_snapshots/omnimed_final_20260815T022447Z
 increments/20260815_gpu_evaluations_v1
 ```
 

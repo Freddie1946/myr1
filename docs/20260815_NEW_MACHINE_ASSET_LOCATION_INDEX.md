@@ -84,7 +84,20 @@ sha256: 42eeff4d551b970485619b202e3bce7b62a0b4a71ad8a7bf5397cf99c8f9455b
 ## 4. 逐题评测 JSON、metrics、日志和测试口径在哪里
 
 主仓库均为 `Freddie1946/PathVLM-R1-Migration-Archive-20260815`，类型为 dataset，权限为
-public + manual gated。按时间增量恢复：
+public + manual gated。新机器应优先恢复下面的“最终实验记录快照”；它是自包含记录层，不需要先拼接
+旧增量。旧快照继续保留，用于核对当时的备份历史和不可变 revision。
+
+```text
+revision: 5d2485312266ec0670a14494b1fe999d10fe94e1
+prefix: increments/20260815_final_experiment_records_v1
+archive: pathvlm_final_experiment_records_20260815T123626Z.tar.gz
+archive sha256: 0c00a19b827ec8d3ec0c539ca6741507355397569d4e851e5eb60c66ae6cb625
+payload: 49,245 files / 10,226,535,291 bytes before compression
+restore: scripts/restore_final_experiment_records_increment_20260815.sh
+audit: docs/20260815_FINAL_EXPERIMENT_RECORDS_BACKUP_AUDIT.md
+```
+
+历史增量如下：
 
 | 固定 revision | 前缀 | 内容 |
 |---|---|---|
@@ -96,6 +109,7 @@ public + manual gated。按时间增量恢复：
 | `fdc819c9c84fbc72dff2e40a14e74b4bf37d6940` | `increments/20260815_external_review_and_pathvqa_matching_v1` | 外部复核、PLIP/CONCH PathVQA statement matching 与更新表 |
 | `ef660a6a82a931df3f0c07b7aa05c4c4041bd607` | `increments/20260815_bilingual_expert_review_v1` | 双语专家材料、外部参考、统计脚本和最新版统一修订 Markdown |
 | `06ccabf7292d6014eef60c9adf2498611a3d87c1` | `increments/20260815_expert_reviewer_quick_start_v1` | 含简明指南的最新专家分发包 |
+| `5d2485312266ec0670a14494b1fe999d10fe94e1` | `increments/20260815_final_experiment_records_v1` | 排除 smoke 的最终自包含实验记录、逐文件 SHA、审计和双重校验 |
 
 每次评测至少同时读取：
 
@@ -245,7 +259,8 @@ revision。解压归档到独立目录，不覆盖新机器已有结果。
 
 ## 11. 完整性与科学边界
 
-截至本索引，论文范围内非人工资产已通过 85/85 审计；尚待完成的是病理专家评分和收到评分后的统计。
+截至本索引，论文范围内非人工资产已通过 85/85 审计；最终实验记录快照另通过 49,245/49,245
+逐成员 SHA 校验。尚待完成的是病理专家评分和收到评分后的统计。
 备份是关键科学资产迁移，不是 6.3 TiB 工作区的逐字节镜像。以下内容有意不归档：凭据、可重新下载的
 缓存、重复模型树、全部失败/冒烟 checkpoint、optimizer/scheduler/RNG/ZeRO 状态，以及无权重新分发的
 第三方资产。

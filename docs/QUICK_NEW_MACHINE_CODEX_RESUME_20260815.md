@@ -174,6 +174,20 @@ protocol/migration_restore_inventory_20260815.json
 
 ### 下载完整实验记录、评测 JSON/JSONL 与测试口径
 
+推荐直接恢复最终自包含记录快照：
+
+```bash
+cd "$WJY_WORK_ROOT/myr1"
+bash scripts/restore_final_experiment_records_increment_20260815.sh \
+  "$WJY_WORK_ROOT/restored_results/final_experiment_records_20260815" --extract
+```
+
+该脚本固定 HF revision `5d2485312266ec0670a14494b1fe999d10fe94e1` 和归档 SHA，下载后逐个
+校验 49,245 个成员。它覆盖正式评测、主线/消融训练 rollout/reward/Judge/费用/日志、数据合同以及
+最新人工复核/可解释性材料；不含 smoke、模型权重、优化器状态、缓存和凭据。
+
+下面的历史增量恢复流程仍保留，用于复原各备份时点或审计旧 revision：
+
 下面不是只下载汇总表，而是依次恢复：首轮 1,561 文件快照、后续 GPU 评测增量、最终 OmniMedVQA
 归档、最后补齐的论文评测，以及人工复核/解释性材料。可直接执行：
 
