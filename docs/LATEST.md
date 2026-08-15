@@ -1,5 +1,20 @@
 # Latest recovery pointer
 
+Final non-human closure and post-collection human-analysis contract:
+
+0. `20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md`
+0. `20260815_human_review_packet_instructions.md`
+0. `QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md`
+
+The paper-facing fail-closed audit remains 85/85 with zero failures and status
+`complete_except_human_ratings`. No training, inference, or evaluation process remains active; the
+only pending result unit is pathology-expert review. Distributed reward-review exports are now
+verified and imported with `../scripts/import_expert_reward_exports.py` before analysis. Human
+process scores are compared primarily with the training-time GPT-4o score under the identical 0.4
+formula; Claude is a secondary reference. Expert-confirmed ROI regions are evaluated through
+reference-versus-area-matched-random deletion effects, and Stage2/Stage3 generation quality remains
+a blinded A/B comparison until statistics are frozen.
+
 Latest complete revision audit, manuscript-ready response text, tables, and human-review handoff:
 
 0. `20260815_reviewer_response_manuscript_revision_and_complete_tables.md`

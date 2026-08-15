@@ -506,6 +506,24 @@ exec python3 "${ROOT_DIR}/serve_expert_review_app.py" \\
   --host 127.0.0.1 --port "${PORT}"
 ''', encoding="utf-8")
     launcher.chmod(0o755)
+    (root / "PACKAGE_README.md").write_text('''# PathVLM-R1 分布式专家复核包
+
+每位专家在自己的电脑上解压一份本包，运行 `bash serve_review.sh 8765`，再访问
+`http://127.0.0.1:8765/`。负责人应预先分配匿名 Reviewer ID；不要填写姓名或邮箱。
+
+奖励复核的历史记录只从本包内 `expert_submissions/<Reviewer ID>/` 读取，不访问 HF、
+负责人主机或其他远程服务。完成后点击“导出我的评分包”，将生成的
+`pathvlm_reward_review_<Reviewer ID>_complete60.zip` 交还负责人。`partialN` 只用于断点备份。
+
+负责人收到 ZIP 后，先用仓库中的 `scripts/import_expert_reward_exports.py` 校验 SHA-256、
+Reviewer ID、60 例完整性和六布尔字段，再用 `scripts/analyze_human_reward_score_differences.py`
+比较人工过程分与训练期 GPT-4o 奖励；Claude 只作为第二参考。当前直接显示外部参考的入口
+属于 reference-assisted review，不能宣称为独立盲评。
+
+ROI 结果用于确认 pseudo-reference evidence region 是否具有病理相关性，并在确认后比较
+reference deletion 与 area-matched random deletion 的决策损失。Stage2/Stage3 生成质量结果
+应在 A/B 解盲后比较人工偏好，Claude/Gemini 只作外部一致性参照。
+''', encoding="utf-8")
 
 
 def main() -> None:

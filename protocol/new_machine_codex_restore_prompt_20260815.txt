@@ -4,12 +4,13 @@
 
 请完整阅读并按顺序执行：
 1. docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md
-2. docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
-3. protocol/migration_restore_inventory_20260815.json
-4. docs/LATEST.md
-5. docs/result_catalog_20260815/README.md
-6. docs/result_catalog_20260815/paper_tables.md
-7. docs/20260814_final_nonhuman_results_and_migration_handoff.md
+2. docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md
+3. docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
+4. protocol/migration_restore_inventory_20260815.json
+5. docs/LATEST.md
+6. docs/result_catalog_20260815/README.md
+7. docs/result_catalog_20260815/paper_tables.md
+8. docs/20260814_final_nonhuman_results_and_migration_handoff.md
 
 随后只做只读迁移验收：
 - 核对 Git 分支和远端 HEAD；

@@ -56,7 +56,12 @@ def main() -> None:
         f"{PREFIX}/human_review/gpt4o_claude_agreement.json": agreement,
         f"{PREFIX}/documents/gpt4o_claude_reward_reference_agreement.md": REPO / "docs/20260815_gpt4o_claude_reward_reference_agreement.md",
         f"{PREFIX}/documents/human_review_packet_instructions.md": REPO / "docs/20260815_human_review_packet_instructions.md",
+        f"{PREFIX}/documents/final_migration_and_human_review_closure.md": REPO / "docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md",
+        f"{PREFIX}/documents/quick_new_machine_codex_resume.md": REPO / "docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md",
         f"{PREFIX}/documents/reviewer_response_manuscript_revision_and_complete_tables.md": REPO / "docs/20260815_reviewer_response_manuscript_revision_and_complete_tables.md",
+        f"{PREFIX}/audit/final_revision_assets_audit.json": REPO / "protocol/final_revision_assets_audit_20260815.json",
+        f"{PREFIX}/tools/import_expert_reward_exports.py": REPO / "scripts/import_expert_reward_exports.py",
+        f"{PREFIX}/tools/analyze_human_reward_score_differences.py": REPO / "scripts/analyze_human_reward_score_differences.py",
         f"{PREFIX}/documents/LATEST.md": REPO / "docs/LATEST.md",
     }
     for path in files.values():

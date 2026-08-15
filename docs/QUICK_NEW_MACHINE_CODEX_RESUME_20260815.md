@@ -4,6 +4,11 @@
 完成后可用 `codex resume --all` 打开原会话。模型、数据集和大型评测归档按需下载，不应在首次恢复时
 一次性拉取。
 
+截至本指南最后一次审计，论文冻结范围内 85/85 项非人工资产检查通过，状态为
+`complete_except_human_ratings`。当前没有训练、推理或评测任务在运行；唯一未完成的论文结果单元是
+病理专家人工复核及其统计汇总。权威说明见
+`docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md`。
+
 ## 0. 边界
 
 - 最新会话快照：`Freddie1946/PathVLM-R1-Codex-Private-Snapshots`
@@ -151,6 +156,31 @@ repo: Freddie1946/PathVLM-R1-Migration-Archive-20260815
 revision: 2c90a34185c383054acebb80336201e99fbc96fd
 prefix: increments/20260815_bilingual_expert_review_v1
 ```
+
+评测 JSON/JSONL、metrics、日志及测试口径不是只存在于论文表格中。恢复时按下列顺序核对：
+
+```text
+protocol/evaluation_results_priority_backup_20260815.json
+protocol/final_revision_hf_backup_20260815.json
+protocol/final_revision_assets_audit_20260815.json
+protocol/results_material_index_v2_hf_backup_20260815.json
+protocol/migration_restore_inventory_20260815.json
+```
+
+其中 `evaluation_results_priority_backup_20260815.json` 记录了 1,561 个文件、约 1.28 GB
+未压缩结果的首轮远端快照；后续 GPU 评测增量和最终修订增量分别补齐其后的 JSON/JSONL。
+新机器 Codex必须依据 manifest 中的 SHA-256 和固定 revision 下载，不能仅凭相似目录名猜测模型或测试口径。
+
+专家评分历史不从 HF 在线读取。每位专家在自己的分发包内使用
+`expert_submissions/<Reviewer ID>/` 保存和恢复，并将导出的 `complete60.zip` 交给负责人。负责人使用：
+
+```bash
+python3 scripts/import_expert_reward_exports.py /path/to/returned/*.zip \
+  --output-dir "$WJY_WORK_ROOT/pathvlm_revision_eval_a100/human_review/expert_submissions_20260815"
+```
+
+专家结果与训练期 GPT-4o、Claude、ROI 删除对照及 Stage2/Stage3 盲评的具体比较关系见
+`docs/20260815_human_review_packet_instructions.md`。
 
 完整模型仓库、固定 revision、大小、第三方数据来源和许可证边界见权威恢复指南。新 Codex应先列出
 本次任务真正需要的资产及磁盘预算，经确认后再逐项下载。

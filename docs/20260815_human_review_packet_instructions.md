@@ -128,6 +128,31 @@ bash scripts/serve_two_pass_expert_review.sh 8765
 
 每位专家完成后点击“导出我的评分包”，浏览器会下载 `pathvlm_reward_review_<Reviewer ID>_complete60.zip`。ZIP 内含 60 个逐题 JSON、汇总 CSV 和带 SHA-256 的 `EXPORT_MANIFEST.json`，直接交还负责人即可。未完成时也允许导出断点备份，但文件名会明确标成 `partialN`，不能当作完整人工结果。负责人收到不同专家 ZIP 后先核对 reviewer ID、`complete=true`、`completed_cases=60` 和 manifest 校验，再进行汇总分析。
 
+### 负责人收回奖励评分 ZIP 后
+
+将各专家返回的 ZIP 放入一个目录，例如 `$WJY_WORK_ROOT/human_review_returns/reward/`，然后执行：
+
+```bash
+cd /home/dataset-assist-0/czy/wjy/myr1
+python3 scripts/import_expert_reward_exports.py \
+  /home/dataset-assist-0/czy/wjy/human_review_returns/reward/*.zip \
+  --output-dir /home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/expert_submissions_20260815
+```
+
+导入器会验证 ZIP 路径安全性、manifest SHA-256、Reviewer ID、60 例完整性及精确六布尔 schema；默认拒绝 `partialN`，也拒绝覆盖同名但内容不同的评分。随后运行本文末尾的 `analyze_human_reward_score_differences.py`。
+
+收回结果后的比较对象和主次顺序固定如下：
+
+| 人工任务 | 主要比较对象 | 主要统计 | 外部模型的角色 |
+|---|---|---|---|
+| 六事件奖励复核 | 同一 60 例的训练期 GPT-4o 六事件及其 0.4 过程分 | 每位专家的人工−GPT-4o 有符号分差、MAE、RMSE、完全同分率、差值≤0.2比例及病例 bootstrap 95% CI | Claude Sonnet 4.6 是第二参考；同样计算分差，但不能代替专家 |
+| ROI 区域复核 | 专家确认后的病理相关区域，与等面积随机/邻近删除对照 | 专家认可率、漏标率、修框率；随后重算 reference deletion−random deletion 的 margin loss、flip rate 和配对 CI | Gemini/Opus 框是待复核的 pseudo-reference，不是真值；可报告专家与两模型的区域级一致性 |
+| Stage2/Stage3 生成质量 | 冻结 100 例中盲化回答 A/B，解盲后还原 Stage2 与 Stage3 | Stage3 better / Stage2 better / Tie、净偏好、专家间一致性及分项质量差 | Claude/Gemini 的逐题判断只作 concordance/敏感性分析 |
+
+奖励任务的科学问题是“训练期 GPT-4o 过程奖励与病理专家按同一规则计算的分数相差多少”，所以 GPT-4o 是主要比较对象，不是 Claude。若专家使用了从一开始显示 Claude 意见的辅助入口，结果必须写作 `reference-assisted expert review`；只有不显示任何外部参考的第一阶段结果才可作为独立专家验证。
+
+两位专家都完成后，还应在重叠病例上报告专家−专家的最终过程分差与事件级一致性。专家之间的分歧不应通过删除病例解决；由第三位专家仲裁时，原始两份评分和仲裁记录都要保留。任务 B 的真正结论不是“专家框与外部模型框 IoU 多高”，而是经专家确认的区域被删除后，模型决策损失是否显著大于等面积对照。任务 C 在解盲前完成所有统计；改善/退化 case 包只能做定性解释，不能替代冻结 100 例总体偏好率。
+
 辅助入口已将评分规则、题干、选项、参考答案、待评分回答、外部模型理由和区域特征全部改为中英文对照。中文用于降低阅读负担，英文原文同时保留并作为语义冲突时的权威版本；`<think>`、`<answer>` 和 A/B/C/D 标签经过自动完整性检查，不能在翻译中增删。评分 CSV 的机器字段名仍保持英文，以确保汇总脚本兼容；页面内提供逐字段中文释义。
 
 ## 外部参考中的结构化指标是什么意思
