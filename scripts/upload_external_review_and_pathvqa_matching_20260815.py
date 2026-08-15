@@ -53,6 +53,7 @@ def main() -> None:
         f"{PREFIX}/documents/paper_tables.md": REPO / "docs/result_catalog_20260815/paper_tables.md",
         f"{PREFIX}/documents/LATEST.md": REPO / "docs/LATEST.md",
         f"{PREFIX}/human_review/pathvlm_external_reference_second_pass_20260815.tar.gz": WORK / "backup_archives/human_review_distribution_20260815_v3/pathvlm_external_reference_second_pass_20260815.tar.gz",
+        f"{PREFIX}/human_review/pathvlm_human_review_assisted_navigation_20260815.tar.gz": WORK / "backup_archives/human_review_distribution_20260815_v3/pathvlm_human_review_assisted_navigation_20260815.tar.gz",
         f"{PREFIX}/human_review/reward_external_reference/references.jsonl": reward / "references.jsonl",
         f"{PREFIX}/human_review/reward_external_reference/manifest.json": reward / "manifest.json",
     }

@@ -7,9 +7,10 @@ Latest complete revision audit, manuscript-ready response text, tables, and huma
 0. `20260815_pathvqa_plip_conch_statement_matching.md`
 0. `../protocol/final_revision_assets_audit_20260815.json`
 
-The 2026-08-15 review supplement adds a strict two-pass expert workflow: independent blinded
-ratings are saved before optional external-model references are revealed, and every post-reference
-change is logged separately. Reward review uses a non-GPT Claude Sonnet 4.6 reference; ROI review
+The 2026-08-15 review supplement adds both a strict two-pass expert workflow and a separately
+labeled reference-assisted interface with previous/next navigation. Independent blinded ratings
+remain the primary analysis; the assisted entry displays external advice from the first screen and
+therefore cannot be called independent expert scoring. Reward review uses a non-GPT Claude Sonnet 4.6 reference; ROI review
 uses the existing independent Gemini 3.1 Pro and Claude Opus 5 annotations; blind response-quality
 review uses the existing Claude/Gemini per-response judgments. The portal is served by
 `../scripts/serve_two_pass_expert_review.sh`. PLIP and CONCH now also have an explicitly exploratory

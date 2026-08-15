@@ -12,9 +12,9 @@ from pathlib import Path
 from typing import Any
 
 
-STYLE = """body{font-family:system-ui,sans-serif;max-width:1180px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#202124}
+STYLE = """body{font-family:system-ui,sans-serif;max-width:1380px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#202124}
 table{border-collapse:collapse;width:100%}th,td{border:1px solid #aaa;padding:.45rem;vertical-align:top}pre{white-space:pre-wrap;background:#f6f6f6;padding:1rem}
-.warning{background:#fff2cc;border-left:5px solid #d49b00;padding:1rem}.ref{background:#eef6ff;border-left:5px solid #3977b7;padding:1rem}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem}a{color:#1457a6}"""
+.warning{background:#fff2cc;border-left:5px solid #d49b00;padding:1rem}.ref{background:#eef6ff;border-left:5px solid #3977b7;padding:1rem}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem}a{color:#1457a6}.nav{display:flex;justify-content:space-between;gap:1rem;position:sticky;top:0;background:white;padding:.7rem 0;z-index:2}.panes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem}.panes iframe{width:100%;height:900px;border:1px solid #999}@media(max-width:900px){.panes{grid-template-columns:1fr}}"""
 
 
 def page(title: str, body: str) -> str:
@@ -140,6 +140,76 @@ def build_generation(root: Path, answer_key_path: Path, claude_path: Path, gemin
     (output / "index.html").write_text(page("生成质量盲评：二阶段外部参考", '<div class="warning">必须先冻结第一阶段 A/B/Tie。外部意见不可替代人工评分；请记录是否改判。</div><div class="grid">' + "".join(links) + "</div>"), encoding="utf-8")
 
 
+def assisted_rubric(task: str) -> str:
+    if task == "reward":
+        return '''<h2>与训练奖励一致的评分规则</h2>
+<p>只对六个奖励事件作布尔判断（true / false / uncertain）：</p>
+<ol><li>正向完整性事件：图像特征分析、选项排除、医学知识支持；</li>
+<li>负向错误事件：组织学定义错误、逻辑矛盾、错误或过时病理标准。</li></ol>
+<p>令 <code>m</code> 为三个正向事件中缺失数，<code>e</code> 为三个负向事件中出现数：</p>
+<pre>S_integrity = max(0, 1 - 0.4*m)
+S_knowledge = max(0, 1 - 0.4*e)
+R_process = (S_integrity + S_knowledge) / 2</pre>
+<p>每个子量表的 0/1/2/3 个失败对应 1.0/0.6/0.2/0.0。另填病理推理正确性、图像 grounding、逻辑一致性及信心（1–5）。幻觉和参考答案歧义是补充审计项，不进入上述六事件奖励公式。</p>'''
+    if task == "roi":
+        return '''<h2>ROI 评分规则</h2><p>整题填写：参考答案有效性（yes/partial/no）、总体病理相关性 1–5、覆盖度（all/most/some/none）、特异性 1–5、是否漏标、是否需要修框、信心 1–5。逐框填写：诊断相关性（yes/partial/no）和边界质量 1–5。外部框仍是 pseudo-reference；模型意见不能替代专家判断。</p>'''
+    return '''<h2>生成质量评分规则</h2><p>先给匿名回答 A/B/Tie 偏好及信心 1–5；再分别给 A/B 的医学事实正确性、视觉依据充分性、推理质量各 1–5。不能因回答更长而加分，也不能只看最终选项。两者同样好或同样差应选 Tie。</p>'''
+
+
+def build_assisted_review(root: Path) -> None:
+    assisted = root / "assisted_review_with_external_references"
+    assisted.mkdir(exist_ok=True)
+    specs = {
+        "reward": {
+            "title": "奖励机制辅助复核",
+            "ids": [f"HRA-{number:03d}" for number in range(1, 61)],
+            "blind": lambda case_id: f"../../first_pass_blinded/reward_agreement_blinded/cases/{case_id}/index.html",
+            "reference": lambda case_id: f"../../second_pass_external_references/reward_reference_after_first_pass/{case_id}.html",
+            "csv": "../../first_pass_blinded/reward_agreement_blinded/ratings_template.csv",
+        },
+        "roi": {
+            "title": "可解释性区域辅助复核",
+            "ids": [f"EIR-{number:03d}" for number in range(1, 21)],
+            "blind": lambda case_id: f"../../first_pass_blinded/interpretability_roi_blinded/cases/{case_id}/index.html",
+            "reference": lambda case_id: f"../../second_pass_external_references/roi_reference_after_first_pass/{case_id}.html",
+            "csv": "../../first_pass_blinded/interpretability_roi_blinded/case_ratings_template.csv",
+        },
+        "generation": {
+            "title": "Stage2/Stage3 生成质量辅助盲评",
+            "ids": [f"case_{number:03d}" for number in range(1, 101)],
+            "blind": lambda case_id: f"../../first_pass_blinded/stage2_stage3_blind_pairwise_100/{case_id}/review.html",
+            "reference": lambda case_id: f"../../second_pass_external_references/generation_reference_after_first_pass/{case_id}.html",
+            "csv": "../../first_pass_blinded/stage2_stage3_blind_pairwise_100/ratings_template.csv",
+        },
+    }
+    root_links = []
+    for task, spec in specs.items():
+        task_root = assisted / task
+        task_root.mkdir(exist_ok=True)
+        ids = spec["ids"]
+        links = []
+        for position, case_id in enumerate(ids):
+            previous_link = f'<a href="{ids[position - 1]}.html">← 上一题</a>' if position else '<span>← 上一题</span>'
+            next_link = f'<a href="{ids[position + 1]}.html">下一题 →</a>' if position + 1 < len(ids) else '<span>下一题 →</span>'
+            nav = f'<div class="nav">{previous_link}<a href="index.html">题目目录</a>{next_link}</div>'
+            body = f'''{nav}<div class="warning"><strong>外部参考辅助模式：</strong>候选模型/训练阶段仍盲化，但专家从一开始就能看到外部模型意见。因此本入口结果必须标为 reference-assisted，不能用于“独立专家评分”主统计。</div>
+{assisted_rubric(task)}<p><a href="{spec['csv']}">下载该任务评分 CSV 模板</a></p>
+<div class="panes"><section><h2>病例与待评分内容</h2><iframe src="{spec['blind'](case_id)}"></iframe></section><section><h2>外部模型参考意见</h2><iframe src="{spec['reference'](case_id)}"></iframe></section></div>{nav}'''
+            (task_root / f"{case_id}.html").write_text(page(f"{spec['title']}：{case_id}", body), encoding="utf-8")
+            links.append(f'<a href="{case_id}.html">{case_id}</a>')
+        index_body = f'''<p><a href="../index.html">返回辅助评审总目录</a></p><div class="warning">本任务含外部参考，结果属于 reference-assisted expert review。</div>{assisted_rubric(task)}<p><a href="{spec['csv']}">下载评分 CSV 模板</a></p><div class="grid">{"".join(links)}</div>'''
+        (task_root / "index.html").write_text(page(spec["title"], index_body), encoding="utf-8")
+        root_links.append(f'<li><a href="{task}/index.html">{spec["title"]}</a></li>')
+    assisted_body = '<div class="warning">此入口直接显示外部参考，适合辅助作答或仲裁，不适合作为独立盲评主统计。</div><ol>' + "".join(root_links) + "</ol>"
+    (assisted / "index.html").write_text(page("外部参考辅助专家评审", assisted_body), encoding="utf-8")
+
+
+def write_root_index(root: Path) -> None:
+    body = '''<div class="warning"><strong>请选择评审模式：</strong>独立盲评用于论文主要人工统计；辅助模式从第一题开始显示外部意见，必须单独标注为 reference-assisted。</div>
+<ol><li><a href="first_pass.html">独立盲评入口（不显示外部参考）</a></li><li><a href="assisted_review_with_external_references/index.html">外部参考辅助评审入口（含上一题/下一题）</a></li><li><a href="second_pass_external_references/reward_reference_after_first_pass/index.html">原两阶段：奖励参考</a></li><li><a href="second_pass_external_references/roi_reference_after_first_pass/index.html">原两阶段：ROI 参考</a></li><li><a href="second_pass_external_references/generation_reference_after_first_pass/index.html">原两阶段：生成质量参考</a></li></ol>'''
+    (root / "index.html").write_text(page("PathVLM-R1 专家复核入口", body), encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
@@ -152,9 +222,15 @@ def main() -> None:
     parser.add_argument("--answer-key", type=Path, required=True)
     parser.add_argument("--claude-judgments", type=Path, required=True)
     parser.add_argument("--gemini-judgments", type=Path, required=True)
+    parser.add_argument("--augment-existing", action="store_true")
     args = parser.parse_args()
     if args.output.exists():
-        raise FileExistsError(args.output)
+        if not args.augment_existing:
+            raise FileExistsError(args.output)
+        build_assisted_review(args.output)
+        write_root_index(args.output)
+        print(json.dumps({"status": "augmented", "output": str(args.output.resolve())}, ensure_ascii=False))
+        return
     args.output.mkdir(parents=True)
     relative_target = os.path.relpath(args.first_pass.resolve(), args.output.resolve())
     os.symlink(relative_target, args.output / "first_pass_blinded")
@@ -176,9 +252,8 @@ def main() -> None:
         page("第一阶段：生成质量盲评", '<div class="warning">先独立填写盲化 ratings_template.csv；本页不显示外部 Judge 意见。</div><div class="grid">' + generation_links + "</div>"),
         encoding="utf-8",
     )
-    body = '''<div class="warning"><strong>强制顺序：</strong>第一阶段独立评分并保存 CSV → 第二阶段查看外部参考 → 填写改判日志。论文主要人工统计只使用第一阶段。</div>
-<ol><li><a href="first_pass.html">第一阶段：盲化专家入口</a></li><li><a href="second_pass_external_references/reward_reference_after_first_pass/index.html">奖励机制参考</a></li><li><a href="second_pass_external_references/roi_reference_after_first_pass/index.html">可解释性区域参考</a></li><li><a href="second_pass_external_references/generation_reference_after_first_pass/index.html">生成质量参考</a></li></ol>'''
-    (args.output / "index.html").write_text(page("PathVLM-R1 两阶段专家复核入口", body), encoding="utf-8")
+    build_assisted_review(args.output)
+    write_root_index(args.output)
     print(json.dumps({"status": "completed", "output": str(args.output.resolve())}, ensure_ascii=False))
 
 

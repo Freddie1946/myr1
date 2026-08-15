@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "created_at": "2026-08-15T08:11:56.639546+00:00",
+  "created_at": "2026-08-15T08:51:46.929456+00:00",
   "status": "verified",
   "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
   "private": false,
   "gated": "manual",
-  "revision": "ca96668741d629eb63309281ebb6eeb03b160d5c",
+  "revision": "fdc819c9c84fbc72dff2e40a14e74b4bf37d6940",
   "prefix": "increments/20260815_external_review_and_pathvqa_matching_v1",
-  "file_count": 14,
-  "total_bytes": 5308951,
+  "file_count": 15,
+  "total_bytes": 111725856,
   "failures": [],
   "files": {
     "increments/20260815_external_review_and_pathvqa_matching_v1/documents/pathvqa_plip_conch_statement_matching.md": {
@@ -16,24 +16,28 @@
       "sha256": "83b30e1e24d8045eb4ae0101c8e92147e4642a791aaca060c861574c1112a6a8"
     },
     "increments/20260815_external_review_and_pathvqa_matching_v1/documents/human_review_packet_instructions.md": {
-      "bytes": 7352,
-      "sha256": "c2a3bd09090575ec6ea05fb1a98f8e795f344dadc46b9ebba1162155b3e92c3a"
+      "bytes": 8125,
+      "sha256": "e798bf11ad14cfc38f1495b5d23c55c5018e7d9a9b66852deaf7e7f53263974d"
     },
     "increments/20260815_external_review_and_pathvqa_matching_v1/documents/reviewer_response_manuscript_revision_and_complete_tables.md": {
-      "bytes": 39715,
-      "sha256": "c698b6d9ce1a37216930becee89b73a7b90a354d95f3c9e1e7a262fb1da5894d"
+      "bytes": 40122,
+      "sha256": "29f3a902cc034fdd33b9c7f8840e3333b9d256e6225fd6fba20282dff878652a"
     },
     "increments/20260815_external_review_and_pathvqa_matching_v1/documents/paper_tables.md": {
       "bytes": 14817,
       "sha256": "42eeff4d551b970485619b202e3bce7b62a0b4a71ad8a7bf5397cf99c8f9455b"
     },
     "increments/20260815_external_review_and_pathvqa_matching_v1/documents/LATEST.md": {
-      "bytes": 57794,
-      "sha256": "c92e2705e56b4726b8326735f0dc997b5d1906271a53f1b5ae315bfe0619966e"
+      "bytes": 57917,
+      "sha256": "e3d13732b807a74e7141c5d94392f9490ed2644199c4f5d5a8b012414223c293"
     },
     "increments/20260815_external_review_and_pathvqa_matching_v1/human_review/pathvlm_external_reference_second_pass_20260815.tar.gz": {
       "bytes": 71904,
       "sha256": "9e5693d0bb54ef04951e1a38cc410ffd93149cc259bfba77bc12d1b6338c5cc0"
+    },
+    "increments/20260815_external_review_and_pathvqa_matching_v1/human_review/pathvlm_human_review_assisted_navigation_20260815.tar.gz": {
+      "bytes": 106415602,
+      "sha256": "3c0a6a05306cf1d3cabd535d1fc8e9dea09ce342e3cd9f1ce6ca6be98d849506"
     },
     "increments/20260815_external_review_and_pathvqa_matching_v1/human_review/reward_external_reference/references.jsonl": {
       "bytes": 135236,
