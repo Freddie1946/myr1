@@ -67,38 +67,39 @@ protocol/migration_restore_inventory_20260815.json
 
 ## 3. 恢复最新 Codex 会话状态
 
-最新 secret-free 在线快照位于 private dataset：
+最新 secret-free 在线快照位于 private dataset；最短恢复步骤另见
+`docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md`：
 
 ```text
 Freddie1946/PathVLM-R1-Codex-Private-Snapshots
-revision: e138c465a74874dbbb6213fbcc4d86cfa6c28f07
-prefix: snapshots/20260815T040515Z
-archive SHA-256: 21cf90809e76812f1b82501507a55c206a57bb433cf7a36ebe22f8bdead14aa7
+revision: a7b576e8450bc676ec93cc51db6ae592b9493d47
+prefix: snapshots/20260815T100317Z
+archive SHA-256: d10f7b3e72c2f7a75770b5d283efc2c3cc9209c002faa1c9917cb305f2198ee9
 ```
 
 下载与恢复到隔离的 `CODEX_HOME`：
 
 ```bash
 export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage"
-export NEW_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy"
+export NEW_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T100317Z"
 mkdir -p "$RESTORE_STAGE/codex"
 
 hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots \
   --repo-type dataset \
-  --revision e138c465a74874dbbb6213fbcc4d86cfa6c28f07 \
-  --include 'snapshots/20260815T040515Z/*' \
+  --revision a7b576e8450bc676ec93cc51db6ae592b9493d47 \
+  --include 'snapshots/20260815T100317Z/*' \
   --local-dir "$RESTORE_STAGE/codex"
 
-sha256sum "$RESTORE_STAGE/codex/snapshots/20260815T040515Z/"\
-"codex_online_snapshot_20260815T040515Z.tar.gz"
+sha256sum "$RESTORE_STAGE/codex/snapshots/20260815T100317Z/"\
+"codex_online_snapshot_20260815T100317Z.tar.gz"
 
 mkdir -p "$RESTORE_STAGE/codex-unpacked"
-tar -xzf "$RESTORE_STAGE/codex/snapshots/20260815T040515Z/"\
-"codex_online_snapshot_20260815T040515Z.tar.gz" \
+tar -xzf "$RESTORE_STAGE/codex/snapshots/20260815T100317Z/"\
+"codex_online_snapshot_20260815T100317Z.tar.gz" \
   -C "$RESTORE_STAGE/codex-unpacked"
 
 mkdir -p "$NEW_CODEX_HOME"
-cp -a "$RESTORE_STAGE/codex-unpacked/codex_online_snapshot_20260815T040515Z/"\
+cp -a "$RESTORE_STAGE/codex-unpacked/codex_online_snapshot_20260815T100317Z/"\
 "codex-home-snapshot/." "$NEW_CODEX_HOME/"
 chmod 700 "$NEW_CODEX_HOME"
 export CODEX_HOME="$NEW_CODEX_HOME"
@@ -280,4 +281,3 @@ python3 -m compileall -q "$WJY_WORK_ROOT/myr1/scripts"
 - optimizer/ZeRO 状态；
 - 第三方模型与数据的无条件再分发；
 - 当前快照之后未来新增对话与实验的自动增量备份。
-

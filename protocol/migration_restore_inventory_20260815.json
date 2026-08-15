@@ -11,10 +11,10 @@
     "repo_type": "dataset",
     "repo_id": "Freddie1946/PathVLM-R1-Codex-Private-Snapshots",
     "private": true,
-    "revision": "e138c465a74874dbbb6213fbcc4d86cfa6c28f07",
-    "prefix": "snapshots/20260815T040515Z",
-    "archive_bytes": 172856852,
-    "archive_sha256": "21cf90809e76812f1b82501507a55c206a57bb433cf7a36ebe22f8bdead14aa7",
+    "revision": "a7b576e8450bc676ec93cc51db6ae592b9493d47",
+    "prefix": "snapshots/20260815T100317Z",
+    "archive_bytes": 175178109,
+    "archive_sha256": "d10f7b3e72c2f7a75770b5d283efc2c3cc9209c002faa1c9917cb305f2198ee9",
     "credentials_included": false
   },
   "results": [
@@ -32,6 +32,13 @@
       "visibility": "private",
       "revision": "b2e61cbec20a679c99bba640975f772f033f121a",
       "prefix": "snapshots/20260814_interpretability_human_case_selection"
+    },
+    {
+      "repo_type": "dataset",
+      "repo_id": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+      "visibility": "public_manual_gated",
+      "revision": "2c90a34185c383054acebb80336201e99fbc96fd",
+      "prefix": "increments/20260815_bilingual_expert_review_v1"
     }
   ],
   "models": [
@@ -62,4 +69,3 @@
     "future_changes_after_this_snapshot"
   ]
 }
-

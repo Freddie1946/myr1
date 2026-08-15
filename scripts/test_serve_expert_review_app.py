@@ -2,8 +2,10 @@
 
 import csv
 import json
+import io
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 from serve_expert_review_app import EVENTS, RatingStore, process_score
@@ -30,6 +32,15 @@ class RatingStoreTest(unittest.TestCase):
                 rows = list(csv.DictReader(handle))
             self.assertEqual(len(rows), 1)
             self.assertEqual(rows[0]["process_score"], "1.000000")
+            body, filename, completed = store.export("pathologist_A")
+            self.assertEqual(completed, 1)
+            self.assertEqual(filename, "pathvlm_reward_review_pathologist_A_partial1.zip")
+            with zipfile.ZipFile(io.BytesIO(body)) as archive:
+                names = set(archive.namelist())
+                self.assertIn("pathvlm_reward_review_pathologist_A/HRA-001.json", names)
+                manifest = json.loads(archive.read("pathvlm_reward_review_pathologist_A/EXPORT_MANIFEST.json"))
+            self.assertFalse(manifest["complete"])
+            self.assertEqual(manifest["completed_cases"], 1)
 
     def test_rejects_extra_or_nonboolean_fields(self):
         with tempfile.TemporaryDirectory() as temporary:

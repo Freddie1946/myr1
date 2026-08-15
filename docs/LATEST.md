@@ -27,7 +27,7 @@ frozen 60-case reward panel, Claude-versus-training-GPT-4o six-event agreement i
 this is moderate machine-machine agreement and not a substitute for pathology-expert validation.
 See `20260815_gpt4o_claude_reward_reference_agreement.md`. The self-contained bilingual assisted
 packet, all 180 audited translation records, the agreement JSON, and updated instructions are
-remotely verified at gated HF revision `45bb5398cca0efedf060c8554e1cda1661e30db1`; verification is
+remotely verified at gated HF revision `2c90a34185c383054acebb80336201e99fbc96fd`; verification is
 recorded in `../protocol/bilingual_expert_review_hf_backup_20260815.json`. PLIP and CONCH now also have an explicitly exploratory
 PathVQA question+Yes/No-answer statement-matching result (48.30% and 53.87%, respectively), with
 raw predictions and the reference supplement verified on HF under
@@ -53,13 +53,14 @@ contract/cost details, and the revised main/supplementary tables. Human material
 into a blinded reviewer distribution and an owner-only package containing mappings and keys.
 The final revision increment is remotely verified in the manual-gated migration dataset under
 `increments/20260815_final_revision_closure_v1`; the current private Codex snapshot tag is
-`20260815T062722Z`. Verification records are
+`20260815T100317Z`. Verification records are
 `../protocol/final_revision_hf_backup_20260815.json` and
-`../protocol/codex_private_snapshot_backup_20260815T062722Z.json`.
+`../protocol/codex_private_snapshot_backup_20260815T100317Z.json`.
 
 Latest machine-migration backup plan:
 
 0. `NEW_MACHINE_CODEX_RESTORE_20260815.md` (authoritative new-machine restore entry)
+0. `QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md` (minimal Git + private Codex-session restore path)
 0. `../protocol/migration_restore_inventory_20260815.json`
 0. `../protocol/new_machine_codex_restore_prompt_20260815.txt`
 0. `20260815_machine_migration_backup_plan.md`

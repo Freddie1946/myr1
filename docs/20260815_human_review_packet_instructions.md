@@ -124,6 +124,10 @@ bash scripts/serve_two_pass_expert_review.sh 8765
 
 每题保存为一个 JSON，同时刷新 `reward_six_event_ratings.csv`。刷新页面或更换病例后可按 reviewer ID 恢复既有评分。网页即时显示人工过程分、Claude 参考过程分以及逐题 `人工−Claude` 分差。
 
+`Reviewer ID` 应由负责人在评审开始前分配为固定匿名编号，例如 `pathologist_A`、`pathologist_B`，不要填写真实姓名或邮箱。它不是为了在同一台设备区分多人：正式分发时，每位专家各自收到一份自包含包，在自己的电脑上运行并使用自己的编号。专家第一次在第一题录入；后续浏览器只用 localStorage 自动带出该编号。真正的恢复来源是本机解压目录 `expert_submissions/<Reviewer ID>/` 中的 JSON/CSV；不查询负责人机器、HF 或任何远程服务。换浏览器时输入同一编号并点击“载入本题已保存评分”即可；换机器时必须一并迁移该本地目录。编号拼错会被视为另一位新评审者并创建新目录，因此正式开始前应将编号列表冻结。
+
+每位专家完成后点击“导出我的评分包”，浏览器会下载 `pathvlm_reward_review_<Reviewer ID>_complete60.zip`。ZIP 内含 60 个逐题 JSON、汇总 CSV 和带 SHA-256 的 `EXPORT_MANIFEST.json`，直接交还负责人即可。未完成时也允许导出断点备份，但文件名会明确标成 `partialN`，不能当作完整人工结果。负责人收到不同专家 ZIP 后先核对 reviewer ID、`complete=true`、`completed_cases=60` 和 manifest 校验，再进行汇总分析。
+
 辅助入口已将评分规则、题干、选项、参考答案、待评分回答、外部模型理由和区域特征全部改为中英文对照。中文用于降低阅读负担，英文原文同时保留并作为语义冲突时的权威版本；`<think>`、`<answer>` 和 A/B/C/D 标签经过自动完整性检查，不能在翻译中增删。评分 CSV 的机器字段名仍保持英文，以确保汇总脚本兼容；页面内提供逐字段中文释义。
 
 ## 外部参考中的结构化指标是什么意思

@@ -302,6 +302,12 @@ async function saveRating() {{
   document.getElementById('save-status').textContent = `已写入文件 / Saved：${{result.saved_at}}；当前完成 ${{result.completed_cases}}/60`;
   updateScore();
 }}
+function exportRatings() {{
+  const reviewer = document.getElementById('reviewer-id').value.trim();
+  if (!reviewer) {{ alert('请先填写评审者编号 / Enter reviewer ID'); return; }}
+  localStorage.setItem('pathvlm_reviewer_id', reviewer);
+  window.location.href = `/api/export-reward-ratings?reviewer_id=${{encodeURIComponent(reviewer)}}`;
+}}
 window.addEventListener('DOMContentLoaded', () => {{
   document.getElementById('reviewer-id').value = localStorage.getItem('pathvlm_reviewer_id') || '';
   document.querySelectorAll('input[type=radio]').forEach(node => node.addEventListener('change', updateScore));
@@ -310,11 +316,12 @@ window.addEventListener('DOMContentLoaded', () => {{
 }});
 </script>'''
     return f'''<h2>六事件直接评分与保存 / Direct six-event rating</h2>
-<p><label>评审者编号 / Reviewer ID：<input id="reviewer-id" type="text" maxlength="64" placeholder="例如 pathologist_A"></label> <button type="button" onclick="loadSavedRating()">载入已保存评分 / Load</button></p>
+<div class="warning"><strong>Reviewer ID 使用方法：</strong>每位专家在自己的电脑上使用负责人预先分配的固定匿名编号，例如 <code>pathologist_A</code>、<code>pathologist_B</code>。第一次在第一题录入；后续浏览器会自动带出。中断后输入同一编号并点击“载入已保存评分”。历史评分只从本机解压目录的 <code>expert_submissions/&lt;Reviewer ID&gt;/</code> 读取，不访问远程服务器。不要填写真实姓名或邮箱；编号拼错会创建另一套本地记录。</div>
+<p><label>评审者编号 / Reviewer ID：<input id="reviewer-id" type="text" maxlength="64" placeholder="例如 pathologist_A"></label> <button type="button" onclick="loadSavedRating()">载入本题已保存评分 / Load this saved case</button></p>
 {''.join(cards)}
 <p><label>可选备注（不参与奖励）/ Optional notes (not scored)：<br><textarea id="reviewer-notes" rows="3" style="width:100%" maxlength="2000"></textarea></label></p>
 <div class="score-box"><strong>人工过程分 / Human process score：</strong><span id="human-score"></span><br><strong>外部 Claude 过程分 / External Claude process score：</strong><span id="external-score"></span><br><strong>人工−外部模型分差 / Human minus external difference：</strong><span id="score-difference"></span></div>
-<button type="button" onclick="saveRating()">保存本题评分到文件 / Save this rating</button><span id="save-status" class="save-status"></span>{script}'''
+<button type="button" onclick="saveRating()">保存本题评分到本地文件 / Save this rating locally</button> <button type="button" onclick="exportRatings()">导出我的评分包 / Export my ratings ZIP</button><span id="save-status" class="save-status"></span>{script}'''
 
 
 def load_translation_maps(directory: Path) -> dict[str, dict[str, dict[str, str]]]:
@@ -456,8 +463,13 @@ def build_assisted_review(root: Path, translations_dir: Path | None = None) -> N
             nav = f'<div class="nav">{previous_link}<a href="index.html">题目目录</a>{next_link}</div>'
             direct_form = reward_click_form(case_id, reward_references[case_id]) if task == "reward" else ""
             csv_link = "" if task == "reward" else f'<p><a href="{spec["csv"]}">下载该任务评分 CSV 模板</a></p>'
-            body = f'''{nav}<div class="warning"><strong>外部参考辅助模式：</strong>候选模型/训练阶段仍盲化，但专家从一开始就能看到外部模型意见。因此本入口结果必须标为 reference-assisted，不能用于“独立专家评分”主统计。</div>
-{assisted_rubric(task)}{direct_form}{csv_link}
+            if task == "reward":
+                body = f'''{nav}<div class="warning"><strong>外部参考辅助模式：</strong>候选模型/训练阶段仍盲化，但专家从一开始就能看到外部模型意见。因此本入口结果必须标为 reference-assisted，不能用于“独立专家评分”主统计。</div>
+<section><h2>先阅读病例、图像与待评分回答 / First review the case, image, and candidate response</h2><iframe style="width:100%;height:1050px;border:1px solid #999" src="{spec['blind'](case_id)}"></iframe></section>
+{assisted_rubric(task)}{direct_form}{nav}'''
+            else:
+                body = f'''{nav}<div class="warning"><strong>外部参考辅助模式：</strong>候选模型/训练阶段仍盲化，但专家从一开始就能看到外部模型意见。因此本入口结果必须标为 reference-assisted，不能用于“独立专家评分”主统计。</div>
+{assisted_rubric(task)}{csv_link}
 <div class="panes"><section><h2>病例与待评分内容 / Case and response</h2><iframe src="{spec['blind'](case_id)}"></iframe></section><section><h2>外部模型参考意见 / External-model reference</h2><iframe src="{spec['reference'](case_id)}"></iframe></section></div>{nav}'''
             (task_root / f"{case_id}.html").write_text(page(f"{spec['title']}：{case_id}", body), encoding="utf-8")
             links.append(f'<a href="{case_id}.html">{case_id}</a>')

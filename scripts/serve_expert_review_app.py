@@ -5,11 +5,14 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
+import io
 import json
 import os
 import re
 import tempfile
 import threading
+import zipfile
 from datetime import datetime, timezone
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -37,10 +40,14 @@ def process_score(events: dict[str, bool]) -> float:
 
 
 def validate_identity(reviewer_id: str, case_id: str) -> None:
-    if not REVIEWER_RE.fullmatch(reviewer_id):
-        raise ValueError("reviewer_id must contain only letters, numbers, period, underscore, or hyphen")
+    validate_reviewer(reviewer_id)
     if not CASE_RE.fullmatch(case_id):
         raise ValueError("case_id must be HRA-001 through HRA-060")
+
+
+def validate_reviewer(reviewer_id: str) -> None:
+    if not REVIEWER_RE.fullmatch(reviewer_id):
+        raise ValueError("reviewer_id must contain only letters, numbers, period, underscore, or hyphen")
 
 
 class RatingStore:
@@ -103,6 +110,46 @@ class RatingStore:
             completed = len(list((self.root / reviewer_id).glob("HRA-*.json")))
         return record, completed
 
+    def export(self, reviewer_id: str) -> tuple[bytes, str, int]:
+        validate_reviewer(reviewer_id)
+        directory = self.root / reviewer_id
+        json_paths = sorted(directory.glob("HRA-*.json")) if directory.is_dir() else []
+        if not json_paths:
+            raise FileNotFoundError(directory)
+        csv_path = directory / "reward_six_event_ratings.csv"
+        if not csv_path.is_file():
+            raise FileNotFoundError(csv_path)
+        files = [*json_paths, csv_path]
+        records = []
+        for path in files:
+            data = path.read_bytes()
+            records.append({
+                "path": path.name,
+                "bytes": len(data),
+                "sha256": hashlib.sha256(data).hexdigest(),
+            })
+        manifest = {
+            "schema_version": 1,
+            "rating_contract": "pathvlm_stage3_process_events_v1_exact_six_booleans",
+            "reviewer_id": reviewer_id,
+            "completed_cases": len(json_paths),
+            "expected_cases": 60,
+            "complete": len(json_paths) == 60,
+            "exported_at": datetime.now(timezone.utc).isoformat(),
+            "files": records,
+        }
+        stream = io.BytesIO()
+        prefix = f"pathvlm_reward_review_{reviewer_id}"
+        with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            for path in files:
+                archive.writestr(f"{prefix}/{path.name}", path.read_bytes())
+            archive.writestr(
+                f"{prefix}/EXPORT_MANIFEST.json",
+                json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            )
+        state = "complete60" if len(json_paths) == 60 else f"partial{len(json_paths)}"
+        return stream.getvalue(), f"pathvlm_reward_review_{reviewer_id}_{state}.zip", len(json_paths)
+
     def _write_csv(self, reviewer_id: str) -> None:
         directory = self.root / reviewer_id
         records = [json.loads(path.read_text(encoding="utf-8")) for path in sorted(directory.glob("HRA-*.json"))]
@@ -144,8 +191,27 @@ def make_handler(directory: Path, store: RatingStore):
             self.end_headers()
             self.wfile.write(body)
 
+        def binary_response(self, status: HTTPStatus, body: bytes, filename: str) -> None:
+            self.send_response(status)
+            self.send_header("Content-Type", "application/zip")
+            self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+
         def do_GET(self) -> None:
             parsed = urlparse(self.path)
+            if parsed.path == "/api/export-reward-ratings":
+                reviewer_id = parse_qs(parsed.query).get("reviewer_id", [""])[0]
+                try:
+                    body, filename, _ = store.export(reviewer_id)
+                    self.binary_response(HTTPStatus.OK, body, filename)
+                except FileNotFoundError:
+                    self.json_response(HTTPStatus.NOT_FOUND, {"error": "no saved ratings found"})
+                except ValueError as error:
+                    self.json_response(HTTPStatus.BAD_REQUEST, {"error": str(error)})
+                return
             if parsed.path != "/api/reward-rating":
                 return super().do_GET()
             query = parse_qs(parsed.query)
