@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T09:21:52.399870+00:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+  "private": false,
+  "gated": "manual",
+  "revision": "6eb1e953b93cb633b3576ff5001611ca306c57b2",
+  "prefix": "increments/20260815_bilingual_expert_review_v1",
+  "file_count": 10,
+  "total_bytes": 107402858,
+  "failures": [],
+  "files": {
+    "increments/20260815_bilingual_expert_review_v1/human_review/pathvlm_human_review_bilingual_assisted_20260815.tar.gz": {
+      "bytes": 106692744,
+      "sha256": "a440dfb570ab6f250dbcddf63fcda3a5b95256179c323fe52618bffc12c8d60e"
+    },
+    "increments/20260815_bilingual_expert_review_v1/human_review/translations/manifest.json": {
+      "bytes": 1240,
+      "sha256": "c066e1125c1a79ff78eb601f42a0d13c2e605dd33bb7b43a353451028397de01"
+    },
+    "increments/20260815_bilingual_expert_review_v1/human_review/translations/reward.jsonl": {
+      "bytes": 177931,
+      "sha256": "046b0894fd037b63eed64606b34877b78630c78628eb5542e717bae6b122dded"
+    },
+    "increments/20260815_bilingual_expert_review_v1/human_review/translations/roi.jsonl": {
+      "bytes": 88662,
+      "sha256": "1a705bcae0b0d2f33e012e3941a5b3773ade068d6f6bfa2fb8060137ae7bc9aa"
+    },
+    "increments/20260815_bilingual_expert_review_v1/human_review/translations/generation.jsonl": {
+      "bytes": 324419,
+      "sha256": "9dfb327fd2df355b25acae45d4d67e6d737ec9696024135f8a78f751fcdecac7"
+    },
+    "increments/20260815_bilingual_expert_review_v1/human_review/gpt4o_claude_agreement.json": {
+      "bytes": 5472,
+      "sha256": "761940024a3bc893094e559e49491a4bc3feeec29879aaa93a461178059fa448"
+    },
+    "increments/20260815_bilingual_expert_review_v1/documents/gpt4o_claude_reward_reference_agreement.md": {
+      "bytes": 1555,
+      "sha256": "7ca0e574ce397e93a0e80deacabf743d7bd263f88282f98fb6cce477895ff9c3"
+    },
+    "increments/20260815_bilingual_expert_review_v1/documents/human_review_packet_instructions.md": {
+      "bytes": 11077,
+      "sha256": "0733b9fba744172eac6361a8e43a6d4b36bec307e3e0bdf277dacb9e2ebed8e7"
+    },
+    "increments/20260815_bilingual_expert_review_v1/documents/reviewer_response_manuscript_revision_and_complete_tables.md": {
+      "bytes": 41241,
+      "sha256": "942f12482de6f31d95a061ad76e4d34118451e72d5c3a9be0204818bc3cb714b"
+    },
+    "increments/20260815_bilingual_expert_review_v1/documents/LATEST.md": {
+      "bytes": 58517,
+      "sha256": "d0a935dfb519ae3e02e064565ec0b6e1a0d7128247652c96b886770217f9398d"
+    }
+  }
+}

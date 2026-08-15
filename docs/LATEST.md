@@ -13,7 +13,16 @@ remain the primary analysis; the assisted entry displays external advice from th
 therefore cannot be called independent expert scoring. Reward review uses a non-GPT Claude Sonnet 4.6 reference; ROI review
 uses the existing independent Gemini 3.1 Pro and Claude Opus 5 annotations; blind response-quality
 review uses the existing Claude/Gemini per-response judgments. The portal is served by
-`../scripts/serve_two_pass_expert_review.sh`. PLIP and CONCH now also have an explicitly exploratory
+`../scripts/serve_two_pass_expert_review.sh`. The assisted portal now presents the scoring rules,
+questions/options, reference answers, candidate responses, external rationales, and ROI features
+in Chinese-English parallel form while preserving the English source and structural tags. On the
+frozen 60-case reward panel, Claude-versus-training-GPT-4o six-event agreement is 79.72% (clustered
+95% CI 75.28%--83.89%), Cohen's kappa is 0.566, and derived reward Spearman correlation is 0.522;
+this is moderate machine-machine agreement and not a substitute for pathology-expert validation.
+See `20260815_gpt4o_claude_reward_reference_agreement.md`. The self-contained bilingual assisted
+packet, all 180 audited translation records, the agreement JSON, and updated instructions are
+remotely verified at gated HF revision `6eb1e953b93cb633b3576ff5001611ca306c57b2`; verification is
+recorded in `../protocol/bilingual_expert_review_hf_backup_20260815.json`. PLIP and CONCH now also have an explicitly exploratory
 PathVQA question+Yes/No-answer statement-matching result (48.30% and 53.87%, respectively), with
 raw predictions and the reference supplement verified on HF under
 `increments/20260815_external_review_and_pathvqa_matching_v1`; see

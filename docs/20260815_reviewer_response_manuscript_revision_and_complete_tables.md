@@ -378,6 +378,8 @@ LoRA-SFT4000 对比 LoRA-SFT3000 的 Test999 基本没有提高，而后续 full
 
 为降低专家逐题浏览成本，材料另提供 reference-assisted 入口：每题直接并列展示匿名病例内容与外部意见，并有上一题/下一题导航；奖励页固定显示与训练一致的六事件及 0.4 量表公式。该入口仍对候选模型身份盲化，但不对外部参考盲化，因此其评分只作为辅助/仲裁结果，不能取代上述独立盲评主统计。
 
+该辅助入口现以中英文对照展示评分规则、题干、选项、参考答案、匿名待评回答、外部模型理由和 ROI 特征；英文原文继续保留为权威文本，翻译只用于辅助理解。冻结 60 例上，Claude Sonnet 4.6 与训练期 GPT-4o 的 360 个六事件判断 micro agreement 为 79.72%（病例聚类 bootstrap 95% CI 75.28%–83.89%），Cohen's kappa 为 0.566；换算后过程奖励精确相同率为 38.33%，85.00% 的病例差值不超过 0.2，Spearman 相关为 0.522（95% CI 0.308–0.698）。这属于中等机器—机器一致性，不能替代尚待完成的病理专家验证；challenge-enriched 面板也不能当作总体随机样本。
+
 ## 8. 结果与材料入口
 
 - 最新审计：`protocol/final_revision_assets_audit_20260815.json`
@@ -408,6 +410,8 @@ LoRA-SFT4000 对比 LoRA-SFT3000 的 Test999 基本没有提高，而后续 full
 - Stage2/Stage3 盲化 100 例、改善/退化案例：`pathvlm_revision_eval_a100/runs/stage2_stage3_human_review_packet_20260815`
 - 逐步使用手册：`myr1/docs/20260815_human_review_packet_instructions.md`
 - 两阶段本机入口：`pathvlm_revision_eval_a100/human_review/two_pass_expert_review_20260815/index.html`；第二阶段参考必须在第一阶段评分保存后查看。
+- 中英文辅助入口：上述本机入口中的 `assisted_review_with_external_references/index.html`；辅助结果必须标为 `reference-assisted expert review`，不可混入独立盲评主统计。
+- GPT-4o/Claude 奖励一致性：`docs/20260815_gpt4o_claude_reward_reference_agreement.md` 与 `pathvlm_revision_eval_a100/human_review/external_reference_reward_review_20260815/gpt4o_claude_agreement.json`。
 
 现有盲化 100 例与已完成的三模型 Judge 使用同一个 `Stage3-GPT4o-selected`，保证人机逐题对齐；当前 n=8 step1500 目前只有按结果分层的改善/退化案例包，不能用来估计总体人工偏好。若正文最终以 n=8 step1500 作为唯一 Stage3 主模型并要求相应总体人工偏好，需要另建一份使用同一输出无关 panel 的 n=8 盲化 A/B 包。
 
