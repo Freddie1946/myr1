@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-08-15T12:05:27+08:00",
+  "status": "critical_scientific_assets_remotely_backed_up_not_bytewise_workspace_clone",
+  "git": {
+    "repo": "https://github.com/Freddie1946/myr1.git",
+    "branch": "codex/a100-stage3-eval",
+    "restore_guide": "docs/NEW_MACHINE_CODEX_RESTORE_20260815.md"
+  },
+  "codex_snapshot": {
+    "repo_type": "dataset",
+    "repo_id": "Freddie1946/PathVLM-R1-Codex-Private-Snapshots",
+    "private": true,
+    "revision": "e138c465a74874dbbb6213fbcc4d86cfa6c28f07",
+    "prefix": "snapshots/20260815T040515Z",
+    "archive_bytes": 172856852,
+    "archive_sha256": "21cf90809e76812f1b82501507a55c206a57bb433cf7a36ebe22f8bdead14aa7",
+    "credentials_included": false
+  },
+  "results": [
+    {
+      "repo_type": "dataset",
+      "repo_id": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
+      "visibility": "public_manual_gated",
+      "revision": "82323d5cff454a97c4e137733c4521911c8d5e47",
+      "primary_prefix": "evaluation_snapshots/omnimed_final_20260815T022447Z",
+      "increment_prefix": "increments/20260815_gpu_evaluations_v1"
+    },
+    {
+      "repo_type": "dataset",
+      "repo_id": "Freddie1946/PathVLM-R1-Revision-Evaluation-Results",
+      "visibility": "private",
+      "revision": "b2e61cbec20a679c99bba640975f772f033f121a",
+      "prefix": "snapshots/20260814_interpretability_human_case_selection"
+    }
+  ],
+  "models": [
+    {"label": "stage3_gpt4o_n8_parent_steps_500_1000_1500", "repo_id": "Freddie1946/PathVLM-R1-Stage3-GPT4o-n8-parent-seed42-GatedArchive", "revision": "49dea265dbb7607b431d3c74293e4ba2cf80a348", "bytes": 49802495458},
+    {"label": "lora_sft3000_step80", "repo_id": "Freddie1946/PathVLM-R1-LoRA-SFT3000-step80-seed42-GatedArchive", "revision": "4341c46a5e3764bbe6063ee112e83299e344f60e", "bytes": 177443974},
+    {"label": "lora_sft4000_control", "repo_id": "Freddie1946/PathVLM-R1-LoRA-SFT4000-Control-seed42-GatedArchive", "revision": "586973a525e912fb1d4b5b2896d7fb3c5221e46b", "bytes": 532362864},
+    {"label": "full_rule_rl_n4_step1000", "repo_id": "Freddie1946/PathVLM-R1-FullRuleRL-n4-step1000-seed42", "revision": "38cee47d749410be8e30f3bc1a65372a9d648bc8", "bytes": 16600704665},
+    {"label": "full_rule_rl_n8_step1000", "repo_id": "Freddie1946/PathVLM-R1-FullRuleRL-n8-step1000-seed42-GatedArchive", "revision": "b8ba2e1b9be6fe31d44c8415fd5eb0ee60f3a5a1", "bytes": 16600710282},
+    {"label": "historical_full_sft3000", "repo_id": "Freddie1946/PathVLM-R1-SFT-n3000-seed42-epoch3-GatedArchive", "revision": "86151d3369d412e59a776dd1da7ebe16cb095413", "bytes": 16600556023},
+    {"label": "historical_full_sft4000", "repo_id": "Freddie1946/PathVLM-R1-SFT-n4000-control-seed42-epoch2", "revision": "31ecd18b9dc9de5c4118efde586bb625e4a6da06", "bytes": 16600408983},
+    {"label": "historical_stage2_outcome_grpo", "repo_id": "Freddie1946/PathVLM-R1-Outcome-GRPO-n1000-seed42-epoch2", "revision": "6496331a597246bda84e8945a3f554c92a3ccc84", "bytes": 16600756321},
+    {"label": "historical_stage3_gpt4o_selected", "repo_id": "Freddie1946/PathVLM-R1-Process-GRPO-GPT4o-n1000-seed42-epoch2", "revision": "3ade3cffd46b64abc864ed9f271b47632810ec9c", "bytes": 16600834950},
+    {"label": "p2_rule_rl4000_and_stage2_continue1000", "repo_id": "Freddie1946/PathVLM-R1-P2-Model-Snapshot-Archive-20260815", "revision": "45e55ae634de41fd2adbe9d27907e3083b3f6e55", "bytes": 33201058452}
+  ],
+  "upstream_rebuild_assets": [
+    {"label": "pathmmu", "repo_id": "jamessyx/PathMMU", "revision": "054e64e56e599e9636024f1471d49ecae4a2784f"},
+    {"label": "pathvqa", "repo_id": "flaviagiammarino/path-vqa", "revision": "1685832883334b5bb5beaf4e4b333fdeecaa4ad9"},
+    {"label": "omnimedvqa", "repo_id": "foreverbeliever/OmniMedVQA", "revision": "1ba51c28fc0773bdf7efb8396e5bcfd4227e22da"},
+    {"label": "mmmu", "repo_id": "MMMU/MMMU", "revision": "98e6ac0cb9b7b2cd2c991b85a50762edc4aedc68"},
+    {"label": "qwen2_5_vl_7b_base", "repo_id": "Qwen/Qwen2.5-VL-7B-Instruct", "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5"}
+  ],
+  "intentionally_not_archived": [
+    "credentials_and_api_keys",
+    "optimizer_scheduler_rng_and_deepspeed_zero_shards",
+    "downloadable_caches_and_duplicate_weight_trees",
+    "all_smoke_failed_and_small_mechanism_checkpoint_weights",
+    "third_party_assets_without_redistribution_permission",
+    "future_changes_after_this_snapshot"
+  ]
+}
+

@@ -1,0 +1,25 @@
+你正在一台新机器上恢复 PathVLM-R1 论文修订工作。不要立即训练、推理、删除、覆盖或调用付费 API。
+
+工作根目录优先使用 /home/dataset-assist-0/czy/wjy；若实际路径不同，先建立路径映射并明确记录。
+
+请完整阅读并按顺序执行：
+1. docs/NEW_MACHINE_CODEX_RESTORE_20260815.md
+2. protocol/migration_restore_inventory_20260815.json
+3. docs/LATEST.md
+4. docs/result_catalog_20260815/README.md
+5. docs/result_catalog_20260815/paper_tables.md
+6. docs/20260814_final_nonhuman_results_and_migration_handoff.md
+
+随后只做只读迁移验收：
+- 核对 Git 分支和远端 HEAD；
+- 核对 HF 登录账号为 Freddie1946；
+- 核对 private Codex snapshot、manual-gated 结果归档和关键模型 repo 的固定 revision；
+- 核对数据集来源 revision、split SHA、结果 ARCHIVE_MANIFEST/VERIFICATION；
+- 核对 GPU、CUDA、磁盘和可重建环境入口；
+- 输出“已恢复、需下载、因许可证需上游重建、明确未备份”四类清单；
+- 对需要的大模型先列出大小与下载计划，不要一次全部下载。
+
+认证信息不在快照中，必须在新机器重新登录。model-only checkpoint 不含 optimizer/ZeRO state，不能宣称逐比特续训；可以重新建立 optimizer 后继续 SFT/RL。PathMMU test999 已用于开发诊断，不得描述为未触碰测试集。PathVQA A/B 是接口敏感性补充，不替代原始 Yes/No 主口径。OmniMedVQA 只接受 omnimed_domain_think_answer_v4_1024 统一合同结果。
+
+完成只读验收后停下，向用户汇报具体缺口并请求下一步授权。
+

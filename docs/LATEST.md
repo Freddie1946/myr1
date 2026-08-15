@@ -2,9 +2,14 @@
 
 Latest machine-migration backup plan:
 
+0. `NEW_MACHINE_CODEX_RESTORE_20260815.md` (authoritative new-machine restore entry)
+0. `../protocol/migration_restore_inventory_20260815.json`
+0. `../protocol/new_machine_codex_restore_prompt_20260815.txt`
 0. `20260815_machine_migration_backup_plan.md`
 
-The backup is layered into Git protocol/code, a private secret-free Codex online snapshot,
+The authoritative restore guide records the remotely verified P1/P2 model revisions, the final
+OmniMedVQA result archive, the interpretability/human-rating packet, and the latest private
+secret-free Codex snapshot. The backup is layered into Git protocol/code, a private Codex snapshot,
 public+manual-gated immutable evaluation/model archives, and license-aware rebuild manifests for
 third-party foundations and caches. Active JSONL outputs are added only as a later verified
 increment; no local deletion is authorized by this plan.
