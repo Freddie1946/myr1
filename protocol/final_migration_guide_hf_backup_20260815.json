@@ -1,22 +1,24 @@
 {
   "schema_version": 1,
-  "created_at": "2026-08-15T18:38:00+08:00",
+  "created_at": "2026-08-15T19:13:09+08:00",
   "status": "verified",
   "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
   "private": false,
   "gated": "manual",
-  "revision": "27c792f4da3524f18d870c90f749aa8aece011eb",
+  "revision": "ad13f0a63d1ff406f6377ebc9b1485a0b2358c42",
   "prefix": "increments/20260815_final_migration_guide_v1",
-  "file_count": 8,
+  "file_count": 10,
   "remote_size_check_failures": [],
   "files": {
-    "documents/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md": {"bytes": 9425, "sha256": "d9f93ac0bdca89619a521a750d46e44c16f62cbf5e79b99b44a587e42a460d25"},
+    "documents/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md": {"bytes": 9820, "sha256": "ccf03e5cda612fdb9f2f88924f3f7b98a9df46bd7b807796650ce70234ef44e6"},
     "documents/NEW_MACHINE_CODEX_RESTORE_20260815.md": {"bytes": 11070, "sha256": "ee1188e61c3b7468c032c19bc23a0f0621577e16b386ad237645d8208e4db2ba"},
     "documents/FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md": {"bytes": 2483, "sha256": "749848de5ec874cd1eff2f4dba945808a5588c0e02fdf7f29bbe75ee0ce35578"},
     "documents/human_review_packet_instructions.md": {"bytes": 17243, "sha256": "8f41ae3d6db133bd190e6221e6572537c32878d483481b76767899e8c93c77cc"},
-    "documents/LATEST.md": {"bytes": 60450, "sha256": "79502e8dd13b8acd22a0abbdb71feffebcc31f7298aa0b188931d50110129e97"},
+    "documents/LATEST.md": {"bytes": 60575, "sha256": "5386173ff0758ffaa6a7156effe0ab953c0a59e756c49f07b1810897f52bc02a"},
+    "documents/HUMAN_REVIEW_DISTRIBUTION_AND_ANALYSIS_PATHS.md": {"bytes": 5447, "sha256": "1938abffc7c00bc7efa389caf951c1b095fd9a0fd6f9287d6ec38e37add67f01"},
     "protocol/migration_restore_inventory_20260815.json": {"bytes": 4664, "sha256": "36a03fe39437491a0edeb5e934c6c6980df5503c18f77e723f283d23903c9960"},
     "protocol/codex_private_snapshot_backup_20260815T103534Z.json": {"bytes": 669, "sha256": "e365bf74b76009fee0b35a8bb0def51b46f1c0f08d1069ecbe84b4a924fa29d2"},
-    "tools/import_expert_reward_exports.py": {"bytes": 5877, "sha256": "58293bcd255af421b2575cef2f190ed9a07cd46182dc635cbc49130bb5a71c56"}
+    "tools/import_expert_reward_exports.py": {"bytes": 5877, "sha256": "58293bcd255af421b2575cef2f190ed9a07cd46182dc635cbc49130bb5a71c56"},
+    "protocol/new_machine_codex_restore_prompt_20260815.txt": {"bytes": 1908, "sha256": "848ef6c5f565f07c5a6de73c509b07e10b29043aefe4f5047640c5e16f8841e1"}
   }
 }
