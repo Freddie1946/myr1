@@ -12,9 +12,9 @@
 ## 0. 边界
 
 - 最新会话快照：`Freddie1946/PathVLM-R1-Codex-Private-Snapshots`
-- 固定 revision：`a7b576e8450bc676ec93cc51db6ae592b9493d47`
-- prefix：`snapshots/20260815T100317Z`
-- archive SHA-256：`d10f7b3e72c2f7a75770b5d283efc2c3cc9209c002faa1c9917cb305f2198ee9`
+- 固定 revision：`965d3e14558aa019861092f0c1b7e23612a91eaa`
+- prefix：`snapshots/20260815T103110Z`
+- archive SHA-256：`1260af7dc0063b5035e901733dd15a170120d1c902d355db45591dbf8ce896a7`
 - Git：`https://github.com/Freddie1946/myr1.git`，branch `codex/a100-stage3-eval`
 
 快照不含 HF token、API key、Codex `auth.json`、缓存或模型权重。新机器必须重新完成 HF 和 Codex
@@ -56,22 +56,22 @@ test -f docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md
 ## 3. 下载并核验最新 Codex 会话快照
 
 ```bash
-export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage/codex_20260815T100317Z"
+export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage/codex_20260815T103110Z"
 mkdir -p "$RESTORE_STAGE/download" "$RESTORE_STAGE/unpacked"
 
 hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots \
   --repo-type dataset \
-  --revision a7b576e8450bc676ec93cc51db6ae592b9493d47 \
-  --include 'snapshots/20260815T100317Z/*' \
+  --revision 965d3e14558aa019861092f0c1b7e23612a91eaa \
+  --include 'snapshots/20260815T103110Z/*' \
   --local-dir "$RESTORE_STAGE/download"
 
-echo 'd10f7b3e72c2f7a75770b5d283efc2c3cc9209c002faa1c9917cb305f2198ee9  snapshots/20260815T100317Z/codex_online_snapshot_20260815T100317Z.tar.gz' \
+echo '1260af7dc0063b5035e901733dd15a170120d1c902d355db45591dbf8ce896a7  snapshots/20260815T103110Z/codex_online_snapshot_20260815T103110Z.tar.gz' \
   > "$RESTORE_STAGE/download/CHECKSUMS.sha256"
 
 cd "$RESTORE_STAGE/download"
 sha256sum -c CHECKSUMS.sha256
 
-tar -xzf snapshots/20260815T100317Z/codex_online_snapshot_20260815T100317Z.tar.gz \
+tar -xzf snapshots/20260815T103110Z/codex_online_snapshot_20260815T103110Z.tar.gz \
   -C "$RESTORE_STAGE/unpacked"
 ```
 
@@ -82,11 +82,11 @@ tar -xzf snapshots/20260815T100317Z/codex_online_snapshot_20260815T100317Z.tar.g
 不要覆盖新机器已有的 Codex home。这里使用独立目录：
 
 ```bash
-export RESTORED_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T100317Z"
+export RESTORED_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T103110Z"
 test ! -e "$RESTORED_CODEX_HOME"
 mkdir -p "$RESTORED_CODEX_HOME"
 
-cp -a "$RESTORE_STAGE/unpacked/codex_online_snapshot_20260815T100317Z/codex-home-snapshot/." \
+cp -a "$RESTORE_STAGE/unpacked/codex_online_snapshot_20260815T103110Z/codex-home-snapshot/." \
   "$RESTORED_CODEX_HOME/"
 chmod 700 "$RESTORED_CODEX_HOME"
 export CODEX_HOME="$RESTORED_CODEX_HOME"
@@ -153,7 +153,7 @@ protocol/migration_restore_inventory_20260815.json
 
 ```text
 repo: Freddie1946/PathVLM-R1-Migration-Archive-20260815
-revision: 2c90a34185c383054acebb80336201e99fbc96fd
+revision: 0d4c90e2aebb7ee197e172c9fa83be7a854b09b0
 prefix: increments/20260815_bilingual_expert_review_v1
 ```
 
@@ -170,6 +170,47 @@ protocol/migration_restore_inventory_20260815.json
 其中 `evaluation_results_priority_backup_20260815.json` 记录了 1,561 个文件、约 1.28 GB
 未压缩结果的首轮远端快照；后续 GPU 评测增量和最终修订增量分别补齐其后的 JSON/JSONL。
 新机器 Codex必须依据 manifest 中的 SHA-256 和固定 revision 下载，不能仅凭相似目录名猜测模型或测试口径。
+
+### 下载完整实验记录、评测 JSON/JSONL 与测试口径
+
+下面不是只下载汇总表，而是依次恢复：首轮 1,561 文件快照、后续 GPU 评测增量、最终 OmniMedVQA
+归档、最后补齐的论文评测，以及人工复核/解释性材料。可直接执行：
+
+```bash
+export RESULTS_RESTORE="$WJY_WORK_ROOT/restored_results/pathvlm_20260815"
+mkdir -p "$RESULTS_RESTORE"
+
+hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
+  --repo-type dataset --revision 4c1999d2164b4cab4f0f633a65efe01b482c61f9 \
+  --include 'evaluation_snapshots/20260815T020000Z/*' \
+  --local-dir "$RESULTS_RESTORE/migration_archive"
+
+hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
+  --repo-type dataset --revision 3576750e12541133c9432a8a17362d5d35913e94 \
+  --include 'increments/20260815_gpu_evaluations_v1/*' \
+  --local-dir "$RESULTS_RESTORE/migration_archive"
+
+hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
+  --repo-type dataset --revision 82323d5cff454a97c4e137733c4521911c8d5e47 \
+  --include 'evaluation_snapshots/omnimed_final_20260815T022447Z/*' \
+  --local-dir "$RESULTS_RESTORE/migration_archive"
+
+hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
+  --repo-type dataset --revision 9527a11a19cf9024f02eba7d40bfe1eee4cd37c6 \
+  --include 'increments/20260815_final_revision_closure_v1/*' \
+  --local-dir "$RESULTS_RESTORE/migration_archive"
+
+hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
+  --repo-type dataset --revision 0d4c90e2aebb7ee197e172c9fa83be7a854b09b0 \
+  --include 'increments/20260815_bilingual_expert_review_v1/*' \
+  --local-dir "$RESULTS_RESTORE/migration_archive"
+```
+
+首轮与 Omni 最终归档各含 `ARCHIVE_MANIFEST.json`、`ARCHIVE_VERIFICATION.json` 和一个 tar.gz。
+先核对 verification 与 tar.gz 的 SHA-256，再解压到独立目录；不要覆盖 Git 仓库或新机器已有结果。
+GPU/最终增量已经按模型与评测合同分层保存 `predictions.jsonl`、`metrics.json`、`run_config.json` 和日志。
+下载后以 `docs/result_catalog_20260815/result_lineage.json` 建立模型—checkpoint—prompt—parser—dataset
+对应关系；同名指标但合同不同的结果不得合并。
 
 专家评分历史不从 HF 在线读取。每位专家在自己的分发包内使用
 `expert_submissions/<Reviewer ID>/` 保存和恢复，并将导出的 `complete60.zip` 交给负责人。负责人使用：

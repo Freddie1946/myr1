@@ -42,7 +42,7 @@ frozen 60-case reward panel, Claude-versus-training-GPT-4o six-event agreement i
 this is moderate machine-machine agreement and not a substitute for pathology-expert validation.
 See `20260815_gpt4o_claude_reward_reference_agreement.md`. The self-contained bilingual assisted
 packet, all 180 audited translation records, the agreement JSON, and updated instructions are
-remotely verified at gated HF revision `2c90a34185c383054acebb80336201e99fbc96fd`; verification is
+remotely verified at gated HF revision `0d4c90e2aebb7ee197e172c9fa83be7a854b09b0`; verification is
 recorded in `../protocol/bilingual_expert_review_hf_backup_20260815.json`. PLIP and CONCH now also have an explicitly exploratory
 PathVQA question+Yes/No-answer statement-matching result (48.30% and 53.87%, respectively), with
 raw predictions and the reference supplement verified on HF under
@@ -68,9 +68,9 @@ contract/cost details, and the revised main/supplementary tables. Human material
 into a blinded reviewer distribution and an owner-only package containing mappings and keys.
 The final revision increment is remotely verified in the manual-gated migration dataset under
 `increments/20260815_final_revision_closure_v1`; the current private Codex snapshot tag is
-`20260815T100317Z`. Verification records are
+`20260815T103110Z`. Verification records are
 `../protocol/final_revision_hf_backup_20260815.json` and
-`../protocol/codex_private_snapshot_backup_20260815T100317Z.json`.
+`../protocol/codex_private_snapshot_backup_20260815T103110Z.json`.
 
 Latest machine-migration backup plan:
 

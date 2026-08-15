@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-08-15T12:05:27+08:00",
+  "as_of": "2026-08-15T18:32:23+08:00",
   "status": "critical_scientific_assets_remotely_backed_up_not_bytewise_workspace_clone",
   "git": {
     "repo": "https://github.com/Freddie1946/myr1.git",
@@ -11,10 +11,10 @@
     "repo_type": "dataset",
     "repo_id": "Freddie1946/PathVLM-R1-Codex-Private-Snapshots",
     "private": true,
-    "revision": "a7b576e8450bc676ec93cc51db6ae592b9493d47",
-    "prefix": "snapshots/20260815T100317Z",
-    "archive_bytes": 175178109,
-    "archive_sha256": "d10f7b3e72c2f7a75770b5d283efc2c3cc9209c002faa1c9917cb305f2198ee9",
+    "revision": "965d3e14558aa019861092f0c1b7e23612a91eaa",
+    "prefix": "snapshots/20260815T103110Z",
+    "archive_bytes": 175531937,
+    "archive_sha256": "1260af7dc0063b5035e901733dd15a170120d1c902d355db45591dbf8ce896a7",
     "credentials_included": false
   },
   "results": [
@@ -37,7 +37,7 @@
       "repo_type": "dataset",
       "repo_id": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
       "visibility": "public_manual_gated",
-      "revision": "2c90a34185c383054acebb80336201e99fbc96fd",
+      "revision": "0d4c90e2aebb7ee197e172c9fa83be7a854b09b0",
       "prefix": "increments/20260815_bilingual_expert_review_v1"
     }
   ],
