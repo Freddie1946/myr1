@@ -2,6 +2,7 @@
 
 Final non-human closure and post-collection human-analysis contract:
 
+0. `20260815_HUMAN_REVIEW_DISTRIBUTION_AND_ANALYSIS_PATHS.md`
 0. `20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md`
 0. `20260815_human_review_packet_instructions.md`
 0. `QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md`

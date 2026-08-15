@@ -221,6 +221,7 @@ python3 scripts/import_expert_reward_exports.py /path/to/returned/*.zip \
 ```
 
 专家结果与训练期 GPT-4o、Claude、ROI 删除对照及 Stage2/Stage3 盲评的具体比较关系见
+`docs/20260815_HUMAN_REVIEW_DISTRIBUTION_AND_ANALYSIS_PATHS.md` 和
 `docs/20260815_human_review_packet_instructions.md`。
 
 完整模型仓库、固定 revision、大小、第三方数据来源和许可证边界见权威恢复指南。新 Codex应先列出
