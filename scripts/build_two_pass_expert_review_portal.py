@@ -16,7 +16,7 @@ from generate_bilingual_expert_review_translations import source_records
 
 STYLE = """body{font-family:system-ui,sans-serif;max-width:1380px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#202124}
 table{border-collapse:collapse;width:100%}th,td{border:1px solid #aaa;padding:.45rem;vertical-align:top}pre{white-space:pre-wrap;background:#f6f6f6;padding:1rem}
-.warning{background:#fff2cc;border-left:5px solid #d49b00;padding:1rem}.ref{background:#eef6ff;border-left:5px solid #3977b7;padding:1rem}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem}a{color:#1457a6}.nav{display:flex;justify-content:space-between;gap:1rem;position:sticky;top:0;background:white;padding:.7rem 0;z-index:2}.panes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem}.panes iframe{width:100%;height:900px;border:1px solid #999}@media(max-width:900px){.panes{grid-template-columns:1fr}}"""
+.warning{background:#fff2cc;border-left:5px solid #d49b00;padding:1rem}.ref{background:#eef6ff;border-left:5px solid #3977b7;padding:1rem}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem}a{color:#1457a6}.nav{display:flex;justify-content:space-between;gap:1rem;position:sticky;top:0;background:white;padding:.7rem 0;z-index:2}.panes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem}.panes iframe{width:100%;height:900px;border:1px solid #999}.event-card{border:1px solid #bbb;border-radius:8px;padding:1rem;margin:.8rem 0}.choices{display:flex;gap:1.5rem;margin:.7rem 0}.choices label{font-size:1.1rem}.score-box{background:#eef9ef;border-left:5px solid #3a8b46;padding:1rem;margin:1rem 0}button{padding:.7rem 1.2rem;font-size:1rem;cursor:pointer}input[type=text]{padding:.5rem;min-width:260px}.save-status{font-weight:600;margin-left:1rem}@media(max-width:900px){.panes{grid-template-columns:1fr}}"""
 
 REWARD_FIELDS = {
     "image_feature_analysis_present": ("包含图像特征分析", "Image-feature analysis present", "回答指出图像中可见的具体特征，并用于支持判断；仅写泛泛的“图像异常”不够。"),
@@ -32,6 +32,15 @@ REWARD_FIELDS = {
     "reference_answer_ambiguous_or_noisy": ("参考答案含歧义或噪声", "Reference answer ambiguous or noisy", "数据集参考答案本身可能不唯一、不充分或错误；该项不进入六事件奖励。"),
     "reviewer_confidence_1_to_5": ("评审信心（1–5）", "Reviewer confidence (1–5)", "1=非常不确定；3=中等；5=非常确定。"),
 }
+
+CORE_REWARD_FIELDS = (
+    "image_feature_analysis_present",
+    "option_elimination_present",
+    "medical_knowledge_support_present",
+    "histological_definition_error",
+    "logical_contradiction",
+    "outdated_or_incorrect_pathology_criterion",
+)
 
 JUDGE_FIELDS = {
     "r_acc": ("推理对答案的支持度", "Reasoning support for answer"),
@@ -188,16 +197,20 @@ def build_generation(root: Path, answer_key_path: Path, claude_path: Path, gemin
 
 def assisted_rubric(task: str) -> str:
     if task == "reward":
-        field_rows = "".join(f"<tr><th>{html.escape(zh)} / {html.escape(en)}</th><td>{html.escape(explanation)}</td></tr>" for zh, en, explanation in REWARD_FIELDS.values())
+        field_rows = "".join(
+            f"<tr><th>{html.escape(REWARD_FIELDS[field][0])} / {html.escape(REWARD_FIELDS[field][1])}</th>"
+            f"<td>{html.escape(REWARD_FIELDS[field][2])}</td></tr>"
+            for field in CORE_REWARD_FIELDS
+        )
         return f'''<h2>与训练奖励一致的评分规则 / Scoring rubric aligned with the training reward</h2>
-<p>只对六个奖励事件作布尔判断（是/True、否/False、不确定/Uncertain）。Only the six reward events enter the process-reward formula.</p>
+<p><strong>人工只填写下面六个布尔值（是/True 或否/False）。</strong>这六项与训练期 GPT-4o Judge 的事件 schema 完全一致；页面不再要求任何 1–5 分、幻觉、参考答案噪声或总体质量分。Experts enter exactly the same six booleans as the training-time Judge.</p>
 <ol><li>正向完整性事件 / Positive integrity events：图像特征分析 / image-feature analysis、选项排除 / option elimination、医学知识支持 / medical-knowledge support；</li>
 <li>负向错误事件 / Error events：组织学定义错误 / histological-definition error、逻辑矛盾 / logical contradiction、错误或过时病理标准 / incorrect or outdated criterion。</li></ol>
 <p>令 <code>m</code> 为三个正向事件中缺失数，<code>e</code> 为三个负向事件中出现数。Let <code>m</code> be the number of missing positive events and <code>e</code> the number of present error events:</p>
 <pre>S_integrity = max(0, 1 - 0.4*m)
 S_knowledge = max(0, 1 - 0.4*e)
 R_process = (S_integrity + S_knowledge) / 2</pre>
-<p>每个子量表的 0/1/2/3 个失败对应 1.0/0.6/0.2/0.0。Zero/one/two/three failures map to 1.0/0.6/0.2/0.0. 幻觉和参考答案歧义是补充审计项，不进入公式 / Hallucination and reference ambiguity are supplemental audit fields.</p><table><tr><th>指标 / Field</th><th>含义与评分锚点 / Meaning and anchors</th></tr>{field_rows}</table>'''
+<p>每个子量表的 0/1/2/3 个失败对应 1.0/0.6/0.2/0.0。Zero/one/two/three failures map to 1.0/0.6/0.2/0.0.</p><table><tr><th>指标 / Field</th><th>含义 / Meaning</th></tr>{field_rows}</table>'''
     if task == "roi":
         return '''<h2>ROI 评分规则 / ROI scoring rubric</h2>
 <p>整题填写 / Case-level fields：参考答案有效性 / reference validity（是/yes、部分/partial、否/no）、总体病理相关性 / overall relevance 1–5、覆盖度 / coverage（全部/all、大部分/most、部分/some、无/none）、特异性 / specificity 1–5、是否漏标 / missing region、是否需要修框 / edit required、信心 / confidence 1–5。逐框填写 / Per-region fields：诊断相关性 / diagnostic relevance（yes/partial/no）和边界质量 / boundary quality 1–5。</p>
@@ -214,6 +227,94 @@ R_process = (S_integrity + S_knowledge) / 2</pre>
     )
     return f'''<h2>生成质量评分规则 / Generation-quality scoring rubric</h2><p>先给匿名回答 A/B/平局（Tie）偏好及信心 1–5；再分别给 A/B 的医学事实正确性 / medical factuality、视觉依据充分性 / visual grounding、推理质量 / reasoning quality 各 1–5。不能因回答更长而加分，也不能只看最终选项 / Do not reward verbosity or judge only the final option. 两者同样好或同样差应选 Tie / Choose Tie when equally good or equally poor.</p>
 <h3>外部 Judge 结构化参考 / Structured external-Judge reference</h3><table><tr><th>指标 / Metric</th><th>取值和含义 / Range and meaning</th></tr>{judge_rows}</table><p><code>r_acc</code> 专看推理是否支持最终答案；<code>k_acc</code> 专看医学知识是否正确。其余四项依次衡量严谨性、专业性、清晰度和简洁性。These fields separately score answer-supporting reasoning, medical knowledge, rigor, professionalism, clarity, and conciseness.</p>'''
+
+
+def process_score(events: dict[str, bool]) -> float:
+    missing = sum(not events[field] for field in CORE_REWARD_FIELDS[:3])
+    errors = sum(events[field] for field in CORE_REWARD_FIELDS[3:])
+    return (max(0.0, 1.0 - 0.4 * missing) + max(0.0, 1.0 - 0.4 * errors)) / 2.0
+
+
+def reward_click_form(case_id: str, external_reference: dict[str, Any]) -> str:
+    cards = []
+    for field in CORE_REWARD_FIELDS:
+        zh, en, explanation = REWARD_FIELDS[field]
+        external = bool(external_reference[field])
+        external_label = "是 / True" if external else "否 / False"
+        cards.append(f'''<div class="event-card" data-field="{html.escape(field)}">
+<h3>{html.escape(zh)} / {html.escape(en)}</h3><p>{html.escape(explanation)}</p>
+<div class="choices"><label><input type="radio" name="{html.escape(field)}" value="true"> 是 / True</label><label><input type="radio" name="{html.escape(field)}" value="false"> 否 / False</label></div>
+<div class="ref"><strong>Claude Sonnet 4.6 外部参考 / External reference：</strong>{external_label}</div></div>''')
+    fields_json = json.dumps(list(CORE_REWARD_FIELDS), ensure_ascii=False)
+    external_json = json.dumps({field: bool(external_reference[field]) for field in CORE_REWARD_FIELDS})
+    external_score = process_score({field: bool(external_reference[field]) for field in CORE_REWARD_FIELDS})
+    script = f'''<script>
+const CASE_ID = {json.dumps(case_id)};
+const FIELDS = {fields_json};
+const EXTERNAL_EVENTS = {external_json};
+const EXTERNAL_SCORE = {external_score:.12g};
+function calculateScore(values) {{
+  const missing = FIELDS.slice(0,3).filter(field => !values[field]).length;
+  const errors = FIELDS.slice(3).filter(field => values[field]).length;
+  return (Math.max(0, 1 - 0.4 * missing) + Math.max(0, 1 - 0.4 * errors)) / 2;
+}}
+function selectedEvents(requireAll=true) {{
+  const values = {{}};
+  for (const field of FIELDS) {{
+    const selected = document.querySelector(`input[name="${{field}}"]:checked`);
+    if (!selected) {{ if (requireAll) throw new Error(`尚未填写：${{field}}`); else return null; }}
+    values[field] = selected.value === 'true';
+  }}
+  return values;
+}}
+function updateScore() {{
+  const values = selectedEvents(false);
+  const human = values === null ? null : calculateScore(values);
+  document.getElementById('human-score').textContent = human === null ? '待六项填写完整' : human.toFixed(2);
+  document.getElementById('external-score').textContent = EXTERNAL_SCORE.toFixed(2);
+  document.getElementById('score-difference').textContent = human === null ? '待计算' : (human - EXTERNAL_SCORE).toFixed(2);
+}}
+async function loadSavedRating() {{
+  const reviewer = document.getElementById('reviewer-id').value.trim();
+  if (!reviewer) return;
+  localStorage.setItem('pathvlm_reviewer_id', reviewer);
+  const response = await fetch(`/api/reward-rating?reviewer_id=${{encodeURIComponent(reviewer)}}&case_id=${{encodeURIComponent(CASE_ID)}}`);
+  if (response.status === 404) {{ document.getElementById('save-status').textContent = '本题尚未保存 / Not saved yet'; return; }}
+  if (!response.ok) throw new Error(await response.text());
+  const record = await response.json();
+  for (const [field, value] of Object.entries(record.events)) {{
+    const radio = document.querySelector(`input[name="${{field}}"][value="${{value ? 'true' : 'false'}}"]`);
+    if (radio) radio.checked = true;
+  }}
+  document.getElementById('reviewer-notes').value = record.reviewer_notes || '';
+  document.getElementById('save-status').textContent = `已恢复保存记录：${{record.saved_at}}`;
+  updateScore();
+}}
+async function saveRating() {{
+  const reviewer = document.getElementById('reviewer-id').value.trim();
+  if (!reviewer) {{ alert('请先填写评审者编号 / Enter reviewer ID'); return; }}
+  let events;
+  try {{ events = selectedEvents(true); }} catch (error) {{ alert(error.message); return; }}
+  localStorage.setItem('pathvlm_reviewer_id', reviewer);
+  const response = await fetch('/api/reward-rating', {{method:'POST', headers:{{'Content-Type':'application/json'}}, body:JSON.stringify({{reviewer_id:reviewer,case_id:CASE_ID,events:events,reviewer_notes:document.getElementById('reviewer-notes').value}})}});
+  if (!response.ok) {{ alert(`保存失败 / Save failed: ${{await response.text()}}`); return; }}
+  const result = await response.json();
+  document.getElementById('save-status').textContent = `已写入文件 / Saved：${{result.saved_at}}；当前完成 ${{result.completed_cases}}/60`;
+  updateScore();
+}}
+window.addEventListener('DOMContentLoaded', () => {{
+  document.getElementById('reviewer-id').value = localStorage.getItem('pathvlm_reviewer_id') || '';
+  document.querySelectorAll('input[type=radio]').forEach(node => node.addEventListener('change', updateScore));
+  updateScore();
+  if (document.getElementById('reviewer-id').value) loadSavedRating().catch(error => document.getElementById('save-status').textContent = error.message);
+}});
+</script>'''
+    return f'''<h2>六事件直接评分与保存 / Direct six-event rating</h2>
+<p><label>评审者编号 / Reviewer ID：<input id="reviewer-id" type="text" maxlength="64" placeholder="例如 pathologist_A"></label> <button type="button" onclick="loadSavedRating()">载入已保存评分 / Load</button></p>
+{''.join(cards)}
+<p><label>可选备注（不参与奖励）/ Optional notes (not scored)：<br><textarea id="reviewer-notes" rows="3" style="width:100%" maxlength="2000"></textarea></label></p>
+<div class="score-box"><strong>人工过程分 / Human process score：</strong><span id="human-score"></span><br><strong>外部 Claude 过程分 / External Claude process score：</strong><span id="external-score"></span><br><strong>人工−外部模型分差 / Human minus external difference：</strong><span id="score-difference"></span></div>
+<button type="button" onclick="saveRating()">保存本题评分到文件 / Save this rating</button><span id="save-status" class="save-status"></span>{script}'''
 
 
 def load_translation_maps(directory: Path) -> dict[str, dict[str, dict[str, str]]]:
@@ -265,13 +366,12 @@ def build_bilingual_views(root: Path, translations_dir: Path) -> None:
         (views / "cases/reward" / f"{case_id}.html").write_text(page(f"{case_id} 病例 / Case", body), encoding="utf-8")
         reference = reward_refs[case_id]["reference"]
         rows = []
-        for field, value in reference.items():
-            if field == "overall_reason":
-                continue
+        for field in CORE_REWARD_FIELDS:
+            value = reference[field]
             zh_label, en_label, explanation = REWARD_FIELDS[field]
             display = boolean_label(value) if isinstance(value, bool) or value == "uncertain" else str(value)
             rows.append(f"<tr><th>{html.escape(zh_label)} / {html.escape(en_label)}</th><td>{html.escape(display)}</td><td>{html.escape(explanation)}</td></tr>")
-        ref_body = '<div class="warning">Claude Sonnet 4.6 外部参考 / External reference；不是病理专家真值 / not pathologist ground truth.</div><table><tr><th>指标 / Field</th><th>参考值 / Value</th><th>含义 / Meaning</th></tr>' + "".join(rows) + "</table>" + bilingual_text("总体理由", "Overall reason", texts["external_overall_reason"], zh["external_overall_reason"])
+        ref_body = '<div class="warning">Claude Sonnet 4.6 外部参考 / External reference；不是病理专家真值 / not pathologist ground truth. 仅六事件进入奖励；总体理由只帮助理解，不是评分项 / Only the six events enter the reward; the overall reason is explanatory only.</div><table><tr><th>指标 / Field</th><th>参考值 / Value</th><th>含义 / Meaning</th></tr>' + "".join(rows) + "</table>" + bilingual_text("补充参考理由（不评分）", "Explanatory rationale (not rated)", texts["external_overall_reason"], zh["external_overall_reason"])
         (views / "references/reward" / f"{case_id}.html").write_text(page(f"{case_id} 外部参考 / External reference", ref_body), encoding="utf-8")
 
     effective = json.loads(Path("/home/dataset-assist-0/czy/wjy/myr1/protocol/effective_interpretability_panel_20case_20260814.json").read_text(encoding="utf-8"))
@@ -315,6 +415,10 @@ def build_bilingual_views(root: Path, translations_dir: Path) -> None:
 def build_assisted_review(root: Path, translations_dir: Path | None = None) -> None:
     if translations_dir is not None:
         build_bilingual_views(root, translations_dir)
+    reward_references = {
+        row["case_id"]: row["reference"]
+        for row in load_jsonl(Path("/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/external_reference_reward_review_20260815/references.jsonl"))
+    }
     assisted = root / "assisted_review_with_external_references"
     assisted.mkdir(exist_ok=True)
     specs = {
@@ -350,12 +454,15 @@ def build_assisted_review(root: Path, translations_dir: Path | None = None) -> N
             previous_link = f'<a href="{ids[position - 1]}.html">← 上一题</a>' if position else '<span>← 上一题</span>'
             next_link = f'<a href="{ids[position + 1]}.html">下一题 →</a>' if position + 1 < len(ids) else '<span>下一题 →</span>'
             nav = f'<div class="nav">{previous_link}<a href="index.html">题目目录</a>{next_link}</div>'
+            direct_form = reward_click_form(case_id, reward_references[case_id]) if task == "reward" else ""
+            csv_link = "" if task == "reward" else f'<p><a href="{spec["csv"]}">下载该任务评分 CSV 模板</a></p>'
             body = f'''{nav}<div class="warning"><strong>外部参考辅助模式：</strong>候选模型/训练阶段仍盲化，但专家从一开始就能看到外部模型意见。因此本入口结果必须标为 reference-assisted，不能用于“独立专家评分”主统计。</div>
-{assisted_rubric(task)}<p><a href="{spec['csv']}">下载该任务评分 CSV 模板</a></p>
+{assisted_rubric(task)}{direct_form}{csv_link}
 <div class="panes"><section><h2>病例与待评分内容 / Case and response</h2><iframe src="{spec['blind'](case_id)}"></iframe></section><section><h2>外部模型参考意见 / External-model reference</h2><iframe src="{spec['reference'](case_id)}"></iframe></section></div>{nav}'''
             (task_root / f"{case_id}.html").write_text(page(f"{spec['title']}：{case_id}", body), encoding="utf-8")
             links.append(f'<a href="{case_id}.html">{case_id}</a>')
-        index_body = f'''<p><a href="../index.html">返回辅助评审总目录</a></p><div class="warning">本任务含外部参考，结果属于 reference-assisted expert review。</div>{assisted_rubric(task)}<p><a href="{spec['csv']}">下载评分 CSV 模板</a></p><div class="grid">{"".join(links)}</div>'''
+        csv_link = "" if task == "reward" else f'<p><a href="{spec["csv"]}">下载评分 CSV 模板</a></p>'
+        index_body = f'''<p><a href="../index.html">返回辅助评审总目录</a></p><div class="warning">本任务含外部参考，结果属于 reference-assisted expert review。奖励任务的六事件可在每题页面直接点击并保存到本地文件。</div>{assisted_rubric(task)}{csv_link}<div class="grid">{"".join(links)}</div>'''
         (task_root / "index.html").write_text(page(spec["title"], index_body), encoding="utf-8")
         root_links.append(f'<li><a href="{task}/index.html">{spec["title"]}</a></li>')
     assisted_body = '<div class="warning">此入口直接显示外部参考，适合辅助作答或仲裁，不适合作为独立盲评主统计。</div><ol>' + "".join(root_links) + "</ol>"
@@ -366,6 +473,27 @@ def write_root_index(root: Path) -> None:
     body = '''<div class="warning"><strong>请选择评审模式：</strong>独立盲评用于论文主要人工统计；辅助模式从第一题开始显示外部意见，必须单独标注为 reference-assisted。</div>
 <ol><li><a href="first_pass.html">独立盲评入口（不显示外部参考）</a></li><li><a href="assisted_review_with_external_references/index.html">外部参考辅助评审入口（含上一题/下一题）</a></li><li><a href="second_pass_external_references/reward_reference_after_first_pass/index.html">原两阶段：奖励参考</a></li><li><a href="second_pass_external_references/roi_reference_after_first_pass/index.html">原两阶段：ROI 参考</a></li><li><a href="second_pass_external_references/generation_reference_after_first_pass/index.html">原两阶段：生成质量参考</a></li></ol>'''
     (root / "index.html").write_text(page("PathVLM-R1 专家复核入口", body), encoding="utf-8")
+
+
+def write_portable_server(root: Path) -> None:
+    source = Path(__file__).with_name("serve_expert_review_app.py")
+    if not source.is_file():
+        raise FileNotFoundError(source)
+    bundled = root / "serve_expert_review_app.py"
+    bundled.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+    bundled.chmod(0o755)
+    launcher = root / "serve_review.sh"
+    launcher.write_text('''#!/usr/bin/env bash
+set -euo pipefail
+PORT="${1:-8765}"
+ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+echo "Portal: http://127.0.0.1:${PORT}/"
+echo "Ratings: ${ROOT_DIR}/expert_submissions"
+exec python3 "${ROOT_DIR}/serve_expert_review_app.py" \\
+  --root "${ROOT_DIR}" --output "${ROOT_DIR}/expert_submissions" \\
+  --host 127.0.0.1 --port "${PORT}"
+''', encoding="utf-8")
+    launcher.chmod(0o755)
 
 
 def main() -> None:
@@ -388,6 +516,7 @@ def main() -> None:
             raise FileExistsError(args.output)
         build_assisted_review(args.output, args.translations_dir)
         write_root_index(args.output)
+        write_portable_server(args.output)
         print(json.dumps({"status": "augmented", "output": str(args.output.resolve())}, ensure_ascii=False))
         return
     args.output.mkdir(parents=True)
@@ -413,6 +542,7 @@ def main() -> None:
     )
     build_assisted_review(args.output, args.translations_dir)
     write_root_index(args.output)
+    write_portable_server(args.output)
     print(json.dumps({"status": "completed", "output": str(args.output.resolve())}, ensure_ascii=False))
 
 

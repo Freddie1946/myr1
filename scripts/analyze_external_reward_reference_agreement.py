@@ -98,14 +98,17 @@ def percentile(values: list[float], q: float) -> float:
 
 def bootstrap(cases: list[dict[str, Any]], iterations: int, seed: int) -> dict[str, list[float]]:
     rng = random.Random(seed)
-    values = {"micro_event_agreement": [], "reward_mae": [], "reward_spearman": []}
+    values = {"micro_event_agreement": [], "mean_signed_claude_minus_gpt": [], "reward_mae": [], "reward_rmse": [], "reward_spearman": []}
     for _ in range(iterations):
         sample = [cases[rng.randrange(len(cases))] for _ in cases]
         event_pairs = [(row["gpt"][event], row["claude"][event]) for row in sample for event in EVENTS]
         values["micro_event_agreement"].append(mean(a == b for a, b in event_pairs))
         gpt_rewards = [process_reward(row["gpt"]) for row in sample]
         claude_rewards = [process_reward(row["claude"]) for row in sample]
-        values["reward_mae"].append(mean(abs(a - b) for a, b in zip(gpt_rewards, claude_rewards)))
+        differences = [b - a for a, b in zip(gpt_rewards, claude_rewards)]
+        values["mean_signed_claude_minus_gpt"].append(mean(differences))
+        values["reward_mae"].append(mean(abs(value) for value in differences))
+        values["reward_rmse"].append(math.sqrt(mean(value * value for value in differences)))
         rho = spearman(gpt_rewards, claude_rewards)
         if rho is not None:
             values["reward_spearman"].append(rho)
@@ -186,8 +189,11 @@ def main() -> None:
             "gpt_process_reward_mean": mean(gpt_rewards),
             "claude_process_reward_mean": mean(claude_rewards),
             "mean_signed_claude_minus_gpt": mean(b - a for a, b in zip(gpt_rewards, claude_rewards)),
+            "mean_signed_claude_minus_gpt_cluster_bootstrap_95ci": ci["mean_signed_claude_minus_gpt"],
             "reward_mae": mean(abs(a - b) for a, b in zip(gpt_rewards, claude_rewards)),
             "reward_mae_cluster_bootstrap_95ci": ci["reward_mae"],
+            "reward_rmse": math.sqrt(mean((a - b) ** 2 for a, b in zip(gpt_rewards, claude_rewards))),
+            "reward_rmse_cluster_bootstrap_95ci": ci["reward_rmse"],
             "reward_exact_agreement": mean(abs(a - b) < 1e-12 for a, b in zip(gpt_rewards, claude_rewards)),
             "reward_within_0p2": mean(abs(a - b) <= 0.2000001 for a, b in zip(gpt_rewards, claude_rewards)),
             "reward_pearson": correlation(gpt_rewards, claude_rewards),
@@ -200,8 +206,14 @@ def main() -> None:
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_json.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     lines = [
-        "# GPT-4o 训练奖励与 Claude 外部参考一致性", "",
-        "> 这是机器—机器一致性，不是专家验证。60 例包含 36 例 representative 与 24 例 challenge，不能当作总体随机样本。", "",
+        "# GPT-4o 训练奖励与 Claude 外部参考的最终过程分差", "",
+        "> 主终点是用同一 0.4 公式换算后的逐病例过程分差；六事件一致率只作辅助定位。这是机器—机器比较，不是专家验证。60 例包含 36 例 representative 与 24 例 challenge，不能当作总体随机样本。", "",
+        "## 最终过程分差（主结果）", "",
+        f"- GPT-4o 平均过程分：{payload['overall']['gpt_process_reward_mean']:.3f}；Claude：{payload['overall']['claude_process_reward_mean']:.3f}。",
+        f"- Claude−GPT-4o 平均有符号分差：{payload['overall']['mean_signed_claude_minus_gpt']:+.3f}，病例 bootstrap 95% CI [{ci['mean_signed_claude_minus_gpt'][0]:+.3f}, {ci['mean_signed_claude_minus_gpt'][1]:+.3f}]。",
+        f"- MAE：{payload['overall']['reward_mae']:.3f}，95% CI [{ci['reward_mae'][0]:.3f}, {ci['reward_mae'][1]:.3f}]；RMSE：{payload['overall']['reward_rmse']:.3f}。",
+        f"- 最终过程分完全相同：{payload['overall']['reward_exact_agreement']:.1%}；绝对分差不超过 0.2：{payload['overall']['reward_within_0p2']:.1%}。",
+        "", "## 六事件分歧定位（辅助结果）", "",
         "| 六事件 | Agreement | Cohen κ | GPT positive | Claude positive | Claude-vs-GPT F1 |", "|---|---:|---:|---:|---:|---:|",
     ]
     for event in EVENTS:
@@ -210,7 +222,7 @@ def main() -> None:
         f1_text = "NA" if row["claude_vs_gpt_positive_f1"] is None else f"{row['claude_vs_gpt_positive_f1']:.3f}"
         lines.append(f"| {row['label']} | {row['agreement']:.1%} | {kappa_text} | {row['gpt_positive']} | {row['claude_positive']} | {f1_text} |")
     overall = payload["overall"]
-    lines += ["", "## 汇总", "", f"- 360 个事件判断的 micro agreement：{overall['micro_event_agreement']:.1%}，case-cluster bootstrap 95% CI [{ci['micro_event_agreement'][0]:.1%}, {ci['micro_event_agreement'][1]:.1%}]；micro κ={overall['micro_cohen_kappa']:.3f}。", f"- 同一 0.4 公式下：GPT-4o 平均奖励 {overall['gpt_process_reward_mean']:.3f}，Claude {overall['claude_process_reward_mean']:.3f}，Claude 平均低 {abs(overall['mean_signed_claude_minus_gpt']):.3f}。", f"- reward MAE={overall['reward_mae']:.3f}；完全相同 {overall['reward_exact_agreement']:.1%}；差值不超过 0.2 的病例 {overall['reward_within_0p2']:.1%}。", f"- reward Spearman ρ={overall['reward_spearman']:.3f}，bootstrap 95% CI [{ci['reward_spearman'][0]:.3f}, {ci['reward_spearman'][1]:.3f}]。", f"- representative：agreement {group_results['representative']['micro_event_agreement']:.1%}、κ={group_results['representative']['micro_cohen_kappa']:.3f}；challenge：agreement {group_results['challenge']['micro_event_agreement']:.1%}、κ={group_results['challenge']['micro_cohen_kappa']:.3f}。", "", "## 解释边界", "", "整体属于中等一致性，而不是高度可互换。图像分析事件一致性高；逻辑矛盾与错误/过时标准的阳性率差异很大，显示 rubric 边界仍依赖 Judge。真正回应审稿人仍需使用第一阶段病理专家评分。", ""]
+    lines += ["", f"- 360 个事件判断的 micro agreement：{overall['micro_event_agreement']:.1%}，case-cluster bootstrap 95% CI [{ci['micro_event_agreement'][0]:.1%}, {ci['micro_event_agreement'][1]:.1%}]；micro κ={overall['micro_cohen_kappa']:.3f}。", f"- reward Spearman ρ={overall['reward_spearman']:.3f}，bootstrap 95% CI [{ci['reward_spearman'][0]:.3f}, {ci['reward_spearman'][1]:.3f}]。", f"- representative：agreement {group_results['representative']['micro_event_agreement']:.1%}、κ={group_results['representative']['micro_cohen_kappa']:.3f}；challenge：agreement {group_results['challenge']['micro_event_agreement']:.1%}、κ={group_results['challenge']['micro_cohen_kappa']:.3f}。", "", "## 解释边界", "", "最终分差显示 Claude 整体给分略低，但病例级差异不可忽略；事件表只用于定位差异来自哪些 rubric 边界。该结果仍是机器—机器比较，不是病理专家验证。", ""]
     args.output_md.write_text("\n".join(lines), encoding="utf-8")
     print(json.dumps(payload["overall"], ensure_ascii=False, indent=2))
 

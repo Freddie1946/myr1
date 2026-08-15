@@ -116,13 +116,19 @@ bash scripts/serve_two_pass_expert_review.sh 8765
 - `独立盲评入口`：不显示外部参考，用于论文主要人工统计；
 - `外部参考辅助评审入口`：每题左右并列显示病例/待评内容与外部模型意见，并提供上一题、题目目录、下一题导航。
 
-辅助入口继续隐藏候选回答的模型与训练阶段身份，但不再对外部参考盲化，因此结果必须标为 `reference-assisted expert review`。奖励任务页面直接显示与训练一致的六事件规则：三个正向事件缺失数为 `m`，三个错误事件出现数为 `e`，`S_integrity=max(0,1-0.4m)`、`S_knowledge=max(0,1-0.4e)`、`R_process=(S_integrity+S_knowledge)/2`。幻觉与参考答案歧义仍作为补充审计字段，不进入六事件公式。
+辅助入口继续隐藏候选回答的模型与训练阶段身份，但不再对外部参考盲化，因此结果必须标为 `reference-assisted expert review`。奖励任务页面现已严格收缩为训练 Judge 的六个布尔事件，不再要求 1–5 分、幻觉、参考答案噪声或总体质量分。每个事件只有 `True/False` 两个可点击选项，其下直接显示 Claude Sonnet 4.6 的对应 `True/False` 参考；三个正向事件缺失数为 `m`，三个错误事件出现数为 `e`，`S_integrity=max(0,1-0.4m)`、`S_knowledge=max(0,1-0.4e)`、`R_process=(S_integrity+S_knowledge)/2`。
+
+奖励页必须通过 `scripts/serve_two_pass_expert_review.sh` 启动，不能再用普通 `python -m http.server`，因为只有应用服务器才能接收点击结果。专家先填写页面顶部的 reviewer ID，再逐项点击并按“保存本题评分”；服务端只接受精确的六个布尔字段，以原子替换方式写入：
+
+`/home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/expert_submissions_20260815/<reviewer_id>/`
+
+每题保存为一个 JSON，同时刷新 `reward_six_event_ratings.csv`。刷新页面或更换病例后可按 reviewer ID 恢复既有评分。网页即时显示人工过程分、Claude 参考过程分以及逐题 `人工−Claude` 分差。
 
 辅助入口已将评分规则、题干、选项、参考答案、待评分回答、外部模型理由和区域特征全部改为中英文对照。中文用于降低阅读负担，英文原文同时保留并作为语义冲突时的权威版本；`<think>`、`<answer>` 和 A/B/C/D 标签经过自动完整性检查，不能在翻译中增删。评分 CSV 的机器字段名仍保持英文，以确保汇总脚本兼容；页面内提供逐字段中文释义。
 
 ## 外部参考中的结构化指标是什么意思
 
-奖励复核的六个布尔事件中，前三项检查回答是否实际完成了图像特征分析、选项排除和医学知识支持；后三项检查是否存在组织学定义错误、逻辑矛盾和错误/过时的病理标准。`true` 表示该正向成分确实存在，或该负向错误确实发生；`false` 表示不存在；无法可靠判断写 `uncertain`。病理推理正确性、图像依据充分性、逻辑一致性和评审信心均为 1–5 分：1 最差/最低、3 为中间水平、5 最好/最高。幻觉和参考答案歧义只作补充审计，不进入奖励公式。
+奖励复核的六个布尔事件中，前三项检查回答是否实际完成了图像特征分析、选项排除和医学知识支持；后三项检查是否存在组织学定义错误、逻辑矛盾和错误/过时的病理标准。`true` 表示该正向成分确实存在，或该负向错误确实发生；`false` 表示不存在。当前直接点击入口为了与训练 schema 完全一致，不提供 `uncertain` 或任何额外质量分；确实无法判断时可暂不保存并在病例讨论后再完成。
 
 ROI 参考中的 `box=[x1,y1,x2,y2]` 是将宽高归一化到 0–1000 后的坐标，不是原图像素；`feature` 是框内病理征象；`role` 表示该征象支持参考答案、反驳干扰项或只提供背景；`importance∈[0,1]` 是外部模型估计的本题相关重要度；`confidence∈[0,1]` 是模型对整份标注的自评信心。后二者都不是校准概率，也不是专家一致率。
 
@@ -132,4 +138,18 @@ ROI 参考中的 `box=[x1,y1,x2,y2]` 是将宽高归一化到 0–1000 后的坐
 
 在冻结的 60 例面板上，以 Claude Sonnet 4.6 的结构化意见直接代替专家评分，与训练期 GPT-4o 六事件记录比较：360 个事件的 micro agreement 为 79.72%（病例聚类 bootstrap 95% CI 75.28%–83.89%），Cohen's kappa 为 0.566；由六事件换算的过程奖励精确相同率为 38.33%，85.00% 的病例差值不超过 0.2，奖励 Spearman 相关为 0.522（95% CI 0.308–0.698）。Claude 的平均过程奖励为 0.7067，GPT-4o 为 0.7750，平均差为 -0.0683。
 
-因此当前只能表述为“总体中等一致，足以作为辅助参考，但不能互换”。差异主要集中在逻辑矛盾（Claude 更常判为存在）和错误/过时病理标准（GPT-4o 更常判为存在）。该面板还人为加入了 24 个 challenge 病例，不是总体随机样本；这些数值是机器—机器一致性，不是训练奖励已经通过专家验证的证据。论文主要一致性结果仍必须使用不显示外部参考的第一阶段病理专家评分。
+因此当前只能表述为“总体中等一致，足以作为辅助参考，但不能互换”。差异主要集中在逻辑矛盾（Claude 更常判为存在）和错误/过时病理标准（GPT-4o 更常判为存在）。该面板还人为加入了 24 个 challenge 病例，不是总体随机样本；这些数值是机器—机器一致性，不是训练奖励已经通过专家验证的证据。
+
+后续人工汇总以最终过程分差为主终点，而不是六事件总体一致率：逐病例用同一 0.4 公式分别换算人工、训练期 GPT-4o 和外部 Claude 的过程分，报告平均有符号差、MAE、RMSE、精确同分率、差值不超过 0.2 的比例和病例聚类 bootstrap 95% CI；六事件 agreement 只保留为辅助定位指标。汇总命令为：
+
+```bash
+cd /home/dataset-assist-0/czy/wjy/myr1
+python3 scripts/analyze_human_reward_score_differences.py \
+  --ratings-dir /home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/expert_submissions_20260815 \
+  --gpt-key /home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/reward_agreement_60case_20260814/internal_selection_key.jsonl \
+  --claude-references /home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/external_reference_reward_review_20260815/references.jsonl \
+  --output-json /home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/expert_submissions_20260815/final_score_differences.json \
+  --output-md /home/dataset-assist-0/czy/wjy/pathvlm_revision_eval_a100/human_review/expert_submissions_20260815/final_score_differences.md
+```
+
+由于当前点击入口从评分前就显示 Claude 参考，其结果只能称为参考辅助人工复核，不能再用于声称“独立病理专家验证”。如论文需要独立专家主统计，仍应使用不显示外部参考的第一阶段入口。
