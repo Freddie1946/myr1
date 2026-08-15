@@ -12,9 +12,9 @@
 ## 0. 边界
 
 - 最新会话快照：`Freddie1946/PathVLM-R1-Codex-Private-Snapshots`
-- 固定 revision：`965d3e14558aa019861092f0c1b7e23612a91eaa`
-- prefix：`snapshots/20260815T103110Z`
-- archive SHA-256：`1260af7dc0063b5035e901733dd15a170120d1c902d355db45591dbf8ce896a7`
+- 固定 revision：`7d9a6032c02321c636dc0b07f0bb273223c9e8ec`
+- prefix：`snapshots/20260815T103534Z`
+- archive SHA-256：`1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a`
 - Git：`https://github.com/Freddie1946/myr1.git`，branch `codex/a100-stage3-eval`
 
 快照不含 HF token、API key、Codex `auth.json`、缓存或模型权重。新机器必须重新完成 HF 和 Codex
@@ -56,22 +56,22 @@ test -f docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md
 ## 3. 下载并核验最新 Codex 会话快照
 
 ```bash
-export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage/codex_20260815T103110Z"
+export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage/codex_20260815T103534Z"
 mkdir -p "$RESTORE_STAGE/download" "$RESTORE_STAGE/unpacked"
 
 hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots \
   --repo-type dataset \
-  --revision 965d3e14558aa019861092f0c1b7e23612a91eaa \
-  --include 'snapshots/20260815T103110Z/*' \
+  --revision 7d9a6032c02321c636dc0b07f0bb273223c9e8ec \
+  --include 'snapshots/20260815T103534Z/*' \
   --local-dir "$RESTORE_STAGE/download"
 
-echo '1260af7dc0063b5035e901733dd15a170120d1c902d355db45591dbf8ce896a7  snapshots/20260815T103110Z/codex_online_snapshot_20260815T103110Z.tar.gz' \
+echo '1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a  snapshots/20260815T103534Z/codex_online_snapshot_20260815T103534Z.tar.gz' \
   > "$RESTORE_STAGE/download/CHECKSUMS.sha256"
 
 cd "$RESTORE_STAGE/download"
 sha256sum -c CHECKSUMS.sha256
 
-tar -xzf snapshots/20260815T103110Z/codex_online_snapshot_20260815T103110Z.tar.gz \
+tar -xzf snapshots/20260815T103534Z/codex_online_snapshot_20260815T103534Z.tar.gz \
   -C "$RESTORE_STAGE/unpacked"
 ```
 
@@ -82,11 +82,11 @@ tar -xzf snapshots/20260815T103110Z/codex_online_snapshot_20260815T103110Z.tar.g
 不要覆盖新机器已有的 Codex home。这里使用独立目录：
 
 ```bash
-export RESTORED_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T103110Z"
+export RESTORED_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T103534Z"
 test ! -e "$RESTORED_CODEX_HOME"
 mkdir -p "$RESTORED_CODEX_HOME"
 
-cp -a "$RESTORE_STAGE/unpacked/codex_online_snapshot_20260815T103110Z/codex-home-snapshot/." \
+cp -a "$RESTORE_STAGE/unpacked/codex_online_snapshot_20260815T103534Z/codex-home-snapshot/." \
   "$RESTORED_CODEX_HOME/"
 chmod 700 "$RESTORED_CODEX_HOME"
 export CODEX_HOME="$RESTORED_CODEX_HOME"
@@ -153,7 +153,7 @@ protocol/migration_restore_inventory_20260815.json
 
 ```text
 repo: Freddie1946/PathVLM-R1-Migration-Archive-20260815
-revision: 0d4c90e2aebb7ee197e172c9fa83be7a854b09b0
+revision: ef660a6a82a931df3f0c07b7aa05c4c4041bd607
 prefix: increments/20260815_bilingual_expert_review_v1
 ```
 
@@ -201,7 +201,7 @@ hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
   --local-dir "$RESULTS_RESTORE/migration_archive"
 
 hf download Freddie1946/PathVLM-R1-Migration-Archive-20260815 \
-  --repo-type dataset --revision 0d4c90e2aebb7ee197e172c9fa83be7a854b09b0 \
+  --repo-type dataset --revision ef660a6a82a931df3f0c07b7aa05c4c4041bd607 \
   --include 'increments/20260815_bilingual_expert_review_v1/*' \
   --local-dir "$RESULTS_RESTORE/migration_archive"
 ```

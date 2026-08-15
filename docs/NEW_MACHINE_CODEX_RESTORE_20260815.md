@@ -72,34 +72,34 @@ protocol/migration_restore_inventory_20260815.json
 
 ```text
 Freddie1946/PathVLM-R1-Codex-Private-Snapshots
-revision: 965d3e14558aa019861092f0c1b7e23612a91eaa
-prefix: snapshots/20260815T103110Z
-archive SHA-256: 1260af7dc0063b5035e901733dd15a170120d1c902d355db45591dbf8ce896a7
+revision: 7d9a6032c02321c636dc0b07f0bb273223c9e8ec
+prefix: snapshots/20260815T103534Z
+archive SHA-256: 1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a
 ```
 
 下载与恢复到隔离的 `CODEX_HOME`：
 
 ```bash
 export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage"
-export NEW_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T103110Z"
+export NEW_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T103534Z"
 mkdir -p "$RESTORE_STAGE/codex"
 
 hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots \
   --repo-type dataset \
-  --revision 965d3e14558aa019861092f0c1b7e23612a91eaa \
-  --include 'snapshots/20260815T103110Z/*' \
+  --revision 7d9a6032c02321c636dc0b07f0bb273223c9e8ec \
+  --include 'snapshots/20260815T103534Z/*' \
   --local-dir "$RESTORE_STAGE/codex"
 
-sha256sum "$RESTORE_STAGE/codex/snapshots/20260815T103110Z/"\
-"codex_online_snapshot_20260815T103110Z.tar.gz"
+sha256sum "$RESTORE_STAGE/codex/snapshots/20260815T103534Z/"\
+"codex_online_snapshot_20260815T103534Z.tar.gz"
 
 mkdir -p "$RESTORE_STAGE/codex-unpacked"
-tar -xzf "$RESTORE_STAGE/codex/snapshots/20260815T103110Z/"\
-"codex_online_snapshot_20260815T103110Z.tar.gz" \
+tar -xzf "$RESTORE_STAGE/codex/snapshots/20260815T103534Z/"\
+"codex_online_snapshot_20260815T103534Z.tar.gz" \
   -C "$RESTORE_STAGE/codex-unpacked"
 
 mkdir -p "$NEW_CODEX_HOME"
-cp -a "$RESTORE_STAGE/codex-unpacked/codex_online_snapshot_20260815T103110Z/"\
+cp -a "$RESTORE_STAGE/codex-unpacked/codex_online_snapshot_20260815T103534Z/"\
 "codex-home-snapshot/." "$NEW_CODEX_HOME/"
 chmod 700 "$NEW_CODEX_HOME"
 export CODEX_HOME="$NEW_CODEX_HOME"

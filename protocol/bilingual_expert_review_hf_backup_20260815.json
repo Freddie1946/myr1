@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "created_at": "2026-08-15T10:31:03.440043+00:00",
+  "created_at": "2026-08-15T10:35:00.839644+00:00",
   "status": "verified",
   "repository": "Freddie1946/PathVLM-R1-Migration-Archive-20260815",
   "private": false,
   "gated": "manual",
-  "revision": "0d4c90e2aebb7ee197e172c9fa83be7a854b09b0",
+  "revision": "ef660a6a82a931df3f0c07b7aa05c4c4041bd607",
   "prefix": "increments/20260815_bilingual_expert_review_v1",
   "file_count": 15,
-  "total_bytes": 107484625,
+  "total_bytes": 107486849,
   "failures": [],
   "files": {
     "increments/20260815_bilingual_expert_review_v1/human_review/pathvlm_human_review_bilingual_assisted_20260815.tar.gz": {
@@ -48,8 +48,8 @@
       "sha256": "749848de5ec874cd1eff2f4dba945808a5588c0e02fdf7f29bbe75ee0ce35578"
     },
     "increments/20260815_bilingual_expert_review_v1/documents/quick_new_machine_codex_resume.md": {
-      "bytes": 7201,
-      "sha256": "f4d1f6f252741b8524420c5ad52472fc03f5fb38a2c4b443cd749aa96d59132f"
+      "bytes": 9425,
+      "sha256": "44905c1fede0bfc8c7b173fca7d4d9113de5a1342e3e988c3f1dc416f0341714"
     },
     "increments/20260815_bilingual_expert_review_v1/documents/reviewer_response_manuscript_revision_and_complete_tables.md": {
       "bytes": 41687,
@@ -69,7 +69,7 @@
     },
     "increments/20260815_bilingual_expert_review_v1/documents/LATEST.md": {
       "bytes": 60450,
-      "sha256": "c7f224cdcbd0612ac156e7d23f16ced44b5851aa58de2efe0a08c5aef4bce0d2"
+      "sha256": "560f4e0d45292b53ecf476e456d87e620cddd3d809602dc0b09d3d55c8b48127"
     }
   }
 }

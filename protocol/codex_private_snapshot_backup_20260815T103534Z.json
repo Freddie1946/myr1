@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T10:36:39.836700+00:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Codex-Private-Snapshots",
+  "private": true,
+  "revision": "7d9a6032c02321c636dc0b07f0bb273223c9e8ec",
+  "tag": "20260815T103534Z",
+  "files": {
+    "snapshots/20260815T103534Z/codex_online_snapshot_20260815T103534Z.tar.gz": {
+      "bytes": 175567770,
+      "sha256": "1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a"
+    },
+    "snapshots/20260815T103534Z/manifest.json": {
+      "bytes": 15298,
+      "sha256": "ddbe75dc867722adfb776819dbd69273cddb6a426f364fb382cb70411041b2d3"
+    }
+  },
+  "failures": []
+}
