@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-08-15T20:50:00+08:00",
+  "as_of": "2026-08-15T21:40:00+08:00",
   "status": "critical_scientific_assets_remotely_backed_up_not_bytewise_workspace_clone",
   "git": {
     "repo": "https://github.com/Freddie1946/myr1.git",
@@ -9,13 +9,29 @@
   },
   "codex_snapshot": {
     "repo_type": "dataset",
-    "repo_id": "Freddie1946/PathVLM-R1-Codex-Private-Snapshots",
+    "repo_id": "Freddie1946/PathVLM-R1-Codex-Private-Snapshots-Clean-20260815",
     "private": true,
-    "revision": "7d9a6032c02321c636dc0b07f0bb273223c9e8ec",
-    "prefix": "snapshots/20260815T103534Z",
-    "archive_bytes": 175567770,
-    "archive_sha256": "1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a",
-    "credentials_included": false
+    "revision": "4c9e0778895d8a06fda45f391bbe64e7699fd634",
+    "prefix": "snapshots/20260815T134000Z",
+    "archive_bytes": 152363544,
+    "archive_sha256": "6e87ab9182a705e31e35fc11e30606f2d5d7f88e3ccc16d5021219b7b345c4ab",
+    "credentials_included": false,
+    "token_shaped_secret_scan": "passed",
+    "jsonl_validation": "58175/58175 lines parsed",
+    "excluded_security_sensitive_state": ["auth.json", "logs_2.sqlite", "shell_snapshots"],
+    "deprecated_repo_do_not_restore": "Freddie1946/PathVLM-R1-Codex-Private-Snapshots"
+  },
+  "private_source_material": {
+    "repo_type": "dataset",
+    "repo_id": "Freddie1946/PathVLM-R1-Private-Migration-Supplement-20260815",
+    "private": true,
+    "revision": "9f2377c03827d60e38a1fa6d5e03fdf250cfafdd",
+    "prefix": "snapshots/20260815_final_workspace_v1",
+    "archive": "pathvlm_private_migration_supplement_20260815_final_workspace_v1.tar.gz",
+    "archive_bytes": 1329714,
+    "archive_sha256": "55a3e1e5a19dadc8470eee15df72927050fdc23701bb56408787cd59bef3a4d8",
+    "payload": "original manuscript PDF, editor/reviewer PDF, and reviewer Markdown",
+    "historical_stage3_draft_included": false
   },
   "results": [
     {

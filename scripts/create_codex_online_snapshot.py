@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import sqlite3
 from datetime import datetime, timezone
@@ -26,7 +27,18 @@ EXCLUDED_ROOT_NAMES = {
     "tmp",
 }
 COPY_ROOT_FILES = {"config.toml", "history.jsonl"}
-COPY_ROOT_DIRS = {"sessions", "rules", "skills", "shell_snapshots", "memories"}
+COPY_ROOT_DIRS = {"sessions", "rules", "skills", "memories"}
+COPY_SQLITE_FILES = {"state_5.sqlite", "goals_1.sqlite", "memories_1.sqlite"}
+SANITIZED_TEXT_SUFFIXES = {".jsonl", ".json", ".toml", ".txt", ".md", ".sh"}
+SECRET_PATTERNS = {
+    "huggingface_token": re.compile(rb"hf_[A-Za-z0-9]{24,}"),
+    "openai_style_key": re.compile(rb"sk-[A-Za-z0-9_-]{20,}"),
+    "github_pat": re.compile(rb"(?:github_pat_[A-Za-z0-9_]{20,}|gh[pousr]_[A-Za-z0-9]{20,})"),
+    "bearer_token": re.compile(rb"(?i)authorization\s*[:=]\s*bearer\s+[A-Za-z0-9._~+/-]{16,}"),
+    "assigned_api_key": re.compile(
+        rb"(?i)(?:api[_-]?key|token)\s*[\"']?\s*[:=]\s*[\"'][A-Za-z0-9._~+/-]{16,}[\"']"
+    ),
+}
 
 
 def sha256(path: Path) -> str:
@@ -37,9 +49,31 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def copy_file(source: Path, destination: Path) -> None:
+def copy_file(source: Path, destination: Path, redactions: list[dict]) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, destination)
+    if source.suffix.lower() not in SANITIZED_TEXT_SUFFIXES:
+        shutil.copy2(source, destination)
+        return
+    payload = source.read_bytes()
+    labels: dict[str, int] = {}
+    for label, pattern in SECRET_PATTERNS.items():
+        payload, count = pattern.subn(f"[REDACTED:{label}]".encode(), payload)
+        if count:
+            labels[label] = count
+    destination.write_bytes(payload)
+    shutil.copystat(source, destination)
+    if labels:
+        redactions.append({"source": str(source), "patterns": labels})
+
+
+def copy_tree(source: Path, destination: Path, redactions: list[dict]) -> None:
+    for path in sorted(source.rglob("*")):
+        relative = path.relative_to(source)
+        target = destination / relative
+        if path.is_dir():
+            target.mkdir(parents=True, exist_ok=True)
+        elif path.is_file() and not path.is_symlink():
+            copy_file(path, target, redactions)
 
 
 def sqlite_backup(source: Path, destination: Path) -> None:
@@ -62,16 +96,26 @@ def main() -> None:
     snapshot_root = output / "codex-home-snapshot"
     snapshot_root.mkdir()
     started = datetime.now(timezone.utc).isoformat()
+    redactions: list[dict] = []
 
     for path in sorted(source.iterdir()):
         if path.name in EXCLUDED_ROOT_NAMES:
             continue
-        if path.is_file() and path.suffix == ".sqlite":
+        if path.is_file() and path.name in COPY_SQLITE_FILES:
             sqlite_backup(path, snapshot_root / path.name)
         elif path.is_file() and path.name in COPY_ROOT_FILES:
-            copy_file(path, snapshot_root / path.name)
+            copy_file(path, snapshot_root / path.name, redactions)
         elif path.is_dir() and path.name in COPY_ROOT_DIRS:
-            shutil.copytree(path, snapshot_root / path.name, copy_function=shutil.copy2)
+            copy_tree(path, snapshot_root / path.name, redactions)
+
+    unresolved: list[dict] = []
+    for path in sorted(item for item in snapshot_root.rglob("*") if item.is_file()):
+        payload = path.read_bytes()
+        labels = sorted(label for label, pattern in SECRET_PATTERNS.items() if pattern.search(payload))
+        if labels:
+            unresolved.append({"path": str(path.relative_to(snapshot_root)), "patterns": labels})
+    if unresolved:
+        raise RuntimeError(f"unresolved token-shaped content after sanitization: {unresolved}")
 
     records = []
     for path in sorted(p for p in snapshot_root.rglob("*") if p.is_file()):
@@ -90,7 +134,13 @@ def main() -> None:
         "file_count": len(records),
         "total_bytes": sum(item["bytes"] for item in records),
         "excluded": sorted(EXCLUDED_ROOT_NAMES),
-        "credential_policy": "auth.json and credential/cache material intentionally excluded; reauthenticate on destination",
+        "excluded_additional": ["logs_2.sqlite", "shell_snapshots", "all SQLite files not in the explicit allowlist"],
+        "sqlite_allowlist": sorted(COPY_SQLITE_FILES),
+        "redactions": redactions,
+        "credential_policy": (
+            "auth.json, credential/cache material, logs database and shell snapshots are excluded; "
+            "token-shaped strings in copied text/session files are redacted; reauthenticate on destination"
+        ),
         "continuation_note": "The source Codex session may continue after this snapshot. Create a later incremental or sealed snapshot to capture subsequent turns.",
         "files": records,
     }

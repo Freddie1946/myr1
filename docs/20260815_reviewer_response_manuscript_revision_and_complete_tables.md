@@ -429,10 +429,10 @@ content；本次首轮远端校验 revision 为
 - 结果 lineage/catalog；
 - 270 MB 所有者完整人工包与 106 MB 盲化评审包。
 
-当前 Codex 会话另以去密钥在线一致性快照保存到 private dataset
-`Freddie1946/PathVLM-R1-Codex-Private-Snapshots`，tag 为 `20260815T062722Z`，远端 revision
-为 `d53f7a7bc30ccc2a67cc08dbd60d34b02d02b350`。快照归档大小为 174,462,207 bytes，明确排除
-`auth.json`、缓存和凭据；迁移后需要重新认证。
+当前 Codex 会话另以经过 token 脱敏和 JSONL 解析校验的在线快照保存到 private dataset
+`Freddie1946/PathVLM-R1-Codex-Private-Snapshots-Clean-20260815`，tag 为 `20260815T134000Z`，远端
+revision 为 `4c9e0778895d8a06fda45f391bbe64e7699fd634`。快照归档大小为 152,363,544 bytes，明确排除
+`auth.json`、日志数据库、shell 快照、缓存和凭据；迁移后需要重新认证。
 
 本次补齐的 UNI/CONCH/PathChat/PLIP 表格、Stage2/Stage3 生成质量入口和自包含人工复核 v2
 包位于同一 gated dataset 的 `increments/20260815_results_material_index_v2`；上传校验记录为

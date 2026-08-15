@@ -72,36 +72,35 @@ protocol/migration_restore_inventory_20260815.json
 `docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md`：
 
 ```text
-Freddie1946/PathVLM-R1-Codex-Private-Snapshots
-revision: 7d9a6032c02321c636dc0b07f0bb273223c9e8ec
-prefix: snapshots/20260815T103534Z
-archive SHA-256: 1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a
+Freddie1946/PathVLM-R1-Codex-Private-Snapshots-Clean-20260815
+revision: 4c9e0778895d8a06fda45f391bbe64e7699fd634
+prefix: snapshots/20260815T134000Z
+archive SHA-256: 6e87ab9182a705e31e35fc11e30606f2d5d7f88e3ccc16d5021219b7b345c4ab
 ```
 
 下载与恢复到隔离的 `CODEX_HOME`：
 
 ```bash
 export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage"
-export NEW_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T103534Z"
+export NEW_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T134000Z"
 mkdir -p "$RESTORE_STAGE/codex"
 
-hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots \
+hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots-Clean-20260815 \
   --repo-type dataset \
-  --revision 7d9a6032c02321c636dc0b07f0bb273223c9e8ec \
-  --include 'snapshots/20260815T103534Z/*' \
+  --revision 4c9e0778895d8a06fda45f391bbe64e7699fd634 \
+  --include 'snapshots/20260815T134000Z/*' \
   --local-dir "$RESTORE_STAGE/codex"
 
-sha256sum "$RESTORE_STAGE/codex/snapshots/20260815T103534Z/"\
-"codex_online_snapshot_20260815T103534Z.tar.gz"
+sha256sum "$RESTORE_STAGE/codex/snapshots/20260815T134000Z/"\
+"codex_online_snapshot_20260815T134000Z.tar.gz"
 
 mkdir -p "$RESTORE_STAGE/codex-unpacked"
-tar -xzf "$RESTORE_STAGE/codex/snapshots/20260815T103534Z/"\
-"codex_online_snapshot_20260815T103534Z.tar.gz" \
+tar -xzf "$RESTORE_STAGE/codex/snapshots/20260815T134000Z/"\
+"codex_online_snapshot_20260815T134000Z.tar.gz" \
   -C "$RESTORE_STAGE/codex-unpacked"
 
 mkdir -p "$NEW_CODEX_HOME"
-cp -a "$RESTORE_STAGE/codex-unpacked/codex_online_snapshot_20260815T103534Z/"\
-"codex-home-snapshot/." "$NEW_CODEX_HOME/"
+cp -a "$RESTORE_STAGE/codex-unpacked/codex-home-snapshot/." "$NEW_CODEX_HOME/"
 chmod 700 "$NEW_CODEX_HOME"
 export CODEX_HOME="$NEW_CODEX_HOME"
 ```
@@ -131,6 +130,20 @@ codex "$(cat protocol/new_machine_codex_restore_prompt_20260815.txt)"
 
 边界：此方法恢复 CLI 本地 session/history 和 SQLite 状态；它不等同于把某个网页端对话服务器对象
 迁移到另一个账户。快照之后产生的少量对话，应以 Git 中的本指南、`docs/LATEST.md` 和结果清单为准。
+
+原论文 PDF、编辑/审稿 PDF 和审稿 Markdown 在独立 private 补充包中：
+
+```bash
+hf download Freddie1946/PathVLM-R1-Private-Migration-Supplement-20260815 \
+  --repo-type dataset \
+  --revision 9f2377c03827d60e38a1fa6d5e03fdf250cfafdd \
+  --include 'snapshots/20260815_final_workspace_v1/*' \
+  --local-dir "$RESTORE_STAGE/private-source-material"
+```
+
+归档 SHA-256 应为
+`55a3e1e5a19dadc8470eee15df72927050fdc23701bb56408787cd59bef3a4d8`。该包只用于私人迁移，
+不应转为 public/gated；旧 Stage3 工作草案未纳入。
 
 ## 4. 恢复评测 JSON、rollout 和结果表
 

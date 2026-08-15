@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-15T13:35:09.316019+00:00",
+  "status": "verified",
+  "repository": "Freddie1946/PathVLM-R1-Private-Migration-Supplement-20260815",
+  "repo_type": "dataset",
+  "private": true,
+  "revision": "9f2377c03827d60e38a1fa6d5e03fdf250cfafdd",
+  "prefix": "snapshots/20260815_final_workspace_v1",
+  "files": {
+    "snapshots/20260815_final_workspace_v1/pathvlm_private_migration_supplement_20260815_final_workspace_v1.tar.gz": {
+      "bytes": 1329714,
+      "sha256": "55a3e1e5a19dadc8470eee15df72927050fdc23701bb56408787cd59bef3a4d8"
+    },
+    "snapshots/20260815_final_workspace_v1/PRIVATE_MIGRATION_SUPPLEMENT_MANIFEST.json": {
+      "bytes": 1502,
+      "sha256": "88a308d982ed5d22ff7f3e87ddfb9f64d191fac188b06dc2ede8d9ebe6ae4036"
+    },
+    "snapshots/20260815_final_workspace_v1/PRIVATE_MIGRATION_SUPPLEMENT_VERIFICATION.json": {
+      "bytes": 410,
+      "sha256": "bb031be105a3f14db684ea7e56d03bd24848983e124485d21ea249c95fbf0590"
+    }
+  },
+  "failures": []
+}

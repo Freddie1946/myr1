@@ -2,6 +2,7 @@
 
 Final non-human closure and post-collection human-analysis contract:
 
+0. `20260815_FINAL_WORKSPACE_BACKUP_AUDIT.md`
 0. `20260815_FINAL_EXPERIMENT_RECORDS_BACKUP_AUDIT.md`
 0. `20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md`
 0. `20260815_EXPERT_REVIEWER_QUICK_START.md`
@@ -10,6 +11,12 @@ Final non-human closure and post-collection human-analysis contract:
 0. `20260815_human_review_packet_instructions.md`
 0. `QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md`
 0. `../protocol/final_migration_guide_hf_backup_20260815.json`
+
+The terminal workspace audit verifies all ten critical model revisions and byte counts, the
+49,245-file experiment-record archive, a new private source-material supplement, and the new
+sanitized Codex snapshot. The only pending security action is rotation of the OpenRouter and
+AIGCBest keys plus user-authorized deletion of the deprecated legacy Codex snapshot repository;
+that old repository must not be restored.
 
 The final self-contained experiment-records snapshot is remotely verified at manual-gated HF
 revision `5d2485312266ec0670a14494b1fe999d10fe94e1` under
@@ -81,10 +88,11 @@ revisions, in-domain/OOD failure cases, the 0.3/0.4/0.5 penalty sensitivity rati
 contract/cost details, and the revised main/supplementary tables. Human materials are separated
 into a blinded reviewer distribution and an owner-only package containing mappings and keys.
 The final revision increment is remotely verified in the manual-gated migration dataset under
-`increments/20260815_final_revision_closure_v1`; the current private Codex snapshot tag is
-`20260815T103534Z`. Verification records are
+`increments/20260815_final_revision_closure_v1`. The current sanitized private Codex snapshot is
+tag `20260815T134000Z` in `PathVLM-R1-Codex-Private-Snapshots-Clean-20260815`; the former snapshot
+repository is deprecated and must not be restored. Verification records are
 `../protocol/final_revision_hf_backup_20260815.json` and
-`../protocol/codex_private_snapshot_backup_20260815T103534Z.json`.
+`../protocol/codex_clean_private_snapshot_backup_20260815T134000Z.json`.
 
 Latest machine-migration backup plan:
 

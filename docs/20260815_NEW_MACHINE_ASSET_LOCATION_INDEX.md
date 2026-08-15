@@ -10,13 +10,14 @@
 新机器 Codex 克隆 Git 后，按以下顺序读取：
 
 1. `docs/LATEST.md`：当前文档入口和实验状态；
-2. `docs/20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md`：本资产位置索引；
-3. `docs/20260815_reviewer_response_manuscript_revision_and_complete_tables.md`：审稿回复、正文替换段落和完整实验表的统一底稿；
-4. `docs/result_catalog_20260815/paper_tables.md`：单独抽出的论文数据表；
-5. `docs/result_catalog_20260815/result_lineage.json`：模型—checkpoint—数据—prompt—parser—结果的机器可读谱系；
-6. `protocol/migration_restore_inventory_20260815.json`：远端资产和固定 revision 总清单；
-7. `docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md`：非人工实验闭合状态和剩余人工工作；
-8. `protocol/new_machine_codex_restore_prompt_20260815.txt`：恢复后首次审计提示。
+2. `docs/20260815_FINAL_WORKSPACE_BACKUP_AUDIT.md`：终极工作区盘点、缺漏补传与安全边界；
+3. `docs/20260815_NEW_MACHINE_ASSET_LOCATION_INDEX.md`：本资产位置索引；
+4. `docs/20260815_reviewer_response_manuscript_revision_and_complete_tables.md`：审稿回复、正文替换段落和完整实验表的统一底稿；
+5. `docs/result_catalog_20260815/paper_tables.md`：单独抽出的论文数据表；
+6. `docs/result_catalog_20260815/result_lineage.json`：模型—checkpoint—数据—prompt—parser—结果的机器可读谱系；
+7. `protocol/migration_restore_inventory_20260815.json`：远端资产和固定 revision 总清单；
+8. `docs/20260815_FINAL_MIGRATION_AND_HUMAN_REVIEW_CLOSURE.md`：非人工实验闭合状态和剩余人工工作；
+9. `protocol/new_machine_codex_restore_prompt_20260815.txt`：恢复后首次审计提示。
 
 Git 权威仓库：
 
@@ -46,7 +47,7 @@ JSONL 和 Codex 会话快照不依赖 Git 保存。
 | 两个工作区的 `envs/` | SFT/GRPO 与异构基线环境 | 不复制环境二进制；按 Git 中环境脚本重建 |
 | `backup_archives/` | 人工复核分发包、负责人包和本机迁移打包产物 | 关键包已上传 HF；旧的重复归档不必全部恢复 |
 | `migration_backups/` | 迁移过程中的本地快照和审计产物 | 以 HF verification/protocol 为准按需恢复 |
-| `rewrite_docs/` | 原论文 PDF 和审稿意见原件 | 原始参考材料；最新版修订内容以 Git 统一 Markdown 为准 |
+| `rewrite_docs/` | 原论文 PDF 和审稿意见原件 | 已进入 private migration supplement；最新版修订内容以 Git 统一 Markdown 为准 |
 | `.codex-wjy/` | 当前机器 Codex session/history/SQLite 和本地配置 | 由 private secret-free Codex 快照恢复；认证信息需重新登录 |
 | `.secrets/` | API/HF 等本机凭据 | **从未上传；禁止迁移或提交** |
 
@@ -229,19 +230,29 @@ manuscript/environment/reproducible_env_commands.md
 
 ## 9. Codex 会话和长期实验记忆在哪里
 
-private secret-free 会话快照：
+private、经过 token 脱敏和 JSONL 解析校验的会话快照：
 
 ```text
-dataset: Freddie1946/PathVLM-R1-Codex-Private-Snapshots
-revision: 7d9a6032c02321c636dc0b07f0bb273223c9e8ec
-prefix: snapshots/20260815T103534Z
-archive: codex_online_snapshot_20260815T103534Z.tar.gz
-sha256: 1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a
+dataset: Freddie1946/PathVLM-R1-Codex-Private-Snapshots-Clean-20260815
+revision: 4c9e0778895d8a06fda45f391bbe64e7699fd634
+prefix: snapshots/20260815T134000Z
+archive: codex_online_snapshot_20260815T134000Z.tar.gz
+sha256: 6e87ab9182a705e31e35fc11e30606f2d5d7f88e3ccc16d5021219b7b345c4ab
 ```
 
-它包含该时间点之前的 session/history/SQLite，不含凭据。快照之后的实验结论和对话新增内容以 Git
-`docs/LATEST.md`、本索引、统一修订 Markdown 和 protocol JSON 为准。若 `codex resume --all` 不能显示旧
-session，使用 `protocol/new_machine_codex_restore_prompt_20260815.txt` 启动新会话恢复语境。
+它包含该时间点之前的 session/history 及必要 SQLite 状态，不含 `auth.json`、日志数据库、shell 快照
+或凭据；58,175 行 JSONL 全部可解析。旧仓库 `PathVLM-R1-Codex-Private-Snapshots` 因历史快照可能
+含 token 副本，禁止用于恢复。若 `codex resume --all` 不能显示旧 session，使用
+`protocol/new_machine_codex_restore_prompt_20260815.txt` 启动新会话恢复语境。
+
+原论文与审稿意见原件的 private 补充包：
+
+```text
+dataset: Freddie1946/PathVLM-R1-Private-Migration-Supplement-20260815
+revision: 9f2377c03827d60e38a1fa6d5e03fdf250cfafdd
+prefix: snapshots/20260815_final_workspace_v1
+archive sha256: 55a3e1e5a19dadc8470eee15df72927050fdc23701bb56408787cd59bef3a4d8
+```
 
 ## 10. 新机器建议的恢复落点
 

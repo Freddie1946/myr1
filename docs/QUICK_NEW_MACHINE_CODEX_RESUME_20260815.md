@@ -11,15 +11,15 @@
 
 ## 0. 边界
 
-- 最新会话快照：`Freddie1946/PathVLM-R1-Codex-Private-Snapshots`
-- 固定 revision：`7d9a6032c02321c636dc0b07f0bb273223c9e8ec`
-- prefix：`snapshots/20260815T103534Z`
-- archive SHA-256：`1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a`
+- 最新已脱敏会话快照：`Freddie1946/PathVLM-R1-Codex-Private-Snapshots-Clean-20260815`
+- 固定 revision：`4c9e0778895d8a06fda45f391bbe64e7699fd634`
+- prefix：`snapshots/20260815T134000Z`
+- archive SHA-256：`6e87ab9182a705e31e35fc11e30606f2d5d7f88e3ccc16d5021219b7b345c4ab`
 - Git：`https://github.com/Freddie1946/myr1.git`，branch `codex/a100-stage3-eval`
 
-快照不含 HF token、API key、Codex `auth.json`、缓存或模型权重。新机器必须重新完成 HF 和 Codex
-认证。快照是在线一致性时间点，能恢复本地 session/history/SQLite 状态，但不能恢复该时间点之后
-仍在旧机器产生的未来消息；这部分以 Git 的 `docs/LATEST.md` 为准。
+快照不含 HF token、API key、Codex `auth.json`、日志数据库、shell 快照、缓存或模型权重；复制的
+session/history 文本另经过 token 形状扫描与脱敏，58,175 行 JSONL 全部通过解析检查。新机器必须
+重新完成 HF 和 Codex 认证。旧仓库 `PathVLM-R1-Codex-Private-Snapshots` 不得再用于恢复。
 
 ## 1. 准备相同工作路径并认证 HF
 
@@ -56,22 +56,22 @@ test -f docs/QUICK_NEW_MACHINE_CODEX_RESUME_20260815.md
 ## 3. 下载并核验最新 Codex 会话快照
 
 ```bash
-export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage/codex_20260815T103534Z"
+export RESTORE_STAGE="$WJY_WORK_ROOT/restore_stage/codex_20260815T134000Z"
 mkdir -p "$RESTORE_STAGE/download" "$RESTORE_STAGE/unpacked"
 
-hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots \
+hf download Freddie1946/PathVLM-R1-Codex-Private-Snapshots-Clean-20260815 \
   --repo-type dataset \
-  --revision 7d9a6032c02321c636dc0b07f0bb273223c9e8ec \
-  --include 'snapshots/20260815T103534Z/*' \
+  --revision 4c9e0778895d8a06fda45f391bbe64e7699fd634 \
+  --include 'snapshots/20260815T134000Z/*' \
   --local-dir "$RESTORE_STAGE/download"
 
-echo '1f5079557828c1f8e489793c49da31873c423ebd75ba6da73d7db79489387c9a  snapshots/20260815T103534Z/codex_online_snapshot_20260815T103534Z.tar.gz' \
+echo '6e87ab9182a705e31e35fc11e30606f2d5d7f88e3ccc16d5021219b7b345c4ab  snapshots/20260815T134000Z/codex_online_snapshot_20260815T134000Z.tar.gz' \
   > "$RESTORE_STAGE/download/CHECKSUMS.sha256"
 
 cd "$RESTORE_STAGE/download"
 sha256sum -c CHECKSUMS.sha256
 
-tar -xzf snapshots/20260815T103534Z/codex_online_snapshot_20260815T103534Z.tar.gz \
+tar -xzf snapshots/20260815T134000Z/codex_online_snapshot_20260815T134000Z.tar.gz \
   -C "$RESTORE_STAGE/unpacked"
 ```
 
@@ -82,11 +82,11 @@ tar -xzf snapshots/20260815T103534Z/codex_online_snapshot_20260815T103534Z.tar.g
 不要覆盖新机器已有的 Codex home。这里使用独立目录：
 
 ```bash
-export RESTORED_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T103534Z"
+export RESTORED_CODEX_HOME="$WJY_WORK_ROOT/.codex-wjy-restored-20260815T134000Z"
 test ! -e "$RESTORED_CODEX_HOME"
 mkdir -p "$RESTORED_CODEX_HOME"
 
-cp -a "$RESTORE_STAGE/unpacked/codex_online_snapshot_20260815T103534Z/codex-home-snapshot/." \
+cp -a "$RESTORE_STAGE/unpacked/codex-home-snapshot/." \
   "$RESTORED_CODEX_HOME/"
 chmod 700 "$RESTORED_CODEX_HOME"
 export CODEX_HOME="$RESTORED_CODEX_HOME"
